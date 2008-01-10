@@ -80,7 +80,7 @@
   </xsl:template>
 
   <xsl:template match="dc:subject">
-    <a href="{./*/@rdf:about}"><xsl:value-of select="./*/od:title"/></a>
+    <a href="{./*/@rdf:about}"><xsl:value-of select="./*/rdfs:label"/></a>
   </xsl:template>
 
   <xsl:template match="sub:Audience">
