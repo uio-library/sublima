@@ -12,8 +12,10 @@
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns="http://www.w3.org/1999/xhtml" 
-  >
+  exclude-result-prefixes="rdf rdfs dc dct foaf sub sioc od lingvoj wdr">
+  <xsl:import href="rdfxml-res-templates.xsl"/>
   <xsl:output indent="yes"/>
+
 
   <xsl:param name="interface-language">en</xsl:param>
 
