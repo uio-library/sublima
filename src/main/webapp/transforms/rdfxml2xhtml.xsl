@@ -9,8 +9,13 @@
   xmlns:sub="http://xmlns.computas.com/sublima#"
   xmlns:sioc="http://rdfs.org/sioc/ns#"
   xmlns:od="http://sublima.computas.com/topic/" 
+  xmlns:lingvoj="http://www.lingvoj.org/ontology#"
+  xmlns="http://www.w3.org/1999/xhtml" 
   >
   <xsl:output indent="yes"/>
+
+  <xsl:param name="interface-language">en</xsl:param>
+
   <xsl:template match="rdf:RDF">
     <table>
       <xsl:for-each select="rdf:Description"> <!-- The root node for each described resource -->
@@ -26,10 +31,16 @@
 	    <xsl:apply-templates select="./dc:subject"/>
 	  </td>
 	  <td>
+	    <xsl:apply-templates select="./dc:description"/>
+	  </td>
+	  <td>
 	    <xsl:apply-templates select="./sub:committer"/>
 	  </td>
 	  <td>
 	    <xsl:apply-templates select="./dct:dateAccepted"/>
+	  </td>
+	  <td>
+	    <xsl:apply-templates select="./dc:language"/>
 	  </td>
 	  <td>
 	    <xsl:variable name="uri" select="dc:audience/@rdf:resource"/>
@@ -56,6 +67,10 @@
     <a href="{../dc:identifier/@rdf:resource}"><xsl:value-of select="."/></a>
   </xsl:template>
   
+  <xsl:template match="dc:description">
+    <xsl:copy-of select="node()"/>
+  </xsl:template>
+
   <xsl:template match="sub:committer">
     <xsl:value-of select="./sioc:User/rdfs:label"/>
   </xsl:template>
@@ -70,6 +85,10 @@
 
   <xsl:template match="sub:Audience">
     <xsl:value-of select="./rdfs:label"/>
+  </xsl:template>
+
+  <xsl:template match="dc:language">
+    <xsl:value-of select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
 </xsl:stylesheet>
