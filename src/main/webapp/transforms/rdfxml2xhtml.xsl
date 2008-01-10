@@ -54,11 +54,11 @@
 
   <xsl:template match="foaf:Agent|foaf:Person|foaf:Group|foaf:Organization" mode="external-link">
     <xsl:choose>
-      <xsl:when test="foaf:homepage">
+      <xsl:when test="foaf:homepage and foaf:name/@xml:lang=$interface-language">
 	<a href="{foaf:homepage/@rdf:resource}"><xsl:value-of select="foaf:name"/></a>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:value-of select="foaf:name"/>
+	<xsl:value-of select="foaf:name[@xml:lang=$interface-language]"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
