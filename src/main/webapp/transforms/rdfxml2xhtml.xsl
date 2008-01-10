@@ -64,15 +64,19 @@
   </xsl:template>
 
   <xsl:template match="dc:title" mode="internal-link">
-    <a href="{../dc:identifier/@rdf:resource}"><xsl:value-of select="."/></a>
+    <xsl:if test="@xml:lang=$interface-language">
+      <a href="{../dc:identifier/@rdf:resource}"><xsl:value-of select="."/></a>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="dc:description">
-    <xsl:copy-of select="node()"/>
+    <xsl:if test="@xml:lang=$interface-language">
+      <xsl:copy-of select="node()"/>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="sub:committer">
-    <xsl:value-of select="./sioc:User/rdfs:label"/>
+    <xsl:value-of select="./sioc:User/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
  
   <xsl:template match="dct:dateAccepted|dct:dateSubmitted">
@@ -80,11 +84,11 @@
   </xsl:template>
 
   <xsl:template match="dc:subject">
-    <a href="{./*/@rdf:about}"><xsl:value-of select="./*/rdfs:label"/></a>
+    <a href="{./*/@rdf:about}"><xsl:value-of select="./*/rdfs:label[@xml:lang=$interface-language]"/></a>
   </xsl:template>
 
   <xsl:template match="sub:Audience">
-    <xsl:value-of select="./rdfs:label"/>
+    <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
   <xsl:template match="dc:language">
