@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitiional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-loose.dtd">
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Pilot 1 - Dublin Core Search</title>
+  </head>
+  <body>
+    <h2>Pilot 1 - Search using Dublin Core metadata</h2>
+    <h3>Purpose: demonstrate architecture top-down</h3>
+    <br/>
+      
+      <form name="dcSearch" action="Form2SPARQL" method="get">
+	<div>
+      <input type="hidden" name="interface-language" value="en"/>
+      <input type="hidden" name="prefix" value="dc: &lt;http://purl.org/dc/elements/1.1/&gt;"/>
+      <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
+      <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
+      <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+	</div>
+      <table>
+	<tr>
+	  <td align="right"><label for="title">Title</label></td>
+	  <td><input id="title" type="text" name="dc:title" size="20"/></td>
+        </tr>
+	<tr>
+	  <td align="right"><label for="subject">Subject</label></td>
+          <td><input id="subject" type="text" name="dc:subject/rdfs:label" size="20"/></td>
+        </tr>
+        <tr>
+          <td align="right"><label for="description">Description</label></td>
+          <td><input id="description" type="text" name="dc:description" size="20"/></td>
+        </tr>
+        <tr>
+          <td align="right"><label for="publisher">Publisher</label></td>
+          <td><input id="publisher" type="text" name="dc:publisher/foaf:name" size="20"/></td>
+        </tr>
+        <tr>
+          <td align="right"><label for="date">DateAccepted</label></td>
+          <td><input id="dateAccepted" type="text" name="dc:dateAccepted" size="20"/></td>
+        </tr>
+        <tr>
+          <td align="right"><label for="date">DateSubmitted</label></td>
+          <td><input id="dateSubmitted" type="text" name="dc:dateSubmitted" size="20"/></td>
+        </tr>
+        <tr>
+          <td align="right"><label for="type">Type</label></td>
+          <td><input id="type" type="text" name="dc:type" size="20"/></td>
+        </tr>
+        <tr>
+          <td align="right"><label for="identifier">Identifier</label></td>
+          <td><input id="identifier" type="text" name="dc:identifier" size="20"/></td>
+        </tr>
+        <tr>
+          <td align="right"><label for="language">Language</label></td>
+          <td><input id="language" type="text" name="dc:language/rdfs:label" size="20"/></td>
+        </tr>
+         <tr>
+          <td align="right"><label for="audience">Audience</label></td>
+          <td><input id="audience" type="text" name="dc:audience/rdfs:label" size="20"/></td>
+	</tr>
+	<tr>
+	  <td align="right"><label for="committer">Committer</label></td>
+	  <td><input id="committer" type="text" name="sub:committer/rdfs:label" size="20"/></td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><input type="submit" value="Search"/></td>
+	</tr>
+      </table>
+    </form>
+    
+  </body>
+</html>

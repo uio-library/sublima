@@ -1,0 +1,5 @@
+# These are resources we want a local copy of. 
+# Run wget -N -i resources-to-mirror as a cron job
+
+http://www.lingvoj.org/lingvoj.rdf
+http://purl.org/dc/dcmitype/

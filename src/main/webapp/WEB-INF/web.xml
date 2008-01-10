@@ -1,0 +1,55 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+  <servlet>
+    <servlet-name>Form2SparqlServlet</servlet-name>
+    <servlet-class>com.computas.sublima.servlet.Form2SparqlServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>Form2SparqlUpdateServlet</servlet-name>
+    <servlet-class>com.computas.sublima.servlet.Form2SparqlUpdateServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>SparqlUpdateServlet</servlet-name>
+    <servlet-class>com.computas.sublima.servlet.SparqlUpdateServlet</servlet-class>
+  </servlet>
+
+  <!-- The Joseki SPARQL servlet -->
+  <servlet>
+    <servlet-name>SPARQL service processor</servlet-name>
+    <servlet-class>org.joseki.http.Servlet</servlet-class>
+    <!-- Configuration file -->
+    <init-param>
+      <param-name>org.joseki.rdfserver.config</param-name>
+      <param-value>joseki-config.ttl</param-value>
+    </init-param>
+  </servlet>
+
+  <!-- Servlet mappings -->
+
+  <servlet-mapping>
+    <servlet-name>Form2SparqlServlet</servlet-name>
+    <url-pattern>/Form2SPARQL</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Form2SparqlUpdateServlet</servlet-name>
+    <url-pattern>/Form2SPARQLUpdate</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SparqlUpdateServlet</servlet-name>
+    <url-pattern>/update</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SPARQL service processor</servlet-name>
+    <url-pattern>/sparql</url-pattern>
+  </servlet-mapping>
+
+</web-app>
+

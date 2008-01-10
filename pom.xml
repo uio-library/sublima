@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.computas.sublima</groupId>
+  <artifactId>sublima</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Sublima</name>
+  <url>http://sublima.computas.com</url>
+  <description>Sublima</description>
+
+  <!-- Repositories -->
+  <repositories>
+    <repository>
+      <id>jena</id>
+      <url>http://jena.hpl.hp.com/repo</url>
+    </repository>
+    <repository>
+      <id>joseki</id>
+      <url>http://jena.hpl.hp.com/~afs/maven-proto</url>
+    </repository>
+  </repositories>
+
+
+  <!-- Dependencies -->
+  <dependencies>
+    <!-- Log4j -->
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.12</version>
+      <!-- version>1.2.13</version>
+         <version>1.2.14</version>
+         <version>1.2.15</version -->
+      <scope>compile</scope>
+    </dependency>
+    <!-- Junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Apache Cocoon
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-core</artifactId>
+        <version>2.2.0-RC2</version>
+        <scope>compile</scope>
+      </dependency> -->
+
+    <!-- Servlet & Jsp -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Jena -->
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>jena</artifactId>
+      <version>2.5.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>arq</artifactId>
+      <version>2.1</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- Joseki 
+   <dependency>
+     <groupId>org.joseki</groupId>
+     <artifactId>joseki</artifactId>
+     <version>3.0</version>
+     <scope>compile</scope>
+   </dependency> -->
+   
+   <dependency>
+     <groupId>postgresql</groupId>
+     <artifactId>postgresql</artifactId>
+     <version>8.2-504.jdbc3</version>
+     <scope>compile</scope>
+   </dependency>
+  </dependencies>
+
+  <!-- Build -->
+  <build>
+    <finalName>${pom.artifactId}-${pom.version}</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tomcat-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>
