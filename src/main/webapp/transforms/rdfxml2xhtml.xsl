@@ -44,6 +44,9 @@
 	    <xsl:apply-templates select="./dc:language"/>
 	  </td>
 	  <td>
+	    <xsl:apply-templates select="./dc:type"/>
+	  </td>
+	  <td>
 	    <xsl:apply-templates select="./wdr:describedBy"/>
 	  </td>
 	  <td>
@@ -121,6 +124,24 @@
 	<xsl:choose>
 	  <xsl:when test="$interface-language='en'">Suggested</xsl:when>
 	  <xsl:when test="$interface-language='no'">Foreslått</xsl:when>
+	</xsl:choose>
+      </xsl:when>
+	
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="dc:type">
+    <xsl:choose>
+      <xsl:when test="@rdf:resource='http://purl.org/dc/dcmitype/Text'">
+	<xsl:choose>
+	  <xsl:when test="$interface-language='en'">Text</xsl:when>
+	  <xsl:when test="$interface-language='no'">Tekst</xsl:when>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:when test="@rdf:resource='http://purl.org/dc/dcmitype/Image'">
+	<xsl:choose>
+	  <xsl:when test="$interface-language='en'">Image</xsl:when>
+	  <xsl:when test="$interface-language='no'">Bilde</xsl:when>
 	</xsl:choose>
       </xsl:when>
 	
