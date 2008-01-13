@@ -19,7 +19,7 @@ import java.util.Map;
  *
  * @author kkj
  * @version 1.0
- * @param prefixes  A string array with prefixes for names used.
+ * @param: prefixes string array with prefixes for names used.
  */
 public class Form2SparqlService {
   private String language;
