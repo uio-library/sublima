@@ -70,7 +70,7 @@ public class JosekiTest extends TestCase {
   }
 
   /**
-   * Tests that a connection to Joseki exists
+   * Tests that a connection to the webapp exists
    */
   public void testConnection() throws Exception {
     url = new URL(JOSEKI_URL);
