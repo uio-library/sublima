@@ -188,4 +188,25 @@ public class Form2SparqlServiceTest extends TestCase {
     String actual = myService.convertForm2Sparql(testMap);
     assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, actual);
   }
+  public void testConvertForm2SPARULSingleValue() {
+	 // Single value test
+	 String expectS = "INSERT {\n<http://sublima.computas.com/agent/ife> foaf:name \"Institute for Energy Technology\"@en .\n}";
+	 testMap.put("foaf:name", new String[]{"Institute for Energy Technology"});
+	 testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
+	 testMap.put("the-resource", new String[]{"http://sublima.computas.com/agent/ife"}); // this parameter is a magic string
+	 String resultString = myService.convertForm2Sparul(testMap);
+	 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
+  }
+
+  public void testConvertForm2SPARULTwoValues() {
+		 String expectS = "INSERT {\n<http://the-jet.com/> dc:description \"Et veldig lett jetfly (VLJ) som er under utarbeidelse.\"@no .\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}";
+		 testMap.put("dc:description", new String[]{"Et veldig lett jetfly (VLJ) som er under utarbeidelse."});
+		 testMap.put("dc:title", new String[]{"Cirrus personlig jetfly"});
+		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
+		 testMap.put("the-resource", new String[]{"http://the-jet.com/"}); // this parameter is a magic string
+		 String resultString = myService.convertForm2Sparul(testMap);
+		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
+ }	
+
+
 }

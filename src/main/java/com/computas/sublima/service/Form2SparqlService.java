@@ -169,33 +169,32 @@ public class Form2SparqlService {
     return returnString;
   }
 
-  public String convertForm2SparqlUpdate(Map<String, String[]> parameterMap) {
+  public String convertForm2Sparul(Map<String, String[]> parameterMap) {
     //TODO Do this with an proper INSERT/UPDATE/MODIFY
     //Using StringBuffer, since regular String can cause performance issues with large datasets
     StringBuffer sparqlQueryBuffer = new StringBuffer();
-    StringBuffer n3Buffer = new StringBuffer();
     sparqlQueryBuffer.append(getPrefixString());
-    sparqlQueryBuffer.append("INSERT ");
+    sparqlQueryBuffer.append("INSERT {\n");
 
+    String language = new String();
     if (parameterMap.get("interface-language") != null) {
-      setLanguage(parameterMap.get("interface-language")[0]);
+      language = parameterMap.get("interface-language")[0];
       parameterMap.remove("interface-language");
     }
+    String subject = new String(); 
+    if (parameterMap.get("the-resource") != null) {
+        subject = parameterMap.get("the-resource")[0];
+        parameterMap.remove("the-resource");
+    } // else TODO: throw exception
 
     for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-      n3Buffer.append(convertFormField2N3(e.getKey(), e.getValue()));
+    	RDFObject myRDFObject = new RDFObject(e.getValue()[0], language);
+    	sparqlQueryBuffer.append("<" + subject + "> " + e.getKey() + " " + myRDFObject.toN3() + "\n");
     }
 
-    // Add the variables to the query
-    for (Object element : subjectVarList) {
-      sparqlQueryBuffer.append((String) element);
-    }
-
-    sparqlQueryBuffer.append("WHERE {");
-    sparqlQueryBuffer.append(n3Buffer);
-    sparqlQueryBuffer.append("\n}");
+    sparqlQueryBuffer.append("}");
     String returnString = sparqlQueryBuffer.toString();
-    logger.trace("Constructed SPARQL query: " + returnString);
+    logger.trace("Constructed SPARUL query: " + returnString);
     return returnString;
   }
 }
