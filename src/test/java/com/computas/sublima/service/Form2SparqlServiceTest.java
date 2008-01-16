@@ -4,8 +4,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
+
 
 /**
  * Form2SparqlService Tester.
@@ -188,7 +190,7 @@ public class Form2SparqlServiceTest extends TestCase {
     String actual = myService.convertForm2Sparql(testMap);
     assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, actual);
   }
-  public void testConvertForm2SPARULSingleValue() {
+  public void testConvertForm2SPARULSingleValue() throws IOException {
 	 // Single value test
 	 String expectS = "INSERT {\n<http://sublima.computas.com/agent/ife> foaf:name \"Institute for Energy Technology\"@en .\n}";
 	 testMap.put("foaf:name", new String[]{"Institute for Energy Technology"});
@@ -198,7 +200,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
   }
 
-  public void testConvertForm2SPARULTwoValues() {
+  public void testConvertForm2SPARULTwoValues() throws IOException {
 		 String expectS = "INSERT {\n<http://the-jet.com/> dc:description \"Et veldig lett jetfly (VLJ) som er under utarbeidelse.\"@no .\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}";
 		 testMap.put("dc:description", new String[]{"Et veldig lett jetfly (VLJ) som er under utarbeidelse."});
 		 testMap.put("dc:title", new String[]{"Cirrus personlig jetfly"});
@@ -208,11 +210,14 @@ public class Form2SparqlServiceTest extends TestCase {
 		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
  }	
 
-/*  @Test(expected=IOException.class)
-  public void testIOException() {
-	  testMap.put("foaf:name", new String[]{"Institute for Energy Technology"});
-	  testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
-	  String resultString = myService.convertForm2Sparul(testMap);
-  }
-*/    
+
+  public void testConvertForm2SPARULEmpty() {
+		 testMap.put("foaf:name", new String[]{"Institute for Energy Technology"});
+		 testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
+		 try {
+			 String resultString = myService.convertForm2Sparul(testMap);
+		 }	catch (IOException tmp) {
+			 assertTrue(true);
+		 }
+  }	 
 }

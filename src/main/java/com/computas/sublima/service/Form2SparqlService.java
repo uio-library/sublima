@@ -170,7 +170,7 @@ public class Form2SparqlService {
     return returnString;
   }
 
-  public String convertForm2Sparul(Map<String, String[]> parameterMap) {
+  public String convertForm2Sparul(Map<String, String[]> parameterMap) throws IOException {
     //TODO Do this with an proper INSERT/UPDATE/MODIFY
     //Using StringBuffer, since regular String can cause performance issues with large datasets
     StringBuffer sparqlQueryBuffer = new StringBuffer();
@@ -186,11 +186,11 @@ public class Form2SparqlService {
     if (parameterMap.get("the-resource") != null) {
         subject = parameterMap.get("the-resource")[0];
         parameterMap.remove("the-resource");
-    } /*
-     	Is there any way to not be forced to catch the exception in the immediately calling code?
+    } 
+     //	Is there any way to not be forced to catch the exception in the immediately calling code?
     	else {
     	throw new IOException("The subject is not given in the form of a 'the-resource' parameter.");
-    } */
+    } 
 
     for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
     	RDFObject myRDFObject = new RDFObject(e.getValue()[0], language);
