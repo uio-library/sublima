@@ -186,16 +186,16 @@ public class Form2SparqlService {
     if (parameterMap.get("the-resource") != null) {
         subject = parameterMap.get("the-resource")[0];
         parameterMap.remove("the-resource");
-    } 
-     //	Is there any way to not be forced to catch the exception in the immediately calling code?
-    	else {
+    } else {
     	throw new IOException("The subject is not given in the form of a 'the-resource' parameter.");
     } 
 
     for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-    	RDFObject myRDFObject = new RDFObject(e.getValue()[0], language);
-    	sparqlQueryBuffer.append("<" + subject + "> " + e.getKey() + " " + myRDFObject.toN3() + "\n");
-    }
+    	if ((e.getValue() != null) && (e.getValue()[0] != "")) {
+    		RDFObject myRDFObject = new RDFObject(e.getValue()[0], language);
+    		sparqlQueryBuffer.append("<" + subject + "> " + e.getKey() + " " + myRDFObject.toN3() + "\n");
+    	}	
+    }	
 
     sparqlQueryBuffer.append("}");
     String returnString = sparqlQueryBuffer.toString();

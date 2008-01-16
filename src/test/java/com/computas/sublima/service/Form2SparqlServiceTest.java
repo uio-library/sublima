@@ -200,6 +200,16 @@ public class Form2SparqlServiceTest extends TestCase {
 	 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
   }
 
+  public void testConvertForm2SPARULTwoValuesEmpty() throws IOException {
+		 String expectS = "INSERT {\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}";
+		 testMap.put("dc:description", null);
+		 testMap.put("dc:title", new String[]{"Cirrus personlig jetfly"});
+		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
+		 testMap.put("the-resource", new String[]{"http://the-jet.com/"}); // this parameter is a magic string
+		 String resultString = myService.convertForm2Sparul(testMap);
+		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
+ }	
+
   public void testConvertForm2SPARULTwoValues() throws IOException {
 		 String expectS = "INSERT {\n<http://the-jet.com/> dc:description \"Et veldig lett jetfly (VLJ) som er under utarbeidelse.\"@no .\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}";
 		 testMap.put("dc:description", new String[]{"Et veldig lett jetfly (VLJ) som er under utarbeidelse."});
@@ -208,7 +218,7 @@ public class Form2SparqlServiceTest extends TestCase {
 		 testMap.put("the-resource", new String[]{"http://the-jet.com/"}); // this parameter is a magic string
 		 String resultString = myService.convertForm2Sparul(testMap);
 		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
- }	
+}	
 
 
   public void testConvertForm2SPARULEmpty() {
