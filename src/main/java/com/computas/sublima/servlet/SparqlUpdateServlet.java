@@ -34,7 +34,10 @@ public class SparqlUpdateServlet extends HttpServlet {
 
     //The SPARQL/Update from the Form2SparqlUpdateServlet
     String updateQuery = request.getParameter("query");
-
+    /*
+    String updateQuery =  "PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
+                          "INSERT { <http://sublima.computas.com/agent/ife> foaf:name \"Institute for Energy Technology\"@de }";
+    */
     //Create a model based on the one in the DB
     ModelRDB model = ModelRDB.open(connection);
 

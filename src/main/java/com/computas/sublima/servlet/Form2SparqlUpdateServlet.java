@@ -39,49 +39,35 @@ public class Form2SparqlUpdateServlet extends HttpServlet {
       //Calls the Form2SPARQLUpdate service with the parameterMap which returns a SPARQL/Update as String
       Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
       parameterMap.remove("prefix"); // The prefixes are magic variables
-      String sparqlUpdate = form2SparqlService.convertForm2SparqlUpdate(parameterMap);
+      String sparqlUpdate = form2SparqlService.convertForm2Sparul(parameterMap);
 
       PrintWriter out = response.getWriter();
       try {
         //TODO We've gotta do a GET to our fancy fine SparqlUpdateServlet
-        URL u = new URL("http://sublima.computas.com:8180/sublima-1.0-SNAPSHOT/update?query="
+        URL u = new URL("http://localhost:8180/sublima-1.0-SNAPSHOT/update?query="
                 + URLEncoder.encode(sparqlUpdate, "UTF-8")); // TODO: Should have a config somewhere
         HttpURLConnection huc = (HttpURLConnection) u.openConnection();
 
         int code = huc.getResponseCode();
         if (code >= huc.HTTP_INTERNAL_ERROR) { // The upstream server borked, blame it
-          response.sendError(huc.HTTP_BAD_GATEWAY, "The SPARQL Endpoint encountered an internal error.");
+          response.sendError(huc.HTTP_BAD_GATEWAY, "The SPARQL/Update Endpoint encountered an internal error.");
         }
         if (code == huc.HTTP_BAD_REQUEST) { // There was a bad request sent upwards, we're probably to blame
-          response.sendError(huc.HTTP_INTERNAL_ERROR, "The Servlet produced an erroneous SPARQL query.");
+          response.sendError(huc.HTTP_INTERNAL_ERROR, "The Servlet produced an erroneous SPARQL/Update query.");
         }
         // TODO: A test here to attempt to detect parameters that clearly will lead to malformed queries.
         if (code == huc.HTTP_UNAUTHORIZED) {
-          response.sendError(huc.HTTP_UNAUTHORIZED, "You were not authorized to access the SPARQL Endpoint.");
+          response.sendError(huc.HTTP_UNAUTHORIZED, "You were not authorized to access the SPARQL/Update Endpoint.");
         }
         if (code > huc.HTTP_UNAUTHORIZED && code < huc.HTTP_INTERNAL_ERROR) { // The Endpoint returned a client error, and we're the client
-          response.sendError(huc.HTTP_INTERNAL_ERROR, "The Servlet was misconfigured when dealing with the SPARQL endpoint");
+          response.sendError(huc.HTTP_INTERNAL_ERROR, "The Servlet was misconfigured when dealing with the SPARQL/Update endpoint");
         }
 
         if (code >= huc.HTTP_OK && code < huc.HTTP_MULT_CHOICE) {
 
           //TODO Great success! Let the user now!
-
-          /*
-          InputStream bodyInputStream = huc.getInputStream();
-          BufferedReader rdr = new BufferedReader(new InputStreamReader(bodyInputStream));
-          String line;
-          StringBuffer sb = new StringBuffer();
-          while ((line = rdr.readLine()) != null) {
-            sb.append(line);
-          }
-          if (huc.getContentType().length() > 0) {
-        	  response.setContentType(huc.getContentType());
-          } else {
-        	  response.setContentType("application/rdf+xml");
-          }
-          out.println(sb.toString());
-          */
+          out.println("Insert of new resource successfull!");
+          out.close();
         }
 
         huc.disconnect();
