@@ -66,6 +66,7 @@ public class Form2SparqlUpdateServlet extends HttpServlet {
         if (code >= huc.HTTP_OK && code < huc.HTTP_MULT_CHOICE) {
 
           //TODO Great success! Let the user now!
+          response.setContentType("text/html");
           out.println("Insert of new resource successfull!");
           out.println("<a href=\"index.html\">Go back to search</a>");
           out.close();
