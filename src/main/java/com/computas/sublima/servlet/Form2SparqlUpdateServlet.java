@@ -67,6 +67,7 @@ public class Form2SparqlUpdateServlet extends HttpServlet {
 
           //TODO Great success! Let the user now!
           out.println("Insert of new resource successfull!");
+          out.println("<a href=\"index.html\">Go back to search</a>");
           out.close();
         }
 
