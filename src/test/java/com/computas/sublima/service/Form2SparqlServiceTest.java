@@ -208,5 +208,11 @@ public class Form2SparqlServiceTest extends TestCase {
 		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
  }	
 
-
+/*  @Test(expected=IOException.class)
+  public void testIOException() {
+	  testMap.put("foaf:name", new String[]{"Institute for Energy Technology"});
+	  testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
+	  String resultString = myService.convertForm2Sparul(testMap);
+  }
+*/    
 }

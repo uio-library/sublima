@@ -1,5 +1,6 @@
 package com.computas.sublima.service;
 
+import java.io.IOException;
 import com.computas.sublima.model.RDFObject;
 import org.apache.log4j.Logger;
 
@@ -185,7 +186,11 @@ public class Form2SparqlService {
     if (parameterMap.get("the-resource") != null) {
         subject = parameterMap.get("the-resource")[0];
         parameterMap.remove("the-resource");
-    } // else TODO: throw exception
+    } /*
+     	Is there any way to not be forced to catch the exception in the immediately calling code?
+    	else {
+    	throw new IOException("The subject is not given in the form of a 'the-resource' parameter.");
+    } */
 
     for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
     	RDFObject myRDFObject = new RDFObject(e.getValue()[0], language);
