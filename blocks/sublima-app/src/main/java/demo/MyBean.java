@@ -25,6 +25,7 @@ public class MyBean {
     }
 
     public String getMessage() {
-        return this.message;
+        return this.message + "do";
     }
+
 }
