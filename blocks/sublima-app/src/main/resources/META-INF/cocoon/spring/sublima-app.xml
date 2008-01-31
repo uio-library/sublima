@@ -12,4 +12,9 @@
      <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>   
   </bean>
   
+  <bean name="org.apache.cocoon.transformation.Transformer/navigation-facets"
+    class="com.computas.sublima.transform.NavigationAndFacetsTransformer">
+     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>   
+  </bean>
+  
 </beans>

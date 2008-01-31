@@ -30,6 +30,11 @@
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-apples-impl</artifactId>
     </dependency>
+	<dependency>
+	  <groupId>javax.servlet</groupId>
+	  <artifactId>servlet-api</artifactId>
+	  <scope>provided</scope>
+	</dependency>     
     
  	<dependency>
 	  <groupId>commons-httpclient</groupId>

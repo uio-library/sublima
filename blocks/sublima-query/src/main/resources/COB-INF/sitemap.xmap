@@ -7,8 +7,8 @@
 
   <map:pipelines>  
     <map:pipeline>
-      <map:match pattern="query">
-        <map:call function="com.computas.sublima.query.controller.Query"/>
+      <map:match pattern="sparql">
+        <map:call function="com.computas.sublima.query.controller.SparqlQuery"/>
       </map:match>
     </map:pipeline>
     

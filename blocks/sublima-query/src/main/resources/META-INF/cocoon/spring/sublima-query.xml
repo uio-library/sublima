@@ -21,8 +21,8 @@
     </property>
   </bean>
   
-  <bean name="com.computas.sublima.query.controller.Query" 
-    class="com.computas.sublima.query.controller.Query">
+  <bean name="com.computas.sublima.query.controller.SparqlQuery" 
+    class="com.computas.sublima.query.controller.SparqlQuery">
      <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>   
   </bean>
   

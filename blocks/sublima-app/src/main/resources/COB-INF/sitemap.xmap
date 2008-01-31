@@ -39,7 +39,8 @@
     <map:pipeline>
       <map:match pattern="navigation-and-facets">
         <map:generate src="service-consumer:"/>
-        
+        <map:transform src="transform/navigation-and-facets.xslt"/>
+        <map:transform type="navigation-facets"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

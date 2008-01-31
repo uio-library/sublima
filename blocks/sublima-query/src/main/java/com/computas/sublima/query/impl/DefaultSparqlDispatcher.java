@@ -16,16 +16,17 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 
 	private Settings cocoonSettings;
 
-	public Object query() {
+	public Object query(String query) {
 		String result = null;
 		try {
 			String url = cocoonSettings
 					.getProperty("com.computas.sublima.query.joseki.endpoint");
 
-			URL u = new URL(url
-					+ "?query="
-					+ URLEncoder.encode("DESCRIBE <http://the-jet.com/>",
-							"UTF-8"));
+			// query = "DESCRIBE <http://the-jet.com/>";
+			
+			
+			
+			URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
 
 			HttpURLConnection con = (HttpURLConnection) u.openConnection();
 
