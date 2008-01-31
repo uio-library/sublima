@@ -3,15 +3,21 @@
  xsi:schemaLocation="http://apache.org/cocoon/sitemap/1.0 http://cocoon.apache.org/schema/sitemap/cocoon-sitemap-1.0.xsd"
  xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:flow language="javascript"/>
+  <map:flow language="spring-apples"/>
 
   <map:pipelines>
-    <map:pipeline>
- 
-      <map:match pattern="query">
-        <map:call function="query"/>
-      </map:match>
 
+    <map:pipeline>
+      <map:match pattern="search">
+        <map:call function="com.computas.sublima.query.controller.Search"/>
+      </map:match>
+    </map:pipeline>
+
+  
+    <map:pipeline>
+      <map:match pattern="query">
+        <map:call function="com.computas.sublima.query.controller.Query"/>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline internal-only="true">

@@ -6,6 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                            http://cocoon.apache.org/schema/pipeline http://cocoon.apache.org/schema/pipeline/cocoon-pipeline-1.0.xsd"
        default-init-method="init">
+       
   <bean id="com.computas.sublima.query.SparqlDispatcher" class="com.computas.sublima.query.impl.DefaultSparqlDispatcher">
     <property name="cocoonSettings" ref="org.apache.cocoon.configuration.Settings"/>
   </bean>
@@ -19,4 +20,10 @@
       </props>
     </property>
   </bean>
+  
+  <bean name="com.computas.sublima.query.controller.Query" 
+    class="com.computas.sublima.query.controller.Query">
+     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>   
+  </bean>
+  
 </beans>
