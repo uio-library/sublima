@@ -30,6 +30,34 @@
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-flowscript-impl</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.joseki</groupId>
+      <artifactId>joseki</artifactId>    
+    </dependency>
+    <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-core</artifactId>
+        </dependency>    
+       <dependency>  
+    	  <groupId>org.slf4j</groupId>
+    	  <artifactId>slf4j-log4j12</artifactId>
+    	  <scope>test</scope>
+       </dependency>
+     <dependency>
+        <groupId>com.hp.hpl.jena</groupId>
+        <artifactId>jena</artifactId>
+        <scope>compile</scope>
+     </dependency>
+     <dependency>
+        <groupId>com.hp.hpl.jena</groupId>
+        <artifactId>arq</artifactId>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <scope>compile</scope>
+      </dependency>
   </dependencies>
 
 </project>

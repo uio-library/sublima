@@ -26,7 +26,7 @@
       <plugin>
         <groupId>org.apache.cocoon</groupId>
         <artifactId>cocoon-maven-plugin</artifactId>
-        <executions>
+        <!--executions>
           <execution>
             <id>rcl</id>
             <phase>compile</phase>
@@ -34,7 +34,7 @@
               <goal>rcl</goal>
             </goals>
           </execution>
-        </executions>
+        </executions-->
       </plugin>
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
