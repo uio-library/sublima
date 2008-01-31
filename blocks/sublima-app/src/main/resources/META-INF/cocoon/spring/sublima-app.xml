@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id: servlet-service.xml 578865 2007-09-24 16:09:46Z reinhard $ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:pipeline="http://cocoon.apache.org/schema/pipeline"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://cocoon.apache.org/schema/pipeline http://cocoon.apache.org/schema/pipeline/cocoon-pipeline-1.0.xsd"
+       default-init-method="init">
+  
+  <bean name="com.computas.sublima.app.controller.Search" 
+    class="com.computas.sublima.app.controller.Search">
+     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>   
+  </bean>
+  
+</beans>
