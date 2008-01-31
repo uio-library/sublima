@@ -30,6 +30,12 @@
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-flowscript-impl</artifactId>
     </dependency>
+    
+ 	<dependency>
+	  <groupId>commons-httpclient</groupId>
+	  <artifactId>commons-httpclient</artifactId>
+	</dependency>   
+    
     <dependency>
       <groupId>org.joseki</groupId>
       <artifactId>joseki</artifactId>    
