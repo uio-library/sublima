@@ -17,6 +17,8 @@ import com.computas.sublima.query.SparqlDispatcher;
 public class NavigationAndFacetsTransformer extends AbstractTransformer {
 
 	private SparqlDispatcher sparqlDispatcher;
+	
+	private String myVariable;
 
 	public void setup(SourceResolver resolver, Map objectModel, String src,
 			Parameters par) throws ProcessingException, SAXException,
@@ -31,6 +33,7 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
 			super.startElement(uri, "bar", "bar", a);
 			return;
 		}
+		myVariable = "foo";
 		super.startElement(uri, loc, raw, a);
 	}
 	

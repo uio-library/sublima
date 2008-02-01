@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 
 import com.computas.sublima.app.Form2SparqlService;
+import com.computas.sublima.app.filter.AuthenticationFilter;
 import com.computas.sublima.query.SparqlDispatcher;
 
 public class Search implements StatelessAppleController {
@@ -21,7 +20,6 @@ public class Search implements StatelessAppleController {
 
 	@SuppressWarnings("unchecked")
 	public void process(AppleRequest req, AppleResponse res) throws Exception {
-
 		// the initial search page
 		String mode = req.getSitemapParameter("mode");
 		if (!"search-result".equalsIgnoreCase(mode)) {
@@ -50,7 +48,7 @@ public class Search implements StatelessAppleController {
 
 		// FIXME hard-wire the query for testing!!!
 		sparqlQuery = "DESCRIBE <http://the-jet.com/> <http://sublima.computas.com/topic-instance/Jet>";
-		
+
 		Object queryResult = sparqlDispatcher.query(sparqlQuery);
 		Map<String, Object> bizData = new HashMap<String, Object>();
 		bizData.put("result-list", queryResult);

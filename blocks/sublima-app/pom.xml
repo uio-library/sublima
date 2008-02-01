@@ -19,6 +19,10 @@
       <groupId>com.computas.sublima</groupId>
       <artifactId>sublima-query</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.computas.sublima</groupId>
+      <artifactId>sublima-skin</artifactId>
+    </dependency>
   
     <!-- Cocooon -->
     <dependency>

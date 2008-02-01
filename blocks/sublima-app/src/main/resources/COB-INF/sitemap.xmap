@@ -31,7 +31,7 @@
         </map:transform>
         <!-- apply styling -->
         <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:/styling"/>
+          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
         </map:serialize>
       </map:match>
     </map:pipeline>  
@@ -41,14 +41,6 @@
         <map:generate src="service-consumer:"/>
         <map:transform src="transform/navigation-and-facets.xslt"/>
         <map:transform type="navigation-facets"/>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-    
-    <map:pipeline>
-      <map:match pattern="styling">
-        <map:generate src="service-consumer:"/>
-        
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
