@@ -34,11 +34,21 @@
   </build>
 
   <dependencies>
-    <!--dependency>
+    <dependency>
       <groupId>com.computas.sublima</groupId>
-      <artifactId>[the artifact id of the block to be mounted]</artifactId>
+      <artifactId>sublima-app</artifactId>
       <version>1.0-SNAPSHOT</version>
-    </dependency-->
+    </dependency>    
+    <dependency>
+      <groupId>com.computas.sublima</groupId>
+      <artifactId>sublima-query</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.computas.sublima</groupId>
+      <artifactId>sublima-skin</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>        
   </dependencies>
 
 </project>
