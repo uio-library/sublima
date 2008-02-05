@@ -115,10 +115,8 @@ public class Form2SparqlService {
 		StringBuffer n3Buffer = new StringBuffer();
 		String[] keys = key.split("/");
 		Boolean optional = false;
-		for (String value : values) { // TODO low-pri: Optimize to
-			// comma-separate values.
-			String var = "?resource "; // The first SPARQL variable will always
-			// be resource
+		for (String value : values) { // TODO low-pri: Optimize to comma-separate values.
+			String var = "?resource "; // The first SPARQL variable will always be resource
 			int j = 0;
 			for (String qname : keys) {
 				j++;

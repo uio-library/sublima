@@ -35,5 +35,8 @@
       <priority value="${org.apache.cocoon.log4j.loglevel}"/>
       <appender-ref ref="COCOON_DEFAULT" />
     </root>
-    
+    <logger name="com.computas.sublima">
+      <level value="trace"/> 
+      <appender-ref ref="COCOON_DEFAULT" />
+    </logger>
 </log4j:configuration>

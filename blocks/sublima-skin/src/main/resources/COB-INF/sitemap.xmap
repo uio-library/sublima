@@ -13,7 +13,7 @@
     <map:pipeline>
       <map:match pattern="sublima-styling">
         <map:generate src="service-consumer:"/>
-        <map:transform src="transform/sublima-styling.xslt"/>
+        <!-- map:transform src="transform/sublima-styling.xslt"/ -->
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

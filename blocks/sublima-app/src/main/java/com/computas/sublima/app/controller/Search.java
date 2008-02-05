@@ -14,9 +14,13 @@ import com.computas.sublima.app.Form2SparqlService;
 import com.computas.sublima.app.filter.AuthenticationFilter;
 import com.computas.sublima.query.SparqlDispatcher;
 
+import org.apache.log4j.Logger;
+
 public class Search implements StatelessAppleController {
 
 	private SparqlDispatcher sparqlDispatcher;
+
+    	private static Logger logger = Logger.getLogger(Search.class);
 
 	@SuppressWarnings("unchecked")
 	public void process(AppleRequest req, AppleResponse res) throws Exception {
@@ -45,10 +49,12 @@ public class Search implements StatelessAppleController {
 		} else {
 			res.sendStatus(400);
 		}
+		
 
 		// FIXME hard-wire the query for testing!!!
-		sparqlQuery = "DESCRIBE <http://the-jet.com/> <http://sublima.computas.com/topic-instance/Jet>";
-
+		//		sparqlQuery = "DESCRIBE <http://the-jet.com/> <http://sublima.computas.com/topic-instance/Jet>";
+		
+		logger.trace("SPARQL query sent to dispatcher: " + sparqlQuery);
 		Object queryResult = sparqlDispatcher.query(sparqlQuery);
 		Map<String, Object> bizData = new HashMap<String, Object>();
 		bizData.put("result-list", queryResult);
