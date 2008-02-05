@@ -4,10 +4,26 @@
   <xsl:template match="/">
     <html>
       <head>
-        <title>foo</title>
+        <title>Detektor</title>
       </head>
       <body>
-        some output
+        <div id="header"></div>
+
+        <div id="container">
+          <div id="results" class="column">
+           <xsl:value-of select="page/result-list"/>
+          </div>
+
+          <div id="facets" class="column">
+            <xsl:value-of select="page/facets"/>
+          </div>
+
+          <div id="navigation" class="column">
+            <xsl:value-of select="page/navigation"/>
+          </div>
+        </div>
+
+        <div id="footer"></div>
       </body>
     </html>
   </xsl:template>
