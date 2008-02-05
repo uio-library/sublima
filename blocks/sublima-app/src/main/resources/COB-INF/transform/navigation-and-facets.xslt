@@ -6,7 +6,6 @@
       <xsl:apply-templates select="result-list"/>
       <xsl:apply-templates select="result-list" mode="navigation"/>
       <xsl:apply-templates select="result-list" mode="facets"/>
-      <foo>blah</foo>
     </xsl:copy>
   </xsl:template>
 
@@ -20,13 +19,11 @@
   
   <xsl:template match="result-list" mode="navigation">
     <navigation>
-     something goes in here
     </navigation>
   </xsl:template>
   
   <xsl:template match="result-list" mode="facets">
     <facets>
-      <facet>Jets</facet>
     </facets>  
   </xsl:template>
 
