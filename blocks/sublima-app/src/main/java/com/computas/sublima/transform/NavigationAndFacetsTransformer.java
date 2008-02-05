@@ -18,8 +18,6 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
 
 	private SparqlDispatcher sparqlDispatcher;
 	
-	private String myVariable;
-
 	public void setup(SourceResolver resolver, Map objectModel, String src,
 			Parameters par) throws ProcessingException, SAXException,
 			IOException {
@@ -29,26 +27,33 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
 	@Override
 	public void startElement(String uri, String loc, String raw, Attributes a)
 			throws SAXException {
-		if ("foo".equals(loc)) {
-			super.startElement(uri, "bar", "bar", a);
-			return;
+
+        if ("navigation".equals(loc)) {
+			super.startElement(uri, loc, raw, a);
+
+            //todo Use the existing SPARQL resultset and create a query that returns the navigation elements
+            String result = (String) this.sparqlDispatcher.query("DESCRIBE <http://www.the-jet.com/>");
+			StringXMLizable stringXMLizable = new StringXMLizable(result);
+			stringXMLizable.toSAX(new IncludeXMLConsumer(this.contentHandler));
+            return;
 		}
-		myVariable = "foo";
-		super.startElement(uri, loc, raw, a);
+
+        if ("facets".equals(loc)) {
+			super.startElement(uri, loc, raw, a);
+
+            //todo Use the existing SPARQL resultset and create a query that returns the facets
+            String result = (String) this.sparqlDispatcher.query("DESCRIBE <http://www.the-jet.com/>");
+			StringXMLizable stringXMLizable = new StringXMLizable(result);
+			stringXMLizable.toSAX(new IncludeXMLConsumer(this.contentHandler));
+            return;
+		}
+
+        super.startElement(uri, loc, raw, a);
 	}
 	
 	@Override
 	public void endElement(String uri, String loc, String raw) throws SAXException {
-		if ("foo".equals(loc)) {
-			super.endElement(uri, "bar", "bar");
-			
-			// demonstrate how a string can be streamed as SAX events
-			String result = "<abc/>";
-			// result = (String) this.sparqlDispatcher.query("foo");
-			StringXMLizable stringXMLizable = new StringXMLizable(result);			
-			stringXMLizable.toSAX(new IncludeXMLConsumer(this.contentHandler));
-			return;
-		}
+
 		super.endElement(uri, loc, raw);
 	}
 
