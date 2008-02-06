@@ -33,19 +33,15 @@ public class Search implements StatelessAppleController {
 
 		// sending the result
 
-		// Get all parameteres from the HTML form as Map
-		Map<String, String[]> parameterMap = new TreeMap<String, String[]>(
-				createParametersMap(req.getCocoonRequest()));
-
 		String sparqlQuery = null;
 		// Check for magic prefixes
-		if (parameterMap.get("prefix") != null) {
+		if (req.getParameterValues("prefix") != null) {
 			// Calls the Form2SPARQL service with the parameterMap which returns
 			// a SPARQL as String
 			Form2SparqlService form2SparqlService = new Form2SparqlService(
-					parameterMap.get("prefix"));
-			parameterMap.remove("prefix"); // The prefixes are magic variables
-			sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
+					req.getParameterValues("prefix"));
+			req.removeAttribute("prefix"); // The prefixes are magic variables
+			sparqlQuery = form2SparqlService.convertForm2Sparql(req);
 		} else {
 			res.sendStatus(400);
 		}
@@ -66,14 +62,6 @@ public class Search implements StatelessAppleController {
 		this.sparqlDispatcher = sparqlDispatcher;
 	}
 
-	private Map<String, String[]> createParametersMap(Request request) {
-		Map<String, String[]> result = new HashMap<String, String[]>();
-		Enumeration parameterNames = request.getParameterNames();
-		while (parameterNames.hasMoreElements()) {
-			String paramName = (String) parameterNames.nextElement();
-			result.put(paramName, request.getParameterValues(paramName));
-		}
-		return result;
-	}
+
 
 }
