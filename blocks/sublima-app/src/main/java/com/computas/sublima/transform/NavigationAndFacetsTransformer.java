@@ -27,7 +27,7 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
   public void startElement(String uri, String loc, String raw, Attributes a)
           throws SAXException {
 
-    if ("dc:subject".equals(raw)) {
+    if ("dct:subject".equals(raw)) {
       subject = "<" + a.getValue("rdf:resource") + ">";
     }
 
