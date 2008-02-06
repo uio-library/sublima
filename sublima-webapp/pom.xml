@@ -23,7 +23,7 @@
           <connectors>
             <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
               <port>8888</port>
-              <maxIdleTime>30000</maxIdleTime>
+              <maxIdleTime>3600000</maxIdleTime>
             </connector>
           </connectors>
           <webAppSourceDirectory>${project.build.directory}/${pom.artifactId}-${pom.version}</webAppSourceDirectory>
