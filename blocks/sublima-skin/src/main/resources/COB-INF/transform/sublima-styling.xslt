@@ -7,23 +7,29 @@
         <title>Detektor</title>
       </head>
       <body>
-        <div id="header"></div>
+        <div id="header">Detektor demo</div>
 
         <div id="container">
           <div id="results" class="column">
+            Søkeresultater
+
            <xsl:value-of select="page/result-list"/>
           </div>
 
           <div id="facets" class="column">
+            Filtrering
             <xsl:value-of select="page/facets"/>
           </div>
 
           <div id="navigation" class="column">
+            Navigering
             <xsl:value-of select="page/navigation"/>
           </div>
         </div>
 
-        <div id="footer"></div>
+        <div id="footer">
+          ABM Utvikling og Computas AS, 2008
+        </div>
       </body>
     </html>
   </xsl:template>
