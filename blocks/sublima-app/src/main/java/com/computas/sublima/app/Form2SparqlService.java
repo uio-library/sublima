@@ -7,14 +7,11 @@ import org.apache.log4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Enumeration;
 import java.util.Map;
-
-import org.apache.cocoon.environment.Request;
 
 /**
  * A service class with methods to create a SPARQL DESCRIBE query from a
- * Request object. The constructor takes a mandatory array of prefix
+ * key-value structure. The constructor takes a mandatory array of prefix
  * declarations, on the form
  * 
  * <pre>
@@ -124,23 +121,17 @@ public class Form2SparqlService {
 			for (String qname : keys) {
 				j++;
 				n3Buffer.append("\n" + var + qname + " ");
-				System.out.println("Value: " + value);
-				if ("".equals(value)) { // Then, it is a block we don't know is
+				if ("".equals(value)) { //value == "") { // Then, it is a block we don't know is
 					// there, thus OPTIONAL
-				    System.out.println("Value is empty");
 					optional = true;
-				}
-				if (value == null) {
-				    System.out.println("Value is null");
-				}
-				if (value == " ") {
-				    System.out.println("Value is space");
 				}
 				if (!subjectVarList.contains(var)) {
 					subjectVarList.add(var);
 				}
 
-				if (keys.length == j && ! "".equals(value)) { // Then we are on the actual form input value
+				if (keys.length == j && !"".equals(value)) { //value != "") { // Then we are on the
+					// actual form input
+					// value
 					RDFObject myRDFObject = new RDFObject(value, language);
 					n3Buffer.append(myRDFObject.toN3());
 				} else { // Then we have to connect the object of this
@@ -167,11 +158,11 @@ public class Form2SparqlService {
 	 * above described key-value-pairs, it may have a key
 	 * <tt>interface-language</tt> that holds the language of any literal.
 	 * 
-	 * @param request
-	 *            The request parameter data as a Request object.
+	 * @param parameterMap
+	 *            The data structure with the key-value-pairs.
 	 * @return A full SPARQL DESCRIBE query.
 	 */
-	public String convertForm2Sparql(Request request) {
+	public String convertForm2Sparql(Map<String, String[]> parameterMap) {
 
 		// Using StringBuffer, since regular String can cause performance issues
 		// with large datasets
@@ -180,15 +171,13 @@ public class Form2SparqlService {
 		sparqlQueryBuffer.append(getPrefixString());
 		sparqlQueryBuffer.append("DESCRIBE ");
 
-		if (request.getParameterValues("interface-language") != null) {
-			setLanguage(request.getParameterValues("interface-language")[0]);
-			request.removeAttribute("interface-language");
+		if (parameterMap.get("interface-language") != null) {
+			setLanguage(parameterMap.get("interface-language")[0]);
+			parameterMap.remove("interface-language");
 		}
 
-		Enumeration enumeration = request.getParameterNames();		
-		while (enumeration.hasMoreElements()) {
-			String key = (String) enumeration.nextElement();
-			String tmpn3 = convertFormField2N3(key, request.getParameterValues(key));
+		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
+			String tmpn3 = convertFormField2N3(e.getKey(), e.getValue());
 			if (tmpn3.startsWith("\nOPTIONAL")) {
 				n3Buffer.append(tmpn3); // OPTIONALs have to go after
 			} else {
@@ -216,13 +205,13 @@ public class Form2SparqlService {
 	 * <tt>the-resource</tt> Like the DESCRIBE method, it may have a key
 	 * <tt>interface-language</tt> that holds the language of any literal.
 	 * 
-	 * @param request
-	 *            The request parameter data as a Request object.
+	 * @param parameterMap
+	 *            The data structure with the key-value-pairs.
 	 * @return A full SPARQL INSERT query.
 	 * @throws IOException
 	 */
 
-	public String convertForm2Sparul(Request request)
+	public String convertForm2Sparul(Map<String, String[]> parameterMap)
 			throws IOException {
 		// TODO Do this with an proper INSERT/UPDATE/MODIFY
 		// Using StringBuffer, since regular String can cause performance issues
@@ -232,26 +221,23 @@ public class Form2SparqlService {
 		sparqlQueryBuffer.append("INSERT {\n");
 
 		String language = new String();
-		if (request.getParameterValues("interface-language") != null) {
-			language = request.getParameterValues("interface-language")[0];
-			request.removeAttribute("interface-language");
+		if (parameterMap.get("interface-language") != null) {
+			language = parameterMap.get("interface-language")[0];
+			parameterMap.remove("interface-language");
 		}
 		String subject = new String();
-		if (request.getParameterValues("the-resource") != null) {
-			subject = request.getParameterValues("the-resource")[0];
-			request.removeAttribute("the-resource");
+		if (parameterMap.get("the-resource") != null) {
+			subject = parameterMap.get("the-resource")[0];
+			parameterMap.remove("the-resource");
 		} else {
 			throw new IOException(
 					"The subject is not given in the form of a 'the-resource' parameter.");
 		}
 
-		Enumeration enumeration = request.getParameterNames();
-		while(enumeration.hasMoreElements()) {
-			String key = (String) enumeration.nextElement();
-			String[] values = request.getParameterValues(key);
-			if ((values != null) && (! "".equals(values[0]))) {
-				RDFObject myRDFObject = new RDFObject(values[0], language);
-				sparqlQueryBuffer.append("<" + subject + "> " + key
+		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
+			if ((e.getValue() != null) && (e.getValue()[0] != "")) {
+				RDFObject myRDFObject = new RDFObject(e.getValue()[0], language);
+				sparqlQueryBuffer.append("<" + subject + "> " + e.getKey()
 						+ " " + myRDFObject.toN3() + "\n");
 			}
 		}
