@@ -125,7 +125,7 @@ public class Form2SparqlService {
 				j++;
 				n3Buffer.append("\n" + var + qname + " ");
 				System.out.println("Value: " + value);
-				if (value == "") { // Then, it is a block we don't know is
+				if ("".equals(value)) { // Then, it is a block we don't know is
 					// there, thus OPTIONAL
 				    System.out.println("Value is empty");
 					optional = true;
@@ -140,9 +140,7 @@ public class Form2SparqlService {
 					subjectVarList.add(var);
 				}
 
-				if (keys.length == j && value != "") { // Then we are on the
-					// actual form input
-					// value
+				if (keys.length == j && ! "".equals(value)) { // Then we are on the actual form input value
 					RDFObject myRDFObject = new RDFObject(value, language);
 					n3Buffer.append(myRDFObject.toN3());
 				} else { // Then we have to connect the object of this
@@ -251,7 +249,7 @@ public class Form2SparqlService {
 		while(enumeration.hasMoreElements()) {
 			String key = (String) enumeration.nextElement();
 			String[] values = request.getParameterValues(key);
-			if ((values != null) && (values[0] != "")) {
+			if ((values != null) && (! "".equals(values[0]))) {
 				RDFObject myRDFObject = new RDFObject(values[0], language);
 				sparqlQueryBuffer.append("<" + subject + "> " + key
 						+ " " + myRDFObject.toN3() + "\n");

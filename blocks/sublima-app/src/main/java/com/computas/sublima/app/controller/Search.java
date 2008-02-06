@@ -36,6 +36,7 @@ public class Search implements StatelessAppleController {
 		String sparqlQuery = null;
 		// Check for magic prefixes
 		Request request = req.getCocoonRequest();
+		System.out.println("FOO:"+request.getParameterValues("prefix"));
 		if (request.getParameterValues("prefix") != null) {
 			// Calls the Form2SPARQL service with the parameterMap which returns
 			// a SPARQL as String
