@@ -33,24 +33,26 @@ public class Search implements StatelessAppleController {
 
 		// sending the result
 
+		// Get all parameteres from the HTML form as Map
+		Map<String, String[]> parameterMap = new TreeMap<String, String[]>(
+				createParametersMap(req.getCocoonRequest()));
+
 		String sparqlQuery = null;
 		// Check for magic prefixes
-		Request request = req.getCocoonRequest();
-		System.out.println("FOO:"+request.getParameterValues("prefix"));
-		if (request.getParameterValues("prefix") != null) {
+		if (parameterMap.get("prefix") != null) {
 			// Calls the Form2SPARQL service with the parameterMap which returns
 			// a SPARQL as String
 			Form2SparqlService form2SparqlService = new Form2SparqlService(
-					request.getParameterValues("prefix"));
-			request.removeAttribute("prefix"); // The prefixes are magic variables
-			sparqlQuery = form2SparqlService.convertForm2Sparql(request);
+					parameterMap.get("prefix"));
+			parameterMap.remove("prefix"); // The prefixes are magic variables
+			sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
 		} else {
 			res.sendStatus(400);
 		}
 		
 
 		// FIXME hard-wire the query for testing!!!
-		//		sparqlQuery = "DESCRIBE <http://the-jet.com/> <http://sublima.computas.com/topic-instance/Jet>";
+				sparqlQuery = "DESCRIBE <http://the-jet.com/>";
 		
 		logger.trace("SPARQL query sent to dispatcher: " + sparqlQuery);
 		Object queryResult = sparqlDispatcher.query(sparqlQuery);
@@ -64,6 +66,14 @@ public class Search implements StatelessAppleController {
 		this.sparqlDispatcher = sparqlDispatcher;
 	}
 
-
+	private Map<String, String[]> createParametersMap(Request request) {
+		Map<String, String[]> result = new HashMap<String, String[]>();
+		Enumeration parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			String paramName = (String) parameterNames.nextElement();
+			result.put(paramName, request.getParameterValues(paramName));
+		}
+		return result;
+	}
 
 }
