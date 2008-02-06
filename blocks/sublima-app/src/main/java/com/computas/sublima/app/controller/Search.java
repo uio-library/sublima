@@ -35,13 +35,14 @@ public class Search implements StatelessAppleController {
 
 		String sparqlQuery = null;
 		// Check for magic prefixes
-		if (req.getParameterValues("prefix") != null) {
+		Request request = req.getCocoonRequest()
+		if (request.getParameterValues("prefix") != null) {
 			// Calls the Form2SPARQL service with the parameterMap which returns
 			// a SPARQL as String
 			Form2SparqlService form2SparqlService = new Form2SparqlService(
-					req.getParameterValues("prefix"));
-			req.removeAttribute("prefix"); // The prefixes are magic variables
-			sparqlQuery = form2SparqlService.convertForm2Sparql(req);
+					request.getParameterValues("prefix"));
+			request.removeAttribute("prefix"); // The prefixes are magic variables
+			sparqlQuery = form2SparqlService.convertForm2Sparql(request);
 		} else {
 			res.sendStatus(400);
 		}
