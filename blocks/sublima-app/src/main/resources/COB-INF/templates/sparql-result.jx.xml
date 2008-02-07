@@ -2,4 +2,10 @@
   <result-list>
     <jx:out value="#{result-list}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/>
   </result-list>
+
+  <navigation>
+  </navigation>
+
+  <facets>
+  </facets>
 </page>
