@@ -118,7 +118,8 @@ topic:WindEnergy
 
 :Airplane
       a       topic:Airplane ;
-      rdfs:label  "Fly"@no .
+      sub:synonym "Flymaskin"@no, "Aircraft"@en ;
+      rdfs:label  "Fly"@no, "Airplane"@en .
 
 :Jet  a       topic:Jet ; 
       :hasEngine :JetEngine ;
@@ -239,8 +240,8 @@ sub:classification
       a       topic:JetEngine ;
       sub:description "~motor reaksjonsmotor, turbojetmotor"@no ;
       :hasEnergySource :FosileEnergy ;
-      sub:synonym "Turbojetmotor" ;
-      rdfs:label  "Jetmotor"@no .
+      sub:synonym "Turbojetmotor"@no ;
+      rdfs:label  "Jetmotor"@no, "Jet Engine"@en .
 
 sub:misspelling
       a       owl:AnnotationProperty .

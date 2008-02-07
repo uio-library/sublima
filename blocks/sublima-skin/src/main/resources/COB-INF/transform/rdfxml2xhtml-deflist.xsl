@@ -23,16 +23,16 @@ xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
       <xsl:for-each select="rdf:Description"> <!-- The root node for each described resource -->
 	<dt>
 	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  <span style="font-size:small">Published by: 
-	    <xsl:variable name="uri" select="dct:publisher/@rdf:resource"/>
-	    <xsl:apply-templates select="../*[@rdf:about=$uri]" mode="external-link" />
-	    <xsl:apply-templates select="./dct:dateAccepted"/>
-	  </span>
+	  <xsl:text> is a </xsl:text>	  
+	  <xsl:apply-templates select="./dct:subject"/>
 	</dt>
 	<dd>
-	  <span style="color:red">
-	    <xsl:apply-templates select="./dct:subject"/>
-	  </span>
+	  <div style="font-size:small"><xsl:text>Published by: </xsl:text>
+	    <xsl:variable name="uri" select="dct:publisher/@rdf:resource"/>
+	    <xsl:apply-templates select="../*[@rdf:about=$uri]" mode="external-link" />
+	    <xsl:text> </xsl:text>
+	    <xsl:apply-templates select="./dct:dateAccepted"/>
+	  </div>
 	  <xsl:apply-templates select="./dct:description"/>
 	</dd>
       </xsl:for-each>

@@ -14,29 +14,34 @@
     <html>
       <head>
         <title>Detektor</title>
+	<link rel="stylesheet" type="text/css" href="http://detektor.deichman.no/stylesheet.css"/>
+	<link rel="stylesheet" type="text/css" href="/sublima-skin/my-css.css"/>
       </head>
       <body>
-        <div id="header">Detektor demo</div>
+        <h1 id="header">Detektor demo</h1>
 
         <div id="container">
-          <div id="results" class="column">
-            Søkeresultater
-           <xsl:apply-templates select="c:page/c:result-list/rdf:RDF"/>
+
+	  <div id="navigation" class="column">
+            <h2>Navigering</h2>
+            <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept"/>
           </div>
 
-          <div id="facets" class="column">
-            Filtrering
+	  <div id="results" class="column">
+	    <h2>Søkeresultater</h2>
+	    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF"/>
+          </div>
+
+         <div id="facets" class="column">
+            <h2>Filtrering</h2>
             <xsl:value-of select="c:page/c:facets"/>
           </div>
 
-          <div id="navigation" class="column">
-            Navigering
-            <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept"/>
-          </div>
+
         </div>
 
         <div id="footer">
-          ABM Utvikling og Computas AS, 2008
+          A Free Software Project supported by ABM Utvikling and Computas AS, 2008
         </div>
       </body>
     </html>
