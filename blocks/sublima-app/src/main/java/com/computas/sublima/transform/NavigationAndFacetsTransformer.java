@@ -27,8 +27,19 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
   public void startElement(String uri, String loc, String raw, Attributes a)
           throws SAXException {
 
-    if ("dct:subject".equals(raw)) {
-      subject = "<" + a.getValue("rdf:resource") + ">";
+    /**
+     * This checks that if the element starts with topic: then the subject is found at rdf:about
+     *
+     * ie.
+     *
+     * Search for Jet and the topic in the result set is defined by topic:Jet, since this will change we have to only
+     * look for "topic:".
+     *
+     * This can be done with SPARQL also. 
+     */
+
+    if (raw.startsWith("topic:")) { //("dct:subject".equals(raw)) {
+      subject = "<" + a.getValue("rdf:about") + ">";
     }
 
     if ("navigation".equals(loc)) {
