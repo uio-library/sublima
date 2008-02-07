@@ -1,4 +1,4 @@
-<page>
+<page xmlns="http://xmlns.computas.com/cocoon">
   <result-list>
     <jx:out value="#{result-list}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/>
   </result-list>
