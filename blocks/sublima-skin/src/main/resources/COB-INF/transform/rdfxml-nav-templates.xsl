@@ -26,10 +26,10 @@
 	  Synonym: <xsl:value-of select="skos:altLabel[@xml:lang=$interface-language]"/>
 	</p>
       </xsl:if>
-      <xsl:if test="skos:broader">
+      <xsl:if test="skos:broader/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
 	Broader: <xsl:apply-templates select="skos:broader/skos:Concept"/>
       </xsl:if>
-      <xsl:if test="skos:related">
+      <xsl:if test="skos:related/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
 	Related: <xsl:apply-templates select="skos:related/skos:Concept"/>
       </xsl:if>
     </div>

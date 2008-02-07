@@ -1,0 +1,66 @@
+# The information model, describing the relationship between the
+# vocabularies that we use. 
+
+# Issues addressed with this file:
+#  * https://jira.computas.no/browse/OKE-49
+
+# As of 2008-01-14, the DCMI took upon itself to define the ranges and
+# domains of the properties, which simplifies the model somewhat.
+
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix lingvoj: <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix sub: <http://xmlns.computas.com/sublima#> . 
+@prefix wdr: <http://www.w3.org/2007/05/powder#> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+
+dct:subject 		rdfs:range 	owl:Thing ;
+			a 		owl:ObjectProperty ;
+			rdfs:domain	sub:Resource .
+
+	
+dct:title		rdfs:range 	rdfs:Literal ;		
+			a 		owl:AnnotationProperty ;
+			rdfs:domain	sub:Resource .
+
+dct:description		rdfs:range	rdf:XMLLiteral ;
+			a 		owl:AnnotationProperty ;
+			rdfs:domain 	sub:Resource .
+
+dct:language		rdfs:range 	lingvoj:Lingvo ; # Many alternatives
+			a 		owl:ObjectProperty ;
+			rdfs:domain 	sub:Resource .
+
+dct:publisher		rdfs:range	foaf:Agent ;
+			a 		owl:ObjectProperty ;
+			rdfs:domain 	sub:Resource .
+
+dct:identifier		rdfs:range	sub:LocalURI ; 
+			a 		owl:ObjectProperty ;
+			a		owl:InverseFunctionalProperty ;	
+			rdfs:domain 	sub:Resource .
+
+dct:type		rdfs:range 	dct:DCMIType ;
+			a 		owl:ObjectProperty ;
+			rdfs:domain 	sub:Resource .
+
+dct:audience		a 		owl:ObjectProperty ;
+			rdfs:domain 	sub:Resource .
+
+dct:dateAccepted 	rdfs:range 	rdfs:Literal ; # Use xsd:dateTime
+			a 		owl:DatatypeProperty ;	
+			rdfs:domain 	sub:Resource .
+
+dct:dateSubmitted 	rdfs:range 	rdfs:Literal ; # Use xsd:dateTime	
+			a 		owl:DatatypeProperty ;	
+			rdfs:domain 	sub:Resource .
+
+wdr:describedBy		rdfs:range 	wdr:DR ;
+			a 		owl:ObjectProperty ;
+			rdfs:domain 	sub:Resource .
+

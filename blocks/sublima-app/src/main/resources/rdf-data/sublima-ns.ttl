@@ -1,0 +1,20 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sub: <http://xmlns.computas.com/sublima#> . 
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+
+<>	rdfs:comment "An ontology containing some simple properties and classes for use in the Sublima project." .
+
+
+sub:LocalURI		rdfs:subClassOf	sioc:Item ;
+			rdfs:comment	"The local URI assigned to a URI"@en.
+
+
+sub:committer		rdfs:range 	sioc:User ;
+			a 		owl:ObjectProperty ;
+			rdfs:domain	sub:Resource . 
+
+sub:Resource		a 		rdfs:Class;
+			rdfs:subClassOf	rdfs:Resource;
+			owl:unionOf	sioc:Item,sioc:Site .

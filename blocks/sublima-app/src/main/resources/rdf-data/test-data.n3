@@ -1,0 +1,195 @@
+# Test data 
+
+# Issues addressed with this file:
+#  * https://jira.computas.no/browse/OKE-45
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix lingvoj: <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix sub: <http://xmlns.computas.com/sublima#> .
+@prefix wdr: <http://www.w3.org/2007/05/powder#> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://the-jet.com/> 	dct:title 	"Cirrus Personal Jet"@en ;
+			dct:description	"A Very Light Jet Aircraft under construction."@en ;
+			dct:subject	<http://sublima.computas.com/topic-instance/Jet>;
+			dct:language	<http://www.lingvoj.org/lang/en>;
+			dct:publisher 	<http://sublima.computas.com/agent/cirrus-design> ;
+			dct:identifier	<http://sublima.computas.com/resource/cirrus-personal-jet> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/all>;
+			dct:dateAccepted "2007-12-05T14:23:00"^^xsd:dateTime;
+			dct:dateSubmitted "2007-12-05T14:24:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/approved>;
+			sub:committer	<http://sublima.computas.com/user/kjetil>.
+
+<http://sublima.computas.com/agent/cirrus-design> a foaf:Organization;
+			foaf:name 	"Cirrus Design Corporation"@en;
+			foaf:homepage	<http://www.cirrusdesign.com/>.
+
+
+<http://www.velocityaircraft.com/>	dct:title 	"Velocity Aircraft"@en ;
+			dct:description	"A four place canard pusher experimental airplane kit."@en ;
+			dct:subject	<http://sublima.computas.com/topic-instance/Airplane>;
+			dct:language	<http://www.lingvoj.org/lang/en>;
+			dct:publisher 	<http://sublima.computas.com/agent/velocity-inc> ;
+			dct:identifier	<http://sublima.computas.com/resource/velocityaircraft> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/all>;
+			dct:dateSubmitted "2007-12-06T11:04:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/suggested>.
+
+
+<http://sublima.computas.com/agent/velocity-inc> a foaf:Organization;
+			foaf:name 	"Velocity Inc."@en;
+			foaf:homepage	<http://www.velocityaircraft.com/about.html>.
+
+
+<http://www.austinev.org/evalbum/659> 	dct:title 	"1997 Peugeot 106 Electric"@en ;
+			dct:description	"An electric car owned by Joeri de Ridder"@en ;
+			dct:subject	<http://sublima.computas.com/topic-instance/ElectricalCar>;
+			dct:language	<http://www.lingvoj.org/lang/en>;
+			dct:publisher 	<http://sublima.computas.com/agent/joeri-de-ridder> ;
+			dct:identifier	<http://sublima.computas.com/resource/peugeot-106> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/all>;
+			dct:dateAccepted "2007-12-06T11:22:00"^^xsd:dateTime;
+			dct:dateSubmitted "2007-12-06T11:21:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/evaluation>;
+			sub:committer	<http://sublima.computas.com/user/nils>.
+
+<http://sublima.computas.com/agent/joeri-de-ridder> a foaf:Person;
+			foaf:name 	"Joeri de Ridder"@en.
+
+
+<http://www.horizonfuelcell.com/store/h_cell.htm>	dct:title 	"H-cell RC Hobby Integration Kit"@en ;
+			dct:description	"A hobby hydrogen fuel cell product."@en ;
+			dct:subject	<http://sublima.computas.com/topic-instance/FuelCell>;
+			dct:language	<http://www.lingvoj.org/lang/en>;
+			dct:publisher 	<http://sublima.computas.com/agent/horizon-fuel-cell-tech> ;
+			dct:identifier	<http://sublima.computas.com/resource/h-cell-rc-fc> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/pupils>;
+			dct:dateAccepted "2007-12-06T11:28:00"^^xsd:dateTime;
+			dct:dateSubmitted "2007-12-06T11:08:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/approved>;
+			sub:committer	<http://sublima.computas.com/user/kjetil>.
+
+<http://sublima.computas.com/agent/horizon-fuel-cell-tech> a foaf:Organization;
+			foaf:name 	"Horizon Fuel Cell Technologies"@en;
+			foaf:homepage	<http://www.horizonfuelcell.com/about_1.htm>.
+
+
+<http://www.pwc.ca/en/3_0/3_0_1/3_0_1_6_1.asp>	dct:title 	"Pratt & Whitney Canada PW600"@en ;
+			dct:description	"A small turbofan jet engine."@en ;
+			dct:subject	<http://sublima.computas.com/topic-instance/JetEngine>;
+			dct:language	<http://www.lingvoj.org/lang/en>;
+			dct:publisher 	<http://sublima.computas.com/agent/pratt-whitney-canada> ;
+			dct:identifier	<http://sublima.computas.com/resource/pwc-pw600-jet> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/all>;
+			dct:dateSubmitted "2007-12-06T12:42:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/suggested>.
+
+
+<http://sublima.computas.com/agent/pratt-whitney-canada> a foaf:Organization;
+			foaf:name 	"Pratt & Whitney Canada."@en;
+			foaf:homepage	<http://www.pwc.ca/en/0_0/0_0_1.asp>.
+
+<http://www.ife.no/hovedfagomrader/energi_miljo/solenergi> 	dct:title 	"Solenergi-området ved Institutt for Energiteknikk"@no ;
+			dct:description	"En beskrivelse av aktiviteten rundt solenergi ved Institutt for Energiteknikk"@no ;
+			dct:subject	<http://sublima.computas.com/topic-instance/SunEnergy>;
+			dct:language	<http://www.lingvoj.org/lang/no>;
+			dct:publisher 	<http://sublima.computas.com/agent/ife> ;
+			dct:identifier	<http://sublima.computas.com/resource/solenergi-ife> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/students>;
+			dct:dateAccepted "2007-12-06T13:53:00"^^xsd:dateTime;
+			dct:dateSubmitted "2007-12-05T12:54:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/approved>;
+			sub:committer	<http://sublima.computas.com/user/kjetil>.
+
+<http://sublima.computas.com/agent/ife> a foaf:Organization;
+			foaf:name 	"Institutt for Energiteknikk"@no;
+			foaf:homepage	<http://www.ife.no/>.
+
+
+<http://www.pionerbat.no/modeller/pioner10/index.html> 	dct:title 	"Pioner 10"@no ;
+			dct:description	"En 10-fots åpen båt"@no ;
+			dct:subject	<http://sublima.computas.com/topic-instance/Boat>;
+			dct:language	<http://www.lingvoj.org/lang/no>;
+			dct:publisher 	<http://sublima.computas.com/agent/pioner> ;
+			dct:identifier	<http://sublima.computas.com/resource/pioner-10> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/all>;
+			dct:dateAccepted "2007-12-06T13:16:00"^^xsd:dateTime;
+			dct:dateSubmitted "2007-12-06T12:54:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/approved>;
+			sub:committer	<http://sublima.computas.com/user/kjetil>.
+
+<http://sublima.computas.com/agent/pioner> a foaf:Organization;
+			foaf:name 	"West System Norge"@no;
+			foaf:homepage	<http://www.westsystem.no/>.
+
+<http://www.terrawind.com/spyder.htm> 	dct:title 	"Hydra Spyder"@en ;
+			dct:description	"An amphibious sports car."@en ;
+			dct:subject	<http://sublima.computas.com/topic-instance/Amfibium>;
+			dct:language	<http://www.lingvoj.org/lang/en>;
+			dct:publisher 	<http://sublima.computas.com/agent/terrawind> ;
+			dct:identifier	<http://sublima.computas.com/resource/hydra-spyder> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/all>;
+			dct:dateSubmitted "2007-12-05T14:24:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/suggested>.
+
+
+<http://sublima.computas.com/agent/terrawind> a foaf:Organization;
+			foaf:name 	"Cool Amphibious Manufacturers International"@en;
+			foaf:homepage	<http://www.terrawind.com/>.
+
+
+<http://www.atmosphere.mpg.de/enid/2__Hull_i_ozonlaget/-_hullet_i_ozonlaget_4in.html> 	dct:title 	"Klorfluorkarboner og hull i ozon-laget"@no ;
+			dct:description	"En artikkel om klorfluorkarboner (KFK) og hull i ozon-laget."@no ;
+			dct:subject	<http://sublima.computas.com/topic-instance/CFC>;
+			dct:language	<http://www.lingvoj.org/lang/no>;
+			dct:publisher 	<http://sublima.computas.com/agent/max-planck> ;
+			dct:identifier	<http://sublima.computas.com/resource/kfk-hull> ;
+			dct:type		<http://purl.org/dc/dcmitype/Text>;
+			dct:audience	<http://sublima.computas.com/audience/pupils>;
+			dct:dateAccepted "2007-12-06T14:26:00"^^xsd:dateTime;
+			dct:dateSubmitted "2007-12-06T13:54:00"^^xsd:dateTime;
+			wdr:describedBy	<http://sublima.computas.com/status/approved>;
+			sub:committer	<http://sublima.computas.com/user/kjetil>.
+
+<http://sublima.computas.com/agent/max-planck> a foaf:Organization;
+			foaf:name 	"Max-Planck-Institut für Chemie"@de;
+			foaf:homepage	<http://www.mpch-mainz.mpg.de/>.
+
+
+<http://sublima.computas.com/user/kjetil> a sioc:User;
+					sioc:account_of <http://www.kjetil.kjernsmo.net/foaf#me>;
+					rdfs:label "Kjetil Kjernsmo"@en.
+
+
+<http://sublima.computas.com/user/nils> a sioc:User;
+					rdfs:label "Nils Torgeir Wetterhus"@en.
+
+
+
+<http://sublima.computas.com/status/approved> rdfs:label "Approved"@en.
+<http://sublima.computas.com/status/suggested> rdfs:label "Suggested"@en.
+<http://sublima.computas.com/status/evaluation> rdfs:label "Under evaluation"@en.
+
+<http://sublima.computas.com/audience/all> a 		dct:AgentClass;
+					   rdfs:label	"Everyone loves this"@en.
+
+<http://sublima.computas.com/audience/pupils> a 		dct:AgentClass;
+					   rdfs:label	"For pupils in primary school"@en.
+
+<http://sublima.computas.com/audience/students> a 		dct:AgentClass;
+					   rdfs:label	"For students"@en.
