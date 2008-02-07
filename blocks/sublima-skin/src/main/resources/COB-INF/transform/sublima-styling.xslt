@@ -24,12 +24,12 @@
 
           <div id="facets" class="column">
             Filtrering
-            <xsl:value-of select="page/facets"/>
+            <xsl:value-of select="c:page/c:facets"/>
           </div>
 
           <div id="navigation" class="column">
             Navigering
-            <xsl:value-of select="page/navigation"/>
+            <xsl:value-of select="c:page/c:navigation"/>
           </div>
         </div>
 
