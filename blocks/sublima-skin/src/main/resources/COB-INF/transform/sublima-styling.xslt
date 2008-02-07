@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet 
+    xmlns:c="http://xmlns.computas.com/cocoon"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+    xmlns:dct="http://purl.org/dc/terms/" 
+    version="1.0">
+
+  <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
 
   <xsl:template match="/">
     <html>
@@ -12,8 +19,7 @@
         <div id="container">
           <div id="results" class="column">
             Søkeresultater
-
-           <xsl:value-of select="page/result-list"/>
+           <xsl:apply-templates select="c:page/c:result-list/rdf:RDF"/>
           </div>
 
           <div id="facets" class="column">
@@ -32,10 +38,6 @@
         </div>
       </body>
     </html>
-  </xsl:template>
-
-  <xsl:template match="*|node()|@*">
-    <xsl:copy><xsl:apply-templates select="*|node()|@*"/></xsl:copy>
   </xsl:template>
 
 </xsl:stylesheet>

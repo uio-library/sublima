@@ -41,6 +41,8 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
     if (raw.startsWith("topic:")) { //("dct:subject".equals(raw)) {
       subject = "<" + a.getValue("rdf:about") + ">";
     }
+    
+    // TODO: Should throw exception here is subject is null, and a 400 in the calling code
 
     if ("navigation".equals(loc)) {
       super.startElement(uri, loc, raw, a);
