@@ -52,7 +52,7 @@ public class Search implements StatelessAppleController {
 		
 
 		// FIXME hard-wire the query for testing!!!
-				sparqlQuery = "DESCRIBE <http://the-jet.com/>";
+		// sparqlQuery = "DESCRIBE <http://the-jet.com/>";
 		
 		logger.trace("SPARQL query sent to dispatcher: " + sparqlQuery);
 		Object queryResult = sparqlDispatcher.query(sparqlQuery);
