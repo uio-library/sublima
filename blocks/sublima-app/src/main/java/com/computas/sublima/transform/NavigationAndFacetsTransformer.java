@@ -63,13 +63,17 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
               "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
               "CONSTRUCT {\n" +
                       subject + " skos:prefLabel ?label ; \n" +
+                      " a skos:Concept;\n" + 
                       " skos:altLabel ?synLabel ;\n" +
                       " skos:related ?relSub ;\n" +
                       " skos:broader ?btSub ;\n" +
                       " skos:narrower ?ntSub .\n" +
-                      " ?relSub skos:prefLabel ?relLabel .\n" +
-                      " ?btSub skos:prefLabel ?btLabel .\n" +
-                      " ?ntSub skos:prefLabel ?ntLabel .\n" +
+                      " ?relSub skos:prefLabel ?relLabel ;\n" +
+                      " a skos:Concept .\n" +
+                      " ?btSub skos:prefLabel ?btLabel ;\n" +
+                      " a skos:Concept .\n" +
+                      " ?ntSub skos:prefLabel ?ntLabel ;\n" +
+                      " a skos:Concept .\n" +
                       " }\n" +
                       " WHERE {\n" +
                       subject + " rdfs:label ?label .\n" +
