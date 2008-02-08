@@ -25,6 +25,13 @@
 	  <map:parameter name="interface-language" value="en"/>
         </map:call>
       </map:match>
+      <map:match pattern="resource/*">
+        <map:call function="com.computas.sublima.app.controller.Search">
+          <map:parameter name="mode" value="resource"/>
+	  <map:parameter name="name" value="{1}"/>
+	  <map:parameter name="interface-language" value="en"/>
+        </map:call>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline internal-only="true">

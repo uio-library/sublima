@@ -34,14 +34,21 @@ public class Search implements StatelessAppleController {
 		Map<String, String[]> parameterMap = new TreeMap<String, String[]>(
 				createParametersMap(req.getCocoonRequest()));
 		
-		if ("topic-instance".equalsIgnoreCase(mode)) {
-			System.out.println("FOOOOOOOOOOO " + req.getSitemapParameter("topic"));
-			parameterMap.put("dct:subject/rdfs:label", new String[]{req.getSitemapParameter("topic")});
+		if ("topic-instance".equalsIgnoreCase(mode) || "resource".equalsIgnoreCase(mode)) {
 			parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>","rdfs: <http://www.w3.org/2000/01/rdf-schema#>"});
 			parameterMap.put("interface-language", new String[]{req.getSitemapParameter("interface-language")});
 		}
-
 		
+		if ("topic-instance".equalsIgnoreCase(mode)) {
+			parameterMap.put("dct:subject/rdfs:label", new String[]{req.getSitemapParameter("topic")});
+		}
+		
+		if ("resource".equalsIgnoreCase(mode)) {
+			parameterMap.put("dct:identifier", new String[]{"http://sublima.computas.com/resource/"
+															+req.getSitemapParameter("name")});
+			parameterMap.put("dct:subject/rdfs:label", new String[]{""});
+		}
+
 		
 		// sending the result
 
