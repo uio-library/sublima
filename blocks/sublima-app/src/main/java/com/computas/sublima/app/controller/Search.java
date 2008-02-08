@@ -26,16 +26,26 @@ public class Search implements StatelessAppleController {
 	public void process(AppleRequest req, AppleResponse res) throws Exception {
 		// the initial search page
 		String mode = req.getSitemapParameter("mode");
-		if (!"search-result".equalsIgnoreCase(mode)) {
+		if ("search".equalsIgnoreCase(mode)) {
 			res.sendPage("xhtml/search-form", null);
 			return;
 		}
-
-		// sending the result
-
 		// Get all parameteres from the HTML form as Map
 		Map<String, String[]> parameterMap = new TreeMap<String, String[]>(
 				createParametersMap(req.getCocoonRequest()));
+		
+		if ("topic-instance".equalsIgnoreCase(mode)) {
+			System.out.println("FOOOOOOOOOOO " + req.getSitemapParameter("topic"));
+			parameterMap.put("dct:subject/rdfs:label", new String[]{req.getSitemapParameter("topic")});
+			parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>","rdfs: <http://www.w3.org/2000/01/rdf-schema#>"});
+			parameterMap.put("interface-language", new String[]{req.getSitemapParameter("interface-language")});
+		}
+
+		
+		
+		// sending the result
+
+
 
 		String sparqlQuery = null;
 		// Check for magic prefixes
