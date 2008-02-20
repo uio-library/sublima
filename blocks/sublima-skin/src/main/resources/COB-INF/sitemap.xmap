@@ -5,15 +5,15 @@
  
   <map:pipelines>
     <map:pipeline>
-      <map:match pattern="my-css.css">
-        <map:read src="my-css.css"/>
+      <map:match pattern="alt-css.css">
+        <map:read src="styles/alt-css.css"/>
       </map:match>
     </map:pipeline>
   
     <map:pipeline>
       <map:match pattern="sublima-styling">
         <map:generate src="service-consumer:"/>
-        <map:transform src="transform/sublima-styling.xslt"/>
+        <map:transform src="transform/alt-styling.xslt"/>
         <map:serialize type="xhtml"/>
       </map:match>
     </map:pipeline>
