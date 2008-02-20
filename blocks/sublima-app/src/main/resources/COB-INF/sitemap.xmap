@@ -32,6 +32,16 @@
 	  <map:parameter name="interface-language" value="en"/>
         </map:call>
       </map:match>
+      <map:match pattern="freetext">
+        <map:call function="com.computas.sublima.app.controller.Search">
+          <map:parameter name="mode" value="freetext"/>
+        </map:call>
+      </map:match>
+      <map:match pattern="freetext-result">
+        <map:call function="com.computas.sublima.app.controller.Search">
+          <map:parameter name="mode" value="freetext-result"/>
+        </map:call>
+      </map:match>
     </map:pipeline>
     
     <map:pipeline internal-only="true">
