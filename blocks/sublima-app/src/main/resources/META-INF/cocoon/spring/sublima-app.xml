@@ -11,6 +11,10 @@
     class="com.computas.sublima.app.controller.Search">
      <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>   
   </bean>
+
+  <bean name="com.computas.sublima.app.controller.Index" 
+    class="com.computas.sublima.app.controller.Index">
+  </bean>
   
   <bean name="org.apache.cocoon.transformation.Transformer/navigation-facets"
     class="com.computas.sublima.transform.NavigationAndFacetsTransformer"
