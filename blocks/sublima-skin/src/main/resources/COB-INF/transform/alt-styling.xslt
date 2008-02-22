@@ -16,8 +16,8 @@
             <head>
                 <title>Detektor</title>
                 <!-- link rel="stylesheet" type="text/css" href="http://detektor.deichman.no/stylesheet.css"/> -->
-                <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
-<!--style type="text/css" media="screen">
+                <!-- link rel="stylesheet" type="text/css" href="styles/alt-css.css"/ -->
+                <style type="text/css" media="screen">
 
                     /* General styles
                     body {
@@ -32,7 +32,7 @@
                     }
                     a {
                         color:#31363E;
-						text-decoration:underline;
+						            text-decoration:underline;
                     }
                     a:hover {
                         color:#3990C8;
@@ -41,7 +41,7 @@
                     h1, h2, h3 {
                         margin:.8em 0 .2em 0;
                         padding:0;
-						color:#31363E;
+						            color:#31363E;
                     }
                     p {
                         margin:.4em 0 .8em 0;
@@ -55,20 +55,20 @@
                         clear:both;
                         float:left;
                         width:100%;
-						background:#E0DCC5;
+						            background:#E0DCC5;
 
                     }
                     #header h1
                     {
                         padding:.4em 15px 0 15px;
                         margin:0;
-						color:#0F1A80;
+						            color:#0F1A80;
                     }
-					#header h2 {
-						padding:.4em 15px 0 15px;
-                        margin:0;
-						color:#47463F;
-					}
+					          #header h2 {
+						          padding:.4em 15px 0 15px;
+                      margin:0;
+						          color:#47463F;
+					          }
                     #header ul {
                         clear:left;
                         float:left;
@@ -114,7 +114,7 @@
                         clear:both;
                         background:#fff;
                         border-top:4px solid #F3F1E9;
-						border-bottom:4px solid #F3F1E9;
+						            border-bottom:4px solid #F3F1E9;
                         margin:0;
                         padding:6px 15px !important;
                         text-align:right;
@@ -169,26 +169,26 @@
                         left:85%;				/* Please make note of the brackets here:
                                                 (100% - left column width) plus (center column left and right padding) plus (left column left and right padding) plus (right column left padding) */
                     }
-					.col2 h1 h2 .col3 h1 h2 {
-						color:#F3F1E9;
-						font-size:18px;
-						font-weight:bold;
-					}
+                    .col2 h1 h2 .col3 h1 h2 {
+                      color:#F3F1E9;
+                      font-size:18px;
+                      font-weight:bold;
+                    }
                     /* Footer styles */
                     #footer {
                         clear:both;
                         float:left;
                         width:100%;
                         border-top:1px solid #A6A18D;
-						color:#A6A18D;
+						            color:#A6A18D;
                     }
                     #footer p {
                         padding:10px;
                         margin:0;
                     }
-					#footer a {
-						color:#A6A18D;
-					}
+                    #footer a {
+                      color:#A6A18D;
+                    }
                     #search {
                         background:#fff;
                     }
@@ -199,21 +199,21 @@
                         padding: 3px;
                         font-size : 130%;
                     }
-					#navigation {
-						background:#eee;
+                    #navigation {
+                      background:#eee;
                         border:2px solid #B61963;
                     }
-					#results {
-						background:#ddd;
-					}
-                </style-->
+                    #results {
+                      background:#ddd;
+                    }
+                </style>
             </head>
             <body>
 
                 <div id="header">
 
-                    <!--h1>Detektor</h1-->
-                    <img src="images/detektor_beta_header.png"/>
+                    <h1>Detektor</h1>
+                    <!-- img src="images/detektor_beta_header.png"/ -->
 
                     <h2>Demosite for portalverktøyet Sublima</h2>
                     <ul>
@@ -282,8 +282,9 @@
                                 <!-- Column 3 start -->
 
                                 <h2>Min side osv.</h2>
+                                <a href="tips">Tips oss om en ny ressurs</a>
 
-                                <!-- Column 3 end -->
+                              <!-- Column 3 end -->
                             </div>
                         </div>
 

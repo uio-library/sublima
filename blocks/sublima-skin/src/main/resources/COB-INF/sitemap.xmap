@@ -11,12 +11,13 @@
     </map:pipeline-->
   
     <map:pipeline>
+      
       <map:match pattern="sublima-styling">
         <map:generate src="service-consumer:"/>
         <map:transform src="transform/alt-styling.xslt"/>
         <map:serialize type="xhtml"/>
       </map:match>
-      
+
       <!-- Matchers for CSS and images -->
       <map:match pattern="images/*.gif">
         <map:read src="resources/images/{1}.gif" mime-type="image/gif"/>
@@ -35,5 +36,6 @@
       </map:match>
 
     </map:pipeline>
+
   </map:pipelines>
 </map:sitemap>
