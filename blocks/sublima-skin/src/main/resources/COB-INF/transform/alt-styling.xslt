@@ -16,10 +16,10 @@
             <head>
                 <title>Detektor</title>
                 <!-- link rel="stylesheet" type="text/css" href="http://detektor.deichman.no/stylesheet.css"/> -->
-                <!-- link rel="stylesheet" type="text/css" href="styles/alt-css.css"/ -->
-<style type="text/css" media="screen">
+                <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
+<!--style type="text/css" media="screen">
 
-                    /* General styles */
+                    /* General styles
                     body {
                         margin:0;
                         padding:0;
@@ -206,13 +206,14 @@
 					#results {
 						background:#ddd;
 					}
-                </style>
+                </style-->
             </head>
             <body>
 
                 <div id="header">
 
-                    <h1>Detektor</h1>
+                    <!--h1>Detektor</h1-->
+                    <img src="images/detektor_beta_header.png"/>
 
                     <h2>Demosite for portalverktøyet Sublima</h2>
                     <ul>
