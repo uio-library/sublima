@@ -212,7 +212,8 @@
 
                 <div id="header">
 
-                    <h1>Detektor</h1>
+                    <!-- h1>Detektor</h1 -->
+                    <img src="detektor_beta.png"/>
                     <!-- img src="images/detektor_beta_header.png"/ -->
 
                     <h2>Demosite for portalverktøyet Sublima</h2>
