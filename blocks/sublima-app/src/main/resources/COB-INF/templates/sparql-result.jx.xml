@@ -1,15 +1,11 @@
 <page xmlns="http://xmlns.computas.com/cocoon">
-  <result-list>
-    <jx:out value="#{result-list}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/>
-  </result-list>
+  <result-list><jx:out value="#{result-list}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/></result-list>
 
-  <freetext-result-list>
-      <!--jx:out value="#{freetext-result-list}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/-->                
-  </freetext-result-list>
+  <freetext-result-list><!--jx:out value="#{freetext-result-list}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/--></freetext-result-list>
 
-  <navigation>
-  </navigation>
+  <navigation></navigation>
 
-  <facets>
-  </facets>
+  <advancedsearch></advancedsearch>
+
+  <facets></facets>
 </page>

@@ -5,6 +5,8 @@ import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.DBConnection;
 
 import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 /**
  * @author: mha
@@ -28,5 +30,22 @@ public class DatabaseService {
     IDBConnection connection = new DBConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD, M_DB);
 
     return connection;
+  }
+
+  public Connection getJavaSQLConnection() {
+    try {
+      Class.forName(M_DBDRIVER_CLASS);
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+      Connection connection = null;
+      try {
+          connection = DriverManager.getConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD);
+      } catch (SQLException e) {
+          e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+      }
+
+      return connection;
   }
 }

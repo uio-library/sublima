@@ -17,6 +17,7 @@ import com.computas.sublima.query.service.DatabaseService;
 import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.LARQ;
+import com.hp.hpl.jena.query.larq.IndexBuilderSubject;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.db.IDBConnection;
@@ -37,7 +38,7 @@ public class Search implements StatelessAppleController {
 		this.mode = req.getSitemapParameter("mode");
 
         // The initial advanced search page
-        if ("search".equalsIgnoreCase(mode)) {
+        if ("advancedsearch".equalsIgnoreCase(mode)) {
 			res.sendPage("xhtml/search-form", null);
 			return;
 		}
@@ -46,13 +47,6 @@ public class Search implements StatelessAppleController {
         if ("topic-instance".equalsIgnoreCase(mode) || "resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode)) {
             doAdvancedSearch(res, req);
             return;
-        }
-        
-        if ("freetext".equalsIgnoreCase(mode)) {
-            res.sendPage("xhtml/freetext-form", null);
-			return;
-            //doFreeTextSearch(res, req);
-            //return;
         }
 
         if ("freetext-result".equalsIgnoreCase(mode)) {
@@ -70,7 +64,9 @@ public class Search implements StatelessAppleController {
         IDBConnection connection = myDbService.getConnection();
 
         // -- Read and index all literal strings.
-        IndexBuilderString larqBuilder = new IndexBuilderString();
+        //IndexBuilderString larqBuilder = new IndexBuilderString();
+
+        IndexBuilderSubject larqBuilder = new IndexBuilderSubject();
 
         //Create a model based on the one in the DB
         ModelRDB model = ModelRDB.open(connection);
@@ -88,13 +84,20 @@ public class Search implements StatelessAppleController {
         //todo Fix me so that I'm up to speed with the actual model
         String queryString = StringUtils.join("\n", new String[]{
                 "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
-                "SELECT * {",
-                "    ?lit pf:textMatch '"+searchstring + "'.",
+                "PREFIX dct: <http://purl.org/dc/terms/>",
+                "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+                "SELECT ?resource WHERE {",
+                "?resource dct:subject ?var1 .",
+                "?var1 rdfs:label ?var2 .",
+                "?var2 pf:textMatch '" + searchstring + "'",
                 "}"
         });
         Query query = QueryFactory.create(queryString);
         QueryExecution qExec = QueryExecutionFactory.create(query, model);
-        String queryResult = ResultSetFormatter.asXMLString(qExec.execSelect());
+        //String queryResult = ResultSetFormatter.asXMLString(qExec.execSelect());
+        ResultSetFormatter.out(System.out, qExec.execSelect(), query) ;
 
         return;
         /*

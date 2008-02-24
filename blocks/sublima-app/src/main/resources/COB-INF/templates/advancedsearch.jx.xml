@@ -1,0 +1,113 @@
+<page xmlns="http://xmlns.computas.com/cocoon">
+    <result-list></result-list>
+
+    <freetext-result-list></freetext-result-list>
+
+    <navigation></navigation>
+
+    <advancedsearch>&lt;form name="dcSearch" action="search-result" method="GET"&gt;
+                &lt;input type="hidden" name="interface-language" value="en"/&gt;
+                &lt;input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/&gt;
+                &lt;input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/&gt;
+                &lt;input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/&gt;
+                &lt;input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="title"&gt;Title&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="title" type="text" name="dct:title" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="subject"&gt;Subject&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="subject" type="text" name="dct:subject/rdfs:label" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="description"&gt;Description&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="description" type="text" name="dct:description" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="publisher"&gt;Publisher&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="publisher" type="text" name="dct:publisher/foaf:name" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="date"&gt;DateAccepted&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="dateAccepted" type="text" name="dct:dateAccepted" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="date"&gt;DateSubmitted&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="dateSubmitted" type="text" name="dct:dateSubmitted" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="type"&gt;Type&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="type" type="text" name="dct:type" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="identifier"&gt;Identifier&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="identifier" type="text" name="dct:identifier" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="language"&gt;Language&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="language" type="text" name="dct:language/rdfs:label" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="audience"&gt;Audience&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="audience" type="text" name="dct:audience/rdfs:label" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td align="right"&gt;
+                        &lt;label for="committer"&gt;Committer&lt;/label&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input id="committer" type="text" name="sub:committer/rdfs:label" size="20"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;&lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;input type="submit" value="Search"/&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/form&gt;</advancedsearch>
+
+    <facets></facets>
+</page>

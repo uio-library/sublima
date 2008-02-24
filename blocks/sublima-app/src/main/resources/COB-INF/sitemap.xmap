@@ -11,26 +11,71 @@
 
       <!-- pattern to match for "", when users don't define a URL -->
       <map:match pattern="">
-        <map:call function="com.computas.sublima.app.controller.Index"/>
-      </map:match>
-
-      <map:match pattern="index/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-
+        <map:generate src="cocoon:/empty"/>
         <!-- apply styling -->
         <map:serialize type="servletService">
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
         </map:serialize>
       </map:match>
 
+      <!-- So that we have a "home" link on the site -->
+      <map:match pattern="home">
+          <map:redirect-to uri="cocoon:/"/>
+      </map:match>
+
+    </map:pipeline>
+
+    <map:pipeline>
+        <map:match pattern="empty">
+            <map:generate src="templates/empty-page.jx.xml" type="jx"/>
+            <map:serialize type="xml"/>
+        </map:match>
+    </map:pipeline>
+
+    <!-- Pipeline for feedback (tips and feedback on resources) -->
+    <map:pipeline>
+
+       <map:match pattern="tips">
+         <map:generate src="templates/tips.jx.xml" type="jx"/>
+         <!-- apply styling -->
+         <map:serialize type="servletService">
+           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+         </map:serialize>
+         <map:serialize type="xml"/>
+       </map:match>
+
+       <map:match pattern="sendtips">
+        <map:call function="com.computas.sublima.app.controller.Feedback">
+          <map:parameter name="mode" value="sendtips"/>
+        </map:call>
+       </map:match>
+
+      <map:match pattern="takk">
+        <map:generate src="templates/takktips.jx.xml" type="jx"/>
+         <!-- apply styling -->
+         <map:serialize type="servletService">
+           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+         </map:serialize>
+         <map:serialize type="xml"/>
+      </map:match>
+
     </map:pipeline>
 
     <map:pipeline>
 
-      <map:match pattern="search">
-        <map:call function="com.computas.sublima.app.controller.Search">
-          <map:parameter name="mode" value="search"/>
-        </map:call>
+      <map:match pattern="advancedsearch">
+        <!--map:call function="com.computas.sublima.app.controller.Search">
+          <map:parameter name="mode" value="advancedsearch"/>
+        </map:call-->
+        <map:generate src="templates/advancedsearch.jx.xml" type="jx"/>
+        <!--map:transform type="servletService">
+          <map:parameter name="service" value="servlet:/navigation-and-facets"/>
+        </map:transform-->
+        <!-- apply styling -->
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+        </map:serialize>
+        <map:serialize type="xml"/>
        </map:match>
 
       <map:match pattern="search-result">
@@ -55,28 +100,9 @@
         </map:call>
       </map:match>
 
-      <map:match pattern="freetext">
-        <map:call function="com.computas.sublima.app.controller.Search">
-          <map:parameter name="mode" value="freetext"/>
-        </map:call>
-      </map:match>
-
       <map:match pattern="freetext-result">
         <map:call function="com.computas.sublima.app.controller.Search">
           <map:parameter name="mode" value="freetext-result"/>
-        </map:call>
-      </map:match>
-
-      <!-- pattern for tips, where users send in recommendations on URLs -->
-      <map:match pattern="tips">
-        <map:call function="com.computas.sublima.app.controller.Feedback">
-          <map:paramter name="mode" value="visTipsForm"/>
-        </map:call>
-      </map:match>
-
-      <map:match pattern="tips">
-        <map:call function="com.computas.sublima.app.controller.Feedback">
-          <map:paramter name="mode" value="sendInnTips"/>
         </map:call>
       </map:match>
 

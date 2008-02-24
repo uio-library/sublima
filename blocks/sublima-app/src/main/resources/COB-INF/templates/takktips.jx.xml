@@ -1,0 +1,14 @@
+<page xmlns="http://xmlns.computas.com/cocoon">
+    <result-list></result-list>
+
+    <freetext-result-list></freetext-result-list>
+
+    <navigation></navigation>
+
+    <tips>
+        &lt;h3&gt;Takk for tipset!&lt;/h3&gt;
+        &lt;a href="home"&gt;Tilbake&lt;/a&gt;
+   </tips>
+
+    <facets></facets>
+</page>
