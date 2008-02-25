@@ -52,11 +52,11 @@ dct:type		rdfs:range 	dct:DCMIType ;
 dct:audience		a 		owl:ObjectProperty ;
 			rdfs:domain 	sub:Resource .
 
-dct:dateAccepted 	rdfs:range 	rdfs:Literal ; # Use xsd:dateTime
+dct:dateAccepted 	rdfs:range 	xsd:dateTime ;
 			a 		owl:DatatypeProperty ;	
 			rdfs:domain 	sub:Resource .
 
-dct:dateSubmitted 	rdfs:range 	rdfs:Literal ; # Use xsd:dateTime	
+dct:dateSubmitted 	rdfs:range  	xsd:dateTime ;	
 			a 		owl:DatatypeProperty ;	
 			rdfs:domain 	sub:Resource .
 
