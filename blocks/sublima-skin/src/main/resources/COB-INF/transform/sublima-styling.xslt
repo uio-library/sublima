@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:c="http://xmlns.computas.com/cocoon"
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 

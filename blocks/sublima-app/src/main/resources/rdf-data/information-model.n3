@@ -18,6 +18,7 @@
 @prefix sub: <http://xmlns.computas.com/sublima#> . 
 @prefix wdr: <http://www.w3.org/2007/05/powder#> .
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema> .
 
 dct:subject 		rdfs:range 	owl:Thing ;
 			a 		owl:ObjectProperty ;
