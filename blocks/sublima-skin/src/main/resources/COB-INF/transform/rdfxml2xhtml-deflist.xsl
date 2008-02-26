@@ -16,7 +16,7 @@ xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
   <xsl:import href="rdfxml-res-templates.xsl"/>
 
 
-  <xsl:param name="interface-language">en</xsl:param>
+  <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="rdf:RDF">
     <dl>

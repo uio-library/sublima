@@ -5,10 +5,16 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
+	xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
 
     <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
     <xsl:import href="rdfxml-nav-templates.xsl"/>
+
+
+    <xsl:template name="advancedsearch"> <!-- I have no idea why it didn't work to have a normal node-based template -->
+      <xsl:copy-of select="*"/>
+    </xsl:template>
 
     <xsl:template match="/">
 
@@ -275,9 +281,9 @@
 
                                 <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
                                 <div id="advancedsearch">
-                                    <!-- xsl:apply-templates select="c:page/c:advancedsearch"/-->
-                                    <xsl:value-of select="c:page/c:advancedsearch" disable-output-escaping="yes"/>
-                                    <xsl:value-of select="c:page/c:tips" disable-output-escaping="yes"/>
+                                    <xsl:call-template name="advancedsearch"/>
+                                    <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
+                                    <xsl:copy-of select="c:page/c:tips"/>
                                 </div>
 
                                 <div id="results">
@@ -312,12 +318,14 @@
                     <p>
                         A Free Software Project supported by
                         <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
-                        and<a href="http://www.computas.com">Computas AS</a>, 2008
+                        and <a href="http://www.computas.com">Computas AS</a>, 2008
                     </p>
 
                 </div>
             </body>
         </html>
     </xsl:template>
+
+
 
 </xsl:stylesheet>

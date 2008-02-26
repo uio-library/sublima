@@ -38,11 +38,10 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
      * This can be done with SPARQL also. 
      */
 
-    if (raw.startsWith("topic:")) { //("dct:subject".equals(raw)) {
+    if (raw.startsWith("topic:")) { // TODO: Is it possible to make it more robust by using NS URI?
       subject = "<" + a.getValue("rdf:about") + ">";
     }
-    
-    // TODO: Should throw exception here is subject is null, and a 400 in the calling code
+    // TODO: Should throw exception here is subject is null, and a 404 in the calling code
 
     if ("navigation".equals(loc)) {
       super.startElement(uri, loc, raw, a);
