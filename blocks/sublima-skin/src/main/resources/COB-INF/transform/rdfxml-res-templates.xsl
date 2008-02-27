@@ -60,6 +60,19 @@
     <xsl:text> </xsl:text>
   </xsl:template>
 
+  <xsl:template match="dct:publisher">
+   <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>
+	<xsl:apply-templates select="//foaf:*[@rdf:about=$uri]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates select="./*" mode="external-link" />
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text> </xsl:text>
+  </xsl:template>
+
   <xsl:template match="sub:Audience">
     <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
