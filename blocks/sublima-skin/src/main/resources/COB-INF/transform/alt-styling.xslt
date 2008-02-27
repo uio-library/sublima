@@ -16,6 +16,10 @@
       <xsl:copy-of select="*"/>
     </xsl:template>
 
+    <xsl:template name="tips"> <!-- I have no idea why it didn't work to have a normal node-based template -->
+       <xsl:copy-of select="c:page/c:tips/*"/>
+    </xsl:template>
+
     <xsl:template match="/">
 
         <html>
@@ -283,7 +287,7 @@
                                 <div id="advancedsearch">
                                     <xsl:call-template name="advancedsearch"/>
                                     <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
-                                    <xsl:copy-of select="c:page/c:tips"/>
+                                    <xsl:call-template name="tips"/>
                                 </div>
 
                                 <div id="results">
