@@ -20,7 +20,7 @@
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema> .
 
-dct:subject 		rdfs:range 	owl:Thing ;
+dct:subject 		rdfs:range 	owl:Class ;
 			a 		owl:ObjectProperty ;
 			rdfs:domain	sub:Resource .
 
