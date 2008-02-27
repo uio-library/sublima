@@ -1,55 +1,55 @@
-<page xmlns:xh="http://www.w3.org/1999/xhtml"
-  xmlns="http://xmlns.computas.com/cocoon">
-    <result-list></result-list>
+<page xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:c="http://xmlns.computas.com/cocoon">
+    <c:result-list></c:result-list>
 
-    <freetext-result-list></freetext-result-list>
+    <c:freetext-result-list></c:freetext-result-list>
 
-    <navigation></navigation>
+    <c:navigation></c:navigation>
 
-    <tips>
-        <xh:form name="tips" action="sendtips" method="GET">
-             <xh:table>
-                <xh:tr>
-                    <xh:td align="right">
-                        <xh:label for="navn">Ditt navn</xh:label>
-                    </xh:td>
-                    <xh:td>
-                        <xh:input id="navn" type="text" name="navn" size="40"/>
-                    </xh:td>
-                </xh:tr>
-                <xh:tr>
-                    <xh:td align="right">
-                        <xh:label for="epost">Din e-post</xh:label>
-                    </xh:td>
-                    <xh:td>
-                        <xh:input id="epost" type="text" name="epost" size="40"/>
-                    </xh:td>
-                </xh:tr>
-                <xh:tr>
-                    <xh:td align="right">
-                        <xh:label for="url">URL</xh:label>
-                    </xh:td>
-                    <xh:td>
-                        <xh:input id="url" type="text" name="url" size="40"/>
-                    </xh:td>
-                </xh:tr>
-                <xh:tr>
-                    <xh:td align="right">
-                        <xh:label for="beskrivelse">Beskrivelse</xh:label>
-                    </xh:td>
-                    <xh:td>
-                        <xh:textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40"></xh:textarea>
-                    </xh:td>
-                </xh:tr>
-                <xh:tr>
-                    <xh:td></xh:td>
-                    <xh:td>
-                        <xh:input type="submit" value="Send inn"/>
-                    </xh:td>
-                </xh:tr>
-            </xh:table>
-        </xh:form>
-   </tips>
+    <c:tips>
+        <form name="tips" action="sendtips" method="GET">
+             <table>
+                <tr>
+                    <td align="right">
+                        <label for="navn">Ditt navn</label>
+                    </td>
+                    <td>
+                        <input id="navn" type="text" name="navn" size="40"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="epost">Din e-post</label>
+                    </td>
+                    <td>
+                        <input id="epost" type="text" name="epost" size="40"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="url">URL</label>
+                    </td>
+                    <td>
+                        <input id="url" type="text" name="url" size="40"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="beskrivelse">Beskrivelse</label>
+                    </td>
+                    <td>
+                        <textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40"> </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Send inn"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+   </c:tips>
 
-    <facets></facets>
+    <c:facets></c:facets>
 </page>
