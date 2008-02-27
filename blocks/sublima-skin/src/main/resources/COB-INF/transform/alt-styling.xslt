@@ -7,18 +7,25 @@
         xmlns:dct="http://purl.org/dc/terms/"
 	xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
+  <!-- xsl:output method="html" indent="yes"/ -->
 
     <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
     <xsl:import href="rdfxml-nav-templates.xsl"/>
 
 
     <xsl:template name="advancedsearch"> <!-- I have no idea why it didn't work to have a normal node-based template -->
-      <xsl:copy-of select="*"/>
+      <xsl:copy-of select="c:page/c:advancedsearch/*"/>
     </xsl:template>
 
     <xsl:template name="tips"> <!-- I have no idea why it didn't work to have a normal node-based template -->
        <xsl:copy-of select="c:page/c:tips/*"/>
     </xsl:template>
+
+    <xsl:template name="debug"> <!-- A debug template that dumps the source tree -->
+      <div id="debug">
+	<xsl:copy-of select="*"/>
+      </div>
+   </xsl:template>
 
     <xsl:template match="/">
 
@@ -224,6 +231,8 @@
                 </style>
             </head>
             <body>
+
+	      <xsl:call-template name="debug"/>
 
                 <div id="header">
 

@@ -98,11 +98,13 @@ public class Search implements StatelessAppleController {
     String queryString = StringUtils.join("\n", new String[] {
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
             "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "CONSTRUCT { ?resource dct:title ?title;",
             "                    dct:description ?desc;",
             "                    dct:language ?lang;",
             "                    dct:subject ?subject .",
-            "            ?subject a ?topic . }",
+            "            ?subject a ?topic ;",
+            "                     rdfs:label ?name . }",
             "WHERE {",
             "        ?lit pf:textMatch ( '+" + searchstring + "' 10 ) .",
             "        ?resource ?p ?lit; ",
@@ -110,7 +112,8 @@ public class Search implements StatelessAppleController {
             "                dct:description ?desc;",
             "                dct:language ?lang;",
             "                dct:subject ?subject .",
-            "        ?subject a ?topic. }"});
+            "        ?subject a ?topic ;",
+            "				  rdfs:label ?name . }"});
 
     /*String queryString = StringUtils.join("\n", new String[]{
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",

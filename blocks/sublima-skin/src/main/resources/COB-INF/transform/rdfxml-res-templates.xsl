@@ -10,6 +10,7 @@
   xmlns:od="http://sublima.computas.com/topic/" 
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
+  xmlns:topic="http://sublima.computas.com/topic/"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc od lingvoj wdr"
   >
@@ -47,7 +48,16 @@
   </xsl:template>
 
   <xsl:template match="dct:subject">
-    <a href="{./*/@rdf:about}"><xsl:value-of select="./*/rdfs:label[@xml:lang=$interface-language]"/></a>
+   <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>
+	<a href="{$uri}"><xsl:value-of select="//topic:*[@rdf:about=$uri]/rdfs:label[@xml:lang=$interface-language]"/></a>
+      </xsl:when>
+      <xsl:when test="./topic:*/@rdf:about">
+	<a href="{./topic:*/@rdf:about}"><xsl:value-of select="./topic:*/rdfs:label[@xml:lang=$interface-language]"/></a>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:text> </xsl:text>
   </xsl:template>
 
   <xsl:template match="sub:Audience">
