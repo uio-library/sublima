@@ -99,21 +99,15 @@ public class Search implements StatelessAppleController {
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "CONSTRUCT { ?resource dct:title ?title;",
-            "                    dct:description ?desc;",
-            "                    dct:language ?lang;",
-            "                    dct:subject ?subject .",
-            "            ?subject a ?topic ;",
-            "                     rdfs:label ?name . }",
+            "DESCRIBE ?resource ?subject ?publisher",
             "WHERE {",
             "        ?lit pf:textMatch ( '+" + searchstring + "' 10 ) .",
             "        ?resource ?p ?lit; ",
             "                dct:title ?title;",
             "                dct:description ?desc;",
             "                dct:language ?lang;",
-            "                dct:subject ?subject .",
-            "        ?subject a ?topic ;",
-            "				  rdfs:label ?name . }"});
+            "				 dct:publisher ?publisher ;",
+            "                dct:subject ?subject .}"});
 
     /*String queryString = StringUtils.join("\n", new String[]{
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
@@ -125,7 +119,7 @@ public class Search implements StatelessAppleController {
 
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, model);
-    Model m = qExec.execConstruct();
+    Model m = qExec.execDescribe();
     qExec.close();
     ByteArrayOutputStream bout = new ByteArrayOutputStream();
     m.write(bout, "RDF/XML-ABBREV");
