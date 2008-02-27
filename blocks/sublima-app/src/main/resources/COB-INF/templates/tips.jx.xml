@@ -1,4 +1,5 @@
-<page xmlns="http://xmlns.computas.com/cocoon">
+<page xmlns:xh="http://www.w3.org/1999/xhtml"
+  xmlns="http://xmlns.computas.com/cocoon">
     <result-list></result-list>
 
     <freetext-result-list></freetext-result-list>
@@ -6,48 +7,48 @@
     <navigation></navigation>
 
     <tips>
-        &lt;form name="tips" action="sendtips" method="GET"&gt;
-             &lt;table&gt;
-                &lt;tr&gt;
-                    &lt;td align="right"&gt;
-                        &lt;label for="navn"&gt;Ditt navn&lt;/label&gt;
-                    &lt;/td&gt;
-                    &lt;td&gt;
-                        &lt;input id="navn" type="text" name="navn" size="40"/&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
-                    &lt;td align="right"&gt;
-                        &lt;label for="epost"&gt;Din e-post&lt;/label&gt;
-                    &lt;/td&gt;
-                    &lt;td&gt;
-                        &lt;input id="epost" type="text" name="epost" size="40"/&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
-                    &lt;td align="right"&gt;
-                        &lt;label for="url"&gt;URL&lt;/label&gt;
-                    &lt;/td&gt;
-                    &lt;td&gt;
-                        &lt;input id="url" type="text" name="url" size="40"/&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
-                    &lt;td align="right"&gt;
-                        &lt;label for="Beskrivelse"&gt;Beskrivelse&lt;/label&gt;
-                    &lt;/td&gt;
-                    &lt;td&gt;
-                        &lt;textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40"&gt;&lt;/textarea&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
-                    &lt;td&gt;&lt;/td&gt;
-                    &lt;td&gt;
-                        &lt;input type="submit" value="Send inn"/&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
-            &lt;/table&gt;
-        &lt;/form&gt;
+        <xh:form name="tips" action="sendtips" method="GET">
+             <xh:table>
+                <xh:tr>
+                    <xh:td align="right">
+                        <xh:label for="navn">Ditt navn</xh:label>
+                    </xh:td>
+                    <xh:td>
+                        <xh:input id="navn" type="text" name="navn" size="40"/>
+                    </xh:td>
+                </xh:tr>
+                <xh:tr>
+                    <xh:td align="right">
+                        <xh:label for="epost">Din e-post</xh:label>
+                    </xh:td>
+                    <xh:td>
+                        <xh:input id="epost" type="text" name="epost" size="40"/>
+                    </xh:td>
+                </xh:tr>
+                <xh:tr>
+                    <xh:td align="right">
+                        <xh:label for="url">URL</xh:label>
+                    </xh:td>
+                    <xh:td>
+                        <xh:input id="url" type="text" name="url" size="40"/>
+                    </xh:td>
+                </xh:tr>
+                <xh:tr>
+                    <xh:td align="right">
+                        <xh:label for="beskrivelse">Beskrivelse</xh:label>
+                    </xh:td>
+                    <xh:td>
+                        <xh:textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40"></xh:textarea>
+                    </xh:td>
+                </xh:tr>
+                <xh:tr>
+                    <xh:td></xh:td>
+                    <xh:td>
+                        <xh:input type="submit" value="Send inn"/>
+                    </xh:td>
+                </xh:tr>
+            </xh:table>
+        </xh:form>
    </tips>
 
     <facets></facets>
