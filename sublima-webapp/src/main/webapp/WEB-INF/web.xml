@@ -88,6 +88,11 @@
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
 
+  <!-- Listener to index the graph on web app init -->
+  <listener>
+    <listener-class>com.computas.sublima.app.listener.ContextListener</listener-class>
+  </listener>
+
   <servlet>
     <description>Cocoon blocks dispatcher</description>
     <display-name>DispatcherServlet</display-name>
