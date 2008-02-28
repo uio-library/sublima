@@ -10,6 +10,7 @@
   <!-- xsl:output method="html" indent="yes"/ -->
 
     <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
+    <xsl:import href="rdfxml2xhtml-facets.xsl"/>
     <xsl:import href="rdfxml-nav-templates.xsl"/>
 
 
@@ -21,7 +22,8 @@
        <xsl:copy-of select="c:page/c:tips/*"/>
     </xsl:template>
 
-    <xsl:template name="debug"> <!-- A debug template that dumps the source tree -->
+    <!-- A debug template that dumps the source tree -->
+    <xsl:template name="debug"> 
       <div id="debug">
 	<xsl:copy-of select="*"/>
       </div>
@@ -302,17 +304,20 @@
                                 <div id="results">
                                     <h3>Results</h3>
                                     <!-- Søkeresultatene -->
-                                    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF"/>
+                                    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
                                 </div>
                                 <!-- Column 1 end -->
                             </div>
 
                             <div class="col2">
                                 <!-- Column 2 start -->
-                                <h3>Facets</h3>
-                                <xsl:value-of select="c:page/c:facets"/>
-
-                                <!-- Column 2 end -->
+				<div id="facets">
+				  <h3>Facets</h3>
+				  <xsl:if test="c:page/c:facets">
+				    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
+				  </xsl:if>
+				</div>
+				<!-- Column 2 end -->
                             </div>
 
                             <div class="col3">

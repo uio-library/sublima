@@ -160,7 +160,8 @@ public class Search implements StatelessAppleController {
     Object queryResult = sparqlDispatcher.query(sparqlQuery);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
-    bizData.put("configuration", new Object());
+//    bizData.put("configuration", new Object());
+    bizData.put("request", req.getCocoonRequest());
     res.sendPage("xml/sparql-result", bizData);
   }
 

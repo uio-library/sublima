@@ -111,5 +111,7 @@
             </table>
         </form></c:advancedsearch>
 
-    <c:facets></c:facets>
+    <c:facets>
+
+    </c:facets>
 </c:page>

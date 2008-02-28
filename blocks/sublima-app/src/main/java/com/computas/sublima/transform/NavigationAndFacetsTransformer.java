@@ -93,7 +93,7 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
       return;
     }
 
-    if ("facets".equals(loc)) {
+   /* if ("facets".equals(loc)) {
       super.startElement(uri, loc, raw, a);
 
       //todo Use the existing SPARQL resultset and create a query that returns the facets
@@ -101,14 +101,13 @@ public class NavigationAndFacetsTransformer extends AbstractTransformer {
       StringXMLizable stringXMLizable = new StringXMLizable(result);
       stringXMLizable.toSAX(new IncludeXMLConsumer(this.contentHandler));
       return;
-    }
+    } */
 
     super.startElement(uri, loc, raw, a);
   }
 
   @Override
   public void endElement(String uri, String loc, String raw) throws SAXException {
-
     super.endElement(uri, loc, raw);
   }
 

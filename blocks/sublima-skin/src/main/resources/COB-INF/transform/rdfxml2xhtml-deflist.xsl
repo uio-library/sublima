@@ -18,7 +18,7 @@ xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 
   <xsl:param name="interface-language">no</xsl:param>
 
-  <xsl:template match="rdf:RDF">
+  <xsl:template match="rdf:RDF" mode="results">
     <dl>
       <xsl:for-each select="rdf:Description"> <!-- The root node for each described resource -->
 	<dt>
@@ -28,8 +28,6 @@ xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	</dt>
 	<dd>
 	  <div style="font-size:small"><xsl:text>Published by: </xsl:text>
-	    <!-- xsl:variable name="uri" select="dct:publisher/@rdf:resource"/>
-	    <xsl:apply-templates select="../*[@rdf:about=$uri]" mode="external-link" / -->
 	    <xsl:apply-templates select="dct:publisher"/>
 	    <xsl:text> </xsl:text>
 	    <xsl:apply-templates select="./dct:dateAccepted"/>
