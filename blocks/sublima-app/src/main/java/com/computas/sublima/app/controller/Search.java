@@ -59,26 +59,12 @@ public class Search implements StatelessAppleController {
   private void doFreeTextSearch(AppleResponse res, AppleRequest req) {
     String searchstring = req.getCocoonRequest().getParameter("searchstring");
 
+
     DatabaseService myDbService = new DatabaseService();
     IDBConnection connection = myDbService.getConnection();
-
-    // -- Read and index all literal strings.
-    IndexBuilderString larqBuilder = new IndexBuilderString();
-
-    //IndexBuilderSubject larqBuilder = new IndexBuilderSubject();
-
+    
     //Create a model based on the one in the DB
     ModelRDB model = ModelRDB.open(connection);
-
-    // -- Create an index based on existing statements
-    larqBuilder.indexStatements(model.listStatements());
-    // -- Finish indexing
-    larqBuilder.closeForWriting();
-    // -- Create the access index
-    IndexLARQ index = larqBuilder.getIndex();
-
-    // -- Make globally available
-    LARQ.setDefaultIndex(index);
 
     //todo Fix me so that I'm up to speed with the actual model
     /*String queryString = StringUtils.join("\n", new String[]{
@@ -123,6 +109,7 @@ public class Search implements StatelessAppleController {
     qExec.close();
     ByteArrayOutputStream bout = new ByteArrayOutputStream();
     m.write(bout, "RDF/XML-ABBREV");
+
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", bout.toString());
