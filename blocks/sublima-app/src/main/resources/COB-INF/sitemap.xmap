@@ -88,7 +88,7 @@
         <map:call function="com.computas.sublima.app.controller.Search">
           <map:parameter name="mode" value="topic-instance"/>
             <map:parameter name="topic" value="{1}"/>
-            <map:parameter name="interface-language" value="en"/>
+            <map:parameter name="interface-language" value="no"/>
         </map:call>
       </map:match>
 
@@ -96,7 +96,7 @@
         <map:call function="com.computas.sublima.app.controller.Search">
           <map:parameter name="mode" value="resource"/>
           <map:parameter name="name" value="{1}"/>
-          <map:parameter name="interface-language" value="en"/>
+          <map:parameter name="interface-language" value="no"/>
         </map:call>
       </map:match>
 
