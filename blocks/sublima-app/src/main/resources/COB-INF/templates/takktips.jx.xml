@@ -1,14 +1,16 @@
-<page xmlns="http://xmlns.computas.com/cocoon">
-    <result-list></result-list>
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:c="http://xmlns.computas.com/cocoon">
+    <c:result-list></c:result-list>
 
-    <freetext-result-list></freetext-result-list>
+    <c:freetext-result-list></c:freetext-result-list>
 
-    <navigation></navigation>
+    <c:navigation></c:navigation>
 
-    <tips>
-        &lt;h3&gt;Takk for tipset!&lt;/h3&gt;
-        &lt;a href="home"&gt;Tilbake&lt;/a&gt;
-   </tips>
+    <c:tips>
+       <h3>Takk for tipset!</h3>
+       <a href="home">Tilbake</a>
+   </c:tips>
 
     <facets></facets>
-</page>
+</c:page>

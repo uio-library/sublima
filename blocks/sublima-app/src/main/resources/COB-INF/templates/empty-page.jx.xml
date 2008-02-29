@@ -1,8 +1,10 @@
-<page xmlns="http://xmlns.computas.com/cocoon">
-    <result-list/>
-    <freetext-result-list/>
-    <navigation/>
-    <advancedsearch/>
-    <facets/>
-</page>
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:c="http://xmlns.computas.com/cocoon">
+    <c:result-list/>
+    <c:freetext-result-list/>
+    <c:navigation/>
+    <c:advancedsearch/>
+    <c:facets/>
+</c:page>
  
