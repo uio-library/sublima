@@ -234,7 +234,7 @@
             </head>
             <body>
 
-	      <xsl:call-template name="debug"/>
+	      <!-- xsl:call-template name="debug"/ -->
 
                 <div id="header">
 
@@ -312,7 +312,7 @@
                             <div class="col2">
                                 <!-- Column 2 start -->
 				<div id="facets">
-				  <h3>Facets</h3>
+				  <h3>Fasetter</h3>
 				  <xsl:if test="c:page/c:facets">
 				    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
 				  </xsl:if>

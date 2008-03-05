@@ -23,11 +23,11 @@ xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
       <xsl:for-each select="rdf:Description"> <!-- The root node for each described resource -->
 	<dt>
 	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  <xsl:text> is a </xsl:text>	  
+	  <xsl:text> har emne </xsl:text>	  
 	  <xsl:apply-templates select="./dct:subject"/>
 	</dt>
 	<dd>
-	  <div style="font-size:small"><xsl:text>Published by: </xsl:text>
+	  <div style="font-size:small"><xsl:text>Publisert av: </xsl:text>
 	    <xsl:apply-templates select="dct:publisher"/>
 	    <xsl:text> </xsl:text>
 	    <xsl:apply-templates select="./dct:dateAccepted"/>
