@@ -101,21 +101,6 @@ public class Search implements StatelessAppleController {
     //Create a model based on the one in the DB
     ModelRDB model = ModelRDB.open(connection);
 
-    //todo Fix me so that I'm up to speed with the actual model
-    /*String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
-            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "SELECT ?resource WHERE {",
-            "?resource dct:subject ?var1 .",
-            "?var1 rdfs:label ?var2 .",
-            "?var2 pf:textMatch '" + searchstring + "'",
-            "}"
-    });*/
-
-
     String queryString = StringUtils.join("\n", new String[] {
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
             "PREFIX dct: <http://purl.org/dc/terms/>",
@@ -130,14 +115,6 @@ public class Search implements StatelessAppleController {
             "				 dct:publisher ?publisher ;",
             "                dct:subject ?subject .}"});
 
-    /*String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
-            "SELECT * {" ,
-            "    ?lit pf:textMatch '+" + searchstring + "'",
-            "}"
-        }) ;*/
-
-
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, model);
     Model m = qExec.execDescribe();
@@ -150,11 +127,6 @@ public class Search implements StatelessAppleController {
     bizData.put("result-list", bout.toString());
     bizData.put("configuration", new Object());
     res.sendPage("xml/sparql-result", bizData);
-    /*
-          Map<String, Object> bizData = new HashMap<String, Object>();
-      bizData.put("freetext-result-list", queryResult);
-      bizData.put("configuration", new Object());
-      res.sendPage("xml/sparql-result", bizData);*/
   }
 
   public void doAdvancedSearch(AppleResponse res, AppleRequest req) {
@@ -189,7 +161,6 @@ public class Search implements StatelessAppleController {
     Object queryResult = sparqlDispatcher.query(sparqlQuery);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
-//    bizData.put("configuration", new Object());
     bizData.put("request", req.getCocoonRequest());
     res.sendPage("xml/sparql-result", bizData);
   }
