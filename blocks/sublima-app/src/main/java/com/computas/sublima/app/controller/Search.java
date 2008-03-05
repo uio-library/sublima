@@ -43,7 +43,7 @@ public class Search implements StatelessAppleController {
     }
 
     // If it's search-results for advanced search, topic instance or resource
-    if ("topic-instance".equalsIgnoreCase(mode) || "resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode)) {
+    if ("resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode)) {
       doAdvancedSearch(res, req);
       return;
     }
@@ -52,10 +52,45 @@ public class Search implements StatelessAppleController {
       doFreeTextSearch(res, req);
       return;
     }
+    
+    if ("topic-instance".equalsIgnoreCase(mode)) {
+      doGetTopic(res, req);
+      return;
+    }
 
 
   }
 
+  private void doGetTopic(AppleResponse res, AppleRequest req) {
+	    DatabaseService myDbService = new DatabaseService();
+	    IDBConnection connection = myDbService.getConnection();
+	    
+	    //Create a model based on the one in the DB
+	    ModelRDB model = ModelRDB.open(connection);
+	    String subject = "http://sublima.computas.com/topic-instance/"+req.getSitemapParameter("topic");
+	    String queryString = StringUtils.join("\n", new String[] {
+	            "PREFIX dct: <http://purl.org/dc/terms/>",
+	            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+	            "DESCRIBE ?resource <"+subject+"> ?publisher",
+	            "WHERE {",
+	            "        ?resource dct:language ?lang;",
+	            "				 dct:publisher ?publisher ;",
+	            "                dct:subject <"+subject+"> .}"});
+	    System.out.println(queryString);
+	    Query query = QueryFactory.create(queryString);
+	    QueryExecution qExec = QueryExecutionFactory.create(query, model);
+	    Model m = qExec.execDescribe();
+	    qExec.close();
+	    ByteArrayOutputStream bout = new ByteArrayOutputStream();
+	    m.write(bout, "RDF/XML-ABBREV");
+
+
+	    Map<String, Object> bizData = new HashMap<String, Object>();
+	    bizData.put("result-list", bout.toString());
+	    res.sendPage("xml/sparql-result", bizData);
+  }
+
+  
   private void doFreeTextSearch(AppleResponse res, AppleRequest req) {
     String searchstring = req.getCocoonRequest().getParameter("searchstring");
 
@@ -126,16 +161,10 @@ public class Search implements StatelessAppleController {
     // Get all parameteres from the HTML form as Map
     Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
-    if ("topic-instance".equalsIgnoreCase(mode) || "resource".equalsIgnoreCase(mode)) {
-      parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>", "rdfs: <http://www.w3.org/2000/01/rdf-schema#>"});
-      parameterMap.put("interface-language", new String[]{req.getSitemapParameter("interface-language")});
-    }
-
-    if ("topic-instance".equalsIgnoreCase(mode)) {
-      parameterMap.put("dct:subject/rdfs:label", new String[]{req.getSitemapParameter("topic")});
-    }
 
     if ("resource".equalsIgnoreCase(mode)) {
+      parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>", "rdfs: <http://www.w3.org/2000/01/rdf-schema#>"});
+      parameterMap.put("interface-language", new String[]{req.getSitemapParameter("interface-language")});
       parameterMap.put("dct:identifier", new String[]{"http://sublima.computas.com/resource/"
               + req.getSitemapParameter("name")});
       parameterMap.put("dct:subject/rdfs:label", new String[]{""});
