@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <page  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" xmlns="http://xmlns.computas.com/cocoon">
+  <mode><jx:out value="#{mode}"/></mode>
   <result-list><jx:out value="#{result-list}" xmlize="true"/></result-list>
 
   <freetext-result-list><!--jx:out value="#{freetext-result-list}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/--></freetext-result-list>

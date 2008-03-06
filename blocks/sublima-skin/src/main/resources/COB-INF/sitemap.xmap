@@ -14,8 +14,8 @@
       
       <map:match pattern="sublima-styling">
         <map:generate src="service-consumer:"/>
-        <map:transform src="transform/alt-styling.xslt"/>
-        <map:serialize type="xhtml"/>
+	<map:transform src="transform/alt-styling.xslt"/>
+	<map:serialize type="xhtml"/>
       </map:match>
 
       <!-- Matchers for CSS and images -->

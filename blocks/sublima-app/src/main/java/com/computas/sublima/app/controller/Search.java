@@ -87,6 +87,7 @@ public class Search implements StatelessAppleController {
 
 	    Map<String, Object> bizData = new HashMap<String, Object>();
 	    bizData.put("result-list", bout.toString());
+	    bizData.put("mode", mode);
 	    res.sendPage("xml/sparql-result", bizData);
   }
 
@@ -125,6 +126,7 @@ public class Search implements StatelessAppleController {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", bout.toString());
+    bizData.put("mode", mode);
     bizData.put("configuration", new Object());
     res.sendPage("xml/sparql-result", bizData);
   }
@@ -161,7 +163,8 @@ public class Search implements StatelessAppleController {
     Object queryResult = sparqlDispatcher.query(sparqlQuery);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
-    bizData.put("request", req.getCocoonRequest());
+    bizData.put("mode", mode);
+    bizData.put("request", req.getCocoonRequest()); // TODO: Must loop
     res.sendPage("xml/sparql-result", bizData);
   }
 

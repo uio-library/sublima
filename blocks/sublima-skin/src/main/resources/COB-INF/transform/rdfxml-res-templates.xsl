@@ -32,6 +32,12 @@
       <a href="{../dct:identifier/@rdf:resource}"><xsl:value-of select="."/></a>
     </xsl:if>
   </xsl:template>
+
+  <xsl:template match="dct:title" mode="external-link">
+    <xsl:if test="@xml:lang=$interface-language">
+      <a href="{../@rdf:about}"><xsl:value-of select="."/></a>
+    </xsl:if>
+  </xsl:template>
   
   <xsl:template match="dct:description">
     <xsl:if test="@xml:lang=$interface-language">

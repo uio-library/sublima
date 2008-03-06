@@ -13,6 +13,7 @@
     <xsl:import href="rdfxml2xhtml-facets.xsl"/>
     <xsl:import href="rdfxml-nav-templates.xsl"/>
 
+    <xsl:param name="mode"/>
 
     <xsl:template name="advancedsearch"> <!-- I have no idea why it didn't work to have a normal node-based template -->
       <xsl:copy-of select="c:page/c:advancedsearch/*"/>
@@ -234,14 +235,14 @@
             </head>
             <body>
 
-	      <!-- xsl:call-template name="debug"/ -->
+	      <xsl:call-template name="debug"/>
 
                 <div id="header">
 
                     <!-- h1>Detektor</h1 -->
                     <img src="detektor_beta.png"/>
                     <!-- img src="images/detektor_beta_header.png"/ -->
-
+		    <xsl:value-of select="$mode"/>
                     <h2>Demosite for portalverktøyet Sublima</h2>
                     <ul>
                         <li>
@@ -289,34 +290,37 @@
                                         </form>
                                     </xsl:if>
                                 </div>
-                                <div id="navigation">
-                                    <h3>Navigering</h3>
-                                    <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept"/>
-                                </div>
-
-                                <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
-                                <div id="advancedsearch">
-                                    <xsl:call-template name="advancedsearch"/>
-                                    <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
-                                    <xsl:call-template name="tips"/>
-                                </div>
-
-                                <div id="results">
-                                    <h3>Results</h3>
-                                    <!-- Søkeresultatene -->
-                                    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
-                                </div>
+				<xsl:if test="/c:page/c:mode = 'topic-instance'">
+				  <div id="navigation">
+				    <h3>Navigering</h3>
+				    <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept"/>
+				  </div>
+				</xsl:if>
+				<!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
+				<div id="advancedsearch">
+				  <xsl:call-template name="advancedsearch"/>
+				    <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
+				    <xsl:call-template name="tips"/>
+				</div>
+				
+				<div id="results">
+				  <h3>Ressurser</h3>
+				  <!-- Søkeresultatene -->
+				  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
+				</div>
                                 <!-- Column 1 end -->
                             </div>
 
                             <div class="col2">
                                 <!-- Column 2 start -->
-				<div id="facets">
-				  <h3>Fasetter</h3>
-				  <xsl:if test="c:page/c:facets">
-				    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
-				  </xsl:if>
-				</div>
+				<xsl:if test="/c:page/c:mode = 'search-result'">
+				  <div id="facets">
+				    <h3>Fasetter</h3>
+				    <xsl:if test="c:page/c:facets">
+				      <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
+				    </xsl:if>
+				  </div>
+				</xsl:if>
 				<!-- Column 2 end -->
                             </div>
 
