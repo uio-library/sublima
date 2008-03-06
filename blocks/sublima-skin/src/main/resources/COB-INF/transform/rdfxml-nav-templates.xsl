@@ -29,6 +29,9 @@
       <xsl:if test="skos:broader/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
 	Bredere: <xsl:apply-templates select="skos:broader/skos:Concept"/>
       </xsl:if>
+      <xsl:if test="skos:narrower/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
+	Smalere: <xsl:apply-templates select="skos:narrower/skos:Concept"/>
+      </xsl:if>
       <xsl:if test="skos:related/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
 	Relatert: <xsl:apply-templates select="skos:related/skos:Concept"/>
       </xsl:if>
