@@ -2,6 +2,7 @@ package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
+import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
@@ -27,9 +28,11 @@ import java.io.*;
 public class Search implements StatelessAppleController {
 
   private SparqlDispatcher sparqlDispatcher;
+  private SparulDispatcher sparulDispatcher;
   private String mode;
 
   private static Logger logger = Logger.getLogger(Search.class);
+
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
@@ -170,6 +173,10 @@ public class Search implements StatelessAppleController {
 
   public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
+  }
+
+  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
+    this.sparulDispatcher = sparulDispatcher;
   }
 
   private Map<String, String[]> createParametersMap(Request request) {
