@@ -10,6 +10,10 @@
   <bean id="com.computas.sublima.query.SparqlDispatcher" class="com.computas.sublima.query.impl.DefaultSparqlDispatcher">
     <property name="cocoonSettings" ref="org.apache.cocoon.configuration.Settings"/>
   </bean>
+
+  <bean id="com.computas.sublima.query.SparulDispatcher" class="com.computas.sublima.query.impl.DefaultSparulDispatcher">
+    <property name="cocoonSettings" ref="org.apache.cocoon.configuration.Settings"/>
+  </bean>
   
   <bean name="org.apache.cocoon.serialization.Serializer/rdf" class="org.apache.cocoon.serialization.XMLSerializer"
         scope="prototype" parent="org.apache.cocoon.serialization.AbstractTextSerializer">
