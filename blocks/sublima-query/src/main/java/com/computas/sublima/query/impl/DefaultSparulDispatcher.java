@@ -3,11 +3,16 @@ package com.computas.sublima.query.impl;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 
 import org.apache.cocoon.configuration.Settings;
 import org.apache.commons.io.IOUtils;
 
 import com.computas.sublima.query.SparulDispatcher;
+import com.computas.sublima.query.service.DatabaseService;
+import com.hp.hpl.jena.update.*;
+import com.hp.hpl.jena.db.IDBConnection;
+import com.hp.hpl.jena.db.ModelRDB;
 
 /**
  * This component queries RDF triple stores using Sparul. It is threadsafe.
@@ -17,25 +22,40 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
 	private Settings cocoonSettings;
 
 	public Object query(String query) {
-		String result = null;
-		try {
-			String url = cocoonSettings
-					.getProperty("com.computas.sublima.query.sparul.endpoint");
+		DatabaseService myDbService = new DatabaseService();
+    IDBConnection connection = myDbService.getConnection();
 
-			// query = "DESCRIBE <http://the-jet.com/>"; // The Simplest Query In the World :-)
-			
-			
-			
-			URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
+    /*
+    String updateQuery =  "PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
+                          "INSERT { <http://sublima.computas.com/agent/ife> foaf:name \"Institute for Energy Technology\"@de }";
+    */
 
-			HttpURLConnection con = (HttpURLConnection) u.openConnection();
+    //Create a model based on the one in the DB
+    ModelRDB model = ModelRDB.open(connection);
 
-			result = IOUtils.toString(con.getInputStream());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+    //Get a GraphStore and load the graph from the Model
+    GraphStore graphStore = GraphStoreFactory.create();
+	  graphStore.setDefaultGraph(model.getGraph());
+
+    try {
+      //Try to execute the updateQuery (SPARQL/Update)
+      UpdateRequest updateRequest = UpdateFactory.create(query);
+	    updateRequest.exec(graphStore);
+    }
+    catch (UpdateException e) {
+        return false;
+    }
+
+    try {
+      connection.close();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    // Return true if update success
+    return true;
+  }
 
 	public void setCocoonSettings(Settings cocoonSettings) {
 		this.cocoonSettings = cocoonSettings;
