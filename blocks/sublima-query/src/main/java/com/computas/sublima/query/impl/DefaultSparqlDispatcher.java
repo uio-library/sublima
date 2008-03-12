@@ -20,7 +20,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 		String result = null;
 		try {
 			String url = cocoonSettings
-					.getProperty("com.computas.sublima.query.joseki.endpoint");
+					.getProperty("sublima.joseki.endpoint");
 
 			// query = "DESCRIBE <http://the-jet.com/>";
 			
