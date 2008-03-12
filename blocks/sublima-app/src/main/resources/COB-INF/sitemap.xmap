@@ -6,7 +6,23 @@
 
   <map:flow language="spring-apples"/>
 
+  <!--map:components>
+
+    <map:selectors default="exception">
+
+      <map:selector name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
+        <exception name="processing" class="ProcessingException" unroll="true"/>
+        <exception name="sax" class="org.xml.SAXException"/>
+        <exception name="application" class="ApplicationException"/>
+      </map:selector>
+      
+    </map:selectors>
+                                                     |
+  </map:components-->
+
+
   <map:pipelines>
+
     <map:pipeline>
 
       <!-- pattern to match for "", when users don't define a URL -->
@@ -58,6 +74,12 @@
          </map:serialize>
          <map:serialize type="xml"/>
       </map:match>
+
+
+      <map:handle-errors>
+        <map:transform scr="transform/error2xhtml.xslt"/>
+        <map:serialize type="xhtml"/>
+      </map:handle-errors>
 
     </map:pipeline>
 
@@ -136,8 +158,18 @@
         <map:transform type="navigation-facets"/>
         <map:serialize type="xml"/>
       </map:match>
-      
+
     </map:pipeline>
+
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform scr="servlet:skin:/error"/>
+        <!-- map:generate src="cocoon:/empty"/ -->
+        <!-- apply styling -->
+        <!--map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+        </map:serialize -->
+      </map:handle-errors>
      
   </map:pipelines>
 
