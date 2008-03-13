@@ -195,7 +195,7 @@
 
         <div id="header">
           <!-- h1>Detektor</h1 -->
-          <img alt="header logo" src="detektor_beta.png"/>
+          <img alt="header logo" src="detektor_beta_header.png"/>
           <!-- img src="images/detektor_beta_header.png"/ -->
           <xsl:value-of select="$mode"/>
           <h2>Demosite for portalverktøyet Sublima</h2>
@@ -237,6 +237,12 @@
                         </td>
                         <td>
                           <a href="advancedsearch">Avansert søk</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="radio" name="booleanoperator" value="AND" checked="true" />OG <input type="radio" name="booleanoperator" value="OR" /> ELLER
+                          <input type="checkbox" name="deepsearch" value="deepsearch"/> Søk også i de eksterne ressursene
                         </td>
                       </tr>
                     </table>
