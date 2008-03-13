@@ -11,7 +11,6 @@
     class="com.computas.sublima.app.controller.Search">
      <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
      <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
-     <property name="cocoonSettings" ref="org.apache.cocoon.configuration.Settings"/>
   </bean>
 
   <bean name="com.computas.sublima.app.controller.Feedback"

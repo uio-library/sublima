@@ -1,7 +1,8 @@
 package com.computas.sublima.app.controller;
 
-import com.computas.sublima.app.Form2SparqlService;
-import com.computas.sublima.app.SearchService;
+import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.app.service.SearchService;
+import com.computas.sublima.query.service.SettingsService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
@@ -16,7 +17,6 @@ import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.configuration.Settings;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Search implements StatelessAppleController {
-  private Settings cocoonSettings;
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   private String mode;
@@ -93,12 +92,31 @@ public class Search implements StatelessAppleController {
 
 
   private void doFreeTextSearch(AppleResponse res, AppleRequest req) {
-    String defaultBooleanOperator = cocoonSettings.getProperty("sublima.default.boolean.operator");
-    SearchService searchService = new SearchService(defaultBooleanOperator);
-    String searchstring = searchService.buildSearchString(req.getCocoonRequest().getParameter("searchstring"));
+    String defaultBooleanOperator = SettingsService.getProperty("sublima.default.boolean.operator");
+    String chosenOperator = req.getCocoonRequest().getParameter("booleanoperator");
+    boolean deepsearch = false;
 
+    SearchService searchService;
     DatabaseService myDbService = new DatabaseService();
     IDBConnection connection = myDbService.getConnection();
+
+    //Use user chosen boolean operator when it doesn't equal the default
+    if ( !chosenOperator.equalsIgnoreCase(defaultBooleanOperator)) {
+      searchService = new SearchService(chosenOperator);
+      logger.debug("SUBLIMA: Use " + chosenOperator + " as boolean operator for search");
+    }
+    else {
+      searchService = new SearchService(defaultBooleanOperator);
+      logger.debug("SUBLIMA: Use " + defaultBooleanOperator + " as boolean operator for search");
+    }
+
+    String searchstring = searchService.buildSearchString(req.getCocoonRequest().getParameter("searchstring"));
+
+    //Do deep search in external resources or not
+    if ( req.getCocoonRequest().getParameterValues("deepsearch") != null && "deepsearch".equalsIgnoreCase(req.getCocoonRequest().getParameterValues("deepsearch")[0])) {
+      deepsearch = true;
+      logger.debug("SUBLIMA: Deep search enabled");
+    }
 
     //Create a model based on the one in the DB
     ModelRDB model = ModelRDB.open(connection);
@@ -185,9 +203,5 @@ public class Search implements StatelessAppleController {
 
   public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
-  }
-
-  public void setCocoonSettings(Settings cocoonSettings) {
-    this.cocoonSettings = cocoonSettings;
   }
 }

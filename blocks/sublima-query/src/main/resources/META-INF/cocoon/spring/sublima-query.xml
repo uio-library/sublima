@@ -8,11 +8,9 @@
        default-init-method="init">
        
   <bean id="com.computas.sublima.query.SparqlDispatcher" class="com.computas.sublima.query.impl.DefaultSparqlDispatcher">
-    <property name="cocoonSettings" ref="org.apache.cocoon.configuration.Settings"/>
   </bean>
 
   <bean id="com.computas.sublima.query.SparulDispatcher" class="com.computas.sublima.query.impl.DefaultSparulDispatcher">
-    <property name="cocoonSettings" ref="org.apache.cocoon.configuration.Settings"/>
   </bean>
   
   <bean name="org.apache.cocoon.serialization.Serializer/rdf" class="org.apache.cocoon.serialization.XMLSerializer"
@@ -25,9 +23,14 @@
     </property>
   </bean>
   
-  <bean name="com.computas.sublima.query.controller.SparqlQuery" 
-    class="com.computas.sublima.query.controller.SparqlQuery">
-     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>   
+  <bean name="com.computas.sublima.query.service.SettingsService"
+    class="com.computas.sublima.query.service.SettingsService">
+    <property name="cocoonSettings" ref="org.apache.cocoon.configuration.Settings"/>
   </bean>
+
+  <bean name="com.computas.sublima.query.controller.SparqlQuery"
+    class="com.computas.sublima.query.controller.SparqlQuery">
+     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
+  </bean>   
   
 </beans>

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.computas.sublima.app.service.Form2SparqlService;
+
 
 /**
  * Form2SparqlService Tester.

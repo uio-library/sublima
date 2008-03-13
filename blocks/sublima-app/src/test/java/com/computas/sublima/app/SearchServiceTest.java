@@ -3,6 +3,7 @@ package com.computas.sublima.app;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
+import com.computas.sublima.app.service.SearchService;
 
 /**
  * SearchService Tester.
