@@ -22,7 +22,7 @@ public class Feedback implements StatelessAppleController {
     this.mode = req.getSitemapParameter("mode");
 
     if("visTipsForm".equalsIgnoreCase("mode")) {
-      res.sendPage("xhtml/tips-form", null);
+      res.sendPage("xhtml/tips", null);
 	  return;  
     }
 
