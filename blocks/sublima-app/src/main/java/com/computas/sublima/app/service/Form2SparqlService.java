@@ -114,19 +114,14 @@ public class Form2SparqlService {
 	public String convertFormField2N3(String key, String[] values) {
 		StringBuffer n3Buffer = new StringBuffer();
 		String[] keys = key.split("/");
-		Boolean optional = false;
 		for (String value : values) { // TODO low-pri: Optimize to comma-separate values.
 			String var = "?resource "; // The first SPARQL variable will always be resource
 			int j = 0;
 			for (String qname : keys) {
 				j++;
 				n3Buffer.append("\n" + var + qname + " ");
-				if ("".equals(value)) { //value == "") { // Then, it is a block we don't know is
-					// there, thus OPTIONAL
-					optional = true;
-				}
-				if (!subjectVarList.contains(var)) {
-					subjectVarList.add(var);
+				if ("".equals(value)) { //value == "") { // Then, it is a block with no value, which will be caught by a catch-all
+					return "\n";
 				}
 
 				if (keys.length == j && !"".equals(value)) { //value != "") { // Then we are on the
@@ -143,10 +138,6 @@ public class Form2SparqlService {
 					variablecount++;
 				}
 			}
-		}
-		if (optional) {
-			n3Buffer.insert(0, "\nOPTIONAL {");
-			n3Buffer.append(" }");
 		}
 		logger.trace("Returning N3: " + n3Buffer.toString());
 		return n3Buffer.toString();
@@ -177,12 +168,7 @@ public class Form2SparqlService {
 		}
 
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-			String tmpn3 = convertFormField2N3(e.getKey(), e.getValue());
-			if (tmpn3.startsWith("\nOPTIONAL")) {
-				n3Buffer.append(tmpn3); // OPTIONALs have to go after
-			} else {
-				n3Buffer.insert(0, tmpn3);
-			}
+			n3Buffer.insert(0, convertFormField2N3(e.getKey(), e.getValue()));
 		}
 
 		// Add the variables to the query
@@ -190,8 +176,9 @@ public class Form2SparqlService {
 			sparqlQueryBuffer.append((String) element);
 		}
 
-		sparqlQueryBuffer.append("WHERE {");
+		sparqlQueryBuffer.append("?rest WHERE {");
 		sparqlQueryBuffer.append(n3Buffer);
+		sparqlQueryBuffer.append("\n?resource ?p ?rest .");
 		sparqlQueryBuffer.append("\n}");
 		String returnString = sparqlQueryBuffer.toString();
 		System.out.println(returnString);
