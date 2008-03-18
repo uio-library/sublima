@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <map:sitemap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://apache.org/cocoon/sitemap/1.0 http://cocoon.apache.org/schema/sitemap/cocoon-sitemap-1.0.xsd"
- xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+             xsi:schemaLocation="http://apache.org/cocoon/sitemap/1.0 http://cocoon.apache.org/schema/sitemap/cocoon-sitemap-1.0.xsd"
+             xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:flow language="spring-apples"/>
 
@@ -36,54 +36,37 @@
 
       <!-- So that we have a "home" link on the site -->
       <map:match pattern="home">
-          <map:redirect-to uri="cocoon:/"/>
+        <map:redirect-to uri="cocoon:/"/>
       </map:match>
 
-    </map:pipeline>
+      <map:match pattern="empty">
+        <map:generate src="templates/empty-page.jx.xml" type="jx"/>
+        <map:serialize type="xml"/>
+      </map:match>
 
-    <map:pipeline>
-        <map:match pattern="empty">
-            <map:generate src="templates/empty-page.jx.xml" type="jx"/>
-            <map:serialize type="xml"/>
-        </map:match>
-    </map:pipeline>
+      <map:match pattern="tips">
+        <map:generate src="templates/tips.jx.xml" type="jx"/>
+        <!-- apply styling -->
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+        </map:serialize>
+        <map:serialize type="xml"/>
+      </map:match>
 
-    <!-- Pipeline for feedback (tips and feedback on resources) -->
-    <map:pipeline>
-
-       <map:match pattern="tips">
-         <map:generate src="templates/tips.jx.xml" type="jx"/>
-         <!-- apply styling -->
-         <map:serialize type="servletService">
-           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-         </map:serialize>
-         <map:serialize type="xml"/>
-       </map:match>
-
-       <map:match pattern="sendtips">
+      <map:match pattern="sendtips">
         <map:call function="com.computas.sublima.app.controller.Feedback">
           <map:parameter name="mode" value="sendtips"/>
         </map:call>
-       </map:match>
+      </map:match>
 
       <map:match pattern="takk">
         <map:generate src="templates/takktips.jx.xml" type="jx"/>
-         <!-- apply styling -->
-         <map:serialize type="servletService">
-           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-         </map:serialize>
-         <map:serialize type="xml"/>
+        <!-- apply styling -->
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+        </map:serialize>
+        <map:serialize type="xml"/>
       </map:match>
-
-
-      <map:handle-errors>
-        <map:transform scr="transform/error2xhtml.xslt"/>
-        <map:serialize type="xhtml"/>
-      </map:handle-errors>
-
-    </map:pipeline>
-
-    <map:pipeline>
 
       <map:match pattern="advancedsearch">
         <!--map:call function="com.computas.sublima.app.controller.Search">
@@ -98,7 +81,7 @@
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
         </map:serialize>
         <map:serialize type="xml"/>
-       </map:match>
+      </map:match>
 
       <map:match pattern="search-result">
         <map:call function="com.computas.sublima.app.controller.Search">
@@ -109,8 +92,8 @@
       <map:match pattern="topic-instance/*">
         <map:call function="com.computas.sublima.app.controller.Search">
           <map:parameter name="mode" value="topic-instance"/>
-            <map:parameter name="topic" value="{1}"/>
-            <map:parameter name="interface-language" value="no"/>
+          <map:parameter name="topic" value="{1}"/>
+          <map:parameter name="interface-language" value="no"/>
         </map:call>
       </map:match>
 
@@ -128,8 +111,31 @@
         </map:call>
       </map:match>
 
+      <map:match pattern="navigation-and-facets">
+        <map:generate src="service-consumer:"/>
+        <map:transform type="navigation-facets"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- Matchers for CSS and images -->
+      <map:match pattern="images/*.gif">
+        <map:read src="resources/images/{1}.gif" mime-type="image/gif"/>
+      </map:match>
+
+      <map:match pattern="images/*.jpg">
+        <map:read src="resources/images/{1}.jpg" mime-type="image/jpg"/>
+      </map:match>
+
+      <map:match pattern="images/*.png">
+        <map:read src="resources/images/{1}.png" mime-type="image/png"/>
+      </map:match>
+
+      <map:match pattern="styles/*.css">
+        <map:read src="resources/styles/{1}.css" mime-type="text/css"/>
+      </map:match>
+
     </map:pipeline>
-    
+
     <map:pipeline internal-only="true">
 
       <map:match pattern="xhtml/*">
@@ -150,27 +156,7 @@
       </map:match>
 
     </map:pipeline>
-    
-    <map:pipeline>
 
-      <map:match pattern="navigation-and-facets">
-        <map:generate src="service-consumer:"/>
-        <map:transform type="navigation-facets"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-    </map:pipeline>
-
-      <map:handle-errors>
-        <map:generate type="notifying"/>
-        <map:transform scr="servlet:skin:/error"/>
-        <!-- map:generate src="cocoon:/empty"/ -->
-        <!-- apply styling -->
-        <!--map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize -->
-      </map:handle-errors>
-     
   </map:pipelines>
 
 </map:sitemap>
