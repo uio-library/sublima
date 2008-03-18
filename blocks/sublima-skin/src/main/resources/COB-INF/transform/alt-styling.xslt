@@ -13,7 +13,14 @@
   <xsl:import href="rdfxml2xhtml-facets.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
 
-  <xsl:param name="mode"/>
+
+    <!-- A debug template that dumps the source tree. Do not remove
+         this, just comment out the call-template -->
+    <xsl:template name="debug">
+      <div id="debug">
+	<xsl:copy-of select="*"/>
+      </div>
+    </xsl:template>
 
   <xsl:template name="advancedsearch"> <!-- I have no idea why it didn't work to have a normal node-based template -->
     <xsl:copy-of select="c:page/c:advancedsearch/*"/>
@@ -35,7 +42,7 @@
 
         <div id="header">
           <img alt="header logo" src="images/detektor_beta_header.png"/>
-           <xsl:value-of select="$mode"/>
+
           <h2>Demosite for portalverktøyet Sublima</h2>
           <ul>
             <li>
@@ -60,6 +67,8 @@
           <div class="colmid">
             <div class="colleft">
               <div class="col1">
+
+		<!-- xsl:call-template name="debug"/ -->
 
                 <!-- Column 1 start -->
                 <xsl:if test="not(c:page/c:advancedsearch/node())">
@@ -87,12 +96,12 @@
                   </form>
                 </xsl:if>
 
-                <!-- xsl:if test="c:page/c:mode = 'topic-instance'" -->
+                <xsl:if test="c:page/c:mode = 'topic-instance'">
 
                   <h3>Navigering</h3>
                   <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept"/>
 
-                <!-- /xsl:if -->
+                </xsl:if>
                 <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
                 <xsl:call-template name="advancedsearch"/>
                 <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->

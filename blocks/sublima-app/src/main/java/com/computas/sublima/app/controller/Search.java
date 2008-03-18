@@ -72,11 +72,11 @@ public class Search implements StatelessAppleController {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "DESCRIBE ?resource <" + subject + "> ?publisher",
+            "DESCRIBE ?resource <" + subject + "> ?publisher ?subjects",
             "WHERE {",
             "        ?resource dct:language ?lang;",
             "				 dct:publisher ?publisher ;",
-            "                dct:subject <" + subject + "> .}"});
+            "                dct:subject <" + subject + ">, ?subjects .}"});
     System.out.println(queryString);
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, model);
