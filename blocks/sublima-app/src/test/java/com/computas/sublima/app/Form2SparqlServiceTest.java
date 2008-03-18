@@ -32,7 +32,7 @@ public class Form2SparqlServiceTest extends TestCase {
 
   public void setUp() throws Exception {
     testMap = new TreeMap<String, String[]>();
-    expectedString = "DESCRIBE ?resource WHERE {\n?resource dc:title \"Cirrus Personal Jet\"";
+    expectedString = "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title \"Cirrus Personal Jet\"";
     testString = new String[1];
     testString[0] = "Cirrus Personal Jet";
     expectedPrefix = "PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>\n";
@@ -146,7 +146,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFormField2N3DualEmpty() {
-    String expectS = "\nOPTIONAL {\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage ?var2 . }";
+    String expectS = "\n";
     testString[0] = "";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dc:publisher/foaf:homepage", testString));
@@ -157,7 +157,7 @@ public class Form2SparqlServiceTest extends TestCase {
     // Single value test
     testMap.put("dc:title", testString);
     String resultString = myService.convertForm2Sparql(testMap);
-    assertEquals("Expected result and actual result not equal", expectedPrefix + expectedString + " .\n}", resultString);
+    assertEquals("Expected result and actual result not equal", expectedPrefix + expectedString + " .\n?resource ?p ?rest .\n}", resultString);
   }
 
   public void testConvertForm2SparqlSingleValue() {
@@ -165,7 +165,7 @@ public class Form2SparqlServiceTest extends TestCase {
     testMap.put("dc:title", testString);
     testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
     String resultString = myService.convertForm2Sparql(testMap);
-    assertEquals("Expected result and actual result not equal", expectedPrefix + expectedString + "@en .\n}", resultString);
+    assertEquals("Expected result and actual result not equal", expectedPrefix + expectedString + "@en .\n?resource ?p ?rest .\n}", resultString);
   }
 
   public void testConvertForm2SparqlTwoValues() {
@@ -174,11 +174,11 @@ public class Form2SparqlServiceTest extends TestCase {
     testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
     testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
     String resultString = myService.convertForm2Sparql(testMap);
-    assertEquals("Expected result and actual result not equal", expectedPrefix + "DESCRIBE ?resource WHERE {\n?resource dc:title \"Cirrus Personal Jet\"@en .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n}", resultString);
+    assertEquals("Expected result and actual result not equal", expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title \"Cirrus Personal Jet\"@en .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
   }
 
   public void testConvertFor2SPARQLDoubleDual() {
-    String expectS = "DESCRIBE ?resource ?var1 ?var2 WHERE {\n?resource dc:subject ?var2 .\n?var2 rdfs:label \"Jet\" .\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n}";
+    String expectS = "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {\n?resource dc:subject ?var2 .\n?var2 rdfs:label \"Jet\" .\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource ?p ?rest .\n}";
     testMap.put("dc:subject/rdfs:label", new String[]{"Jet"});
     testMap.put("dc:publisher/foaf:homepage", new String[]{"http://www.cirrusdesign.com/"});
     String actual = myService.convertForm2Sparql(testMap);
@@ -186,7 +186,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFor2SPARQLDoubleEmpty() {
-    String expectS = "DESCRIBE ?resource ?var2 WHERE {\n?resource dc:subject ?var2 .\n?var2 rdfs:label \"Jet\" .\nOPTIONAL {\n?resource dc:publisher ?var1 . }\n}";
+    String expectS = "DESCRIBE ?resource ?var1 ?rest WHERE {\n?resource dc:subject ?var1 .\n?var1 rdfs:label \"Jet\" .\n\n?resource ?p ?rest .\n}";
     testMap.put("dc:subject/rdfs:label", new String[]{"Jet"});
     testMap.put("dc:publisher", new String[]{""});
     String actual = myService.convertForm2Sparql(testMap);

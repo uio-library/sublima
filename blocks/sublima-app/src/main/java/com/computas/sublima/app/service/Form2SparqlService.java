@@ -123,6 +123,9 @@ public class Form2SparqlService {
 				if ("".equals(value)) { //value == "") { // Then, it is a block with no value, which will be caught by a catch-all
 					return "\n";
 				}
+				if (!subjectVarList.contains(var)) {
+					subjectVarList.add(var);
+				}
 
 				if (keys.length == j && !"".equals(value)) { //value != "") { // Then we are on the
 					// actual form input
