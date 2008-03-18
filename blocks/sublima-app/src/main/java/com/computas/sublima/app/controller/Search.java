@@ -25,6 +25,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.sql.SQLException;
 
 public class Search implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
@@ -120,6 +121,11 @@ public class Search implements StatelessAppleController {
 
     //Create a model based on the one in the DB
     ModelRDB model = ModelRDB.open(connection);
+    try {
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
@@ -140,14 +146,20 @@ public class Search implements StatelessAppleController {
     Model m = qExec.execDescribe();
     qExec.close();
 
-    ByteArrayOutputStream bout = new ByteArrayOutputStream();
-    m.write(bout, "RDF/XML-ABBREV");
+    // If the model is empty, thus no results, return the zero-results-strategy-page
+    if( m.isEmpty() ) {
+      res.sendPage("tips", null);  
+    }
+    else {
+      ByteArrayOutputStream bout = new ByteArrayOutputStream();
+      m.write(bout, "RDF/XML-ABBREV");
 
-    Map<String, Object> bizData = new HashMap<String, Object>();
-    bizData.put("result-list", bout.toString());
-    bizData.put("mode", mode);
-    bizData.put("configuration", new Object());
-    res.sendPage("xml/sparql-result", bizData);
+      Map<String, Object> bizData = new HashMap<String, Object>();
+      bizData.put("result-list", bout.toString());
+      bizData.put("mode", mode);
+      bizData.put("configuration", new Object());
+      res.sendPage("xml/sparql-result", bizData);
+    }
   }
 
   public void doAdvancedSearch(AppleResponse res, AppleRequest req) {
