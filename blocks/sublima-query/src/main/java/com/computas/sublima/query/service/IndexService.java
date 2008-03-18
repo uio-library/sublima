@@ -19,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.io.IOException;
 import java.util.Map;
+import java.sql.SQLException;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -52,6 +53,11 @@ public class IndexService {
     //Create a model based on the one in the DB
     ModelRDB model = ModelRDB.open(connection);
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created RDF model from database");
+    try {
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace(); 
+    }
 
     // -- Create an index based on existing statements
     larqBuilder.indexStatements(model.listStatements());
@@ -71,8 +77,6 @@ public class IndexService {
    *  Method to create an index based on the external content
    */
   public void createExternalResourcesMemoryIndex() {
-    DatabaseService myDbService = new DatabaseService();
-    IDBConnection connection = myDbService.getConnection();
     IndexBuilderExt larqBuilder = new IndexBuilderExt() ;
     ResultSet resultSet;
 
@@ -87,11 +91,14 @@ public class IndexService {
     URL u = null;
     String result = null;
 
-    while(resultSet.hasNext()) {
+    for(int i = 0; i<10; i++) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length()-3).trim();
-
-      result = readURL(url);
+      if(getHTTPcodeForUrl(url) == 200) {
+        result = readURL(url);
+        // Strip all HTML tags
+        result = result.replaceAll("\\<.*?>","");
+      }
 
       if(result != null) {
         Resource r = ResourceFactory.createResource(url);
@@ -99,6 +106,27 @@ public class IndexService {
         System.out.println(result);
       }
     }
+    /*
+    while(resultSet.hasNext()) {
+      String resultURL = resultSet.next().toString();
+      String url = resultURL.substring(10, resultURL.length()-3).trim();
+      if(getHTTPcodeForUrl(url) == 200) {
+        result = readURL(url);
+      }
+
+      if(result != null) {
+        Resource r = ResourceFactory.createResource(url);
+        larqBuilderExt.index(r, result);
+        System.out.println(result);
+      }
+    }*/
+
+    larqBuilder.closeForWriting() ;
+    IndexLARQ index = larqBuilder.getIndex() ;
+
+    // -- Make globally available
+    LARQ.setDefaultIndex(index);
+    logger.info("SUBLIMA: createExternalResourcesMemoryIndex() --> Indexing - Index now globally available");
 
   }
 
@@ -197,6 +225,7 @@ public class IndexService {
     catch (ClassCastException e) {
       System.out.println("***** ERROR ****** " + url);
       e.printStackTrace();
+
     }
     return result;
   }
