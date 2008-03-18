@@ -1,0 +1,52 @@
+h1 { 
+     font-size : 3em;
+     color : white;
+}
+
+div#results, div#navigation, div#facets, div#footer 
+{ 
+  background : white;
+  border-color : #339999;
+  border-style : solid;
+  border-width : 1px; 
+  margin : 1em;
+  padding : 0.2em 1em;
+}
+
+a
+{  
+  color : blue;
+  text-decoration : underline;
+}
+
+div#navigation 
+{ 
+  width : 10em;
+  float : left;
+}
+
+div#results
+{ 
+  margin-left : 15em;
+  margin-right : 15em;
+  max-width : 38em;
+  clear:none;
+}
+
+div#facets 
+{ 
+float:right;
+width:10em;
+}
+
+div#footer 
+{  
+  clear:both;
+  text-align : center;
+}
+
+@media projection {
+  body { 
+         font-size : 130%;
+       }       
+}
