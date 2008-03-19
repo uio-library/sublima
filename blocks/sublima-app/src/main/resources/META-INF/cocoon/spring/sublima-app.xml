@@ -17,10 +17,4 @@
     class="com.computas.sublima.app.controller.Feedback">
   </bean>    
 
-  <bean name="org.apache.cocoon.transformation.Transformer/navigation-facets"
-    class="com.computas.sublima.transform.NavigationAndFacetsTransformer"
-    scope="prototype">
-     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>   
-  </bean>
-  
 </beans>
