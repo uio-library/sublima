@@ -186,6 +186,7 @@ public class Search implements StatelessAppleController {
 
       Map<String, Object> bizData = new HashMap<String, Object>();
       bizData.put("result-list", bout.toString());
+      bizData.put("navigation", "<empty></empty>");
       bizData.put("mode", mode);
       bizData.put("configuration", new Object());
       res.sendPage("xml/sparql-result", bizData);
