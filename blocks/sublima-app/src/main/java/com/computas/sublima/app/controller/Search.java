@@ -77,16 +77,12 @@ public class Search implements StatelessAppleController {
             "        ?resource dct:language ?lang;",
             "				 dct:publisher ?publisher ;",
             "                dct:subject <" + subject + ">, ?subjects .}"});
-    System.out.println(queryString);
-    Query query = QueryFactory.create(queryString);
-    QueryExecution qExec = QueryExecutionFactory.create(query, model);
-    Model m = qExec.execDescribe();
-    qExec.close();
-    ByteArrayOutputStream bout = new ByteArrayOutputStream();
-    m.write(bout, "RDF/XML-ABBREV");
+
+    logger.trace("SPARQL query sent to dispatcher: " + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
-    bizData.put("result-list", bout.toString());
+    bizData.put("result-list", queryResult);
     bizData.put("mode", mode);
     res.sendPage("xml/sparql-result", bizData);
   }
