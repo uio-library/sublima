@@ -85,17 +85,11 @@ public class Search implements StatelessAppleController {
     bizData.put("result-list", queryResult);
 
     String sparqlConstructQuery =
-              "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
               "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
               "prefix owl: <http://www.w3.org/2002/07/owl#>\n" +
-              "prefix foaf: <http://xmlns.com/foaf/0.1/>\n" +
-              "prefix lingvoj: <http://www.lingvoj.org/ontology#>\n" +
-              "prefix dcmitype: <http://purl.org/dc/dcmitype/>\n" +
-              "prefix dct: <http://purl.org/dc/terms/>\n" +
+	      "prefix dct: <http://purl.org/dc/terms/>\n" +
               "prefix sub: <http://xmlns.computas.com/sublima#>\n" +
-              "prefix wdr: <http://www.w3.org/2007/05/powder#>\n" +
-              "prefix sioc: <http://rdfs.org/sioc/ns#>\n" +
-              "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+	      "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
               "CONSTRUCT {\n" +
                       subject + " skos:prefLabel ?label ; \n" +
                       " a skos:Concept;\n" + 
@@ -113,7 +107,7 @@ public class Search implements StatelessAppleController {
                       " WHERE {\n" +
                       subject + " rdfs:label ?label .\n" +
                       subject + " a ?class .\n" +
-                      " OPTIONAL { " + subject + " <http://xmlns.computas.com/sublima#synonym> ?synLabel  . }\n" +
+                      " OPTIONAL { " + subject + " sub:synonym ?synLabel  . }\n" +
                       " OPTIONAL { " + subject + " ?prop ?relSub .\n" +
                       " ?relSub rdfs:label ?relLabel . }\n" +
                       " OPTIONAL { ?class rdfs:subClassOf ?btClass .\n" +
