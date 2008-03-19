@@ -113,7 +113,7 @@
 
       <map:match pattern="navigation-and-facets">
         <map:generate src="service-consumer:"/>
-        <map:transform type="navigation-facets"/>
+        <!-- map:transform type="navigation-facets"/ -->
         <map:serialize type="xml"/>
       </map:match>
       

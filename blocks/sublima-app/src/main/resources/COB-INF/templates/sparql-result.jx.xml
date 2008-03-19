@@ -5,7 +5,7 @@
 
   <freetext-result-list><!--jx:out value="#{freetext-result-list}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/--></freetext-result-list>
 
-  <navigation></navigation>
+  <navigation><jx:out value="#{navigation}" xmlize="true"/></navigation>
 
   <advancedsearch></advancedsearch>
 

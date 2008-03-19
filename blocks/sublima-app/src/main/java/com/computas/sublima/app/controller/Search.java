@@ -68,21 +68,65 @@ public class Search implements StatelessAppleController {
 
     //Create a model based on the one in the DB
     ModelRDB model = ModelRDB.open(connection);
-    String subject = "http://sublima.computas.com/topic-instance/" + req.getSitemapParameter("topic");
+    String subject = "<http://sublima.computas.com/topic-instance/" + req.getSitemapParameter("topic") + ">";
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "DESCRIBE ?resource <" + subject + "> ?publisher ?subjects",
+            "DESCRIBE ?resource " + subject + " ?publisher ?subjects",
             "WHERE {",
             "        ?resource dct:language ?lang;",
             "				 dct:publisher ?publisher ;",
-            "                dct:subject <" + subject + ">, ?subjects .}"});
+            "                dct:subject " + subject + ", ?subjects .}"});
 
     logger.trace("SPARQL query sent to dispatcher: " + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
-
+   
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
+
+    String sparqlConstructQuery =
+              "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+              "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+              "prefix owl: <http://www.w3.org/2002/07/owl#>\n" +
+              "prefix foaf: <http://xmlns.com/foaf/0.1/>\n" +
+              "prefix lingvoj: <http://www.lingvoj.org/ontology#>\n" +
+              "prefix dcmitype: <http://purl.org/dc/dcmitype/>\n" +
+              "prefix dct: <http://purl.org/dc/terms/>\n" +
+              "prefix sub: <http://xmlns.computas.com/sublima#>\n" +
+              "prefix wdr: <http://www.w3.org/2007/05/powder#>\n" +
+              "prefix sioc: <http://rdfs.org/sioc/ns#>\n" +
+              "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+              "CONSTRUCT {\n" +
+                      subject + " skos:prefLabel ?label ; \n" +
+                      " a skos:Concept;\n" + 
+                      " skos:altLabel ?synLabel ;\n" +
+                      " skos:related ?relSub ;\n" +
+                      " skos:broader ?btSub ;\n" +
+                      " skos:narrower ?ntSub .\n" +
+                      " ?relSub skos:prefLabel ?relLabel ;\n" +
+                      " a skos:Concept .\n" +
+                      " ?btSub skos:prefLabel ?btLabel ;\n" +
+                      " a skos:Concept .\n" +
+                      " ?ntSub skos:prefLabel ?ntLabel ;\n" +
+                      " a skos:Concept .\n" +
+                      " }\n" +
+                      " WHERE {\n" +
+                      subject + " rdfs:label ?label .\n" +
+                      subject + " a ?class .\n" +
+                      " OPTIONAL { " + subject + " <http://xmlns.computas.com/sublima#synonym> ?synLabel  . }\n" +
+                      " OPTIONAL { " + subject + " ?prop ?relSub .\n" +
+                      " ?relSub rdfs:label ?relLabel . }\n" +
+                      " OPTIONAL { ?class rdfs:subClassOf ?btClass .\n" +
+                      " ?btSub a ?btClass ;\n" +
+                      " rdfs:label ?btLabel . }\n" +
+                      " OPTIONAL { ?ntClass rdfs:subClassOf ?class .\n" +
+                      " ?ntSub a ?ntClass .\n" +
+                      " ?ntClass rdfs:label ?ntLabel . } }";
+
+    logger.trace("SPARQL query sent to dispatcher: " + sparqlConstructQuery);
+    queryResult = sparqlDispatcher.query(sparqlConstructQuery);
+   
+    bizData.put("navigation", queryResult);
     bizData.put("mode", mode);
     res.sendPage("xml/sparql-result", bizData);
   }
