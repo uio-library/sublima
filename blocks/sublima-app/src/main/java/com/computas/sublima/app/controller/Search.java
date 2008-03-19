@@ -63,11 +63,7 @@ public class Search implements StatelessAppleController {
   }
 
   private void doGetTopic(AppleResponse res, AppleRequest req) {
-    DatabaseService myDbService = new DatabaseService();
-    IDBConnection connection = myDbService.getConnection();
 
-    //Create a model based on the one in the DB
-    ModelRDB model = ModelRDB.open(connection);
     String subject = "<http://sublima.computas.com/topic-instance/" + req.getSitemapParameter("topic") + ">";
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
@@ -225,9 +221,11 @@ public class Search implements StatelessAppleController {
     // sparqlQuery = "DESCRIBE <http://the-jet.com/>";
 
     logger.trace("SPARQL query sent to dispatcher: " + sparqlQuery);
-    Object queryResult = sparqlDispatcher.query(sparqlQuery);
+    Object queryResult = sparqlDispatcher.query(sparqlQuery);   	
+    
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
+    bizData.put("navigation", "<empty></empty>");
     bizData.put("mode", mode);
     bizData.put("request", req.getCocoonRequest()); // TODO: Must loop
     res.sendPage("xml/sparql-result", bizData);
