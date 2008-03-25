@@ -1,63 +1,75 @@
 package com.computas.sublima.app.controller;
 
+import com.computas.sublima.query.SparqlDispatcher;
+import com.computas.sublima.query.SparulDispatcher;
+import com.computas.sublima.query.service.IndexService;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
-import com.computas.sublima.query.service.DatabaseService;
-import com.hp.hpl.jena.db.IDBConnection;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Connection;
 
 public class Feedback implements StatelessAppleController {
 
-  private String mode;
   private static Logger logger = Logger.getLogger(Feedback.class);
+  private String mode;
+  private SparulDispatcher sparulDispatcher;
+  boolean success = false;
 
+  //todo Check how to send error messages with Cocoon (like Struts 2's s:actionmessage)
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
 
     this.mode = req.getSitemapParameter("mode");
 
-    if("visTipsForm".equalsIgnoreCase("mode")) {
+    if ("visTipsForm".equalsIgnoreCase("mode")) {
       res.sendPage("xhtml/tips", null);
-	  return;  
+      return;
     }
 
-    if("sendtips".equalsIgnoreCase(mode)) {
-        String navn = req.getCocoonRequest().getParameter("navn");
-        String email = req.getCocoonRequest().getParameter("epost");
-        String url = req.getCocoonRequest().getParameter("url");
-        String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
+    if ("sendtips".equalsIgnoreCase(mode)) {
+      String url = req.getCocoonRequest().getParameter("url");
+      String tittel = req.getCocoonRequest().getParameter("tittel");
+      String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
 
-        DatabaseService myDbService = new DatabaseService();
-        Connection connection = myDbService.getJavaSQLConnection();
+      // Do a URL check so that we know we have a valid URL
+      IndexService indexService = new IndexService();
+      int status = indexService.getHTTPcodeForUrl(url);
 
-        try {
-            // Prepare a statement to insert a record
-            String sql = "INSERT INTO feedback (type, name, email, url, description, ip) VALUES(?,?,?,?,?,?)";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+      if (status == 200) {
+        String updateString = StringUtils.join("\n", new String[]{
+                "PREFIX dct: <http://purl.org/dc/terms/>",
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+                "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+                "INSERT",
+                "{",
+                "<" + url + ">" + " dct:description " + "\"" + beskrivelse + "\"@no ;",
+                "dct:title " + "\"" + tittel + "\"@no .",
+                "}"});
 
-            pstmt.setString(1, "suggestion");
-            pstmt.setString(2, navn);
-            pstmt.setString(3, email);
-            pstmt.setString(4, url);
-            pstmt.setString(5, beskrivelse);
-            pstmt.setString(6, req.getCocoonRequest().getRemoteAddr());
-            // Insert the row
-            pstmt.executeUpdate();
+        //"wdr:describedBy rdf:resource=\"http://sublima.computas.com/status/til_godkjenning\" ."});
 
-            res.sendPage("takk", null);
-            return;
+        success = sparulDispatcher.query(updateString);
+
+        if (success) {
+          res.sendPage("takk", null);
+          return;
+        } else {
+          res.sendPage("xhtml/tips", null);
+          return;
         }
-        catch (SQLException e) {
-            e.printStackTrace(); 
-        }
+
+      } else {
+        res.sendPage("xhtml/tips", null);
+        return;
+      }
     }
 
     return;
+  }
+
+  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
+    this.sparulDispatcher = sparulDispatcher;
   }
 
 }
