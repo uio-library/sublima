@@ -36,18 +36,17 @@ public class Feedback implements StatelessAppleController {
       IndexService indexService = new IndexService();
       int status = indexService.getHTTPcodeForUrl(url);
 
+      //todo We have to get the interface-language @no from somewhere
       if (status == 200) {
         String updateString = StringUtils.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
                 "INSERT",
                 "{",
-                "<" + url + ">" + " dct:description " + "\"" + beskrivelse + "\"@no ;",
-                "dct:title " + "\"" + tittel + "\"@no .",
+                "<" + url + ">" + " dct:title " + "\"" + tittel + "\"@no ; ",
+                "dct:description " + "\"" + beskrivelse + "\"@no ;",
+                "wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> .",
                 "}"});
-
-        //"wdr:describedBy rdf:resource=\"http://sublima.computas.com/status/til_godkjenning\" ."});
 
         success = sparulDispatcher.query(updateString);
 
