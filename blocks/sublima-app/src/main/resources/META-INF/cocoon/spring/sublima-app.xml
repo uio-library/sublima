@@ -10,11 +10,11 @@
   <bean name="com.computas.sublima.app.controller.Search" 
     class="com.computas.sublima.app.controller.Search">
      <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
-     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
   <bean name="com.computas.sublima.app.controller.Feedback"
     class="com.computas.sublima.app.controller.Feedback">
-  </bean>    
+    <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+  </bean>
 
 </beans>
