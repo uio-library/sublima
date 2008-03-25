@@ -38,6 +38,14 @@
           </td>
         </tr>
         <tr>
+          <td align="right">
+            <label for="stikkord">Stikkord (kommaseparert)</label>
+          </td>
+          <td>
+            <input id="stikkord" type="text" name="stikkord" size="40"/>
+          </td>
+        </tr>
+        <tr>
           <td></td>
           <td>
             <input type="submit" value="Send inn"/>
