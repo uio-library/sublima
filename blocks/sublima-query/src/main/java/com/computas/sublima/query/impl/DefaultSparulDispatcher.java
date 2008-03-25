@@ -1,28 +1,23 @@
 package com.computas.sublima.query.impl;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.sql.SQLException;
-
-import org.apache.cocoon.configuration.Settings;
-import org.apache.commons.io.IOUtils;
-
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
-import com.hp.hpl.jena.update.*;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
+import com.hp.hpl.jena.update.*;
+import org.apache.cocoon.configuration.Settings;
+
+import java.sql.SQLException;
 
 /**
  * This component queries RDF triple stores using Sparul. It is threadsafe.
  */
 public class DefaultSparulDispatcher implements SparulDispatcher {
 
-	private Settings cocoonSettings;
+  private Settings cocoonSettings;
 
-	public Object query(String query) {
-		DatabaseService myDbService = new DatabaseService();
+  public boolean query(String query) {
+    DatabaseService myDbService = new DatabaseService();
     IDBConnection connection = myDbService.getConnection();
 
     /*
@@ -35,30 +30,32 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
 
     //Get a GraphStore and load the graph from the Model
     GraphStore graphStore = GraphStoreFactory.create();
-	  graphStore.setDefaultGraph(model.getGraph());
+    graphStore.setDefaultGraph(model.getGraph());
 
     try {
       //Try to execute the updateQuery (SPARQL/Update)
       UpdateRequest updateRequest = UpdateFactory.create(query);
-	    updateRequest.exec(graphStore);
+      updateRequest.exec(graphStore);
     }
     catch (UpdateException e) {
-        return false;
+      return false;
     }
 
-    try {
-      connection.close();
-    }
-    catch (SQLException e) {
-      e.printStackTrace();
+    finally {
+      try {
+        connection.close();
+      }
+      catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
 
     // Return true if update success
     return true;
   }
 
-	public void setCocoonSettings(Settings cocoonSettings) {
-		this.cocoonSettings = cocoonSettings;
-	}
+  public void setCocoonSettings(Settings cocoonSettings) {
+    this.cocoonSettings = cocoonSettings;
+  }
 
 }
