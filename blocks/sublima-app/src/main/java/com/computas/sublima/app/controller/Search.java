@@ -107,10 +107,10 @@ public class Search implements StatelessAppleController {
                       " ?relSub rdfs:label ?relLabel . }\n" +
                       " OPTIONAL { ?class rdfs:subClassOf ?btClass .\n" +
                       " ?btSub a ?btClass ;\n" +
-                      " rdfs:label ?btLabel . }\n" +
+                      "     rdfs:label ?btLabel . }\n" +
                       " OPTIONAL { ?ntClass rdfs:subClassOf ?class .\n" +
-                      " ?ntSub a ?ntClass .\n" +
-                      " ?ntClass rdfs:label ?ntLabel . } }";
+                      " ?ntSub a ?ntClass ;\n" +
+                      "     rdfs:label ?ntLabel . } }";
 
     logger.trace("SPARQL query sent to dispatcher: " + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);
