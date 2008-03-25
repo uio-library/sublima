@@ -20,7 +20,7 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
-import java.io.ByteArrayOutputStream;
+import java.io.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +29,6 @@ import java.sql.SQLException;
 
 public class Search implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
-  private SparulDispatcher sparulDispatcher;
   private String mode;
 
   private static Logger logger = Logger.getLogger(Search.class);
@@ -128,8 +127,7 @@ public class Search implements StatelessAppleController {
     boolean deepsearch = false;
 
     SearchService searchService;
-    DatabaseService myDbService = new DatabaseService();
-    IDBConnection connection = myDbService.getConnection();
+
 
     //Use user chosen boolean operator when it doesn't equal the default
     if ( !chosenOperator.equalsIgnoreCase(defaultBooleanOperator)) {
@@ -149,14 +147,6 @@ public class Search implements StatelessAppleController {
       logger.debug("SUBLIMA: Deep search enabled");
     }
 
-    //Create a model based on the one in the DB
-    ModelRDB model = ModelRDB.open(connection);
-    try {
-      connection.close();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
             "PREFIX dct: <http://purl.org/dc/terms/>",
@@ -171,18 +161,15 @@ public class Search implements StatelessAppleController {
             "				 dct:publisher ?publisher ;",
             "                dct:subject ?subject .}"});
 
-    Query query = QueryFactory.create(queryString);
-    QueryExecution qExec = QueryExecutionFactory.create(query, model);
-    Model m = qExec.execDescribe();
-    qExec.close();
+    Model queryResult = (Model) sparqlDispatcher.query(queryString);
 
     // If the model is empty, thus no results, return the zero-results-strategy-page
-    if( m.isEmpty() ) {
+    if( queryResult.isEmpty() ) {
       res.sendPage("tips", null);  
     }
     else {
       ByteArrayOutputStream bout = new ByteArrayOutputStream();
-      m.write(bout, "RDF/XML-ABBREV");
+      queryResult.write(bout, "RDF/XML-ABBREV");
 
       Map<String, Object> bizData = new HashMap<String, Object>();
       bizData.put("result-list", bout.toString());
@@ -244,9 +231,5 @@ public class Search implements StatelessAppleController {
 
   public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
-  }
-
-  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
-    this.sparulDispatcher = sparulDispatcher;
   }
 }
