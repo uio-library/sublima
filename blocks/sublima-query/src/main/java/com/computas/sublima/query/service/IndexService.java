@@ -208,7 +208,7 @@ public class IndexService {
    * @param url - The URL of the resource to read
    * @return A int representing the HTTP code.
    */
-  private int getHTTPcodeForUrl(String url) {
+  public int getHTTPcodeForUrl(String url) {
         int result = 0;
 
     try {
