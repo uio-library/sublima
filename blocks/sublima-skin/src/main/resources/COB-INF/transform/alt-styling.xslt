@@ -11,6 +11,7 @@
 
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
   <xsl:import href="rdfxml2xhtml-facets.xsl"/>
+  <xsl:import href="rdfxml2xhtml-table.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
 
 
@@ -109,10 +110,17 @@
                 <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
                 <xsl:call-template name="tips"/>
 
-                <h3>Ressurser</h3>
-                <!-- Søkeresultatene -->
-                <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
-                <!-- Column 1 end -->
+		<xsl:choose>
+		  <xsl:when test="c:page/c:mode = 'resource'">
+		    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="resource"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <h3>Ressurser</h3>
+		    <!-- Søkeresultatene -->
+		    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
+		    <!-- Column 1 end -->
+		  </xsl:otherwise>
+		</xsl:choose>
               </div>
               <div class="col2">
                 <!-- Column 2 start -->

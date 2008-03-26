@@ -11,52 +11,68 @@
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns="http://www.w3.org/1999/xhtml" 
-  exclude-result-prefixes="rdf rdfs dc dct foaf sub sioc od lingvoj wdr">
+  exclude-result-prefixes="rdf rdfs dct foaf sub sioc od lingvoj wdr">
   <xsl:import href="rdfxml-res-templates.xsl"/>
   <xsl:output indent="yes"/>
 
+  <xsl:param name="interface-language">no</xsl:param>
 
-  <xsl:param name="interface-language">en</xsl:param>
-
-  <xsl:template match="rdf:RDF">
+  <xsl:template match="rdf:RDF" mode="resource">
     <table>
-      <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-	<tr>
-	  <th scope="row">
-	    <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  </th>
-	  <td>
-	    <xsl:variable name="uri" select="dct:publisher/@rdf:resource"/>
-	    <xsl:apply-templates select="../*[@rdf:about=$uri]" mode="external-link" />
-	  </td>
-	  <td>
-	    <xsl:apply-templates select="./dct:subject"/>
-	  </td>
-	  <td>
-	    <xsl:apply-templates select="./dct:description"/>
-	  </td>
-	  <td>
-	    <xsl:apply-templates select="./sub:committer"/>
-	  </td>
-	  <td>
-	    <xsl:apply-templates select="./dct:dateAccepted"/>
-	  </td>
-	  <td>
-	    <xsl:apply-templates select="./dct:language"/>
-	  </td>
-	  <td>
-	    <xsl:apply-templates select="./dct:type"/>
-	  </td>
-	  <td>
-	    <xsl:apply-templates select="./wdr:describedBy"/>
-	  </td>
-	  <td>
-	    <xsl:variable name="uri" select="dct:audience/@rdf:resource"/>
-	    <xsl:apply-templates select="../*[@rdf:about=$uri]" />
-	  </td>
+      
+      <tr>
+	<th scope="col">
+	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/>
+	</th>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:variable name="uri" select="dct:publisher/@rdf:resource"/>
+	  <xsl:apply-templates select="../*[@rdf:about=$uri]" mode="external-link" />
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:apply-templates select="sub:Resource/dct:subject"/>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:apply-templates select="sub:Resource/dct:description"/>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:apply-templates select="sub:Resource/sub:committer"/>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:apply-templates select="sub:Resource/dct:dateAccepted"/>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:apply-templates select="sub:Resource/dct:language"/>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:apply-templates select="sub:Resource/dct:type"/>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:apply-templates select="sub:Resource/wdr:describedBy"/>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <xsl:variable name="uri" select="dct:audience/@rdf:resource"/>
+	  <xsl:apply-templates select="../*[@rdf:about=$uri]" />
+	</td>
+      </tr>
 
-	</tr>
-      </xsl:for-each>
     </table>
   </xsl:template>
 
