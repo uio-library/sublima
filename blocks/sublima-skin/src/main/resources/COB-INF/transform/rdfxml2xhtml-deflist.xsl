@@ -20,7 +20,7 @@ xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 
   <xsl:template match="rdf:RDF" mode="results">
     <dl>
-      <xsl:for-each select="rdf:Description"> <!-- The root node for each described resource -->
+      <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
 	<dt>
 	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
 	  <xsl:text> har emne </xsl:text>	  

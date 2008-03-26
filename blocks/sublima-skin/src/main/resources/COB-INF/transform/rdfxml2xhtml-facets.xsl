@@ -18,7 +18,7 @@
 
   <xsl:template match="rdf:RDF" mode="facets">
     <ul>
-      <xsl:for-each select="rdf:Description/dct:subject">
+      <xsl:for-each select="sub:Resource/dct:subject">
 	<xsl:if test="./topic:*"> <!-- This should iterate all unique topics -->
 	  <li>
 	    <xsl:apply-templates select="."/>

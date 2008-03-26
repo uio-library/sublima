@@ -68,7 +68,9 @@
             <div class="colleft">
               <div class="col1">
 
-		<!-- xsl:call-template name="debug"/ -->
+		<!-- 
+		<xsl:call-template name="debug"/>
+		-->
 
                 <!-- Column 1 start -->
                 <xsl:if test="not(c:page/c:advancedsearch/node())">

@@ -20,7 +20,7 @@
 
   <xsl:template match="rdf:RDF">
     <table>
-      <xsl:for-each select="rdf:Description"> <!-- The root node for each described resource -->
+      <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
 	<tr>
 	  <th scope="row">
 	    <xsl:apply-templates select="./dct:title" mode="internal-link"/>
