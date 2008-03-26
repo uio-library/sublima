@@ -34,7 +34,7 @@
             <label for="beskrivelse">Beskrivelse</label>
           </td>
           <td>
-            <textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40" />
+            <textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40"> </textarea>
           </td>
         </tr>
         <tr>
