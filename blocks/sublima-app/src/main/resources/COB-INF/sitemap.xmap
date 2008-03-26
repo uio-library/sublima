@@ -130,10 +130,10 @@
       <map:match pattern="xml/*">
         <map:generate src="templates/{1}.jx.xml" type="jx"/>
         <!-- render the result and add facets and navigation -->
-        <!-- TODO: Is this obsolete now? -->
+        <!-- TODO: Is this obsolete now?
         <map:transform type="servletService">
           <map:parameter name="service" value="servlet:/navigation-and-facets"/>
-        </map:transform>
+        </map:transform>   -->
         <!-- apply styling -->
         <map:serialize type="servletService">
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
