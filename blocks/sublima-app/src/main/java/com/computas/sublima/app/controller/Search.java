@@ -161,6 +161,8 @@ public class Search implements StatelessAppleController {
             "				 dct:publisher ?publisher ;",
             "                dct:subject ?subject .}"});
 
+    logger.trace("Freetext search: SPARQL query sent to dispatcher: " + queryString);
+
     Model queryResult = (Model) sparqlDispatcher.query(queryString);
 
     // If the model is empty, thus no results, return the zero-results-strategy-page
