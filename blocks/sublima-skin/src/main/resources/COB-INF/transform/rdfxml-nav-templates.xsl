@@ -16,10 +16,18 @@
   >
 
   <xsl:template match="skos:Concept">
+    <xsl:param name="role"/>
     <xsl:variable name="uri" select="@rdf:about"/>
     <div class="skos:Concept">
       <p>
-	<a href="{$uri}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
+	<xsl:choose>
+	  <xsl:when test="$role='this-param'">
+	    <h4><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></h4>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <a href="{$uri}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
+	  </xsl:otherwise>
+	</xsl:choose>
       </p>
       <xsl:if test="skos:altLabel[@xml:lang=$interface-language]">
 	<p>

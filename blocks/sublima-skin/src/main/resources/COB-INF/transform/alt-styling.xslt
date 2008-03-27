@@ -5,7 +5,8 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
-        xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:sub="http://xmlns.computas.com/sublima#"
+       xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <!-- xsl:output method="html" indent="yes"/ -->
 
@@ -35,7 +36,24 @@
 
     <html>
       <head>
-        <title>Detektor</title>
+        <title>
+	  <xsl:choose>
+	    <xsl:when test="c:page/c:mode = 'topic-instance'">
+	      <xsl:value-of select="c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+	      <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]">
+		<xsl:text> / </xsl:text> 
+		<xsl:value-of select="c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]"/>
+	      </xsl:if>
+	      <xsl:text> | </xsl:text>
+	    </xsl:when>
+	    <xsl:when test="c:page/c:mode = 'resource'">
+	      <xsl:value-of select="c:page/c:result-list/rdf:RDF/sub:Resource/dct:title"/>
+	      <xsl:text> | </xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
+
+	  Detektor
+	</title>
         <!-- link rel="stylesheet" type="text/css" href="http://detektor.deichman.no/stylesheet.css"/> -->
         <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
       </head>
@@ -102,7 +120,9 @@
                 <xsl:if test="c:page/c:mode = 'topic-instance'">
 
                   <h3>Navigering</h3>
-                  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept"/>
+                  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
+		    <xsl:with-param name="role">this-param</xsl:with-param>
+		  </xsl:apply-templates>
 
                 </xsl:if>
                 <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
