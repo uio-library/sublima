@@ -21,58 +21,92 @@
     <table>
       
       <tr>
-	<th scope="col">
+	<th colspan="2" scope="col">
 	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/>
 	</th>
       </tr>
       <tr>
+	<th scope="row">
+	  Publisert av:
+	</th>
 	<td>
-	  <xsl:variable name="uri" select="dct:publisher/@rdf:resource"/>
-	  <xsl:apply-templates select="../*[@rdf:about=$uri]" mode="external-link" />
+	  <xsl:apply-templates select="sub:Resource/dct:publisher" mode="external-link" />
 	</td>
       </tr>
       <tr>
+	<th scope="row">
+	  Emner:
+	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:subject"/>
 	</td>
       </tr>
       <tr>
+	<th scope="row">
+	  Beskrivelse
+	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:description"/>
 	</td>
       </tr>
       <tr>
+	<th scope="row">
+	  Redaksjonelt godkjent av:
+	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/sub:committer"/>
 	</td>
       </tr>
       <tr>
+	<th scope="row">
+	  Innsendt dato:
+	</th>
+	<td>
+	  <xsl:apply-templates select="sub:Resource/dct:dateSubmitted"/>
+	</td>
+      </tr>
+     
+      <tr>
+	<th scope="row">
+	  Akseptert dato:
+	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:dateAccepted"/>
 	</td>
       </tr>
       <tr>
+	<th scope="row">
+	  Språk:
+	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:language"/>
 	</td>
       </tr>
       <tr>
+	<th scope="row">
+	  Type:
+	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:type"/>
 	</td>
       </tr>
       <tr>
+	<th scope="row">
+	  Status:
+	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/wdr:describedBy"/>
 	</td>
       </tr>
       <tr>
+	<th scope="row">
+	  Ment for:
+	</th>
 	<td>
-	  <xsl:variable name="uri" select="dct:audience/@rdf:resource"/>
-	  <xsl:apply-templates select="../*[@rdf:about=$uri]" />
+	  <xsl:apply-templates select="sub:Resource/dct:audience" />
 	</td>
       </tr>
-
+     
     </table>
   </xsl:template>
 

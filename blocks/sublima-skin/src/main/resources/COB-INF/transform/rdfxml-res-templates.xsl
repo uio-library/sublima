@@ -48,7 +48,11 @@
   <xsl:template match="sub:committer">
     <xsl:value-of select="./sioc:User/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
- 
+  
+  <xsl:template match="dct:audience">
+    <xsl:value-of select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+  </xsl:template>
+
   <xsl:template match="dct:dateAccepted|dct:dateSubmitted">
     <xsl:value-of select="substring-before(., 'T')"/>
   </xsl:template>
@@ -98,21 +102,7 @@
        is searched for. -->
 
   <xsl:template match="wdr:describedBy">
-    <xsl:choose>
-      <xsl:when test="@rdf:resource='http://sublima.computas.com/status/approved'">
-	<xsl:choose>
-	  <xsl:when test="$interface-language='en'">Approved</xsl:when>
-	  <xsl:when test="$interface-language='no'">Godkjent</xsl:when>
-	</xsl:choose>
-      </xsl:when>
-      <xsl:when test="@rdf:resource='http://sublima.computas.com/status/suggested'">
-	<xsl:choose>
-	  <xsl:when test="$interface-language='en'">Suggested</xsl:when>
-	  <xsl:when test="$interface-language='no'">Foreslått</xsl:when>
-	</xsl:choose>
-      </xsl:when>
-	
-    </xsl:choose>
+    <xsl:value-of select="./rdf:Description/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
   <xsl:template match="dct:type">
@@ -131,5 +121,7 @@
       </xsl:when>
 	
     </xsl:choose>
+    <xsl:text>, </xsl:text>
+
   </xsl:template>
 </xsl:stylesheet>
