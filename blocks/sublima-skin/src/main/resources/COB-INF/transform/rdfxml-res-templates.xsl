@@ -67,7 +67,9 @@
 	<a href="{./topic:*/@rdf:about}"><xsl:value-of select="./topic:*/rdfs:label[@xml:lang=$interface-language]"/></a>
       </xsl:when>
     </xsl:choose>
-    <xsl:text> </xsl:text>
+    <xsl:if test="position() != last()">
+      <xsl:text>, </xsl:text>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="dct:publisher">
@@ -119,9 +121,16 @@
 	  <xsl:when test="$interface-language='no'">Bilde</xsl:when>
 	</xsl:choose>
       </xsl:when>
-	
-    </xsl:choose>
-    <xsl:text>, </xsl:text>
+      <xsl:when test="@rdf:resource='http://purl.org/dc/dcmitype/Film'">
+	<xsl:choose>
+	  <xsl:when test="$interface-language='en'">Film</xsl:when>
+	  <xsl:when test="$interface-language='no'">Film</xsl:when>
+	</xsl:choose>
+      </xsl:when>
 
+    </xsl:choose>
+    <xsl:if test="position() != last()">
+      <xsl:text>, </xsl:text>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
