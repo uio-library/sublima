@@ -10,6 +10,12 @@
   <advancedsearch></advancedsearch>
 
   <facets>
-    <!-- jx:out value="#{request}" xmlize="true"/ -->
+    <jx:forEach var="p" select="${cocoon.request.getParameterNames()}">
+      <param key="${p}">
+	<jx:forEach var="v" select="${cocoon.request.getParameterValues(p)}">
+	  <value>${v}</value>
+	</jx:forEach>
+      </param>
+    </jx:forEach>
   </facets>
 </page>
