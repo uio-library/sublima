@@ -18,6 +18,7 @@ import java.net.URLEncoder;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.io.IOException;
+import java.io.File;
 import java.util.Map;
 import java.sql.SQLException;
 
@@ -45,9 +46,10 @@ public class IndexService {
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created database connection " + connection.getDatabaseType());
 
     // -- Read and index all literal strings.
+    File indexDir = new File("/sublimaindex");
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
-    IndexBuilderString larqBuilder = new IndexBuilderString();
-   
+    IndexBuilderString larqBuilder = new IndexBuilderString(indexDir);
+
     //IndexBuilderSubject larqBuilder = new IndexBuilderSubject();
 
     //Create a model based on the one in the DB
@@ -61,6 +63,7 @@ public class IndexService {
 
     // -- Create an index based on existing statements
     larqBuilder.indexStatements(model.listStatements());
+
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Indexed all model statements");
     // -- Finish indexing
     larqBuilder.closeForWriting();
@@ -126,6 +129,7 @@ public class IndexService {
 
     // -- Make globally available
     LARQ.setDefaultIndex(index);
+
     logger.info("SUBLIMA: createExternalResourcesMemoryIndex() --> Indexing - Index now globally available");
 
   }
