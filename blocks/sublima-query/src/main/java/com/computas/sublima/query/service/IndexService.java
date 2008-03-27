@@ -10,16 +10,15 @@ import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
+import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.IOUtils;
 
-import java.net.URL;
-import java.net.URLEncoder;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+import java.net.*;
 import java.io.IOException;
 import java.io.File;
-import java.util.Map;
+import java.util.HashMap;
 import java.sql.SQLException;
 
 /**
@@ -33,6 +32,7 @@ import java.sql.SQLException;
 public class IndexService {
 
     private static Logger logger = Logger.getLogger(IndexService.class);
+    private DefaultSparulDispatcher sparulDispatcher;
 
   /**
    *  Method to create an index based on the internal content
@@ -46,7 +46,7 @@ public class IndexService {
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created database connection " + connection.getDatabaseType());
 
     // -- Read and index all literal strings.
-    File indexDir = new File("/sublimaindex");
+    File indexDir = new File(SettingsService.getProperty("sublima.index.directory"));
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
     IndexBuilderString larqBuilder = new IndexBuilderString(indexDir);
 
@@ -78,8 +78,10 @@ public class IndexService {
 
   /**
    *  Method to create an index based on the external content
+   * @deprecated Replaced by a CRON job
    */
-  public void createExternalResourcesMemoryIndex() {
+
+  @Deprecated public void createExternalResourcesMemoryIndex() {
     IndexBuilderExt larqBuilder = new IndexBuilderExt() ;
     ResultSet resultSet;
 
@@ -97,8 +99,8 @@ public class IndexService {
     for(int i = 0; i<10; i++) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length()-3).trim();
-      if(getHTTPcodeForUrl(url) == 200) {
-        result = readURL(url);
+      if("200".equals(getHTTPcodeForUrl(url))) {
+        result = readContentFromURL(url);
         // Strip all HTML tags
         result = result.replaceAll("\\<.*?>","");
       }
@@ -114,7 +116,7 @@ public class IndexService {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length()-3).trim();
       if(getHTTPcodeForUrl(url) == 200) {
-        result = readURL(url);
+        result = readContentFromURL(url);
       }
 
       if(result != null) {
@@ -135,7 +137,7 @@ public class IndexService {
   }
 
   /**
-   * Method to extract all URLs to the resources in the model
+   * Method to extract all URLs of the resources in the model
    *
    * @return ResultSet containing all resource URLS from the model
    */
@@ -153,34 +155,41 @@ public class IndexService {
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, model);
     ResultSet resultSet = qExec.execSelect();
+
+    try {
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    
     logger.info("SUBLIMA: getAllExternalResourcesURLs() --> Indexing - Fetched all resource URLs from the model");
     return resultSet;
   }
 
   /**
    * A method to validate all urls on the resources. Adds the URL to the list along with
-   * the http code if it's not okey - 200.
-   * @return A map containing the URL with the error code
+   * the http code.
+   * @return A map containing the URL and its HTTP Code. In case of exceptions a String
+   * representation of the exception is used.
    */
-  //todo Return a map ie with the failing urls
-  public void validateURLs() {
+  public HashMap<String, String> validateURLs() {
     ResultSet resultSet;
     resultSet = getAllExternalResourcesURLs();
+    HashMap<String, String> urlCodeMap = new HashMap<String, String>();
 
     // For each URL, do a HTTP GET and check the HTTP code
     URL u = null;
-    int result = 0;
+    String result;
 
     while(resultSet.hasNext()) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length()-3).trim();
-
       result = getHTTPcodeForUrl(url);
-
-      if(result != 200) {
-        System.out.println(url + " returned a " + result);
-      }
+      urlCodeMap.put(url, result);
+      logger.debug("validateURLS() ---> " + url + "  :  " + result);
     }
+
+    return urlCodeMap;
   }
 
   /**
@@ -189,7 +198,7 @@ public class IndexService {
    * @param url - The URL of the resource to read
    * @return A String containing the content of the given URL
    */
-  private String readURL(String url) {
+  private String readContentFromURL(String url) {
     String result = null;
 
     try {
@@ -208,29 +217,89 @@ public class IndexService {
 
   /**
    * A method to check a URL. Returns the HTTP code.
+   * In cases where the connection gives an exception
+   * the exception is catched and a String representation
+   * of the exception is returned as the http code
    *
    * @param url - The URL of the resource to read
-   * @return A int representing the HTTP code.
+   * @return A String representing the HTTP code. In case of exceptions a String
+   * representation of the exception is used.
    */
-  public int getHTTPcodeForUrl(String url) {
-        int result = 0;
+  public String getHTTPcodeForUrl(String url) {
+        String result = null;
 
     try {
       URL u = new URL(url);
       HttpURLConnection con = (HttpURLConnection) u.openConnection();
-      result = con.getResponseCode();
+      result = String.valueOf(con.getResponseCode());
     }
     catch (MalformedURLException e) {
-      e.printStackTrace();
-    }
-    catch (IOException e) {
+      result = "MALFORMED_URL";
       e.printStackTrace();
     }
     catch (ClassCastException e) {
-      System.out.println("***** ERROR ****** " + url);
+      result = "UNSUPPORTED_PROTOCOL";
       e.printStackTrace();
-
+    }
+    catch (UnknownHostException e) {
+      result = "UNKNOWN_HOST";
+      e.printStackTrace();
+    }
+    catch (ConnectException e) {
+      result = "CONNECTION_TIMEOUT";
+      e.printStackTrace();
+    }
+    catch(IOException e) {
+      result = "IOEXCEPTION";
+      e.printStackTrace();
     }
     return result;
   }
+
+  /**
+   * Method that updates a resource based on the HTTP Code.
+   * @param url - The URL (resource URI) to update
+   * @param code - The URLs HTTP Code
+   */
+  public void updateResourceStatus(String url, String code) {
+    sparulDispatcher = new DefaultSparulDispatcher();
+    String updateString = null;
+
+    /*
+      if("200".equals(code)) {
+
+      updateString = "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+                     "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                     "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                     "MODIFY <" + url + ">\n" +
+                     "DELETE\n" +
+                     "{ " +
+                     "wdr:describedBy ?oldstatus " +
+                     "}\n" +
+                     "INSERT\n" +
+
+    }
+    */
+
+
+  }
+
+  /**
+   * Method thats perform the linkcheck job. The job performs an
+   * URL check on all resource URLs, fetches the URL content for all URLs
+   * marked as OK and updates the status in the model
+   */
+
+  public void performLinkcheckJob() {
+    HashMap<String, String> validatedURLs = null;
+
+    validatedURLs = validateURLs();
+
+    for(String url : validatedURLs.keySet()) {
+      String code = validatedURLs.get(url);
+      updateResourceStatus(url, code);
+    }
+  }
+
+
 }

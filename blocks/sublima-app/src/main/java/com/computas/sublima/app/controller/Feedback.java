@@ -35,10 +35,10 @@ public class Feedback implements StatelessAppleController {
 
       // Do a URL check so that we know we have a valid URL
       IndexService indexService = new IndexService();
-      int status = indexService.getHTTPcodeForUrl(url);
+      String status = indexService.getHTTPcodeForUrl(url);
 
       //todo We have to get the interface-language @no from somewhere
-      if (status == 200) {
+      if ("200".equals(status)) {
         String partialUpdateString =
                 "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
