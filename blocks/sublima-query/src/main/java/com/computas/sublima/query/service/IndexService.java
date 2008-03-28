@@ -1,44 +1,42 @@
 package com.computas.sublima.query.service;
 
+import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexBuilderExt;
+import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.LARQ;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
-import com.computas.sublima.query.impl.DefaultSparulDispatcher;
-import org.apache.log4j.Logger;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 
-import java.net.*;
-import java.io.IOException;
 import java.io.File;
-import java.util.HashMap;
+import java.io.IOException;
+import java.net.*;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
  * Has methods for creating and accessing indexes
- *
  *
  * @author: mha
  * Date: 13.mar.2008
  */
 public class IndexService {
 
-    private static Logger logger = Logger.getLogger(IndexService.class);
-    private DefaultSparulDispatcher sparulDispatcher;
+  private static Logger logger = Logger.getLogger(IndexService.class);
+  private DefaultSparulDispatcher sparulDispatcher;
 
   /**
-   *  Method to create an index based on the internal content
+   * Method to create an index based on the internal content
    */
   public void createInternalResourcesMemoryIndex() {
-    
+
     DatabaseService myDbService = new DatabaseService();
     IDBConnection connection = myDbService.getConnection();
     ResultSet resultSet;
@@ -48,7 +46,13 @@ public class IndexService {
     // -- Read and index all literal strings.
     File indexDir = new File(SettingsService.getProperty("sublima.index.directory"));
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
-    IndexBuilderString larqBuilder = new IndexBuilderString(indexDir);
+    if("memory".equals(SettingsService.getProperty("sublima.index.type"))) {
+      IndexBuilderString larqBuilder = new IndexBuilderString();
+    }
+    else {
+      IndexBuilderString larqBuilder = new IndexBuilderString(indexDir);
+    }
+
 
     //IndexBuilderSubject larqBuilder = new IndexBuilderSubject();
 
@@ -58,7 +62,7 @@ public class IndexService {
     try {
       connection.close();
     } catch (SQLException e) {
-      e.printStackTrace(); 
+      e.printStackTrace();
     }
 
     // -- Create an index based on existing statements
@@ -77,35 +81,36 @@ public class IndexService {
   }
 
   /**
-   *  Method to create an index based on the external content
+   * Method to create an index based on the external content
+   *
    * @deprecated Replaced by a CRON job
    */
 
-  @Deprecated public void createExternalResourcesMemoryIndex() {
-    IndexBuilderExt larqBuilder = new IndexBuilderExt() ;
+  @Deprecated
+  public void createExternalResourcesMemoryIndex() {
+    IndexBuilderExt larqBuilder = new IndexBuilderExt();
     ResultSet resultSet;
-
 
     // -- Read and index all external resources
     logger.info("SUBLIMA: createExternalResourcesMemoryIndex() --> Indexing - Read and index all external resources");
 
     resultSet = getAllExternalResourcesURLs();
-    IndexBuilderExt larqBuilderExt = new IndexBuilderExt() ;
+    IndexBuilderExt larqBuilderExt = new IndexBuilderExt();
 
     // For each URL, do a HTTP GET and extract the content. This content is put in the index.
     URL u = null;
     String result = null;
 
-    for(int i = 0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
       String resultURL = resultSet.next().toString();
-      String url = resultURL.substring(10, resultURL.length()-3).trim();
-      if("200".equals(getHTTPcodeForUrl(url))) {
+      String url = resultURL.substring(10, resultURL.length() - 3).trim();
+      if ("200".equals(getHTTPcodeForUrl(url))) {
         result = readContentFromURL(url);
         // Strip all HTML tags
-        result = result.replaceAll("\\<.*?>","");
+        result = result.replaceAll("\\<.*?>", "");
       }
 
-      if(result != null) {
+      if (result != null) {
         Resource r = ResourceFactory.createResource(url);
         larqBuilderExt.index(r, result);
         System.out.println(result);
@@ -126,8 +131,8 @@ public class IndexService {
       }
     }*/
 
-    larqBuilder.closeForWriting() ;
-    IndexLARQ index = larqBuilder.getIndex() ;
+    larqBuilder.closeForWriting();
+    IndexLARQ index = larqBuilder.getIndex();
 
     // -- Make globally available
     LARQ.setDefaultIndex(index);
@@ -161,7 +166,7 @@ public class IndexService {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    
+
     logger.info("SUBLIMA: getAllExternalResourcesURLs() --> Indexing - Fetched all resource URLs from the model");
     return resultSet;
   }
@@ -169,8 +174,9 @@ public class IndexService {
   /**
    * A method to validate all urls on the resources. Adds the URL to the list along with
    * the http code.
+   *
    * @return A map containing the URL and its HTTP Code. In case of exceptions a String
-   * representation of the exception is used.
+   *         representation of the exception is used.
    */
   public HashMap<String, String> validateURLs() {
     ResultSet resultSet;
@@ -181,13 +187,23 @@ public class IndexService {
     URL u = null;
     String result;
 
-    while(resultSet.hasNext()) {
+    for (int i = 0; i < 40; i++) {
       String resultURL = resultSet.next().toString();
-      String url = resultURL.substring(10, resultURL.length()-3).trim();
+      String url = resultURL.substring(10, resultURL.length() - 3).trim();
       result = getHTTPcodeForUrl(url);
       urlCodeMap.put(url, result);
       logger.debug("validateURLS() ---> " + url + "  :  " + result);
     }
+
+    /*
+    while (resultSet.hasNext()) {
+        String resultURL = resultSet.next().toString();
+        String url = resultURL.substring(10, resultURL.length() - 3).trim();
+        result = getHTTPcodeForUrl(url);
+        urlCodeMap.put(url, result);
+        logger.debug("validateURLS() ---> " + url + "  :  " + result);
+      }
+     */
 
     return urlCodeMap;
   }
@@ -223,10 +239,10 @@ public class IndexService {
    *
    * @param url - The URL of the resource to read
    * @return A String representing the HTTP code. In case of exceptions a String
-   * representation of the exception is used.
+   *         representation of the exception is used.
    */
   public String getHTTPcodeForUrl(String url) {
-        String result = null;
+    String result = null;
 
     try {
       URL u = new URL(url);
@@ -249,7 +265,7 @@ public class IndexService {
       result = "CONNECTION_TIMEOUT";
       e.printStackTrace();
     }
-    catch(IOException e) {
+    catch (IOException e) {
       result = "IOEXCEPTION";
       e.printStackTrace();
     }
@@ -258,30 +274,88 @@ public class IndexService {
 
   /**
    * Method that updates a resource based on the HTTP Code.
-   * @param url - The URL (resource URI) to update
+   * The resource can have one of three statuses: OK, CHECK or INACTIVE.
+   * This list shows what HTTP Codes that gives what status.
+   * <p/>
+   * 2xx - OK
+   * <p/>
+   * 301 - Fetch new URL from HTTP Header, then CHECK
+   * 302 - OK
+   * 303 - OK
+   * 304 - OK
+   * 305 - OK
+   * 306 - INACTIVE
+   * 307 - OK
+   * <p/>
+   * 400 - INACTIVE
+   * 401 - CHECK
+   * 403 - INACTIVE
+   * 404 - CHECK
+   * 405 - INACTIVE
+   * 406 - CHECK
+   * 407 - CHECK
+   * 408 - CHECK
+   * 409 - CHECK
+   * 410 - GONE
+   * 411 to 417 - CHECK
+   * <p/>
+   * 5xx - CHECK
+   * <p/>
+   * MALFORMED_URL - INACTIVE
+   * UNSUPPORTED_PROTOCOL - INACTIVE
+   * UNKNOWN_HOST - CHECK
+   * CONNECTION_TIMEOUT - CHECK
+   * <p/>
+   * Others - CHECK
+   *
+   * @param url  - The URL (resource URI) to update
    * @param code - The URLs HTTP Code
    */
   public void updateResourceStatus(String url, String code) {
     sparulDispatcher = new DefaultSparulDispatcher();
     String updateString = null;
+    String status = null;
 
-    /*
-      if("200".equals(code)) {
-
-      updateString = "PREFIX dct: <http://purl.org/dc/terms/>\n" +
-                     "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-                     "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                     "MODIFY <" + url + ">\n" +
-                     "DELETE\n" +
-                     "{ " +
-                     "wdr:describedBy ?oldstatus " +
-                     "}\n" +
-                     "INSERT\n" +
-
+    // OK
+    if ("302".equals(code) ||
+            "303".equals(code) ||
+            "304".equals(code) ||
+            "305".equals(code) ||
+            "307".equals(code) ||
+            code.startsWith("2")) {
+      status = "<http://sublima.computas.com/status/OK>";
     }
-    */
+    // GONE
+    else if ("410".equals(code)) {
+      status = "<http://sublima.computas.com/status/GONE>";
+    }
+    // INACTIVE
+    else if ("306".equals(code) ||
+            "400".equals(code) ||
+            "403".equals(code) ||
+            "405".equals(code) ||
+            "MALFORMED_URL".equals(code) ||
+            "UNSUPPORTED_PROTOCOL".equals(code)) {
+      status = "<http://sublima.computas.com/status/INACTIVE>";
+    }
+    // CHECK
+    else {
+      status = "<http://sublima.computas.com/status/CHECK>";
+    }
 
+    updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "MODIFY\n" +
+            "DELETE\n" +
+            "{ " +
+            "<" +url +"> sub:status ?oldstatus " +
+            "}\n" +
+            "INSERT\n" +
+            "{ " +
+            "<" +url +"> sub:status " + status + "\n" +
+            "}";
 
+    boolean success = sparulDispatcher.query(updateString);
+    logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- UPDATE RESULT --> " + success);
   }
 
   /**
@@ -295,7 +369,7 @@ public class IndexService {
 
     validatedURLs = validateURLs();
 
-    for(String url : validatedURLs.keySet()) {
+    for (String url : validatedURLs.keySet()) {
       String code = validatedURLs.get(url);
       updateResourceStatus(url, code);
     }
