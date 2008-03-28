@@ -15,6 +15,7 @@
   <xsl:import href="rdfxml2xhtml-table.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
 
+  <xsl:param name="baseurl" />
 
     <!-- A debug template that dumps the source tree. Do not remove
          this, just comment out the call-template -->
@@ -157,7 +158,7 @@
                 <!-- Column 3 start -->
                   <!-- xsl:if test="c:page/c:mode = 'search-result'" -->
                  <h2>Min side osv.</h2>
-                 <a href="tips">Tips oss om en ny ressurs</a>
+                 <a href="{$baseurl}tips">Tips oss om en ny ressurs</a>
 
 
                 <!-- /xsl:if -->
