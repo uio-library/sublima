@@ -27,7 +27,7 @@ public final class ContextListener implements ServletContextListener {
 
     if("true".equalsIgnoreCase(SettingsService.getProperty("sublima.checkurl.onstartup"))) {
       logger.info("SUBLIMA: Property sublima.checkurl.onstartup set to TRUE --> URL Check - Performing a url check");
-      indexService.validateURLs();
+      indexService.performLinkcheckJob();
     }
 
     if("true".equalsIgnoreCase(SettingsService.getProperty("sublima.index.external.onstartup"))) {
