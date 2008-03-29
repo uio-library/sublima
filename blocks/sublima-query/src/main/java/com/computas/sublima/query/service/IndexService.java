@@ -40,6 +40,7 @@ public class IndexService {
     DatabaseService myDbService = new DatabaseService();
     IDBConnection connection = myDbService.getConnection();
     ResultSet resultSet;
+    IndexBuilderString larqBuilder;
 
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created database connection " + connection.getDatabaseType());
 
@@ -47,10 +48,10 @@ public class IndexService {
     File indexDir = new File(SettingsService.getProperty("sublima.index.directory"));
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
     if("memory".equals(SettingsService.getProperty("sublima.index.type"))) {
-      IndexBuilderString larqBuilder = new IndexBuilderString();
+      larqBuilder = new IndexBuilderString();
     }
     else {
-      IndexBuilderString larqBuilder = new IndexBuilderString(indexDir);
+      larqBuilder = new IndexBuilderString(indexDir);
     }
 
 
