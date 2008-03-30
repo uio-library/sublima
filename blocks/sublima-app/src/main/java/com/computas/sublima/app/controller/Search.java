@@ -153,7 +153,7 @@ public class Search implements StatelessAppleController {
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "DESCRIBE ?resource ?subject ?publisher",
             "WHERE {",
-            "        ?lit pf:textMatch ( '" + searchstring + "*' 10 ) .",
+            "        ?lit pf:textMatch ( '" + searchstring + "' 100) .",
             "        ?resource ?p ?lit; ",
             "                dct:title ?title;",
             "                dct:description ?desc;",

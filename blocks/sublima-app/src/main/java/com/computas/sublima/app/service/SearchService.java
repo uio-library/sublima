@@ -35,7 +35,7 @@ public class SearchService {
      * @param searchstring The given search string
      * @return A transformed search string, using AND/OR based on the configuration
      */
-    //todo Get the regex right, and more advanced check on search string. Ie. - + NOT
+    //todo More advanced check on search string. Ie. - + NOT OR AND if defined in the search term by the user
     public String buildSearchString(String searchstring) {
 
         /*
@@ -56,7 +56,7 @@ public class SearchService {
             actual += ("".equals(actual) ? "" : " " + defaultBooleanOperator + " ") + term;
         }
 
-        //todo This could probably be a part of the regex
+        //todo Can this also be done with the regex?
         // Split the search string, and add * after each word that isn't a part of a phrase
         boolean partOfPhrase = false;
         StringBuffer stringBuffer = new StringBuffer();
