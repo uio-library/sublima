@@ -15,7 +15,7 @@
   <xsl:import href="rdfxml2xhtml-table.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
 
-  <xsl:param name="baseurl" />
+  <xsl:param name="baseurl"/>
 
     <!-- A debug template that dumps the source tree. Do not remove
          this, just comment out the call-template -->
@@ -61,15 +61,15 @@
       <body>
 
         <div id="header">
-          <img alt="header logo" src="images/detektor_beta_header.png"/>
+          <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
 
           <h2>Demosite for portalverktøyet Sublima</h2>
           <ul>
             <li>
-              <a href="home" class="active">Hjem</a>
+              <a href="{$baseurl}/home" class="active">Hjem</a>
             </li>
             <li>
-              <a href="advancedsearch">Avansert søk
+              <a href="{$baseurl}/advancedsearch">Avansert søk
               </a>
             </li>
           </ul>
@@ -105,7 +105,7 @@
                           <input type="submit" value="Søk"/>
                         </td>
                         <td>
-                          <a href="advancedsearch">Avansert søk</a>
+                          <a href="{$baseurl}/advancedsearch">Avansert søk</a>
                         </td>
                       </tr>
                       <tr>
@@ -158,7 +158,7 @@
                 <!-- Column 3 start -->
                   <!-- xsl:if test="c:page/c:mode = 'search-result'" -->
                  <h2>Min side osv.</h2>
-                 <a href="{$baseurl}tips">Tips oss om en ny ressurs</a>
+                 <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a>
 
 
                 <!-- /xsl:if -->
