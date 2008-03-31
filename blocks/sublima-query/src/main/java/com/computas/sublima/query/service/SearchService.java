@@ -1,4 +1,4 @@
-package com.computas.sublima.app.service;
+package com.computas.sublima.query.service;
 
 import org.apache.log4j.Logger;
 
