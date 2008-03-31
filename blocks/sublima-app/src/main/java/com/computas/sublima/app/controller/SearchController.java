@@ -138,6 +138,7 @@ public class SearchController implements StatelessAppleController {
       logger.debug("SUBLIMA: Deep search enabled");
     }
 
+    /*
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
             "PREFIX dct: <http://purl.org/dc/terms/>",
@@ -151,6 +152,29 @@ public class SearchController implements StatelessAppleController {
             "                dct:language ?lang;",
             "				 dct:publisher ?publisher ;",
             "                dct:subject ?subject .}"});
+     */
+     String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "DESCRIBE ?resource ?subject ?publisher",
+             "WHERE {",
+             "    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
+             "  {",
+             "    ?resource ?p1 ?lit;",
+             "              dct:subject ?subject;",
+             "              dct:publisher ?publisher.",
+             "  }",
+             "  UNION",
+             "  {",
+             "      ?resource dct:subject ?subject1 .",
+             "      ?subject1 ?p2 ?lit .",
+             "      ?resource dct:subject ?subject;",
+             "                dct:publisher ?publisher .",
+             "  }",
+             "}",
+             });
+
 
     logger.trace("Freetext search: SPARQL query sent to dispatcher: " + queryString);
 
