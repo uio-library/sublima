@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:c="http://xmlns.computas.com/cocoon">
+  <c:title>Sublima administrasjon</c:title>
+
+  <c:breadcrumbs>
+    <a href="admin">Admin</a>
+  </c:breadcrumbs>
+
+  <c:menu>
+    <a href="admin/emner">Emner</a>
+    <br/>
+    <a href="admin/ressurser">Ressurser</a>
+    <br/>
+    <a href="admin/brukere">Brukere</a>
+    <br/>
+    <a href="admin/utgivere">Utgivere</a>
+    <br/>
+  </c:menu>
+
+  <c:content>
+    <h3>Sublima administrasjon</h3>
+    <p>
+      Paa denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima du vil
+      administrere fra linkene til venstre.
+    </p>
+  </c:content>
+
+</c:page>

@@ -8,6 +8,24 @@
 
   <map:pipelines>
 
+    <!-- Pipeline for the admin part -->
+    <map:pipeline>
+
+      <!-- Initial admin page -->
+      <map:match pattern="admin">
+        <map:call function="com.computas.sublima.app.controller.AdminController">
+          <map:parameter name="mode" value="index"/>
+        </map:call>
+      </map:match>
+
+      <map:match pattern="admin/*">
+        <map:call function="com.computas.sublima.app.controller.AdminController">
+          <map:parameter name="mode" value="{1}"/>
+        </map:call>
+      </map:match>
+
+    </map:pipeline>
+
     <map:pipeline>
 
       <!-- pattern to match for "", when users don't define a URL -->
@@ -30,6 +48,15 @@
       </map:match>
 
       <map:match pattern="tips">
+        <map:generate src="templates/tips.jx.xml" type="jx"/>
+        <!-- apply styling -->
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+        </map:serialize>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="textcontext/testcontext">
         <map:generate src="templates/tips.jx.xml" type="jx"/>
         <!-- apply styling -->
         <map:serialize type="servletService">
