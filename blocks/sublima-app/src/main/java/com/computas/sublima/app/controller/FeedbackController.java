@@ -57,6 +57,7 @@ public class FeedbackController implements StatelessAppleController {
         partialUpdateStringBuffer.append("}");
 
         success = sparulDispatcher.query(partialUpdateStringBuffer.toString());
+        logger.trace("sendTips --> RESULT: " + success);
 
         if (success) {
           res.sendPage("takk", null);
@@ -74,6 +75,7 @@ public class FeedbackController implements StatelessAppleController {
 
     return;
   }
+
 
   public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
