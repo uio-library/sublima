@@ -314,7 +314,6 @@ public class IndexService {
    */
   public void updateResourceStatus(String url, String code) {
     sparulDispatcher = new DefaultSparulDispatcher();
-    String updateString = null;
     String status = null;
 
     // OK
@@ -344,7 +343,7 @@ public class IndexService {
       status = "<http://sublima.computas.com/status/CHECK>";
     }
 
-    updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+    String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
             "MODIFY\n" +
             "DELETE\n" +
             "{ " +
@@ -357,6 +356,25 @@ public class IndexService {
 
     boolean success = sparulDispatcher.query(updateString);
     logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- UPDATE RESULT --> " + success);
+  }
+
+  public void updateResourceExternalContent(String url) {
+    sparulDispatcher = new DefaultSparulDispatcher();
+    String resourceExternalContent = readContentFromURL(url);
+
+    String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "MODIFY\n" +
+            "DELETE\n" +
+            "{ " +
+            "<" +url +"> ext:body ?oldbody " +
+            "}\n" +
+            "INSERT\n" +
+            "{ " +
+            "<" +url +"> ext:body " + resourceExternalContent + "\n" +
+            "}";
+
+    boolean success = sparulDispatcher.query(updateString);
+    logger.info("updateResourceExternalContent() ---> " + url + " -- UPDATE RESULT --> " + success);
   }
 
   /**

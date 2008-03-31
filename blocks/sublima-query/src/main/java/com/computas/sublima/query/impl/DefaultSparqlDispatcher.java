@@ -81,6 +81,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     QueryExecution qExec = QueryExecutionFactory.create(query, model);
     Model queryResult = qExec.execDescribe();
     qExec.close();
+    model.close();
 
     return queryResult;
   }

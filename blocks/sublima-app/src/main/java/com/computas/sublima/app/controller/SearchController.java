@@ -18,11 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Search implements StatelessAppleController {
+public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private String mode;
 
-  private static Logger logger = Logger.getLogger(Search.class);
+  private static Logger logger = Logger.getLogger(SearchController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {

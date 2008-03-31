@@ -39,7 +39,7 @@
       </map:match>
 
       <map:match pattern="sendtips">
-        <map:call function="com.computas.sublima.app.controller.Feedback">
+        <map:call function="com.computas.sublima.app.controller.FeedbackController">
           <map:parameter name="mode" value="sendtips"/>
         </map:call>
       </map:match>
@@ -54,7 +54,7 @@
       </map:match>
 
       <map:match pattern="advancedsearch">
-        <!--map:call function="com.computas.sublima.app.controller.Search">
+        <!--map:call function="com.computas.sublima.app.controller.SearchControllerController">
           <map:parameter name="mode" value="advancedsearch"/>
         </map:call-->
         <map:generate src="templates/advancedsearch.jx.xml" type="jx"/>
@@ -69,13 +69,13 @@
       </map:match>
 
       <map:match pattern="search-result">
-        <map:call function="com.computas.sublima.app.controller.Search">
+        <map:call function="com.computas.sublima.app.controller.SearchController">
           <map:parameter name="mode" value="search-result"/>
         </map:call>
       </map:match>
 
       <map:match pattern="topic-instance/*">
-        <map:call function="com.computas.sublima.app.controller.Search">
+        <map:call function="com.computas.sublima.app.controller.SearchController">
           <map:parameter name="mode" value="topic-instance"/>
           <map:parameter name="topic" value="{1}"/>
           <map:parameter name="interface-language" value="no"/>
@@ -83,7 +83,7 @@
       </map:match>
 
       <map:match pattern="resource/*">
-        <map:call function="com.computas.sublima.app.controller.Search">
+        <map:call function="com.computas.sublima.app.controller.SearchController">
           <map:parameter name="mode" value="resource"/>
           <map:parameter name="name" value="{1}"/>
           <map:parameter name="interface-language" value="no"/>
@@ -91,7 +91,7 @@
       </map:match>
 
       <map:match pattern="freetext-result">
-        <map:call function="com.computas.sublima.app.controller.Search">
+        <map:call function="com.computas.sublima.app.controller.SearchController">
           <map:parameter name="mode" value="freetext-result"/>
         </map:call>
       </map:match>

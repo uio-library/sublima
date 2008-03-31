@@ -1,17 +1,15 @@
 package com.computas.sublima.app.controller;
 
-import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.IndexService;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
 
-public class Feedback implements StatelessAppleController {
+public class FeedbackController implements StatelessAppleController {
 
-  private static Logger logger = Logger.getLogger(Feedback.class);
+  private static Logger logger = Logger.getLogger(FeedbackController.class);
   private String mode;
   private SparulDispatcher sparulDispatcher;
   boolean success = false;
