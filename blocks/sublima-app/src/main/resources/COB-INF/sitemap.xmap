@@ -4,171 +4,182 @@
              xsi:schemaLocation="http://apache.org/cocoon/sitemap/1.0 http://cocoon.apache.org/schema/sitemap/cocoon-sitemap-1.0.xsd"
              xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:flow language="spring-apples"/>
+    <map:flow language="spring-apples"/>
 
-  <map:pipelines>
+    <map:pipelines>
 
-    <!-- Pipeline for the admin part -->
-    <map:pipeline>
+        <!-- Pipeline for the admin part -->
+        <map:pipeline>
 
-      <!-- Initial admin page -->
-      <map:match pattern="admin">
-        <map:call function="com.computas.sublima.app.controller.AdminController">
-          <map:parameter name="mode" value="index"/>
-        </map:call>
-      </map:match>
+            <!-- Initial admin page -->
+            <map:match pattern="admin">
+                <map:generate src="templates/admin.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/admin-styling"/>
+                </map:serialize>
+                <map:serialize type="xml"/>
+            </map:match>
 
-      <map:match pattern="admin/*">
-        <map:call function="com.computas.sublima.app.controller.AdminController">
-          <map:parameter name="mode" value="{1}"/>
-        </map:call>
-      </map:match>
+            <!-- all other admin pages. Returns a 404 if the page is not found. -->
+            <map:match pattern="admin/*">
+                <map:call function="com.computas.sublima.app.controller.AdminController">
+                    <map:parameter name="mode" value="{1}"/>
+                </map:call>
+            </map:match>
 
-    </map:pipeline>
+        </map:pipeline>
 
-    <map:pipeline>
+        <map:pipeline>
 
-      <!-- pattern to match for "", when users don't define a URL -->
-      <map:match pattern="">
-        <map:generate src="cocoon:/empty"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-      </map:match>
+            <!-- pattern to match for "", when users don't define a URL -->
+            <map:match pattern="">
+                <map:generate src="cocoon:/empty"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+            </map:match>
 
-      <!-- So that we have a "home" link on the site -->
-      <map:match pattern="home">
-        <map:redirect-to uri="cocoon:/"/>
-      </map:match>
+            <!-- So that we have a "home" link on the site -->
+            <map:match pattern="home">
+                <map:redirect-to uri="cocoon:/"/>
+            </map:match>
 
-      <map:match pattern="empty">
-        <map:generate src="templates/empty-page.jx.xml" type="jx"/>
-        <map:serialize type="xml"/>
-      </map:match>
+            <map:match pattern="empty">
+                <map:generate src="templates/empty-page.jx.xml" type="jx"/>
+                <map:serialize type="xml"/>
+            </map:match>
 
-      <map:match pattern="tips">
-        <map:generate src="templates/tips.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-        <map:serialize type="xml"/>
-      </map:match>
+            <map:match pattern="tips">
+                <map:generate src="templates/tips.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+                <map:serialize type="xml"/>
+            </map:match>
 
-      <map:match pattern="textcontext/testcontext">
-        <map:generate src="templates/tips.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-        <map:serialize type="xml"/>
-      </map:match>
+            <map:match pattern="textcontext/testcontext">
+                <map:generate src="templates/tips.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+                <map:serialize type="xml"/>
+            </map:match>
 
-      <map:match pattern="sendtips">
-        <map:call function="com.computas.sublima.app.controller.FeedbackController">
-          <map:parameter name="mode" value="sendtips"/>
-        </map:call>
-      </map:match>
+            <map:match pattern="sendtips">
+                <map:call function="com.computas.sublima.app.controller.FeedbackController">
+                    <map:parameter name="mode" value="sendtips"/>
+                </map:call>
+            </map:match>
 
-      <map:match pattern="takk">
-        <map:generate src="templates/takktips.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-        <map:serialize type="xml"/>
-      </map:match>
+            <map:match pattern="takk">
+                <map:generate src="templates/takktips.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+                <map:serialize type="xml"/>
+            </map:match>
 
-      <map:match pattern="advancedsearch">
-        <!--map:call function="com.computas.sublima.app.controller.SearchControllerController">
-          <map:parameter name="mode" value="advancedsearch"/>
-        </map:call-->
-        <map:generate src="templates/advancedsearch.jx.xml" type="jx"/>
-        <!--map:transform type="servletService">
-          <map:parameter name="service" value="servlet:/navigation-and-facets"/>
-        </map:transform-->
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-        <map:serialize type="xml"/>
-      </map:match>
+            <map:match pattern="advancedsearch">
+                <!--map:call function="com.computas.sublima.app.controller.SearchControllerController">
+                  <map:parameter name="mode" value="advancedsearch"/>
+                </map:call-->
+                <map:generate src="templates/advancedsearch.jx.xml" type="jx"/>
+                <!--map:transform type="servletService">
+                  <map:parameter name="service" value="servlet:/navigation-and-facets"/>
+                </map:transform-->
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+                <map:serialize type="xml"/>
+            </map:match>
 
-      <map:match pattern="search-result">
-        <map:call function="com.computas.sublima.app.controller.SearchController">
-          <map:parameter name="mode" value="search-result"/>
-        </map:call>
-      </map:match>
+            <map:match pattern="search-result">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="search-result"/>
+                </map:call>
+            </map:match>
 
-      <map:match pattern="topic-instance/*">
-        <map:call function="com.computas.sublima.app.controller.SearchController">
-          <map:parameter name="mode" value="topic-instance"/>
-          <map:parameter name="topic" value="{1}"/>
-          <map:parameter name="interface-language" value="no"/>
-        </map:call>
-      </map:match>
+            <map:match pattern="topic-instance/*">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="topic-instance"/>
+                    <map:parameter name="topic" value="{1}"/>
+                    <map:parameter name="interface-language" value="no"/>
+                </map:call>
+            </map:match>
 
-      <map:match pattern="resource/*">
-        <map:call function="com.computas.sublima.app.controller.SearchController">
-          <map:parameter name="mode" value="resource"/>
-          <map:parameter name="name" value="{1}"/>
-          <map:parameter name="interface-language" value="no"/>
-        </map:call>
-      </map:match>
+            <map:match pattern="resource/*">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="resource"/>
+                    <map:parameter name="name" value="{1}"/>
+                    <map:parameter name="interface-language" value="no"/>
+                </map:call>
+            </map:match>
 
-      <map:match pattern="freetext-result">
-        <map:call function="com.computas.sublima.app.controller.SearchController">
-          <map:parameter name="mode" value="freetext-result"/>
-        </map:call>
-      </map:match>
+            <map:match pattern="freetext-result">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="freetext-result"/>
+                </map:call>
+            </map:match>
 
-      <map:match pattern="navigation-and-facets">
-        <map:generate src="service-consumer:"/>
-        <map:serialize type="xml"/>
-      </map:match>
+            <map:match pattern="navigation-and-facets">
+                <map:generate src="service-consumer:"/>
+                <map:serialize type="xml"/>
+            </map:match>
 
-      <!-- Matchers for CSS and images -->
-      <map:match pattern="**/*.gif">
-        <map:read src="resources/images/{2}.gif" mime-type="image/gif"/>
-      </map:match>
+            <!-- Matchers for CSS and images -->
+            <map:match pattern="**/*.gif">
+                <map:read src="resources/images/{2}.gif" mime-type="image/gif"/>
+            </map:match>
 
-      <map:match pattern="**/*.jpg">
-        <map:read src="resources/images/{2}.jpg" mime-type="image/jpg"/>
-      </map:match>
+            <map:match pattern="**/*.jpg">
+                <map:read src="resources/images/{2}.jpg" mime-type="image/jpg"/>
+            </map:match>
 
-      <map:match pattern="**/*.png">
-        <map:read src="resources/images/{2}.png" mime-type="image/png"/>
-      </map:match>
+            <map:match pattern="**/*.png">
+                <map:read src="resources/images/{2}.png" mime-type="image/png"/>
+            </map:match>
 
-      <map:match pattern="**/*.css">
-        <map:read src="resources/styles/{2}.css" mime-type="text/css"/>
-      </map:match>
+            <map:match pattern="**/*.css">
+                <map:read src="resources/styles/{2}.css" mime-type="text/css"/>
+            </map:match>
 
-    </map:pipeline>
+        </map:pipeline>
 
-    <map:pipeline internal-only="true">
+        <map:pipeline internal-only="true">
 
-      <map:match pattern="xhtml/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <map:serialize type="xhtml"/>
-      </map:match>
+            <map:match pattern="xhtml/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <map:serialize type="xhtml"/>
+            </map:match>
 
-      <map:match pattern="xml/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <!-- render the result and add facets and navigation -->
-        <!-- TODO: Is this obsolete now?
-        <map:transform type="servletService">
-          <map:parameter name="service" value="servlet:/navigation-and-facets"/>
-        </map:transform>   -->
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-      </map:match>
+            <map:match pattern="xml/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <!-- render the result and add facets and navigation -->
+                <!-- TODO: Is this obsolete now?
+             <map:transform type="servletService">
+               <map:parameter name="service" value="servlet:/navigation-and-facets"/>
+             </map:transform>   -->
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+            </map:match>
 
-    </map:pipeline>
+            <map:match pattern="xml2/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/admin-styling"/>
+                </map:serialize>
+            </map:match>
 
-  </map:pipelines>
+        </map:pipeline>
+
+    </map:pipelines>
 
 </map:sitemap>
