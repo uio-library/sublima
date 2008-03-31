@@ -1,17 +1,9 @@
 package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.Form2SparqlService;
-import com.computas.sublima.app.service.SearchService;
+import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import com.computas.sublima.query.SparqlDispatcher;
-import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.query.service.DatabaseService;
-import com.hp.hpl.jena.db.IDBConnection;
-import com.hp.hpl.jena.db.ModelRDB;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -25,7 +17,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import java.sql.SQLException;
 
 public class Search implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
@@ -167,11 +158,13 @@ public class Search implements StatelessAppleController {
 
     // If the model is empty, thus no results, return the zero-results-strategy-page
     if( queryResult.isEmpty() ) {
+      queryResult.close();
       res.sendPage("tips", null);  
     }
     else {
       ByteArrayOutputStream bout = new ByteArrayOutputStream();
       queryResult.write(bout, "RDF/XML-ABBREV");
+      queryResult.close();
 
       Map<String, Object> bizData = new HashMap<String, Object>();
       bizData.put("result-list", bout.toString());
