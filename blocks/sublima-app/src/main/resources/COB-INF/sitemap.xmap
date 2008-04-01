@@ -25,6 +25,15 @@
             <map:match pattern="admin/*">
                 <map:call function="com.computas.sublima.app.controller.AdminController">
                     <map:parameter name="mode" value="{1}"/>
+                    <map:parameter name="submode" value="{2}"/>
+                </map:call>
+            </map:match>
+
+            <!-- all resource admin pages. Returns a 404 if the page is not found. -->
+            <map:match pattern="admin/ressurser/*">
+                <map:call function="com.computas.sublima.app.controller.AdminController">
+                    <map:parameter name="mode" value="ressurser"/>
+                    <map:parameter name="submode" value="{1}"/>
                 </map:call>
             </map:match>
 

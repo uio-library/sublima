@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:c="http://xmlns.computas.com/cocoon">
+  <c:title>Sublima administrasjon</c:title>
+
+  <c:breadcrumbs>
+    <c:breadcrumb title="Sublima"></c:breadcrumb>
+    <c:breadcrumb title="Admin">admin</c:breadcrumb>
+    <c:breadcrumb title="Ressurser">admin/ressurser</c:breadcrumb>
+    <c:breadcrumb title="Foreslaatte">admin/ressurser/foreslaatte</c:breadcrumb>
+  </c:breadcrumbs>
+
+  <c:menu>
+      <!-- c:menuelement title="Emner">admin/emner</c:menuelement -->
+      <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
+      <c:menuelement title="Foreslaatte" child="true">admin/ressurser/foreslaatte</c:menuelement>
+      <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
+      <!-- c:menuelement title="Utgivere">admin/utgivere</c:menuelement -->
+      <c:menuelement title="Lenkesjekk">admin/lenkesjekk</c:menuelement>
+  </c:menu>
+
+  <c:content>
+    <c:text>
+      <h3>Foreslaatte</h3>
+      <p>Foelgende ressurser har blitt sendt inn av brukerne, men er ennaa ikke godkjent.</p>
+      <br/>
+    </c:text>
+    <c:suggestedresources>
+      <jx:out value="#{suggestedresourceslist}" xmlize="true"/>
+    </c:suggestedresources>
+  </c:content>
+
+</c:page>

@@ -81,19 +81,37 @@
                   </xsl:for-each>
                   </ul>
                 </xsl:if>
+
+                <xsl:if test="c:page/c:content/c:suggestedresources/rdf:RDF">
+                  <ul>
+                  <xsl:for-each select="c:page/c:content/c:suggestedresources/rdf:RDF/sub:Resource">
+                    <li>
+                      <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+                    </li>
+                  </xsl:for-each>
+                  </ul>
+                </xsl:if>
                 <!-- Column 1 end -->
               </div>
               <div class="col2">
                 <!-- Column 2 start -->
-                <xsl:for-each select="c:page/c:menu/c:menuelement">
-                  <a>
-                    <xsl:attribute name="href">
-                      <xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/>
-                    </xsl:attribute>
-                    <xsl:value-of select="@title"/>
-                  </a>
-                  <br/>
-                </xsl:for-each>
+                <xsl:if test="c:page/c:menu/c:menuelement">
+
+                  <ul>
+
+                    <xsl:for-each select="c:page/c:menu/c:menuelement">
+
+                      <li>
+                        <a>
+                          <xsl:attribute name="href">
+                            <xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/>
+                          </xsl:attribute>
+                        <xsl:value-of select="@title"/>
+                        </a>
+                    </li>
+                  </xsl:for-each>
+                  </ul>
+                </xsl:if>
                 <!-- Column 2 end -->
               </div>
               <div class="col3">
