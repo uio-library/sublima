@@ -9,7 +9,7 @@
 
   <c:tips>
     <h3>Takk for tipset!</h3>
-    <a href="{$baseurl}/home">Tilbake</a>
+    <a href="home">Tilbake</a>
   </c:tips>
 
   <facets></facets>
