@@ -74,6 +74,10 @@ this, just comment out the call-template -->
               <a href="{$baseurl}/advancedsearch">Avansert søk
               </a>
             </li>
+            <li>
+              <a href="{$baseurl}/admin">Administrasjon
+              </a>
+            </li>
           </ul>
 
           <p id="layoutdims">
@@ -161,8 +165,9 @@ this, just comment out the call-template -->
               <div class="col3">
                 <!-- Column 3 start -->
                 <!-- xsl:if test="c:page/c:mode = 'search-result'" -->
-                <h2>Min side osv.</h2>
-                <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a>
+                <h2>Mine aktiviteter</h2>
+                <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a><br/>
+                <a href="{$baseurl}/admin">Administrasjon</a>
 
 
                 <!-- /xsl:if -->

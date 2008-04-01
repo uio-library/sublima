@@ -51,13 +51,17 @@ public class AdminController implements StatelessAppleController {
         String queryString = StringUtils.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-                "SELECT ?resource ?title",
-                "WHERE {",
-                "    ?resource sub:status <http://sublima.computas.com/status/CHECK> ;",
-                "              dct:title ?title .",
+                "CONSTRUCT {",
+                "    ?resource dct:title ?title ;" +
+                "              dct:identifier ?identifier ;" +
+                "              a sub:Resource . }",
+                "    WHERE {",
+                "        ?resource sub:status <http://sublima.computas.com/status/CHECK> ;",
+                "                  dct:title ?title ;",
+                "                  dct:identifier ?identifier .",
                 "}"});
 
-        logger.trace("AdminController.showLinkcheckResults() --> SPARQL query sent to dispatcher: " + queryString);
+        logger.trace("AdminController.showLinkcheckResults() --> SPARQL query sent to dispatcher: \n" + queryString);
         Object queryResult = sparqlDispatcher.query(queryString);
 
         Map<String, Object> bizData = new HashMap<String, Object>();

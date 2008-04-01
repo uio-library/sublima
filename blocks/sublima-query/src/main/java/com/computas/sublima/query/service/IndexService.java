@@ -188,12 +188,12 @@ public class IndexService {
     URL u = null;
     String result;
 
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 50; i++) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length() - 3).trim();
       result = getHTTPcodeForUrl(url);
       urlCodeMap.put(url, result);
-      logger.debug("validateURLS() ---> " + url + "  :  " + result);
+      logger.info("validateURLS() ---> " + url + "  :  " + result);
     }
 
     /*
@@ -342,9 +342,8 @@ public class IndexService {
     else {
       status = "<http://sublima.computas.com/status/CHECK>";
     }
-
+    /*
     String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-            "MODIFY\n" +
             "DELETE\n" +
             "{ " +
             "<" +url +"> sub:status ?oldstatus " +
@@ -353,8 +352,26 @@ public class IndexService {
             "{ " +
             "<" +url +"> sub:status " + status + "\n" +
             "}";
+    */
 
-    boolean success = sparulDispatcher.query(updateString);
+    String deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "DELETE\n" +
+            "{ " +
+            "<" +url +"> sub:status ?oldstatus " +
+            "}";
+
+    //boolean success = false;
+    boolean success = sparulDispatcher.query(deleteString);
+    /*
+    String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "INSERT\n" +
+            "{ " +
+            "<" +url +"> sub:status " + status + "\n" +
+            "}";
+
+    boolean success = false;
+    */
+    success = sparulDispatcher.query(deleteString);
     logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- UPDATE RESULT --> " + success);
   }
 
