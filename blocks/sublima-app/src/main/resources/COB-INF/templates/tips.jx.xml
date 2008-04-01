@@ -11,7 +11,7 @@
 
     <h2>Fant du ikke det du lette etter?</h2>
     <p>Tips oss gjerne dersom du finner sider som du tror vi kunne satt pris paa!</p>
-    <form name="tips" action="sendtips" method="GET">
+    <form name="tips" action="{$baseurl}/sendtips" method="GET">
       <table>
         <tr>
           <td align="right">

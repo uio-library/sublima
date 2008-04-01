@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:c="http://xmlns.computas.com/cocoon">
-    <c:result-list></c:result-list>
+        xmlns:c="http://xmlns.computas.com/cocoon">
+  <c:result-list></c:result-list>
 
-    <c:freetext-result-list></c:freetext-result-list>
+  <c:freetext-result-list></c:freetext-result-list>
 
-    <c:navigation></c:navigation>
+  <c:navigation></c:navigation>
 
-    <c:tips>
-       <h3>Takk for tipset!</h3>
-       <a href="home">Tilbake</a>
-   </c:tips>
+  <c:tips>
+    <h3>Takk for tipset!</h3>
+    <a href="{$baseurl}/home">Tilbake</a>
+  </c:tips>
 
-    <facets></facets>
+  <facets></facets>
 </c:page>
