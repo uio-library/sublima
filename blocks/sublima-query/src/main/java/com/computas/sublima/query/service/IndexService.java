@@ -75,6 +75,7 @@ public class IndexService {
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Closed index for writing");
     // -- Create the access index
     IndexLARQ index = larqBuilder.getIndex();
+    model.close();
 
     // -- Make globally available
     LARQ.setDefaultIndex(index);
@@ -161,6 +162,7 @@ public class IndexService {
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, model);
     ResultSet resultSet = qExec.execSelect();
+    model.close();
 
     try {
       connection.close();

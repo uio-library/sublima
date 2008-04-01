@@ -38,14 +38,17 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
       updateRequest.exec(graphStore);
     }
     catch (UpdateException e) {
+      model.close();
       return false;
     }
 
     finally {
       try {
         connection.close();
+        model.close();
       }
       catch (SQLException e) {
+        model.close();
         e.printStackTrace();
       }
     }

@@ -46,17 +46,19 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 
   private Object structuredQuery(String query) {
     String result = null;
+    HttpURLConnection con = null;
     try {
       String url = SettingsService.getProperty("sublima.joseki.endpoint");
 
       URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
 
-      HttpURLConnection con = (HttpURLConnection) u.openConnection();
-
+      con = (HttpURLConnection) u.openConnection();
       result = IOUtils.toString(con.getInputStream());
     } catch (Exception e) {
+      con.disconnect();
       e.printStackTrace();
     }
+    con.disconnect();
     return result;
   }
 
@@ -74,6 +76,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     try {
       connection.close();
     } catch (SQLException e) {
+      model.close();
       e.printStackTrace();
     }
 
