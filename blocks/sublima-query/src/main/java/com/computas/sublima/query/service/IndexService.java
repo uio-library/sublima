@@ -148,6 +148,7 @@ public class IndexService {
    *
    * @return ResultSet containing all resource URLS from the model
    */
+  // todo Use SparqlDispatcher (needs to return ResultSet)
   private ResultSet getAllExternalResourcesURLs() {
     DatabaseService myDbService = new DatabaseService();
     IDBConnection connection = myDbService.getConnection();
@@ -162,7 +163,7 @@ public class IndexService {
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, model);
     ResultSet resultSet = qExec.execSelect();
-    model.close();
+    //model.close();
 
     try {
       connection.close();
@@ -344,56 +345,59 @@ public class IndexService {
     else {
       status = "<http://sublima.computas.com/status/CHECK>";
     }
-    /*
-    String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-            "DELETE\n" +
-            "{ " +
-            "<" +url +"> sub:status ?oldstatus " +
-            "}\n" +
-            "INSERT\n" +
-            "{ " +
-            "<" +url +"> sub:status " + status + "\n" +
-            "}";
-    */
 
     String deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
             "DELETE\n" +
             "{ " +
             "<" +url +"> sub:status ?oldstatus " +
+            "}\n" +
+            "WHERE {\n" +
+             "<" +url +"> sub:status ?oldstatus " +
             "}";
 
-    //boolean success = false;
-    boolean success = sparulDispatcher.query(deleteString);
-    /*
+    boolean success = false;
+    success = sparulDispatcher.query(deleteString);
+    logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- DELETE OLD STATUS --> " + success);
+
     String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
             "INSERT\n" +
             "{ " +
             "<" +url +"> sub:status " + status + "\n" +
             "}";
 
-    boolean success = false;
-    */
-    success = sparulDispatcher.query(deleteString);
-    logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- UPDATE RESULT --> " + success);
+    success = false;
+
+    success = sparulDispatcher.query(updateString);
+    logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- INSERT NEW STATUS --> " + success);
   }
 
   public void updateResourceExternalContent(String url) {
     sparulDispatcher = new DefaultSparulDispatcher();
     String resourceExternalContent = readContentFromURL(url);
 
-    String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-            "MODIFY\n" +
+    String deleteString = "PREFIX ext: <??????????>\n" +
             "DELETE\n" +
             "{ " +
-            "<" +url +"> ext:body ?oldbody " +
+            "<" +url +"> ext:body ?oldcontent " +
             "}\n" +
+            "WHERE {\n" +
+             "<" +url +"> ext:body ?oldcontent " +
+            "}";
+
+    boolean success = false;
+    success = sparulDispatcher.query(deleteString);
+    logger.info("updateResourceExternalContent() ---> " + url + " -- DELETE OLD STATUS --> " + success);
+
+    String updateString = "PREFIX ext: <???????????>\n" +
             "INSERT\n" +
             "{ " +
             "<" +url +"> ext:body " + resourceExternalContent + "\n" +
             "}";
 
-    boolean success = sparulDispatcher.query(updateString);
-    logger.info("updateResourceExternalContent() ---> " + url + " -- UPDATE RESULT --> " + success);
+    success = false;
+
+    success = sparulDispatcher.query(deleteString);
+    logger.info("updateResourceExternalContent() ---> " + url + " -- INSERT NEW STATUS --> " + success);
   }
 
   /**
