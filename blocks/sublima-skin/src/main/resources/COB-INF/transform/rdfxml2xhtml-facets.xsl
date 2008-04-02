@@ -27,17 +27,22 @@
 	</xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
+   <ul>
+      <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
+	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+      </xsl:apply-templates> 
+   </ul>
+   <ul>
+      <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
+	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+      </xsl:apply-templates> 
+   </ul>
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:subject" mode="facets">
 	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
       </xsl:apply-templates>
     </ul>
-    <ul>
-      <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
-	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-      </xsl:apply-templates> 
-   </ul>
-  </xsl:template>
+   </xsl:template>
 
 
   <xsl:template match="dct:subject" mode="facets">
@@ -79,6 +84,28 @@
 	<xsl:variable name="uri" select="./lingvoj:Lingvo/@rdf:about"/>
 	<xsl:text> (</xsl:text>
 	<xsl:value-of select="count(//dct:language[@rdf:resource=$uri])+1"/>)
+      </li>
+    </xsl:if>
+    
+  </xsl:template>
+
+  <xsl:template match="dct:audience" mode="facets">
+    <xsl:param name="baseurlparams"/>
+    <xsl:if test="./dct:AgentClass"> <!-- This should iterate all unique languages -->
+      <li>
+	<xsl:variable name="this-label" select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+	<a> <!-- The following builds the URL. -->
+	  <xsl:attribute name="href">
+	    <xsl:value-of select="$baseurlparams"/>
+	    <xsl:text>dct:audience/rdfs:label=</xsl:text>
+	    <xsl:value-of select="$this-label"/>
+	  </xsl:attribute>
+	  <xsl:value-of select="$this-label"/>
+	</a>
+
+	<xsl:variable name="uri" select="./dct:AgentClass/@rdf:about"/>
+	<xsl:text> (</xsl:text>
+	<xsl:value-of select="count(//dct:audience[@rdf:resource=$uri])+1"/>)
       </li>
     </xsl:if>
     
