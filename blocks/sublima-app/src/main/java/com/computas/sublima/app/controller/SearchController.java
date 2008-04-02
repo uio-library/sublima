@@ -109,6 +109,7 @@ public class SearchController implements StatelessAppleController {
    
     bizData.put("navigation", queryResult);
     bizData.put("mode", mode);
+    bizData.put("request", "<empty></empty>");
     res.sendPage("xml/sparql-result", bizData);
   }
 
@@ -196,6 +197,7 @@ public class SearchController implements StatelessAppleController {
       bizData.put("navigation", "<empty></empty>");
       bizData.put("mode", mode);
       bizData.put("configuration", new Object());
+      bizData.put("request", "<empty></empty>");
       res.sendPage("xml/sparql-result", bizData);
     }
   }
