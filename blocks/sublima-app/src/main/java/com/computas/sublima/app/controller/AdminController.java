@@ -95,7 +95,9 @@ public class AdminController implements StatelessAppleController {
    * @param req - AppleRequest
    */
   private void showLinkcheckResults(AppleResponse res, AppleRequest req) {
-    String queryString = StringUtils.join("\n", new String[]{
+
+    // CHECK
+    String queryStringCHECK = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX sub: <http://xmlns.computas.com/sublima#>",
             "CONSTRUCT {",
@@ -108,11 +110,47 @@ public class AdminController implements StatelessAppleController {
             "                  dct:identifier ?identifier .",
             "}"});
 
-    logger.trace("AdminController.showLinkcheckResults() --> SPARQL query sent to dispatcher: \n" + queryString);
-    Object queryResult = sparqlDispatcher.query(queryString);
+    logger.trace("AdminController.showLinkcheckResults() --> SPARQL query sent to dispatcher: \n" + queryStringCHECK);
+    Object queryResultCHECK = sparqlDispatcher.query(queryStringCHECK);
+
+    // INACTIVE
+    String queryStringINACTIVE = StringUtils.join("\n", new String[]{
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            "CONSTRUCT {",
+            "    ?resource dct:title ?title ;" +
+                    "              dct:identifier ?identifier ;" +
+                    "              a sub:Resource . }",
+            "    WHERE {",
+            "        ?resource sub:status <http://sublima.computas.com/status/IANCTIVE> ;",
+            "                  dct:title ?title ;",
+            "                  dct:identifier ?identifier .",
+            "}"});
+
+    logger.trace("AdminController.showLinkcheckResults() --> SPARQL query sent to dispatcher: \n" + queryStringINACTIVE);
+    Object queryResultINACTIVE = sparqlDispatcher.query(queryStringINACTIVE);
+
+    // GONE
+    String queryStringGONE = StringUtils.join("\n", new String[]{
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            "CONSTRUCT {",
+            "    ?resource dct:title ?title ;" +
+                    "              dct:identifier ?identifier ;" +
+                    "              a sub:Resource . }",
+            "    WHERE {",
+            "        ?resource sub:status <http://sublima.computas.com/status/GONE> ;",
+            "                  dct:title ?title ;",
+            "                  dct:identifier ?identifier .",
+            "}"});
+
+    logger.trace("AdminController.showLinkcheckResults() --> SPARQL query sent to dispatcher: \n" + queryStringGONE);
+    Object queryResultGONE = sparqlDispatcher.query(queryStringGONE);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
-    bizData.put("lenkesjekklist", queryResult);
+    bizData.put("lenkesjekklist_check", queryResultCHECK);
+    bizData.put("lenkesjekklist_inactive", queryResultINACTIVE);
+    bizData.put("lenkesjekklist_gone", queryResultGONE);
     res.sendPage("xml2/lenkesjekk", bizData);
 
   }

@@ -21,12 +21,17 @@
   <c:content>
     <c:text>
       <h3>Lenkesjekk</h3>
-      <p>Foelgende lenker har blitt satt til manuell sjekk etter lenkesjekken</p>
       <br/>
     </c:text>
-    <c:linkcheck>
-      <jx:out value="#{lenkesjekklist}" xmlize="true"/>
-    </c:linkcheck>
+    <c:linkcheck_check>
+      <jx:out value="#{lenkesjekklist_check}" xmlize="true"/>
+    </c:linkcheck_check>
+    <c:linkcheck_inactive>
+      <jx:out value="#{lenkesjekklist_inactive}" xmlize="true"/>
+    </c:linkcheck_inactive>
+    <c:linkcheck_gone>
+      <jx:out value="#{lenkesjekklist_gone}" xmlize="true"/>
+    </c:linkcheck_gone>
   </c:content>
 
 </c:page>

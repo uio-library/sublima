@@ -72,9 +72,32 @@
                 <!-- Column 1 start -->
                 <xsl:call-template name="contenttext"/>
 
-                <xsl:if test="c:page/c:content/c:linkcheck/rdf:RDF">
+                <xsl:if test="c:page/c:content/c:linkcheck_check/rdf:RDF/sub:Resource">
+                  <p>Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</p>
                   <ul>
-                  <xsl:for-each select="c:page/c:content/c:linkcheck/rdf:RDF/sub:Resource">
+                  <xsl:for-each select="c:page/c:content/c:linkcheck_check/rdf:RDF/sub:Resource">
+                    <li>
+                      <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+                    </li>
+                  </xsl:for-each>
+                  </ul>
+                </xsl:if>
+
+                <xsl:if test="c:page/c:content/c:linkcheck_inactive/rdf:RDF/sub:Resource">
+                  <p>Satt inaktive pga varige problemer</p>
+                  <ul>
+                  <xsl:for-each select="c:page/c:content/c:linkcheck_inactive/rdf:RDF/sub:Resource">
+                    <li>
+                      <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+                    </li>
+                  </xsl:for-each>
+                  </ul>
+                </xsl:if>
+
+                <xsl:if test="c:page/c:content/c:linkcheck_gone/rdf:RDF/sub:Resource">
+                  <p>Satt til borte entydig besked fra tilbyder</p>
+                  <ul>
+                  <xsl:for-each select="c:page/c:content/c:linkcheck_gone/rdf:RDF/sub:Resource">
                     <li>
                       <xsl:apply-templates select="./dct:title" mode="internal-link"/>
                     </li>

@@ -191,12 +191,13 @@ public class IndexService {
     URL u = null;
     String result;
 
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 200; i++) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length() - 3).trim();
       result = getHTTPcodeForUrl(url);
       urlCodeMap.put(url, result);
       logger.info("validateURLS() ---> " + url + "  :  " + result);
+
     }
 
     /*
@@ -250,28 +251,28 @@ public class IndexService {
 
     try {
       URL u = new URL(url);
+      logger.info("getHTTPcodeForUrl() ---> " + url);
       HttpURLConnection con = (HttpURLConnection) u.openConnection();
+      con.setConnectTimeout(500);
       result = String.valueOf(con.getResponseCode());
     }
     catch (MalformedURLException e) {
       result = "MALFORMED_URL";
-      e.printStackTrace();
     }
     catch (ClassCastException e) {
       result = "UNSUPPORTED_PROTOCOL";
-      e.printStackTrace();
     }
     catch (UnknownHostException e) {
       result = "UNKNOWN_HOST";
-      e.printStackTrace();
     }
     catch (ConnectException e) {
       result = "CONNECTION_TIMEOUT";
-      e.printStackTrace();
+    }
+    catch (SocketTimeoutException e) {
+      result = "CONNECTION_TIMEOUT";
     }
     catch (IOException e) {
       result = "IOEXCEPTION";
-      e.printStackTrace();
     }
     return result;
   }
