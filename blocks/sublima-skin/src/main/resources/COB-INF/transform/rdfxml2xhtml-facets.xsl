@@ -14,36 +14,31 @@
   xmlns:topic="http://sublima.computas.com/topic/"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc od lingvoj wdr">
-  <xsl:import href="rdfxml-res-templates.xsl"/>
+  <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
 
   <xsl:template match="rdf:RDF" mode="facets">
     <ul>
       <xsl:for-each select="sub:Resource/dct:subject">
 	<xsl:if test="./topic:*"> <!-- This should iterate all unique topics -->
 	  <li>
-	    <xsl:apply-templates select="."/>
+	    <xsl:variable name="this-label" select="./topic:*/rdfs:label[@xml:lang=$interface-language]"/>
+	    <a> <!-- The following builds the URL. -->
+	      <xsl:attribute name="href"><xsl:text>?</xsl:text><xsl:for-each select="/c:page/c:facets/c:request/c:param"><xsl:for-each select="c:value"><xsl:value-of select="../@key"/>=<xsl:value-of select="."/>&amp;<xsl:text/></xsl:for-each></xsl:for-each>
+	      <xsl:text>dct:subject/rdfs:label=</xsl:text>
+	      <xsl:value-of select="$this-label"/>
+	      </xsl:attribute>
+	    </a>
+	    <xsl:value-of select="$this-label"/>
 	    <xsl:variable name="uri" select="./topic:*/@rdf:about"/>
 	    <xsl:text> (</xsl:text>
 	    <xsl:value-of select="count(//dct:subject[@rdf:resource=$uri])+1"/>)
  	  </li>
 	</xsl:if>
 	  
-	<!-- dt>
-	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  <xsl:text> is a </xsl:text>	  
-	  <xsl:apply-templates select="./dct:subject"/>
-	</dt>
-	<dd>
-	  <div style="font-size:small"><xsl:text>Published by: </xsl:text>
-	    <xsl:apply-templates select="dct:publisher"/>
-	    <xsl:text> </xsl:text>
-	    <xsl:apply-templates select="./dct:dateAccepted"/>
-	  </div>
-	  <xsl:apply-templates select="./dct:description"/>
-	</dd -->
       </xsl:for-each>
     </ul>
   </xsl:template>
+
 
 
 </xsl:stylesheet>

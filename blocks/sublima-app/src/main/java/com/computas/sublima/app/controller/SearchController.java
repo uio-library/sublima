@@ -1,22 +1,23 @@
 package com.computas.sublima.app.controller;
 
-import com.computas.sublima.app.service.Form2SparqlService;
-import com.computas.sublima.query.service.SearchService;
-import com.computas.sublima.query.service.SettingsService;
-import com.computas.sublima.query.SparqlDispatcher;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.sparql.util.StringUtils;
+import java.io.ByteArrayOutputStream;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
-import java.io.*;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.query.SparqlDispatcher;
+import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.SearchService;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 
 public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
@@ -234,7 +235,29 @@ public class SearchController implements StatelessAppleController {
     bizData.put("result-list", queryResult);
     bizData.put("navigation", "<empty></empty>");
     bizData.put("mode", mode);
-    bizData.put("request", req.getCocoonRequest()); // TODO: Must loop
+
+    // This is such a 1999 way of doing things. There should be a generic SAX events generator 
+    // or something that would serialise this data structure automatically in a one-liner, 
+    // but I couldn't find it. Arguably a TODO.
+    StringBuffer params = new StringBuffer();
+    params.append("<request>\n");
+    for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
+    	String key = keys.nextElement().toString();
+    	params.append("\n<param key=\"" + key + "\">");
+    	String[] values = req.getCocoonRequest().getParameterValues(key);
+    	for (String value : values) {
+    		value = value.replaceAll("<", "&lt;");
+    		System.out.println(value);
+    		value = value.replaceAll(">", "&gt;");
+    		value = value.replaceAll("#", "%23");
+    		params.append("\n  <value>"+value+"</value>");    	
+    	}
+    	params.append("\n</param>");
+    }
+    params.append("\n</request>\n");
+
+    System.out.println(params);
+    bizData.put("request", params.toString()); 
     res.sendPage("xml/sparql-result", bizData);
   }
 
