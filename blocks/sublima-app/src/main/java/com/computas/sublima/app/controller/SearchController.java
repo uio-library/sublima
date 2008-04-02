@@ -240,21 +240,21 @@ public class SearchController implements StatelessAppleController {
     // or something that would serialise this data structure automatically in a one-liner, 
     // but I couldn't find it. Arguably a TODO.
     StringBuffer params = new StringBuffer();
-    params.append("<request>\n");
+    params.append("  <request>\n");
     for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
     	String key = keys.nextElement().toString();
-    	params.append("\n<param key=\"" + key + "\">");
+    	params.append("\n    <param key=\"" + key + "\">");
     	String[] values = req.getCocoonRequest().getParameterValues(key);
     	for (String value : values) {
     		value = value.replaceAll("<", "&lt;");
     		System.out.println(value);
     		value = value.replaceAll(">", "&gt;");
-    		value = value.replaceAll("#", "%23");
-    		params.append("\n  <value>"+value+"</value>");    	
+    		value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+    		params.append("\n      <value>"+value+"</value>");    	
     	}
-    	params.append("\n</param>");
+    	params.append("\n    </param>");
     }
-    params.append("\n</request>\n");
+    params.append("\n  </request>\n");
 
     System.out.println(params);
     bizData.put("request", params.toString()); 
