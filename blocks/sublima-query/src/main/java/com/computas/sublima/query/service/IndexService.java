@@ -253,7 +253,7 @@ public class IndexService {
       URL u = new URL(url);
       logger.info("getHTTPcodeForUrl() ---> " + url);
       HttpURLConnection con = (HttpURLConnection) u.openConnection();
-      con.setConnectTimeout(500);
+      con.setConnectTimeout(6000);
       result = String.valueOf(con.getResponseCode());
     }
     catch (MalformedURLException e) {
