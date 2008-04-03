@@ -30,11 +30,18 @@ public class AdminController implements StatelessAppleController {
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
 
-    // Lenkesjekk. Sender brukeren til en side som lister alle ressurser (tittel med URI som link) som har status CHECK.
+    // Linkcheck. Send the user to a page that displays a list of all resources affected.
     if ("lenkesjekk".equalsIgnoreCase(mode)) {
       showLinkcheckResults(res, req);
       return;
     }
+    // Publishers. Send the user to a page that displays a list of all publishers.
+    if ("utgivere".equalsIgnoreCase(mode)) {
+      showPublishers(res, req);
+      return;
+    }
+
+
     if ("ressurser".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
         showResourcesIndex(res, req);
@@ -50,10 +57,35 @@ public class AdminController implements StatelessAppleController {
   }
 
   /**
+   * Method to display a list of all publishers. These link to a page where each publisher can edited.
+   *
+   * @param res - AppleResponse
+   * @param req - AppleRequest
+   */
+  private void showPublishers(AppleResponse res, AppleRequest req) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+            "SELECT DISTINCT ?publisher ?name",
+            "WHERE {",
+            "?resource dct:publisher ?publisher .",
+            "?publisher foaf:name ?name .",
+            "}",
+            "ORDER BY ?name"});
+
+    logger.trace("AdminController.showPublishers() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("publisherlist", queryResult);
+    res.sendPage("xml2/utgivere", bizData);
+  }
+
+  /**
    * Method to displaty a list of all resources suggested by users
    *
-   * @param res
-   * @param req
+   * @param res - AppleResponse
+   * @param req - AppleRequest
    */
   private void showSuggestedResources(AppleResponse res, AppleRequest req) {
     String queryString = StringUtils.join("\n", new String[]{
@@ -62,12 +94,12 @@ public class AdminController implements StatelessAppleController {
             "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
             "CONSTRUCT {",
             "    ?resource dct:title ?title ;" +
-                    "              dct:identifier ?identifier ;" +
+                    //"              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
             "        ?resource wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;",
-            "                  dct:title ?title ;",
-            "                  dct:identifier ?identifier .",
+            "                  dct:title ?title .",
+            //"                  dct:identifier ?identifier .",
             "}"});
 
     logger.trace("AdminController.showSuggestedResources() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -81,10 +113,13 @@ public class AdminController implements StatelessAppleController {
   /**
    * Method to display the initial page for administrating resources
    *
-   * @param res
-   * @param req
+   * @param res - AppleResponse
+   * @param req - AppleRequest
    */
-  private void showResourcesIndex(AppleResponse res, AppleRequest req) {
+  private void showResourcesIndex
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     res.sendPage("xml2/ressurser", null);
   }
 
@@ -94,7 +129,10 @@ public class AdminController implements StatelessAppleController {
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
-  private void showLinkcheckResults(AppleResponse res, AppleRequest req) {
+  private void showLinkcheckResults
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
 
     // CHECK
     String queryStringCHECK = StringUtils.join("\n", new String[]{
@@ -155,11 +193,15 @@ public class AdminController implements StatelessAppleController {
 
   }
 
-  public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
+  public void setSparqlDispatcher
+          (SparqlDispatcher
+                  sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
   }
 
-  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
+  public void setSparulDispatcher
+          (SparulDispatcher
+                  sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 }

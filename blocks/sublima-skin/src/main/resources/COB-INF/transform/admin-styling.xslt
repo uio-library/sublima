@@ -37,7 +37,7 @@
         <div id="header">
           <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
 
-          <h2>Demosite for portalverktøyet Sublima</h2>
+          <h2>Sublima 0.5.7</h2>
           <ul>
             <li>
               <a href="{$baseurl}/home">Hjem</a>
@@ -72,6 +72,23 @@
                 <!-- Column 1 start -->
                 <xsl:call-template name="contenttext"/>
 
+                <!-- Publishers -->
+                <xsl:if test="c:page/c:content/c:publishers/sparql/results/result">
+                  <ul>
+                  <xsl:for-each select="c:page/c:content/c:publishers/sparql/results/result">
+                    <li>
+                       <a>
+                          <xsl:attribute name="href">
+                            <xsl:value-of select="./binding[@name='publisher']/uri"/>
+                          </xsl:attribute>
+                        <xsl:value-of select="./binding[@name='name']/literal"/>
+                        </a>
+                    </li>
+                  </xsl:for-each>
+                  </ul>                  
+                </xsl:if>
+
+                <!-- Linkcheck status check -->
                 <xsl:if test="c:page/c:content/c:linkcheck_check/rdf:RDF/sub:Resource">
                   <p>Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</p>
                   <ul>
@@ -83,6 +100,7 @@
                   </ul>
                 </xsl:if>
 
+                <!-- Linkcheck status inactive -->
                 <xsl:if test="c:page/c:content/c:linkcheck_inactive/rdf:RDF/sub:Resource">
                   <p>Satt inaktive pga varige problemer</p>
                   <ul>
@@ -94,6 +112,7 @@
                   </ul>
                 </xsl:if>
 
+                <!-- Linkcheck status resource -->
                 <xsl:if test="c:page/c:content/c:linkcheck_gone/rdf:RDF/sub:Resource">
                   <p>Satt til borte entydig besked fra tilbyder</p>
                   <ul>
@@ -105,6 +124,7 @@
                   </ul>
                 </xsl:if>
 
+                <!-- Suggested resources -->
                 <xsl:if test="c:page/c:content/c:suggestedresources/rdf:RDF">
                   <ul>
                   <xsl:for-each select="c:page/c:content/c:suggestedresources/rdf:RDF/sub:Resource">
