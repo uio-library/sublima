@@ -25,7 +25,6 @@
             <map:match pattern="admin/*">
                 <map:call function="com.computas.sublima.app.controller.AdminController">
                     <map:parameter name="mode" value="{1}"/>
-                    <map:parameter name="submode" value="{2}"/>
                 </map:call>
             </map:match>
 
