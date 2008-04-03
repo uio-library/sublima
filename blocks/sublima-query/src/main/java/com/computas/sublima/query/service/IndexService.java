@@ -328,6 +328,10 @@ public class IndexService {
             "307".equals(code) ||
             code.startsWith("2")) {
       status = "<http://sublima.computas.com/status/OK>";
+
+      // Update the external content of the resource
+      updateResourceExternalContent(url);
+
     }
     // GONE
     else if ("410".equals(code)) {
@@ -375,6 +379,10 @@ public class IndexService {
   public void updateResourceExternalContent(String url) {
     sparulDispatcher = new DefaultSparulDispatcher();
     String resourceExternalContent = readContentFromURL(url);
+
+    // Strip the content from all HTML tags
+    resourceExternalContent = resourceExternalContent.replaceAll("\\<.*?>","");
+
 
     String deleteString = "PREFIX ext: <??????????>\n" +
             "DELETE\n" +
