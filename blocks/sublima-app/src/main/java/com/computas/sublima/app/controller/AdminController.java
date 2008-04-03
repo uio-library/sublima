@@ -37,7 +37,12 @@ public class AdminController implements StatelessAppleController {
     }
     // Publishers. Send the user to a page that displays a list of all publishers.
     if ("utgivere".equalsIgnoreCase(mode)) {
-      showPublishers(res, req);
+      if ("".equalsIgnoreCase(submode)) {
+        showPublishersIndex(res, req);
+      } else {
+        showPublisherByURI(res, req);
+      }
+
       return;
     }
 
@@ -57,12 +62,42 @@ public class AdminController implements StatelessAppleController {
   }
 
   /**
+   * Method to create the individual publisher page based on the publisher name. 
+   * The page presents the publisher and all resources from that publisher.
+   *
+   * @param res - AppleResponse
+   * @param req - AppleRequest
+   */
+
+  private void showPublisherByURI(AppleResponse res, AppleRequest req) {
+    String publisheruri = this.submode;
+
+    //Find the publisher URI based on name
+    String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
+      "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+      "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+      "DESCRIBE ?resource " + publisheruri, // + " ?rest",
+      "WHERE {",
+      "?resource dct:publisher " + publisheruri + " .",
+      //"?resource dct:su ?rest .",
+      "}"});
+
+
+      logger.trace("AdminController.showPublisherByName() --> SPARQL query sent to dispatcher: \n" + findPublisherByURIQuery);
+      Object queryResult = sparqlDispatcher.query(findPublisherByURIQuery);
+
+      Map<String, Object> bizData = new HashMap<String, Object>();
+      bizData.put("publisherlist", queryResult);
+      res.sendPage("xml2/utgivere", bizData);
+  }
+
+  /**
    * Method to display a list of all publishers. These link to a page where each publisher can edited.
    *
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
-  private void showPublishers(AppleResponse res, AppleRequest req) {
+  private void showPublishersIndex(AppleResponse res, AppleRequest req) {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
@@ -73,7 +108,7 @@ public class AdminController implements StatelessAppleController {
             "}",
             "ORDER BY ?name"});
 
-    logger.trace("AdminController.showPublishers() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminController.showPublishersIndex() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -116,10 +151,7 @@ public class AdminController implements StatelessAppleController {
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
-  private void showResourcesIndex
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+  private void showResourcesIndex(AppleResponse res, AppleRequest req) {
     res.sendPage("xml2/ressurser", null);
   }
 
@@ -129,10 +161,7 @@ public class AdminController implements StatelessAppleController {
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
-  private void showLinkcheckResults
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+  private void showLinkcheckResults(AppleResponse res, AppleRequest req) {
 
     // CHECK
     String queryStringCHECK = StringUtils.join("\n", new String[]{
@@ -193,15 +222,11 @@ public class AdminController implements StatelessAppleController {
 
   }
 
-  public void setSparqlDispatcher
-          (SparqlDispatcher
-                  sparqlDispatcher) {
+  public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
   }
 
-  public void setSparulDispatcher
-          (SparulDispatcher
-                  sparulDispatcher) {
+  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 }

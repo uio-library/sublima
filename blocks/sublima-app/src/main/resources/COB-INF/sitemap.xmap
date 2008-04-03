@@ -36,6 +36,16 @@
                 </map:call>
             </map:match>
 
+            <!-- individual page for each publisher. -->
+            <map:match pattern="admin/utgivere/*">
+                <map:call function="com.computas.sublima.app.controller.AdminController">
+                    <map:parameter name="mode" value="utgivere"/>
+                    <map:parameter name="submode" value="{1}"/>
+                </map:call>
+            </map:match>
+
+
+
         </map:pipeline>
 
         <map:pipeline>
