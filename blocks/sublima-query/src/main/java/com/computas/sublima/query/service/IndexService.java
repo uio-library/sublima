@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.net.*;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -82,67 +84,7 @@ public class IndexService {
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Index now globally available");
   }
 
-  /**
-   * Method to create an index based on the external content
-   *
-   * @deprecated Replaced by a CRON job
-   */
-
-  @Deprecated
-  public void createExternalResourcesMemoryIndex() {
-    IndexBuilderExt larqBuilder = new IndexBuilderExt();
-    ResultSet resultSet;
-
-    // -- Read and index all external resources
-    logger.info("SUBLIMA: createExternalResourcesMemoryIndex() --> Indexing - Read and index all external resources");
-
-    resultSet = getAllExternalResourcesURLs();
-    IndexBuilderExt larqBuilderExt = new IndexBuilderExt();
-
-    // For each URL, do a HTTP GET and extract the content. This content is put in the index.
-    URL u = null;
-    String result = null;
-
-    for (int i = 0; i < 10; i++) {
-      String resultURL = resultSet.next().toString();
-      String url = resultURL.substring(10, resultURL.length() - 3).trim();
-      if ("200".equals(getHTTPcodeForUrl(url))) {
-        result = readContentFromURL(url);
-        // Strip all HTML tags
-        result = result.replaceAll("\\<.*?>", "");
-      }
-
-      if (result != null) {
-        Resource r = ResourceFactory.createResource(url);
-        larqBuilderExt.index(r, result);
-        System.out.println(result);
-      }
-    }
-    /*
-    while(resultSet.hasNext()) {
-      String resultURL = resultSet.next().toString();
-      String url = resultURL.substring(10, resultURL.length()-3).trim();
-      if(getHTTPcodeForUrl(url) == 200) {
-        result = readContentFromURL(url);
-      }
-
-      if(result != null) {
-        Resource r = ResourceFactory.createResource(url);
-        larqBuilderExt.index(r, result);
-        System.out.println(result);
-      }
-    }*/
-
-    larqBuilder.closeForWriting();
-    IndexLARQ index = larqBuilder.getIndex();
-
-    // -- Make globally available
-    LARQ.setDefaultIndex(index);
-
-    logger.info("SUBLIMA: createExternalResourcesMemoryIndex() --> Indexing - Index now globally available");
-
-  }
-
+ 
   /**
    * Method to extract all URLs of the resources in the model
    *
@@ -182,19 +124,19 @@ public class IndexService {
    * @return A map containing the URL and its HTTP Code. In case of exceptions a String
    *         representation of the exception is used.
    */
-  public HashMap<String, String> validateURLs() {
+  public HashMap<String, HashMap<String, String>> validateURLs() {
     ResultSet resultSet;
     resultSet = getAllExternalResourcesURLs();
-    HashMap<String, String> urlCodeMap = new HashMap<String, String>();
+    HashMap<String, HashMap<String, String>> urlCodeMap = new HashMap<String, HashMap<String, String>>();
 
     // For each URL, do a HTTP GET and check the HTTP code
     URL u = null;
-    String result;
+    HashMap<String, String> result;
 
     for (int i = 0; i < 200; i++) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length() - 3).trim();
-      result = getHTTPcodeForUrl(url);
+      result = getHTTPmapForUrl(url);
       urlCodeMap.put(url, result);
       logger.info("validateURLS() ---> " + url + "  :  " + result);
 
@@ -243,37 +185,48 @@ public class IndexService {
    * of the exception is returned as the http code
    *
    * @param url - The URL of the resource to read
-   * @return A String representing the HTTP code. In case of exceptions a String
+   * @return A HashMap<String, String> where each key is an HTTP-header, but in lowercase, 
+   *         and represented in an appropriate namespace. The returned HTTP code is in the 
+   *         http:status field. In case of exceptions a String
    *         representation of the exception is used.
    */
-  public String getHTTPcodeForUrl(String url) {
-    String result = null;
+  public HashMap<String, String> getHTTPmapForUrl(String url) {
+    HashMap<String, String> result = new HashMap<String, String>();
 
+    String code = null;
     try {
       URL u = new URL(url);
-      logger.info("getHTTPcodeForUrl() ---> " + url);
+      logger.info("getHTTPmapForUrl() ---> " + url);
       HttpURLConnection con = (HttpURLConnection) u.openConnection();
       con.setConnectTimeout(6000);
-      result = String.valueOf(con.getResponseCode());
+      for (String key : con.getHeaderFields().keySet()) {
+    	  if(key != null) {
+    		  result.put("httph:" + key.toLowerCase(), con.getHeaderField(key));
+    	  }
+    	  
+      }
+      code = String.valueOf(con.getResponseCode());
     }
     catch (MalformedURLException e) {
-      result = "MALFORMED_URL";
+      code = "MALFORMED_URL";
     }
     catch (ClassCastException e) {
-      result = "UNSUPPORTED_PROTOCOL";
+      code = "UNSUPPORTED_PROTOCOL";
     }
     catch (UnknownHostException e) {
-      result = "UNKNOWN_HOST";
+      code = "UNKNOWN_HOST";
     }
     catch (ConnectException e) {
-      result = "CONNECTION_TIMEOUT";
+      code = "CONNECTION_TIMEOUT";
     }
     catch (SocketTimeoutException e) {
-      result = "CONNECTION_TIMEOUT";
+      code = "CONNECTION_TIMEOUT";
     }
     catch (IOException e) {
-      result = "IOEXCEPTION";
+      code = "IOEXCEPTION";
     }
+    result.put("http:status", code);
+    
     return result;
   }
 
@@ -383,29 +336,31 @@ public class IndexService {
     // Strip the content from all HTML tags
     resourceExternalContent = resourceExternalContent.replaceAll("\\<.*?>","");
 
-
-    String deleteString = "PREFIX ext: <??????????>\n" +
-            "DELETE\n" +
-            "{ " +
-            "<" +url +"> ext:body ?oldcontent " +
-            "}\n" +
-            "WHERE {\n" +
-             "<" +url +"> ext:body ?oldcontent " +
-            "}";
+    String deleteString = "DELETE { ?response ?p ?o }" +
+    		" WHERE { <" + url + "> <http://www.w3.org/2007/ont/link#request> ?response . }";
 
     boolean success = false;
     success = sparulDispatcher.query(deleteString);
     logger.info("updateResourceExternalContent() ---> " + url + " -- DELETE OLD STATUS --> " + success);
 
-    String updateString = "PREFIX ext: <???????????>\n" +
-            "INSERT\n" +
-            "{ " +
-            "<" +url +"> ext:body " + resourceExternalContent + "\n" +
-            "}";
-
+    String requesturl = url.replace("resource", "latest-get");
+    StringBuffer updateString = new StringBuffer(); 
+    updateString.append("PREFIX link: <http://www.w3.org/2007/ont/link#>\n" +
+    					  "PREFIX http: <http://www.w3.org/2007/ont/http#>\n" +
+    					  "PREFIX httph: <http://www.w3.org/2007/ont/httph#>\n" +
+    					  "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "INSERT\n{\n<"+url+"> link:request" + requesturl + " .\n" +
+            "<" + requesturl + "> a http:ResponseMessage ; \n");
+    HashMap<String, String> headers = getHTTPmapForUrl(url);
+    for (String key : headers.keySet()) {
+        updateString.append("<" + requesturl +"> " + " \"" + headers.get(key) + "\" ;\n");       
+    }
+  	updateString.append("<" + requesturl +"> sub:stripped \"" + resourceExternalContent + "\" .\n}");
+  	logger.trace("updateResourceExternalContent() ---> INSERT: " + updateString.toString());
+  	
     success = false;
-
-    success = sparulDispatcher.query(deleteString);
+    
+    success = sparulDispatcher.query(updateString.toString());
     logger.info("updateResourceExternalContent() ---> " + url + " -- INSERT NEW STATUS --> " + success);
   }
 
@@ -416,12 +371,12 @@ public class IndexService {
    */
 
   public void performLinkcheckJob() {
-    HashMap<String, String> validatedURLs = null;
+    HashMap<String, HashMap<String, String>> validatedURLs = null;
 
     validatedURLs = validateURLs();
 
     for (String url : validatedURLs.keySet()) {
-      String code = validatedURLs.get(url);
+      String code = validatedURLs.get(url).get("status");
       updateResourceStatus(url, code);
     }
   }
