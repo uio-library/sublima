@@ -4,12 +4,9 @@ import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.query.larq.IndexBuilderExt;
 import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.LARQ;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -19,8 +16,6 @@ import java.io.IOException;
 import java.net.*;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -33,6 +28,7 @@ public class IndexService {
 
   private static Logger logger = Logger.getLogger(IndexService.class);
   private DefaultSparulDispatcher sparulDispatcher;
+  private SearchService searchService = new SearchService();
 
   /**
    * Method to create an index based on the internal content
@@ -49,13 +45,11 @@ public class IndexService {
     // -- Read and index all literal strings.
     File indexDir = new File(SettingsService.getProperty("sublima.index.directory"));
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
-    if("memory".equals(SettingsService.getProperty("sublima.index.type"))) {
+    if ("memory".equals(SettingsService.getProperty("sublima.index.type"))) {
       larqBuilder = new IndexBuilderString();
-    }
-    else {
+    } else {
       larqBuilder = new IndexBuilderString(indexDir);
     }
-
 
     //IndexBuilderSubject larqBuilder = new IndexBuilderSubject();
 
@@ -84,7 +78,7 @@ public class IndexService {
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Index now globally available");
   }
 
- 
+
   /**
    * Method to extract all URLs of the resources in the model
    *
@@ -179,31 +173,68 @@ public class IndexService {
   }
 
   /**
-   * A method to check a URL. Returns the HTTP code.
-   * In cases where the connection gives an exception
-   * the exception is catched and a String representation
-   * of the exception is returned as the http code
+   * Method to get only the HTTP Code, or String representation of exception
    *
-   * @param url - The URL of the resource to read
-   * @return A HashMap<String, String> where each key is an HTTP-header, but in lowercase, 
-   *         and represented in an appropriate namespace. The returned HTTP code is in the 
-   *         http:status field. In case of exceptions a String
-   *         representation of the exception is used.
+   * @param url
+   * @return
    */
-  public HashMap<String, String> getHTTPmapForUrl(String url) {
-    HashMap<String, String> result = new HashMap<String, String>();
-
+  public String getHTTPcodeForUrl(String url) {
     String code = null;
     try {
       URL u = new URL(url);
       logger.info("getHTTPmapForUrl() ---> " + url);
       HttpURLConnection con = (HttpURLConnection) u.openConnection();
       con.setConnectTimeout(6000);
+      code = String.valueOf(con.getResponseCode());
+    }
+    catch (MalformedURLException e) {
+      code = "MALFORMED_URL";
+    }
+    catch (ClassCastException e) {
+      code = "UNSUPPORTED_PROTOCOL";
+    }
+    catch (UnknownHostException e) {
+      code = "UNKNOWN_HOST";
+    }
+    catch (ConnectException e) {
+      code = "CONNECTION_TIMEOUT";
+    }
+    catch (SocketTimeoutException e) {
+      code = "CONNECTION_TIMEOUT";
+    }
+    catch (IOException e) {
+      code = "IOEXCEPTION";
+    }
+
+    return code;
+  }
+
+  /**
+   * A method to check a URL. Returns the HTTP code.
+   * In cases where the connection gives an exception
+   * the exception is catched and a String representation
+   * of the exception is returned as the http code
+   *
+   * @param url - The URL of the resource to read
+   * @return A HashMap<String, String> where each key is an HTTP-header, but in lowercase,
+   *         and represented in an appropriate namespace. The returned HTTP code is in the
+   *         http:status field. In case of exceptions a String
+   *         representation of the exception is used.
+   */
+  public HashMap<String, String> getHTTPmapForUrl(String url) {
+    HashMap<String, String> result = new HashMap<String, String>();
+
+    String code = "";
+    try {
+      URL u = new URL(url);
+      logger.info("getHTTPmapForUrl() ---> " + url);
+      HttpURLConnection con = (HttpURLConnection) u.openConnection();
+      con.setConnectTimeout(6000);
       for (String key : con.getHeaderFields().keySet()) {
-    	  if(key != null) {
-    		  result.put("httph:" + key.toLowerCase(), con.getHeaderField(key));
-    	  }
-    	  
+        if (key != null) {
+          result.put("httph:" + key.toLowerCase(), con.getHeaderField(key));
+        }
+
       }
       code = String.valueOf(con.getResponseCode());
     }
@@ -226,7 +257,7 @@ public class IndexService {
       code = "IOEXCEPTION";
     }
     result.put("http:status", code);
-    
+
     return result;
   }
 
@@ -271,47 +302,60 @@ public class IndexService {
    */
   public void updateResourceStatus(String url, String code) {
     sparulDispatcher = new DefaultSparulDispatcher();
-    String status = null;
+    String status = "";
 
+    if ("http://www.thais.it/scultura/default_uk.htm".equalsIgnoreCase(url)) {
+      System.out.println(url + " --> " + status);  
+    }
+
+    try {
+      if ("302".equals(code) ||
+              "303".equals(code) ||
+              "304".equals(code) ||
+              "305".equals(code) ||
+              "307".equals(code) ||
+              code.startsWith("2")) {
+        status = "<http://sublima.computas.com/status/OK>";
+
+        // Update the external content of the resource
+        updateResourceExternalContent(url);
+
+      }
+      // GONE
+      else if ("410".equals(code)) {
+        status = "<http://sublima.computas.com/status/GONE>";
+      }
+      // INACTIVE
+      else if ("306".equals(code) ||
+              "400".equals(code) ||
+              "403".equals(code) ||
+              "405".equals(code) ||
+              "MALFORMED_URL".equals(code) ||
+              "UNSUPPORTED_PROTOCOL".equals(code)) {
+        status = "<http://sublima.computas.com/status/INACTIVE>";
+      }
+      // CHECK
+      else {
+        status = "<http://sublima.computas.com/status/CHECK>";
+      }
+
+    }
+    catch (NullPointerException e) {
+      logger.info("NullPointerException -- updateResourceStatus() ---> " + url + ":" + code);
+      e.printStackTrace();
+    }
     // OK
-    if ("302".equals(code) ||
-            "303".equals(code) ||
-            "304".equals(code) ||
-            "305".equals(code) ||
-            "307".equals(code) ||
-            code.startsWith("2")) {
-      status = "<http://sublima.computas.com/status/OK>";
-
-      // Update the external content of the resource
-      updateResourceExternalContent(url);
-
-    }
-    // GONE
-    else if ("410".equals(code)) {
-      status = "<http://sublima.computas.com/status/GONE>";
-    }
-    // INACTIVE
-    else if ("306".equals(code) ||
-            "400".equals(code) ||
-            "403".equals(code) ||
-            "405".equals(code) ||
-            "MALFORMED_URL".equals(code) ||
-            "UNSUPPORTED_PROTOCOL".equals(code)) {
-      status = "<http://sublima.computas.com/status/INACTIVE>";
-    }
-    // CHECK
-    else {
-      status = "<http://sublima.computas.com/status/CHECK>";
-    }
 
     String deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
             "DELETE\n" +
             "{ " +
-            "<" +url +"> sub:status ?oldstatus " +
+            "<" + url + "> sub:status ?oldstatus " +
             "}\n" +
             "WHERE {\n" +
-             "<" +url +"> sub:status ?oldstatus " +
+            "<" + url + "> sub:status ?oldstatus " +
             "}";
+
+    logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- SPARUL DELETE  --> " + deleteString);
 
     boolean success = false;
     success = sparulDispatcher.query(deleteString);
@@ -320,8 +364,10 @@ public class IndexService {
     String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
             "INSERT\n" +
             "{ " +
-            "<" +url +"> sub:status " + status + "\n" +
+            "<" + url + "> sub:status " + status + "\n" +
             "}";
+
+    logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- SPARUL UPDATE  --> " + updateString);
 
     success = false;
 
@@ -334,32 +380,32 @@ public class IndexService {
     String resourceExternalContent = readContentFromURL(url);
 
     // Strip the content from all HTML tags
-    resourceExternalContent = resourceExternalContent.replaceAll("\\<.*?>","");
+    resourceExternalContent = resourceExternalContent.replaceAll("\\<.*?>", "");
 
     String deleteString = "DELETE { ?response ?p ?o }" +
-    		" WHERE { <" + url + "> <http://www.w3.org/2007/ont/link#request> ?response . }";
+            " WHERE { <" + url + "> <http://www.w3.org/2007/ont/link#request> ?response . }";
 
     boolean success = false;
     success = sparulDispatcher.query(deleteString);
     logger.info("updateResourceExternalContent() ---> " + url + " -- DELETE OLD STATUS --> " + success);
 
     String requesturl = url.replace("resource", "latest-get");
-    StringBuffer updateString = new StringBuffer(); 
+    StringBuffer updateString = new StringBuffer();
     updateString.append("PREFIX link: <http://www.w3.org/2007/ont/link#>\n" +
-    					  "PREFIX http: <http://www.w3.org/2007/ont/http#>\n" +
-    					  "PREFIX httph: <http://www.w3.org/2007/ont/httph#>\n" +
-    					  "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-            "INSERT\n{\n<"+url+"> link:request" + requesturl + " .\n" +
+            "PREFIX http: <http://www.w3.org/2007/ont/http#>\n" +
+            "PREFIX httph: <http://www.w3.org/2007/ont/httph#>\n" +
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "INSERT\n{\n<" + url + "> link:request <" + requesturl + "> .\n" +
             "<" + requesturl + "> a http:ResponseMessage ; \n");
     HashMap<String, String> headers = getHTTPmapForUrl(url);
     for (String key : headers.keySet()) {
-        updateString.append("<" + requesturl +"> " + " \"" + headers.get(key) + "\" ;\n");       
+      updateString.append("<" + requesturl + "> " + " \"" + searchService.escapeString(headers.get(key)) + "\" ;\n");
     }
-  	updateString.append("<" + requesturl +"> sub:stripped \"" + resourceExternalContent + "\" .\n}");
-  	logger.trace("updateResourceExternalContent() ---> INSERT: " + updateString.toString());
-  	
+    updateString.append("<" + requesturl + "> sub:stripped \"" + resourceExternalContent + "\" .\n}");
+    logger.trace("updateResourceExternalContent() ---> INSERT: " + updateString.toString());
+
     success = false;
-    
+
     success = sparulDispatcher.query(updateString.toString());
     logger.info("updateResourceExternalContent() ---> " + url + " -- INSERT NEW STATUS --> " + success);
   }
