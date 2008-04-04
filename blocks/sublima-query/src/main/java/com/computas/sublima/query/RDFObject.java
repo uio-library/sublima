@@ -26,6 +26,8 @@ public class RDFObject implements Serializable {
 
 	private String language = null;
 
+	private boolean freetext = false;
+
 	public RDFObject() {
 	}
 
@@ -52,6 +54,24 @@ public class RDFObject implements Serializable {
 		this.value = value;
 		this.language = language;
 	}
+	
+	/**
+	 * Constructor where the value, the language and if the field is a freetext field 
+	 * of this object can be entered.
+	 * 
+	 * @param value
+	 *            The value of the object.
+	 * @param language
+	 *            The language the object is known to have.
+	 * @param freetext
+	 *            If this field is a freetext field. If not set, it defaults to false.
+	 */
+	public RDFObject(String value, String language, boolean freetext) {
+		this.value = value;
+		this.language = language;
+		this.freetext = freetext;
+	}
+
 
 	public String getValue() {
 		return value;
@@ -60,7 +80,17 @@ public class RDFObject implements Serializable {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	public boolean getFreetext() {
+		return freetext;
+	}
 
+	public void setFreetext(boolean freetext) {
+		this.freetext = freetext;
+	}
+
+	
+	
 	public String getLanguage() {
 		return language;
 	}

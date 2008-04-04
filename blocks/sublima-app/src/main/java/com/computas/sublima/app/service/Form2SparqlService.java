@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 /**
  * A service class with methods to create a SPARQL DESCRIBE query from a
@@ -110,8 +111,11 @@ public class Form2SparqlService {
 	 *            The key as described above.
 	 * @param values
 	 *            A string array containing values for the key.
+	 * @param freetextFields 
+	 * 			  A List containing the fields that containing the fields 
+	 *            that needs to be treated as free-text-indexed fields.
 	 */
-	public String convertFormField2N3(String key, String[] values) {
+	public String convertFormField2N3(String key, String[] values, List freetextFields) {
 		StringBuffer n3Buffer = new StringBuffer();
 		String[] keys = key.split("/");
 		for (String value : values) { // TODO low-pri: Optimize to comma-separate values.
@@ -127,10 +131,13 @@ public class Form2SparqlService {
 					subjectVarList.add(var);
 				}
 
-				if (keys.length == j && !"".equals(value)) { //value != "") { // Then we are on the
-					// actual form input
-					// value
+				if (keys.length == j && !"".equals(value)) { //value != "") { 
+					// Then we are on the actual form input value
+					if (freetextFields == null) { System.out.println("OMG"); }
 					RDFObject myRDFObject = new RDFObject(value, language);
+					if (freetextFields != null)  {
+						myRDFObject.setFreetext(freetextFields.contains(key));	
+					}
 					n3Buffer.append(myRDFObject.toN3());
 				} else { // Then we have to connect the object of this
 					// statement to the subject of the next
@@ -170,15 +177,22 @@ public class Form2SparqlService {
 			parameterMap.remove("interface-language");
 		}
 
+		List freetextFields = null;
+		if (parameterMap.get("freetext-fields") != null) {
+			freetextFields = Arrays.asList(parameterMap.get("freetext-fields"));
+			sparqlQueryBuffer.insert(0, "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>");
+			parameterMap.remove("freetext-fields");
+		}
+		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-			n3Buffer.insert(0, convertFormField2N3(e.getKey(), e.getValue()));
+			n3Buffer.insert(0, convertFormField2N3(e.getKey(), e.getValue(), freetextFields));
 		}
 
 		// Add the variables to the query
 		for (Object element : subjectVarList) {
 			sparqlQueryBuffer.append((String) element);
 		}
-
+			
 		sparqlQueryBuffer.append("?rest WHERE {");
 		sparqlQueryBuffer.append(n3Buffer);
 		sparqlQueryBuffer.append("\n?resource ?p ?rest .");
