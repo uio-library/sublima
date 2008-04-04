@@ -30,10 +30,6 @@ public final class ContextListener implements ServletContextListener {
       indexService.performLinkcheckJob();
     }
 
-    if("true".equalsIgnoreCase(SettingsService.getProperty("sublima.index.external.onstartup"))) {
-      logger.info("SUBLIMA: Property sublima.index.externalOnStartup set to TRUE --> Indexing - External content");
-      indexService.createExternalResourcesMemoryIndex();
-    }
   }
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
