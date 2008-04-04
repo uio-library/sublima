@@ -95,7 +95,7 @@ public class AdminController implements StatelessAppleController {
       "DESCRIBE ?resource ?publisher", // + " ?rest",
       "WHERE {",
       "?resource dct:publisher ?publisher .",
-      "?publisher foaf:name " + publishername + " .",
+      "?publisher foaf:name \"" + publishername + "\"@no .",
       //"?resource dct:su ?rest .",
       "}"});
 
@@ -104,7 +104,8 @@ public class AdminController implements StatelessAppleController {
       Object queryResult = sparqlDispatcher.query(findPublisherByNameQuery);
 
       Map<String, Object> bizData = new HashMap<String, Object>();
-      bizData.put("publisherlist", queryResult);
+      bizData.put("publisherlist", "<empty></empty>");
+      bizData.put("publisherdetails", queryResult);
       res.sendPage("xml2/utgivere", bizData);
   }
 
@@ -130,6 +131,7 @@ public class AdminController implements StatelessAppleController {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("publisherlist", queryResult);
+    bizData.put("publisherdetails", "<empty></empty>");
     res.sendPage("xml2/utgivere", bizData);
   }
 
