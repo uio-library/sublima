@@ -11,6 +11,10 @@
   <!-- xsl:output method="html" indent="yes"/ -->
   <xsl:import href="rdfxml-res-templates.xsl"/>
 
+   <xsl:output method="xml"
+            encoding="UTF-8"
+            indent="no"/>
+
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
 
@@ -20,6 +24,21 @@
 
   <xsl:template name="contenttext">
     <xsl:copy-of select="c:page/c:content/c:text/*"/>
+  </xsl:template>
+
+  <xsl:template name="publisherslist">
+    <ul>
+      <xsl:for-each select="c:page/c:content/c:publisherlist/sparql/results/result">
+        <li>
+           <a>
+              <xsl:attribute name="href">
+                <xsl:value-of select="./binding[@name='publisher']/uri"/>
+              </xsl:attribute>
+            <xsl:value-of select="./binding[@name='name']/literal"/>
+            </a>
+        </li>
+      </xsl:for-each>
+    </ul>
   </xsl:template>
 
   <xsl:template match="/">
@@ -72,20 +91,9 @@
                 <!-- Column 1 start -->
                 <xsl:call-template name="contenttext"/>
 
-                <!-- Publishers -->
-                <xsl:if test="c:page/c:content/c:publishers/sparql/results/result">
-                  <ul>
-                  <xsl:for-each select="c:page/c:content/c:publishers/sparql/results/result">
-                    <li>
-                       <a>
-                          <xsl:attribute name="href">
-                            <xsl:value-of select="./binding[@name='publisher']/uri"/>
-                          </xsl:attribute>
-                        <xsl:value-of select="./binding[@name='name']/literal"/>
-                        </a>
-                    </li>
-                  </xsl:for-each>
-                  </ul>                  
+                <!-- Publishers index -->
+                <xsl:if test="c:page/c:content/c:publisherlist/sparql/results/result">
+                  <xsl:call-template name="publisherslist"/>
                 </xsl:if>
 
                 <!-- Linkcheck status check -->
