@@ -37,7 +37,7 @@
         <div id="header">
           <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
 
-          <h2>Sublima 0.5.7</h2>
+          <h2>Sublima 0.5.8</h2>
           <ul>
             <li>
               <a href="{$baseurl}/home">Hjem</a>

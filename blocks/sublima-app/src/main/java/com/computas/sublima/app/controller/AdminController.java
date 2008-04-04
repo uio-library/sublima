@@ -37,10 +37,10 @@ public class AdminController implements StatelessAppleController {
     }
     // Publishers. Send the user to a page that displays a list of all publishers.
     if ("utgivere".equalsIgnoreCase(mode)) {
-      if ("".equalsIgnoreCase(submode)) {
+      if ("".equalsIgnoreCase(submode) || submode == null) {
         showPublishersIndex(res, req);
       } else {
-        showPublisherByURI(res, req);
+        showPublisherByName(res, req);
       }
 
       return;
@@ -48,7 +48,7 @@ public class AdminController implements StatelessAppleController {
 
 
     if ("ressurser".equalsIgnoreCase(mode)) {
-      if ("".equalsIgnoreCase(submode)) {
+      if ("".equalsIgnoreCase(submode) || submode == null) {
         showResourcesIndex(res, req);
       } else if ("foreslaatte".equalsIgnoreCase(submode)) {
         showSuggestedResources(res, req);
@@ -69,11 +69,14 @@ public class AdminController implements StatelessAppleController {
    * @param req - AppleRequest
    */
 
-  private void showPublisherByURI(AppleResponse res, AppleRequest req) {
-    String publisheruri = this.submode;
+  private void showPublisherByName(AppleResponse res, AppleRequest req) {
+    //String publisheruri = this.submode;
+   // String publishername = this.submode;
+    String publishername = "Norges Sjakkforbund";
 
+    /*
     //Find the publisher URI based on name
-    String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
+    String findPublisherByNameQuery = StringUtils.join("\n", new String[]{
       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
       "PREFIX sub: <http://xmlns.computas.com/sublima#>",
       "DESCRIBE ?resource " + publisheruri, // + " ?rest",
@@ -82,9 +85,23 @@ public class AdminController implements StatelessAppleController {
       //"?resource dct:su ?rest .",
       "}"});
 
+     */
 
-      logger.trace("AdminController.showPublisherByName() --> SPARQL query sent to dispatcher: \n" + findPublisherByURIQuery);
-      Object queryResult = sparqlDispatcher.query(findPublisherByURIQuery);
+      //Find the publisher URI based on name
+      String findPublisherByNameQuery = StringUtils.join("\n", new String[]{
+      "PREFIX dct: <http://purl.org/dc/terms/>",
+      "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+      "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+      "DESCRIBE ?resource ?publisher", // + " ?rest",
+      "WHERE {",
+      "?resource dct:publisher ?publisher .",
+      "?publisher foaf:name " + publishername + " .",
+      //"?resource dct:su ?rest .",
+      "}"});
+
+
+      logger.trace("AdminController.showPublisherByName() --> SPARQL query sent to dispatcher: \n" + findPublisherByNameQuery);
+      Object queryResult = sparqlDispatcher.query(findPublisherByNameQuery);
 
       Map<String, Object> bizData = new HashMap<String, Object>();
       bizData.put("publisherlist", queryResult);
