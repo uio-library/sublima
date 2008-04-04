@@ -376,7 +376,7 @@ public class IndexService {
     validatedURLs = validateURLs();
 
     for (String url : validatedURLs.keySet()) {
-      String code = validatedURLs.get(url).get("status");
+      String code = validatedURLs.get(url).get("http:status");
       updateResourceStatus(url, code);
     }
   }
