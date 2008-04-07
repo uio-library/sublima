@@ -22,15 +22,15 @@
 
     <c:text>
       <h3>Utgiverdetaljer</h3>
-      <p>Foelgende utgivere er registrert i systemet. Klikk paa utgiver for aa redigere denne.</p>
+
       <br/>
     </c:text>
 
     <c:errormessages></c:errormessages>
 
-    <c:publisherlist>
-      <jx:out value="#{publisherlist}" xmlize="true"/>
-    </c:publisherlist>
+    <c:publisherdetails>
+      <jx:out value="#{publisherdetails}" xmlize="true"/>
+    </c:publisherdetails>
 
   </c:content>
 

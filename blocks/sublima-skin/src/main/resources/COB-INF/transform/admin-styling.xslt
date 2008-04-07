@@ -6,6 +6,8 @@
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <!-- xsl:output method="html" indent="yes"/ -->
@@ -26,12 +28,14 @@
     <xsl:copy-of select="c:page/c:content/c:text/*"/>
   </xsl:template>
 
+  <!-- Publisherlist -->
   <xsl:template name="publisherslist">
+    publisherslist
     <ul>
       <xsl:for-each select="c:page/c:content/c:publisherlist/sparql/results/result">
         <li>
            <a>
-              <xsl:attribute name="href">
+              <xsl:attribute name="href">{$baseurl}/admin/utgivere/detaljer?uri=
                 <xsl:value-of select="./binding[@name='publisher']/uri"/>
               </xsl:attribute>
             <xsl:value-of select="./binding[@name='name']/literal"/>
@@ -39,6 +43,15 @@
         </li>
       </xsl:for-each>
     </ul>
+  </xsl:template>
+
+  <!-- Publisherdetails -->
+  <xsl:template name="publisherdetails">
+
+    <p>Utgiver: <xsl:value-of select="c:page/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Agent/foaf:name[@xml:lang='no']" /></p>
+
+        <xsl:apply-templates select="c:page/c:publisherdetails/rdf:RDF" mode="resource"/>
+
   </xsl:template>
 
   <xsl:template match="/">
@@ -92,8 +105,13 @@
                 <xsl:call-template name="contenttext"/>
 
                 <!-- Publishers index -->
-                <xsl:if test="c:page/c:content/c:publisherlist/sparql/results/result">
+                <xsl:if test="c:page/c:content/c:publisherlist">
                   <xsl:call-template name="publisherslist"/>
+                </xsl:if>
+
+                <!-- Publishers details -->
+                <xsl:if test="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource">
+                  <xsl:call-template name="publisherdetails"/>
                 </xsl:if>
 
                 <!-- Linkcheck status check -->
@@ -122,7 +140,7 @@
 
                 <!-- Linkcheck status resource -->
                 <xsl:if test="c:page/c:content/c:linkcheck_gone/rdf:RDF/sub:Resource">
-                  <p>Satt til borte entydig besked fra tilbyder</p>
+                  <p>Satt til borte grunnet entydig besked fra tilbyder</p>
                   <ul>
                   <xsl:for-each select="c:page/c:content/c:linkcheck_gone/rdf:RDF/sub:Resource">
                     <li>
