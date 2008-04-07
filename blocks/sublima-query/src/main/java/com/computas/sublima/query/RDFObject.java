@@ -26,7 +26,7 @@ public class RDFObject implements Serializable {
 
 	private String language = null;
 
-	private boolean freetext = false;
+	private Integer freetext = null;
 
 	public RDFObject() {
 	}
@@ -64,9 +64,10 @@ public class RDFObject implements Serializable {
 	 * @param language
 	 *            The language the object is known to have.
 	 * @param freetext
-	 *            If this field is a freetext field. If not set, it defaults to false.
+	 *            An integer giving an unique index to the freetext field.
+	 *            If not set, the field is regarded a non-freetext-field.
 	 */
-	public RDFObject(String value, String language, boolean freetext) {
+	public RDFObject(String value, String language, Integer freetext) {
 		this.value = value;
 		this.language = language;
 		this.freetext = freetext;
@@ -81,11 +82,11 @@ public class RDFObject implements Serializable {
 		this.value = value;
 	}
 	
-	public boolean getFreetext() {
+	public Integer getFreetext() {
 		return freetext;
 	}
 
-	public void setFreetext(boolean freetext) {
+	public void setFreetext(Integer freetext) {
 		this.freetext = freetext;
 	}
 
@@ -123,11 +124,16 @@ public class RDFObject implements Serializable {
 			n3Buffer.append("<" + getValue() + "> .");
 		} else { // We have a literal
 			logger.trace("Found Literal " + getValue());
-			n3Buffer.append("\"" + getValue() + "\"");
-			if (language != null) {
-				n3Buffer.append("@" + language);
+			if (freetext != null && freetext > 0) { // Should this literal be treated as a free text?
+				n3Buffer.append("?free" + freetext + " .\n"); // The actual previous object
+				n3Buffer.append("?free" + freetext + " pf:textMatch ( '+" + getValue() + "' ) .");
+			} else {
+				n3Buffer.append("\"" + getValue() + "\"");
+				if (language != null) {
+					n3Buffer.append("@" + language);
+				}
+				n3Buffer.append(" .");
 			}
-			n3Buffer.append(" .");
 		}
 		return n3Buffer.toString();
 	}

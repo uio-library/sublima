@@ -136,7 +136,7 @@ public class Form2SparqlService {
 					if (freetextFields == null) { System.out.println("OMG"); }
 					RDFObject myRDFObject = new RDFObject(value, language);
 					if (freetextFields != null)  {
-						myRDFObject.setFreetext(freetextFields.contains(key));	
+						myRDFObject.setFreetext(freetextFields.indexOf(key)+1);	
 					}
 					n3Buffer.append(myRDFObject.toN3());
 				} else { // Then we have to connect the object of this
@@ -180,7 +180,7 @@ public class Form2SparqlService {
 		List freetextFields = null;
 		if (parameterMap.get("freetext-fields") != null) {
 			freetextFields = Arrays.asList(parameterMap.get("freetext-fields"));
-			sparqlQueryBuffer.insert(0, "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>");
+			sparqlQueryBuffer.insert(0, "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n");
 			parameterMap.remove("freetext-fields");
 		}
 		
