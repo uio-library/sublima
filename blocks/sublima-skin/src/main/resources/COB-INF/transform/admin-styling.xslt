@@ -29,7 +29,7 @@
   </xsl:template>
 
   <!-- Publisherlist -->
-  <xsl:template name="publisherslist">
+  <xsl:template name="publisherlist">
     publisherslist
     <ul>
       <xsl:for-each select="c:page/c:content/c:publisherlist/sparql/results/result">
@@ -106,7 +106,8 @@
 
                 <!-- Publishers index -->
                 <xsl:if test="c:page/c:content/c:publisherlist">
-                  <xsl:call-template name="publisherslist"/>
+                  Inside XSLT
+                  <xsl:call-template name="publisherlist"/>
                 </xsl:if>
 
                 <!-- Publishers details -->
