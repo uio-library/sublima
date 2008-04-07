@@ -9,7 +9,7 @@
     </c:breadcrumbs>
 
     <c:menu>
-      <!-- c:menuelement title="Emner">admin/emner</c:menuelement -->
+      <c:menuelement title="Emner">admin/emner</c:menuelement>
       <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
       <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
       <c:menuelement title="Utgivere">admin/utgivere</c:menuelement>

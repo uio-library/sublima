@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
         xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:c="http://xmlns.computas.com/cocoon">
+        xmlns:c="http://xmlns.computas.com/cocoon"
+        xmlns:sparql="http://www.w3.org/2005/sparql-results#">
   <c:title>Sublima administrasjon</c:title>
 
   <c:breadcrumbs>

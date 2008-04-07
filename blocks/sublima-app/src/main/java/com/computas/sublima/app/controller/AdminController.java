@@ -43,14 +43,18 @@ public class AdminController implements StatelessAppleController {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         showPublishersIndex(res, req);
         return;
-      } else {
+      } else if ("update".equalsIgnoreCase(submode)) {
+        updatePublisherByURI(res, req);
+        return;
+      }
+      else {
         showPublisherByURI(res, req);
         return;
       }
     }
     // Resources.
     else if ("ressurser".equalsIgnoreCase(mode)) {
-      if ("".equalsIgnoreCase(submode)) {
+      if ("".equalsIgnoreCase(submode) || submode == null) {
         showResourcesIndex(res, req);
         return;
       } else if ("foreslaatte".equalsIgnoreCase(submode)) {
@@ -64,6 +68,16 @@ public class AdminController implements StatelessAppleController {
       res.sendStatus(404);
       return;
     }
+  }
+
+
+  /**
+   * Method to update a publisher
+   * @param res - AppleResponse
+   * @param req - AppleRequest
+   */
+  private void updatePublisherByURI(AppleResponse res, AppleRequest req) {
+
   }
 
   /**
