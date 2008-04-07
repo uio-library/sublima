@@ -116,7 +116,7 @@ _:modelDB1 rdf:type ja:RDBModel ;
     ja:connection
     [
         ja:dbType "PostgreSQL" ;
-        ja:dbURL          <jdbc:postgresql://sublima.computas.com/subdata> ;
+        ja:dbURL          <jdbc:postgresql://sublima.computas.int/subdata> ;
         ja:dbUser         "subuser" ;
         ja:dbPassword     "subpasswd" ; # Remember, no production passwords here!!
         ja:dbClass        "org.postgresql.Driver" ;
