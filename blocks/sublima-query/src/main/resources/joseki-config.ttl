@@ -125,7 +125,6 @@ _:modelDB1 rdf:type ja:RDBModel ;
     ja:modelName "DEFAULT" 
     .
 
-
 # # ---- RDFS Inference model - all from one file.
 
 # _:model_inf_1 rdfs:label "Inf-1" ;
