@@ -178,10 +178,10 @@ public class Form2SparqlService {
 		}
 
 		List freetextFields = null;
-		if (parameterMap.get("freetext-fields") != null) {
-			freetextFields = Arrays.asList(parameterMap.get("freetext-fields"));
+		if (parameterMap.get("freetext-field") != null) {
+			freetextFields = Arrays.asList(parameterMap.get("freetext-field"));
 			sparqlQueryBuffer.insert(0, "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n");
-			parameterMap.remove("freetext-fields");
+			parameterMap.remove("freetext-field");
 		}
 		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {

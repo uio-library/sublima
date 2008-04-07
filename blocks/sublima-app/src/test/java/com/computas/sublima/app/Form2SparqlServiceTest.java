@@ -226,7 +226,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("dc:title", testString);
 	    testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
 	    testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
-	    testMap.put("freetext-fields", new String[]{"dc:title"}); // this parameter is a magic string
+	    testMap.put("freetext-field", new String[]{"dc:title"}); // this parameter is a magic string
 	    String resultString = myService.convertForm2Sparql(testMap);
 	    assertEquals("Expected result and actual result not equal", "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch ( '+Cirrus Personal Jet' ) .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
 	  }
@@ -234,7 +234,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    // Single value test
 	    testMap.put("dc:title", testString);
 	    testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
-	    testMap.put("freetext-fields", new String[]{"dc:title","dc:description"}); // this parameter is a magic string
+	    testMap.put("freetext-field", new String[]{"dc:title","dc:description"}); // this parameter is a magic string
 	    String resultString = myService.convertForm2Sparql(testMap);
 	    assertEquals("Expected result and actual result not equal", "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch ( '+Cirrus Personal Jet' ) .\n?resource dc:description ?free2 .\n?free2 pf:textMatch ( '+A Very Light Jet Aircraft under construction.' ) .\n?resource ?p ?rest .\n}", resultString);
 	  }
