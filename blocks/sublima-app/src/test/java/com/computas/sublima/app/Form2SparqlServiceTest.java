@@ -92,6 +92,19 @@ public class Form2SparqlServiceTest extends TestCase {
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dc:subject/rdfs:label", testString, emptyList));
   }
+  
+  public void testConvertFormField2N3SingleFree() {
+	  String expectS = "\n?resource dc:title ?free1 .\n?free1 pf:textMatch ( '+Cirrus Personal Jet' ) .";
+	  assertEquals("Expected result and actual result not equal", expectS,
+			  myService.convertFormField2N3("dc:title", testString, aList));
+  }	
+
+  public void testConvertFormField2N3DualFree() {
+	  String expectS = "\n?resource dc:subject ?var1 .\n?var1 rdfs:label ?free1 .\n?free1 pf:textMatch ( '+Jet' ) .";
+	  testString[0] = "Jet";
+	  assertEquals("Expected result and actual result not equal", expectS,
+			  myService.convertFormField2N3("dc:subject/rdfs:label", testString, Arrays.asList(new String[]{"dc:subject/rdfs:label"})));
+  }	
 
   public void testConvertFormField2N3SingleLiteralLang() {
     myService.setLanguage("en");
@@ -152,6 +165,26 @@ public class Form2SparqlServiceTest extends TestCase {
 
     assertEquals("Expected result and actual result not equal", expectS, actual);
   }
+  
+  public void testConvertFormField2N3DoubleDualOneFree() {
+	    String expectS = "\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dc:subject ?var2 .\n?var2 rdfs:label ?free2 .\n?free2 pf:textMatch ( '+Jet' ) .";
+	    testString[0] = "http://www.cirrusdesign.com/";
+	    String actual = myService.convertFormField2N3("dc:publisher/foaf:homepage", testString, emptyList);
+	    testString[0] = "Jet";
+	    actual = actual + myService.convertFormField2N3("dc:subject/rdfs:label", testString, Arrays.asList(new String[]{"dc:subject/rdfs:label"}));
+
+	    assertEquals("Expected result and actual result not equal", expectS, actual);
+  }
+  
+  public void testConvertFormField2N3DoubleDualBothFree() {
+	    String expectS = "\n?resource dc:title ?free1 .\n?free1 pf:textMatch ( '+Cirrus Personal Jet' ) .\n?resource dc:subject ?var2 .\n?var2 rdfs:label ?free2 .\n?free2 pf:textMatch ( '+Jet' ) .";
+	    testString[0] = "Cirrus Personal Jet";
+	    String actual = myService.convertFormField2N3("dc:title", testString, aList);
+	    testString[0] = "Jet";
+	    actual = actual + myService.convertFormField2N3("dc:subject/rdfs:label", testString, Arrays.asList(new String[]{"dc:subject/rdfs:label"}));
+
+	    assertEquals("Expected result and actual result not equal", expectS, actual);
+	  }
 
   public void testConvertFormField2N3DualEmpty() {
     String expectS = "\n";
