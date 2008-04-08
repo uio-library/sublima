@@ -199,7 +199,7 @@ public class Form2SparqlService {
 		sparqlQueryBuffer.append("\n}");
 		String returnString = sparqlQueryBuffer.toString();
 		System.out.println(returnString);
-		logger.trace("Constructed SPARQL query: " + returnString);
+		logger.trace("Constructed SPARQL query: \n" + returnString);
 		return returnString;
 	}
 

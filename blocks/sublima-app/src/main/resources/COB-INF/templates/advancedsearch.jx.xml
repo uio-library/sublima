@@ -10,6 +10,11 @@
   <c:advancedsearch>
     <form name="dcSearch" action="search-result" method="GET">
       <input type="hidden" name="interface-language" value="no"/>
+      <input type="hidden" name="freetext-field" value="dct:title"/>
+      <input type="hidden" name="freetext-field" value="dct:subject/rdfs:label"/>
+      <input type="hidden" name="freetext-field" value="dct:description"/>
+      <input type="hidden" name="freetext-field" value="dct:publisher/foaf:name"/>
+
       <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
       <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>

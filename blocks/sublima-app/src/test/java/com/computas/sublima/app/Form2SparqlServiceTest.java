@@ -91,13 +91,13 @@ public class Form2SparqlServiceTest extends TestCase {
   }
   
   public void testConvertFormField2N3SingleFree() {
-	  String expectS = "\n?resource dc:title ?free1 .\n?free1 pf:textMatch ( '+Cirrus Personal Jet' ) .";
+	  String expectS = "\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .";
 	  assertEquals("Expected result and actual result not equal", expectS,
 			  myService.convertFormField2N3("dc:title", testString, Arrays.asList(new String[]{"dc:title"})));
   }	
 
   public void testConvertFormField2N3DualFree() {
-	  String expectS = "\n?resource dc:subject ?var1 .\n?var1 rdfs:label ?free1 .\n?free1 pf:textMatch ( '+Jet' ) .";
+	  String expectS = "\n?resource dc:subject ?var1 .\n?var1 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet' .";
 	  testString[0] = "Jet";
 	  assertEquals("Expected result and actual result not equal", expectS,
 			  myService.convertFormField2N3("dc:subject/rdfs:label", testString, Arrays.asList(new String[]{"dc:subject/rdfs:label"})));
@@ -164,7 +164,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
   
   public void testConvertFormField2N3DoubleDualOneFree() {
-	    String expectS = "\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dc:subject ?var2 .\n?var2 rdfs:label ?free1 .\n?free1 pf:textMatch ( '+Jet' ) .";
+	    String expectS = "\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dc:subject ?var2 .\n?var2 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet' .";
 	    testString[0] = "http://www.cirrusdesign.com/";
 	    String actual = myService.convertFormField2N3("dc:publisher/foaf:homepage", testString, emptyList);
 	    testString[0] = "Jet";
@@ -228,7 +228,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
 	    testMap.put("freetext-field", new String[]{"dc:title"}); // this parameter is a magic string
 	    String resultString = myService.convertForm2Sparql(testMap);
-	    assertEquals("Expected result and actual result not equal", "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch ( '+Cirrus Personal Jet' ) .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
+	    assertEquals("Expected result and actual result not equal", "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
 	  }
   public void testConvertForm2SparqlTwoValuesBothFree() {
 	    // Single value test
@@ -236,7 +236,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
 	    testMap.put("freetext-field", new String[]{"dc:title","dc:description"}); // this parameter is a magic string
 	    String resultString = myService.convertForm2Sparql(testMap);
-	    assertEquals("Expected result and actual result not equal", "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch ( '+Cirrus Personal Jet' ) .\n?resource dc:description ?free2 .\n?free2 pf:textMatch ( '+A Very Light Jet Aircraft under construction.' ) .\n?resource ?p ?rest .\n}", resultString);
+	    assertEquals("Expected result and actual result not equal", "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description ?free2 .\n?free2 pf:textMatch '+A Very Light Jet Aircraft under construction.' .\n?resource ?p ?rest .\n}", resultString);
 	  }
 
   public void testConvertFor2SPARQLDoubleDual() {
