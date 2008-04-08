@@ -45,11 +45,19 @@
             </map:match>
 
             <!-- action to update a publisher -->
-          <map:match pattern="updatepublisher">
-            <map:call function="com.computas.sublima.app.controller.AdminController">
+            <map:match pattern="updatepublisher">
+                <map:call function="com.computas.sublima.app.controller.AdminController">
                     <map:parameter name="mode" value="utgivere"/>
                     <map:parameter name="submode" value="updatepublisher"/>
-             </map:call>
+                </map:call>
+            </map:match>
+
+            <!-- action to insert a new publisher -->
+            <map:match pattern="insertpublisher">
+                <map:call function="com.computas.sublima.app.controller.AdminController">
+                    <map:parameter name="mode" value="utgivere"/>
+                    <map:parameter name="submode" value="insertpublisher"/>
+                </map:call>
             </map:match>
 
         </map:pipeline>

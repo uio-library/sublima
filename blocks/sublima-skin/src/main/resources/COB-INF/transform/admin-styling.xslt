@@ -29,8 +29,40 @@
     <xsl:copy-of select="c:page/c:content/c:text/*"/>
   </xsl:template>
 
+  <!-- New publisher -->
+  <xsl:template name="new_publisher">
+      
+    <form name="new_publisher" action="insertpublisher" method="GET">
+     <table>
+        <tr>
+            <td>
+              <label for="new_publisher">Navn</label>
+            </td>
+            <td>
+                <input id="new_publisher" type="text" name="new_publisher" size="40" />
+            </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="Lagre utgiver"/>
+          </td>
+        </tr>
+      </table>
+    </form>
+      
+     <xsl:if test="c:page/c:content/c:messages/message">
+       Validering
+      <br/>
+      <xsl:value-of select="c:page/c:content/c:messages/message" />
+    </xsl:if>
+
+  </xsl:template>
+
   <!-- Publisherlist -->
   <xsl:template name="publisherlist">
+    <xsl:call-template name="new_publisher"/>
+    <br/>
     <ul>
       <xsl:for-each select="c:page/c:content/c:publisherlist/sparql:sparql/sparql:results/sparql:result">
         <li>
@@ -47,7 +79,7 @@
   <!-- Publisherdetails -->
   <xsl:template name="publisherdetails">
 
-  <form name="rename_publisher" action="updatepublisher" method="POST">
+  <form name="rename_publisher" action="updatepublisher" method="GET">
      <table>
       <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/*" mode="edit" />
         <tr>
