@@ -1,15 +1,21 @@
 package com.computas.sublima.app.controller;
 
+import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
+import com.computas.sublima.query.RDFObject;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
+import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+import java.io.IOException;
 
 /**
  * @author: mha
@@ -43,12 +49,11 @@ public class AdminController implements StatelessAppleController {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         showPublishersIndex(res, req);
         return;
-      } else if ("update".equalsIgnoreCase(submode)) {
+      } else if ("updatepublisher".equalsIgnoreCase(submode)) {
         updatePublisherByURI(res, req);
         return;
-      }
-      else {
-        showPublisherByURI(res, req);
+      } else {
+        showPublisherByURI(res, req, null);
         return;
       }
     }
@@ -60,8 +65,7 @@ public class AdminController implements StatelessAppleController {
       } else if ("foreslaatte".equalsIgnoreCase(submode)) {
         showSuggestedResources(res, req);
         return;
-      }
-      else {
+      } else {
         return;
       }
     } else {
@@ -73,11 +77,67 @@ public class AdminController implements StatelessAppleController {
 
   /**
    * Method to update a publisher
+   *
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
   private void updatePublisherByURI(AppleResponse res, AppleRequest req) {
+    String publisheruri = req.getCocoonRequest().getParameter("the-resource");
+    String publishername = ""; //= req.getCocoonRequest().getParameter("publisher").trim();
+    String messages;
 
+    /*
+    Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
+
+    // Insert the needed PREFIX
+    parameterMap.put("prefix", new String[]{"foaf: <http://xmlns.com/foaf/0.1/>"});
+
+    Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+    parameterMap.remove("prefix"); // The prefixes are magic variables
+    try {
+      String sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    */
+
+    String deleteString = "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+            "DELETE\n" +
+            "{ " +
+            "<" + publisheruri + "> foaf:name ?oldname@no " +
+            "}\n" +
+            "WHERE {\n" +
+            "<" + publisheruri + "> foaf:name ?oldname@no " +
+            "}";
+
+    logger.info("updatePublisherByURI() ---> " + publisheruri + " -- SPARUL DELETE  --> " + deleteString);
+
+    boolean success = false;
+    success = sparulDispatcher.query(deleteString);
+    logger.info("updatePublisherByURI() ---> " + publisheruri + " -- DELETE OLD NAME --> " + success);
+
+    String updateString = "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+            "INSERT\n" +
+            "{ " +
+            "<" + publisheruri + "> foaf:name " + publishername + "@no\n" +
+            "}";
+
+    logger.info("updatePublisherByURI() ---> " + publisheruri + ":" + publishername + " -- SPARUL UPDATE  --> " + updateString);
+
+    success = false;
+
+    success = sparulDispatcher.query(updateString);
+    logger.info("updatePublisherByURI() ---> " + publisheruri + ":" + publishername + " -- INSERT NEW NAME --> " + success);
+
+    if (success) {
+      messages = "<c:message>Utgiveren oppdatert</c:message>";
+    } else {
+      messages = "<c:message>Feil ved oppdatering</c:message>";
+    }
+
+    showPublisherByURI(res, req, messages);
   }
 
   /**
@@ -88,17 +148,20 @@ public class AdminController implements StatelessAppleController {
    * @param req - AppleRequest
    */
 
-  private void showPublisherByURI(AppleResponse res, AppleRequest req) {
+  private void showPublisherByURI(AppleResponse res, AppleRequest req, String messages) {
     //String publisheruri = this.submode;
     String publisheruri = req.getCocoonRequest().getParameter("uri");
+    if (messages == null) {
+      messages = "<empty></empty>";
+    }
 
     //Find the publisher URI based on name
     String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
-            "DESCRIBE ?resource <" + publisheruri + ">",// + " ?rest",
+            "DESCRIBE ?resource <" + publisheruri + "> ?subject",
             "WHERE {",
             "?resource dct:publisher <" + publisheruri + "> .",
-            //"?resource dct:su ?rest .",
+            "?resource dct:subject ?subject .",
             "}"});
 
 
@@ -106,6 +169,7 @@ public class AdminController implements StatelessAppleController {
     Object queryResult = sparqlDispatcher.query(findPublisherByURIQuery);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("messages", messages);
     bizData.put("publisherdetails", queryResult);
     res.sendPage("xml2/detaljer", bizData);
   }
@@ -208,7 +272,7 @@ public class AdminController implements StatelessAppleController {
                     "              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
-            "        ?resource sub:status <http://sublima.computas.com/status/IANCTIVE> ;",
+            "        ?resource sub:status <http://sublima.computas.com/status/INACTIVE> ;",
             "                  dct:title ?title ;",
             "                  dct:identifier ?identifier .",
             "}"});
@@ -247,6 +311,17 @@ public class AdminController implements StatelessAppleController {
 
   public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
+  }
+
+  //todo Move to a Service-class
+  private Map<String, String[]> createParametersMap(Request request) {
+    Map<String, String[]> result = new HashMap<String, String[]>();
+    Enumeration parameterNames = request.getParameterNames();
+    while (parameterNames.hasMoreElements()) {
+      String paramName = (String) parameterNames.nextElement();
+      result.put(paramName, request.getParameterValues(paramName));
+    }
+    return result;
   }
 }
 

@@ -12,7 +12,7 @@
         version="1.0">
   <!-- xsl:output method="html" indent="yes"/ -->
   <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
-  <xsl:import href="rdfxml2xhtml-table.xsl"/>
+  <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
 
    <xsl:output method="xml"
             encoding="UTF-8"
@@ -47,20 +47,9 @@
   <!-- Publisherdetails -->
   <xsl:template name="publisherdetails">
 
-  <form name="rename_publisher" action="updatepublisher" method="GET">
-    <input type="hidden" name="publisheruri" value="{c:page/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Agent|foaf:Person|foaf:Group|foaf:Organization/@rdf:about}"/>
+  <form name="rename_publisher" action="updatepublisher" method="POST">
      <table>
-        <tr>
-          <td align="right">
-            <label for="publisher">Utgiver</label>
-          </td>
-          <td>
-            <input id="publisher" type="text" name="publisher" size="40" value="{c:page/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Name[@xml:lang='no']}"/>
-            <xsl:value-of select="c:page/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Name[@xml:lang='no']"/>
-            <xsl:value-of select="c:page/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/*"/>
-            <xsl:value-of select="c:page/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Agent/foaf:name"/>
-          </td>
-        </tr>
+      <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/*" mode="edit" />
         <tr>
           <td></td>
           <td>
@@ -68,10 +57,53 @@
           </td>
         </tr>
       </table>
+    <xsl:if test="c:page/c:content/c:messages/c:message">
+      <xsl:value-of select="c:page/c:content/c:messages/c:message" />
+    </xsl:if>
     </form>
     <br />
-    <h2>Ressurser tilknyttet utgiveren</h2>
-    <xsl:apply-templates select="c:page/c:publisherdetails/rdf:RDF" mode="resource"/>
+    <h4>Ressurser tilknyttet utgiveren</h4>
+    
+    <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF" mode="results"/>
+
+  </xsl:template>
+
+  <xsl:template name="linkcheck">
+
+    <xsl:if test="c:page/c:content/c:linkcheck/c:status_check">
+      <p>Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</p>
+      <ul>
+      <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_check/rdf:RDF/sub:Resource">
+        <li>
+          <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+        </li>
+      </xsl:for-each>
+      </ul>
+    </xsl:if>
+
+    <!-- Linkcheck status inactive -->
+    <xsl:if test="c:page/c:content/c:linkcheck/c:status_inactive/rdf:RDF/sub:Resource">
+      <p>Satt inaktive pga varige problemer</p>
+      <ul>
+      <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_inactive/rdf:RDF/sub:Resource">
+        <li>
+          <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+        </li>
+      </xsl:for-each>
+      </ul>
+    </xsl:if>
+
+    <!-- Linkcheck status resource -->
+    <xsl:if test="c:page/c:content/c:status_gone/rdf:RDF/sub:Resource">
+      <p>Satt til borte grunnet entydig besked fra tilbyder</p>
+      <ul>
+      <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_gone/rdf:RDF/sub:Resource">
+        <li>
+          <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+        </li>
+      </xsl:for-each>
+      </ul>
+    </xsl:if>
 
   </xsl:template>
 
@@ -135,41 +167,11 @@
                   <xsl:call-template name="publisherdetails"/>
                 </xsl:if>
 
-                <!-- Linkcheck status check -->
-                <xsl:if test="c:page/c:content/c:linkcheck_check/rdf:RDF/sub:Resource">
-                  <p>Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</p>
-                  <ul>
-                  <xsl:for-each select="c:page/c:content/c:linkcheck_check/rdf:RDF/sub:Resource">
-                    <li>
-                      <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-                    </li>
-                  </xsl:for-each>
-                  </ul>
+                <!-- Linkcheck -->
+                <xsl:if test="c:page/c:content/c:linkcheck">
+                  <xsl:call-template name="linkcheck"/>
                 </xsl:if>
 
-                <!-- Linkcheck status inactive -->
-                <xsl:if test="c:page/c:content/c:linkcheck_inactive/rdf:RDF/sub:Resource">
-                  <p>Satt inaktive pga varige problemer</p>
-                  <ul>
-                  <xsl:for-each select="c:page/c:content/c:linkcheck_inactive/rdf:RDF/sub:Resource">
-                    <li>
-                      <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-                    </li>
-                  </xsl:for-each>
-                  </ul>
-                </xsl:if>
-
-                <!-- Linkcheck status resource -->
-                <xsl:if test="c:page/c:content/c:linkcheck_gone/rdf:RDF/sub:Resource">
-                  <p>Satt til borte grunnet entydig besked fra tilbyder</p>
-                  <ul>
-                  <xsl:for-each select="c:page/c:content/c:linkcheck_gone/rdf:RDF/sub:Resource">
-                    <li>
-                      <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-                    </li>
-                  </xsl:for-each>
-                  </ul>
-                </xsl:if>
 
                 <!-- Suggested resources -->
                 <xsl:if test="c:page/c:content/c:suggestedresources/rdf:RDF">

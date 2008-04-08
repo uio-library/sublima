@@ -23,15 +23,17 @@
       <h3>Lenkesjekk</h3>
       <br/>
     </c:text>
-    <c:linkcheck_check>
-      <jx:out value="#{lenkesjekklist_check}" xmlize="true"/>
-    </c:linkcheck_check>
-    <c:linkcheck_inactive>
-      <jx:out value="#{lenkesjekklist_inactive}" xmlize="true"/>
-    </c:linkcheck_inactive>
-    <c:linkcheck_gone>
-      <jx:out value="#{lenkesjekklist_gone}" xmlize="true"/>
-    </c:linkcheck_gone>
+    <c:linkcheck>
+      <c:status_check>
+        <jx:out value="#{lenkesjekklist_check}" xmlize="true"/>
+      </c:status_check>
+      <c:status_inactive>
+        <jx:out value="#{lenkesjekklist_inactive}" xmlize="true"/>
+      </c:status_inactive>
+      <c:status_gone>
+        <jx:out value="#{lenkesjekklist_gone}" xmlize="true"/>
+      </c:status_gone>
+    </c:linkcheck>
   </c:content>
 
 </c:page>

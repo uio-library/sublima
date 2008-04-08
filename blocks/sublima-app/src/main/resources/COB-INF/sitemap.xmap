@@ -48,7 +48,7 @@
           <map:match pattern="updatepublisher">
             <map:call function="com.computas.sublima.app.controller.AdminController">
                     <map:parameter name="mode" value="utgivere"/>
-                    <map:parameter name="submode" value="update"/>
+                    <map:parameter name="submode" value="updatepublisher"/>
              </map:call>
             </map:match>
 

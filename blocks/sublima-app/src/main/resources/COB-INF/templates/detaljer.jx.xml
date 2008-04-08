@@ -26,7 +26,7 @@
       <br/>
     </c:text>
 
-    <c:errormessages></c:errormessages>
+    <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>
 
     <c:publisherdetails>
       <jx:out value="#{publisherdetails}" xmlize="true"/>
