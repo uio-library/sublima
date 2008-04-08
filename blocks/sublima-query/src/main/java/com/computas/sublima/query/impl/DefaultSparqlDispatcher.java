@@ -4,6 +4,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.io.ByteArrayOutputStream;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.apache.commons.io.IOUtils;
 
@@ -83,9 +86,12 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     Query query = QueryFactory.create(sparqlQuery);
     QueryExecution qExec = QueryExecutionFactory.create(query, model);
     Model queryResult = qExec.execDescribe();
-    qExec.close();
-    model.close();
 
-    return queryResult;
+    ByteArrayOutputStream bout = new ByteArrayOutputStream();
+    queryResult.write(bout, "RDF/XML-ABBREV");
+    queryResult.close();
+    qExec.close();
+    
+    return bout.toString();
   }
 }

@@ -1,23 +1,20 @@
 package com.computas.sublima.app.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
+import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.query.SparqlDispatcher;
+import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.query.service.SettingsService;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
-import com.computas.sublima.app.service.Form2SparqlService;
-import com.computas.sublima.query.SparqlDispatcher;
-import com.computas.sublima.query.service.SettingsService;
-import com.computas.sublima.query.service.SearchService;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.sparql.util.StringUtils;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
@@ -67,46 +64,46 @@ public class SearchController implements StatelessAppleController {
 
     logger.trace("SPARQL query sent to dispatcher: " + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
-   
+
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
 
     String sparqlConstructQuery =
-              "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-              "prefix owl: <http://www.w3.org/2002/07/owl#>\n" +
-	      "prefix dct: <http://purl.org/dc/terms/>\n" +
-              "prefix sub: <http://xmlns.computas.com/sublima#>\n" +
-	      "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-              "CONSTRUCT {\n" +
-                      subject + " skos:prefLabel ?label ; \n" +
-                      " a skos:Concept;\n" + 
-                      " skos:altLabel ?synLabel ;\n" +
-                      " skos:related ?relSub ;\n" +
-                      " skos:broader ?btSub ;\n" +
-                      " skos:narrower ?ntSub .\n" +
-                      " ?relSub skos:prefLabel ?relLabel ;\n" +
-                      " a skos:Concept .\n" +
-                      " ?btSub skos:prefLabel ?btLabel ;\n" +
-                      " a skos:Concept .\n" +
-                      " ?ntSub skos:prefLabel ?ntLabel ;\n" +
-                      " a skos:Concept .\n" +
-                      " }\n" +
-                      " WHERE {\n" +
-                      subject + " rdfs:label ?label .\n" +
-                      subject + " a ?class .\n" +
-                      " OPTIONAL { " + subject + " sub:synonym ?synLabel  . }\n" +
-                      " OPTIONAL { " + subject + " ?prop ?relSub .\n" +
-                      " ?relSub rdfs:label ?relLabel . }\n" +
-                      " OPTIONAL { ?class rdfs:subClassOf ?btClass .\n" +
-                      " ?btSub a ?btClass ;\n" +
-                      "     rdfs:label ?btLabel . }\n" +
-                      " OPTIONAL { ?ntClass rdfs:subClassOf ?class .\n" +
-                      " ?ntSub a ?ntClass ;\n" +
-                      "     rdfs:label ?ntLabel . } }";
+            "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                    "prefix owl: <http://www.w3.org/2002/07/owl#>\n" +
+                    "prefix dct: <http://purl.org/dc/terms/>\n" +
+                    "prefix sub: <http://xmlns.computas.com/sublima#>\n" +
+                    "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                    "CONSTRUCT {\n" +
+                    subject + " skos:prefLabel ?label ; \n" +
+                    " a skos:Concept;\n" +
+                    " skos:altLabel ?synLabel ;\n" +
+                    " skos:related ?relSub ;\n" +
+                    " skos:broader ?btSub ;\n" +
+                    " skos:narrower ?ntSub .\n" +
+                    " ?relSub skos:prefLabel ?relLabel ;\n" +
+                    " a skos:Concept .\n" +
+                    " ?btSub skos:prefLabel ?btLabel ;\n" +
+                    " a skos:Concept .\n" +
+                    " ?ntSub skos:prefLabel ?ntLabel ;\n" +
+                    " a skos:Concept .\n" +
+                    " }\n" +
+                    " WHERE {\n" +
+                    subject + " rdfs:label ?label .\n" +
+                    subject + " a ?class .\n" +
+                    " OPTIONAL { " + subject + " sub:synonym ?synLabel  . }\n" +
+                    " OPTIONAL { " + subject + " ?prop ?relSub .\n" +
+                    " ?relSub rdfs:label ?relLabel . }\n" +
+                    " OPTIONAL { ?class rdfs:subClassOf ?btClass .\n" +
+                    " ?btSub a ?btClass ;\n" +
+                    "     rdfs:label ?btLabel . }\n" +
+                    " OPTIONAL { ?ntClass rdfs:subClassOf ?class .\n" +
+                    " ?ntSub a ?ntClass ;\n" +
+                    "     rdfs:label ?ntLabel . } }";
 
     logger.trace("SPARQL query sent to dispatcher: " + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);
-   
+
     bizData.put("navigation", queryResult);
     bizData.put("mode", mode);
     bizData.put("request", "<empty></empty>");
@@ -121,13 +118,11 @@ public class SearchController implements StatelessAppleController {
 
     SearchService searchService;
 
-
     //Use user chosen boolean operator when it doesn't equal the default
-    if ( !chosenOperator.equalsIgnoreCase(defaultBooleanOperator)) {
+    if (!chosenOperator.equalsIgnoreCase(defaultBooleanOperator)) {
       searchService = new SearchService(chosenOperator);
       logger.debug("SUBLIMA: Use " + chosenOperator + " as boolean operator for search");
-    }
-    else {
+    } else {
       searchService = new SearchService(defaultBooleanOperator);
       logger.debug("SUBLIMA: Use " + defaultBooleanOperator + " as boolean operator for search");
     }
@@ -135,7 +130,7 @@ public class SearchController implements StatelessAppleController {
     String searchstring = searchService.buildSearchString(req.getCocoonRequest().getParameter("searchstring"));
 
     //Do deep search in external resources or not
-    if ( req.getCocoonRequest().getParameterValues("deepsearch") != null && "deepsearch".equalsIgnoreCase(req.getCocoonRequest().getParameterValues("deepsearch")[0])) {
+    if (req.getCocoonRequest().getParameterValues("deepsearch") != null && "deepsearch".equalsIgnoreCase(req.getCocoonRequest().getParameterValues("deepsearch")[0])) {
       deepsearch = true;
       logger.debug("SUBLIMA: Deep search enabled");
     }
@@ -155,51 +150,40 @@ public class SearchController implements StatelessAppleController {
             "				 dct:publisher ?publisher ;",
             "                dct:subject ?subject .}"});
      */
-     String queryString = StringUtils.join("\n", new String[]{
+    String queryString = StringUtils.join("\n", new String[]{
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "DESCRIBE ?resource ?subject ?publisher",
-             "WHERE {",
-             "    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
-             "  {",
-             "    ?resource ?p1 ?lit;",
-             "              dct:subject ?subject;",
-             "              dct:publisher ?publisher.",
-             "  }",
-             "  UNION",
-             "  {",
-             "      ?resource dct:subject ?subject1 .",
-             "      ?subject1 ?p2 ?lit .",
-             "      ?resource dct:subject ?subject;",
-             "                dct:publisher ?publisher .",
-             "  }",
-             "}",
-             });
+            "WHERE {",
+            "    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
+            "  {",
+            "    ?resource ?p1 ?lit;",
+            "              dct:subject ?subject;",
+            "              dct:publisher ?publisher.",
+            "  }",
+            "  UNION",
+            "  {",
+            "      ?resource dct:subject ?subject1 .",
+            "      ?subject1 ?p2 ?lit .",
+            "      ?resource dct:subject ?subject;",
+            "                dct:publisher ?publisher .",
+            "  }",
+            "}",
+    });
 
 
     logger.trace("Freetext search: SPARQL query sent to dispatcher: " + queryString);
 
-    Model queryResult = (Model) sparqlDispatcher.query(queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
 
-    // If the model is empty, thus no results, return the zero-results-strategy-page
-    if( queryResult.isEmpty() ) {
-      queryResult.close();
-      res.sendPage("tips", null);  
-    }
-    else {
-      ByteArrayOutputStream bout = new ByteArrayOutputStream();
-      queryResult.write(bout, "RDF/XML-ABBREV");
-      queryResult.close();
-
-      Map<String, Object> bizData = new HashMap<String, Object>();
-      bizData.put("result-list", bout.toString());
-      bizData.put("navigation", "<empty></empty>");
-      bizData.put("mode", mode);
-      bizData.put("configuration", new Object());
-      bizData.put("request", "<empty></empty>");
-      res.sendPage("xml/sparql-result", bizData);
-    }
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("result-list", queryResult);
+    bizData.put("navigation", "<empty></empty>");
+    bizData.put("mode", mode);
+    bizData.put("configuration", new Object());
+    bizData.put("request", "<empty></empty>");
+    res.sendPage("xml/sparql-result", bizData);
   }
 
   public void doAdvancedSearch(AppleResponse res, AppleRequest req) {
@@ -231,8 +215,8 @@ public class SearchController implements StatelessAppleController {
     // sparqlQuery = "DESCRIBE <http://the-jet.com/>";
 
     logger.trace("SPARQL query sent to dispatcher: " + sparqlQuery);
-    Object queryResult = sparqlDispatcher.query(sparqlQuery);   	
-    
+    Object queryResult = sparqlDispatcher.query(sparqlQuery);
+
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
     bizData.put("navigation", "<empty></empty>");
@@ -244,22 +228,22 @@ public class SearchController implements StatelessAppleController {
     StringBuffer params = new StringBuffer();
     params.append("  <request>\n");
     for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
-    	String key = keys.nextElement().toString();
-    	params.append("\n    <param key=\"" + key + "\">");
-    	String[] values = req.getCocoonRequest().getParameterValues(key);
-    	for (String value : values) {
-    		value = value.replaceAll("<", "&lt;");
-    		System.out.println(value);
-    		value = value.replaceAll(">", "&gt;");
-    		value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
-    		params.append("\n      <value>"+value+"</value>");    	
-    	}
-    	params.append("\n    </param>");
+      String key = keys.nextElement().toString();
+      params.append("\n    <param key=\"" + key + "\">");
+      String[] values = req.getCocoonRequest().getParameterValues(key);
+      for (String value : values) {
+        value = value.replaceAll("<", "&lt;");
+        System.out.println(value);
+        value = value.replaceAll(">", "&gt;");
+        value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+        params.append("\n      <value>" + value + "</value>");
+      }
+      params.append("\n    </param>");
     }
     params.append("\n  </request>\n");
 
     System.out.println(params);
-    bizData.put("request", params.toString()); 
+    bizData.put("request", params.toString());
     res.sendPage("xml/sparql-result", bizData);
   }
 
