@@ -1,30 +1,17 @@
-/* General styles
+/* General styles */
 body {
-margin:0;
-padding:0;
-border:0; /* This removes the border around the viewport in old versions of IE */
-width:
-
-100
-%
-;
-background:#fff
-
-;
-min-width:
-
-600
-px
-
-;
-/* Minimum width of layout - remove line if not required */
+  margin: 0;
+  padding: 0;
+  border: 0; /* This removes the border around the viewport in old versions of IE */
+  width: 100%;
+  background: #fff;
+  min-width:
+  600px; /* Minimum width of layout - remove line if not required */
 /* The min-width property does not work in old versions of Internet Explorer */
-font-size:
-
-90
-%
-;
+  font-size:
+  90%;
 }
+
 a {
   color: #369;
 }
@@ -198,4 +185,31 @@ padding) plus (right column left padding) */
 #footer p {
   padding: 10px;
   margin: 0;
+}
+
+/* Validation messages */
+p.validationmessage {
+  font-size: medium;
+  font-weight: bold;
+  color: blue;
+}
+
+.navigation {
+  background: #FF0000;
+}
+
+.facets {
+  background: #00FF00;
+}
+
+.activities {
+  background: #0000FF;
+}
+
+.resources {
+  background: #00FFFF;
+}
+
+.resources dd {
+  padding-bottom: .2em;
 }
