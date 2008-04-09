@@ -45,7 +45,7 @@ public class SearchService {
     }
     */
 
-    Pattern p = Pattern.compile("(\\w+)|(\\\"[^\\\"]+\\\")");
+    Pattern p = Pattern.compile("(\\p{L}+)|(\\\"[^\\\"]+\\\")");
     Matcher m = p.matcher(searchstring);
     List<String> terms = new ArrayList<String>();
     while (m.find()) {
