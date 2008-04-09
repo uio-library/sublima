@@ -51,10 +51,11 @@
       </table>
     </form>
       
-     <xsl:if test="c:page/c:content/c:messages/message">
-       Validering
+     <xsl:if test="c:page/c:content/c:messages">
       <br/>
-      <xsl:value-of select="c:page/c:content/c:messages/message" />
+      <p class="validationmessage">
+      <xsl:value-of select="c:page/c:content/c:messages/*" />
+      </p>
     </xsl:if>
 
   </xsl:template>
@@ -81,7 +82,7 @@
 
   <form name="rename_publisher" action="updatepublisher" method="GET">
      <table>
-      <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/*" mode="edit" />
+      <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/foaf:Agent" mode="edit" />
         <tr>
           <td></td>
           <td>
@@ -89,8 +90,11 @@
           </td>
         </tr>
       </table>
-    <xsl:if test="c:page/c:content/c:messages/c:message">
-      <xsl:value-of select="c:page/c:content/c:messages/c:message" />
+    <xsl:if test="c:page/c:content/c:messages">
+      <br/>
+      <p class="validationmessage">
+      <xsl:value-of select="c:page/c:content/c:messages/*" />
+      </p>
     </xsl:if>
     </form>
     <br />
@@ -195,7 +199,7 @@
                 </xsl:if>
 
                 <!-- Publishers details -->
-                <xsl:if test="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource">
+                <xsl:if test="c:page/c:content/c:publisherdetails/rdf:RDF">
                   <xsl:call-template name="publisherdetails"/>
                 </xsl:if>
 

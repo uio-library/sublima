@@ -22,8 +22,8 @@
   <c:content>
 
     <c:text>
-      <h3>Utgiverdetaljer</h3>
-      <p>Foelgende utgivere er registrert i systemet. Klikk paa utgiver for aa redigere denne.</p>
+      <h3>Utgivere</h3>
+      <p>Legg til ny eller klikk en eksisterende for å redigere denne.</p>
       <br/>
     </c:text>
 

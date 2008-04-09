@@ -39,6 +39,7 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
     }
     catch (UpdateException e) {
       model.close();
+      e.printStackTrace();
       return false;
     }
 

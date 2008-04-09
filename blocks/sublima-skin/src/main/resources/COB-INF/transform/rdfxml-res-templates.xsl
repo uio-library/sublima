@@ -136,14 +136,18 @@
 
   <xsl:template match="foaf:Agent|foaf:Person|foaf:Group|foaf:Organization" mode="edit">
     <input type="hidden" name="uri" value="{./@rdf:about}" />
-    
+
+    <tr>
+      <td>Språk</td>
+      <td>Navn</td>
+    </tr>
     <xsl:for-each select="./foaf:name">
       <tr>
         <td>
-          <label for="dct:publisher/foaf:name@{@xml:lang}"><xsl:value-of select="@xml:lang" /></label>
+          <label for="foaf:Agent/foaf:name@{@xml:lang}"><xsl:value-of select="@xml:lang" /></label>
         </td>
         <td>
-          <input id="dct:publisher/foaf:name@{@xml:lang}" type="text" name="dct:publisher/foaf:name@{@xml:lang}" size="40">
+          <input id="foaf:Agent/foaf:name@{@xml:lang}" type="text" name="foaf:Agent/foaf:name@{@xml:lang}" size="40">
            <xsl:attribute name="value">
             <xsl:value-of select="."/>
            </xsl:attribute>
@@ -152,6 +156,14 @@
       </tr>
       
     </xsl:for-each>
+    <tr>
+      <td>
+        <input id="new_lang" type="text" name="new_lang" size="5" />
+      </td>
+      <td>
+        <input id="new_name" type="text" name="new_name" size="40" />  
+      </td>
+    </tr>
 
   </xsl:template>
 
