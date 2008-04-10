@@ -44,8 +44,7 @@ public class AdminController implements StatelessAppleController {
       }
       else {
         String query = req.getCocoonRequest().getParameter("query");
-        String url = SettingsService.getProperty("sublima.joseki.endpoint");
-        res.redirectTo(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
+        res.redirectTo(req.getCocoonRequest().getContextPath() + "/sparql?query=" + URLEncoder.encode(query, "UTF-8"));
       }
     }
 

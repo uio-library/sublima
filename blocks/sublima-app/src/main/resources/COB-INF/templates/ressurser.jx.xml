@@ -13,6 +13,7 @@
       <!-- c:menuelement title="Emner">admin/emner</c:menuelement -->
       <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
       <c:menuelement title="Foreslaatte" child="true">admin/ressurser/foreslaatte</c:menuelement>
+      <c:menuelement title="Ny" child="true">admin/ressurser/ny</c:menuelement>
       <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
       <!-- c:menuelement title="Utgivere">admin/utgivere</c:menuelement -->
       <c:menuelement title="Lenkesjekk">admin/lenkesjekk</c:menuelement>
