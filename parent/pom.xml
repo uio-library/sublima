@@ -151,19 +151,18 @@
   </dependencyManagement>  
   
    <repositories>
-    <repository>
-      <id>computas-internal</id>
-      <name>Computas internal Maven repository</name>
-      <url>file://D://Prosjekter//SUBLIMA//code//Sublima//sublima-maven2-repo</url>
+    <!-- repository>
+      <id>computas-external</id>
+      <name>Computas external Maven repository</name>
+      <url>http://maven.computas.com</url>
       <releases>
         <enabled>true</enabled>
-        <!-- only look for jars here when they are not present locally -->
         <updatePolicy>never</updatePolicy>
       </releases>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-    </repository>
+    </repository -->
       <repository>
         <id>jena</id>
         <url>http://jena.hpl.hp.com/repo</url>
