@@ -18,3 +18,11 @@ sub:committer		rdfs:range 	sioc:User ;
 sub:Resource		a 		rdfs:Class;
 			rdfs:subClassOf	rdfs:Resource;
 			owl:unionOf	sioc:Item,sioc:Site .
+
+sub:skipped		rdfs:range 	rdfs:Literal ;		
+			a 		owl:AnnotationProperty ;
+			rdfs:domain	<http://www.w3.org/2007/ont/http#ResponseMessage> .
+
+sub:status		rdfs:range 	rdfs:Literal ;		
+			a 		owl:AnnotationProperty ;
+			rdfs:domain	sub:Resource .
