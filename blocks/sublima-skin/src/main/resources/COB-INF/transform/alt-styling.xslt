@@ -65,7 +65,7 @@ this, just comment out the call-template -->
         <div id="header">
           <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
 
-          <h2>Sublima 0.5.8</h2>
+          <h2>Sublima 0.6</h2>
           <ul>
             <li>
               <a href="{$baseurl}/home" class="active">Hjem</a>
@@ -94,9 +94,9 @@ this, just comment out the call-template -->
             <div class="colleft">
               <div class="col1">
 
-		<!--
-		    <xsl:call-template name="debug"/>
-		-->
+                <!--
+                <xsl:call-template name="debug"/>
+            -->
 
                 <!-- Column 1 start -->
                 <xsl:if test="not(c:page/c:advancedsearch/node())">
@@ -126,15 +126,14 @@ this, just comment out the call-template -->
                     </table>
                   </form>
                 </xsl:if>
+                  <xsl:if test="c:page/c:mode = 'topic-instance'">
 
-                <xsl:if test="c:page/c:mode = 'topic-instance'">
+                    <h3>Navigering</h3>
+                    <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
+                      <xsl:with-param name="role">this-param</xsl:with-param>
+                    </xsl:apply-templates>
 
-                  <h3>Navigering</h3>
-                  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
-                    <xsl:with-param name="role">this-param</xsl:with-param>
-                  </xsl:apply-templates>
-
-                </xsl:if>
+                  </xsl:if>
                 <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
                 <xsl:call-template name="advancedsearch"/>
                 <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
@@ -145,20 +144,19 @@ this, just comment out the call-template -->
                     <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="resource"/>
                   </xsl:when>
                   <xsl:otherwise>
-                    <h3>Ressurser</h3>
-                    <!-- Søkeresultatene -->
-                    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
-                    <!-- Column 1 end -->
+                      <h3>Ressurser</h3>
+                      <!-- Søkeresultatene -->
+                      <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
+                      <!-- Column 1 end -->
                   </xsl:otherwise>
                 </xsl:choose>
               </div>
               <div class="col2">
                 <!-- Column 2 start -->
-                <h3>Fasetter</h3>
-                <xsl:if test="c:page/c:facets">
-                  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
-                </xsl:if>
-
+                  <h3>Fasetter</h3>
+                  <xsl:if test="c:page/c:facets">
+                    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
+                  </xsl:if>
 
                 <!-- Column 2 end -->
               </div>
@@ -166,7 +164,8 @@ this, just comment out the call-template -->
                 <!-- Column 3 start -->
                 <!-- xsl:if test="c:page/c:mode = 'search-result'" -->
                 <h2>Mine aktiviteter</h2>
-                <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a><br/>
+                <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a>
+                <br/>
                 <a href="{$baseurl}/admin">Administrasjon</a>
 
 
