@@ -11,6 +11,14 @@
         <!-- Pipeline for the admin part -->
         <map:pipeline>
 
+          <!-- To test SPARQL queries -->
+          <map:match pattern="testsparql/*">
+            <map:call function="com.computas.sublima.app.controller.AdminController">
+                    <map:parameter name="mode" value="testsparql"/>
+                    <map:parameter name="submode" value="{1}"/>
+                </map:call>
+          </map:match>
+
             <!-- Initial admin page -->
             <map:match pattern="admin">
                 <map:generate src="templates/admin.jx.xml" type="jx"/>

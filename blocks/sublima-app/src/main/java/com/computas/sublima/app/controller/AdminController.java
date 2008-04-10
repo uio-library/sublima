@@ -2,6 +2,8 @@ package com.computas.sublima.app.controller;
 
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
+import com.computas.sublima.query.service.AdminService;
+import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.net.URLEncoder;
 
 /**
  * @author: mha
@@ -35,7 +38,18 @@ public class AdminController implements StatelessAppleController {
 
     if ("".equalsIgnoreCase(mode)) {
       res.sendPage("xml2/admin", null);
+    } else if ("testsparql".equalsIgnoreCase(mode)) {
+      if("".equalsIgnoreCase(submode)) {
+        res.sendPage("xhtml/testsparql", null);
+      }
+      else {
+        String query = req.getCocoonRequest().getParameter("query");
+        String url = SettingsService.getProperty("sublima.joseki.endpoint");
+        res.redirectTo(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
+      }
     }
+
+
     // Linkcheck. Send the user to a page that displays a list of all resources affected.
     else if ("lenkesjekk".equalsIgnoreCase(mode)) {
       showLinkcheckResults(res, req);
@@ -68,13 +82,62 @@ public class AdminController implements StatelessAppleController {
       } else if ("foreslaatte".equalsIgnoreCase(submode)) {
         showSuggestedResources(res, req);
         return;
-      } else {
+      } else if ("ny".equalsIgnoreCase(submode)) {
+        editResource(res,req, "ny", null);
+      } else if ("edit".equalsIgnoreCase(submode)) {
+        editResource(res,req, "edit", null);
+      }
+      else {
         return;
       }
     } else {
       res.sendStatus(404);
       return;
     }
+  }
+
+
+  /**
+   * Method to add new resources and edit existing ones
+   * Sparql queries for all topics, statuses, languages, media types and audience
+   * is done and the results forwarded to the JX Template and XSLT.
+   *
+   * A query for the resource is done when the action is "edit". In case of "new" a blank
+   * form is presented.
+   *
+   * @param res - AppleResponse
+   * @param req - AppleRequest
+   */
+  private void editResource(AppleResponse res, AppleRequest req, String type, String messages) {
+
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    AdminService adminService= new AdminService();
+
+    if ("ny".equalsIgnoreCase(type)) {
+      adminService.getAllAudiences();
+      adminService.getAllLanguages();
+      adminService.getAllMediaTypes();
+      adminService.getAllStatuses();
+      adminService.getAllTopics();
+
+      bizData.put("resource", "<empty></empty>");
+      bizData.put("topics", "<empty></empty>");
+      bizData.put("languages", "<empty></empty>");
+      bizData.put("mediatypes", "<empty></empty>");
+      bizData.put("audience", "<empty></empty>");
+      bizData.put("resource", "<empty></empty>");
+    }
+    else {
+      bizData.put("resource", "<empty></empty>");
+      bizData.put("topics", "<empty></empty>");
+      bizData.put("languages", "<empty></empty>");
+      bizData.put("mediatypes", "<empty></empty>");
+      bizData.put("audience", "<empty></empty>");
+      bizData.put("resource", "<empty></empty>");
+    }
+
+      res.sendPage("xml2/ressurs", bizData);
+
   }
 
   /**
