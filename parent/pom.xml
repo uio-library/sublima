@@ -151,25 +151,14 @@
   </dependencyManagement>  
   
    <repositories>
-    <!-- repository>
+    <repository>
       <id>computas-external</id>
       <name>Computas external Maven repository</name>
       <url>http://maven.computas.com</url>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository -->
+    </repository>
       <repository>
         <id>jena</id>
         <url>http://jena.hpl.hp.com/repo</url>
-      </repository>
-      <repository>
-        <id>joseki</id>
-        <url>http://jena.hpl.hp.com/~afs/maven-proto</url>
       </repository>
   </repositories> 
   
