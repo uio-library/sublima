@@ -7,11 +7,10 @@
   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
   xmlns:sub="http://xmlns.computas.com/sublima#"
   xmlns:sioc="http://rdfs.org/sioc/ns#"
-  xmlns:od="http://sublima.computas.com/topic/" 
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns="http://www.w3.org/1999/xhtml" 
-  exclude-result-prefixes="rdf rdfs dct foaf sub sioc od lingvoj wdr">
+  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <xsl:import href="rdfxml-res-templates.xsl"/>
   <xsl:output indent="yes"/>
 

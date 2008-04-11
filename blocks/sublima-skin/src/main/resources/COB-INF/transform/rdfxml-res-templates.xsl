@@ -7,12 +7,11 @@
   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
   xmlns:sub="http://xmlns.computas.com/sublima#"
   xmlns:sioc="http://rdfs.org/sioc/ns#"
-  xmlns:od="http://sublima.computas.com/topic/" 
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
-  xmlns:topic="http://sublima.computas.com/topic/"
   xmlns="http://www.w3.org/1999/xhtml" 
-  exclude-result-prefixes="rdf rdfs dct foaf sub sioc od lingvoj wdr"
+  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr skos"
   >
 
 
@@ -61,10 +60,10 @@
    <xsl:choose>
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
-	<a href="{$uri}"><xsl:value-of select="//topic:*[@rdf:about=$uri]/rdfs:label[@xml:lang=$interface-language]"/></a>
+	<a href="{$uri}"><xsl:value-of select="//skos:Concept[@rdf:about=$uri]/rdfs:label[@xml:lang=$interface-language]"/></a>
       </xsl:when>
-      <xsl:when test="./topic:*/@rdf:about">
-	<a href="{./topic:*/@rdf:about}"><xsl:value-of select="./topic:*/rdfs:label[@xml:lang=$interface-language]"/></a>
+      <xsl:when test="./skos:Concept/@rdf:about">
+	<a href="{./skos:Concept/@rdf:about}"><xsl:value-of select="./skos:Concept/rdfs:label[@xml:lang=$interface-language]"/></a>
       </xsl:when>
     </xsl:choose>
     <xsl:if test="position() != last()">

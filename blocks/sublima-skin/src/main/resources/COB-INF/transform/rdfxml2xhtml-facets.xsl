@@ -2,18 +2,17 @@
 <xsl:stylesheet version="1.0" 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:c="http://xmlns.computas.com/cocoon"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"   
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
   xmlns:dct="http://purl.org/dc/terms/" 
   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
   xmlns:sub="http://xmlns.computas.com/sublima#"
   xmlns:sioc="http://rdfs.org/sioc/ns#"
-  xmlns:od="http://sublima.computas.com/topic/" 
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
-  xmlns:topic="http://sublima.computas.com/topic/"
   xmlns="http://www.w3.org/1999/xhtml" 
-  exclude-result-prefixes="rdf rdfs dct foaf sub sioc od lingvoj wdr">
+  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
 
   <xsl:template match="rdf:RDF" mode="facets">
@@ -47,9 +46,9 @@
 
   <xsl:template match="dct:subject" mode="facets">
     <xsl:param name="baseurlparams"/>
-    <xsl:if test="./topic:*"> <!-- This should iterate all unique topics -->
+    <xsl:if test="./skos:Concept"> <!-- This should iterate all unique topics -->
       <li>
-	<xsl:variable name="this-label" select="./topic:*/rdfs:label[@xml:lang=$interface-language]"/>
+	<xsl:variable name="this-label" select="./skos:Concept/rdfs:label[@xml:lang=$interface-language]"/>
 	<a> <!-- The following builds the URL. -->
 	  <xsl:attribute name="href">
 	    <xsl:value-of select="$baseurlparams"/>
@@ -59,7 +58,7 @@
 	  <xsl:value-of select="$this-label"/>
 	</a>
 
-	<xsl:variable name="uri" select="./topic:*/@rdf:about"/>
+	<xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
 	<xsl:text> (</xsl:text>
 	<xsl:value-of select="count(//dct:subject[@rdf:resource=$uri])+1"/>)
       </li>

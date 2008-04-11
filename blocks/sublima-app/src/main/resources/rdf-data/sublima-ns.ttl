@@ -26,3 +26,7 @@ sub:skipped		rdfs:range 	rdfs:Literal ;
 sub:status		rdfs:range 	rdfs:Literal ;		
 			a 		owl:AnnotationProperty ;
 			rdfs:domain	sub:Resource .
+
+sub:url  		a       owl:ObjectProperty , owl:AnnotationProperty ;
+			rdfs:domain	sub:Resource ;
+			rdfs:range	sub:Resource .
