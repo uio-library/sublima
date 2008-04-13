@@ -115,4 +115,24 @@ public class AdminService {
 
     return queryResult.toString();
   }
+  /**
+   * Method to get a resource by its URI
+   *
+   * @return A String RDF/XML containing the resource
+   */
+    public Object getResourceByURI(String uri) {
+
+      // if not < > is provided
+      if ( !uri.startsWith("<") && !uri.endsWith(">")) {
+        uri = "<" + uri + ">";    
+      }
+
+      String queryString = StringUtils.join("\n", new String[]{
+            "DESCRIBE " + uri});
+
+    logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+    }
 }

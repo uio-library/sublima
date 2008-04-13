@@ -6,21 +6,26 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                            http://cocoon.apache.org/schema/pipeline http://cocoon.apache.org/schema/pipeline/cocoon-pipeline-1.0.xsd"
        default-init-method="init">
-  
-  <bean name="com.computas.sublima.app.controller.SearchController"
-    class="com.computas.sublima.app.controller.SearchController">
-     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
-  </bean>
 
-  <bean name="com.computas.sublima.app.controller.FeedbackController"
-    class="com.computas.sublima.app.controller.FeedbackController">
-    <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
-  </bean>
+    <bean name="com.computas.sublima.app.controller.SearchController"
+          class="com.computas.sublima.app.controller.SearchController">
+        <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
+    </bean>
 
-  <bean name="com.computas.sublima.app.controller.AdminController"
-    class="com.computas.sublima.app.controller.AdminController">
-    <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
-    <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
-  </bean>
+    <bean name="com.computas.sublima.app.controller.FeedbackController"
+          class="com.computas.sublima.app.controller.FeedbackController">
+        <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    </bean>
+
+    <bean name="com.computas.sublima.app.controller.AdminController"
+          class="com.computas.sublima.app.controller.AdminController">
+        <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
+        <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    </bean>
+
+    <bean name="com.computas.sublima.app.controller.form.ResourceFormController"
+          class="com.computas.sublima.app.controller.form.ResourceFormController">
+    </bean>
+
 
 </beans>

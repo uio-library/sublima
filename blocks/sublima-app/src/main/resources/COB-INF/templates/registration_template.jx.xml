@@ -1,0 +1,38 @@
+<html xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+
+  <jx:import uri="resource://org/apache/cocoon/forms/generation/jx-macros.xml"/>
+
+  <head>
+    <title>First form!</title>
+  </head>
+  <body>
+    <ft:form-template action="firstform" method="POST">
+   <ft:widget-label id="name"/>
+      <ft:widget id="name"/>
+      <br/>
+      <ft:widget-label id="email"/>
+      <ft:widget id="email"/>
+      <br/>
+      <ft:widget-label id="age"/>
+      <ft:widget id="age"/>
+      <br/>
+      <ft:widget-label id="password"/>
+      <ft:widget id="password">
+        <fi:styling type="password"/>
+      </ft:widget>
+      <br/>
+      <ft:widget-label id="confirmPassword"/>
+      <ft:widget id="confirmPassword">
+        <fi:styling type="password"/>
+      </ft:widget>
+      <br/>
+      <ft:widget id="spam"/>
+      <ft:widget-label id="spam"/>
+      <br/>
+
+      <input type="submit"/>
+    </ft:form-template>
+  </body>
+</html>

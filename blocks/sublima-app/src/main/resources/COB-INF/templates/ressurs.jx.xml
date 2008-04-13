@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns:c="http://xmlns.computas.com/cocoon"
+        xmlns="http://www.w3.org/1999/xhtml">
+
+    <c:title>Sublima administrasjon</c:title>
+
+    <c:breadcrumbs>
+        <c:breadcrumb title="Sublima"></c:breadcrumb>
+        <c:breadcrumb title="Admin">admin</c:breadcrumb>
+        <c:breadcrumb title="Ressurser">admin/ressurser</c:breadcrumb>
+    </c:breadcrumbs>
+
+    <c:menu>
+        <!-- c:menuelement title="Emner">admin/emner</c:menuelement -->
+        <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
+        <c:menuelement title="Foreslaatte" child="true">admin/ressurser/foreslaatte</c:menuelement>
+        <c:menuelement title="Ny" child="true">admin/ressurser/ny</c:menuelement>
+        <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
+        <!-- c:menuelement title="Utgivere">admin/utgivere</c:menuelement -->
+        <c:menuelement title="Lenkesjekk">admin/lenkesjekk</c:menuelement>
+    </c:menu>
+
+    <c:content>
+
+        <c:text>
+            <p>Ressurs</p>
+        </c:text>
+
+        <c:resource><jx:out value="#{resource}" xmlize="true"/></c:resource>
+        <c:topics><jx:out value="#{topics}" xmlize="true"/></c:topics>
+        <c:languages><jx:out value="#{languages}" xmlize="true"/></c:languages>
+        <c:mediatypes><jx:out value="#{mediatypes}" xmlize="true"/></c:mediatypes>
+        <c:audience><jx:out value="#{audience}" xmlize="true"/></c:audience>
+        <c:status><jx:out value="#{status}" xmlize="true"/></c:status>
+        <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>
+        
+    </c:content>
+
+</c:page>

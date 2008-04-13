@@ -113,26 +113,24 @@ public class AdminController implements StatelessAppleController {
     AdminService adminService= new AdminService();
 
     if ("ny".equalsIgnoreCase(type)) {
-      adminService.getAllAudiences();
-      adminService.getAllLanguages();
-      adminService.getAllMediaTypes();
-      adminService.getAllStatuses();
-      adminService.getAllTopics();
-
       bizData.put("resource", "<empty></empty>");
-      bizData.put("topics", "<empty></empty>");
-      bizData.put("languages", "<empty></empty>");
-      bizData.put("mediatypes", "<empty></empty>");
-      bizData.put("audience", "<empty></empty>");
-      bizData.put("resource", "<empty></empty>");
+      bizData.put("topics", adminService.getAllTopics());
+      bizData.put("languages", adminService.getAllLanguages());
+      bizData.put("mediatypes", adminService.getAllMediaTypes());
+      bizData.put("audience", adminService.getAllAudiences());
+      bizData.put("status", adminService.getAllStatuses());
+      bizData.put("message", messages);
     }
     else {
-      bizData.put("resource", "<empty></empty>");
-      bizData.put("topics", "<empty></empty>");
-      bizData.put("languages", "<empty></empty>");
-      bizData.put("mediatypes", "<empty></empty>");
-      bizData.put("audience", "<empty></empty>");
-      bizData.put("resource", "<empty></empty>");
+      String uri = req.getCocoonRequest().getParameter("uri");
+
+      bizData.put("resource", adminService.getResourceByURI(uri));
+      bizData.put("topics", adminService.getAllTopics());
+      bizData.put("languages", adminService.getAllLanguages());
+      bizData.put("mediatypes",  adminService.getAllMediaTypes());
+      bizData.put("audience", adminService.getAllAudiences());
+      bizData.put("status", adminService.getAllStatuses());
+      bizData.put("message", messages);
     }
 
       res.sendPage("xml2/ressurs", bizData);

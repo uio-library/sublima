@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:servlet="http://cocoon.apache.org/schema/servlet"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:servlet="http://cocoon.apache.org/schema/servlet"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
   http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
-  <bean id="com.computas.sublima.sublima-app.service" class="org.apache.cocoon.sitemap.SitemapServlet">
-    <servlet:context mount-path="" context-path="blockcontext:/sublima-app/">
-      <servlet:connections>
-        <entry key="skin" value-ref="${com.computas.sublima.app.skin}"/>
-      </servlet:connections>    
-    </servlet:context>
-  </bean>
+    <bean id="com.computas.sublima.sublima-app.service" class="org.apache.cocoon.sitemap.SitemapServlet">
+        <servlet:context mount-path="" context-path="blockcontext:/sublima-app/">
+            <servlet:connections>
+                <entry key="skin" value-ref="${com.computas.sublima.app.skin}"/>
+                <entry key="forms" value-ref="org.apache.cocoon.forms.impl.servlet"/>
+                <entry key="ajax" value-ref="org.apache.cocoon.ajax.impl.servlet"/>
+            </servlet:connections>
+        </servlet:context>
+    </bean>
 
 </beans>
