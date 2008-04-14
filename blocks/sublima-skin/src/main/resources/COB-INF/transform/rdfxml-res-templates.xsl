@@ -8,7 +8,7 @@
   xmlns:sub="http://xmlns.computas.com/sublima#"
   xmlns:sioc="http://rdfs.org/sioc/ns#"
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
-  xmlns:skos="http://www.w3.org/2004/02/skos/"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr skos"
@@ -65,6 +65,9 @@
       <xsl:when test="./skos:Concept/@rdf:about">
 	<a href="{./skos:Concept/@rdf:about}"><xsl:value-of select="./skos:Concept/rdfs:label[@xml:lang=$interface-language]"/></a>
       </xsl:when>
+      <xsl:otherwise>
+	<span class="warning">Emne mangler tittel</span>
+      </xsl:otherwise>
     </xsl:choose>
     <xsl:if test="position() != last()">
       <xsl:text>, </xsl:text>

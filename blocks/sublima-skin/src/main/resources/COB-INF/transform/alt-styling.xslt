@@ -47,11 +47,11 @@ this, just comment out the call-template -->
                 <xsl:value-of
                         select="c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]"/>
               </xsl:if>
-              <xsl:text>|</xsl:text>
+              <xsl:text> | </xsl:text>
             </xsl:when>
             <xsl:when test="c:page/c:mode = 'resource'">
               <xsl:value-of select="c:page/c:result-list/rdf:RDF/sub:Resource/dct:title"/>
-              <xsl:text>|</xsl:text>
+              <xsl:text> | </xsl:text>
             </xsl:when>
           </xsl:choose>
 
