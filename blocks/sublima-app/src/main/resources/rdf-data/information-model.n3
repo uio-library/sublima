@@ -46,7 +46,7 @@ dct:identifier		rdfs:range	sub:LocalURI ;
 			a		owl:InverseFunctionalProperty ;	
 			rdfs:domain 	sub:Resource .
 
-dct:type		rdfs:range 	dct:DCMIType ;
+dct:type		rdfs:range 	dct:MediaType ;
 			a 		owl:ObjectProperty ;
 			rdfs:domain 	sub:Resource .
 
@@ -65,3 +65,53 @@ wdr:describedBy		rdfs:range 	wdr:DR ;
 			a 		owl:ObjectProperty ;
 			rdfs:domain 	sub:Resource .
 
+
+<http://purl.org/dc/dcmitype/Collection> a dct:MediaType ;
+	rdfs:label "Collection"@en ;
+	rdfs:label "Samling"@no .
+
+<http://purl.org/dc/dcmitype/Dataset> a dct:MediaType ;
+	rdfs:label "Dataset"@en ;
+	rdfs:label "Datasett"@no .
+
+<http://purl.org/dc/dcmitype/Event> a dct:MediaType ;
+	rdfs:label "Event"@en ;
+	rdfs:label "Hendelse"@no .
+
+<http://purl.org/dc/dcmitype/Image> a dct:MediaType ;
+	rdfs:label "Image"@en ;
+	rdfs:label "Avbildning"@no .
+
+<http://purl.org/dc/dcmitype/InteractiveResource> a dct:MediaType ;
+	rdfs:label "Interactive Resource"@en ;
+	rdfs:label "Interaktiv ressurs"@no .
+
+
+<http://purl.org/dc/dcmitype/MovingImage> a dct:MediaType ;
+	rdfs:label "Moving Image"@en ;
+	rdfs:label "Film"@no .
+
+<http://purl.org/dc/dcmitype/PhysicalObject> a dct:MediaType ;
+	rdfs:label "Physical Object"@en ;
+	rdfs:label "Fysisk ting"@no .
+
+<http://purl.org/dc/dcmitype/Service> a dct:MediaType ;
+	rdfs:label "Service"@en ;
+	rdfs:label "Service"@no .
+
+<http://purl.org/dc/dcmitype/Software> a dct:MediaType ;
+	rdfs:label "Software"@en ;
+	rdfs:label "Programvare"@no .
+
+
+<http://purl.org/dc/dcmitype/Sound> a dct:MediaType ;
+	rdfs:label "Sound"@en ;
+	rdfs:label "Lyd"@no .
+
+<http://purl.org/dc/dcmitype/StillImage> a dct:MediaType ;
+	rdfs:label "StillImage"@en ;
+	rdfs:label "Bilde"@no .
+
+<http://purl.org/dc/dcmitype/Text> a dct:MediaType ;
+	rdfs:label "Text"@en ;
+	rdfs:label "Tekst"@no .
