@@ -217,7 +217,6 @@ public class SearchController implements StatelessAppleController {
       String[] values = req.getCocoonRequest().getParameterValues(key);
       for (String value : values) {
         value = value.replaceAll("<", "&lt;");
-        System.out.println(value);
         value = value.replaceAll(">", "&gt;");
         value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
         params.append("\n      <value>" + value + "</value>");
@@ -226,7 +225,6 @@ public class SearchController implements StatelessAppleController {
     }
     params.append("\n  </request>\n");
 
-    System.out.println(params);
     bizData.put("request", params.toString());
     res.sendPage("xml/sparql-result", bizData);
   }
