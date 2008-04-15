@@ -52,6 +52,9 @@
          <td><textarea id="dct:description" name="dct:description" rows="6" cols="40">...</textarea></td>
        </tr>
        <tr>
+         <td>Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet under</td>
+       </tr>
+       <tr>
          <td>
            <label for="dct:publisher/foaf:Agent/foaf:name">Utgiver</label>
          </td>
@@ -63,6 +66,10 @@
               </xsl:for-each>
             </select>
          </td>
+       </tr>
+       <tr>
+         <td></td>
+         <td><input id="newpublisher" type="text" name="newpublisher" size="40" /></td>
        </tr>
        <tr>
          <td><label for="dct:language">Språk</label></td>
