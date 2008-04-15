@@ -15,6 +15,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.io.UnsupportedEncodingException;
 
 public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
@@ -177,7 +178,14 @@ public class SearchController implements StatelessAppleController {
 			  "      ?resource dct:subject ?subject;",
 			  "                dct:publisher ?publisher .",
 			  "  }",
-			  "}",
+        "  UNION",
+			  "  {",
+			  "      ?resource dct:publisher ?publisher1 .",
+			  "      ?publisher1 ?p2 ?lit .",
+			  "      ?resource dct:subject ?subject;",
+			  "                dct:publisher ?publisher .",
+			  "  }",
+        "}",
 	  });
 
 	  logger.trace("Freetext search: SPARQL query sent to dispatcher: " + queryString);
