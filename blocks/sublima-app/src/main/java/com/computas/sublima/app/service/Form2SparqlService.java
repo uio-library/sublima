@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 
 /**
  * A service class with methods to create a SPARQL DESCRIBE query from a
@@ -251,5 +252,38 @@ public class Form2SparqlService {
 		String returnString = sparqlQueryBuffer.toString();
 		logger.trace("Constructed SPARUL query: " + returnString);
 		return returnString;
+	}
+	
+	/*
+	 * A method that will take a simple search string and return the triples need to do freetext search
+	 * 
+	 * @param searchstring
+	 *		 			The string to search for
+	 * @return	
+	 * 			A string with triples
+	 * 
+	 */
+	public String freeTextQuery (String searchstring) {
+			return StringUtils.join("\n", new String[]{
+					"    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
+					"  {",
+					"    ?resource ?p1 ?lit;",
+					"              dct:subject ?subject;",
+					"              dct:publisher ?publisher.",
+					"  }",
+					"  UNION",
+					"  {",
+					"      ?resource dct:subject ?subject1 .",
+					"      ?subject1 ?p2 ?lit .",
+					"      ?resource dct:subject ?subject;",
+					"                dct:publisher ?publisher .",
+					"  }",
+					"  UNION",
+					"  {",
+					"      ?resource dct:publisher ?publisher1 .",
+					"      ?publisher1 ?p2 ?lit .",
+					"      ?resource dct:subject ?subject;",
+					"                dct:publisher ?publisher .",
+					"  }"});
 	}
 }
