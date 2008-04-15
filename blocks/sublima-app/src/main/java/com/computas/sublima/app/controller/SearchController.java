@@ -135,33 +135,7 @@ public class SearchController implements StatelessAppleController {
       logger.debug("SUBLIMA: Deep search enabled");
     }
 
-
-    String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "DESCRIBE ?resource ?subject ?publisher",
-            "WHERE {",
-            "    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
-            "  {",
-            "    ?resource ?p1 ?lit;",
-            "              dct:subject ?subject;",
-            "              dct:publisher ?publisher.",
-            "  }",
-            "  UNION",
-            "  {",
-            "      ?resource dct:subject ?subject1 .",
-            "      ?subject1 ?p2 ?lit .",
-            "      ?resource dct:subject ?subject;",
-            "                dct:publisher ?publisher .",
-            "  }",
-            "}",
-    });
-
-
-    logger.trace("Freetext search: SPARQL query sent to dispatcher: " + queryString);
-
-    Object queryResult = sparqlDispatcher.query(queryString);
+    Object queryResult = freeTextQuery(searchstring);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
@@ -172,6 +146,45 @@ public class SearchController implements StatelessAppleController {
     res.sendPage("xml/sparql-result", bizData);
   }
 
+
+  /*
+   * A method that will take a simple search string and do a freetext search for the string.
+   * It will return an object containing the RDF/XML response from the SPARQL Dispatcher
+   * 
+   * @param searchstring
+   * 			The string to search for
+   * @return
+   * 			An object with the query result
+   * 
+   */
+  public Object freeTextQuery (String searchstring) {
+	  String queryString = StringUtils.join("\n", new String[]{
+			  "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+			  "PREFIX dct: <http://purl.org/dc/terms/>",
+			  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+			  "DESCRIBE ?resource ?subject ?publisher",
+			  "WHERE {",
+			  "    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
+			  "  {",
+			  "    ?resource ?p1 ?lit;",
+			  "              dct:subject ?subject;",
+			  "              dct:publisher ?publisher.",
+			  "  }",
+			  "  UNION",
+			  "  {",
+			  "      ?resource dct:subject ?subject1 .",
+			  "      ?subject1 ?p2 ?lit .",
+			  "      ?resource dct:subject ?subject;",
+			  "                dct:publisher ?publisher .",
+			  "  }",
+			  "}",
+	  });
+
+	  logger.trace("Freetext search: SPARQL query sent to dispatcher: " + queryString);
+	  
+	  return sparqlDispatcher.query(queryString);
+  }	
+	  
   public void doAdvancedSearch(AppleResponse res, AppleRequest req) {
     // Get all parameteres from the HTML form as Map
     Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
