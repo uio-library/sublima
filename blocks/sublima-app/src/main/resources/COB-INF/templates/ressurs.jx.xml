@@ -26,14 +26,30 @@
         <c:text>
             <p>Ressurs</p>
         </c:text>
+      <c:resourcedetails>
 
-        <c:resource><jx:out value="#{resource}" xmlize="true"/></c:resource>
-        <c:topics><jx:out value="#{topics}" xmlize="true"/></c:topics>
-        <c:languages><jx:out value="#{languages}" xmlize="true"/></c:languages>
-        <c:mediatypes><jx:out value="#{mediatypes}" xmlize="true"/></c:mediatypes>
-        <c:audience><jx:out value="#{audience}" xmlize="true"/></c:audience>
-        <c:status><jx:out value="#{status}" xmlize="true"/></c:status>
-        <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>
+        <!-- c:resource><jx:out value="#{resource}" xmlize="true"/></c:resource -->
+        <c:topics>
+          <jx:out value="#{topics}" xmlize="true"/>
+        </c:topics>
+        <c:publishers>
+          <jx:out value="#{publishers}" xmlize="true"/>
+        </c:publishers>
+        <c:languages>
+          <jx:out value="#{languages}" xmlize="true"/>
+        </c:languages>
+        <c:mediatypes>
+          <jx:out value="#{mediatypes}" xmlize="true"/>
+        </c:mediatypes>
+        <c:audiences>
+          <jx:out value="#{audience}" xmlize="true"/>
+        </c:audiences>
+        <c:statuses>
+          <jx:out value="#{status}" xmlize="true"/>
+        </c:statuses>
+        <!-- c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages-->
+
+      </c:resourcedetails>
         
     </c:content>
 

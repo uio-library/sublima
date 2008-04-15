@@ -3,7 +3,6 @@ package com.computas.sublima.app.controller;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.AdminService;
-import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -11,11 +10,11 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.net.URLEncoder;
 
 /**
  * @author: mha
@@ -39,19 +38,19 @@ public class AdminController implements StatelessAppleController {
     if ("".equalsIgnoreCase(mode)) {
       res.sendPage("xml2/admin", null);
     } else if ("testsparql".equalsIgnoreCase(mode)) {
-      if("".equalsIgnoreCase(submode)) {
+      if ("".equalsIgnoreCase(submode)) {
         res.sendPage("xhtml/testsparql", null);
-      }
-      else {
+      } else {
         String query = req.getCocoonRequest().getParameter("query");
         res.redirectTo(req.getCocoonRequest().getContextPath() + "/sparql?query=" + URLEncoder.encode(query, "UTF-8"));
       }
     }
 
-
     // Linkcheck. Send the user to a page that displays a list of all resources affected.
     else if ("lenkesjekk".equalsIgnoreCase(mode)) {
+      AdminService adminService = new AdminService();
       showLinkcheckResults(res, req);
+
       return;
     } else if ("insertpublisher".equalsIgnoreCase(mode)) {
       insertPublisherByName(res, req);
@@ -82,11 +81,13 @@ public class AdminController implements StatelessAppleController {
         showSuggestedResources(res, req);
         return;
       } else if ("ny".equalsIgnoreCase(submode)) {
-        editResource(res,req, "ny", null);
+        editResource(res, req, "ny", null);
+        return;
+
       } else if ("edit".equalsIgnoreCase(submode)) {
-        editResource(res,req, "edit", null);
-      }
-      else {
+        editResource(res, req, "edit", null);
+        return;
+      } else {
         return;
       }
     } else {
@@ -95,12 +96,20 @@ public class AdminController implements StatelessAppleController {
     }
   }
 
+  private void newResourceByURI(AppleResponse res, AppleRequest req) {
+    if (req.getCocoonRequest().getMethod().equals("GET")) {
+      //showForm(appleResponse);
+    } else if (req.getCocoonRequest().getMethod().equals("POST")) {
+
+    }
+  }
+
 
   /**
    * Method to add new resources and edit existing ones
    * Sparql queries for all topics, statuses, languages, media types and audience
    * is done and the results forwarded to the JX Template and XSLT.
-   *
+   * <p/>
    * A query for the resource is done when the action is "edit". In case of "new" a blank
    * form is presented.
    *
@@ -110,30 +119,37 @@ public class AdminController implements StatelessAppleController {
   private void editResource(AppleResponse res, AppleRequest req, String type, String messages) {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
-    AdminService adminService= new AdminService();
+    AdminService adminService = new AdminService();
+
+    if (messages == null) {
+      messages = "";
+    }
+
+    String allTopics = adminService.getAllTopics();
+    String allLanguages = adminService.getAllLanguages();
+    String allMediatypes = adminService.getAllMediaTypes();
+    String allAudiences = adminService.getAllAudiences();
+    String allStatuses = adminService.getAllStatuses();
+    String allPublishers = adminService.getAllPublishers();
+
+    bizData.put("topics", allTopics);
+    bizData.put("languages", allLanguages);
+    bizData.put("mediatypes", allMediatypes);
+    bizData.put("audience", allAudiences);
+    bizData.put("status", allStatuses);
+    bizData.put("publishers", allPublishers);
+    bizData.put("message", messages);
+
 
     if ("ny".equalsIgnoreCase(type)) {
       bizData.put("resource", "<empty></empty>");
-      bizData.put("topics", adminService.getAllTopics());
-      bizData.put("languages", adminService.getAllLanguages());
-      bizData.put("mediatypes", adminService.getAllMediaTypes());
-      bizData.put("audience", adminService.getAllAudiences());
-      bizData.put("status", adminService.getAllStatuses());
-      bizData.put("message", messages);
-    }
-    else {
+
+    } else {
       String uri = req.getCocoonRequest().getParameter("uri");
-
       bizData.put("resource", adminService.getResourceByURI(uri));
-      bizData.put("topics", adminService.getAllTopics());
-      bizData.put("languages", adminService.getAllLanguages());
-      bizData.put("mediatypes",  adminService.getAllMediaTypes());
-      bizData.put("audience", adminService.getAllAudiences());
-      bizData.put("status", adminService.getAllStatuses());
-      bizData.put("message", messages);
     }
 
-      res.sendPage("xml2/ressurs", bizData);
+    res.sendPage("xml2/ressurs", bizData);
 
   }
 
@@ -155,15 +171,15 @@ public class AdminController implements StatelessAppleController {
       // Check if a publisher by that name already exists
       //Find the publisher URI based on name
       String findPublisherByNameQuery = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
-            "SELECT ?publisher ?name",
-            "WHERE {",
-            "?publisher a foaf:Agent ;",
-            "           foaf:name ?name  .",
-            "FILTER regex(str(?name), \"^" + publishername + "\", \"i\" )",
-            //"FILTER langMatches( lang(?name), \"*\" )",
-            "}"});
+              "PREFIX dct: <http://purl.org/dc/terms/>",
+              "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+              "SELECT ?publisher ?name",
+              "WHERE {",
+              "?publisher a foaf:Agent ;",
+              "           foaf:name ?name  .",
+              "FILTER regex(str(?name), \"^" + publishername + "\", \"i\" )",
+              //"FILTER langMatches( lang(?name), \"*\" )",
+              "}"});
 
       logger.trace("AdminController.insertPublisherByName() --> SPARQL query sent to dispatcher: \n" + findPublisherByNameQuery);
       Object queryResult = sparqlDispatcher.query(findPublisherByNameQuery);
@@ -243,9 +259,9 @@ public class AdminController implements StatelessAppleController {
 
     // If user has added a new name for a new language
     if (!"".equalsIgnoreCase(publisherNewLang)
-        && publisherNewLang != null
-        && !"".equalsIgnoreCase(publisherNewName)
-        && publisherNewName != null ) {
+            && publisherNewLang != null
+            && !"".equalsIgnoreCase(publisherNewName)
+            && publisherNewName != null) {
 
       insertStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
       insertStringBuffer.append("foaf:name" + " \"" + publisherNewName + "\"" + "@" + publisherNewLang + " .\n");
@@ -346,7 +362,7 @@ public class AdminController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("messages", messages);
     bizData.put("publisherdetails", queryResult);
-    res.sendPage("xml2/detaljer", bizData);
+    res.sendPage("xml2/utgiver", bizData);
   }
 
   /**

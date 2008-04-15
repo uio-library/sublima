@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet
+        xmlns:lingvoj="http://www.lingvoj.org/ontology#"
+        xmlns:wdr="http://www.w3.org/2007/05/powder#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
         xmlns:c="http://xmlns.computas.com/cocoon"
         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -13,6 +16,8 @@
   <!-- xsl:output method="html" indent="yes"/ -->
   <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
+  <xsl:import href="servlet:forms:/resource/internal/xsl/forms-page-styling.xsl"/>
+  <xsl:import href="servlet:forms:/resource/internal/xsl/forms-field-styling.xsl"/>
 
    <xsl:output method="xml"
             encoding="UTF-8"
@@ -20,6 +25,8 @@
 
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="forms-resources"/>
+  <xsl:param name="dojo-resources"/>
 
   <xsl:template name="title">
     <xsl:copy-of select="c:page/c:title/*"/>
@@ -27,6 +34,96 @@
 
   <xsl:template name="contenttext">
     <xsl:copy-of select="c:page/c:content/c:text/*"/>
+  </xsl:template>
+
+
+  <xsl:template name="resourcedetails">
+     <table>
+        <tr>
+            <td>
+              <label for="sub:Resource">URI</label>
+            </td>
+            <td>
+                <input id="sub:Resource" type="text" name="sub:Resource" size="40" />
+            </td>
+        </tr>
+       <tr>
+         <td><label for="dct:description">Beskrivelse</label></td>
+         <td><textarea id="dct:description" name="dct:description" rows="6" cols="40">...</textarea></td>
+       </tr>
+       <tr>
+         <td>
+           <label for="dct:publisher/foaf:Agent/foaf:name">Utgiver</label>
+         </td>
+         <td>
+           <select id="dct:publisher/foaf:Agent/foaf:name" name="dct:publisher/foaf:Agent/foaf:name">
+              <xsl:for-each select="c:page/c:content/c:resourcedetails/c:publishers/rdf:RDF/foaf:Agent">
+                <xsl:sort select="./foaf:name"/>
+                <option value="{./@rdf:about}"><xsl:value-of select="./foaf:name"/></option>
+              </xsl:for-each>
+            </select>
+         </td>
+       </tr>
+       <tr>
+         <td><label for="dct:language">Språk</label></td>
+         <td>
+           <select id="dct:language" name="dct:language" multiple="multiple" size="10">
+              <xsl:for-each select="c:page/c:content/c:resourcedetails/c:languages/rdf:RDF/lingvoj:Lingvo">
+                <xsl:sort select="./rdfs:label"/>
+                <option value="{./@rdf:about}"><xsl:value-of select="./rdfs:label"/></option>
+              </xsl:for-each>
+            </select>
+         </td>
+       </tr>
+       <tr>
+         <td><label for="dct:MediaType">Mediatype</label></td>
+         <td>
+           <select id="dct:MediaType" name="dct:MediaType" multiple="multiple" size="10">
+              <xsl:for-each select="c:page/c:content/c:resourcedetails/c:mediatypes/rdf:RDF/dct:MediaType">
+                <xsl:sort select="./rdfs:label"/>
+                <option value="{./@rdf:about}"><xsl:value-of select="./rdfs:label"/></option>
+              </xsl:for-each>
+            </select>
+         </td>
+       </tr>
+       <tr>
+         <td><label for="dct:audience">Målgruppe</label></td>
+         <td>
+           <select id="dct:audience" name="dct:audience" multiple="multiple" size="10">
+              <xsl:for-each select="c:page/c:content/c:resourcedetails/c:audiences/rdf:RDF/dct:AgentClass">
+                <xsl:sort select="./rdfs:label"/>
+                <option value="{./@rdf:about}"><xsl:value-of select="./rdfs:label"/></option>
+              </xsl:for-each>
+            </select>
+         </td>
+       </tr>
+       <tr>
+         <td><label for="dct:subject">Emner</label></td>
+         <td>
+           <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
+              <xsl:for-each select="c:page/c:content/c:resourcedetails/c:topics/rdf:RDF/skos:Concept">
+                <xsl:sort select="./rdfs:label"/>
+                <option value="{./@rdf:about}"><xsl:value-of select="./rdfs:label"/></option>
+              </xsl:for-each>
+            </select>
+         </td>
+       </tr>
+       <tr>
+         <td><label for="comment">Kommentar</label></td>
+         <td><textarea id="comment" name="comment" rows="6" cols="40">...</textarea></td>
+       </tr>
+       <tr>
+         <td><label for="wdr:DR">Status</label></td>
+         <td>
+           <select id="wdr:DR" name="wdr:DR">
+              <xsl:for-each select="c:page/c:content/c:resourcedetails/c:statuses/rdf:RDF/wdr:DR">
+                <xsl:sort select="./rdfs:label"/>
+                <option value="{./@rdf:about}"><xsl:value-of select="./rdfs:label"/></option>
+              </xsl:for-each>
+            </select>
+         </td>
+       </tr>
+    </table>
   </xsl:template>
 
   <!-- New publisher -->
@@ -68,7 +165,7 @@
       <xsl:for-each select="c:page/c:content/c:publisherlist/sparql:sparql/sparql:results/sparql:result">
         <li>
            <a>
-              <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/detaljer?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:uri"/>
+              <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:uri"/>
               </xsl:attribute>
             <xsl:value-of select="./sparql:binding[@name='name']/sparql:literal"/>
             </a>
@@ -192,6 +289,15 @@
               <div class="col1">
                 <!-- Column 1 start -->
                 <xsl:call-template name="contenttext"/>
+
+                <!-- Resource form -->
+                <xsl:apply-templates select="c:page/c:content/c:resourceform" mode="forms-page"/>
+                <xsl:apply-templates select="c:page/c:content/c:resourceform" mode="forms-field"/>
+
+
+                <xsl:if test="c:page/c:content/c:resourcedetails">
+                  <xsl:call-template name="resourcedetails"/>
+                </xsl:if>
 
                 <!-- Publishers index -->
                 <xsl:if test="c:page/c:content/c:publisherlist">

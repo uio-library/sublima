@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fd:form
-  xmlns:fd="http://apache.org/cocoon/forms/1.0#definition">
+        xmlns:fd="http://apache.org/cocoon/forms/1.0#definition">
 
   <fd:widgets>
-    <fd:field id="name" required="true">
-      <fd:label>Name:</fd:label>
+
+    <fd:field id="url" required="true">
+      <fd:label>URL:</fd:label>
       <fd:datatype base="string"/>
-      <fd:validation>
-        <fd:length min="2"/>
-      </fd:validation>
     </fd:field>
 
-    <fd:field id="email" required="true">
-      <fd:label>Email address:</fd:label>
+    <fd:field id="title" required="true">
+      <fd:label>Tittel:</fd:label>
       <fd:datatype base="string"/>
-      <fd:validation>
-        <fd:email/>
-      </fd:validation>
     </fd:field>
 
-    <fd:field id="age">
-      <fd:label>Your age:</fd:label>
-      <fd:datatype base="long"/>
-      <fd:validation>
-        <fd:range min="0" max="150"/>
-      </fd:validation>
-    </fd:field>
-
-    <fd:field id="password" required="true">
-      <fd:label>Password:</fd:label>
+    <fd:field id="description">
+      <fd:label>Beskrivelse:</fd:label>
       <fd:datatype base="string"/>
-      <fd:validation>
-        <fd:length min="5" max="20"/>
-      </fd:validation>
+      <fd:initial-value>...</fd:initial-value>
     </fd:field>
 
-    <fd:field id="confirmPassword" required="true">
-      <fd:label>Re-enter password:</fd:label>
+    <fd:multivaluefield id="language">
+      <fd:label>Språk:</fd:label>
       <fd:datatype base="string"/>
-      <fd:validation>
-        <fd:assert test="password = confirmPassword">
-          <fd:failmessage>The two passwords are not equal.</fd:failmessage>
-        </fd:assert>
-      </fd:validation>
+      <fd:selection-list>
+      </fd:selection-list>
+    </fd:multivaluefield>
+
+    <fd:multivaluefield id="media">
+      <fd:label>Media:</fd:label>
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+      </fd:selection-list>
+    </fd:multivaluefield>
+
+    <fd:multivaluefield id="audience">
+      <fd:label>Målgruppe:</fd:label>
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+      </fd:selection-list>
+    </fd:multivaluefield>
+
+    <fd:multivaluefield id="topics">
+      <fd:label>Emner:</fd:label>
+      <fd:datatype base="string"/>
+      <fd:selection-list>
+      </fd:selection-list>
+    </fd:multivaluefield>
+
+    <fd:field id="status">
+      <fd:label>Status:</fd:label>
+      <fd:datatype base="string"/>
     </fd:field>
 
-    <fd:booleanfield id="spam">
-      <fd:label>Send me spam</fd:label>
-    </fd:booleanfield>
+    <fd:field id="comment">
+      <fd:label>Kommentar:</fd:label>
+      <fd:datatype base="string"/>
+      <fd:initial-value>...</fd:initial-value>
+    </fd:field>
+
   </fd:widgets>
 
 </fd:form>
