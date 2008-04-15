@@ -135,21 +135,7 @@ public class SearchController implements StatelessAppleController {
       logger.debug("SUBLIMA: Deep search enabled");
     }
 
-    /*
-    String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "DESCRIBE ?resource ?subject ?publisher",
-            "WHERE {",
-            "        ?lit pf:textMatch ( '" + searchstring + "' 100) .",
-            "        ?resource ?p ?lit; ",
-            "                dct:title ?title;",
-            "                dct:description ?desc;",
-            "                dct:language ?lang;",
-            "				 dct:publisher ?publisher ;",
-            "                dct:subject ?subject .}"});
-     */
+
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
             "PREFIX dct: <http://purl.org/dc/terms/>",
@@ -211,9 +197,7 @@ public class SearchController implements StatelessAppleController {
     } else {
       res.sendStatus(400);
     }
-    // FIXME hard-wire the query for testing!!!
-    // sparqlQuery = "DESCRIBE <http://the-jet.com/>";
-
+    
     logger.trace("SPARQL query sent to dispatcher: " + sparqlQuery);
     Object queryResult = sparqlDispatcher.query(sparqlQuery);
 
