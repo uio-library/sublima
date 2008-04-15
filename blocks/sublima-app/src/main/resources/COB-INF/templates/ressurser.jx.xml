@@ -6,31 +6,26 @@
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
         <c:breadcrumb title="Admin">admin</c:breadcrumb>
-      <c:breadcrumb title="Ressurser">admin/ressurser</c:breadcrumb>
+        <c:breadcrumb title="Ressurser">admin/ressurser</c:breadcrumb>
+        <c:breadcrumb title="Ressurser">admin/ressurser/ny</c:breadcrumb>
     </c:breadcrumbs>
 
     <c:menu>
-      <!-- c:menuelement title="Emner">admin/emner</c:menuelement -->
-      <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
-      <c:menuelement title="Foreslaatte" child="true">admin/ressurser/foreslaatte</c:menuelement>
-      <c:menuelement title="Ny" child="true">admin/ressurser/ny</c:menuelement>
-      <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
-      <!-- c:menuelement title="Utgivere">admin/utgivere</c:menuelement -->
-      <c:menuelement title="Lenkesjekk">admin/lenkesjekk</c:menuelement>
+        <c:menuelement title="Emner" link="admin/emner" />
+        <c:menuelement title="Ressurser" link="admin/ressurser">
+            <c:childmenuelement title="Foreslaatte" link="admin/ressurser/foreslaatte"/>
+            <c:childmenuelement title="Ny" link="admin/ressurser/ny"/>
+        </c:menuelement>
+        <c:menuelement title="Brukere" link="admin/brukere"/>
+        <c:menuelement title="Utgivere" link="admin/utgivere"/>
+        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
     </c:menu>
 
     <c:content>
-      <c:text>
-        <h3>Ressurser</h3>
-        <p>
-            Paa denne siden kan du administrere ressurser, brukere og utgivere. Velg hvilken del av ressursene du
-            vil
-            administrere fra underlinkene til venstre.
-        </p>
-      </c:text>
+        <c:text>
+            <h3>Ressurser</h3>
+            <p>
+            </p>
+        </c:text>
     </c:content>
-
-    
-    
-
 </c:page>

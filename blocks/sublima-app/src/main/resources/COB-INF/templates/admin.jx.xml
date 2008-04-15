@@ -10,22 +10,21 @@
     </c:breadcrumbs>
 
     <c:menu>
-      <c:menuelement title="Emner">admin/emner</c:menuelement>
-      <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
-      <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
-      <c:menuelement title="Utgivere">admin/utgivere</c:menuelement>
-      <c:menuelement title="Lenkesjekk">admin/lenkesjekk</c:menuelement>
+        <c:menuelement title="Emner" link="admin/emner"/>
+        <c:menuelement title="Ressurser" link="admin/ressurser"/>
+        <c:menuelement title="Brukere" link="admin/brukere"/>
+        <c:menuelement title="Utgivere" link="admin/utgivere"/>
+        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
     </c:menu>
 
     <c:content>
-      <c:text>
-        <h3>Sublima administrasjon</h3>
-        <p>
-            Paa denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima du
-            vil
-            administrere fra linkene til venstre.
-        </p>
-      </c:text>
+        <c:text>
+            <h3>Sublima administrasjon</h3>
+            <p>
+                På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima
+                du vil administrere fra linkene til venstre.
+            </p>
+        </c:text>
     </c:content>
 
 </c:page>

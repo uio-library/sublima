@@ -12,13 +12,14 @@
     </c:breadcrumbs>
 
     <c:menu>
-        <!-- c:menuelement title="Emner">admin/emner</c:menuelement -->
-        <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
-        <c:menuelement title="Foreslaatte" child="true">admin/ressurser/foreslaatte</c:menuelement>
-        <c:menuelement title="Ny" child="true">admin/ressurser/ny</c:menuelement>
-        <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
-        <!-- c:menuelement title="Utgivere">admin/utgivere</c:menuelement -->
-        <c:menuelement title="Lenkesjekk">admin/lenkesjekk</c:menuelement>
+        <c:menuelement title="Emner" link="admin/emner" />
+        <c:menuelement title="Ressurser" link="admin/ressurser">
+            <c:childmenuelement title="Foreslaatte" link="admin/ressurser/foreslaatte"/>
+            <c:childmenuelement title="Ny" link="admin/ressurser/ny"/>
+        </c:menuelement>
+        <c:menuelement title="Brukere" link="admin/brukere"/>
+        <c:menuelement title="Utgivere" link="admin/utgivere"/>
+        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
     </c:menu>
 
     <c:content>
@@ -26,31 +27,31 @@
         <c:text>
             <p>Ressurs</p>
         </c:text>
-      <c:resourcedetails>
+        <c:resourcedetails>
 
-        <!-- c:resource><jx:out value="#{resource}" xmlize="true"/></c:resource -->
-        <c:topics>
-          <jx:out value="#{topics}" xmlize="true"/>
-        </c:topics>
-        <c:publishers>
-          <jx:out value="#{publishers}" xmlize="true"/>
-        </c:publishers>
-        <c:languages>
-          <jx:out value="#{languages}" xmlize="true"/>
-        </c:languages>
-        <c:mediatypes>
-          <jx:out value="#{mediatypes}" xmlize="true"/>
-        </c:mediatypes>
-        <c:audiences>
-          <jx:out value="#{audience}" xmlize="true"/>
-        </c:audiences>
-        <c:statuses>
-          <jx:out value="#{status}" xmlize="true"/>
-        </c:statuses>
-        <!-- c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages-->
+            <!-- c:resource><jx:out value="#{resource}" xmlize="true"/></c:resource -->
+            <c:topics>
+                <jx:out value="#{topics}" xmlize="true"/>
+            </c:topics>
+            <c:publishers>
+                <jx:out value="#{publishers}" xmlize="true"/>
+            </c:publishers>
+            <c:languages>
+                <jx:out value="#{languages}" xmlize="true"/>
+            </c:languages>
+            <c:mediatypes>
+                <jx:out value="#{mediatypes}" xmlize="true"/>
+            </c:mediatypes>
+            <c:audiences>
+                <jx:out value="#{audience}" xmlize="true"/>
+            </c:audiences>
+            <c:statuses>
+                <jx:out value="#{status}" xmlize="true"/>
+            </c:statuses>
+            <!-- c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages-->
 
-      </c:resourcedetails>
-        
+        </c:resourcedetails>
+
     </c:content>
 
 </c:page>

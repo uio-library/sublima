@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
-        xmlns="http://www.w3.org/1999/xhtml"
+<c:page xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:c="http://xmlns.computas.com/cocoon">
     <c:title>Sublima administrasjon</c:title>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
         <c:breadcrumb title="Admin">admin</c:breadcrumb>
-        <c:breadcrumb title="Utgivere">admin/utgivere</c:breadcrumb>
+        <c:breadcrumb title="Brukere">admin/brukere</c:breadcrumb>
     </c:breadcrumbs>
 
     <c:menu>
-        <c:menuelement title="Emner" link="admin/emner" />
+        <c:menuelement title="Emner" link="admin/emner"/>
         <c:menuelement title="Ressurser" link="admin/ressurser"/>
         <c:menuelement title="Brukere" link="admin/brukere"/>
         <c:menuelement title="Utgivere" link="admin/utgivere"/>
@@ -19,21 +19,11 @@
     </c:menu>
 
     <c:content>
-
         <c:text>
-            <h3>Utgiverdetaljer</h3>
-
-            <br/>
+            <h3>Brukere</h3>
+            <p>
+                Vi sier som Cocoon - TODO
+            </p>
         </c:text>
-
-        <c:messages>
-            <jx:out value="#{messages}" xmlize="true"/>
-        </c:messages>
-
-        <c:publisherdetails>
-            <jx:out value="#{publisherdetails}" xmlize="true"/>
-        </c:publisherdetails>
-
     </c:content>
-
 </c:page>

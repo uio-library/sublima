@@ -3,36 +3,38 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:c="http://xmlns.computas.com/cocoon"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#">
-  <c:title>Sublima administrasjon</c:title>
+    <c:title>Sublima administrasjon</c:title>
 
-  <c:breadcrumbs>
-    <c:breadcrumb title="Sublima"></c:breadcrumb>
-    <c:breadcrumb title="Admin">admin</c:breadcrumb>
-    <c:breadcrumb title="Utgivere">admin/utgivere</c:breadcrumb>
-  </c:breadcrumbs>
+    <c:breadcrumbs>
+        <c:breadcrumb title="Sublima"></c:breadcrumb>
+        <c:breadcrumb title="Admin">admin</c:breadcrumb>
+        <c:breadcrumb title="Utgivere">admin/utgivere</c:breadcrumb>
+    </c:breadcrumbs>
 
-  <c:menu>
-    <!-- c:menuelement title="Emner">admin/emner</c:menuelement -->
-    <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
-    <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
-    <c:menuelement title="Utgivere">admin/utgivere</c:menuelement>
-    <c:menuelement title="Lenkesjekk">admin/lenkesjekk</c:menuelement>
-  </c:menu>
+    <c:menu>
+        <c:menuelement title="Emner" link="admin/emner" />
+        <c:menuelement title="Ressurser" link="admin/ressurser"/>
+        <c:menuelement title="Brukere" link="admin/brukere"/>
+        <c:menuelement title="Utgivere" link="admin/utgivere"/>
+        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
+    </c:menu>
 
-  <c:content>
+    <c:content>
 
-    <c:text>
-      <h3>Utgivere</h3>
-      <p>Legg til ny eller klikk en eksisterende for å redigere denne.</p>
-      <br/>
-    </c:text>
+        <c:text>
+            <h3>Utgivere</h3>
+            <p>Legg til ny eller klikk en eksisterende for å redigere denne.</p>
+            <br/>
+        </c:text>
 
-    <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>
+        <c:messages>
+            <jx:out value="#{messages}" xmlize="true"/>
+        </c:messages>
 
-    <c:publisherlist>
-      <jx:out value="#{publisherlist}" xmlize="true"/>
-    </c:publisherlist>
+        <c:publisherlist>
+            <jx:out value="#{publisherlist}" xmlize="true"/>
+        </c:publisherlist>
 
-  </c:content>
+    </c:content>
 
 </c:page>

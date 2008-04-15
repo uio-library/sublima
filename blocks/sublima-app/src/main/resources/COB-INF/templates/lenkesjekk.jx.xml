@@ -2,38 +2,38 @@
 <c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:c="http://xmlns.computas.com/cocoon">
-  <c:title>Sublima administrasjon</c:title>
+    <c:title>Sublima administrasjon</c:title>
 
-  <c:breadcrumbs>
-    <c:breadcrumb title="Sublima"></c:breadcrumb>
-    <c:breadcrumb title="Admin">admin</c:breadcrumb>
-    <c:breadcrumb title="Lenkesjekk">admin/lenkesjekk</c:breadcrumb>
-  </c:breadcrumbs>
+    <c:breadcrumbs>
+        <c:breadcrumb title="Sublima"></c:breadcrumb>
+        <c:breadcrumb title="Admin">admin</c:breadcrumb>
+        <c:breadcrumb title="Lenkesjekk">admin/lenkesjekk</c:breadcrumb>
+    </c:breadcrumbs>
 
-  <c:menu>
-    <!-- c:menuelement title="Emner">admin/emner</c:menuelement -->
-    <c:menuelement title="Ressurser">admin/ressurser</c:menuelement>
-    <!-- c:menuelement title="Brukere">admin/brukere</c:menuelement -->
-    <!-- c:menuelement title="Utgivere">admin/utgivere</c:menuelement -->
-    <c:menuelement title="Lenkesjekk">admin/lenkesjekk</c:menuelement>
-  </c:menu>
+    <c:menu>
+        <c:menuelement title="Emner" link="admin/emner"/>
+        <c:menuelement title="Ressurser" link="admin/ressurser"/>
+        <c:menuelement title="Brukere" link="admin/brukere"/>
+        <c:menuelement title="Utgivere" link="admin/utgivere"/>
+        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
+    </c:menu>
 
-  <c:content>
-    <c:text>
-      <h3>Lenkesjekk</h3>
-      <br/>
-    </c:text>
-    <c:linkcheck>
-      <c:status_check>
-        <jx:out value="#{lenkesjekklist_check}" xmlize="true"/>
-      </c:status_check>
-      <c:status_inactive>
-        <jx:out value="#{lenkesjekklist_inactive}" xmlize="true"/>
-      </c:status_inactive>
-      <c:status_gone>
-        <jx:out value="#{lenkesjekklist_gone}" xmlize="true"/>
-      </c:status_gone>
-    </c:linkcheck>
-  </c:content>
+    <c:content>
+        <c:text>
+            <h3>Lenkesjekk</h3>
+            <br/>
+        </c:text>
+        <c:linkcheck>
+            <c:status_check>
+                <jx:out value="#{lenkesjekklist_check}" xmlize="true"/>
+            </c:status_check>
+            <c:status_inactive>
+                <jx:out value="#{lenkesjekklist_inactive}" xmlize="true"/>
+            </c:status_inactive>
+            <c:status_gone>
+                <jx:out value="#{lenkesjekklist_gone}" xmlize="true"/>
+            </c:status_gone>
+        </c:linkcheck>
+    </c:content>
 
 </c:page>
