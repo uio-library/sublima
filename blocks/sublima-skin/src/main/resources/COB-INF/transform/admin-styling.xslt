@@ -34,7 +34,7 @@
 
 
     <xsl:template name="resourcedetails">
-        <form name="new_resource" action="admin/ressurser/ny" method="POST">
+        <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
         <table>
             <tr>
                 <td>
@@ -60,10 +60,10 @@
         <table>
             <tr>
                 <td>
-                    <label for="dct:publisher/foaf:Agent/foaf:name">Utgiver</label>
+                    <label for="dct:publisher/foaf:Agent/@rdf:about">Utgiver</label>
                 </td>
                 <td>
-                    <select id="dct:publisher/foaf:Agent/foaf:name" name="dct:publisher/foaf:Agent/foaf:name">
+                    <select id="dct:publisher/foaf:Agent" name="dct:publisher/foaf:Agent">
                         <xsl:for-each select="c:page/c:content/c:resourcedetails/c:publishers/rdf:RDF/foaf:Agent">
                             <xsl:sort select="./foaf:name"/>
                             <option value="{./@rdf:about}">
@@ -231,6 +231,7 @@
         <form name="rename_publisher" action="updatepublisher" method="GET">
             <table>
                 <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/foaf:Agent" mode="edit"/>
+                <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Agent" mode="edit"/>
                 <tr>
                     <td></td>
                     <td>

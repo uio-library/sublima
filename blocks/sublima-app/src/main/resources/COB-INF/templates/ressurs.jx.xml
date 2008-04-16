@@ -25,7 +25,8 @@
     <c:content>
 
         <c:text>
-            <p>Ressurs</p>
+            <h3>Ressurs</h3>
+            <h4>NB! Funksjonalitet for å lagre er ennå ikke implementert</h4>
         </c:text>
         <c:resourcedetails>
 
