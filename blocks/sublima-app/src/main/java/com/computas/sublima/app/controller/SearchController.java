@@ -136,17 +136,16 @@ public class SearchController implements StatelessAppleController {
       logger.debug("SUBLIMA: Deep search enabled");
     }
 
-    String[] tmp = null;
-    Form2SparqlService form2SparqlService = new Form2SparqlService(tmp);
-    String queryString = StringUtils.join("\n", new String[]{
-    		"PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
-    		"PREFIX dct: <http://purl.org/dc/terms/>",
-    		"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-    		"DESCRIBE ?resource ?subject ?publisher",
-    		"WHERE {",
-    		form2SparqlService.freeTextQuery(searchstring),
-        "}",	
-	  });
+
+    Form2SparqlService form2SparqlService = new Form2SparqlService(new String[]{
+    		"pf: <http://jena.hpl.hp.com/ARQ/property#>",
+    		"dct: <http://purl.org/dc/terms/>",
+    		"rdfs: <http://www.w3.org/2000/01/rdf-schema#>"});
+    
+    String queryString = form2SparqlService.getPrefixString() +
+	"DESCRIBE ?resource ?subject ?publisher WHERE {\n" +
+    		form2SparqlService.freeTextQuery(searchstring) +
+        "\n}";
 
     logger.trace("Freetext search: SPARQL query sent to dispatcher: " + queryString);
     
@@ -190,7 +189,7 @@ public class SearchController implements StatelessAppleController {
       res.sendStatus(400);
     }
     
-    logger.trace("SPARQL query sent to dispatcher: " + sparqlQuery);
+    logger.trace("SPARQL query sent to dispatcher:\n" + sparqlQuery);
     Object queryResult = sparqlDispatcher.query(sparqlQuery);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
