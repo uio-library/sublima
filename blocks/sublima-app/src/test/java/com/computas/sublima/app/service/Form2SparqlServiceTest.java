@@ -1,4 +1,4 @@
-package com.computas.sublima.app;
+package com.computas.sublima.app.service;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Arrays;
 
@@ -46,6 +47,7 @@ public class Form2SparqlServiceTest extends TestCase {
 //        String resultStringN3 = myService.convertFormField2N3();
 
   }
+  
 
   public void tearDown() throws Exception {
     testMap = null;
@@ -228,7 +230,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
 	    testMap.put("freetext-field", new String[]{"dc:title"}); // this parameter is a magic string
 	    String resultString = myService.convertForm2Sparql(testMap);
-	    assertEquals("Expected result and actual result not equal", "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
+	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +"DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
 	  }
   public void testConvertForm2SparqlTwoValuesBothFree() {
 	    // Single value test
@@ -236,7 +238,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
 	    testMap.put("freetext-field", new String[]{"dc:title","dc:description"}); // this parameter is a magic string
 	    String resultString = myService.convertForm2Sparql(testMap);
-	    assertEquals("Expected result and actual result not equal", "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description ?free2 .\n?free2 pf:textMatch '+A Very Light Jet Aircraft under construction.' .\n?resource ?p ?rest .\n}", resultString);
+	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +  "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description ?free2 .\n?free2 pf:textMatch '+A Very Light Jet Aircraft under construction.' .\n?resource ?p ?rest .\n}", resultString);
 	  }
 
   public void testConvertFor2SPARQLDoubleDual() {

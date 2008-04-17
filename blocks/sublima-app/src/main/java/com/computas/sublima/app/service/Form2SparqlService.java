@@ -6,6 +6,7 @@ import com.computas.sublima.query.RDFObject;
 import org.apache.log4j.Logger;
 
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
@@ -34,7 +35,7 @@ public class Form2SparqlService {
 	
 	private String language;
 
-	private String[] prefixes;
+	private List<String> prefixes = new ArrayList<String>();
 
 	private List subjectVarList = new LinkedList();
 
@@ -44,7 +45,7 @@ public class Form2SparqlService {
 
 
 	public Form2SparqlService(String[] pr) {
-		prefixes = pr;
+		prefixes = new ArrayList<String>(Arrays.asList(pr));
 	}
 
 	/**
@@ -80,10 +81,16 @@ public class Form2SparqlService {
 		return res.toString();
 	}
 
-	/*
-	 * TODO: create a method to expand the prefix array public void
-	 * addPrefix(String prefix) { prefixes.add(prefix); }
-	 */
+        /** 
+	 * Adds a prefix to the list of prefixes 
+	 *
+	 * @param prefix
+	 *        A string with the prefix declaration
+	 */  
+
+
+     public void addPrefix(String prefix) { prefixes.add(prefix); }
+
 
 	/**
 	 * Takes a key with corresponding values and returns an N3 representation
@@ -170,7 +177,6 @@ public class Form2SparqlService {
 		// with large datasets
 		StringBuffer sparqlQueryBuffer = new StringBuffer();
 		StringBuffer n3Buffer = new StringBuffer();
-		sparqlQueryBuffer.append(getPrefixString());
 		sparqlQueryBuffer.append("DESCRIBE ");
 
 		if (parameterMap.get("interface-language") != null) {
@@ -181,9 +187,10 @@ public class Form2SparqlService {
 		List freetextFields = null;
 		if (parameterMap.get("freetext-field") != null) {
 			freetextFields = Arrays.asList(parameterMap.get("freetext-field"));
-			sparqlQueryBuffer.insert(0, "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n");
+			addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
 			parameterMap.remove("freetext-field");
 		}
+	
 		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
 			n3Buffer.insert(0, convertFormField2N3(e.getKey(), e.getValue(), freetextFields));
@@ -198,6 +205,7 @@ public class Form2SparqlService {
 		sparqlQueryBuffer.append(n3Buffer);
 		sparqlQueryBuffer.append("\n?resource ?p ?rest .");
 		sparqlQueryBuffer.append("\n}");
+		sparqlQueryBuffer.insert(0, getPrefixString());
 		String returnString = sparqlQueryBuffer.toString();
 		System.out.println(returnString);
 		logger.trace("Constructed SPARQL query: \n" + returnString);
