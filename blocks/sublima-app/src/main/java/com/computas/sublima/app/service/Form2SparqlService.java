@@ -249,11 +249,22 @@ public class Form2SparqlService {
 		}
 
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-			if ((e.getValue() != null) && (e.getValue()[0] != "")) {
+      if (e.getValue() != null) {
+        for (String s : e.getValue()) {
+          if (!"".equalsIgnoreCase(s) && s != null) {
+            RDFObject myRDFObject = new RDFObject(s, language);
+				    sparqlQueryBuffer.append("<" + subject + "> " + e.getKey()
+						+ " " + myRDFObject.toN3() + "\n");
+          }
+        }
+      }
+
+      /*
+      if ((e.getValue() != null) && (e.getValue()[0] != "")) {
 				RDFObject myRDFObject = new RDFObject(e.getValue()[0], language);
 				sparqlQueryBuffer.append("<" + subject + "> " + e.getKey()
 						+ " " + myRDFObject.toN3() + "\n");
-			}
+			} */
 		}
 
 		sparqlQueryBuffer.append("}");
