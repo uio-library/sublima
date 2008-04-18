@@ -35,16 +35,17 @@ public class SearchController implements StatelessAppleController {
     }
 
     // If it's search-results for advanced search, topic instance or resource
-    if ("resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode)) {
+    if ("resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode) || "freetext-result".equalsIgnoreCase(mode)) {
       doAdvancedSearch(res, req);
       return;
     }
 
+    /*
     if ("freetext-result".equalsIgnoreCase(mode)) {
       doFreeTextSearch(res, req);
       return;
     }
-
+*/
     if ("topic-instance".equalsIgnoreCase(mode)) {
       doGetTopic(res, req);
       return;
@@ -63,7 +64,7 @@ public class SearchController implements StatelessAppleController {
             "				 dct:publisher ?publisher ;",
             "                dct:subject " + subject + ", ?subjects .}"});
 
-    logger.trace("SPARQL query sent to dispatcher: " + queryString);
+    logger.trace("doGetTopic: SPARQL query sent to dispatcher: " + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -102,7 +103,7 @@ public class SearchController implements StatelessAppleController {
                     " ?ntSub a skos:Concept ;\n" +
                     "     rdfs:label ?ntLabel . } }";
 
-    logger.trace("SPARQL query sent to dispatcher: " + sparqlConstructQuery);
+    logger.trace("doGetTopic: SPARQL CONSTUCT query sent to dispatcher: " + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);
 
     bizData.put("navigation", queryResult);
@@ -112,7 +113,7 @@ public class SearchController implements StatelessAppleController {
   }
 
 
-  private void doFreeTextSearch(AppleResponse res, AppleRequest req) {
+  private String freeTextSearchString(AppleResponse res, AppleRequest req) {
     String defaultBooleanOperator = SettingsService.getProperty("sublima.default.boolean.operator");
     String chosenOperator = req.getCocoonRequest().getParameter("booleanoperator");
     boolean deepsearch = false;
@@ -136,29 +137,7 @@ public class SearchController implements StatelessAppleController {
       logger.debug("SUBLIMA: Deep search enabled");
     }
 
-
-    Form2SparqlService form2SparqlService = new Form2SparqlService(new String[]{
-    		"pf: <http://jena.hpl.hp.com/ARQ/property#>",
-    		"dct: <http://purl.org/dc/terms/>",
-    		"rdfs: <http://www.w3.org/2000/01/rdf-schema#>"});
-    
-    String queryString = form2SparqlService.getPrefixString() +
-	"DESCRIBE ?resource ?subject ?publisher WHERE {\n" +
-    		form2SparqlService.freeTextQuery(searchstring) +
-        "\n}";
-
-    logger.trace("Freetext search: SPARQL query sent to dispatcher: " + queryString);
-    
-    Object queryResult =  sparqlDispatcher.query(queryString);
-
-
-    Map<String, Object> bizData = new HashMap<String, Object>();
-    bizData.put("result-list", queryResult);
-    bizData.put("navigation", "<empty></empty>");
-    bizData.put("mode", mode);
-    bizData.put("configuration", new Object());
-    bizData.put("request", "<empty></empty>");
-    res.sendPage("xml/sparql-result", bizData);
+    return searchstring;
   }
 
 
@@ -176,6 +155,12 @@ public class SearchController implements StatelessAppleController {
       parameterMap.put("dct:subject/rdfs:label", new String[]{""});
     }
 
+    logger.trace("FOO: " + parameterMap.get("searchstring")[0]);
+    if (parameterMap.get("searchstring") != null) {
+    	parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});    	
+    }
+    
+    
     // sending the result
     String sparqlQuery = null;
     // Check for magic prefixes
@@ -189,7 +174,7 @@ public class SearchController implements StatelessAppleController {
       res.sendStatus(400);
     }
     
-    logger.trace("SPARQL query sent to dispatcher:\n" + sparqlQuery);
+    logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
     Object queryResult = sparqlDispatcher.query(sparqlQuery);
 
     Map<String, Object> bizData = new HashMap<String, Object>();

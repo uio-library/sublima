@@ -141,7 +141,6 @@ public class Form2SparqlService {
 
 				if (keys.length == j && !"".equals(value)) { //value != "") { 
 					// Then we are on the actual form input value
-					if (freetextFields == null) { System.out.println("OMG"); }
 					RDFObject myRDFObject = new RDFObject(value, language);
 					if (freetextFields != null)  {
 						myRDFObject.setFreetext(freetextFields.indexOf(key)+1);	
@@ -183,11 +182,12 @@ public class Form2SparqlService {
 			setLanguage(parameterMap.get("interface-language")[0]);
 			parameterMap.remove("interface-language");
 		}	
-
+		System.out.println("FOOBAR: " + parameterMap.get("searchstring")[0]);
 		if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
 		    sparqlQueryBuffer.append("?subject ?publisher ");
 		    addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
 		    n3Buffer.append(freeTextQuery(parameterMap.get("searchstring")[0]));
+		    logger.trace("n3Buffer so far in freetext:\n"+n3Buffer.toString());
 		    parameterMap.remove("searchstring");
 		}
 
