@@ -1,5 +1,6 @@
 package com.computas.sublima.app.controller;
 
+import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.AdminService;
@@ -10,11 +11,9 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: mha
@@ -24,8 +23,19 @@ public class AdminController implements StatelessAppleController {
 
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
+  AdminService adminService = new AdminService();
   private String mode;
   private String submode;
+  String[] prefixArray = {
+          "PREFIX dct: <http://purl.org/dc/terms/>",
+          "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+          "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+          "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+          "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+          "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
+          "PREFIX portal-topic: <http://sublima.computas.com/topic-instance/>"};
+  String prefixes = StringUtils.join("\n", prefixArray);
 
   private static Logger logger = Logger.getLogger(AdminController.class);
 
@@ -124,29 +134,27 @@ public class AdminController implements StatelessAppleController {
    */
   private void editResource(AppleResponse res, AppleRequest req, String type, String messages) {
 
-    // When GET present a blank form with listvalues or prefilled with resource
-    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
-      Map<String, Object> bizData = new HashMap<String, Object>();
-      AdminService adminService = new AdminService();
+    String allTopics = adminService.getAllTopics();
+    String allLanguages = adminService.getAllLanguages();
+    String allMediatypes = adminService.getAllMediaTypes();
+    String allAudiences = adminService.getAllAudiences();
+    String allStatuses = adminService.getAllStatuses();
+    String allPublishers = adminService.getAllPublishers();
 
-      if (messages == null) {
+    if (messages == null) {
         messages = "";
       }
 
-      String allTopics = adminService.getAllTopics();
-      String allLanguages = adminService.getAllLanguages();
-      String allMediatypes = adminService.getAllMediaTypes();
-      String allAudiences = adminService.getAllAudiences();
-      String allStatuses = adminService.getAllStatuses();
-      String allPublishers = adminService.getAllPublishers();
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("topics", allTopics);
+    bizData.put("languages", allLanguages);
+    bizData.put("mediatypes", allMediatypes);
+    bizData.put("audience", allAudiences);
+    bizData.put("status", allStatuses);
+    bizData.put("publishers", allPublishers);
 
-      bizData.put("topics", allTopics);
-      bizData.put("languages", allLanguages);
-      bizData.put("mediatypes", allMediatypes);
-      bizData.put("audience", allAudiences);
-      bizData.put("status", allStatuses);
-      bizData.put("publishers", allPublishers);
-      bizData.put("message", messages);
+    // When GET present a blank form with listvalues or prefilled with resource
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
 
       if ("ny".equalsIgnoreCase(type)) {
         bizData.put("resource", "<empty></empty>");
@@ -156,19 +164,68 @@ public class AdminController implements StatelessAppleController {
         bizData.put("resource", adminService.getResourceByURI(uri));
       }
 
+      bizData.put("message", messages);
       res.sendPage("xml2/ressurs", bizData);
 
-    // When POST try to save the resource. Return error messages upon failure, and success message upon great success
+      // When POST try to save the resource. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-      String URI = req.getCocoonRequest().getParameter("sub:Resource");
-      String description = req.getCocoonRequest().getParameter("dct:Description");
-      String publisherURI = req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/@rdf:about");
-      String[] languages = req.getCocoonRequest().getParameterValues("dct:language");
-      String[] mediatypes = req.getCocoonRequest().getParameterValues("dct:MediaType");
-      String[] audiences = req.getCocoonRequest().getParameterValues("dct:audience");
-      String[] topics = req.getCocoonRequest().getParameterValues("dct:subject");
-      String comment = req.getCocoonRequest().getParameter("comment");
-      String status = req.getCocoonRequest().getParameter("wdr:DR");
+      String uri = req.getCocoonRequest().getParameter("sub:Resource");
+
+      Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
+
+      // If the user names a new publisher we persist this and use the new publisher URI in our INSERT later
+      if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher")) && (req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") != null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name")))) {
+        String publisheruri = adminService.insertPublisher(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name"));
+        if ("".equalsIgnoreCase(publisheruri)) {
+          messages += "<message>Feil ved tillegging av ny utgiver</message>";
+          //todo OO this
+          bizData.put("resource", "<empty></empty>");
+          res.sendPage("xml2/ressurs", bizData);
+        } else {
+          messages += "<message>" + req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") + " lagt til som ny utgiver.</message>";
+          // Remove empty publisher reference and add a new with the publisher uri
+          parameterMap.remove("dct:publisher");
+          parameterMap.remove("dct:publisher/foaf:Agent/foaf:name");
+          parameterMap.put("dct:publisher", new String[]{publisheruri});
+        }
+      }
+
+      parameterMap.put("interface-language", new String[]{"no"});
+      parameterMap.put("the-resource", new String[]{req.getCocoonRequest().getParameter("sub:url")});
+
+
+      // Generate a dct:identifier | dct:identifier		<http://sublima.computas.com/resource/samliv_net_001084> ;
+      String dctIdentifier = req.getCocoonRequest().getParameter("dct:title").replace(" ", "_");
+      dctIdentifier = dctIdentifier.replace(",","_");
+      dctIdentifier = dctIdentifier.replace(".","_");
+      dctIdentifier = "http://sublima.computas.com/resource/" + dctIdentifier;
+
+      parameterMap.put("dct:identifier", new String[]{dctIdentifier});
+      parameterMap.put("prefix", prefixArray);
+
+      //todo Fix med autorisasjon
+      parameterMap.put("dct:dateAccepted", new String[]{"2008-18-09T13:39:38"});
+      parameterMap.put("sub:committer", new String[]{"http://sublima.computas.com/user/det_usr00057"});
+
+
+      Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+      parameterMap.remove("prefix"); // The prefixes are magic variables
+      try {
+        String sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+        logger.trace("AdminController.editResource --> INSERT QUERY:\n" + sparqlQuery);
+        boolean success = sparulDispatcher.query(sparqlQuery);
+        logger.trace("AdminController.editResource --> INSERT QUERY RESULT: " + success);
+        if(success) {
+          messages +="<message>Ny ressurs lagt til!</message>" ;
+        }
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
+      bizData.put("resource", "<empty></empty>");
+      res.sendPage("xml2/ressurs", bizData);
+
     }
 
   }
@@ -191,8 +248,7 @@ public class AdminController implements StatelessAppleController {
       // Check if a publisher by that name already exists
       //Find the publisher URI based on name
       String findPublisherByNameQuery = StringUtils.join("\n", new String[]{
-              "PREFIX dct: <http://purl.org/dc/terms/>",
-              "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+              prefixes,
               "SELECT ?publisher ?name",
               "WHERE {",
               "?publisher a foaf:Agent ;",
@@ -210,30 +266,9 @@ public class AdminController implements StatelessAppleController {
         return;
       }
 
-      String publisherURI = publishername.replaceAll(" ", "_");
-      //publisherURI = publisherURI.replaceAll(".", "_");
-      //publisherURI = publisherURI.replaceAll(",", "_");
-      //publisherURI = publisherURI.replaceAll("/", "_");
-      //publisherURI = publisherURI.replaceAll("-", "_");
-      //publisherURI = publisherURI.replaceAll("'", "_");
-      publisherURI = "http://sublima.computas.com/agent/" + publisherURI;
+      String success = adminService.insertPublisher(publishername);
 
-
-      String insertPublisherByName =
-              "PREFIX dct: <http://purl.org/dc/terms/>\n" +
-                      "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
-                      "INSERT\n" +
-                      "{\n" +
-                      "<" + publisherURI + "> a foaf:Agent ;\n" +
-                      "foaf:name \"" + publishername + "\"@en .\n" +
-                      "}";
-
-      logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);
-      boolean success = false;
-      success = sparulDispatcher.query(insertPublisherByName);
-      logger.info("updatePublisherByURI() ---> " + publisherURI + " -- INSERT NEW NAME --> " + success);
-
-      if (success) {
+      if (!"".equalsIgnoreCase(success)) {
         messages = "<message>\nLagring av ny utgiver vellykket\n</message>";
       } else {
         messages = "<message>\nFeil ved lagring av ny utgiver\n</message>";
@@ -258,8 +293,7 @@ public class AdminController implements StatelessAppleController {
 
     // Delete statement
     StringBuffer deleteStringBuffer = new StringBuffer();
-    deleteStringBuffer.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
-    deleteStringBuffer.append("PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n");
+    deleteStringBuffer.append(prefixes);
     deleteStringBuffer.append("DELETE {\n");
     deleteStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
     deleteStringBuffer.append("foaf:name ?oldname .\n");
@@ -273,8 +307,7 @@ public class AdminController implements StatelessAppleController {
 
     // Insert statement
     StringBuffer insertStringBuffer = new StringBuffer();
-    insertStringBuffer.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
-    insertStringBuffer.append("PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n");
+    insertStringBuffer.append(prefixes);
     insertStringBuffer.append("INSERT {\n");
 
     // If user has added a new name for a new language
@@ -368,7 +401,7 @@ public class AdminController implements StatelessAppleController {
 
     //Find the publisher URI based on name
     String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
+            prefixes,
             "DESCRIBE <" + publisherURI + "> ?resource ?subject",
             "WHERE {",
             "OPTIONAL { ?resource dct:publisher <" + publisherURI + "> .",
@@ -398,8 +431,7 @@ public class AdminController implements StatelessAppleController {
     }
 
     String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+            prefixes,
             "SELECT DISTINCT ?publisher ?name",
             "WHERE {",
             "?publisher foaf:name ?name ;",
@@ -424,9 +456,7 @@ public class AdminController implements StatelessAppleController {
    */
   private void showSuggestedResources(AppleResponse res, AppleRequest req) {
     String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+            prefixes,
             "CONSTRUCT {",
             "    ?resource dct:title ?title ;" +
                     //"              dct:identifier ?identifier ;" +
@@ -465,8 +495,7 @@ public class AdminController implements StatelessAppleController {
 
     // CHECK
     String queryStringCHECK = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            prefixes,
             "CONSTRUCT {",
             "    ?resource dct:title ?title ;" +
                     "              dct:identifier ?identifier ;" +
@@ -482,8 +511,7 @@ public class AdminController implements StatelessAppleController {
 
     // INACTIVE
     String queryStringINACTIVE = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            prefixes,
             "CONSTRUCT {",
             "    ?resource dct:title ?title ;" +
                     "              dct:identifier ?identifier ;" +
@@ -499,8 +527,7 @@ public class AdminController implements StatelessAppleController {
 
     // GONE
     String queryStringGONE = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            prefixes,
             "CONSTRUCT {",
             "    ?resource dct:title ?title ;" +
                     "              dct:identifier ?identifier ;" +

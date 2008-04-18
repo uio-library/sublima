@@ -1,9 +1,9 @@
 package com.computas.sublima.query.service;
 
-import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
-import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
+import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
+import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -47,7 +47,7 @@ public class AdminService {
 
     return queryResult.toString();
   }
-  
+
   /**
    * Method to get all topics
    *
@@ -135,7 +135,7 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-             "CONSTRUCT {",
+            "CONSTRUCT {",
             "    ?mediatype a dct:MediaType ;",
             "             rdfs:label ?label .",
             "}",
@@ -196,5 +196,36 @@ public class AdminService {
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
+  }
+
+  public String insertPublisher(String publishername) {
+    String publisherURI = publishername.replaceAll(" ", "_");
+    //publisherURI = publisherURI.replaceAll(".", "_");
+    //publisherURI = publisherURI.replaceAll(",", "_");
+    //publisherURI = publisherURI.replaceAll("/", "_");
+    //publisherURI = publisherURI.replaceAll("-", "_");
+    //publisherURI = publisherURI.replaceAll("'", "_");
+    publisherURI = "http://sublima.computas.com/agent/" + publisherURI;
+
+
+    String insertPublisherByName =
+            "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+                    "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+                    "INSERT\n" +
+                    "{\n" +
+                    "<" + publisherURI + "> a foaf:Agent ;\n" +
+                    "foaf:name \"" + publishername + "\"@en .\n" +
+                    "}";
+
+    logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);
+    boolean success = false;
+    success = sparulDispatcher.query(insertPublisherByName);
+    logger.info("updatePublisherByURI() ---> " + publisherURI + " -- INSERT NEW NAME --> " + success);
+    if (success) {
+      return publisherURI;
+    }
+    else {
+      return "";
+    }
   }
 }

@@ -39,7 +39,7 @@
         </tr>
         <tr>
           <td align="right">
-            <label for="stikkord">Stikkord (kommaseparert)</label>
+            <label for="stikkord">Forslag til emner på ressursen (kommaseparert)</label>
           </td>
           <td>
             <input id="stikkord" type="text" name="stikkord" size="40"/>

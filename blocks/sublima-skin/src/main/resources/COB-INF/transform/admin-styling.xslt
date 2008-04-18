@@ -34,14 +34,23 @@
 
 
     <xsl:template name="resourcedetails">
-        <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
+      <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
+        <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
         <table>
             <tr>
                 <td>
-                    <label for="sub:Resource">URI</label>
+                    <label for="dct:title">Tittel</label>
                 </td>
                 <td>
-                    <input id="sub:Resource" type="text" name="sub:Resource" size="40"/>
+                    <input id="dct:title" type="text" name="dct:title" size="40"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="sub:url">URI</label>
+                </td>
+                <td>
+                    <input id="sub:url" type="text" name="sub:url" size="40"/>
                 </td>
             </tr>
             <tr>
@@ -63,7 +72,8 @@
                     <label for="dct:publisher/foaf:Agent/@rdf:about">Utgiver</label>
                 </td>
                 <td>
-                    <select id="dct:publisher/foaf:Agent" name="dct:publisher/foaf:Agent">
+                    <select id="dct:publisher" name="dct:publisher" onmouseover="javascript: imgover('url');">
+                      <option value="" />
                         <xsl:for-each select="c:page/c:content/c:resourcedetails/c:publishers/rdf:RDF/foaf:Agent">
                             <xsl:sort select="./foaf:name"/>
                             <option value="{./@rdf:about}">
@@ -76,7 +86,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <input id="newpublisher" type="text" name="newpublisher" size="40"/>
+                    <input id="dct:publisher/foaf:Agent/foaf:name" type="text" name="dct:publisher/foaf:Agent/foaf:name" size="40"/>
                 </td>
             </tr>
             <tr>
@@ -141,10 +151,10 @@
             </tr>
             <tr>
                 <td>
-                    <label for="comment">Kommentar</label>
+                    <label for="rdfs:comment">Kommentar</label>
                 </td>
                 <td>
-                    <textarea id="comment" name="comment" rows="6" cols="40">...</textarea>
+                    <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40">...</textarea>
                 </td>
             </tr>
             <tr>
@@ -153,6 +163,7 @@
                 </td>
                 <td>
                     <select id="wdr:DR" name="wdr:DR">
+                      <option value="" />
                         <xsl:for-each select="c:page/c:content/c:resourcedetails/c:statuses/rdf:RDF/wdr:DR">
                             <xsl:sort select="./rdfs:label"/>
                             <option value="{./@rdf:about}">

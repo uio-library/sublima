@@ -45,6 +45,7 @@ public class FeedbackController implements StatelessAppleController {
                 "{\n" +
                 "<" + url + ">" + " dct:title " + "\"" + tittel + "\"@no ; \n" +
                 "dct:description " + "\"" + beskrivelse + "\"@no ; \n" +
+                "dct:keywords " + "\"" + stikkord.toString() + "\"@no ; \n" +
                 "wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;\n";
         
         StringBuffer partialUpdateStringBuffer = new StringBuffer();
