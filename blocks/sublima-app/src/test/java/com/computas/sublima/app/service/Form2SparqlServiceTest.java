@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import java.util.Arrays;
 
 import com.computas.sublima.app.service.Form2SparqlService;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 
 
 /**
@@ -70,14 +71,6 @@ public class Form2SparqlServiceTest extends TestCase {
 
   }
 
-/*  TODO, not implemented
-    public void testAppendPrefixes() {
-      myService.addPrefix("rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>");
-        assertEquals("Expected result and actual result not equal",
-              "PREFIX dct: <http://purl.org/dc/terms/> .\nPREFIX foaf: <http://xmlns.com/foaf/0.1/> .\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n", myService.getPrefixString());
-
-    }
-*/
 
   public void testConvertFormField2N3SingleLiteral() {
     String expectS = "\n?resource dc:title \"Cirrus Personal Jet\" .";
@@ -206,6 +199,40 @@ public class Form2SparqlServiceTest extends TestCase {
     assertEquals("Expected result and actual result not equal", expectedPrefix + expectedString + " .\n?resource ?p ?rest .\n}", resultString);
   }
 
+  public void testConvertForm2SparqlSingleValueFreetext() {
+      // Single value test, with simple freetext search
+      testMap.put("dc:title", testString);
+      testMap.put("searchstring", new String[]{"engine"});
+      String resultString = myService.convertForm2Sparql(testMap);
+      assertEquals("Expected result and actual result not equal", 
+		   StringUtils.join("\n", new String[]{
+		       "PREFIX dct: <http://purl.org/dc/terms/>",
+		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>", 
+		       "DESCRIBE ?subject ?publisher ?resource ?rest WHERE {",
+		       "?resource dc:title \"Cirrus Personal Jet\" .",
+		       "   ?lit pf:textMatch ( '+engine' 100) .",
+		       "  {",
+		       "    ?resource ?p1 ?lit;",
+		       "              dct:subject ?subject;",
+		       "              dct:publisher ?publisher.",
+		       "  }",
+		       "  UNION",
+		       "  {",
+		       "      ?resource dct:subject ?subject1 .",
+		       "      ?subject1 ?p2 ?lit .",
+		       "      ?resource dct:subject ?subject;",
+		       "                dct:publisher ?publisher .",
+		       "  }",
+		       "  UNION",
+		       "  {",
+		       "      ?resource dct:publisher ?publisher1 .",
+		       "      ?publisher1 ?p2 ?lit .",
+		       "      ?resource dct:subject ?subject;",
+		       "                dct:publisher ?publisher .",
+		       "  }\n?resource ?p ?rest .\n}"}), resultString);
+  }
+    
   public void testConvertForm2SparqlSingleValue() {
     // Single value test
     testMap.put("dc:title", testString);
@@ -286,7 +313,13 @@ public class Form2SparqlServiceTest extends TestCase {
 		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
 }	
 
-
+  public void testAppendPrefixes() {
+	  myService.addPrefix("rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>");
+	  assertEquals("Expected result and actual result not equal",
+			  	"PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n", myService.getPrefixString());
+	  
+  }
+  
   public void testConvertForm2SPARULEmpty() {
 		 testMap.put("foaf:name", new String[]{"Institute for Energy Technology"});
 		 testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
@@ -296,4 +329,6 @@ public class Form2SparqlServiceTest extends TestCase {
 			 assertTrue(true);
 		 }
   }	 
+  
+  
 }

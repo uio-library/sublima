@@ -182,6 +182,13 @@ public class Form2SparqlService {
 		if (parameterMap.get("interface-language") != null) {
 			setLanguage(parameterMap.get("interface-language")[0]);
 			parameterMap.remove("interface-language");
+		}	
+
+		if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
+		    sparqlQueryBuffer.append("?subject ?publisher ");
+		    addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
+		    n3Buffer.append(freeTextQuery(parameterMap.get("searchstring")[0]));
+		    parameterMap.remove("searchstring");
 		}
 
 		List freetextFields = null;
@@ -284,7 +291,7 @@ public class Form2SparqlService {
 	 */
 	public String freeTextQuery (String searchstring) {
 			return StringUtils.join("\n", new String[]{
-					"    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
+					"\n    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
 					"  {",
 					"    ?resource ?p1 ?lit;",
 					"              dct:subject ?subject;",
