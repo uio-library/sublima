@@ -15,14 +15,15 @@
   <xsl:output indent="yes"/>
 
   <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="baseurl"/>
 
   <xsl:template match="rdf:RDF" mode="resource">
     <table>
       
       <tr>
 	<th colspan="2" scope="col">
-	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/>
-	</th>
+	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/> - <a href="{$baseurl}/admin/ressurser/edit?uri={sub:Resource/@rdf:about}">[Edit]</a>
+    </th>
       </tr>
       <tr>
 	<th scope="row">
@@ -107,6 +108,35 @@
       </tr>
      
     </table>
+
+    <p>Send inn en kommentar angående denne ressursen</p>
+    <form name="resourcecomment" action="resourcecomment" method="GET">
+        <input type="hidden" name="uri" value="{sub:Resource/@rdf:about}"/>
+      <table>
+        <tr>
+          <td align="right">
+            <label for="email">Din e-post</label>
+          </td>
+          <td>
+            <input id="email" type="text" name="email" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+            <label for="comment">Kommentar</label>
+          </td>
+          <td>
+            <textarea id="comment" name="comment" rows="6" cols="40"> </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="Send inn"/>
+          </td>
+        </tr>
+      </table>
+    </form>
   </xsl:template>
 
 
