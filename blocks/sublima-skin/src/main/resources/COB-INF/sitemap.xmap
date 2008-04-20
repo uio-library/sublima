@@ -18,18 +18,6 @@
         <map:generate src="service-consumer:"/>
         <map:transform src="transform/admin-styling.xslt">
           <map:parameter name="baseurl" value="{request:contextPath}"/>
-          <map:parameter name="forms-resources" value="{servlet:forms:/resource/external/forms}"/>
-          <map:parameter name="dojo-resources" value="{servlet:ajax:/resource/external/dojo}"/>
-        </map:transform>
-        <map:transform type="servletLinkRewriter"/>
-        <map:serialize type="xhtml"/>
-      </map:match>
-
-      <map:match pattern="forms-styling">
-        <map:generate src="service-consumer:"/>
-        <map:transform src="transform/form-styling.xslt">
-          <map:parameter name="forms-resources" value="{servlet:forms:/resource/external/forms}"/>
-          <map:parameter name="dojo-resources" value="{servlet:ajax:/resource/external/dojo}"/>
         </map:transform>
         <map:serialize type="xhtml"/>
       </map:match>
