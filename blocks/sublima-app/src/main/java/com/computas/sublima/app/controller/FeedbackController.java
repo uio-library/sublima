@@ -9,77 +9,104 @@ import org.apache.log4j.Logger;
 
 public class FeedbackController implements StatelessAppleController {
 
-  private static Logger logger = Logger.getLogger(FeedbackController.class);
-  private String mode;
-  private SparulDispatcher sparulDispatcher;
-  boolean success = false;
+    private static Logger logger = Logger.getLogger(FeedbackController.class);
+    private String mode;
+    private SparulDispatcher sparulDispatcher;
+    boolean success = false;
 
-  //todo Check how to send error messages with Cocoon (like Struts 2's s:actionmessage)
-  @SuppressWarnings("unchecked")
-  public void process(AppleRequest req, AppleResponse res) throws Exception {
+    //todo Check how to send error messages with Cocoon (like Struts 2's s:actionmessage)
+    @SuppressWarnings("unchecked")
+    public void process(AppleRequest req, AppleResponse res) throws Exception {
 
-    this.mode = req.getSitemapParameter("mode");
+        this.mode = req.getSitemapParameter("mode");
 
-    if ("visTipsForm".equalsIgnoreCase("mode")) {
-      res.sendPage("xhtml/tips", null);
-      return;
-    }
+        if ("resourcecomment".equalsIgnoreCase("mode")) {
+            String uri = req.getCocoonRequest().getParameter("uri");
+            String email = req.getCocoonRequest().getParameter("email");
+            String comment = req.getCocoonRequest().getParameter("comment");
 
-    if ("sendtips".equalsIgnoreCase(mode)) {
-      String url = req.getCocoonRequest().getParameter("url");
-      String tittel = req.getCocoonRequest().getParameter("tittel");
-      String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
-      String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(","); 
+            String partialUpdateString =
+                    "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+                            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                            "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                            "INSERT\n" +
+                            "{\n" +
+                            "<" + uri + ">" + " sub:comment " + "\"" + comment + "\"@no ; \n";
 
-      // Do a URL check so that we know we have a valid URL
-      IndexService indexService = new IndexService();
-      String status = indexService.getHTTPcodeForUrl(url);
+            success = sparulDispatcher.query(partialUpdateString);
+            logger.trace("FeedbackController.java --> Comment on resource: " + partialUpdateString + "\nResult: " + success);
 
-      //todo We have to get the interface-language @no from somewhere
-      if ("200".equals(status)) {
-        String partialUpdateString =
-                "PREFIX dct: <http://purl.org/dc/terms/>\n" +
-                "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                "INSERT\n" +
-                "{\n" +
-                "<" + url + ">" + " dct:title " + "\"" + tittel + "\"@no ; \n" +
-                "dct:description " + "\"" + beskrivelse + "\"@no ; \n" +
-                "dct:keywords " + "\"" + stikkord.toString() + "\"@no ; \n" +
-                "wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;\n";
-        
-        StringBuffer partialUpdateStringBuffer = new StringBuffer();
+            //todo Back to the resource details page
+            if (success) {
+                res.sendPage("takk", null);
+                return;
+            } else {
+                res.sendPage("xhtml/tips", null);
+                return;
+            }
 
-        partialUpdateStringBuffer.append(partialUpdateString);
-        //for each keyword, add a sub:keyword
-        for(String s : stikkord) {
-          partialUpdateStringBuffer.append("sub:keyword \"" + s + "\"@no ;\n");
-        }
-        partialUpdateStringBuffer.append("}");
-
-        success = sparulDispatcher.query(partialUpdateStringBuffer.toString());
-        logger.trace("sendTips --> RESULT: " + success);
-
-        if (success) {
-          res.sendPage("takk", null);
-          return;
-        } else {
-          res.sendPage("xhtml/tips", null);
-          return;
         }
 
-      } else {
-        res.sendPage("xhtml/tips", null);
+        if ("visTipsForm".equalsIgnoreCase("mode")) {
+            res.sendPage("xhtml/tips", null);
+            return;
+        }
+
+        if ("sendtips".equalsIgnoreCase(mode)) {
+            String url = req.getCocoonRequest().getParameter("url");
+            String tittel = req.getCocoonRequest().getParameter("tittel");
+            String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
+            String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(",");
+
+            // Do a URL check so that we know we have a valid URL
+            IndexService indexService = new IndexService();
+            String status = indexService.getHTTPcodeForUrl(url);
+
+            //todo We have to get the interface-language @no from somewhere
+            if ("200".equals(status)) {
+                String partialUpdateString =
+                        "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+                                "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                                "INSERT\n" +
+                                "{\n" +
+                                "<" + url + ">" + " dct:title " + "\"" + tittel + "\"@no ; \n" +
+                                "dct:description " + "\"" + beskrivelse + "\"@no ; \n" +
+                                "dct:keywords " + "\"" + stikkord.toString() + "\"@no ; \n" +
+                                "wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;\n";
+
+                StringBuffer partialUpdateStringBuffer = new StringBuffer();
+
+                partialUpdateStringBuffer.append(partialUpdateString);
+                //for each keyword, add a sub:keyword
+                for (String s : stikkord) {
+                    partialUpdateStringBuffer.append("sub:keyword \"" + s + "\"@no ;\n");
+                }
+                partialUpdateStringBuffer.append("}");
+
+                success = sparulDispatcher.query(partialUpdateStringBuffer.toString());
+                logger.trace("sendTips --> RESULT: " + success);
+
+                if (success) {
+                    res.sendPage("takk", null);
+                    return;
+                } else {
+                    res.sendPage("xhtml/tips", null);
+                    return;
+                }
+
+            } else {
+                res.sendPage("xhtml/tips", null);
+                return;
+            }
+        }
+
         return;
-      }
     }
 
-    return;
-  }
 
-
-  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
-    this.sparulDispatcher = sparulDispatcher;
-  }
+    public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
+        this.sparulDispatcher = sparulDispatcher;
+    }
 
 }

@@ -16,6 +16,7 @@
     <!-- xsl:output method="html" indent="yes"/ -->
     <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
     <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
+    <xsl:import href="resourceform.xsl"/>
 
     <xsl:output method="xml"
                 encoding="UTF-8"
@@ -34,159 +35,30 @@
 
 
     <xsl:template name="resourcedetails">
-      <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
-        <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
-        <table>
-            <tr>
-                <td>
-                    <label for="dct:title">Tittel</label>
-                </td>
-                <td>
-                    <input id="dct:title" type="text" name="dct:title" size="40"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="sub:url">URI</label>
-                </td>
-                <td>
-                    <input id="sub:url" type="text" name="sub:url" size="40"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="dct:description">Beskrivelse</label>
-                </td>
-                <td>
-                    <textarea id="dct:description" name="dct:description" rows="6" cols="40">...</textarea>
-                </td>
-            </tr>
-        </table>
-        <br/>
-        <p>Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet
-            under
-        </p>
-        <table>
-            <tr>
-                <td>
-                    <label for="dct:publisher/foaf:Agent/@rdf:about">Utgiver</label>
-                </td>
-                <td>
-                    <select id="dct:publisher" name="dct:publisher" onmouseover="javascript: imgover('url');">
-                      <option value="" />
-                        <xsl:for-each select="c:page/c:content/c:resourcedetails/c:publishers/rdf:RDF/foaf:Agent">
-                            <xsl:sort select="./foaf:name"/>
-                            <option value="{./@rdf:about}">
-                                <xsl:value-of select="./foaf:name"/>
-                            </option>
-                        </xsl:for-each>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <input id="dct:publisher/foaf:Agent/foaf:name" type="text" name="dct:publisher/foaf:Agent/foaf:name" size="40"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="dct:language">Språk</label>
-                </td>
-                <td>
-                    <select id="dct:language" name="dct:language" multiple="multiple" size="10">
-                        <xsl:for-each select="c:page/c:content/c:resourcedetails/c:languages/rdf:RDF/lingvoj:Lingvo">
-                            <xsl:sort select="./rdfs:label"/>
-                            <option value="{./@rdf:about}">
-                                <xsl:value-of select="./rdfs:label"/>
-                            </option>
-                        </xsl:for-each>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="dct:MediaType">Mediatype</label>
-                </td>
-                <td>
-                    <select id="dct:MediaType" name="dct:MediaType" multiple="multiple" size="10">
-                        <xsl:for-each select="c:page/c:content/c:resourcedetails/c:mediatypes/rdf:RDF/dct:MediaType">
-                            <xsl:sort select="./rdfs:label"/>
-                            <option value="{./@rdf:about}">
-                                <xsl:value-of select="./rdfs:label"/>
-                            </option>
-                        </xsl:for-each>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="dct:audience">Målgruppe</label>
-                </td>
-                <td>
-                    <select id="dct:audience" name="dct:audience" multiple="multiple" size="10">
-                        <xsl:for-each select="c:page/c:content/c:resourcedetails/c:audiences/rdf:RDF/dct:AgentClass">
-                            <xsl:sort select="./rdfs:label"/>
-                            <option value="{./@rdf:about}">
-                                <xsl:value-of select="./rdfs:label"/>
-                            </option>
-                        </xsl:for-each>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="dct:subject">Emner</label>
-                </td>
-                <td>
-                    <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
-                        <xsl:for-each select="c:page/c:content/c:resourcedetails/c:topics/rdf:RDF/skos:Concept">
-                            <xsl:sort select="./rdfs:label"/>
-                            <option value="{./@rdf:about}">
-                                <xsl:value-of select="./rdfs:label"/>
-                            </option>
-                        </xsl:for-each>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="rdfs:comment">Kommentar</label>
-                </td>
-                <td>
-                    <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40">...</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="wdr:DR">Status</label>
-                </td>
-                <td>
-                    <select id="wdr:DR" name="wdr:DR">
-                      <option value="" />
-                        <xsl:for-each select="c:page/c:content/c:resourcedetails/c:statuses/rdf:RDF/wdr:DR">
-                            <xsl:sort select="./rdfs:label"/>
-                            <option value="{./@rdf:about}">
-                                <xsl:value-of select="./rdfs:label"/>
-                            </option>
-                        </xsl:for-each>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="Lagre ressurs"/>
-                </td>
-                <td>
-                    <input type="reset" value="Rens skjema"/>
-                </td>
-            </tr>
-        </table>
-      </form>
+
+        <xsl:if test="c:page/c:content/c:messages">
+            <br/> We've got messages!
+            <p class="validationmessage">
+                <xsl:value-of select="c:page/c:content/c:messages/*"/>
+            </p>
+        </xsl:if>
+
+        <xsl:for-each select="c:page/c:content/c:resourcedetails/c:messages/c:message">
+            <xsl:value-of select="." /><br/>
+        </xsl:for-each>
+
+        <xsl:choose>
+            <xsl:when test="c:page/c:content/c:resourcedetails/c:resource/rdf:RDF">
+                <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="edit"/>
+            </xsl:when>
+            <xsl:when test="c:page/c:content/c:resourcedetails/c:tempvalues/temp">
+
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="new"/>    
+            </xsl:otherwise>
+
+        </xsl:choose>
     </xsl:template>
 
     <!-- New publisher -->
