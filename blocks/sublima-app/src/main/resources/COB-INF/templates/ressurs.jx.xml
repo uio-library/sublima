@@ -14,6 +14,7 @@
         xmlns="http://www.w3.org/1999/xhtml">
 
     <c:title>Sublima administrasjon</c:title>
+    <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>

@@ -36,23 +36,16 @@
 
     <xsl:template name="resourcedetails">
 
-        <xsl:if test="c:page/c:content/c:messages">
-            <br/> We've got messages!
-            <p class="validationmessage">
-                <xsl:value-of select="c:page/c:content/c:messages/*"/>
-            </p>
-        </xsl:if>
-
         <xsl:for-each select="c:page/c:content/c:resourcedetails/c:messages/c:message">
             <xsl:value-of select="." /><br/>
         </xsl:for-each>
 
         <xsl:choose>
-            <xsl:when test="c:page/c:content/c:resourcedetails/c:resource/rdf:RDF">
+            <xsl:when test="c:page/c:mode = 'edit'">
                 <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="edit"/>
             </xsl:when>
-            <xsl:when test="c:page/c:content/c:resourcedetails/c:tempvalues/temp">
-
+            <xsl:when test="c:page/c:mode = 'temp'">
+                <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="temp"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="new"/>    

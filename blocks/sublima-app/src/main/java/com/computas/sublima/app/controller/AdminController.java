@@ -153,8 +153,10 @@ public class AdminController implements StatelessAppleController {
 
             if ("ny".equalsIgnoreCase(type)) {
                 bizData.put("resource", "<empty></empty>");
+                bizData.put("mode", "new");
             } else {
                 bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("uri")));
+                bizData.put("mode", "edit");
             }
 
             bizData.put("messages", "<empty></empty>");
@@ -164,7 +166,7 @@ public class AdminController implements StatelessAppleController {
         } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
             StringBuffer tempValues = getTempValues(req);
-            String tempPrefixes = "<temp \n" +
+            String tempPrefixes = "<c:tempvalues \n" +
                     "xmlns:topic=\"http://sublima.computas.com/topic/\"\n" +
                     "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
                     "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
@@ -178,14 +180,16 @@ public class AdminController implements StatelessAppleController {
                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
                     "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
                     "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-                    "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n ";
+                    "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+                    "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
             // Check if all required fields are filled out, if not return error messages
             String validationMessages = validateRequest(req);
             if (!"".equalsIgnoreCase(validationMessages)) {
                 bizData.put("resource", "<empty></empty>");
-                bizData.put("tempvalues", tempPrefixes  + tempValues.toString() + "</temp>");
-                bizData.put("messages", "<messages>" + validationMessages + "</messages>");
+                bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+                bizData.put("messages", "<messages>\n" + validationMessages + "\n</messages>\n");
+                bizData.put("mode", "temp");
 
                 res.sendPage("xml2/ressurs", bizData);
 
@@ -253,12 +257,15 @@ public class AdminController implements StatelessAppleController {
                 if (validated) {
                     bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url")));
                     bizData.put("tempvalues", "<empty></empty>");
+                    bizData.put("mode", "edit");
                 } else {
                     bizData.put("resource", "<empty></empty>");
                     bizData.put("tempvalues", "<temp>" + tempValues.toString() + "</temp>");
+                    bizData.put("mode", "temp");
                 }
 
                 bizData.put("messages", messages);
+
                 res.sendPage("xml2/ressurs", bizData);
             }
 
@@ -339,35 +346,32 @@ public class AdminController implements StatelessAppleController {
         xmlStructureBuffer.append("<foaf:Agent>" + temp_added_publisher + "</foaf:Agent>\n");
 
         if (temp_languages != null) {
-            xmlStructureBuffer.append("<dct:language>\n");
             for (String s : temp_languages) {
-                xmlStructureBuffer.append("<language>" + s + "</language>\n");
+                //xmlStructureBuffer.append("<language>" + s + "</language>\n");
+              xmlStructureBuffer.append("<dct:language rdf:description=\"" + s + "\"/>\n");
             }
-            xmlStructureBuffer.append("</dct:language>\n");
         }
 
         if (temp_mediatypes != null) {
-            xmlStructureBuffer.append("<dct:MediaType>\n");
+
             for (String s : temp_mediatypes) {
-                xmlStructureBuffer.append("<mediatype>" + s + "</mediatype>\n");
+                xmlStructureBuffer.append("<dct:MediaType rdf:description=\"" + s + "\"/>\n");
             }
-            xmlStructureBuffer.append("</dct:MediaType>\n");
+
         }
 
         if (temp_audiences != null) {
-            xmlStructureBuffer.append("<dct:audience>\n");
+
             for (String s : temp_audiences) {
-                xmlStructureBuffer.append("<audience>" + s + "</audience>\n");
+                xmlStructureBuffer.append("<dct:audience rdf:description=\"" + s + "\"/>\n");
             }
-            xmlStructureBuffer.append("</dct:audience>\n");
+
         }
 
         if (temp_subjects != null) {
-            xmlStructureBuffer.append("<dct:subject>\n");
             for (String s : temp_subjects) {
-                xmlStructureBuffer.append("<subject>" + s + "</subject>\n");
+                xmlStructureBuffer.append("<dct:subject rdf:description=\"" + s + "\"/>\n");
             }
-            xmlStructureBuffer.append("</dct:subject>\n");
         }
 
         xmlStructureBuffer.append("<rdfs:comment>" + temp_comment + "</rdfs:comment>\n");

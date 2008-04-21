@@ -190,7 +190,13 @@ public class AdminService {
     }
 
     String queryString = StringUtils.join("\n", new String[]{
-            "DESCRIBE " + uri});
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "DESCRIBE ?resource " + uri + " ?publisher ?subjects",
+            "WHERE {",
+            "        ?resource dct:language ?lang;",
+            "				 dct:publisher ?publisher ;",
+            "                dct:subject " + uri + ", ?subjects .}"});
 
     logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
