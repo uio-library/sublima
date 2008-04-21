@@ -2,7 +2,6 @@
 <c:page xmlns="http://www.w3.org/1999/xhtml"
   xmlns:c="http://xmlns.computas.com/cocoon">
     <c:result-list/>
-    <c:freetext-result-list/>
     <c:navigation/>
     <c:advancedsearch/>
     <c:facets/>

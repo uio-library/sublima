@@ -35,17 +35,11 @@ public class SearchController implements StatelessAppleController {
     }
 
     // If it's search-results for advanced search, topic instance or resource
-    if ("resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode) || "freetext-result".equalsIgnoreCase(mode)) {
+    if ("resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode)) {
       doAdvancedSearch(res, req);
       return;
     }
 
-    /*
-    if ("freetext-result".equalsIgnoreCase(mode)) {
-      doFreeTextSearch(res, req);
-      return;
-    }
-*/
     if ("topic-instance".equalsIgnoreCase(mode)) {
       doGetTopic(res, req);
       return;

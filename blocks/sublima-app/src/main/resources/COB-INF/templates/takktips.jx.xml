@@ -3,8 +3,6 @@
         xmlns:c="http://xmlns.computas.com/cocoon">
   <c:result-list></c:result-list>
 
-  <c:freetext-result-list></c:freetext-result-list>
-
   <c:navigation></c:navigation>
 
   <c:tips>
