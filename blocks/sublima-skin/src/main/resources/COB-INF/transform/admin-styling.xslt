@@ -33,6 +33,10 @@
         <xsl:copy-of select="c:page/c:content/c:text/*"/>
     </xsl:template>
 
+    <xsl:template name="upload">
+        <xsl:copy-of select="c:page/c:content/c:upload/*"/>
+    </xsl:template>
+
 
     <xsl:template name="resourcedetails">
 
@@ -215,6 +219,8 @@
                             <div class="col1">
                                 <!-- Column 1 start -->
                                 <xsl:call-template name="contenttext"/>
+
+                                <xsl:call-template name="upload"/>
 
                                 <xsl:if test="c:page/c:content/c:resourcedetails">
                                     <xsl:call-template name="resourcedetails"/>

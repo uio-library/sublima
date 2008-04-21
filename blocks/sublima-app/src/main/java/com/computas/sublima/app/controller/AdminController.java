@@ -1,6 +1,7 @@
 package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.app.adhoc.ImportData;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.AdminService;
@@ -65,6 +66,8 @@ public class AdminController implements StatelessAppleController {
         } else if ("insertpublisher".equalsIgnoreCase(mode)) {
             insertPublisherByName(res, req);
             return;
+        } else if ("database".equalsIgnoreCase(mode)) {
+            uploadForm(res,req);
         }
         // Publishers. Send the user to a page that displays a list of all publishers.
         else if ("utgivere".equalsIgnoreCase(mode)) {
@@ -93,9 +96,8 @@ public class AdminController implements StatelessAppleController {
             } else if ("ny".equalsIgnoreCase(submode)) {
                 editResource(res, req, "ny", null);
                 return;
-
             } else if ("edit".equalsIgnoreCase(submode)) {
-                //editResource(res, req, "edit", null);
+                editResource(res, req, "edit", null);
                 return;
             } else {
                 return;
@@ -112,7 +114,20 @@ public class AdminController implements StatelessAppleController {
         }
     }
 
-    /**
+  private void uploadForm(AppleResponse res, AppleRequest req) {
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+      res.sendPage("xml2/upload", null);
+    } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+      String location = req.getCocoonRequest().getParameter("location");
+      String type = req.getCocoonRequest().getParameter("type");
+
+      ImportData importData = new ImportData();
+      importData.load(location, type);
+      res.sendPage("xml2/upload", null);
+    }
+  }
+
+  /**
      * Method to add new resources and edit existing ones
      * Sparql queries for all topics, statuses, languages, media types and audience
      * is done and the results forwarded to the JX Template and XSLT.

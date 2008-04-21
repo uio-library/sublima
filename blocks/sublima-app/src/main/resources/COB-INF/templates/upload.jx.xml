@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:c="http://xmlns.computas.com/cocoon">
+    <c:title>Sublima administrasjon</c:title>
+
+    <c:breadcrumbs>
+        <c:breadcrumb title="Sublima"></c:breadcrumb>
+        <c:breadcrumb title="Admin">admin</c:breadcrumb>
+        <c:breadcrumb title="Database">admin/database</c:breadcrumb>
+    </c:breadcrumbs>
+
+    <c:menu>
+        <c:menuelement title="Emner" link="admin/emner"/>
+        <c:menuelement title="Ressurser" link="admin/ressurser"/>
+        <c:menuelement title="Brukere" link="admin/brukere"/>
+        <c:menuelement title="Utgivere" link="admin/utgivere"/>
+        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
+        <c:menuelement title="Database" link="admin/database"/>
+    </c:menu>
+
+    <c:content>
+        <c:text>
+            <h3>Lest inn data til databasen</h3>
+            <p>
+                Angi fil/URL og konverteringstypen i feltene nedenfor.<br/><br/>
+                Format for filer:<br/>
+                file:\Sti\til\fil\information-model.n3<br/>
+                <br/>
+                Format for URL:<br/>
+                http://www.urltilfil.com/information-model.n3<br/>
+            </p>
+        </c:text>
+      <c:upload>
+        <form name="upload" action="database" method="POST">
+      <table>
+        <tr>
+          <td align="right">
+            <label for="location">Lokasjon</label>
+          </td>
+          <td>
+            <input id="location" type="text" name="location" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+            <label for="tittel">Type</label>
+          </td>
+          <td>
+            <select name="type">
+              <option value="RDF/XML">RDF/XML</option>
+              <option value="N3">N3</option>
+              <option value="Turtle">Turtle</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="Les inn"/>
+          </td>
+        </tr>
+      </table>
+    </form>
+      </c:upload>
+    </c:content>
+
+</c:page>
