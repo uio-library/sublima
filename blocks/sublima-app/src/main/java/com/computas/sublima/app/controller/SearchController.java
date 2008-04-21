@@ -154,10 +154,13 @@ public class SearchController implements StatelessAppleController {
               + req.getSitemapParameter("name")});
       parameterMap.put("dct:subject/rdfs:label", new String[]{""});
     }
-
-    logger.trace("FOO: " + parameterMap.get("searchstring")[0]);
+                                       
     if (parameterMap.get("searchstring") != null) {
     	parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});    	
+        parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>", 
+        							"rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+        							"pf: <http://jena.hpl.hp.com/ARQ/property#>"});
+        parameterMap.remove("booleanoperator");
     }
     
     

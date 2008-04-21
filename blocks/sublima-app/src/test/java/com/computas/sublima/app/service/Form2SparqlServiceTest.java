@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
-
+import com.computas.sublima.query.service.SearchService;
 
 /**
  * Form2SparqlService Tester.
@@ -44,9 +44,6 @@ public class Form2SparqlServiceTest extends TestCase {
     List emptyList = new LinkedList();
     expectedPrefix = "PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>\n";
     myService = new Form2SparqlService(new String[]{"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>"});
-    String resultString = myService.convertForm2Sparql(testMap);
-//        String resultStringN3 = myService.convertFormField2N3();
-
   }
   
 
@@ -202,7 +199,9 @@ public class Form2SparqlServiceTest extends TestCase {
   public void testConvertForm2SparqlSingleValueFreetext() {
       // Single value test, with simple freetext search
       testMap.put("dc:title", testString);
-      testMap.put("searchstring", new String[]{"engine"});
+      SearchService searchService = new SearchService("AND");
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine")});
+      myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
       String resultString = myService.convertForm2Sparql(testMap);
       assertEquals("Expected result and actual result not equal", 
 		   StringUtils.join("\n", new String[]{
@@ -211,7 +210,7 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>", 
 		       "DESCRIBE ?subject ?publisher ?resource ?rest WHERE {",
 		       "?resource dc:title \"Cirrus Personal Jet\" .",
-		       "   ?lit pf:textMatch ( '+engine' 100) .",
+		       "  ?lit pf:textMatch ( 'engine*' 100) .",
 		       "  {",
 		       "    ?resource ?p1 ?lit;",
 		       "              dct:subject ?subject;",
@@ -232,7 +231,42 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "                dct:publisher ?publisher .",
 		       "  }\n?resource ?p ?rest .\n}"}), resultString);
   }
-    
+
+    public void testConvertForm2SparqlNoValueFreetext() {
+      // Single value test, with simple freetext search
+      SearchService searchService = new SearchService("AND");
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine")});
+      myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
+      String resultString = myService.convertForm2Sparql(testMap);
+      assertEquals("Expected result and actual result not equal",
+		   StringUtils.join("\n", new String[]{
+		       "PREFIX dct: <http://purl.org/dc/terms/>",
+		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+		       "DESCRIBE ?subject ?publisher ?resource ?rest WHERE {",
+		       "  ?lit pf:textMatch ( 'engine*' 100) .",
+		       "  {",
+		       "    ?resource ?p1 ?lit;",
+		       "              dct:subject ?subject;",
+		       "              dct:publisher ?publisher.",
+		       "  }",
+		       "  UNION",
+		       "  {",
+		       "      ?resource dct:subject ?subject1 .",
+		       "      ?subject1 ?p2 ?lit .",
+		       "      ?resource dct:subject ?subject;",
+		       "                dct:publisher ?publisher .",
+		       "  }",
+		       "  UNION",
+		       "  {",
+		       "      ?resource dct:publisher ?publisher1 .",
+		       "      ?publisher1 ?p2 ?lit .",
+		       "      ?resource dct:subject ?subject;",
+		       "                dct:publisher ?publisher .",
+		       "  }\n?resource ?p ?rest .\n}"}), resultString);
+  }
+
+
   public void testConvertForm2SparqlSingleValue() {
     // Single value test
     testMap.put("dc:title", testString);

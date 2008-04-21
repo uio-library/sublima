@@ -39,9 +39,7 @@ public class Form2SparqlService {
 
 	private List subjectVarList = new LinkedList();
 
-	private int variablecount = 1; // the var below has to be unique across
-
-	// calls
+	private int variablecount = 1; // the var below has to be unique across calls
 
 
 	public Form2SparqlService(String[] pr) {
@@ -182,12 +180,11 @@ public class Form2SparqlService {
 			setLanguage(parameterMap.get("interface-language")[0]);
 			parameterMap.remove("interface-language");
 		}	
-		System.out.println("FOOBAR: " + parameterMap.get("searchstring")[0]);
+
 		if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
 		    sparqlQueryBuffer.append("?subject ?publisher ");
-		    addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
 		    n3Buffer.append(freeTextQuery(parameterMap.get("searchstring")[0]));
-		    logger.trace("n3Buffer so far in freetext:\n"+n3Buffer.toString());
+//		    logger.trace("n3Buffer so far in freetext:\n"+n3Buffer.toString());
 		    parameterMap.remove("searchstring");
 		}
 
@@ -289,9 +286,12 @@ public class Form2SparqlService {
 	 * 			A string with triples
 	 * 
 	 */
-	public String freeTextQuery (String searchstring) {
-			return StringUtils.join("\n", new String[]{
-					"\n    ?lit pf:textMatch ( '" + searchstring + "' 100) .",
+    public String freeTextQuery (String searchstring) {
+        if (!subjectVarList.contains("?resource ")) {
+            subjectVarList.add("?resource ");
+        }
+        return StringUtils.join("\n", new String[]{
+					"\n  ?lit pf:textMatch ( '" + searchstring + "' 100) .",
 					"  {",
 					"    ?resource ?p1 ?lit;",
 					"              dct:subject ?subject;",
