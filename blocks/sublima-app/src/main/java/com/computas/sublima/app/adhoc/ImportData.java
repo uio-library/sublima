@@ -1,21 +1,19 @@
 package com.computas.sublima.app.adhoc;
 
-import com.hp.hpl.jena.db.DBConnection;
+import com.computas.sublima.query.service.DatabaseService;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
-import com.hp.hpl.jena.rdf.model.ModelMaker;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.AlreadyExistsException;
-import com.computas.sublima.query.service.DatabaseService;
 
 import java.sql.SQLException;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
 
 public class ImportData {
-  /**
+
+
+  public ImportData() {
+  }
+  
+   /**
    * Ad hoc method to import data to the Pg Data Store.
    *
    * @param url  The URL of the RDF to import
@@ -38,12 +36,21 @@ public class ImportData {
       try {
         connection.close();
       } catch (SQLException e) {
-        e.printStackTrace(); 
+        e.printStackTrace();
       }
     }
   }
 
   public static void main(String[] args) {
-    load(args[0], args[1]);
+    //load(args[0], args[1]);
+
+
+    load("file:\\Prosjekter\\SUBLIMA\\Kode\\Sublima\\blocks\\sublima-app\\src\\main\\resources\\rdf-data\\information-model.n3", "N3");
+    System.out.println("Done loading information-model.n3");
+    //load("file:\\Prosjekter\\SUBLIMA\\Kode\\Sublima\\blocks\\sublima-app\\src\\main\\resources\\rdf-data\\sublima-ns.ttl", "Turtle");
+    //System.out.println("Done loading sublima-ns.ttl");
+    //load("file:\\Prosjekter\\SUBLIMA\\Kode\\Sublima\\blocks\\sublima-app\\src\\main\\resources\\rdf-data\\detektor-test-data.n3", "N3");
+    //System.out.println("Done loading detektor-test-data.n3");
+    //load("http://www.lingvoj.org/lingvoj.rdf", "RDF/XML");
   }
 }
