@@ -14,10 +14,20 @@
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
+  <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="rdf:RDF" mode="facets">
     <xsl:variable name="baseurlparams">
-      <xsl:text>?</xsl:text>
+      <xsl:choose>
+	<xsl:when test="/c:page/c:mode = 'topic-instance'">
+	  <xsl:text>../search-result?dct:subject/rdfs:label=</xsl:text>
+	  <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+	  <xsl:text>&amp;</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>?</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:for-each select="/c:page/c:facets/c:request/c:param">
 	<xsl:for-each select="c:value">
 	  <xsl:if test="text()">

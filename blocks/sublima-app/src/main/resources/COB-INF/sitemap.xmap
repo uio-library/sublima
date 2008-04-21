@@ -153,6 +153,7 @@
             <map:match pattern="search-result">
                 <map:call function="com.computas.sublima.app.controller.SearchController">
                     <map:parameter name="mode" value="search-result"/>
+                    <map:parameter name="interface-language" value="no"/>
                 </map:call>
             </map:match>
 
