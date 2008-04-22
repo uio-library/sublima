@@ -248,7 +248,8 @@
                                         <xsl:for-each
                                                 select="c:page/c:content/c:suggestedresources/rdf:RDF/sub:Resource">
                                             <li>
-                                                <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+                                                <a href="{$baseurl}/admin/ressurser/edit?uri={@rdf:about}"><xsl:value-of
+                                                        select="./dct:title"/></a>
                                             </li>
                                         </xsl:for-each>
                                     </ul>

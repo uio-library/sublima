@@ -108,10 +108,11 @@
       </tr>
      
     </table>
-
+    <br/>
     <p>Send inn en kommentar angående denne ressursen</p>
-    <form name="resourcecomment" action="resourcecomment" method="GET">
+    <form name="resourcecomment" action="{$baseurl}/resourcecomment" method="GET">
         <input type="hidden" name="uri" value="{sub:Resource/@rdf:about}"/>
+        <input type="hidden" name="resource" value="{sub:Resource/dct:identifier/@rdf:resource}"/>
       <table>
         <tr>
           <td align="right">
@@ -126,7 +127,7 @@
             <label for="comment">Kommentar</label>
           </td>
           <td>
-            <textarea id="comment" name="comment" rows="6" cols="40"> </textarea>
+            <textarea id="comment" name="comment" rows="6" cols="40">...</textarea>
           </td>
         </tr>
         <tr>

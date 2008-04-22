@@ -20,34 +20,34 @@ public class FeedbackController implements StatelessAppleController {
 
         this.mode = req.getSitemapParameter("mode");
 
-        if ("resourcecomment".equalsIgnoreCase("mode")) {
+        if ("resourcecomment".equalsIgnoreCase(mode)) {
             String uri = req.getCocoonRequest().getParameter("uri");
             String email = req.getCocoonRequest().getParameter("email");
             String comment = req.getCocoonRequest().getParameter("comment");
 
-            String partialUpdateString =
-                    "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+            String commentString =
+                            "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                             "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
                             "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                             "INSERT\n" +
                             "{\n" +
-                            "<" + uri + ">" + " sub:comment " + "\"" + comment + "\"@no ; \n";
+                            "<" + uri + ">" + " sub:comment " + "\"" + comment + "\"@no ; \n" +
+                            "}";
 
-            success = sparulDispatcher.query(partialUpdateString);
-            logger.trace("FeedbackController.java --> Comment on resource: " + partialUpdateString + "\nResult: " + success);
+            success = sparulDispatcher.query(commentString);
+            logger.trace("FeedbackController.java --> Comment on resource: " + commentString + "\nResult: " + success);
 
             //todo Back to the resource details page
             if (success) {
-                res.sendPage("takk", null);
+                res.redirectTo(req.getCocoonRequest().getParameter("resource"));
                 return;
             } else {
-                res.sendPage("xhtml/tips", null);
+                res.redirectTo(req.getCocoonRequest().getParameter("resource"));
                 return;
             }
-
         }
 
-        if ("visTipsForm".equalsIgnoreCase("mode")) {
+        if ("visTipsForm".equalsIgnoreCase(mode)) {
             res.sendPage("xhtml/tips", null);
             return;
         }
@@ -70,17 +70,18 @@ public class FeedbackController implements StatelessAppleController {
                                 "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                                 "INSERT\n" +
                                 "{\n" +
-                                "<" + url + ">" + " dct:title " + "\"" + tittel + "\"@no ; \n" +
-                                "dct:description " + "\"" + beskrivelse + "\"@no ; \n" +
-                                "dct:keywords " + "\"" + stikkord.toString() + "\"@no ; \n" +
-                                "wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;\n";
+                                "<" + url + "> a sub:Resource .\n" +
+                                "<" + url + "> dct:title " + "\"" + tittel + "\"@no . \n" +
+                                "<" + url + "> dct:description " + "\"" + beskrivelse + "\"@no . \n" +
+                                "<" + url + "> dct:keywords " + "\"" + stikkord.toString() + "\"@no . \n" +
+                                "<" + url + "> wdr:DR <http://sublima.computas.com/status/til_godkjenning> .\n";
 
                 StringBuffer partialUpdateStringBuffer = new StringBuffer();
 
                 partialUpdateStringBuffer.append(partialUpdateString);
                 //for each keyword, add a sub:keyword
                 for (String s : stikkord) {
-                    partialUpdateStringBuffer.append("sub:keyword \"" + s + "\"@no ;\n");
+                    partialUpdateStringBuffer.append("<" + url + "> sub:keyword \"" + s + "\"@no .\n");
                 }
                 partialUpdateStringBuffer.append("}");
 

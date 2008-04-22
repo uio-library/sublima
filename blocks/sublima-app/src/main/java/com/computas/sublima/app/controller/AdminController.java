@@ -27,6 +27,16 @@ public class AdminController implements StatelessAppleController {
     AdminService adminService = new AdminService();
     private String mode;
     private String submode;
+    String[] completePrefixArray = {
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
+            "PREFIX portal-topic: <http://sublima.computas.com/topic-instance/>"};
+    String completePrefixes = StringUtils.join("\n", completePrefixArray);
     String[] prefixArray = {
             "dct: <http://purl.org/dc/terms/>",
             "foaf: <http://xmlns.com/foaf/0.1/>",
@@ -638,13 +648,13 @@ public class AdminController implements StatelessAppleController {
                     res, AppleRequest
                     req) {
         String queryString = StringUtils.join("\n", new String[]{
-                prefixes,
+                completePrefixes,
                 "CONSTRUCT {",
                 "    ?resource dct:title ?title ;" +
                         //"              dct:identifier ?identifier ;" +
                         "              a sub:Resource . }",
                 "    WHERE {",
-                "        ?resource wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;",
+                "        ?resource wdr:DR <http://sublima.computas.com/status/til_godkjenning> ;",
                 "                  dct:title ?title .",
                 //"                  dct:identifier ?identifier .",
                 "}"});
@@ -653,7 +663,12 @@ public class AdminController implements StatelessAppleController {
         Object queryResult = sparqlDispatcher.query(queryString);
 
         Map<String, Object> bizData = new HashMap<String, Object>();
-        bizData.put("suggestedresourceslist", queryResult);
+
+        if ("".equalsIgnoreCase( (String) queryResult) || queryResult == null) {
+          bizData.put("suggestedresourceslist", "<empty></empty>");
+        } else {
+          bizData.put("suggestedresourceslist", queryResult);
+        }
         res.sendPage("xml2/foreslaatte", bizData);
     }
 

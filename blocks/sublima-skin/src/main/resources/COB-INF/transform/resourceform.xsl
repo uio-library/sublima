@@ -353,7 +353,7 @@
                         <label for="rdfs:comment">Kommentar</label>
                     </td>
                     <td>
-                        <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40"><xsl:value-of
+                        <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40">...<xsl:value-of
                                 select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/></textarea>
                     </td>
                 </tr>
