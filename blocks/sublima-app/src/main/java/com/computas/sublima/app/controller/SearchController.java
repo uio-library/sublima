@@ -52,11 +52,12 @@ public class SearchController implements StatelessAppleController {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "DESCRIBE ?resource " + subject + " ?publisher ?subjects",
+            "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
             "WHERE {",
             "        ?resource dct:language ?lang;",
             "				 dct:publisher ?publisher ;",
-            "                dct:subject " + subject + ", ?subjects .}"});
+            "                dct:subject " + subject + ", ?subjects ;",
+            "                ?p ?rest .}"});
 
     logger.trace("doGetTopic: SPARQL query sent to dispatcher: " + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -102,7 +103,24 @@ public class SearchController implements StatelessAppleController {
 
     bizData.put("navigation", queryResult);
     bizData.put("mode", mode);
-    bizData.put("request", "<empty></empty>");
+
+    // This is such a 1999 way of doing things. There should be a generic SAX events generator
+    // or something that would serialise this data structure automatically in a one-liner,
+    // but I couldn't find it. Arguably a TODO.
+    StringBuffer params = new StringBuffer();
+    params.append("  <request>\n");
+    params.append("\n    <param key=\"prefix\">");
+    params.append("\n      <value>dct: &lt;http://purl.org/dc/terms/&gt;</value>");
+    params.append("\n      <value>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema%23&gt;</value>");
+    params.append("\n    </param>");
+
+    params.append("\n    <param key=\"interface-language\">");
+    params.append("\n      <value>" + req.getSitemapParameter("interface-language") + "</value>");
+    params.append("\n    </param>");
+
+    params.append("\n  </request>\n");
+
+    bizData.put("request", params.toString());
     res.sendPage("xml/sparql-result", bizData);
   }
 
