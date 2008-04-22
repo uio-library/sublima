@@ -101,13 +101,15 @@ this, just comment out the call-template -->
 
 
                 <!-- Column 1 start -->
-                <xsl:if test="not(c:page/c:advancedsearch/node())">
-                  <form name="freetextSearch" action="{$baseurl}/search-result" method="get">
-                      <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
-      <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
-      <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
-      <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
-                    <table>
+		<xsl:if test="not(c:page/c:advancedsearch/node())">
+		  <form name="freetextSearch" action="{$baseurl}/search-result" method="get">
+		    <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
+		    <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
+		    <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
+		    <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+		    <input type="hidden" name="interface-language" value="{$interface-language}"/>
+                    
+		    <table>
                       <tr>
                         <td>
                           <input id="keyword" class="searchbox" type="text"
