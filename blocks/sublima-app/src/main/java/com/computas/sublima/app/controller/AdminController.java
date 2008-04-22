@@ -426,7 +426,7 @@ public class AdminController implements StatelessAppleController {
             // Check if a publisher by that name already exists
             //Find the publisher URI based on name
             String findPublisherByNameQuery = StringUtils.join("\n", new String[]{
-                    prefixes,
+                    completePrefixes,
                     "SELECT ?publisher ?name",
                     "WHERE {",
                     "?publisher a foaf:Agent ;",
@@ -586,7 +586,7 @@ public class AdminController implements StatelessAppleController {
 
         //Find the publisher URI based on name
         String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
-                prefixes,
+                completePrefixes,
                 "DESCRIBE <" + publisherURI + "> ?resource ?subject",
                 "WHERE {",
                 "OPTIONAL { ?resource dct:publisher <" + publisherURI + "> .",
@@ -620,7 +620,7 @@ public class AdminController implements StatelessAppleController {
         }
 
         String queryString = StringUtils.join("\n", new String[]{
-                prefixes,
+                completePrefixes,
                 "SELECT DISTINCT ?publisher ?name",
                 "WHERE {",
                 "?publisher foaf:name ?name ;",
@@ -698,7 +698,7 @@ public class AdminController implements StatelessAppleController {
 
         // CHECK
         String queryStringCHECK = StringUtils.join("\n", new String[]{
-                prefixes,
+                completePrefixes,
                 "CONSTRUCT {",
                 "    ?resource dct:title ?title ;" +
                         "              dct:identifier ?identifier ;" +
@@ -714,7 +714,7 @@ public class AdminController implements StatelessAppleController {
 
 // INACTIVE
         String queryStringINACTIVE = StringUtils.join("\n", new String[]{
-                prefixes,
+                completePrefixes,
                 "CONSTRUCT {",
                 "    ?resource dct:title ?title ;" +
                         "              dct:identifier ?identifier ;" +
@@ -730,7 +730,7 @@ public class AdminController implements StatelessAppleController {
 
 // GONE
         String queryStringGONE = StringUtils.join("\n", new String[]{
-                prefixes,
+                completePrefixes,
                 "CONSTRUCT {",
                 "    ?resource dct:title ?title ;" +
                         "              dct:identifier ?identifier ;" +
