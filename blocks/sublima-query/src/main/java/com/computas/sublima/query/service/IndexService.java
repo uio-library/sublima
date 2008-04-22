@@ -7,6 +7,7 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.LARQ;
+import com.hp.hpl.jena.shared.DoesNotExistException;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -54,28 +55,33 @@ public class IndexService {
     //IndexBuilderSubject larqBuilder = new IndexBuilderSubject();
 
     //Create a model based on the one in the DB
-    ModelRDB model = ModelRDB.open(connection);
+    try {
+      ModelRDB model = ModelRDB.open(connection);
+      // -- Create an index based on existing statements
+      larqBuilder.indexStatements(model.listStatements());
+
+      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Indexed all model statements");
+      // -- Finish indexing
+      larqBuilder.closeForWriting();
+      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Closed index for writing");
+      // -- Create the access index
+      IndexLARQ index = larqBuilder.getIndex();
+      model.close();
+
+      // -- Make globally available
+      LARQ.setDefaultIndex(index);
+      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Index now globally available");
+    }
+    catch (DoesNotExistException e) {
+      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - NO CONTENT IN DATABASE. Please fill DB from Admin/Database and restart Tomcat.");
+    }
+
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created RDF model from database");
     try {
       connection.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
-    // -- Create an index based on existing statements
-    larqBuilder.indexStatements(model.listStatements());
-
-    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Indexed all model statements");
-    // -- Finish indexing
-    larqBuilder.closeForWriting();
-    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Closed index for writing");
-    // -- Create the access index
-    IndexLARQ index = larqBuilder.getIndex();
-    model.close();
-
-    // -- Make globally available
-    LARQ.setDefaultIndex(index);
-    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Index now globally available");
   }
 
 
@@ -305,7 +311,7 @@ public class IndexService {
     String status = "";
 
     if ("http://www.thais.it/scultura/default_uk.htm".equalsIgnoreCase(url)) {
-      System.out.println(url + " --> " + status);  
+      System.out.println(url + " --> " + status);
     }
 
     try {
@@ -318,7 +324,7 @@ public class IndexService {
         status = "<http://sublima.computas.com/status/OK>";
 
         // Update the external content of the resource
-        updateResourceExternalContent(url);
+        //updateResourceExternalContent(url);
 
       }
       // GONE
@@ -369,6 +375,17 @@ public class IndexService {
 
     logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- SPARUL UPDATE  --> " + updateString);
 
+    /*
+    String updateString = StringUtils.join("\n", new String[]{
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            "MODIFY",
+            "DELETE { <" + url + "> sub:status ?oldstatus }",
+            "INSERT { <" + url + "> sub:status " + status + " }",
+            "WHERE  { <" + url + "> sub:status ?oldstatus }"});
+
+    logger.info("updateResourceStatus() ---> " + url + ":" + code + " -- SPARUL UPDATE  --> " + updateString);
+    */
+
     success = false;
 
     success = sparulDispatcher.query(updateString);
@@ -387,7 +404,7 @@ public class IndexService {
 
     boolean success = false;
     success = sparulDispatcher.query(deleteString);
-    logger.info("updateResourceExternalContent() ---> " + url + " -- DELETE OLD STATUS --> " + success);
+    logger.info("updateResourceExternalContent() ---> " + url + " -- DELETE OLD CONTENT --> " + success);
 
     String requesturl = url.replace("resource", "latest-get");
     StringBuffer updateString = new StringBuffer();
@@ -407,7 +424,7 @@ public class IndexService {
     success = false;
 
     success = sparulDispatcher.query(updateString.toString());
-    logger.info("updateResourceExternalContent() ---> " + url + " -- INSERT NEW STATUS --> " + success);
+    logger.info("updateResourceExternalContent() ---> " + url + " -- INSERT NEW CONTENT --> " + success);
   }
 
   /**
