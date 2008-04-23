@@ -13,15 +13,12 @@
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
-    <!-- xsl:output method="html" indent="yes"/ -->
-    <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
     <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
     <xsl:import href="resourceform.xsl"/>
-
+    <xsl:import href="topicform.xsl"/>
     <xsl:output method="xml"
                 encoding="UTF-8"
                 indent="no"/>
-
     <xsl:param name="baseurl"/>
     <xsl:param name="interface-language">no</xsl:param>
 
@@ -37,6 +34,36 @@
         <xsl:copy-of select="c:page/c:content/c:upload/*"/>
     </xsl:template>
 
+    <xsl:template name="topicdetails">
+
+        <xsl:choose>
+            <xsl:when test="c:page/c:mode = 'topicnew'">
+                NY
+            </xsl:when>
+                EDIT
+            <xsl:when test="c:page/c:mode = 'topicedit'">
+                <xsl:apply-templates select="c:page/c:content/c:topic" mode="topicedit"/>
+              <br/>
+        <h4>Ressurser tilknyttet emnet</h4>
+
+        <xsl:apply-templates select="c:page/c:content/c:topic/c:topicdetails/rdf:RDF" mode="results"/>
+            </xsl:when>
+          <xsl:otherwise>OTHERWISE - <xsl:value-of select="c:page/c:mode"/>
+          </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+
+    <xsl:template name="alltopics">
+      <ul>
+      <xsl:for-each select="c:page/c:content/c:topics/rdf:RDF/skos:Concept">
+        <xsl:sort select="./rdfs:label"/>
+        <li>
+          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}"><xsl:value-of select="./rdfs:label"/></a>
+        </li>
+       </xsl:for-each>
+      </ul>
+    </xsl:template>
 
     <xsl:template name="resourcedetails">
 
@@ -221,6 +248,10 @@
                                 <xsl:call-template name="contenttext"/>
 
                                 <xsl:call-template name="upload"/>
+
+                                <xsl:call-template name="alltopics"/>
+
+                                <xsl:call-template name="topicdetails"/>
 
                                 <xsl:if test="c:page/c:content/c:resourcedetails">
                                     <xsl:call-template name="resourcedetails"/>

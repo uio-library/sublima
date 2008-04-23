@@ -52,6 +52,14 @@
                 </map:call>
             </map:match>
 
+           <!-- individual page for each topic. -->
+            <map:match pattern="admin/emner/*">
+                <map:call function="com.computas.sublima.app.controller.AdminController">
+                    <map:parameter name="mode" value="emner"/>
+                    <map:parameter name="submode" value="{1}"/>
+                </map:call>
+            </map:match>
+
             <!-- action to update a publisher -->
             <map:match pattern="updatepublisher">
                 <map:call function="com.computas.sublima.app.controller.AdminController">

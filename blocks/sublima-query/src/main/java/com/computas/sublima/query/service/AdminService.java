@@ -49,32 +49,6 @@ public class AdminService {
   }
 
   /**
-   * Method to get all topics
-   *
-   * @return A String RDF/XML containing all the topics
-   */
-  public String getAllTopics() {
-
-    String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "CONSTRUCT {",
-            "    ?topic a skos:Concept ;",
-            "        rdfs:label ?label .",
-            "}",
-            "WHERE {",
-            "    ?topic a skos:Concept ;",
-            "        rdfs:label ?label .",
-            "FILTER langMatches( lang(?label), \"no\" )",
-            "}"});
-
-    logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
-    Object queryResult = sparqlDispatcher.query(queryString);
-
-    return queryResult.toString();
-  }
-
-  /**
    * Method to get all statuses
    *
    * @return A String RDF/XML containing all the statuses
@@ -229,9 +203,49 @@ public class AdminService {
     logger.info("updatePublisherByURI() ---> " + publisherURI + " -- INSERT NEW NAME --> " + success);
     if (success) {
       return publisherURI;
-    }
-    else {
+    } else {
       return "";
     }
+  }
+
+  /**
+   * Method to get all topics
+   *
+   * @return A String RDF/XML containing all the topics
+   */
+  public String getAllTopics() {
+
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT {",
+            "    ?topic a skos:Concept ;",
+            "        rdfs:label ?label .",
+            "}",
+            "WHERE {",
+            "    ?topic a skos:Concept ;",
+            "        rdfs:label ?label .",
+            "FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
+
+    logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
+
+  public String getTopicByURI(String uri) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "DESCRIBE <" + uri + "> ?resource ?subject",
+            "WHERE {",
+            "    OPTIONAL",
+            "    { ?resource dct:subject <" + uri + "> . }",
+            "}"});
+
+    logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
   }
 }
