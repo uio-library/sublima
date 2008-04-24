@@ -1,7 +1,8 @@
 package com.computas.sublima.app.listener;
 
-import com.computas.sublima.query.service.IndexService;
+import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.app.service.IndexService;
 
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletContextEvent;
@@ -27,7 +28,7 @@ public final class ContextListener implements ServletContextListener {
 
     if("true".equalsIgnoreCase(SettingsService.getProperty("sublima.checkurl.onstartup"))) {
       logger.info("SUBLIMA: Property sublima.checkurl.onstartup set to TRUE --> URL Check - Performing a url check");
-      indexService.performLinkcheckJob();
+      indexService.validateURLs();
     }
 
   }

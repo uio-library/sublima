@@ -1,4 +1,4 @@
-package com.computas.sublima.app.service;
+package test.com.computas.sublima.app.service;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Arrays;
 

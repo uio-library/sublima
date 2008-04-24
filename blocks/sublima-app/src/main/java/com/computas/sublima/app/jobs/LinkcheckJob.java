@@ -1,6 +1,7 @@
 package com.computas.sublima.app.jobs;
 
-import com.computas.sublima.query.service.IndexService;
+
+import com.computas.sublima.app.service.IndexService;
 
 /**
  * @author: mha
@@ -10,6 +11,6 @@ public class LinkcheckJob {
 
   public static void main(String[] args) {
     IndexService indexService = new IndexService();
-    indexService.performLinkcheckJob();
+    indexService.validateURLs();
   }
 }

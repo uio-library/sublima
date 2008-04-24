@@ -200,6 +200,10 @@ public class URLActions {
       sparulDispatcher = new DefaultSparulDispatcher();
       String status = "";
 
+      if (ourcode == null) {
+        getCode();
+      }
+
       try {
         if ("302".equals(ourcode) ||
                 "303".equals(ourcode) ||
