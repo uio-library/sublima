@@ -318,5 +318,14 @@ public class URLActions {
       logger.info("updateResourceExternalContent() ---> " + url + " -- INSERT NEW CONTENT --> " + success);
     }
 
+    public String strippedContent(String content) {
+        if (content == null) {
+            content = readContent();
+        }
+
+       
+        return content;
+    }
+
 
 }

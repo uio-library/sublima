@@ -46,6 +46,12 @@ public class URLActionsTest extends TestCase {
         //TODO: Test goes here...
     }
 */
+
+    public void testStrippedContent() throws Exception {
+        String html="<html><body>Foo <b>foo <i>bar</b> dahut</i> is cool</html>";
+        assertEquals("Not equal", "200", urlactions.strippedContent(html));
+
+    }
     public static Test suite() {
         return new TestSuite(URLActionsTest.class);
     }
