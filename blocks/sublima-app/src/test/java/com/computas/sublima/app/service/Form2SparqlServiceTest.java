@@ -1,4 +1,4 @@
-package test.com.computas.sublima.app.service;
+package com.computas.sublima.app.service;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
