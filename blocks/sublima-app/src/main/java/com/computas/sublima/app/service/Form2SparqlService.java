@@ -173,7 +173,7 @@ public class Form2SparqlService {
 		// Using StringBuffer, since regular String can cause performance issues
 		// with large datasets
 		StringBuffer sparqlQueryBuffer = new StringBuffer();
-		StringBuffer n3Buffer = new StringBuffer();
+		ArrayList n3List = new ArrayList();
 		sparqlQueryBuffer.append("DESCRIBE ");
 
 		if (parameterMap.get("interface-language") != null) {
@@ -183,8 +183,8 @@ public class Form2SparqlService {
 
 		if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
 		    sparqlQueryBuffer.append("?subject ?publisher ");
-		    n3Buffer.append(freeTextQuery(parameterMap.get("searchstring")[0]));
-//		    logger.trace("n3Buffer so far in freetext:\n"+n3Buffer.toString());
+		    n3List.add(freeTextQuery(parameterMap.get("searchstring")[0]));
+//		    logger.trace("n3List so far in freetext:\n"+n3List.toString());
 		    parameterMap.remove("searchstring");
 		}
 
@@ -197,7 +197,7 @@ public class Form2SparqlService {
 	
 		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-			n3Buffer.insert(0, convertFormField2N3(e.getKey(), e.getValue(), freetextFields));
+			n3List.add(convertFormField2N3(e.getKey(), e.getValue(), freetextFields));
 		}
 
 		// Add the variables to the query
@@ -206,7 +206,7 @@ public class Form2SparqlService {
 		}
 			
 		sparqlQueryBuffer.append("?rest WHERE {");
-		sparqlQueryBuffer.append(n3Buffer);
+		sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
 		sparqlQueryBuffer.append("\n?resource ?p ?rest .");
 		sparqlQueryBuffer.append("\n}");
 		sparqlQueryBuffer.insert(0, getPrefixString());
@@ -312,4 +312,14 @@ public class Form2SparqlService {
 					"                dct:publisher ?publisher .",
 					"  }"});
 	}
+
+    private StringBuffer OptimizeTripleOrder(ArrayList <String>n3List) {
+        StringBuffer ordered = new StringBuffer();
+        for (String triple : n3List) {
+            ordered.insert(0, triple);   
+        }
+
+        return ordered;
+    }
+
 }
