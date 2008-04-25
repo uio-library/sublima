@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -142,7 +143,11 @@ public class IndexService {
       String url = resultURL.substring(10, resultURL.length() - 3).trim();
 
       URLActions urlAction = new URLActions(url);
-      urlAction.updateResourceStatus();
+        try {
+            urlAction.updateResourceStatus();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
   }
 
