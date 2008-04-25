@@ -9,8 +9,7 @@ import org.cyberneko.html.filters.ElementRemover;
 import org.cyberneko.html.HTMLConfiguration;
 
 import java.net.*;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 
 import com.computas.sublima.query.service.SearchService;
@@ -26,7 +25,7 @@ public class URLActions {
     private URL url;
     private HttpURLConnection con = null;
     private String ourcode = null; // This is the code we base our status on
-
+    private String encoding = "UTF-8";
     private static Logger logger = Logger.getLogger(URLActions.class);
     private DefaultSparulDispatcher sparulDispatcher;
 
@@ -47,6 +46,14 @@ public class URLActions {
         return url;
     }
 
+    public String getEncoding() {
+        return encoding;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
+    }
+
     public HttpURLConnection getCon() {
         return con;
     }
@@ -62,7 +69,7 @@ public class URLActions {
         }
     }
 
-    public InputStream readContent() {
+    public InputStream readContentStream() {
       InputStream result = null;
 
       try {
@@ -78,10 +85,10 @@ public class URLActions {
       return result;
     }
 
-    public String readContent() {
+    public String readContent() { // Sux0rz. Dude, where's my multiple return types? 
         String result = null;
         try {
-            InputStream content = (InputStream) readContent();
+            InputStream content = (InputStream) readContentStream();
             result = IOUtils.toString(content);
         }
         catch (IOException e) {
@@ -338,9 +345,10 @@ public class URLActions {
       logger.info("updateResourceExternalContent() ---> " + url + " -- INSERT NEW CONTENT --> " + success);
     }
 
-    public String strippedContent(String content) {
+    public String strippedContent(String content) throws UnsupportedEncodingException {
+        InputStream stream = IOUtils.toInputStream(content);
         if (content == null) {
-            content = readContent();
+            stream = readContentStream();
         }
         ElementRemover remover = new ElementRemover();
 
@@ -348,9 +356,10 @@ public class URLActions {
         // completely remove script elements
         remover.removeElement("script");
 
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
         // create writer filter
         org.cyberneko.html.filters.Writer writer =
-                new org.cyberneko.html.filters.Writer();
+                new org.cyberneko.html.filters.Writer(output, encoding);
 
         // setup filter chain
         XMLDocumentFilter[] filters = {
@@ -362,11 +371,15 @@ public class URLActions {
         XMLParserConfiguration parser = new HTMLConfiguration();
         parser.setProperty("http://cyberneko.org/html/properties/filters", filters);
 
-        XMLInputSource source = new XMLInputSource(null, null, null, readContent(), "UTF-8");
-        parser.parse(source);
-            }
+        XMLInputSource source = new XMLInputSource(null, null, null, stream, encoding);
+        try {
+            parser.parse(source);
+        }
+        catch (IOException e) {
+            ourcode = "IOEXCEPTION";
+        }
 
-        return content;
+        return output.toString();
     }
 
 

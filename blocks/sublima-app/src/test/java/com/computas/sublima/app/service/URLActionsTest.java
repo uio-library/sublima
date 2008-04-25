@@ -49,7 +49,7 @@ public class URLActionsTest extends TestCase {
 
     public void testStrippedContent() throws Exception {
         String html="<html><body>Foo <b>foo <i>bar</b> dahut</i> is cool</html>";
-        assertEquals("Not equal", "200", urlactions.strippedContent(html));
+        assertEquals("Not equal", "Foo foo bar dahut is cool", urlactions.strippedContent(html));
 
     }
     public static Test suite() {
