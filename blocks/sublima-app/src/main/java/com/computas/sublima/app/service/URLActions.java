@@ -2,9 +2,15 @@ package com.computas.sublima.app.service;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.xerces.xni.parser.XMLDocumentFilter;
+import org.apache.xerces.xni.parser.XMLParserConfiguration;
+import org.apache.xerces.xni.parser.XMLInputSource;
+import org.cyberneko.html.filters.ElementRemover;
+import org.cyberneko.html.HTMLConfiguration;
 
 import java.net.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import com.computas.sublima.query.service.SearchService;
@@ -56,21 +62,35 @@ public class URLActions {
         }
     }
 
-    private String readContent() {
-      String result = null;
+    public InputStream readContent() {
+      InputStream result = null;
 
       try {
         connect();
-        result = IOUtils.toString(con.getInputStream());
+        result = con.getInputStream();
       }
       catch (MalformedURLException e) {
-        ourcode = "MALFORMED_URL";
+        ourcode = "MALFORMED_URL";        
       }
       catch (IOException e) {
         ourcode = "IOEXCEPTION";
       }
       return result;
     }
+
+    public String readContent() {
+        String result = null;
+        try {
+            InputStream content = (InputStream) readContent();
+            result = IOUtils.toString(content);
+        }
+        catch (IOException e) {
+            ourcode = "IOEXCEPTION";
+        }
+        return result;
+
+    }
+
 
     /**
      * Method to get only the HTTP Code, or String representation of exception
@@ -322,8 +342,30 @@ public class URLActions {
         if (content == null) {
             content = readContent();
         }
+        ElementRemover remover = new ElementRemover();
 
-       
+
+        // completely remove script elements
+        remover.removeElement("script");
+
+        // create writer filter
+        org.cyberneko.html.filters.Writer writer =
+                new org.cyberneko.html.filters.Writer();
+
+        // setup filter chain
+        XMLDocumentFilter[] filters = {
+                remover,
+                writer,
+        };
+
+            // create HTML parser
+        XMLParserConfiguration parser = new HTMLConfiguration();
+        parser.setProperty("http://cyberneko.org/html/properties/filters", filters);
+
+        XMLInputSource source = new XMLInputSource(null, null, null, readContent(), "UTF-8");
+        parser.parse(source);
+            }
+
         return content;
     }
 
