@@ -309,13 +309,10 @@ public class URLActions {
       logger.info("updateResourceStatus() ---> " + url.toString() + ":" + ourcode + " -- INSERT NEW STATUS --> " + success);
     }
 
-    public void updateResourceExternalContent() {
+    public void updateResourceExternalContent() throws UnsupportedEncodingException {
       sparulDispatcher = new DefaultSparulDispatcher();
       String resourceExternalContent = readContent();
       SearchService searchService = new SearchService();
-
-      // Strip the content from all HTML tags
-      resourceExternalContent = resourceExternalContent.replaceAll("\\<.*?>", "");
 
       String deleteString = "DELETE { ?response ?p ?o }" +
               " WHERE { <" + url + "> <http://www.w3.org/2007/ont/link#request> ?response . }";
@@ -336,7 +333,7 @@ public class URLActions {
       for (String key : headers.keySet()) {
         updateString.append(requesturl + " \"" + searchService.escapeString(headers.get(key)) + "\" ;\n");
       }
-      updateString.append(requesturl + " sub:stripped \"" + resourceExternalContent + "\" .\n}");
+      updateString.append(requesturl + " sub:stripped \"" + strippedContent(null) + "\" .\n}");
       logger.trace("updateResourceExternalContent() ---> INSERT: " + updateString.toString());
 
       success = false;
