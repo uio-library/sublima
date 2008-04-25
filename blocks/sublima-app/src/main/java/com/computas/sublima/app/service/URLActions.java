@@ -315,11 +315,11 @@ public class URLActions {
       SearchService searchService = new SearchService();
 
       String deleteString = "DELETE { ?response ?p ?o }" +
-              " WHERE { <" + url + "> <http://www.w3.org/2007/ont/link#request> ?response . }";
+              " WHERE { <" + url.toString() + "> <http://www.w3.org/2007/ont/link#request> ?response . }";
 
       boolean success = false;
       success = sparulDispatcher.query(deleteString);
-      logger.info("updateResourceExternalContent() ---> " + url + " -- DELETE OLD CONTENT --> " + success);
+      logger.info("updateResourceExternalContent() ---> " + url.toString() + " -- DELETE OLD CONTENT --> " + success);
 
       String requesturl = "<" + url.toString().replace("resource", "latest-get") + ">";
       StringBuffer updateString = new StringBuffer();
@@ -327,7 +327,7 @@ public class URLActions {
               "PREFIX http: <http://www.w3.org/2007/ont/http#>\n" +
               "PREFIX httph: <http://www.w3.org/2007/ont/httph#>\n" +
               "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-              "INSERT\n{\n<" + url + "> link:request " + requesturl + ".\n" +
+              "INSERT\n{\n<" + url.toString() + "> link:request " + requesturl + ".\n" +
               requesturl + " a http:ResponseMessage ; \n");
       HashMap<String, String> headers = getHTTPmap();
       for (String key : headers.keySet()) {
@@ -339,7 +339,7 @@ public class URLActions {
       success = false;
 
       success = sparulDispatcher.query(updateString.toString());
-      logger.info("updateResourceExternalContent() ---> " + url + " -- INSERT NEW CONTENT --> " + success);
+      logger.info("updateResourceExternalContent() ---> " + url.toString() + " -- INSERT NEW CONTENT --> " + success);
     }
 
     public String strippedContent(String content) throws UnsupportedEncodingException {
