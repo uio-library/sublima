@@ -150,11 +150,11 @@ public class AdminController implements StatelessAppleController {
       if ("nytt".equalsIgnoreCase(type)) {
         bizData.put("topicdetails", "<empty></empty>");
         bizData.put("alltopics", adminService.getAllTopics());
-        bizData.put("mode", "topic_new");
+        bizData.put("mode", "topicnew");
       } else {
         bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("uri")));
         bizData.put("alltopics", adminService.getAllTopics());
-        bizData.put("mode", "topic_edit");
+        bizData.put("mode", "topicedit");
       }
 
       bizData.put("messages", "<empty></empty>");

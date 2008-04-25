@@ -38,9 +38,7 @@
 
         <xsl:choose>
             <xsl:when test="c:page/c:mode = 'topicnew'">
-                NY
             </xsl:when>
-                EDIT
             <xsl:when test="c:page/c:mode = 'topicedit'">
                 <xsl:apply-templates select="c:page/c:content/c:topic" mode="topicedit"/>
               <br/>

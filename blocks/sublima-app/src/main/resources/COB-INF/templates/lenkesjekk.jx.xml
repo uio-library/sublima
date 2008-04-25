@@ -22,6 +22,8 @@
         <c:text>
             <h3>Lenkesjekk</h3>
             <br/>
+            <br/>
+            <a href="{$baseurl}/admin/lenkesjekk/run"
         </c:text>
         <c:linkcheck>
             <c:status_check>

@@ -7,6 +7,9 @@ import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
+
 /**
  * A class to support the administration of Sublima
  * Has methods for getting topics, statuses, languages, media types, audience etc.
@@ -158,19 +161,21 @@ public class AdminService {
    */
   public Object getResourceByURI(String uri) {
 
-    // if not < > is provided
-    if (!uri.startsWith("<") && !uri.endsWith(">")) {
-      uri = "<" + uri + ">";
+    try {
+        //uri = URLEncoder.encode(uri, "UTF-8");
+        uri = "<" + uri + ">";
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "DESCRIBE ?resource " + uri + " ?publisher ?subjects",
+            "DESCRIBE "+ uri + " ?publisher ?subjects",
             "WHERE {",
-            "        ?resource dct:language ?lang;",
-            "				 dct:publisher ?publisher ;",
-            "                dct:subject " + uri + ", ?subjects .}"});
+            uri + " dct:language ?lang;",
+            "		    dct:publisher ?publisher ;",
+            "       dct:subject ?subjects .}"});
 
     logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);

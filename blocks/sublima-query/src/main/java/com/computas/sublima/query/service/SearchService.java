@@ -95,8 +95,8 @@ public class SearchService {
    * @return String with characters escaped
    */
   public String escapeString(String raw) {
-    raw = raw.replaceAll("\\", "\\\\");
-    raw = raw.replaceAll("\"", "\\\"");
+    raw = raw.replace("\\", "\\\\");
+    raw = raw.replace("\"", "\\\"");
 
     return raw;
   }

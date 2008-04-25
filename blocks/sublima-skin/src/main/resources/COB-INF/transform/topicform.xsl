@@ -18,7 +18,6 @@
     <xsl:param name="interface-language">no</xsl:param>
 
     <xsl:template match="c:topic" mode="topicedit">
-      Edit
         <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
             <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
             <table>
@@ -39,7 +38,7 @@
                     </td>
                     <td>
                         <select id="dct:publisher" name="dct:publisher" multiple="multiple">
-                            <xsl:for-each select="./c:topicdetails/c:alltopics/rdf:RDF/skos:Concept">
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
                                 <xsl:sort select="./rdfs:label"/>
                                 <option value="{./@rdf:about}">
                                     <xsl:value-of select="./rdfs:label"/>
