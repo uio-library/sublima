@@ -25,8 +25,8 @@
     <c:menu>
         <c:menuelement title="Emner" link="admin/emner"/>
         <c:menuelement title="Ressurser" link="admin/ressurser">
-            <c:childmenuelement title="Foreslaatte" link="admin/ressurser/foreslaatte"/>
             <c:childmenuelement title="Ny" link="admin/ressurser/ny"/>
+            <c:childmenuelement title="Foreslåtte" link="admin/ressurser/foreslaatte"/>
         </c:menuelement>
         <c:menuelement title="Brukere" link="admin/brukere"/>
         <c:menuelement title="Utgivere" link="admin/utgivere"/>
