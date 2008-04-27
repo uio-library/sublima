@@ -150,7 +150,7 @@ public class AdminController implements StatelessAppleController {
       if ("nytt".equalsIgnoreCase(type)) {
         bizData.put("topicdetails", "<empty></empty>");
         bizData.put("alltopics", adminService.getAllTopics());
-        bizData.put("mode", "topicnew");
+        bizData.put("mode", "topicedit");
       } else {
         bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("uri")));
         bizData.put("alltopics", adminService.getAllTopics());
@@ -514,7 +514,7 @@ public class AdminController implements StatelessAppleController {
 
 // Delete statement
     StringBuffer deleteStringBuffer = new StringBuffer();
-    deleteStringBuffer.append(prefixes);
+    deleteStringBuffer.append(completePrefixes);
     deleteStringBuffer.append("DELETE {\n");
     deleteStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
     deleteStringBuffer.append("foaf:name ?oldname .\n");
@@ -528,7 +528,7 @@ public class AdminController implements StatelessAppleController {
 
 // Insert statement
     StringBuffer insertStringBuffer = new StringBuffer();
-    insertStringBuffer.append(prefixes);
+    insertStringBuffer.append(completePrefixes);
     insertStringBuffer.append("INSERT {\n");
 
 // If user has added a new name for a new language

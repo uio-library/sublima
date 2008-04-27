@@ -18,7 +18,6 @@
     <xsl:param name="interface-language">no</xsl:param>
 
     <xsl:template match="c:resourcedetails" mode="new">
-        Ny
         <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
             <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
             <table>
@@ -183,7 +182,6 @@
 
         <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
 
-            Edit
             <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
             <table>
                 <tr>
@@ -406,7 +404,6 @@
 
         <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
 
-            Temp
             <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
             <table>
                 <tr>
@@ -620,17 +617,5 @@
             </table>
         </form>
     </xsl:template>
-
-
-
-
-
-
-
-
-
-
-
-
 
 </xsl:stylesheet>

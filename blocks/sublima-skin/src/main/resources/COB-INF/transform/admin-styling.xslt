@@ -46,9 +46,7 @@
 
         <xsl:apply-templates select="c:page/c:content/c:topic/c:topicdetails/rdf:RDF" mode="results"/>
             </xsl:when>
-          <xsl:otherwise>OTHERWISE - <xsl:value-of select="c:page/c:mode"/>
-          </xsl:otherwise>
-        </xsl:choose>
+       </xsl:choose>
     </xsl:template>
 
 
