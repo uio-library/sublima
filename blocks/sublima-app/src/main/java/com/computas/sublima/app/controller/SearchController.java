@@ -128,7 +128,6 @@ public class SearchController implements StatelessAppleController {
   private String freeTextSearchString(AppleResponse res, AppleRequest req) {
     String defaultBooleanOperator = SettingsService.getProperty("sublima.default.boolean.operator");
     String chosenOperator = req.getCocoonRequest().getParameter("booleanoperator");
-    boolean deepsearch = false;
 
     SearchService searchService;
 
@@ -141,15 +140,7 @@ public class SearchController implements StatelessAppleController {
       logger.debug("SUBLIMA: Use " + defaultBooleanOperator + " as boolean operator for search");
     }
 
-    String searchstring = searchService.buildSearchString(req.getCocoonRequest().getParameter("searchstring"));
-
-    //Do deep search in external resources or not
-    if (req.getCocoonRequest().getParameterValues("deepsearch") != null && "deepsearch".equalsIgnoreCase(req.getCocoonRequest().getParameterValues("deepsearch")[0])) {
-      deepsearch = true;
-      logger.debug("SUBLIMA: Deep search enabled");
-    }
-
-    return searchstring;
+    return searchService.buildSearchString(req.getCocoonRequest().getParameter("searchstring"));
   }
 
 
@@ -174,8 +165,8 @@ public class SearchController implements StatelessAppleController {
         							"pf: <http://jena.hpl.hp.com/ARQ/property#>"});
         parameterMap.remove("booleanoperator");
     }
-    
-    
+
+
     // sending the result
     String sparqlQuery = null;
     // Check for magic prefixes

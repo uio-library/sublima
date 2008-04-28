@@ -244,8 +244,8 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX dct: <http://purl.org/dc/terms/>",
 		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
-               "PREFIX link: <http://www.w3.org/2007/ont/link#>\n",
-               "PREFIX sub: <http://xmlns.computas.com/sublima#>\n",
+               "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+               "PREFIX link: <http://www.w3.org/2007/ont/link#>",
                "DESCRIBE ?subject ?publisher ?request ?resource ?rest WHERE {",
 		       "  ?lit pf:textMatch ( 'engine*' 100) .",
 		       "  {",
@@ -279,6 +279,7 @@ public class Form2SparqlServiceTest extends TestCase {
                "                link:request ?request.",
 		       "  }\n?resource ?p ?rest .\n}"}), resultString);
   }
+
     public void testConvertForm2SparqlNoValueFreetext() {
       // Single value test, with simple freetext search
       SearchService searchService = new SearchService("AND");

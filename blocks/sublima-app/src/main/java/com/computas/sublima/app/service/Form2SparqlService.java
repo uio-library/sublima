@@ -183,7 +183,18 @@ public class Form2SparqlService {
 
 		if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
 		    sparqlQueryBuffer.append("?subject ?publisher ");
-		    n3List.add(freeTextQuery(parameterMap.get("searchstring")[0]));
+
+            //Do deep search in external resources or not
+            boolean deepsearch = false;
+            if (parameterMap.get("deepsearch") != null && "deepsearch".equalsIgnoreCase(parameterMap.get("deepsearch")[0])) {
+                deepsearch = true;
+                addPrefix("sub: <http://xmlns.computas.com/sublima#>");
+                addPrefix("link: <http://www.w3.org/2007/ont/link#>");
+                sparqlQueryBuffer.append("?request ");
+                parameterMap.remove("deepsearch");
+               logger.debug("SUBLIMA: Deep search enabled");
+            }
+            n3List.add(freeTextQuery(parameterMap.get("searchstring")[0], deepsearch));
 //		    logger.trace("n3List so far in freetext:\n"+n3List.toString());
 		    parameterMap.remove("searchstring");
 		}
@@ -286,7 +297,7 @@ public class Form2SparqlService {
 	 * 			A string with triples
 	 * 
 	 */
-    public String freeTextQuery (String searchstring) {
+    public String freeTextQuery (String searchstring, boolean deepsearch) {
         if (!subjectVarList.contains("?resource ")) {
             subjectVarList.add("?resource ");
         }
