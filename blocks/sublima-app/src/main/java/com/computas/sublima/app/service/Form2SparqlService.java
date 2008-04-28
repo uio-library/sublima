@@ -301,28 +301,47 @@ public class Form2SparqlService {
         if (!subjectVarList.contains("?resource ")) {
             subjectVarList.add("?resource ");
         }
-        return StringUtils.join("\n", new String[]{
+        String result = StringUtils.join("\n", new String[]{
 					"\n  ?lit pf:textMatch ( '" + searchstring + "' 100) .",
 					"  {",
 					"    ?resource ?p1 ?lit;",
-					"              dct:subject ?subject;",
-					"              dct:publisher ?publisher.",
-					"  }",
-					"  UNION",
+					"              dct:subject ?subject ;",
+					"              dct:publisher ?publisher "});
+        if (deepsearch) {
+            result = result + ";\n              link:request ?request ";
+        }
+        result = result +             ".\n  }" +  StringUtils.join("\n", new String[]{
+					"\n  UNION",
 					"  {",
 					"      ?resource dct:subject ?subject1 .",
 					"      ?subject1 ?p2 ?lit .",
-					"      ?resource dct:subject ?subject;",
-					"                dct:publisher ?publisher .",
-					"  }",
-					"  UNION",
+					"      ?resource dct:subject ?subject ;",
+					"                dct:publisher ?publisher "});
+        if (deepsearch) {
+            result = result + ";\n                link:request ?request ";
+        }
+        result = result +             ".\n  }" +  StringUtils.join("\n", new String[]{
+                    "\n  UNION",
 					"  {",
 					"      ?resource dct:publisher ?publisher1 .",
 					"      ?publisher1 ?p2 ?lit .",
-					"      ?resource dct:subject ?subject;",
-					"                dct:publisher ?publisher .",
-					"  }"});
-	}
+					"      ?resource dct:subject ?subject ;",
+					"                dct:publisher ?publisher "});
+        if (deepsearch) {
+            result = result + StringUtils.join("\n", new String[]{
+                    ";\n                link:request ?request .",
+                    "  }\n  UNION\n  {",
+                    "      ?resource link:request ?request1 .",
+                    "      ?request1 sub:stripped ?lit .",
+                    "      ?resource dct:subject ?subject ;",
+                    "                dct:publisher ?publisher ;",
+                    "                link:request ?request "});
+        }
+        result = result + ".\n  }";
+    
+
+        return result;
+    }
 
     private StringBuffer OptimizeTripleOrder(ArrayList <String>n3List) {
         StringBuffer ordered = new StringBuffer();
