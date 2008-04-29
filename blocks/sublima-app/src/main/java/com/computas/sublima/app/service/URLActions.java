@@ -22,7 +22,7 @@ import com.computas.sublima.query.impl.DefaultSparulDispatcher;
  * Date: Apr 23, 2008
  * Time: 11:11:41 AM
  */
-public class URLActions {
+public class URLActions { // Should this class extend HttpUrlConnection?
     private URL url;
     private HttpURLConnection con = null;
     private String ourcode = null; // This is the code we base our status on

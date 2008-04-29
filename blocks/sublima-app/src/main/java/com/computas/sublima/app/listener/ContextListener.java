@@ -21,16 +21,15 @@ public final class ContextListener implements ServletContextListener {
   public void contextInitialized(ServletContextEvent servletContextEvent) {
     IndexService indexService = new IndexService();
 
-    if("true".equalsIgnoreCase(SettingsService.getProperty("sublima.index.internal.onstartup"))) {
-      logger.info("SUBLIMA: Property sublima.index.internal.onstartup set to TRUE --> Indexing - Internal content");
-      indexService.createInternalResourcesMemoryIndex();
-    }
-
     if("true".equalsIgnoreCase(SettingsService.getProperty("sublima.checkurl.onstartup"))) {
       logger.info("SUBLIMA: Property sublima.checkurl.onstartup set to TRUE --> URL Check - Performing a url check");
       indexService.validateURLs();
     }
 
+    if("true".equalsIgnoreCase(SettingsService.getProperty("sublima.index.internal.onstartup"))) {
+      logger.info("SUBLIMA: Property sublima.index.internal.onstartup set to TRUE --> Indexing - Internal content");
+      indexService.createInternalResourcesMemoryIndex();
+    }
   }
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
