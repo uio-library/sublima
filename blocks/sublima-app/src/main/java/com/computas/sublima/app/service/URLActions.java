@@ -88,7 +88,7 @@ public class URLActions {
     public String readContent() { // Sux0rz. Dude, where's my multiple return types? 
         String result = null;
         try {
-            InputStream content = (InputStream) readContentStream();
+            InputStream content = readContentStream();
             result = IOUtils.toString(content);
         }
         catch (IOException e) {
@@ -328,13 +328,12 @@ public class URLActions {
               "PREFIX httph: <http://www.w3.org/2007/ont/httph#>\n" +
               "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
               "INSERT\n{\n<" + url.toString() + "> link:request " + requesturl + ".\n" +
-              requesturl + " a http:ResponseMessage ; \n");
+              requesturl + "a http:ResponseMessage ; \n");
       HashMap<String, String> headers = getHTTPmap();
-      updateString.append(requesturl);
       for (String key : headers.keySet()) {
         updateString.append(key + " \"" + searchService.escapeString(headers.get(key)) + "\" ;\n");
       }
-      updateString.append("sub:stripped \"" + strippedContent(null) + "\" .\n}");
+      updateString.append("sub:stripped \"" + searchService.escapeString(strippedContent(null)) + "\" .\n}");
       logger.trace("updateResourceExternalContent() ---> INSERT: " + updateString.toString());
 
       success = false;
@@ -344,12 +343,14 @@ public class URLActions {
     }
 
     public String strippedContent(String content) throws UnsupportedEncodingException {
-        InputStream stream; 
+        logger.trace("BAAAAAAAAAAR!");
+        InputStream stream;
         if (content == null) {
             stream = readContentStream();
         } else {
             stream = IOUtils.toInputStream(content);
         }
+        logger.trace("FOOOO: " +stream.toString())        ;
         ElementRemover remover = new ElementRemover();
 
 
