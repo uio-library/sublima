@@ -7,6 +7,7 @@ import org.apache.xerces.xni.parser.XMLParserConfiguration;
 import org.apache.xerces.xni.parser.XMLInputSource;
 import org.cyberneko.html.filters.ElementRemover;
 import org.cyberneko.html.HTMLConfiguration;
+import org.postgresql.util.PSQLException;
 
 import java.net.*;
 import java.io.*;
@@ -25,7 +26,7 @@ public class URLActions {
     private URL url;
     private HttpURLConnection con = null;
     private String ourcode = null; // This is the code we base our status on
-    private String encoding = "UTF-8";
+    private String encoding = "ISO-8859-1";
     private static Logger logger = Logger.getLogger(URLActions.class);
     private DefaultSparulDispatcher sparulDispatcher;
 
@@ -58,6 +59,15 @@ public class URLActions {
         return con;
     }
 
+    /**
+     * Method to establish a connection
+     *
+     * Apparently, the underlying library needs one connection object for each thing to
+     * retrieve from the connection. This seems very awkward, thus, methods in this class
+     * resets the connection for each thing they do. This method will always refresh the object's
+     * connection object.
+     *
+     */
     public void connect() {
         if (con == null) {
             try {
@@ -82,6 +92,7 @@ public class URLActions {
       catch (IOException e) {
         ourcode = "IOEXCEPTION";
       }
+      con = null;
       return result;
     }
 
@@ -94,6 +105,7 @@ public class URLActions {
         catch (IOException e) {
             ourcode = "IOEXCEPTION";
         }
+        con = null;
         return result;
 
     }
@@ -114,6 +126,7 @@ public class URLActions {
         connect();
         con.setConnectTimeout(6000);
         ourcode = String.valueOf(con.getResponseCode());
+        con = null;
       }
       catch (MalformedURLException e) {
         ourcode = "MALFORMED_URL";
@@ -161,7 +174,9 @@ public class URLActions {
           }
 
         }
+
         ourcode = String.valueOf(con.getResponseCode());
+        con = null;
       }
       catch (MalformedURLException e) {
         ourcode = "MALFORMED_URL";
@@ -223,7 +238,7 @@ public class URLActions {
      * Others - CHECK
      *
      */
-    public void updateResourceStatus() throws UnsupportedEncodingException {
+    public void updateResourceStatus() throws UnsupportedEncodingException, PSQLException {
       sparulDispatcher = new DefaultSparulDispatcher();
       String status = "";
 
@@ -309,7 +324,7 @@ public class URLActions {
       logger.info("updateResourceStatus() ---> " + url.toString() + ":" + ourcode + " -- INSERT NEW STATUS --> " + success);
     }
 
-    public void updateResourceExternalContent() throws UnsupportedEncodingException {
+    public void updateResourceExternalContent() throws UnsupportedEncodingException, PSQLException {
       sparulDispatcher = new DefaultSparulDispatcher();
       String resourceExternalContent = readContent();
       SearchService searchService = new SearchService();
@@ -333,7 +348,7 @@ public class URLActions {
       for (String key : headers.keySet()) {
         updateString.append(key + " \"" + searchService.escapeString(headers.get(key)) + "\" ;\n");
       }
-      updateString.append("sub:stripped \"" + searchService.escapeString(strippedContent(null)) + "\" .\n}");
+      updateString.append("sub:stripped \"\"\"" + searchService.escapeString(strippedContent(null)) + "\"\"\" .\n}");
       logger.trace("updateResourceExternalContent() ---> INSERT: " + updateString.toString());
 
       success = false;
@@ -343,14 +358,18 @@ public class URLActions {
     }
 
     public String strippedContent(String content) throws UnsupportedEncodingException {
-        logger.trace("BAAAAAAAAAAR!");
-        InputStream stream;
+        connect();
+        if (con.getContentEncoding() != null) {
+            encoding = con.getContentEncoding();
+        }
+
+        InputStream stream = null;
         if (content == null) {
             stream = readContentStream();
         } else {
             stream = IOUtils.toInputStream(content);
         }
-        logger.trace("FOOOO: " +stream.toString())        ;
+
         ElementRemover remover = new ElementRemover();
 
 
@@ -380,7 +399,8 @@ public class URLActions {
             ourcode = "IOEXCEPTION";
         }
 
-        return output.toString();
+        byte[] outputbytes = output.toByteArray();
+        return new String(outputbytes, "UTF-8");
     }
 
 

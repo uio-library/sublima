@@ -12,9 +12,11 @@ import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.shared.DoesNotExistException;
+import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.postgresql.util.PSQLException;
 
 import java.io.File;
 import java.io.IOException;
@@ -146,6 +148,16 @@ public class IndexService {
         try {
             urlAction.updateResourceStatus();
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        catch (PSQLException e) {
+            logger.warn("SUBLIMA: validateURLs() --> Indexing - Could not index " + url
+                    + " due to database malfunction, probably caused by invalid characters in resource.");
+            e.printStackTrace();
+        }
+        catch (JenaException e) {
+            logger.warn("SUBLIMA: validateURLs() --> Indexing - Could not index " + url
+                    + " due to backend storage malfunction, probably caused by invalid characters in resource.");
             e.printStackTrace();
         }
     }
