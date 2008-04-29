@@ -321,7 +321,7 @@ public class URLActions {
       success = sparulDispatcher.query(deleteString);
       logger.info("updateResourceExternalContent() ---> " + url.toString() + " -- DELETE OLD CONTENT --> " + success);
 
-      String requesturl = "<" + url.toString().replace("resource", "latest-get") + "> ";
+      String requesturl = "<http://sublima.computas.com/latest-get/"+ url.toString().hashCode() + "> ";
       StringBuffer updateString = new StringBuffer();
       updateString.append("PREFIX link: <http://www.w3.org/2007/ont/link#>\n" +
               "PREFIX http: <http://www.w3.org/2007/ont/http#>\n" +
