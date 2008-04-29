@@ -171,11 +171,11 @@ public class AdminService {
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
-            "DESCRIBE "+ uri + " ?publisher ?subjects",
-            "WHERE {",
+            "DESCRIBE "+ uri,// + " ?publisher ?subjects",
+            /*"WHERE {",
             uri + " dct:language ?lang;",
             "		    dct:publisher ?publisher ;",
-            "       dct:subject ?subjects .}"});
+            "       dct:subject ?subjects .}"*/});
 
     logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);

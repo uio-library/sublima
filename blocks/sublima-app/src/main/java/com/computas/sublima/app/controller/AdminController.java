@@ -1,7 +1,6 @@
 package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.adhoc.ImportData;
-import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.AdminService;
@@ -12,7 +11,6 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -186,12 +184,21 @@ public class AdminController implements StatelessAppleController {
    * A query for the resource is done when the action is "edit". In case of "new" a blank
    * form is presented.
    *
-   * @param res - AppleResponse
-   * @param req - AppleRequest
+   * @param res      - AppleResponse
+   * @param req      - AppleRequest
+   * @param type     - String "new" or "edit"
+   * @param messages
    */
   private void editResource(AppleResponse res, AppleRequest req, String type, String messages) {
 
     boolean validated = true;
+    boolean deleteSuccess = false;
+    boolean insertSuccess = false;
+
+    String dctPublisher;
+    String dctIdentifier;
+    String dateAccepted;
+    String committer;
 
     // Get all list values
     String allTopics = adminService.getAllTopics();
@@ -264,8 +271,8 @@ public class AdminController implements StatelessAppleController {
 
         // If the user names a new publisher we persist this and use the new publisher URI in our INSERT later
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher")) && (req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") != null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name")))) {
-          String publisheruri = adminService.insertPublisher(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name"));
-          if ("".equalsIgnoreCase(publisheruri)) {
+          dctPublisher = adminService.insertPublisher(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name"));
+          if ("".equalsIgnoreCase(dctPublisher)) {
             messages += "<message>Feil ved tillegging av ny utgiver</message>";
             validated = false;
 
@@ -275,52 +282,174 @@ public class AdminController implements StatelessAppleController {
           } else {
             messages += "<message>" + req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") + " lagt til som ny utgiver.</message>";
             // Remove empty publisher reference and add a new with the publisher uri
-            parameterMap.remove("dct:publisher");
-            parameterMap.remove("dct:publisher/foaf:Agent/foaf:name");
-            parameterMap.put("dct:publisher", new String[]{publisheruri});
+            //parameterMap.remove("dct:publisher");
+            //parameterMap.remove("dct:publisher/foaf:Agent/foaf:name");
+            //parameterMap.put("dct:publisher", new String[]{dctPublisher});
           }
+        } else {
+          dctPublisher = req.getCocoonRequest().getParameter("dct:publisher");
         }
 
-        parameterMap.put("interface-language", new String[]{"no"});
-        parameterMap.put("the-resource", new String[]{req.getCocoonRequest().getParameter("sub:url")});
+        //parameterMap.put("interface-language", new String[]{"no"});
+        //parameterMap.put("the-resource", new String[]{req.getCocoonRequest().getParameter("sub:url")});
 
         // Generate a dct:identifier | dct:identifier		<http://sublima.computas.com/resource/samliv_net_001084> ;
-        String dctIdentifier = req.getCocoonRequest().getParameter("dct:title").replace(" ", "_");
+        dctIdentifier = req.getCocoonRequest().getParameter("dct:title").replace(" ", "_");
         dctIdentifier = dctIdentifier.replace(",", "_");
         dctIdentifier = dctIdentifier.replace(".", "_");
         dctIdentifier = "http://sublima.computas.com/resource/" + dctIdentifier;
 
-        parameterMap.put("dct:identifier", new String[]{dctIdentifier});
-        parameterMap.put("prefix", prefixArray);
+        //parameterMap.put("dct:identifier", new String[]{dctIdentifier});
+        //parameterMap.put("prefix", prefixArray);
 
         //todo Fix med autorisasjon
-        parameterMap.put("dct:dateAccepted", new String[]{"2008-18-09T13:39:38"});
-        parameterMap.put("sub:committer", new String[]{"http://sublima.computas.com/user/det_usr00057"});
+        dateAccepted = "2008-18-09T13:39:38";
+        committer = "http://sublima.computas.com/user/det_usr00057";
 
-        Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
-        parameterMap.remove("prefix"); // The prefixes are magic variables
+        //parameterMap.put("dct:dateAccepted", new String[]{"2008-18-09T13:39:38"});
+        //parameterMap.put("sub:committer", new String[]{"http://sublima.computas.com/user/det_usr00057"});
+
+        //Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+        //parameterMap.remove("prefix"); // The prefixes are magic variables
 
         // If no validation failures at this point
         if (validated) {
-          try {
-            String sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
-            logger.trace("AdminController.editResource --> INSERT QUERY:\n" + sparqlQuery);
-            validated = sparulDispatcher.query(sparqlQuery);
-            logger.trace("AdminController.editResource --> INSERT QUERY RESULT: " + validated);
-            if (validated) {
-              messages += "<message>Ny ressurs lagt til!</message>";
+          String uri = req.getCocoonRequest().getParameter("sub:url");
+          int i = 0;
 
-            } else {
-              messages += "<message>Feil ved lagring av ny ressurs</message>";
-              bizData.put("resource", "<empty></empty>");
+          StringBuffer deleteString = new StringBuffer();
+          StringBuffer whereString = new StringBuffer();
+          deleteString.append(completePrefixes);
+          deleteString.append("\nDELETE\n{\n");
+          whereString.append("\nWHERE\n{\n");
+          deleteString.append("<" + uri + "> a sub:Resource .\n");
+          whereString.append("<" + uri + "> a sub:Resource .\n");
+
+          StringBuffer insertString = new StringBuffer();
+          insertString.append(completePrefixes);
+          insertString.append("\nINSERT\n{\n");
+          insertString.append("<" + uri + "> a sub:Resource .\n");
+
+          // Check all input parameters and "DELETE" those who have a value
+          if (req.getCocoonRequest().getParameter("dct:title") != null) {
+            i += 1;
+            deleteString.append("<" + uri + "> dct:title ?var" + i + " .\n");
+            whereString.append("<" + uri + "> dct:title ?var" + i + " .\n");
+            insertString.append("<" + uri + "> dct:title \"" + req.getCocoonRequest().getParameter("dct:title") + "\"@no .\n");
+          }
+
+          if (req.getCocoonRequest().getParameter("dct:description") != null || " ".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:description"))) {
+            i += 1;
+            deleteString.append("<" + uri + "> dct:description ?var" + i + " .\n");
+            whereString.append("<" + uri + "> dct:description ?var" + i + " .\n");
+            insertString.append("<" + uri + "> dct:description \"" + req.getCocoonRequest().getParameter("dct:description") + "\"@no .\n");
+          }
+
+          if (req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/@rdf:about") != null) {
+            i += 1;
+            deleteString.append("<" + uri + "> dct:publisher ?var" + i + " .\n");
+            whereString.append("<" + uri + "> dct:publisher ?var" + i + " .\n");
+            insertString.append("<" + uri + "> dct:description \"" + req.getCocoonRequest().getParameter("dct:description") + "\"@no .\n");
+          }
+
+          if (req.getCocoonRequest().getParameterValues("dct:language") != null) {
+            i += 1;
+            deleteString.append("<" + uri + "> dct:language ?var" + i + " .\n");
+            whereString.append("<" + uri + "> dct:language ?var" + i + " .\n");
+
+            for (String s : req.getCocoonRequest().getParameterValues("dct:language")) {
+              insertString.append("<" + uri + "> dct:language <" + s + "> .\n");
             }
+          }
 
-          } catch (IOException e) {
-            e.printStackTrace();
+          if (req.getCocoonRequest().getParameterValues("dct:MediaType") != null) {
+            i += 1;
+            deleteString.append("<" + uri + "> dct:MediaType ?var" + i + " .\n");
+            whereString.append("<" + uri + "> dct:MediaType ?var" + i + " .\n");
+
+            for (String s : req.getCocoonRequest().getParameterValues("dct:MediaType")) {
+              insertString.append("<" + uri + "> dct:MediaType <" + s + "> .\n");
+            }
+          }
+
+          if (req.getCocoonRequest().getParameterValues("dct:audience") != null) {
+            i += 1;
+            deleteString.append("<" + uri + "> dct:audience ?var" + i + " .\n");
+            whereString.append("<" + uri + "> dct:audience ?var" + i + " .\n");
+
+            for (String s : req.getCocoonRequest().getParameterValues("dct:audience")) {
+              insertString.append("<" + uri + "> dct:audience <" + s + "> .\n");
+            }
+          }
+
+          if (req.getCocoonRequest().getParameterValues("dct:subject") != null) {
+            i += 1;
+            deleteString.append("<" + uri + "> dct:subject ?var" + i + " .\n");
+            whereString.append("<" + uri + "> dct:subject ?var" + i + " .\n");
+
+            for (String s : req.getCocoonRequest().getParameterValues("dct:subject")) {
+              insertString.append("<" + uri + "> dct:subject <" + s + "> .\n");
+            }
+          }
+
+          if (req.getCocoonRequest().getParameter("rdfs:comment") != null) {
+            i += 1;
+            deleteString.append("<" + uri + "> rdfs:comment ?var" + i + " .\n");
+            whereString.append("<" + uri + "> rdfs:comment ?var" + i + " .\n");
+            insertString.append("<" + uri + "> rdfs:comment \"" + (req.getCocoonRequest().getParameter("rdfs:comment")) + "\"@no .\n");
+          }
+
+          if (req.getCocoonRequest().getParameter("wdr:DR") != null) {
+            i += 1;
+            deleteString.append("<" + uri + "> wdr:DR ?var" + i + " .\n");
+            whereString.append("<" + uri + "> wdr:DR ?var" + i + " .\n");
+            insertString.append("<" + uri + "> wdr:DR <" + (req.getCocoonRequest().getParameter("wdr:DR")) + "> .\n");
+          }
+
+          i += 1;
+          deleteString.append("<" + uri + "> dct:publisher ?var" + i + " .\n");
+          whereString.append("<" + uri + "> dct:publisher ?var" + i + " .\n");
+          i += 1;
+          deleteString.append("<" + uri + "> dct:identifier ?var" + i + " .\n");
+          whereString.append("<" + uri + "> dct:identifier ?var" + i + " .\n");
+          i += 1;
+          deleteString.append("<" + uri + "> dct:dateAccepted ?var" + i + " .\n");
+          whereString.append("<" + uri + "> dct:dateAccepted ?var" + i + " .\n");
+          i += 1;
+          deleteString.append("<" + uri + "> sub:committer ?var" + i + " .\n");
+          whereString.append("<" + uri + "> sub:committer ?var" + i + " .\n");
+
+          insertString.append("<" + uri + "> dct:publisher <" + dctPublisher + "> .\n");
+          insertString.append("<" + uri + "> dct:identifier <" + dctIdentifier + "> .\n");
+          insertString.append("<" + uri + "> dct:dateAccepted \"" + dateAccepted + "\" .\n");
+          insertString.append("<" + uri + "> sub:committer <" + committer + "> .\n");
+
+          deleteString.append("}\n");
+          whereString.append("}\n");
+          insertString.append("}\n");
+
+          deleteString.append(whereString.toString());
+
+          deleteSuccess = sparulDispatcher.query(deleteString.toString());
+          insertSuccess = sparulDispatcher.query(insertString.toString());
+
+          // String sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+          logger.trace("AdminController.editResource --> DELETE QUERY:\n" + deleteString.toString());
+          logger.trace("AdminController.editResource --> INSERT QUERY:\n" + insertString.toString());
+          //validated = sparulDispatcher.query(sparqlQuery);
+          logger.trace("AdminController.editResource --> DELETE QUERY RESULT: " + deleteSuccess);
+          logger.trace("AdminController.editResource --> INSERT QUERY RESULT: " + insertSuccess);
+
+          if (deleteSuccess && insertSuccess) {
+            messages += "<message>Ny ressurs lagt til!</message>";
+
+          } else {
+            messages += "<message>Feil ved lagring av ny ressurs</message>";
+            bizData.put("resource", "<empty></empty>");
           }
         }
 
-        if (validated) {
+        if (deleteSuccess && insertSuccess) {
           bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url")));
           bizData.put("tempvalues", "<empty></empty>");
           bizData.put("mode", "edit");
@@ -512,26 +641,26 @@ public class AdminController implements StatelessAppleController {
     String publisherNewName = req.getCocoonRequest().getParameter("new_name");
     String messages = "";
 
-// Delete statement
+    // Delete statement
     StringBuffer deleteStringBuffer = new StringBuffer();
     deleteStringBuffer.append(completePrefixes);
     deleteStringBuffer.append("DELETE {\n");
     deleteStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
     deleteStringBuffer.append("foaf:name ?oldname .\n");
 
-// Where statement for the delete
+    // Where statement for the delete
     StringBuffer whereStringBuffer = new StringBuffer();
     whereStringBuffer.append("WHERE {\n");
     whereStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
     whereStringBuffer.append("foaf:name ?oldname .\n");
     whereStringBuffer.append("FILTER ( ");
 
-// Insert statement
+    // Insert statement
     StringBuffer insertStringBuffer = new StringBuffer();
     insertStringBuffer.append(completePrefixes);
     insertStringBuffer.append("INSERT {\n");
 
-// If user has added a new name for a new language
+    // If user has added a new name for a new language
     if (!"".equalsIgnoreCase(publisherNewLang)
             && publisherNewLang != null
             && !"".equalsIgnoreCase(publisherNewName)
@@ -550,7 +679,7 @@ public class AdminController implements StatelessAppleController {
       if (s.contains("@")) {
         String[] partialString = s.split("@");
 
-//If no name is provided, return error message
+        //If no name is provided, return error message
         if ("".equalsIgnoreCase(parameterMap.get(s)) || parameterMap.get(s) == null) {
           emptyName = true;
         }

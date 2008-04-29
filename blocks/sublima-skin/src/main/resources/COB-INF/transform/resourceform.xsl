@@ -197,7 +197,7 @@
                         <label for="sub:url">URI</label>
                     </td>
                     <td>
-                        <input id="sub:url" type="text" name="sub:url" size="40" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}"/>
+                        <input id="sub:url" type="text" name="sub:url" size="40" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}" />
                     </td>
                 </tr>
                 <tr>
