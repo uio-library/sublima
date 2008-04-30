@@ -2,6 +2,7 @@ package com.computas.sublima.query.service;
 
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
+import static com.computas.sublima.query.service.SettingsService.*;
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -190,7 +191,7 @@ public class AdminService {
     //publisherURI = publisherURI.replaceAll("/", "_");
     //publisherURI = publisherURI.replaceAll("-", "_");
     //publisherURI = publisherURI.replaceAll("'", "_");
-    publisherURI = "http://sublima.computas.com/agent/" + publisherURI;
+    publisherURI = getProperty("sublima.base.url") + "agent/" + publisherURI;
 
 
     String insertPublisherByName =

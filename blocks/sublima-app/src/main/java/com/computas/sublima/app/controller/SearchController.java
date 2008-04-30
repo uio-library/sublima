@@ -4,6 +4,7 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+import static com.computas.sublima.query.service.SettingsService.*;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -48,7 +49,8 @@ public class SearchController implements StatelessAppleController {
 
   private void doGetTopic(AppleResponse res, AppleRequest req) {
 
-    String subject = "<http://sublima.computas.com/topic/" + req.getSitemapParameter("topic") + ">";
+    String subject = "<" + getProperty("sublima.base.url")
+            + "topic/" + req.getSitemapParameter("topic") + ">";
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
@@ -126,7 +128,7 @@ public class SearchController implements StatelessAppleController {
 
 
   private String freeTextSearchString(AppleResponse res, AppleRequest req) {
-    String defaultBooleanOperator = SettingsService.getProperty("sublima.default.boolean.operator");
+    String defaultBooleanOperator = getProperty("sublima.default.boolean.operator");
     String chosenOperator = req.getCocoonRequest().getParameter("booleanoperator");
 
     SearchService searchService;
@@ -153,7 +155,7 @@ public class SearchController implements StatelessAppleController {
     if ("resource".equalsIgnoreCase(mode)) {
       parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>", "rdfs: <http://www.w3.org/2000/01/rdf-schema#>"});
       parameterMap.put("interface-language", new String[]{req.getSitemapParameter("interface-language")});
-      parameterMap.put("dct:identifier", new String[]{"http://sublima.computas.com/resource/"
+      parameterMap.put("dct:identifier", new String[]{getProperty("sublima.base.url") + "resource/"
               + req.getSitemapParameter("name")});
       parameterMap.put("dct:subject/rdfs:label", new String[]{""});
     }
