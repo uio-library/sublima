@@ -42,11 +42,11 @@ public class ImportData {
   }
 
   public static void main(String[] args) {
-    //load(args[0], args[1]);
+    load(args[0], args[1]);
 
 
-    load("file:\\Prosjekter\\SUBLIMA\\Kode\\Sublima\\blocks\\sublima-app\\src\\main\\resources\\rdf-data\\information-model.n3", "N3");
-    System.out.println("Done loading information-model.n3");
+    //load("file:\\Prosjekter\\SUBLIMA\\Kode\\Sublima\\blocks\\sublima-app\\src\\main\\resources\\rdf-data\\information-model.n3", "N3");
+    //System.out.println("Done loading information-model.n3");
     //load("file:\\Prosjekter\\SUBLIMA\\Kode\\Sublima\\blocks\\sublima-app\\src\\main\\resources\\rdf-data\\sublima-ns.ttl", "Turtle");
     //System.out.println("Done loading sublima-ns.ttl");
     //load("file:\\Prosjekter\\SUBLIMA\\Kode\\Sublima\\blocks\\sublima-app\\src\\main\\resources\\rdf-data\\detektor-test-data.n3", "N3");
