@@ -63,9 +63,16 @@
 
     <xsl:template name="resourcedetails">
 
-        <xsl:for-each select="c:page/c:content/c:resourcedetails/c:messages/c:message">
-            <xsl:value-of select="." /><br/>
-        </xsl:for-each>
+        <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
+          <ul>
+            <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
+              <li>
+                <xsl:value-of select="." /><br/>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </xsl:if>
+
 
         <xsl:choose>
             <xsl:when test="c:page/c:mode = 'edit'">
