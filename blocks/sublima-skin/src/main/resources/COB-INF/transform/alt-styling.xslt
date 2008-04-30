@@ -39,7 +39,7 @@ this, just comment out the call-template -->
       <head>
         <title>
           <xsl:choose>
-            <xsl:when test="c:page/c:mode = 'topic-instance'">
+            <xsl:when test="c:page/c:mode = 'topic'">
               <xsl:value-of
                       select="c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
               <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]">
@@ -134,7 +134,7 @@ this, just comment out the call-template -->
                     </table>
                   </form>
                 </xsl:if>
-                  <xsl:if test="c:page/c:mode = 'topic-instance'">
+                  <xsl:if test="c:page/c:mode = 'topic'">
 
                     <h3>Navigering</h3>
                     <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">

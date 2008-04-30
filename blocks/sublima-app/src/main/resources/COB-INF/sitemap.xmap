@@ -165,9 +165,9 @@
                 </map:call>
             </map:match>
 
-            <map:match pattern="topic-instance/*">
+            <map:match pattern="topic/*">
                 <map:call function="com.computas.sublima.app.controller.SearchController">
-                    <map:parameter name="mode" value="topic-instance"/>
+                    <map:parameter name="mode" value="topic"/>
                     <map:parameter name="topic" value="{1}"/>
                     <map:parameter name="interface-language" value="no"/>
                 </map:call>

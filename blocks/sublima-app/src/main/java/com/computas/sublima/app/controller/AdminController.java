@@ -33,7 +33,7 @@ public class AdminController implements StatelessAppleController {
           "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
           "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
-          "PREFIX portal-topic: <http://sublima.computas.com/topic-instance/>"};
+          "PREFIX portal-topic: <http://sublima.computas.com/topic/>"};
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
   String[] prefixArray = {
           "dct: <http://purl.org/dc/terms/>",
@@ -43,7 +43,7 @@ public class AdminController implements StatelessAppleController {
           "wdr: <http://www.w3.org/2007/05/powder#>",
           "skos: <http://www.w3.org/2004/02/skos/core#>",
           "lingvoj: <http://www.lingvoj.org/ontology#>",
-          "portal-topic: <http://sublima.computas.com/topic-instance/>"};
+          "portal-topic: <http://sublima.computas.com/topic/>"};
   String prefixes = StringUtils.join("\n", prefixArray);
 
   private static Logger logger = Logger.getLogger(AdminController.class);
@@ -249,7 +249,6 @@ public class AdminController implements StatelessAppleController {
               "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
               "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
               "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-              "xmlns:ti=\"http://sublima.computas.com/topic-instance/\"\n" +
               "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
               "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
               "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +

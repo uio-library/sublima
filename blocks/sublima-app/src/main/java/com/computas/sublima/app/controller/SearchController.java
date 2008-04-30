@@ -40,7 +40,7 @@ public class SearchController implements StatelessAppleController {
       return;
     }
 
-    if ("topic-instance".equalsIgnoreCase(mode)) {
+    if ("topic".equalsIgnoreCase(mode)) {
       doGetTopic(res, req);
       return;
     }
@@ -48,7 +48,7 @@ public class SearchController implements StatelessAppleController {
 
   private void doGetTopic(AppleResponse res, AppleRequest req) {
 
-    String subject = "<http://sublima.computas.com/topic-instance/" + req.getSitemapParameter("topic") + ">";
+    String subject = "<http://sublima.computas.com/topic/" + req.getSitemapParameter("topic") + ">";
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",

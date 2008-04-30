@@ -19,7 +19,7 @@
   <xsl:template match="rdf:RDF" mode="facets">
     <xsl:variable name="baseurlparams">
       <xsl:choose>
-	<xsl:when test="/c:page/c:mode = 'topic-instance'">
+	<xsl:when test="/c:page/c:mode = 'topic'">
 	  <xsl:text>../search-result?dct:subject/rdfs:label=</xsl:text>
 	  <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
 	  <xsl:text>&amp;</xsl:text>
