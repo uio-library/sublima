@@ -4,6 +4,7 @@ import com.computas.sublima.app.adhoc.ImportData;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.AdminService;
+import static com.computas.sublima.query.service.SettingsService.*;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -32,8 +33,8 @@ public class AdminController implements StatelessAppleController {
           "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
           "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
           "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
-          "PREFIX portal-topic: <http://sublima.computas.com/topic/>"};
+          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
+
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
   String[] prefixArray = {
           "dct: <http://purl.org/dc/terms/>",
@@ -42,8 +43,7 @@ public class AdminController implements StatelessAppleController {
           "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
           "wdr: <http://www.w3.org/2007/05/powder#>",
           "skos: <http://www.w3.org/2004/02/skos/core#>",
-          "lingvoj: <http://www.lingvoj.org/ontology#>",
-          "portal-topic: <http://sublima.computas.com/topic/>"};
+          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
   String prefixes = StringUtils.join("\n", prefixArray);
 
   private static Logger logger = Logger.getLogger(AdminController.class);
@@ -241,7 +241,7 @@ public class AdminController implements StatelessAppleController {
 
       StringBuffer tempValues = getResourceTempValues(req);
       String tempPrefixes = "<c:tempvalues \n" +
-              "xmlns:topic=\"http://sublima.computas.com/topic/\"\n" +
+              "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
               "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
               "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
               "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
@@ -300,14 +300,14 @@ public class AdminController implements StatelessAppleController {
         dctIdentifier = req.getCocoonRequest().getParameter("dct:title").replace(" ", "_");
         dctIdentifier = dctIdentifier.replace(",", "_");
         dctIdentifier = dctIdentifier.replace(".", "_");
-        dctIdentifier = "http://sublima.computas.com/resource/" + dctIdentifier;
+        dctIdentifier = getProperty("sublima.base.url") + "resource/" + dctIdentifier;
 
         //parameterMap.put("dct:identifier", new String[]{dctIdentifier});
         //parameterMap.put("prefix", prefixArray);
 
         //todo Fix med autorisasjon
         dateAccepted = "2008-18-09T13:39:38";
-        committer = "http://sublima.computas.com/user/det_usr00057";
+        committer = getProperty("sublima.base.url") + "user/det_usr00057";
 
         //parameterMap.put("dct:dateAccepted", new String[]{"2008-18-09T13:39:38"});
         //parameterMap.put("sub:committer", new String[]{"http://sublima.computas.com/user/det_usr00057"});
