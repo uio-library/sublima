@@ -30,6 +30,19 @@
         <xsl:copy-of select="c:page/c:content/c:text/*"/>
     </xsl:template>
 
+    <xsl:template name="messages">
+        <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
+        <ul>
+          <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
+            <li>
+              <xsl:value-of select="." /><br/>
+            </li>
+          </xsl:for-each>
+        </ul>
+      </xsl:if>
+    
+    </xsl:template>
+
     <xsl:template name="upload">
         <xsl:copy-of select="c:page/c:content/c:upload/*"/>
     </xsl:template>
@@ -37,14 +50,17 @@
     <xsl:template name="topicdetails">
 
         <xsl:choose>
-            <xsl:when test="c:page/c:mode = 'topicnew'">
+            <xsl:when test="c:page/c:mode = 'topictemp'">
+                <xsl:apply-templates select="c:page/c:content/c:topic" mode="topictemp"/>
+                <br/>
+                <h4>Ressurser tilknyttet emnet</h4>
+                <xsl:apply-templates select="c:page/c:content/c:topic/c:topicdetails/rdf:RDF" mode="results"/>
             </xsl:when>
             <xsl:when test="c:page/c:mode = 'topicedit'">
                 <xsl:apply-templates select="c:page/c:content/c:topic" mode="topicedit"/>
-              <br/>
-        <h4>Ressurser tilknyttet emnet</h4>
-
-        <xsl:apply-templates select="c:page/c:content/c:topic/c:topicdetails/rdf:RDF" mode="results"/>
+                <br/>
+                <h4>Ressurser tilknyttet emnet</h4>
+                <xsl:apply-templates select="c:page/c:content/c:topic/c:topicdetails/rdf:RDF" mode="results"/>
             </xsl:when>
        </xsl:choose>
     </xsl:template>
@@ -81,10 +97,6 @@
             <xsl:when test="c:page/c:mode = 'temp'">
                 <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="temp"/>
             </xsl:when>
-            <xsl:otherwise>
-                <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="new"/>    
-            </xsl:otherwise>
-
         </xsl:choose>
     </xsl:template>
 
@@ -109,14 +121,6 @@
                 </tr>
             </table>
         </form>
-
-        <xsl:if test="c:page/c:content/c:messages">
-            <br/>
-            <p class="validationmessage">
-                <xsl:value-of select="c:page/c:content/c:messages/*"/>
-            </p>
-        </xsl:if>
-
     </xsl:template>
 
     <!-- Publisherlist -->
@@ -149,12 +153,6 @@
                     </td>
                 </tr>
             </table>
-            <xsl:if test="c:page/c:content/c:messages">
-                <br/>
-                <p class="validationmessage">
-                    <xsl:value-of select="c:page/c:content/c:messages/*"/>
-                </p>
-            </xsl:if>
         </form>
         <br/>
         <h4>Ressurser tilknyttet utgiveren</h4>
@@ -249,6 +247,8 @@
                             <div class="col1">
                                 <!-- Column 1 start -->
                                 <xsl:call-template name="contenttext"/>
+
+                                <xsl:call-template name="messages"/>
 
                                 <xsl:call-template name="upload"/>
 

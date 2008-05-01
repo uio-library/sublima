@@ -88,42 +88,6 @@ public class PublisherController implements StatelessAppleController {
     private String validateRequest(AppleRequest req) {
         StringBuffer validationMessages = new StringBuffer();
 
-        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:title")) || req.getCocoonRequest().getParameter("dct:title") == null) {
-            validationMessages.append("<c:message>Tittel kan ikke være blank</c:message>\n");
-        }
-
-        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url")) || req.getCocoonRequest().getParameter("sub:url") == null) {
-            validationMessages.append("<c:message>URL kan ikke være blank</c:message>\n");
-        }
-
-        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:description")) || req.getCocoonRequest().getParameter("dct:description") == null) {
-            validationMessages.append("<c:message>Beskrivelsen kan ikke være blank</c:message>\n");
-        }
-
-        if (("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher")) || req.getCocoonRequest().getParameter("dct:publisher") == null) &&
-                ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name")) || req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") == null)) {
-            validationMessages.append("<c:message>En utgiver må velges, eller et nytt utgivernavn angis</c:message>\n");
-        }
-
-        if (req.getCocoonRequest().getParameterValues("dct:language") == null) {
-            validationMessages.append("<c:message>Minst ett språk må være valgt</c:message>\n");
-        }
-
-        if (req.getCocoonRequest().getParameterValues("dct:MediaType") == null) {
-            validationMessages.append("<c:message>Minst en mediatype må være valgt</c:message>\n");
-        }
-
-        if (req.getCocoonRequest().getParameterValues("dct:audience") == null) {
-            validationMessages.append("<c:message>Minst en målgruppe må være valgt</c:message>\n");
-        }
-
-        if (req.getCocoonRequest().getParameterValues("dct:subject") == null) {
-            validationMessages.append("<c:message>Minst ett emne må være valgt</c:message>\n");
-        }
-
-        if (req.getCocoonRequest().getParameter("wdr:DR") == null) {
-            validationMessages.append("<c:message>En status må velges</c:message>\n");
-        }
 
         return validationMessages.toString();
     }
@@ -139,11 +103,11 @@ public class PublisherController implements StatelessAppleController {
                     res, AppleRequest
                     req) {
 
-        String messages = "";
+        StringBuffer messageBuffer = new StringBuffer() ; 
         String publishername = req.getCocoonRequest().getParameter("new_publisher");
 
         if ("".equalsIgnoreCase(publishername) || publishername == null) {
-            messages = "<message>\nUtgivernavn må angis\n</message>";
+            messageBuffer.append("<c:message>Utgivernavn må angis</c:message>\n");
         } else {
 
             // Check if a publisher by that name already exists
@@ -162,21 +126,21 @@ public class PublisherController implements StatelessAppleController {
             Object queryResult = sparqlDispatcher.query(findPublisherByNameQuery);
 
             if (queryResult.toString().contains(publishername)) {
-                messages = "<message>\nEn utgiver med det navnet finnes allerede registrert\n</message>";
-                showPublishersIndex(res, req, messages);
+                messageBuffer.append("<c:message>En utgiver med det navnet finnes allerede registrert</c:message>\n");
+                showPublishersIndex(res, req, messageBuffer.toString());
                 return;
             }
 
             String success = adminService.insertPublisher(publishername);
 
             if (!"".equalsIgnoreCase(success)) {
-                messages = "<message>\nLagring av ny utgiver vellykket\n</message>";
+                messageBuffer.append("<c:message>Lagring av ny utgiver vellykket</c:message>\n");
             } else {
-                messages = "<message>\nFeil ved lagring av ny utgiver\n</message>";
+                messageBuffer.append("<c:message>Feil ved lagring av ny utgiver</c:message>\n");
             }
         }
 
-        showPublishersIndex(res, req, messages);
+        showPublishersIndex(res, req, messageBuffer.toString());
     }
 
     /**
@@ -192,7 +156,7 @@ public class PublisherController implements StatelessAppleController {
         String publisheruri = req.getCocoonRequest().getParameter("uri");
         String publisherNewLang = req.getCocoonRequest().getParameter("new_lang");
         String publisherNewName = req.getCocoonRequest().getParameter("new_name");
-        String messages = "";
+        StringBuffer messageBuffer = new StringBuffer() ; 
 
         // Delete statement
         StringBuffer deleteStringBuffer = new StringBuffer();
@@ -245,7 +209,7 @@ public class PublisherController implements StatelessAppleController {
         }
 
         if (emptyName) {
-            messages = "<message>\nNavn kan ikke være blankt\n</message>";
+            messageBuffer.append("<c:message>Navn kan ikke være blankt</c:message>\n");
         } else {
 
             for (int i = 0; i < filterList.size(); i++) {
@@ -274,13 +238,13 @@ public class PublisherController implements StatelessAppleController {
             logger.info("updatePublisherByURI() ---> " + publisheruri + " -- INSERT NEW NAME --> " + success);
 
             if (success) {
-                messages = "<message>\nUtgiveren oppdatert\n</message>";
+                messageBuffer.append("<c:message>Utgiveren oppdatert</c:message>\n");
             } else {
-                messages = "<message>\nFeil ved oppdatering\n</message>";
+                messageBuffer.append("<c:message>Feil ved oppdatering</c:message>\n");
             }
         }
 
-        showPublisherByURI(res, req, messages, publisheruri);
+        showPublisherByURI(res, req, messageBuffer.toString(), publisheruri);
     }
 
     /**
@@ -299,14 +263,14 @@ public class PublisherController implements StatelessAppleController {
                     messages, String
                     publisherURI) {
         //String publisheruri = this.submode;
+
+        StringBuffer messageBuffer = new StringBuffer() ; 
+        messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+        messageBuffer.append(messages);
+
         if ("".equalsIgnoreCase(publisherURI) || publisherURI == null) {
             publisherURI = req.getCocoonRequest().getParameter("uri");
         }
-
-        if ("".equals(messages) || messages == null) {
-            messages = "<empty></empty>";
-        }
-
         //Find the publisher URI based on name
         String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
                 completePrefixes,
@@ -320,8 +284,9 @@ public class PublisherController implements StatelessAppleController {
         logger.trace("AdminController.showPublisherByURI() --> SPARQL query sent to dispatcher: \n" + findPublisherByURIQuery);
         Object queryResult = sparqlDispatcher.query(findPublisherByURIQuery);
 
+        messageBuffer.append("</c:messages>");
         Map<String, Object> bizData = new HashMap<String, Object>();
-        bizData.put("messages", messages);
+        bizData.put("messages", messageBuffer.toString());
         bizData.put("publisherdetails", queryResult);
         res.sendPage("xml2/utgiver", bizData);
     }
@@ -338,10 +303,10 @@ public class PublisherController implements StatelessAppleController {
                     req, String
                     messages) {
 
-        if ("".equals(messages) || messages == null) {
-            messages = "<empty></empty>";
-        }
-
+        StringBuffer messageBuffer = new StringBuffer() ; 
+        messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+        messageBuffer.append(messages);
+        
         String queryString = StringUtils.join("\n", new String[]{
                 completePrefixes,
                 "SELECT DISTINCT ?publisher ?name",
@@ -354,8 +319,10 @@ public class PublisherController implements StatelessAppleController {
         logger.trace("AdminController.showPublishersIndex() --> SPARQL query sent to dispatcher: \n" + queryString);
         Object queryResult = sparqlDispatcher.query(queryString);
 
+        messageBuffer.append("</c:messages>");
+
         Map<String, Object> bizData = new HashMap<String, Object>();
-        bizData.put("messages", messages);
+        bizData.put("messages", messageBuffer.toString());
         bizData.put("publisherlist", queryResult);
         res.sendPage("xml2/utgivere", bizData);
     }

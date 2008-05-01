@@ -18,8 +18,9 @@
     <xsl:param name="interface-language">no</xsl:param>
 
     <xsl:template match="c:topic" mode="topicedit">
-        <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
-            <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
+
+        <form name="new_resource" action="{$baseurl}/admin/emner/emne" method="POST">
+            <input type="hidden" name="uri" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/@rdf:about}"/>
             <table>
                 <tr>
                     <td>
@@ -34,15 +35,24 @@
               <table>
                 <tr>
                     <td>
-                        <label for="dct:subject/skos:Concept/rdfs:label">Bredere</label>
+                        <label for="dct:subject/skos:Concept/skos:broader/rdf:resource">Bredere</label>
                     </td>
                     <td>
-                        <select id="dct:publisher" name="dct:publisher" multiple="multiple">
+                        <select id="dct:subject/skos:Concept/skos:broader/rdf:resource" name="dct:subject/skos:Concept/skos:broader/rdf:resource" multiple="multiple">
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
                                 <xsl:sort select="./rdfs:label"/>
-                                <option value="{./@rdf:about}">
-                                    <xsl:value-of select="./rdfs:label"/>
-                                </option>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/skos:broader/@rdf:resource">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
                             </xsl:for-each>
                         </select>
                     </td>
@@ -62,6 +72,64 @@
                 </tr>
             </table>
         </form>
-        
+
+    </xsl:template>
+
+    <xsl:template match="c:topic" mode="topictemp">
+
+        <form name="new_resource" action="{$baseurl}/admin/emner/emne" method="POST">
+            <input type="hidden" name="uri" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/@rdf:about}"/>
+            <table>
+                <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/rdfs:label">Tittel</label>
+                    </td>
+                    <td>
+                        <input id="dct:subject/skos:Concept/rdfs:label" type="text" name="dct:subject/skos:Concept/rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/rdfs:label}"/>
+                    </td>
+                </tr>
+              </table>
+              <p>Relaterte emner</p>
+              <table>
+                <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/skos:broader/rdf:resource">Bredere</label>
+                    </td>
+                    <td>
+                        <select id="dct:subject/skos:Concept/skos:broader/rdf:resource" name="dct:subject/skos:Concept/skos:broader/rdf:resource" multiple="multiple">
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:tempvalues/c:tempvalues/skos:broader/@rdf:resource">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Lagre emne"/>
+                    </td>
+                    <td>
+                        <input type="reset" value="Rens skjema"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
     </xsl:template>
 </xsl:stylesheet>

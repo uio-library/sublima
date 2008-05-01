@@ -3,9 +3,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:c="http://xmlns.computas.com/cocoon">
     <c:title>Sublima administrasjon</c:title>
-    <c:mode>
-        <jx:out value="#{mode}" xmlize="false"/>
-    </c:mode>
+    <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -33,10 +31,8 @@
             <br/>
         </c:text>
 
-        <c:messages>
-            <jx:out value="#{messages}" xmlize="true"/>
-        </c:messages
-                >
+        <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>
+        
         <c:topic>
             <c:topicdetails>
                 <jx:out value="#{topicdetails}" xmlize="true"/>
@@ -45,6 +41,11 @@
             <c:alltopics>
                 <jx:out value="#{alltopics}" xmlize="true"/>
             </c:alltopics>
+
+            <c:tempvalues>
+                <jx:out value="#{tempvalues}" xmlize="true"/>
+            </c:tempvalues>           
+
         </c:topic>
 
     </c:content>
