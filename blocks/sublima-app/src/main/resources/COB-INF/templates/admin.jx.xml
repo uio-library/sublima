@@ -10,12 +10,12 @@
     </c:breadcrumbs>
 
     <c:menu>
-        <c:menuelement title="Emner" link="admin/emner"/>
-        <c:menuelement title="Ressurser" link="admin/ressurser"/>
-        <c:menuelement title="Brukere" link="admin/brukere"/>
-        <c:menuelement title="Utgivere" link="admin/utgivere"/>
-        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
-        <c:menuelement title="Database" link="admin/database"/>
+        <c:menuelement title="Emner" link="admin/emner/"/>
+        <c:menuelement title="Ressurser" link="admin/ressurser/"/>
+        <c:menuelement title="Brukere" link="admin/brukere/"/>
+        <c:menuelement title="Utgivere" link="admin/utgivere/"/>
+        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
+        <c:menuelement title="Database" link="admin/database/"/>
     </c:menu>
 
     <c:content>

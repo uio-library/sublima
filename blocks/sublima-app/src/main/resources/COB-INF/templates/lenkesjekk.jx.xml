@@ -7,15 +7,16 @@
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
         <c:breadcrumb title="Admin">admin</c:breadcrumb>
-        <c:breadcrumb title="Lenkesjekk">admin/lenkesjekk</c:breadcrumb>
+        <c:breadcrumb title="Lenkesjekk">admin/lenkesjekk/</c:breadcrumb>
     </c:breadcrumbs>
 
     <c:menu>
-        <c:menuelement title="Emner" link="admin/emner"/>
-        <c:menuelement title="Ressurser" link="admin/ressurser"/>
-        <c:menuelement title="Brukere" link="admin/brukere"/>
-        <c:menuelement title="Utgivere" link="admin/utgivere"/>
-        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
+        <c:menuelement title="Emner" link="admin/emner/"/>
+        <c:menuelement title="Ressurser" link="admin/ressurser/"/>
+        <c:menuelement title="Brukere" link="admin/brukere/"/>
+        <c:menuelement title="Utgivere" link="admin/utgivere/"/>
+        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
+        <c:menuelement title="Database" link="admin/database/"/>
     </c:menu>
 
     <c:content>
@@ -23,7 +24,7 @@
             <h3>Lenkesjekk</h3>
             <br/>
             <br/>
-            <a href="{$baseurl}/admin/lenkesjekk/run"
+            <a href="{$baseurl}/admin/lenkesjekk/run">Kjør lenkesjekk (NB! Kan ta lang tid)</a>
         </c:text>
         <c:linkcheck>
             <c:status_check>

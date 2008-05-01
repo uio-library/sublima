@@ -6,12 +6,7 @@
   http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
     <bean id="com.computas.sublima.sublima-skin.service" class="org.apache.cocoon.sitemap.SitemapServlet">
-        <servlet:context mount-path="/sublima-skin" context-path="blockcontext:/sublima-skin/">
-            <servlet:connections>
-                <entry key="forms" value-ref="org.apache.cocoon.forms.impl.servlet"/>
-                <entry key="ajax" value-ref="org.apache.cocoon.ajax.impl.servlet"/>
-            </servlet:connections>
-        </servlet:context>
+        <servlet:context mount-path="/sublima-skin" context-path="blockcontext:/sublima-skin/"/>
     </bean>
 
 </beans>

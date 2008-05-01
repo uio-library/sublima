@@ -17,15 +17,40 @@
         <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
     </bean>
 
-    <bean name="com.computas.sublima.app.controller.AdminController"
-          class="com.computas.sublima.app.controller.AdminController">
+    <bean name="com.computas.sublima.app.controller.admin.AdminController"
+          class="com.computas.sublima.app.controller.admin.AdminController">
         <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
         <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
     </bean>
 
-    <bean name="com.computas.sublima.app.controller.form.ResourceFormController"
-          class="com.computas.sublima.app.controller.form.ResourceFormController">
+    <bean name="com.computas.sublima.app.controller.admin.PublisherController"
+          class="com.computas.sublima.app.controller.admin.PublisherController">
+        <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
+        <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
     </bean>
 
+    <bean name="com.computas.sublima.app.controller.admin.ResourceController"
+          class="com.computas.sublima.app.controller.admin.ResourceController">
+        <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
+        <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    </bean>
+
+    <bean name="com.computas.sublima.app.controller.admin.TopicController"
+          class="com.computas.sublima.app.controller.admin.TopicController">
+        <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
+        <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    </bean>
+
+    <bean name="com.computas.sublima.app.controller.admin.UserController"
+          class="com.computas.sublima.app.controller.admin.UserController">
+        <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
+        <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    </bean>
+
+    <bean name="com.computas.sublima.app.controller.admin.LinkcheckController"
+          class="com.computas.sublima.app.controller.admin.LinkcheckController">
+        <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
+        <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    </bean>
 
 </beans>

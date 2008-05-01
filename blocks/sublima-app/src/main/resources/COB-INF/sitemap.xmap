@@ -13,7 +13,7 @@
 
             <!-- To test SPARQL queries -->
             <map:match pattern="testsparql/*">
-                <map:call function="com.computas.sublima.app.controller.AdminController">
+                <map:call function="com.computas.sublima.app.controller.admin.AdminController">
                     <map:parameter name="mode" value="testsparql"/>
                     <map:parameter name="submode" value="{1}"/>
                 </map:call>
@@ -29,24 +29,31 @@
                 <map:serialize type="xml"/>
             </map:match>
 
-            <!-- all other admin pages. Returns a 404 if the page is not found. -->
-            <map:match pattern="admin/*">
-                <map:call function="com.computas.sublima.app.controller.AdminController">
-                    <map:parameter name="mode" value="{1}"/>
+            <!-- all resource admin pages. Returns a 404 if the page is not found. -->
+            <map:match pattern="admin/ressurser/*">
+                <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
+                    <map:parameter name="mode" value="ressurser"/>
+                    <map:parameter name="submode" value="{1}"/>
                 </map:call>
             </map:match>
 
-            <!-- all resource admin pages. Returns a 404 if the page is not found. -->
-            <map:match pattern="admin/ressurser/*">
-                <map:call function="com.computas.sublima.app.controller.AdminController">
-                    <map:parameter name="mode" value="ressurser"/>
+            <map:match pattern="admin/lenkesjekk/*">
+                <map:call function="com.computas.sublima.app.controller.admin.LinkcheckController">
+                    <map:parameter name="mode" value="lenkesjekk"/>
+                    <map:parameter name="submode" value="{1}"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="admin/brukere/*">
+                <map:call function="com.computas.sublima.app.controller.admin.UserController">
+                    <map:parameter name="mode" value="brukere"/>
                     <map:parameter name="submode" value="{1}"/>
                 </map:call>
             </map:match>
 
             <!-- individual page for each publisher. -->
             <map:match pattern="admin/utgivere/*">
-                <map:call function="com.computas.sublima.app.controller.AdminController">
+                <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
                     <map:parameter name="mode" value="utgivere"/>
                     <map:parameter name="submode" value="{1}"/>
                 </map:call>
@@ -54,29 +61,36 @@
 
            <!-- individual page for each topic. -->
             <map:match pattern="admin/emner/*">
-                <map:call function="com.computas.sublima.app.controller.AdminController">
+                <map:call function="com.computas.sublima.app.controller.admin.TopicController">
                     <map:parameter name="mode" value="emner"/>
                     <map:parameter name="submode" value="{1}"/>
                 </map:call>
             </map:match>
 
+            <!-- all other admin pages. Returns a 404 if the page is not found. -->
+            <map:match pattern="admin/*">
+                <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+                    <map:parameter name="mode" value="{1}"/>
+                </map:call>
+            </map:match>
+
             <!-- action to update a publisher -->
             <map:match pattern="updatepublisher">
-                <map:call function="com.computas.sublima.app.controller.AdminController">
+                <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
                     <map:parameter name="mode" value="utgivere"/>
                     <map:parameter name="submode" value="updatepublisher"/>
                 </map:call>
             </map:match>
 
-            <map:match pattern="database">
-                <map:call function="com.computas.sublima.app.controller.AdminController">
+            <map:match pattern="admin/database/*">
+                <map:call function="com.computas.sublima.app.controller.admin.AdminController">
                     <map:parameter name="mode" value="database"/>
                 </map:call>
             </map:match>
 
             <!-- action to insert a new publisher -->
             <map:match pattern="insertpublisher">
-                <map:call function="com.computas.sublima.app.controller.AdminController">
+                <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
                     <map:parameter name="mode" value="utgivere"/>
                     <map:parameter name="submode" value="insertpublisher"/>
                 </map:call>

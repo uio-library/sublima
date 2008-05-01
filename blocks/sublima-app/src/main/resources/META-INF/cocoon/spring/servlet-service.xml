@@ -9,8 +9,6 @@
         <servlet:context mount-path="" context-path="blockcontext:/sublima-app/">
             <servlet:connections>
                 <entry key="skin" value-ref="${com.computas.sublima.app.skin}"/>
-                <entry key="forms" value-ref="org.apache.cocoon.forms.impl.servlet"/>
-                <entry key="ajax" value-ref="org.apache.cocoon.ajax.impl.servlet"/>
             </servlet:connections>
         </servlet:context>
     </bean>

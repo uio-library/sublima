@@ -23,7 +23,7 @@
             <table>
                 <tr>
                     <td>
-                        <label for="dct:subject/skos:Concept/rdfs:label">Emne</label>
+                        <label for="dct:subject/skos:Concept/rdfs:label">Tittel</label>
                     </td>
                     <td>
                         <input id="dct:subject/skos:Concept/rdfs:label" type="text" name="dct:subject/skos:Concept/rdfs:label" size="40" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/rdfs:label}"/>

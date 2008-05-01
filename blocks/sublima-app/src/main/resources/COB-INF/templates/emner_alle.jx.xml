@@ -7,20 +7,21 @@
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>
     <c:breadcrumb title="Admin">admin</c:breadcrumb>
-    <c:breadcrumb title="Emner">admin/emner</c:breadcrumb>
+    <c:breadcrumb title="Emner">admin/emner/</c:breadcrumb>
     <c:breadcrumb title="Emner">admin/emner/alle</c:breadcrumb>
   </c:breadcrumbs>
 
   <c:menu>
-    <c:menuelement title="Emner" link="admin/emner">
+    <c:menuelement title="Emner" link="admin/emner/">
       <c:childmenuelement title="Nytt" link="admin/emner/nytt"/>
       <c:childmenuelement title="Vis alle" link="admin/emner/alle"/>
       <c:childmenuelement title="Slå sammen" link="admin/emner/koble"/>
     </c:menuelement>
-    <c:menuelement title="Ressurser" link="admin/ressurser"/>
-    <c:menuelement title="Brukere" link="admin/brukere"/>
-    <c:menuelement title="Utgivere" link="admin/utgivere"/>
-    <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk"/>
+    <c:menuelement title="Ressurser" link="admin/ressurser/"/>
+    <c:menuelement title="Brukere" link="admin/brukere/"/>
+    <c:menuelement title="Utgivere" link="admin/utgivere/"/>
+    <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
+    <c:menuelement title="Database" link="admin/database/"/>
   </c:menu>
 
   <c:content>
