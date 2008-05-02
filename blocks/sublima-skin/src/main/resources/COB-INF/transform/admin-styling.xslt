@@ -40,7 +40,6 @@
           </xsl:for-each>
         </ul>
       </xsl:if>
-    
     </xsl:template>
 
     <xsl:template name="upload">
