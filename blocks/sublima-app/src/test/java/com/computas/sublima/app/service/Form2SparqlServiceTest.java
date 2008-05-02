@@ -80,7 +80,14 @@ public class Form2SparqlServiceTest extends TestCase {
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dc:subject/rdfs:label", testString, emptyList));
   }
-  
+
+  public void testConvertFormField2N3AllSubjectLabels() {
+    String expectS = "\n?resource dct:subject ?var1 .\n{ ?var1 skos:prefLabel \"Jet\" . }\nUNION { ?var1 skos:altLabel \"Jet\" . }\nUNION { ?var1 skos:hiddenLabel \"Jet\" . }\n";
+    testString[0] = "Jet";
+    assertEquals("Expected result and actual result not equal", expectS,
+            myService.convertFormField2N3("dct:subject/all-labels", testString, emptyList));
+  }
+
   public void testConvertFormField2N3SingleFree() {
 	  String expectS = "\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .";
 	  assertEquals("Expected result and actual result not equal", expectS,

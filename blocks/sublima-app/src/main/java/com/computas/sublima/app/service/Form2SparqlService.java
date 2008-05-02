@@ -129,7 +129,19 @@ public class Form2SparqlService {
 			int j = 0;
 			for (String qname : keys) {
 				j++;
-				n3Buffer.append("\n" + var + qname + " ");
+                if ("dct:subject/all-labels".equals(key) && "all-labels".equals(qname)) {
+                    logger.debug("Will expand the search to include all labels");
+                    RDFObject myRDFObject = new RDFObject(value, language);
+                    n3Buffer.append("\n{ ?var1 skos:prefLabel ");
+                    n3Buffer.append(myRDFObject.toN3());
+                    n3Buffer.append(" }\nUNION { ?var1 skos:altLabel ");
+                    n3Buffer.append(myRDFObject.toN3());
+                    n3Buffer.append(" }\nUNION { ?var1 skos:hiddenLabel ");
+                    n3Buffer.append(myRDFObject.toN3());
+                    n3Buffer.append(" }\n");
+                    return n3Buffer.toString();
+                }
+                n3Buffer.append("\n" + var + qname + " ");
 				if ("".equals(value)) { //value == "") { // Then, it is a block with no value, which will be caught by a catch-all
 					return "\n";
 				}
