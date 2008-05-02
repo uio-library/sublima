@@ -254,4 +254,18 @@ public class AdminService {
 
     return queryResult.toString();
   }
+
+  public String getThemeTopics() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            "DESCRIBE ?theme",
+            "WHERE {",
+            "    ?theme a sub:Theme .",
+            "}"});
+
+    logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
 }

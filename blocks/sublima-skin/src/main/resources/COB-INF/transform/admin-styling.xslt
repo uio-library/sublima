@@ -16,6 +16,7 @@
     <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
     <xsl:import href="resourceform.xsl"/>
     <xsl:import href="topicform.xsl"/>
+    <xsl:import href="themeselection.xsl"/>
     <xsl:output method="xml"
                 encoding="UTF-8"
                 indent="no"/>
@@ -28,6 +29,14 @@
 
     <xsl:template name="contenttext">
         <xsl:copy-of select="c:page/c:content/c:text/*"/>
+    </xsl:template>
+
+    <xsl:template name="theme">
+      <xsl:choose>
+        <xsl:when test="c:page/c:mode = 'theme'">
+          <xsl:apply-templates select="c:page/c:content/c:theme" mode="theme"/>
+        </xsl:when>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template name="messages">
@@ -237,6 +246,8 @@
                                 <xsl:call-template name="contenttext"/>
 
                                 <xsl:call-template name="messages"/>
+
+                                <xsl:call-template name="theme"/>
 
                                 <xsl:call-template name="upload"/>
 

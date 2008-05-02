@@ -19,7 +19,7 @@
 
     <xsl:template match="c:topic" mode="topicedit">
 
-        <form name="new_resource" action="{$baseurl}/admin/emner/emne" method="POST">
+        <form name="topicedit" action="{$baseurl}/admin/emner/emne" method="POST">
             <input type="hidden" name="uri" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/@rdf:about}"/>
             <table>
                 <tr>
@@ -77,7 +77,7 @@
 
     <xsl:template match="c:topic" mode="topictemp">
 
-        <form name="new_resource" action="{$baseurl}/admin/emner/emne" method="POST">
+        <form name="topicedit" action="{$baseurl}/admin/emner/emne" method="POST">
             <input type="hidden" name="uri" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/@rdf:about}"/>
             <table>
                 <tr>
