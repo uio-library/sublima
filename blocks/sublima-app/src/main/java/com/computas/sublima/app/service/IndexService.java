@@ -137,7 +137,7 @@ public class IndexService {
     URL u = null;
     HashMap<String, String> result;
 
-    for (int i = 0; i < 200; i++) {
+    while (resultSet.hasNext()) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length() - 3).trim();
 
