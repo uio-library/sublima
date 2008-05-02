@@ -79,17 +79,6 @@
 
     <xsl:template name="resourcedetails">
 
-        <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
-          <ul>
-            <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
-              <li>
-                <xsl:value-of select="." /><br/>
-              </li>
-            </xsl:for-each>
-          </ul>
-        </xsl:if>
-
-
         <xsl:choose>
             <xsl:when test="c:page/c:mode = 'edit'">
                 <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="edit"/>
