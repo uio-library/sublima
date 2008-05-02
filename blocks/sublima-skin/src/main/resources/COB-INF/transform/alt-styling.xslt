@@ -68,7 +68,7 @@ this, just comment out the call-template -->
           <h2>Sublima 0.8</h2>
           <ul>
             <li>
-              <a href="{$baseurl}/home" class="active">Hjem</a>
+              <a href="{$baseurl}/" class="active">Hjem</a>
             </li>
             <li>
               <a href="{$baseurl}/advancedsearch">Avansert søk

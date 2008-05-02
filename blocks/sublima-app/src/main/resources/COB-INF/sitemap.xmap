@@ -108,11 +108,6 @@
                 </map:serialize>
             </map:match>
 
-            <!-- So that we have a "home" link on the site -->
-            <map:match pattern="home">
-                <map:redirect-to uri="cocoon:/"/>
-            </map:match>
-
             <map:match pattern="empty">
                 <map:generate src="templates/empty-page.jx.xml" type="jx"/>
                 <map:serialize type="xml"/>

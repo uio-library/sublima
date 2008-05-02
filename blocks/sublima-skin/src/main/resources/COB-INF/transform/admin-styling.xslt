@@ -206,7 +206,7 @@
                     <h2>Sublima 0.8</h2>
                     <ul>
                         <li>
-                            <a href="{$baseurl}/home">Hjem</a>
+                            <a href="{$baseurl}/">Hjem</a>
                         </li>
                         <li>
                             <a href="{$baseurl}/advancedsearch">Avansert søk
