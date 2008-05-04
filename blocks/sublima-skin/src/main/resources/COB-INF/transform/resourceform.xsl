@@ -220,8 +220,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Brukernes kommentarer</td>
+                    <td>
+                        <ul>
+                            <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/sub:comment">
+                                <li>
+                                    <xsl:value-of select="." />
+                                </li>
+                            </xsl:for-each>
+                        </ul>
+                    </td>
                 </tr>
                 <tr>
                     <td>

@@ -33,7 +33,7 @@
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'A')]">
                                 <xsl:sort select="./rdfs:label"/>
                                 <xsl:choose>
-                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource">
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
                                             <xsl:value-of select="./rdfs:label"/>
                                         </option>
@@ -48,6 +48,761 @@
                         </select>
                     </td>
                 </tr>
+
+                <tr>
+                    <td>
+                        <label for="B">B</label>
+                    </td>
+                    <td>
+                        <select id="B" name="B">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'B')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="C">C</label>
+                    </td>
+                    <td>
+                        <select id="C" name="C">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'C')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="D">D</label>
+                    </td>
+                    <td>
+                        <select id="D" name="D">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'D')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="E">E</label>
+                    </td>
+                    <td>
+                        <select id="E" name="E">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'E')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="F">F</label>
+                    </td>
+                    <td>
+                        <select id="F" name="F">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'F')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="G">G</label>
+                    </td>
+                    <td>
+                        <select id="G" name="G">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'G')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="H">H</label>
+                    </td>
+                    <td>
+                        <select id="H" name="H">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'H')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="I">I</label>
+                    </td>
+                    <td>
+                        <select id="I" name="I">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'I')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="J">J</label>
+                    </td>
+                    <td>
+                        <select id="J" name="J">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'J')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="K">K</label>
+                    </td>
+                    <td>
+                        <select id="K" name="K">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'K')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="L">L</label>
+                    </td>
+                    <td>
+                        <select id="L" name="L">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'L')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="M">M</label>
+                    </td>
+                    <td>
+                        <select id="M" name="M">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'M')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="N">N</label>
+                    </td>
+                    <td>
+                        <select id="N" name="N">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'N')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="O">O</label>
+                    </td>
+                    <td>
+                        <select id="O" name="O">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'O')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="P">P</label>
+                    </td>
+                    <td>
+                        <select id="P" name="P">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'P')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="Q">Q</label>
+                    </td>
+                    <td>
+                        <select id="Q" name="Q">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'Q')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="R">R</label>
+                    </td>
+                    <td>
+                        <select id="R" name="R">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'R')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="S">S</label>
+                    </td>
+                    <td>
+                        <select id="S" name="S">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'S')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="T">T</label>
+                    </td>
+                    <td>
+                        <select id="T" name="T">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'T')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="U">U</label>
+                    </td>
+                    <td>
+                        <select id="U" name="U">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'U')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="V">V</label>
+                    </td>
+                    <td>
+                        <select id="V" name="V">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'V')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="W">W</label>
+                    </td>
+                    <td>
+                        <select id="W" name="W">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'W')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="X">X</label>
+                    </td>
+                    <td>
+                        <select id="X" name="X">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'X')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="Y">Y</label>
+                    </td>
+                    <td>
+                        <select id="Y" name="Y">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'Y')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="Z">Z</label>
+                    </td>
+                    <td>
+                        <select id="Z" name="Z">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'Z')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="Æ">Æ</label>
+                    </td>
+                    <td>
+                        <select id="Æ" name="Æ">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'Æ')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="Ø">Ø</label>
+                    </td>
+                    <td>
+                        <select id="Ø" name="Ø">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'Ø')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="Å">Å</label>
+                    </td>
+                    <td>
+                        <select id="Å" name="Å">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(rdfs:label, $lcletters, $ucletters), 'Å')]">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="0-9">0-9</label>
+                    </td>
+                    <td>
+                        <select id="0-9" name="0-9">
+                            <option value=""/>
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/sub:Theme/@rdf:about">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+                
                 <tr>
                     <td></td>
                     <td></td>
