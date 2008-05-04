@@ -14,6 +14,7 @@
   <xsl:import href="rdfxml2xhtml-facets.xsl"/>
   <xsl:import href="rdfxml2xhtml-table.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
+  <xsl:import href="browse.xsl"/>
 
   <xsl:param name="baseurl"/>
 
@@ -68,7 +69,7 @@ this, just comment out the call-template -->
           <h2>Sublima 0.8</h2>
           <ul>
             <li>
-              <a href="{$baseurl}/" class="active">Hjem</a>
+              <a href="{$baseurl}/" class="active">A-Å</a>
             </li>
             <li>
               <a href="{$baseurl}/advancedsearch">Avansert søk
@@ -98,9 +99,7 @@ this, just comment out the call-template -->
 		  <xsl:call-template name="debug"/>
 		-->
 
-
-
-                <!-- Column 1 start -->
+       <!-- Column 1 start -->
 		<xsl:if test="not(c:page/c:advancedsearch/node())">
 		  <form name="freetextSearch" action="{$baseurl}/search-result" method="get">
 		    <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
@@ -151,6 +150,9 @@ this, just comment out the call-template -->
                   <xsl:when test="c:page/c:mode = 'resource'">
                     <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="resource"/>
                   </xsl:when>
+                    <xsl:when test="c:page/c:mode = 'browse'">
+                         <xsl:apply-templates select="c:page/c:browse" mode="browse"/>
+                    </xsl:when>
                   <xsl:otherwise>
                       <h3>Ressurser</h3>
                       <!-- Søkeresultatene -->
@@ -163,6 +165,7 @@ this, just comment out the call-template -->
                 <!-- Column 2 start -->
                   <h3>Fasetter</h3>
                   <xsl:if test="c:page/c:facets">
+
                     <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
                   </xsl:if>
 
