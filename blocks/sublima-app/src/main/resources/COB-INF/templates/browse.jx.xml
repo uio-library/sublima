@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:c="http://xmlns.computas.com/cocoon">
+    <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
+    <c:browse><jx:out value="#{themetopics}" xmlize="true"/></c:browse>
+</c:page>
