@@ -9,7 +9,7 @@
     <c:breadcrumb title="Sublima"></c:breadcrumb>
     <c:breadcrumb title="Admin">admin</c:breadcrumb>
     <c:breadcrumb title="Emner">admin/emner/</c:breadcrumb>
-    <c:breadcrumb title="Emner">admin/emner/tema</c:breadcrumb>
+    <c:breadcrumb title="Tema">admin/emner/tema</c:breadcrumb>
   </c:breadcrumbs>
 
   <c:menu>
