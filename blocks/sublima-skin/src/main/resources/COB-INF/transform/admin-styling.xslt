@@ -17,6 +17,7 @@
     <xsl:import href="resourceform.xsl"/>
     <xsl:import href="topicform.xsl"/>
     <xsl:import href="themeselection.xsl"/>
+    <xsl:import href="topicjoin.xsl"/>
     <xsl:output method="xml"
                 encoding="UTF-8"
                 indent="no"/>
@@ -215,7 +216,7 @@
                     <h2>Sublima 0.8</h2>
                     <ul>
                         <li>
-                            <a href="{$baseurl}/">Hjem</a>
+                            <a href="{$baseurl}/">A-Å</a>
                         </li>
                         <li>
                             <a href="{$baseurl}/advancedsearch">Avansert søk
@@ -254,6 +255,8 @@
                                 <xsl:call-template name="alltopics"/>
 
                                 <xsl:call-template name="topicdetails"/>
+
+                                <xsl:apply-templates select="c:page/c:content/c:join" mode="topicjoin"/>
 
                                 <xsl:if test="c:page/c:content/c:resourcedetails">
                                     <xsl:call-template name="resourcedetails"/>
