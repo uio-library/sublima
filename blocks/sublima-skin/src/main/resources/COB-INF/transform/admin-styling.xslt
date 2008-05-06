@@ -112,6 +112,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>
+                        <label for="dct:description">Beskrivelse</label>
+                    </td>
+                    <td>
+                        <input id="dct:description" type="text" name="dct:description" size="40"/>
+                    </td>
+                </tr>
+                <tr>
                     <td></td>
                     <td>
                         <input type="submit" value="Lagre utgiver"/>

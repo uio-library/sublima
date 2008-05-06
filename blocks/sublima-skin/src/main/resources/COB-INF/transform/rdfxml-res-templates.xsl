@@ -167,6 +167,15 @@
       </td>
     </tr>
 
+    <tr>
+        <td>
+            <label for="dct:description">Beskrivelse</label>
+        </td>
+        <td>
+            <input id="dct:description" type="text" name="dct:description" size="40" value="{./dct:description}"/>
+        </td>
+    </tr>
+
   </xsl:template>
 
 </xsl:stylesheet>

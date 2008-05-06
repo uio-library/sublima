@@ -185,12 +185,12 @@ public class AdminService {
   }
 
   public String insertPublisher(String publishername) {
-    String publisherURI = publishername.replaceAll(" ", "_");
-    //publisherURI = publisherURI.replaceAll(".", "_");
-    //publisherURI = publisherURI.replaceAll(",", "_");
-    //publisherURI = publisherURI.replaceAll("/", "_");
-    //publisherURI = publisherURI.replaceAll("-", "_");
-    //publisherURI = publisherURI.replaceAll("'", "_");
+    String publisherURI = publishername.replace(" ", "_");
+    publisherURI = publisherURI.replace(".", "_");
+    publisherURI = publisherURI.replace(",", "_");
+    publisherURI = publisherURI.replace("/", "_");
+    publisherURI = publisherURI.replace("-", "_");
+    publisherURI = publisherURI.replace("'", "_");
     publisherURI = getProperty("sublima.base.url") + "agent/" + publisherURI;
 
 
@@ -200,7 +200,7 @@ public class AdminService {
                     "INSERT\n" +
                     "{\n" +
                     "<" + publisherURI + "> a foaf:Agent ;\n" +
-                    "foaf:name \"" + publishername + "\"@en .\n" +
+                    "foaf:name \"" + publishername + "\"@no .\n" +
                     "}";
 
     logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);
