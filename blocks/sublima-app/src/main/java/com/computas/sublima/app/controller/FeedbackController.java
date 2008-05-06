@@ -2,10 +2,14 @@ package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.URLActions;
 import com.computas.sublima.query.SparulDispatcher;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class FeedbackController implements StatelessAppleController {
 
@@ -25,14 +29,29 @@ public class FeedbackController implements StatelessAppleController {
       String email = req.getCocoonRequest().getParameter("email");
       String comment = req.getCocoonRequest().getParameter("comment");
 
-      String commentString =
-              "PREFIX dct: <http://purl.org/dc/terms/>\n" +
-                      "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-                      "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                      "INSERT\n" +
-                      "{\n" +
-                      "<" + uri + ">" + " sub:comment " + "\"" + comment + "\"@no ; \n" +
-                      "}";
+      String commentString = StringUtils.join("\n", new String[]{
+              "PREFIX dct: <http://purl.org/dc/terms/>",
+              "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+              "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+              "PREFIX sioc:<http://rdfs.org/sioc/ns#>",
+              "INSERT",
+              "{",
+              "    <" + uri + ">" + " sub:comment ?a .",
+              "        ?a a sioc:Item ;",
+              "            sioc:content \"" + comment + "\" ;",
+              "        sioc:has_creator ?b .",
+              "        ?b a sioc:User ;" +
+              "            sioc:email <mailto:" + email + "> .",
+              "}",
+              "WHERE",
+              "{",
+              "    <" + uri + ">" + " sub:comment ?a .",
+              "        ?a a sioc:Item ;",
+              "            sioc:content \"" + comment + "\" ;",
+              "        sioc:has_creator ?b .",
+              "        ?b a sioc:User ;" +
+              "            sioc:email <mailto:" + email + "> .",
+              "}"});
 
       success = sparulDispatcher.query(commentString);
       logger.trace("FeedbackController.java --> Comment on resource: " + commentString + "\nResult: " + success);
@@ -52,19 +71,48 @@ public class FeedbackController implements StatelessAppleController {
       return;
     }
 
+    if ("tips".equalsIgnoreCase(mode)) {
+      Map<String, Object> bizData = new HashMap<String, Object>();
+
+      StringBuffer messageBuffer = new StringBuffer();
+      messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\"></c:messages>");
+      bizData.put("messages", messageBuffer.toString());
+      bizData.put("mode", "form");
+      res.sendPage("xml/tips", bizData);
+      return;
+    }
+
     if ("sendtips".equalsIgnoreCase(mode)) {
+
+      Map<String, Object> bizData = new HashMap<String, Object>();
+
+      StringBuffer messageBuffer = new StringBuffer();
+      messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+
       String url = req.getCocoonRequest().getParameter("url");
       String tittel = req.getCocoonRequest().getParameter("tittel");
       String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
       String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(",");
+      String status;
 
-      // Do a URL check so that we know we have a valid URL
-      URLActions urlAction = new URLActions(url);
-      String status = urlAction.getCode();
+      try {
+        // Do a URL check so that we know we have a valid URL
+        URLActions urlAction = new URLActions(url);
+        status = urlAction.getCode();
+      }
+      catch (NullPointerException e) {
+        e.printStackTrace();
+        messageBuffer.append("<c:message>Feil ved angitt URL. Vennligst kontroller at linken du oppga fungerer.</c:message>");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("messages", messageBuffer.toString());
+        bizData.put("mode", "form");
+        res.sendPage("xml/tips", bizData);
+        return;  
+      }
 
       //todo We have to get the interface-language @no from somewhere
       if ("200".equals(status)) {
-        String partialUpdateString =
+        String insertTipString =
                 "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                         "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
                         "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
@@ -73,31 +121,33 @@ public class FeedbackController implements StatelessAppleController {
                         "<" + url + "> a sub:Resource .\n" +
                         "<" + url + "> dct:title " + "\"" + tittel + "\"@no . \n" +
                         "<" + url + "> dct:description " + "\"" + beskrivelse + "\"@no . \n" +
-                        "<" + url + "> dct:keywords " + "\"" + stikkord.toString() + "\"@no . \n" +
-                        "<" + url + "> wdr:DR <http://sublima.computas.com/status/til_godkjenning> .\n";
+                        "<" + url + "> sub:keywords " + "\"" + stikkord.toString() + "\"@no . \n" +
+                        "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> . }\n";
 
-        StringBuffer partialUpdateStringBuffer = new StringBuffer();
-
-        partialUpdateStringBuffer.append(partialUpdateString);
-        //for each keyword, add a sub:keyword
-        for (String s : stikkord) {
-          partialUpdateStringBuffer.append("<" + url + "> sub:keyword \"" + s + "\"@no .\n");
-        }
-        partialUpdateStringBuffer.append("}");
-
-        success = sparulDispatcher.query(partialUpdateStringBuffer.toString());
+        success = sparulDispatcher.query(insertTipString);
         logger.trace("sendTips --> RESULT: " + success);
 
         if (success) {
-          res.sendPage("takk", null);
+          messageBuffer.append("<c:message>Ditt tips er mottatt. Tusen takk :)</c:message>");
+          messageBuffer.append("</c:messages>\n");
+          bizData.put("messages", messageBuffer.toString());
+          bizData.put("mode", "ok");
+          res.sendPage("xml/tips", bizData);
           return;
         } else {
-          res.sendPage("xhtml/tips", null);
+          messageBuffer.append("<c:message>Det skjedde noe galt. Kontroller alle feltene og prøv igjen</c:message>");
+          messageBuffer.append("</c:messages>\n");
+          bizData.put("mode", "form");
+          bizData.put("messages", messageBuffer.toString());
+          res.sendPage("xml/tips", bizData);
           return;
         }
 
       } else {
-        res.sendPage("xhtml/tips", null);
+        messageBuffer.append("<c:message>Feil ved angitt URL. Vennligst kontroller at linken du oppga fungerer.</c:message>");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("mode", "form");
+        res.sendPage("xml/tips", bizData);
         return;
       }
     }

@@ -233,6 +233,7 @@ public class ResourceController implements StatelessAppleController {
                     insertString.append(completePrefixes);
                     insertString.append("\nINSERT\n{\n");
                     insertString.append("<" + uri + "> a sub:Resource .\n");
+                    insertString.append("<" + uri + "> sub:url \"" + uri + "\" .\n");
 
                     // Check all input parameters and "DELETE" those who have a value
                     if (req.getCocoonRequest().getParameter("dct:title") != null) {
@@ -266,13 +267,13 @@ public class ResourceController implements StatelessAppleController {
                         }
                     }
 
-                    if (req.getCocoonRequest().getParameterValues("dct:MediaType") != null) {
+                    if (req.getCocoonRequest().getParameterValues("dct:format") != null) {
                         i += 1;
-                        deleteString.append("<" + uri + "> dct:MediaType ?var" + i + " .\n");
-                        whereString.append("<" + uri + "> dct:MediaType ?var" + i + " .\n");
+                        deleteString.append("<" + uri + "> dct:format ?var" + i + " .\n");
+                        whereString.append("<" + uri + "> dct:format ?var" + i + " .\n");
 
-                        for (String s : req.getCocoonRequest().getParameterValues("dct:MediaType")) {
-                            insertString.append("<" + uri + "> dct:MediaType <" + s + "> .\n");
+                        for (String s : req.getCocoonRequest().getParameterValues("dct:format")) {
+                            insertString.append("<" + uri + "> dct:format <" + s + "> .\n");
                         }
                     }
 
@@ -303,11 +304,11 @@ public class ResourceController implements StatelessAppleController {
                         insertString.append("<" + uri + "> rdfs:comment \"" + (req.getCocoonRequest().getParameter("rdfs:comment")) + "\"@no .\n");
                     }
 
-                    if (req.getCocoonRequest().getParameter("wdr:DR") != null) {
+                    if (req.getCocoonRequest().getParameter("wdr:describedBy") != null) {
                         i += 1;
-                        deleteString.append("<" + uri + "> wdr:DR ?var" + i + " .\n");
-                        whereString.append("<" + uri + "> wdr:DR ?var" + i + " .\n");
-                        insertString.append("<" + uri + "> wdr:DR <" + (req.getCocoonRequest().getParameter("wdr:DR")) + "> .\n");
+                        deleteString.append("<" + uri + "> wdr:describedBy ?var" + i + " .\n");
+                        whereString.append("<" + uri + "> wdr:describedBy ?var" + i + " .\n");
+                        insertString.append("<" + uri + "> wdr:describedBy <" + (req.getCocoonRequest().getParameter("wdr:describedBy")) + "> .\n");
                     }
 
                     i += 1;
@@ -405,7 +406,7 @@ public class ResourceController implements StatelessAppleController {
             validationMessages.append("<c:message>Minst ett språk må være valgt</c:message>\n");
         }
 
-        if (req.getCocoonRequest().getParameterValues("dct:MediaType") == null) {
+        if (req.getCocoonRequest().getParameterValues("dct:format") == null) {
             validationMessages.append("<c:message>Minst en mediatype må være valgt</c:message>\n");
         }
 
@@ -417,7 +418,7 @@ public class ResourceController implements StatelessAppleController {
             validationMessages.append("<c:message>Minst ett emne må være valgt</c:message>\n");
         }
 
-        if (req.getCocoonRequest().getParameter("wdr:DR") == null) {
+        if (req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
             validationMessages.append("<c:message>En status må velges</c:message>\n");
         }
 
@@ -432,11 +433,11 @@ public class ResourceController implements StatelessAppleController {
         String temp_publisher = req.getCocoonRequest().getParameter("dct:publisher");
         String temp_added_publisher = req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name");
         String[] temp_languages = req.getCocoonRequest().getParameterValues("dct:language");
-        String[] temp_mediatypes = req.getCocoonRequest().getParameterValues("dct:MediaType");
+        String[] temp_mediatypes = req.getCocoonRequest().getParameterValues("dct:format");
         String[] temp_audiences = req.getCocoonRequest().getParameterValues("dct:audience");
         String[] temp_subjects = req.getCocoonRequest().getParameterValues("dct:subject");
         String temp_comment = req.getCocoonRequest().getParameter("rdfs:comment");
-        String temp_status = req.getCocoonRequest().getParameter("wdr:DR");
+        String temp_status = req.getCocoonRequest().getParameter("wdr:describedBy");
 
         //Create an XML structure for the selected values, to use in the JX template
         StringBuffer xmlStructureBuffer = new StringBuffer();
@@ -456,7 +457,7 @@ public class ResourceController implements StatelessAppleController {
         if (temp_mediatypes != null) {
 
             for (String s : temp_mediatypes) {
-                xmlStructureBuffer.append("<dct:MediaType rdf:description=\"" + s + "\"/>\n");
+                xmlStructureBuffer.append("<dct:format rdf:description=\"" + s + "\"/>\n");
             }
 
         }
@@ -476,7 +477,7 @@ public class ResourceController implements StatelessAppleController {
         }
 
         xmlStructureBuffer.append("<rdfs:comment>" + temp_comment + "</rdfs:comment>\n");
-        xmlStructureBuffer.append("<wdr:DR>" + temp_status + "</wdr:DR>\n");
+        xmlStructureBuffer.append("<wdr:describedBy>" + temp_status + "</wdr:describedBy>\n");
 
         return xmlStructureBuffer;
     }
@@ -498,7 +499,7 @@ public class ResourceController implements StatelessAppleController {
                         //"              dct:identifier ?identifier ;" +
                         "              a sub:Resource . }",
                 "    WHERE {",
-                "        ?resource wdr:DR <http://sublima.computas.com/status/til_godkjenning> ;",
+                "        ?resource wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;",
                 "                  dct:title ?title .",
                 //"                  dct:identifier ?identifier .",
                 "}"});
