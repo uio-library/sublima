@@ -63,13 +63,13 @@
                 <xsl:apply-templates select="c:page/c:content/c:topic" mode="topictemp"/>
                 <br/>
                 <h4>Ressurser tilknyttet emnet</h4>
-                <xsl:apply-templates select="c:page/c:content/c:topic/c:topicdetails/rdf:RDF" mode="results"/>
+                <xsl:apply-templates select="c:page/c:content/c:topic/c:topicresources/rdf:RDF" mode="results"/>
             </xsl:when>
             <xsl:when test="c:page/c:mode = 'topicedit'">
                 <xsl:apply-templates select="c:page/c:content/c:topic" mode="topicedit"/>
                 <br/>
                 <h4>Ressurser tilknyttet emnet</h4>
-                <xsl:apply-templates select="c:page/c:content/c:topic/c:topicdetails/rdf:RDF" mode="results"/>
+                <xsl:apply-templates select="c:page/c:content/c:topic/c:topicresources/rdf:RDF" mode="results"/>
             </xsl:when>
        </xsl:choose>
     </xsl:template>
@@ -78,9 +78,9 @@
     <xsl:template name="alltopics">
       <ul>
       <xsl:for-each select="c:page/c:content/c:topics/rdf:RDF/skos:Concept">
-        <xsl:sort select="./rdfs:label"/>
+        <xsl:sort select="./skos:prefLabel"/>
         <li>
-          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}"><xsl:value-of select="./rdfs:label"/></a>
+          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}"><xsl:value-of select="./skos:prefLabel"/></a>
         </li>
        </xsl:for-each>
       </ul>

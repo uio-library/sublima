@@ -168,16 +168,16 @@
                     <td>
                         <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
                             <xsl:for-each select="./c:topics/rdf:RDF/skos:Concept">
-                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:sort select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
                                         <option value="{./@rdf:about}" selected="selected">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <option value="{./@rdf:about}">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:otherwise>
                                 </xsl:choose>

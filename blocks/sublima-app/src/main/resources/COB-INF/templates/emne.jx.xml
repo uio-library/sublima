@@ -39,6 +39,10 @@
                 <jx:out value="#{topicdetails}" xmlize="true"/>
             </c:topicdetails>
 
+            <c:topicresources>
+                <jx:out value="#{topicresources}" xmlize="true"/>
+            </c:topicresources>
+
             <c:alltopics>
                 <jx:out value="#{alltopics}" xmlize="true"/>
             </c:alltopics>

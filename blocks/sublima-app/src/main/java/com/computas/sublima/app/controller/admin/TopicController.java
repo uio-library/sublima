@@ -116,14 +116,14 @@ public class TopicController implements StatelessAppleController {
             // Slette alle gamle URIer
             StringBuffer topicBuffer = new StringBuffer();
 
-            String uri = req.getCocoonRequest().getParameter("skos:Concept/rdfs:label").replace(" ", "_");
+            String uri = req.getCocoonRequest().getParameter("skos:Concept/skos:prefLabel").replace(" ", "_");
             uri = uri.replace(",", "_");
             uri = uri.replace(".", "_");
             uri = getProperty("sublima.base.url") + "topic/" + uri + "_" + uri.hashCode();
 
             String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" +
                     "<" + uri + "> a skos:Concept ;\n" +
-                    " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:Concept/rdfs:label") + "\"@no .\n" +
+                    " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:Concept/skos:prefLabel") + "\"@no .\n" +
                     "}";
 
             logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
@@ -239,11 +239,13 @@ public class TopicController implements StatelessAppleController {
 
             if ("nytt".equalsIgnoreCase(type)) {
                 bizData.put("topicdetails", "<empty></empty>");
+                bizData.put("topicresources", "<empty></empty>");
                 bizData.put("tempvalues", "<empty></empty>");
                 bizData.put("alltopics", adminService.getAllTopics());
                 bizData.put("mode", "topicedit");
             } else {
                 bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("uri")));
+                bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
                 bizData.put("alltopics", adminService.getAllTopics());
                 bizData.put("tempvalues", "<empty></empty>");
                 bizData.put("mode", "topicedit");
@@ -272,6 +274,7 @@ public class TopicController implements StatelessAppleController {
                 messageBuffer.append("</c:messages>\n");
 
                 bizData.put("topicdetails", "<empty></empty>");
+                bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
                 bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
                 bizData.put("messages", messageBuffer.toString());
                 bizData.put("alltopics", adminService.getAllTopics());
@@ -283,7 +286,7 @@ public class TopicController implements StatelessAppleController {
                 // Generate an identifier if a uri is not given
                 String uri;
                 if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
-                    uri = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/rdfs:label").replace(" ", "_");
+                    uri = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel").replace(" ", "_");
                     uri = uri.replace(",", "_");
                     uri = uri.replace(".", "_");
                     uri = getProperty("sublima.base.url") + "topic/" + uri + "_" + uri.hashCode();
@@ -337,11 +340,13 @@ public class TopicController implements StatelessAppleController {
 
                 if (deleteSuccess && insertSuccess) {
                     bizData.put("topicdetails", adminService.getTopicByURI(uri));
+                    bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
                     bizData.put("tempvalues", "<empty></empty>");
                     bizData.put("mode", "topicedit");
                     bizData.put("alltopics", adminService.getAllTopics());
                 } else {
                     bizData.put("topicdetails", adminService.getTopicByURI(uri));
+                    bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
                     bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
                     bizData.put("mode", "topictemp");
                     bizData.put("alltopics", adminService.getAllTopics());
@@ -386,7 +391,7 @@ public class TopicController implements StatelessAppleController {
     private String validateRequest(AppleRequest req) {
         StringBuffer validationMessages = new StringBuffer();
 
-        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/rdfs:label") == null) {
+        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
             validationMessages.append("<c:message>Emnets tittel kan ikke være blank</c:message>\n");
         }
 

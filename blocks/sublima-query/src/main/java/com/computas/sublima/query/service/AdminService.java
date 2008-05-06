@@ -223,14 +223,13 @@ public class AdminService {
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "CONSTRUCT {",
             "    ?topic a skos:Concept ;",
-            "        rdfs:label ?label .",
+            "        skos:prefLabel ?label .",
             "}",
             "WHERE {",
             "    ?topic a skos:Concept ;",
-            "        rdfs:label ?label .",
+            "        skos:prefLabel ?label .",
             "FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
@@ -243,13 +242,28 @@ public class AdminService {
   public String getTopicByURI(String uri) {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
-            "DESCRIBE <" + uri + "> ?resource ?subject",
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "DESCRIBE <" + uri + ">",
             "WHERE {",
-            "    OPTIONAL",
-            "    { ?resource dct:subject <" + uri + "> . }",
+            "<" + uri + "> a skos:Concept .",
             "}"});
 
     logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
+
+  public String getTopicResourcesByURI(String uri) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "DESCRIBE ?resource",
+            "WHERE {",
+            "    ?resource dct:subject <" + uri + "> . ",
+            "}"});
+
+    logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();

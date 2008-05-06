@@ -27,16 +27,16 @@
                     <td>
                         <select id="skos:Concept" name="skos:Concept" multiple="multiple">
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:sort select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:join/c:tempvalues/c:tempvalues/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <option value="{./@rdf:about}">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:otherwise>
                                 </xsl:choose>
@@ -46,8 +46,8 @@
                 </tr>
 
                 <tr>
-                    <td><label for="skos:Concept/rdfs:label">Felles navn</label></td>
-                    <td><input id="skos:Concept/rdfs:label" type="text" name="skos:Concept/rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/skos:Concept/rdfs:label}" /></td>
+                    <td><label for="skos:Concept/skos:prefLabel">Felles navn</label></td>
+                    <td><input id="skos:Concept/skos:prefLabel" type="text" name="skos:Concept/skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:Concept/skos:prefLabel}" /></td>
                 </tr>
              
                 <tr>

@@ -20,14 +20,14 @@
     <xsl:template match="c:topic" mode="topicedit">
 
         <form name="topicedit" action="{$baseurl}/admin/emner/emne" method="POST">
-            <input type="hidden" name="uri" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/@rdf:about}"/>
+            <input type="hidden" name="uri" value="{./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about}"/>
             <table>
                 <tr>
                     <td>
                         <label for="dct:subject/skos:Concept/skos:prefLabel">Tittel</label>
                     </td>
                     <td>
-                        <input id="dct:subject/skos:Concept/skos:prefLabel" type="text" name="dct:subject/skos:Concept/skos:prefLabel" size="40" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/skos:prefLabel}"/>
+                        <input id="dct:subject/skos:Concept/skos:prefLabel" type="text" name="dct:subject/skos:Concept/skos:prefLabel" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/skos:prefLabel}"/>
                     </td>
                 </tr>
               </table>
@@ -78,7 +78,7 @@
     <xsl:template match="c:topic" mode="topictemp">
 
         <form name="topicedit" action="{$baseurl}/admin/emner/emne" method="POST">
-            <input type="hidden" name="uri" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/@rdf:about}"/>
+            <input type="hidden" name="uri" value="{./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about}"/>
             <table>
                 <tr>
                     <td>
