@@ -314,7 +314,7 @@ public class TopicController implements StatelessAppleController {
         insertString.append("<" + uri + "> a skos:Concept ;\n");
         insertString.append("skos:prefLabel \"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") + "\"@no ;\n");
         insertString.append("wdr:describedBy <" + req.getCocoonRequest().getParameter("wdr:describedBy") + "> ;\n");
-        insertString.append("skos:definition \"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:definition") + "\"@no .\n");
+        insertString.append("skos:definition \"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:definition") + "\"@no ;\n");
         insertString.append("skos:note \"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:note") + "\"@no .\n");
 
         if (req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource") != null) {
