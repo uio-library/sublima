@@ -15,6 +15,7 @@
   <xsl:import href="rdfxml2xhtml-table.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
   <xsl:import href="browse.xsl"/>
+  <xsl:import href="tipsform.xsl"/>
 
   <xsl:param name="baseurl"/>
 
@@ -31,8 +32,24 @@ this, just comment out the call-template -->
   </xsl:template>
 
   <xsl:template name="tips"> <!-- I have no idea why it didn't work to have a normal node-based template -->
-    <xsl:copy-of select="c:page/c:tips/*"/>
+    <xsl:choose>
+      <xsl:when test="c:page/c:mode = 'form'">
+        <xsl:apply-templates select="c:page/c:tips" mode="form"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="messages">
+        <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
+        <ul>
+          <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
+            <li>
+              <xsl:value-of select="." /><br/>
+            </li>
+          </xsl:for-each>
+        </ul>
+      </xsl:if>
+    </xsl:template>
 
   <xsl:template match="/">
 
@@ -145,6 +162,7 @@ this, just comment out the call-template -->
                 <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
                 <xsl:call-template name="advancedsearch"/>
                 <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
+                <xsl:call-template name="messages"/>
                 <xsl:call-template name="tips"/>
 
                 <xsl:choose>
