@@ -20,10 +20,10 @@
         Utvalgte emner (for demo)
         <ul>
             <xsl:for-each select="./rdf:RDF/skos:Concept">
-                <xsl:sort select="./rdfs:label"/>
+                <xsl:sort select="./skos:prefLabel"/>
                 <li>
                     <a href="{./@rdf:about}">
-                        <xsl:value-of select="./rdfs:label"/>
+                        <xsl:value-of select="./skos:prefLabel"/>
                     </a>
                 </li>
             </xsl:for-each>
