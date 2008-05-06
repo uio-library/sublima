@@ -113,15 +113,15 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="dct:MediaType">Mediatype</label>
+                        <label for="dct:format">Mediatype</label>
                     </td>
                     <td>
-                        <select id="dct:MediaType" name="dct:MediaType" multiple="multiple" size="10">
+                        <select id="dct:format" name="dct:format" multiple="multiple" size="10">
                             <xsl:for-each
                                     select="./c:mediatypes/rdf:RDF/dct:MediaType">
                                 <xsl:sort select="./rdfs:label"/>
                                 <xsl:choose>
-                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:MediaType/@rdf:resource">
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource">
                                         <option value="{./@rdf:about}" selected="selected">
                                             <xsl:value-of select="./rdfs:label"/>
                                         </option>
@@ -196,15 +196,15 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="wdr:DR">Status</label>
+                        <label for="wdr:describedBy">Status</label>
                     </td>
                     <td>
-                        <select id="wdr:DR" name="wdr:DR">
+                        <select id="wdr:describedBy" name="wdr:describedBy">
                             <option value=""/>
                             <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
                                 <xsl:sort select="./rdfs:label"/>
                                 <xsl:choose>
-                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:DR/@rdf:resource">
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
                                         <option value="{./@rdf:about}" selected="selected">
                                             <xsl:value-of select="./rdfs:label"/>
                                         </option>
@@ -320,7 +320,7 @@
                     <td></td>
                     <td>
                         <input id="dct:publisher/foaf:Agent/foaf:name" type="text"
-                               name="dct:publisher/foaf:Agent/foaf:name" size="40"/>
+                               name="dct:publisher/foaf:Agent/foaf:name" size="40" value="{./c:tempvalues/c:tempvalues/foaf:Agent}"/>
                     </td>
                 </tr>
                 <tr>
@@ -349,15 +349,15 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="dct:MediaType">Mediatype</label>
+                        <label for="dct:format">Mediatype</label>
                     </td>
                     <td>
-                        <select id="dct:MediaType" name="dct:MediaType" multiple="multiple" size="10">
+                        <select id="dct:format" name="dct:format" multiple="multiple" size="10">
                             <xsl:for-each
                                     select="./c:mediatypes/rdf:RDF/dct:MediaType">
                                 <xsl:sort select="./rdfs:label"/>
                                 <xsl:choose>
-                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:tempvalues/c:tempvalues/dct:MediaType/@rdf:description">
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:tempvalues/c:tempvalues/dct:format/@rdf:description">
                                         <option value="{./@rdf:about}" selected="selected">
                                             <xsl:value-of select="./rdfs:label"/>
                                         </option>
@@ -404,16 +404,16 @@
                     <td>
                         <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
                             <xsl:for-each select="./c:topics/rdf:RDF/skos:Concept">
-                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:sort select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:tempvalues/c:tempvalues/dct:subject/@rdf:description">
                                         <option value="{./@rdf:about}" selected="selected">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <option value="{./@rdf:about}">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:otherwise>
                                 </xsl:choose>
@@ -432,15 +432,15 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="wdr:DR">Status</label>
+                        <label for="wdr:describedBy">Status</label>
                     </td>
                     <td>
-                        <select id="wdr:DR" name="wdr:DR">
+                        <select id="wdr:describedBy" name="wdr:describedBy">
                             <option value=""/>
                             <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
                                 <xsl:sort select="./rdfs:label"/>
                                 <xsl:choose>
-                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:tempvalues/c:tempvalues/wdr:DR">
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:tempvalues/c:tempvalues/wdr:describedBy">
                                         <option value="{./@rdf:about}" selected="selected">
                                             <xsl:value-of select="./rdfs:label"/>
                                         </option>

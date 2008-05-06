@@ -30,6 +30,16 @@
                         <input id="dct:subject/skos:Concept/skos:prefLabel" type="text" name="dct:subject/skos:Concept/skos:prefLabel" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/skos:prefLabel}"/>
                     </td>
                 </tr>
+
+                <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/skos:definition">Beskrivelse</label>
+                    </td>
+                    <td>
+                        <input id="dct:subject/skos:Concept/skos:definition" type="text" name="dct:subject/skos:Concept/skos:definition" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/skos:definition}"/>
+                    </td>
+                </tr>
+
               </table>
               <p>Relaterte emner</p>
               <table>
@@ -42,7 +52,7 @@
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
                                 <xsl:sort select="./skos:prefLabel"/>
                                 <xsl:choose>
-                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/skos:broader/@rdf:resource">
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/skos:broader/@rdf:resource">
                                         <option value="{./@rdf:about}" selected="selected">
                                             <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
@@ -57,6 +67,41 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <label for="wdr:describedBy">Status</label>
+                    </td>
+                    <td>
+                        <select id="wdr:describedBy" name="wdr:describedBy">
+                            <option value=""/>
+                            <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/wdr:describedBy/@rdf:resource">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/skos:note">Kommentar</label>
+                    </td>
+                    <td>
+                        <input id="dct:subject/skos:Concept/skos:note" type="text" name="dct:subject/skos:Concept/skos:note" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/skos:note}"/>
+                    </td>
+                </tr>
+
 
                 <tr>
                     <td></td>
@@ -88,6 +133,16 @@
                         <input id="dct:subject/skos:Concept/skos:prefLabel" type="text" name="dct:subject/skos:Concept/skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:prefLabel}"/>
                     </td>
                 </tr>
+
+              <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/skos:definition">Beskrivelse</label>
+                    </td>
+                    <td>
+                        <input id="dct:subject/skos:Concept/skos:definition" type="text" name="dct:subject/skos:Concept/skos:definition" size="40" value="{./c:tempvalues/c:tempvalues/skos:definition}"/>
+                    </td>
+                </tr>
+              
               </table>
               <p>Relaterte emner</p>
               <table>
@@ -115,7 +170,41 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <label for="wdr:describedBy">Status</label>
+                    </td>
+                    <td>
+                        <select id="wdr:describedBy" name="wdr:describedBy">
+                            <option value=""/>
+                            <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
+                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:tempvalues/c:tempvalues/wdr:describedBy/@rdf:resource">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./rdfs:label"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
 
+                <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/skos:note">Kommentar</label>
+                    </td>
+                    <td>
+                        <input id="dct:subject/skos:Concept/skos:note" type="text" name="dct:subject/skos:Concept/skos:note" size="40" value="{./c:tempvalues/c:tempvalues/skos:note}"/>
+                    </td>
+                </tr>
+                
                 <tr>
                     <td></td>
                     <td></td>
