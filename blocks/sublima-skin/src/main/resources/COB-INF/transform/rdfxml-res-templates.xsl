@@ -109,7 +109,7 @@
     <xsl:value-of select="./rdf:Description/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
-  <xsl:template match="dct:type">
+  <xsl:template match="dct:format">
     <xsl:choose>
       <xsl:when test="@rdf:resource='http://purl.org/dc/dcmitype/Text'">
 	<xsl:choose>
