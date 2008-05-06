@@ -87,7 +87,7 @@
 	  Type:
 	</th>
 	<td>
-	  <xsl:apply-templates select="sub:Resource/dct:type"/>
+	  <xsl:apply-templates select="sub:Resource/dct:format"/>
 	</td>
       </tr>
       <tr>
