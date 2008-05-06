@@ -9,7 +9,7 @@
     <form name="dcSearch" action="search-result" method="GET">
       <input type="hidden" name="interface-language" value="no"/>
       <input type="hidden" name="freetext-field" value="dct:title"/>
-      <input type="hidden" name="freetext-field" value="dct:subject/rdfs:label"/>
+      <input type="hidden" name="freetext-field" value="dct:subject/all-labels"/>
       <input type="hidden" name="freetext-field" value="dct:description"/>
       <input type="hidden" name="freetext-field" value="dct:publisher/foaf:name"/>
 
@@ -31,7 +31,7 @@
             <label for="subject">Subject</label>
           </td>
           <td>
-            <input id="subject" type="text" name="dct:subject/rdfs:label" size="20"/>
+            <input id="subject" type="text" name="dct:subject/all-labels" size="20"/>
           </td>
         </tr>
         <tr>
