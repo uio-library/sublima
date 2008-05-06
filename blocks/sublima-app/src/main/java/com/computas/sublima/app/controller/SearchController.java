@@ -175,8 +175,9 @@ public class SearchController implements StatelessAppleController {
     if (parameterMap.get("prefix") != null) {
       // Calls the Form2SPARQL service with the parameterMap which returns
       // a SPARQL as String
-      Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+      Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"), parameterMap.get("freetext-field"));
       parameterMap.remove("prefix"); // The prefixes are magic variables
+      parameterMap.remove("freetext-field"); // The freetext-fields are magic variables too
       sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
     } else {
       res.sendStatus(400);

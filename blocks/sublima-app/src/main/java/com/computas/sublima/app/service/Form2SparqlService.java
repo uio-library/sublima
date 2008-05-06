@@ -24,10 +24,18 @@ import com.hp.hpl.jena.sparql.util.StringUtils;
  * e.g., it may be called as myService = new Form2SparqlService(new
  * String[]{"dct: <http://purl.org/dc/terms/>", "foaf:
  * <http://xmlns.com/foaf/0.1/>"});
- * 
+ *
+ * This class has become rather complex, as it has to account for a very high number of
+ * different situations
+ *
  * @author kkj
  * @version 1.0
- * @param: prefixes string array with prefixes for names used.
+ * @param: prefixes
+ *         string array with prefixes for names used.
+ * @param freetextFields
+ * 			  A List containing the fields that containing the fields 
+ *            that needs to be treated as free-text-indexed fields.
+
  */
 public class Form2SparqlService {
 	
@@ -41,12 +49,23 @@ public class Form2SparqlService {
 
 	private int variablecount = 1; // the var below has to be unique across calls
 
+    private List freetextFields = new ArrayList<String>();
 
-	public Form2SparqlService(String[] pr) {
+
+    public Form2SparqlService(String[] pr) {
+        prefixes = new ArrayList<String>(Arrays.asList(pr));
+    }
+
+    public Form2SparqlService(String[] pr, String[] ff) {
 		prefixes = new ArrayList<String>(Arrays.asList(pr));
-	}
+        if (ff != null) {
+            freetextFields = new ArrayList<String>(Arrays.asList(ff));
+        } else {
+            freetextFields = null;
+        }
+    }
 
-	/**
+    /**
 	 * Can be used to set the language of all content passed to the service.
 	 * 
 	 * @param lang
@@ -79,15 +98,24 @@ public class Form2SparqlService {
 		return res.toString();
 	}
 
-        /** 
+    /**
 	 * Adds a prefix to the list of prefixes 
 	 *
 	 * @param prefix
 	 *        A string with the prefix declaration
-	 */  
-
-
+	 */
      public void addPrefix(String prefix) { prefixes.add(prefix); }
+
+
+    /**
+      * Adds a freetext field to the list of freetext fields
+      *
+      * @param freetextField
+      *        A string with the freetextField declaration
+      */
+
+
+      public void addFreetextField(String freetextField) { freetextFields.add(freetextField); }
 
 
 	/**
@@ -117,11 +145,8 @@ public class Form2SparqlService {
 	 *            The key as described above.
 	 * @param values
 	 *            A string array containing values for the key.
-	 * @param freetextFields 
-	 * 			  A List containing the fields that containing the fields 
-	 *            that needs to be treated as free-text-indexed fields.
 	 */
-	public String convertFormField2N3(String key, String[] values, List freetextFields) {
+	public String convertFormField2N3(String key, String[] values) {
 		StringBuffer n3Buffer = new StringBuffer();
 		String[] keys = key.split("/");
 		for (String value : values) { // TODO low-pri: Optimize to comma-separate values.
@@ -132,6 +157,9 @@ public class Form2SparqlService {
                 if ("dct:subject/all-labels".equals(key) && "all-labels".equals(qname)) {
                     logger.debug("Will expand the search to include all labels");
                     RDFObject myRDFObject = new RDFObject(value, language);
+                    if (freetextFields != null)  {
+						myRDFObject.setFreetext(freetextFields.indexOf(key)+1);
+					}
                     n3Buffer.append("\n{ ?var1 skos:prefLabel ");
                     n3Buffer.append(myRDFObject.toN3());
                     n3Buffer.append(" }\nUNION { ?var1 skos:altLabel ");
@@ -193,7 +221,13 @@ public class Form2SparqlService {
 			parameterMap.remove("interface-language");
 		}	
 
-		if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
+        if (parameterMap.get("dct:subject/all-labels") != null) { // Then there are SKOS labels
+           addPrefix("skos: <http://www.w3.org/2004/02/skos/core#>");
+        }
+
+
+
+        if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
 		    sparqlQueryBuffer.append("?subject ?publisher ");
 
             //Do deep search in external resources or not
@@ -211,16 +245,14 @@ public class Form2SparqlService {
 		    parameterMap.remove("searchstring");
 		}
 
-		List freetextFields = null;
-		if (parameterMap.get("freetext-field") != null) {
-			freetextFields = Arrays.asList(parameterMap.get("freetext-field"));
-			addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
-			parameterMap.remove("freetext-field");
+
+		if (freetextFields != null) {
+            addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
 		}
 	
 		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-			n3List.add(convertFormField2N3(e.getKey(), e.getValue(), freetextFields));
+			n3List.add(convertFormField2N3(e.getKey(), e.getValue()));
 		}
 
 		// Add the variables to the query

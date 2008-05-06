@@ -71,41 +71,51 @@ public class Form2SparqlServiceTest extends TestCase {
   public void testConvertFormField2N3SingleLiteral() {
     String expectS = "\n?resource dc:title \"Cirrus Personal Jet\" .";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dc:title", testString, emptyList));
+            myService.convertFormField2N3("dc:title", testString));
   }
 
   public void testConvertFormField2N3DualLiteral() {
     String expectS = "\n?resource dc:subject ?var1 .\n?var1 rdfs:label \"Jet\" .";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dc:subject/rdfs:label", testString, emptyList));
+            myService.convertFormField2N3("dc:subject/rdfs:label", testString));
   }
 
   public void testConvertFormField2N3AllSubjectLabels() {
     String expectS = "\n?resource dct:subject ?var1 .\n{ ?var1 skos:prefLabel \"Jet\" . }\nUNION { ?var1 skos:altLabel \"Jet\" . }\nUNION { ?var1 skos:hiddenLabel \"Jet\" . }\n";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dct:subject/all-labels", testString, emptyList));
+            myService.convertFormField2N3("dct:subject/all-labels", testString));
   }
 
+  public void testConvertFormField2N3AllSubjectLabelsFree() {
+    String expectS = "\n?resource dct:subject ?var1 .\n{ ?var1 skos:prefLabel ?free1 .\n?free1 pf:textMatch '+Jet' . }\nUNION { ?var1 skos:altLabel ?free1 .\n?free1 pf:textMatch '+Jet' . }\nUNION { ?var1 skos:hiddenLabel ?free1 .\n?free1 pf:textMatch '+Jet' . }\n";
+    testString[0] = "Jet";
+    myService.addFreetextField("dct:subject/all-labels");
+    assertEquals("Expected result and actual result not equal", expectS,
+            myService.convertFormField2N3("dct:subject/all-labels", testString));
+  }
+    
   public void testConvertFormField2N3SingleFree() {
 	  String expectS = "\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .";
-	  assertEquals("Expected result and actual result not equal", expectS,
-			  myService.convertFormField2N3("dc:title", testString, Arrays.asList(new String[]{"dc:title"})));
+      myService.addFreetextField("dc:title");
+      assertEquals("Expected result and actual result not equal", expectS,
+			  myService.convertFormField2N3("dc:title", testString));
   }	
 
   public void testConvertFormField2N3DualFree() {
 	  String expectS = "\n?resource dc:subject ?var1 .\n?var1 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet' .";
 	  testString[0] = "Jet";
-	  assertEquals("Expected result and actual result not equal", expectS,
-			  myService.convertFormField2N3("dc:subject/rdfs:label", testString, Arrays.asList(new String[]{"dc:subject/rdfs:label"})));
+      myService.addFreetextField("dc:subject/rdfs:label");
+      assertEquals("Expected result and actual result not equal", expectS,
+			  myService.convertFormField2N3("dc:subject/rdfs:label", testString));
   }	
 
   public void testConvertFormField2N3SingleLiteralLang() {
     myService.setLanguage("en");
     String expectS = "\n?resource dc:title \"Cirrus Personal Jet\"@en .";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dc:title", testString, emptyList));
+            myService.convertFormField2N3("dc:title", testString));
   }
 
   public void testConvertFormField2N3DualLiteralLang() {
@@ -113,50 +123,50 @@ public class Form2SparqlServiceTest extends TestCase {
     String expectS = "\n?resource dc:subject ?var1 .\n?var1 rdfs:label \"Jet\"@en .";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dc:subject/rdfs:label", testString, emptyList));
+            myService.convertFormField2N3("dc:subject/rdfs:label", testString));
   }
 
   public void testConvertFormField2N3TripleLiteral() {
     String expectS = "\n?resource ex:example ?var1 .\n?var1 foo:foobar ?var2 .\n?var2 bar:foo \"Jet\" .";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("ex:example/foo:foobar/bar:foo", testString, emptyList));
+            myService.convertFormField2N3("ex:example/foo:foobar/bar:foo", testString));
   }
 
   public void testConvertFormField2N3SingleURI() {
     String expectS = "\n?resource dc:publisher <http://sublima.computas.com/agent/cirrus-design> .";
     testString[0] = "http://sublima.computas.com/agent/cirrus-design";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dc:publisher", testString, emptyList));
+            myService.convertFormField2N3("dc:publisher", testString));
   }
 
   public void testConvertFormField2N3SingleDataType() {
     String expectS = "\n?resource dct:dateAccepted \"2007-12-05T14:23:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .";
     testString[0] = "2007-12-05T14:23:00";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dct:dateAccepted", testString, emptyList));
+            myService.convertFormField2N3("dct:dateAccepted", testString));
   }
 
   public void testConvertFormField2N3SingleMailTo() {
     String expectS = "\n?resource foaf:mbox <mailto:test@example.org> .";
     testString[0] = "mailto:test@example.org";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("foaf:mbox", testString, emptyList));
+            myService.convertFormField2N3("foaf:mbox", testString));
   }
 
   public void testConvertFormField2N3DualURI() {
     String expectS = "\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .";
     testString[0] = "http://www.cirrusdesign.com/";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dc:publisher/foaf:homepage", testString, emptyList));
+            myService.convertFormField2N3("dc:publisher/foaf:homepage", testString));
   }
 
   public void testConvertFormField2N3DoubleDual() {
     String expectS = "\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dc:subject ?var2 .\n?var2 rdfs:label \"Jet\" .";
     testString[0] = "http://www.cirrusdesign.com/";
-    String actual = myService.convertFormField2N3("dc:publisher/foaf:homepage", testString, emptyList);
+    String actual = myService.convertFormField2N3("dc:publisher/foaf:homepage", testString);
     testString[0] = "Jet";
-    actual = actual + myService.convertFormField2N3("dc:subject/rdfs:label", testString, emptyList);
+    actual = actual + myService.convertFormField2N3("dc:subject/rdfs:label", testString);
 
     assertEquals("Expected result and actual result not equal", expectS, actual);
   }
@@ -164,34 +174,31 @@ public class Form2SparqlServiceTest extends TestCase {
   public void testConvertFormField2N3DoubleDualOneFree() {
 	    String expectS = "\n?resource dc:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dc:subject ?var2 .\n?var2 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet' .";
 	    testString[0] = "http://www.cirrusdesign.com/";
-	    String actual = myService.convertFormField2N3("dc:publisher/foaf:homepage", testString, emptyList);
+	    String actual = myService.convertFormField2N3("dc:publisher/foaf:homepage", testString);
 	    testString[0] = "Jet";
-	    actual = actual + myService.convertFormField2N3("dc:subject/rdfs:label", testString, Arrays.asList(new String[]{"dc:subject/rdfs:label"}));
+        myService.addFreetextField("dc:subject/rdfs:label");
+        actual = actual + myService.convertFormField2N3("dc:subject/rdfs:label", testString);
 
 	    assertEquals("Expected result and actual result not equal", expectS, actual);
   }
 
-  /* 
-   * this test won't do the right thing, since it depends on a list per call.
-   * 
- 
-  public void testConvertFormField2N3DoubleDualBothFree() {
-	    String expectS = "\n?resource dc:title ?free1 .\n?free1 pf:textMatch ( '+Cirrus Personal Jet' ) .\n?resource dc:subject ?var2 .\n?var2 rdfs:label ?free2 .\n?free2 pf:textMatch ( '+Jet' ) .";
-	    testString[0] = "Cirrus Personal Jet";
-	    List aList = Arrays.asList(new String[]{"dc:title", "dc:subject/rdfs:label"});
-	    String actual = myService.convertFormField2N3("dc:title", testString, Arrays.asList(new String[]{"dc:title"}));
-	    testString[0] = "Jet";
-	    actual = actual + myService.convertFormField2N3("dc:subject/rdfs:label", testString, Arrays.asList(new String[]{"dc:subject/rdfs:label"}));
+    public void testConvertFormField2N3DoubleDualBothFree() {
+        String expectS = "\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:subject ?var1 .\n?var1 rdfs:label ?free2 .\n?free2 pf:textMatch '+Jet' .";
+        testString[0] = "Cirrus Personal Jet";
+       myService.addFreetextField("dc:title");
+        myService.addFreetextField("dc:subject/rdfs:label");
+        String actual = myService.convertFormField2N3("dc:title", testString);
+        testString[0] = "Jet";
+        actual = actual + myService.convertFormField2N3("dc:subject/rdfs:label", testString);
 
-	    assertEquals("Expected result and actual result not equal", expectS, actual);
-	  }
+        assertEquals("Expected result and actual result not equal", expectS, actual);
+    }
 
-*/
   public void testConvertFormField2N3DualEmpty() {
     String expectS = "\n";
     testString[0] = "";
     assertEquals("Expected result and actual result not equal", expectS,
-            myService.convertFormField2N3("dc:publisher/foaf:homepage", testString, emptyList));
+            myService.convertFormField2N3("dc:publisher/foaf:homepage", testString));
   }
 
 
@@ -344,15 +351,17 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("dc:title", testString);
 	    testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
 	    testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
-	    testMap.put("freetext-field", new String[]{"dc:title"}); // this parameter is a magic string
+	    myService.addFreetextField("dc:title"); // this parameter is a magic string
 	    String resultString = myService.convertForm2Sparql(testMap);
 	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +"DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
 	  }
+    
   public void testConvertForm2SparqlTwoValuesBothFree() {
 	    // Single value test
 	    testMap.put("dc:title", testString);
 	    testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
-	    testMap.put("freetext-field", new String[]{"dc:title","dc:description"}); // this parameter is a magic string
+	    myService.addFreetextField("dc:title");
+        myService.addFreetextField("dc:description"); 
 	    String resultString = myService.convertForm2Sparql(testMap);
 	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +  "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description ?free2 .\n?free2 pf:textMatch '+A Very Light Jet Aircraft under construction.' .\n?resource ?p ?rest .\n}", resultString);
 	  }
