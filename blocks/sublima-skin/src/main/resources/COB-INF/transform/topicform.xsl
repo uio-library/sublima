@@ -24,10 +24,10 @@
             <table>
                 <tr>
                     <td>
-                        <label for="dct:subject/skos:Concept/rdfs:label">Tittel</label>
+                        <label for="dct:subject/skos:Concept/skos:prefLabel">Tittel</label>
                     </td>
                     <td>
-                        <input id="dct:subject/skos:Concept/rdfs:label" type="text" name="dct:subject/skos:Concept/rdfs:label" size="40" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/rdfs:label}"/>
+                        <input id="dct:subject/skos:Concept/skos:prefLabel" type="text" name="dct:subject/skos:Concept/skos:prefLabel" size="40" value="{./c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/skos:prefLabel}"/>
                     </td>
                 </tr>
               </table>
@@ -40,16 +40,16 @@
                     <td>
                         <select id="dct:subject/skos:Concept/skos:broader/rdf:resource" name="dct:subject/skos:Concept/skos:broader/rdf:resource" multiple="multiple">
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:sort select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/sub:Resource/dct:subject/skos:Concept/skos:broader/@rdf:resource">
                                         <option value="{./@rdf:about}" selected="selected">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <option value="{./@rdf:about}">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:otherwise>
                                 </xsl:choose>
@@ -82,10 +82,10 @@
             <table>
                 <tr>
                     <td>
-                        <label for="dct:subject/skos:Concept/rdfs:label">Tittel</label>
+                        <label for="dct:subject/skos:Concept/skos:prefLabel">Tittel</label>
                     </td>
                     <td>
-                        <input id="dct:subject/skos:Concept/rdfs:label" type="text" name="dct:subject/skos:Concept/rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/rdfs:label}"/>
+                        <input id="dct:subject/skos:Concept/skos:prefLabel" type="text" name="dct:subject/skos:Concept/skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:prefLabel}"/>
                     </td>
                 </tr>
               </table>
@@ -98,16 +98,16 @@
                     <td>
                         <select id="dct:subject/skos:Concept/skos:broader/rdf:resource" name="dct:subject/skos:Concept/skos:broader/rdf:resource" multiple="multiple">
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                                <xsl:sort select="./rdfs:label"/>
+                                <xsl:sort select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:tempvalues/c:tempvalues/skos:broader/@rdf:resource">
                                         <option value="{./@rdf:about}" selected="selected">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <option value="{./@rdf:about}">
-                                            <xsl:value-of select="./rdfs:label"/>
+                                            <xsl:value-of select="./skos:prefLabel"/>
                                         </option>
                                     </xsl:otherwise>
                                 </xsl:choose>

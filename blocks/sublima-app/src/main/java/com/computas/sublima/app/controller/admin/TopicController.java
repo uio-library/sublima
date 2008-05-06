@@ -27,13 +27,19 @@ public class TopicController implements StatelessAppleController {
     private String mode;
     private String submode;
     String[] completePrefixArray = {
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
-            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
-            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-            "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
+            "PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#>",
+            "PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>",
+            "PREFIX owl: 		<http://www.w3.org/2002/07/owl#>",
+            "PREFIX foaf: 		<http://xmlns.com/foaf/0.1/>",
+            "PREFIX lingvoj: 	<http://www.lingvoj.org/ontology#>",
+            "PREFIX dcmitype: 	<http://purl.org/dc/dcmitype/>",
+            "PREFIX dct: 		<http://purl.org/dc/terms/>",
+            "PREFIX sub: 		<http://xmlns.computas.com/sublima#>",
+            "PREFIX wdr: 		<http://www.w3.org/2007/05/powder#>",
+            "PREFIX sioc: 		<http://rdfs.org/sioc/ns#>",
+            "PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#>",
+            "PREFIX topic: 		<topic/>",
+            "PREFIX skos:		<http://www.w3.org/2004/02/skos/core#>"};
 
     String completePrefixes = StringUtils.join("\n", completePrefixArray);
     String[] prefixArray = {
@@ -43,7 +49,7 @@ public class TopicController implements StatelessAppleController {
             "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "wdr: <http://www.w3.org/2007/05/powder#>",
             "skos: <http://www.w3.org/2004/02/skos/core#>",
-            "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
+            "lingvoj: <http://www.lingvoj.org/ontology#>"};
     String prefixes = StringUtils.join("\n", prefixArray);
 
     private static Logger logger = Logger.getLogger(AdminController.class);
@@ -117,7 +123,7 @@ public class TopicController implements StatelessAppleController {
 
             String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" +
                     "<" + uri + "> a skos:Concept ;\n" +
-                    " rdfs:label \"" + req.getCocoonRequest().getParameter("skos:Concept/rdfs:label") + "\"@no .\n" +
+                    " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:Concept/rdfs:label") + "\"@no .\n" +
                     "}";
 
             logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
@@ -160,9 +166,9 @@ public class TopicController implements StatelessAppleController {
             deleteString.append(completePrefixes);
             deleteString.append("\nDELETE\n{\n");
             whereString.append("\nWHERE\n{\n");
-            deleteString.append("?theme a sub:Theme .\n");
+            deleteString.append("?topic sub:theme ?theme .\n");
             deleteString.append("}\n");
-            whereString.append("?theme a sub:Theme .\n");
+            whereString.append("?topic sub:theme ?theme.\n");
             whereString.append("}\n");
 
             insertString.append(completePrefixes);
@@ -170,7 +176,7 @@ public class TopicController implements StatelessAppleController {
 
             for (String s : requestMap.keySet()) {
                 if (!requestMap.get(s)[0].equalsIgnoreCase("")) {
-                    insertString.append("<" + requestMap.get(s)[0] + "> a sub:Theme .\n");
+                    insertString.append("<" + requestMap.get(s)[0] + "> sub:theme \"true\"^^xsd:boolean .\n");
                 }
             }
 
@@ -300,7 +306,7 @@ public class TopicController implements StatelessAppleController {
                 insertString.append(completePrefixes);
                 insertString.append("\nINSERT\n{\n");
                 insertString.append("<" + uri + "> a skos:Concept ;\n");
-                insertString.append("rdfs:label \"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/rdfs:label") + "\"@no .\n");
+                insertString.append("skos:prefLabel \"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") + "\"@no .\n");
 
                 if (req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource") != null) {
                     for (String s : req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource")) {
@@ -353,12 +359,12 @@ public class TopicController implements StatelessAppleController {
 
     private StringBuffer getTempValues(AppleRequest req) {
         //Keep all selected values in case of validation error
-        String temp_title = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/rdfs:label");
+        String temp_title = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel");
         String[] temp_broader = req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource");
 
         //Create an XML structure for the selected values, to use in the JX template
         StringBuffer xmlStructureBuffer = new StringBuffer();
-        xmlStructureBuffer.append("<rdfs:label>" + temp_title + "</rdfs:label>\n");
+        xmlStructureBuffer.append("<skos:prefLabel>" + temp_title + "</skos:prefLabel>\n");
 
         if (temp_broader != null) {
             for (String s : temp_broader) {
@@ -380,7 +386,7 @@ public class TopicController implements StatelessAppleController {
     private String validateRequest(AppleRequest req) {
         StringBuffer validationMessages = new StringBuffer();
 
-        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/rdfs:label")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/rdfs:label") == null) {
+        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/rdfs:label") == null) {
             validationMessages.append("<c:message>Emnets tittel kan ikke være blank</c:message>\n");
         }
 

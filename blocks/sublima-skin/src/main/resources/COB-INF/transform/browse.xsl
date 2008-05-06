@@ -19,7 +19,7 @@
     <xsl:template match="c:browse" mode="browse">
         Utvalgte emner (for demo)
         <ul>
-            <xsl:for-each select="./rdf:RDF/sub:Theme">
+            <xsl:for-each select="./rdf:RDF/skos:Concept">
                 <xsl:sort select="./rdfs:label"/>
                 <li>
                     <a href="{./@rdf:about}">

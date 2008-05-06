@@ -258,9 +258,10 @@ public class AdminService {
   public String getThemeTopics() {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
             "DESCRIBE ?theme",
             "WHERE {",
-            "    ?theme a sub:Theme .",
+            "    ?theme sub:theme \"true\"^^xsd:boolean .",
             "}"});
 
     logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
