@@ -19,52 +19,145 @@
 @prefix wdr: <http://www.w3.org/2007/05/powder#> .
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .  
 
+######################################################
+# RESOURCES CLASS
+######################################################
+
+# see also sub:
+# sub:Resource a owl:Class .
+
+#
 dct:subject 		rdfs:range 	owl:Class ;
 			a 		owl:ObjectProperty ;
 			rdfs:domain	sub:Resource .
-
+#dct:subject rdfs:range skos:Concept .         
 	
+#	
 dct:title		rdfs:range 	rdfs:Literal ;		
 			a 		owl:AnnotationProperty ;
 			rdfs:domain	sub:Resource .
 
+#
 dct:description		rdfs:range	rdf:XMLLiteral ;
 			a 		owl:AnnotationProperty ;
 			rdfs:domain 	sub:Resource .
 
+#
 dct:language		rdfs:range 	lingvoj:Lingvo ; # Many alternatives
 			a 		owl:ObjectProperty ;
 			rdfs:domain 	sub:Resource .
 
+#
 dct:publisher		rdfs:range	foaf:Agent ;
 			a 		owl:ObjectProperty ;
 			rdfs:domain 	sub:Resource .
 
-dct:identifier		rdfs:range	sub:LocalURI ; 
+#
+dct:identifier		rdfs:range	sub:LocalURI ; # this is used to resolve resources 
 			a 		owl:ObjectProperty ;
 			a		owl:InverseFunctionalProperty ;	
 			rdfs:domain 	sub:Resource .
 
-dct:type		rdfs:range 	dct:MediaType ;
+
+#dct:type		rdfs:range 	dct:MediaType .    # deprecated
+dct:format      rdfs:range  dct:MediaType ;
 			a 		owl:ObjectProperty ;
 			rdfs:domain 	sub:Resource .
 
+#
 dct:audience		a 		owl:ObjectProperty ;
 			rdfs:domain 	sub:Resource .
+# dct:audience			rdfs:range      dct:AgentClass .  
 
+
+#
 dct:dateAccepted 	rdfs:range 	xsd:dateTime ;
 			a 		owl:DatatypeProperty ;	
 			rdfs:domain 	sub:Resource .
 
+
+# resource tip by user
+# not in use
 dct:dateSubmitted 	rdfs:range  	xsd:dateTime ;	
 			a 		owl:DatatypeProperty ;	
 			rdfs:domain 	sub:Resource .
 
+#
 wdr:describedBy		rdfs:range 	wdr:DR ;
 			a 		owl:ObjectProperty ;
 			rdfs:domain 	sub:Resource .
 
+
+# free text keyword			
+# see sub:
+#sub:keywords     rdfs:domain sub:Resource ;
+#            a   owl:AnnotationProperty . 			
+
+
+# intern comment for administration users
+#rdfs:comment    rdfs:domain sub:Resource .
+
+
+# feedback from end-users
+# see sub:
+#sub:comment rdfs:domain sub:Resource ;
+#            rdfs:range sioc:Item . 
+
+
+#sub:committer		rdfs:range 	sioc:User ;
+#			a 		owl:ObjectProperty ;
+#			rdfs:domain	sub:Resource . 
+      
+      
+# see sub:
+#sub:status		rdfs:range 	rdfs:Literal ;		
+#			a 		owl:AnnotationProperty ;
+#			rdfs:domain	sub:Resource .      
+                
+
+# see sub:
+# sub:url  		a       owl:ObjectProperty , owl:AnnotationProperty ;
+#			rdfs:domain	sub:Resource ;
+#			rdfs:range	sub:Resource .
+
+
+######################################################
+# FOR TOPICS
+######################################################
+
+# sub:classification is used for classification
+# e.g. ISBN 
+sub:classification
+			a		owl:AnnotationProperty ; 
+			rdfs:domain     skos:Concept .	       		       	
+
+# skos:note is used for comments
+# this is imported from skos vocabulary	
+# skos:note
+#			a		owl:AnnotationProperty ;
+#			rdfs:domain rdfs:Resource ;
+#           rdfs:range  rdfs:Resource .
+
+# skos:definition
+# sub:description		a		owl:AnnotationProperty ;
+#			rdfs:domain	skos:Concept .		
+
+
+sub:isMainConceptOf  a owl:ObjectProperty ; 
+    rdfs:range skos:ConceptScheme ;
+    rdfs:domain skos:Concept ;
+    owl:inverseOf skos:hasTopConcept . 
+
+
+
+########################
+# MediaType
+########################
+# dct:MediaType a owl:Class .
+
+# instances of dct:MediaType
 
 <http://purl.org/dc/dcmitype/Collection> a dct:MediaType ;
 	rdfs:label "Collection"@en ;
@@ -86,7 +179,6 @@ wdr:describedBy		rdfs:range 	wdr:DR ;
 	rdfs:label "Interactive Resource"@en ;
 	rdfs:label "Interaktiv ressurs"@no .
 
-
 <http://purl.org/dc/dcmitype/MovingImage> a dct:MediaType ;
 	rdfs:label "Moving Image"@en ;
 	rdfs:label "Film"@no .
@@ -103,7 +195,6 @@ wdr:describedBy		rdfs:range 	wdr:DR ;
 	rdfs:label "Software"@en ;
 	rdfs:label "Programvare"@no .
 
-
 <http://purl.org/dc/dcmitype/Sound> a dct:MediaType ;
 	rdfs:label "Sound"@en ;
 	rdfs:label "Lyd"@no .
@@ -115,3 +206,80 @@ wdr:describedBy		rdfs:range 	wdr:DR ;
 <http://purl.org/dc/dcmitype/Text> a dct:MediaType ;
 	rdfs:label "Text"@en ;
 	rdfs:label "Tekst"@no .
+
+
+#########################
+# Registered Users
+#########################
+
+sioc:User  a owl:Class .
+
+# rdfs:label a DatatypeProperty .
+
+
+#########################
+# Unregistered Users
+#########################
+
+
+#sioc:Item a owl:Class .
+
+
+
+#sioc:has_creator rdfs:domain sioc:Item ;
+#            rdfs:range sioc:User .
+
+#sioc:User a owl:Class .
+
+#sioc:email rdfs:domain sioc:User .
+
+
+
+
+#########################
+# Publisher registry 
+#########################
+
+# foaf:Agent a owl:Class .
+
+# foaf:name rdfs:domain foaf:Agent .
+# dct:description rdfs:domain foaf:Agent .          
+
+
+#########################
+# Languages
+#########################
+
+# lingvoj:Lingvo a owl:Class . 
+
+
+########################
+# Annotation
+########################
+
+# see also sub:
+# sub:LocalURI a owl:Class .
+
+
+########################
+# Audience
+########################
+
+
+########################
+# Status
+########################
+
+# wdr:DR a owl:Class .
+
+# wdr:describedBy a owl:ObjectProperty ;
+#            rdfs:domain sub:Resource ;
+#            rdfs:domain skos:Concept ;
+#            rdfs:range wdr:DR .
+
+########################
+# Response Message
+########################
+# <http://www.w3.org/2007/ont/http#ResponseMessage> a owl:Class .
+
+

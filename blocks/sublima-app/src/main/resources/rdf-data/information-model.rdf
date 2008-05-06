@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<!-- NOTE THAT THIS IS A GENERATED VERSION OF information-model.n3. Please generate a new one when the n3 model is changed. The online tool http://www.rdfabout.com/demo/validator/ can be used to validate and convert an  RDF/XML file from N3 and vica versa. -->
-
-<rdf:RDF xmlns:wdr="http://www.w3.org/2007/05/powder#" xmlns:sub="http://xmlns.computas.com/sublima#" xmlns:dct="http://purl.org/dc/terms/" xmlns:lingvoj="http://www.lingvoj.org/ontology#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<rdf:RDF xmlns:wdr="http://www.w3.org/2007/05/powder#" xmlns:sub="http://xmlns.computas.com/sublima#" xmlns:dct="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:lingvoj="http://www.lingvoj.org/ontology#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<owl:ObjectProperty rdf:about="http://purl.org/dc/terms/subject">
 		<rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Class" />
 		<rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource" />
@@ -46,4 +44,22 @@
 		<rdfs:range rdf:resource="http://www.w3.org/2007/05/powder#DR" />
 		<rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource" />
 	</owl:ObjectProperty>
+	<owl:AnnotationProperty rdf:about="http://xmlns.computas.com/sublima#synonym">
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+	</owl:AnnotationProperty>
+	<owl:AnnotationProperty rdf:about="http://xmlns.computas.com/sublima#status">
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+	</owl:AnnotationProperty>
+	<owl:AnnotationProperty rdf:about="http://xmlns.computas.com/sublima#misspelling">
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+	</owl:AnnotationProperty>
+	<owl:AnnotationProperty rdf:about="http://xmlns.computas.com/sublima#classification">
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+	</owl:AnnotationProperty>
+	<owl:AnnotationProperty rdf:about="http://xmlns.computas.com/sublima#comment">
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+	</owl:AnnotationProperty>
+	<owl:AnnotationProperty rdf:about="http://xmlns.computas.com/sublima#description">
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+	</owl:AnnotationProperty>
 </rdf:RDF>
