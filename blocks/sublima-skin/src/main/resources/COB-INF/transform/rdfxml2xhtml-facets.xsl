@@ -20,7 +20,7 @@
     <xsl:variable name="baseurlparams">
       <xsl:choose>
 	<xsl:when test="/c:page/c:mode = 'topic'">
-	  <xsl:text>../search-result?dct:subject/rdfs:label=</xsl:text>
+	  <xsl:text>../search-result?dct:subject/skos:prefLabel=</xsl:text>
 	  <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
 	  <xsl:text>&amp;</xsl:text>
 	</xsl:when>
@@ -58,11 +58,11 @@
     <xsl:param name="baseurlparams"/>
     <xsl:if test="./skos:Concept"> <!-- This should iterate all unique topics -->
       <li>
-	<xsl:variable name="this-label" select="./skos:Concept/rdfs:label[@xml:lang=$interface-language]"/>
+	<xsl:variable name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
 	<a> <!-- The following builds the URL. -->
 	  <xsl:attribute name="href">
 	    <xsl:value-of select="$baseurlparams"/>
-	    <xsl:text>dct:subject/rdfs:label=</xsl:text>
+	    <xsl:text>dct:subject/skos:prefLabel=</xsl:text>
 	    <xsl:value-of select="$this-label"/>
 	  </xsl:attribute>
 	  <xsl:value-of select="$this-label"/>

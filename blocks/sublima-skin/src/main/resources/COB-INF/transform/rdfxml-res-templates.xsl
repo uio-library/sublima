@@ -60,10 +60,10 @@
    <xsl:choose>
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
-	<a href="{$uri}"><xsl:value-of select="//skos:Concept[@rdf:about=$uri]/rdfs:label[@xml:lang=$interface-language]"/></a>
+	<a href="{$uri}"><xsl:value-of select="//skos:Concept[@rdf:about=$uri]/skos:prefLabel[@xml:lang=$interface-language]"/></a>
       </xsl:when>
       <xsl:when test="./skos:Concept/@rdf:about">
-	<a href="{./skos:Concept/@rdf:about}"><xsl:value-of select="./skos:Concept/rdfs:label[@xml:lang=$interface-language]"/></a>
+	<a href="{./skos:Concept/@rdf:about}"><xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/></a>
       </xsl:when>
       <xsl:otherwise>
 	<span class="warning">Emne mangler tittel</span>

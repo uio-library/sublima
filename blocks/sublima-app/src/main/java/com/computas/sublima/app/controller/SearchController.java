@@ -88,17 +88,17 @@ public class SearchController implements StatelessAppleController {
                     " a skos:Concept .\n" +
                     " }\n" +
                     " WHERE {\n" +
-                    subject + " rdfs:label ?label .\n" +
+                    subject + " skos:prefLabel ?label .\n" +
                     subject + " a skos:Concept .\n" +
                     " OPTIONAL { " + subject + " skos:altLabel ?synLabel  . }\n" +
                     " OPTIONAL { " + subject + " skos:related ?relSub .\n" +
-                    " ?relSub rdfs:label ?relLabel . }\n" +
+                    " ?relSub skos:prefLabel ?relLabel . }\n" +
                     " OPTIONAL { " + subject + " skos:broader ?btSub .\n" +
                     " ?btSub a skos:Concept ;\n" +
-                    "     rdfs:label ?btLabel . }\n" +
+                    "     skos:prefLabel ?btLabel . }\n" +
                     " OPTIONAL { ?ntSub skos:broader " + subject + " .\n" +
                     " ?ntSub a skos:Concept ;\n" +
-                    "     rdfs:label ?ntLabel . } }";
+                    "     skos:prefLabel ?ntLabel . } }";
 
     logger.trace("doGetTopic: SPARQL CONSTUCT query sent to dispatcher: " + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);
@@ -157,7 +157,7 @@ public class SearchController implements StatelessAppleController {
       parameterMap.put("interface-language", new String[]{req.getSitemapParameter("interface-language")});
       parameterMap.put("dct:identifier", new String[]{getProperty("sublima.base.url") + "resource/"
               + req.getSitemapParameter("name")});
-      parameterMap.put("dct:subject/rdfs:label", new String[]{""});
+      parameterMap.put("dct:subject/skos:prefLabel", new String[]{""});
     }
                                        
     if (parameterMap.get("searchstring") != null) {
