@@ -126,6 +126,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         connect();
         con.setConnectTimeout(6000);
         ourcode = String.valueOf(con.getResponseCode());
+        logger.info("getCode() ---> " + url.toString() + " returned a " + ourcode );
         con = null;
       }
       catch (MalformedURLException e) {
