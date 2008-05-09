@@ -40,7 +40,8 @@
   
   <xsl:template match="dct:description">
     <xsl:if test="@xml:lang=$interface-language">
-      <xsl:copy-of select="node()"/>
+      <xsl:value-of select="." disable-output-escaping="yes"/>
+      <!-- xsl:copy-of select="node()"/ -->
     </xsl:if>
   </xsl:template>
 
@@ -172,7 +173,7 @@
             <label for="dct:description">Beskrivelse</label>
         </td>
         <td>
-            <input id="dct:description" type="text" name="dct:description" size="40" value="{./dct:description}"/>
+            <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of select="./dct:description"/>...</textarea>
         </td>
     </tr>
 

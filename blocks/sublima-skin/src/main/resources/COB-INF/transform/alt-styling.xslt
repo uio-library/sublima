@@ -16,6 +16,7 @@
   <xsl:import href="rdfxml-nav-templates.xsl"/>
   <xsl:import href="browse.xsl"/>
   <xsl:import href="tipsform.xsl"/>
+  <xsl:import href="loginform.xsl"/>
 
   <xsl:param name="baseurl"/>
 
@@ -164,6 +165,7 @@ this, just comment out the call-template -->
                 <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
                 <xsl:call-template name="messages"/>
                 <xsl:call-template name="tips"/>
+                <xsl:apply-templates select="c:page/c:login" mode="login"/>
 
                 <xsl:choose>
                   <xsl:when test="c:page/c:mode = 'resource'">

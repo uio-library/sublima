@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0" 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:c="http://xmlns.computas.com/cocoon"
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
   xmlns:dct="http://purl.org/dc/terms/" 
@@ -22,7 +23,7 @@
       
       <tr>
 	<th colspan="2" scope="col">
-	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/> - <a href="{$baseurl}/admin/ressurser/edit?uri={sub:Resource/@rdf:about}">[Edit]</a>
+	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/> <xsl:if test="../../c:loggedin = 'true'"> - <a href="{$baseurl}/admin/ressurser/edit?uri={sub:Resource/@rdf:about}">[Edit]</a> </xsl:if>
     </th>
       </tr>
       <tr>

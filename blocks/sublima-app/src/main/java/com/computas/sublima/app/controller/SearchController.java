@@ -3,9 +3,9 @@ package com.computas.sublima.app.controller;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SearchService;
-import com.computas.sublima.query.service.SettingsService;
-import static com.computas.sublima.query.service.SettingsService.*;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
@@ -16,16 +16,20 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import java.io.UnsupportedEncodingException;
 
 public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
+  private ApplicationManager appMan;
+
+
+
   private String mode;
 
   private static Logger logger = Logger.getLogger(SearchController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
+    boolean loggedIn = appMan.isLoggedIn("Sublima");
 
     this.mode = req.getSitemapParameter("mode");
 
@@ -37,17 +41,17 @@ public class SearchController implements StatelessAppleController {
 
     // If it's search-results for advanced search, topic instance or resource
     if ("resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode)) {
-      doAdvancedSearch(res, req);
+      doAdvancedSearch(res, req, loggedIn);
       return;
     }
 
     if ("topic".equalsIgnoreCase(mode)) {
-      doGetTopic(res, req);
+      doGetTopic(res, req, loggedIn);
       return;
     }
   }
 
-  private void doGetTopic(AppleResponse res, AppleRequest req) {
+  private void doGetTopic(AppleResponse res, AppleRequest req, boolean loggedIn) {
 
     String subject = "<" + getProperty("sublima.base.url")
             + "topic/" + req.getSitemapParameter("topic") + ">";
@@ -123,6 +127,7 @@ public class SearchController implements StatelessAppleController {
     params.append("\n  </request>\n");
 
     bizData.put("request", params.toString());
+    bizData.put("loggedin", loggedIn);
     res.sendPage("xml/sparql-result", bizData);
   }
 
@@ -146,8 +151,7 @@ public class SearchController implements StatelessAppleController {
   }
 
 
-	  
-  public void doAdvancedSearch(AppleResponse res, AppleRequest req) {
+  public void doAdvancedSearch(AppleResponse res, AppleRequest req, boolean loggedIn) {
     // Get all parameteres from the HTML form as Map
     Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
@@ -159,15 +163,14 @@ public class SearchController implements StatelessAppleController {
               + req.getSitemapParameter("name")});
       parameterMap.put("dct:subject/skos:prefLabel", new String[]{""});
     }
-                                       
-    if (parameterMap.get("searchstring") != null) {
-    	parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});    	
-        parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>", 
-        							"rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-        							"pf: <http://jena.hpl.hp.com/ARQ/property#>"});
-        parameterMap.remove("booleanoperator");
-    }
 
+    if (parameterMap.get("searchstring") != null) {
+      parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});
+      parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>",
+              "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+              "pf: <http://jena.hpl.hp.com/ARQ/property#>"});
+      parameterMap.remove("booleanoperator");
+    }
 
     // sending the result
     String sparqlQuery = null;
@@ -182,7 +185,7 @@ public class SearchController implements StatelessAppleController {
     } else {
       res.sendStatus(400);
     }
-    
+
     logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
     Object queryResult = sparqlDispatcher.query(sparqlQuery);
 
@@ -211,6 +214,7 @@ public class SearchController implements StatelessAppleController {
     params.append("\n  </request>\n");
 
     bizData.put("request", params.toString());
+    bizData.put("loggedin", loggedIn);
     res.sendPage("xml/sparql-result", bizData);
   }
 
@@ -226,5 +230,9 @@ public class SearchController implements StatelessAppleController {
 
   public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
+  }
+
+  public void setAppMan(ApplicationManager appMan) {
+    this.appMan = appMan;
   }
 }

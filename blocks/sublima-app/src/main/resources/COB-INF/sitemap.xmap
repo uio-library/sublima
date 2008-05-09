@@ -11,6 +11,48 @@
     <!-- Pipeline for the admin part -->
     <map:pipeline>
 
+      <!-- ================= -->
+      <!-- Simple login page -->
+      <!-- ================= -->
+      <map:match pattern="login">
+        <!-- if we are already logged in, redirect to the protected document -->
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+
+          <map:redirect-to uri="admin"/>
+        </map:act>
+        <map:generate src="templates/login.jx.xml" type="jx"/>
+        <!-- apply styling -->
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+        </map:serialize>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- ========================================= -->
+      <!-- Form target which performs auth service   -->
+      <!-- ========================================= -->
+      <map:match pattern="do-login">
+        <!-- try to login -->
+        <map:act type="cauth-login">
+          <map:parameter name="application" value="Sublima"/>
+          <map:parameter name="name" value="{request-param:username}"/>
+          <map:parameter name="password" value="{request-param:password}"/>
+          <map:redirect-to uri="admin"/>
+        </map:act>
+        <map:redirect-to uri="login"/>
+      </map:match>
+
+      <!-- ========================================= -->
+      <!-- Logout link which invalidates the session -->
+      <!-- ========================================= -->
+      <map:match pattern="do-logout">
+        <map:act type="cauth-logout">
+          <map:parameter name="application" value="Sublima"/>
+        </map:act>
+        <map:redirect-to uri="login"/>
+      </map:match>
+
       <!-- To test SPARQL queries -->
       <map:match pattern="testsparql/*">
         <map:call function="com.computas.sublima.app.controller.admin.AdminController">
@@ -21,79 +63,121 @@
 
       <!-- Initial admin page -->
       <map:match pattern="admin">
-        <map:generate src="templates/admin.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/admin-styling"/>
-        </map:serialize>
-        <map:serialize type="xml"/>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+
+          <map:generate src="templates/admin.jx.xml" type="jx"/>
+          <!-- apply styling -->
+          <map:serialize type="servletService">
+            <map:parameter name="service" value="servlet:skin:/admin-styling"/>
+          </map:serialize>
+          <map:serialize type="xml"/>
+        </map:act>
+        <map:redirect-to uri="login"/>
+
       </map:match>
 
       <!-- all resource admin pages. Returns a 404 if the page is not found. -->
       <map:match pattern="admin/ressurser/*">
-        <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
-          <map:parameter name="mode" value="ressurser"/>
-          <map:parameter name="submode" value="{1}"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
+            <map:parameter name="mode" value="ressurser"/>
+            <map:parameter name="submode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
       <map:match pattern="admin/lenkesjekk/*">
-        <map:call function="com.computas.sublima.app.controller.admin.LinkcheckController">
-          <map:parameter name="mode" value="lenkesjekk"/>
-          <map:parameter name="submode" value="{1}"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.LinkcheckController">
+            <map:parameter name="mode" value="lenkesjekk"/>
+            <map:parameter name="submode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
       <map:match pattern="admin/brukere/*">
-        <map:call function="com.computas.sublima.app.controller.admin.UserController">
-          <map:parameter name="mode" value="brukere"/>
-          <map:parameter name="submode" value="{1}"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.UserController">
+            <map:parameter name="mode" value="brukere"/>
+            <map:parameter name="submode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
       <!-- individual page for each publisher. -->
       <map:match pattern="admin/utgivere/*">
-        <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
-          <map:parameter name="mode" value="utgivere"/>
-          <map:parameter name="submode" value="{1}"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
+            <map:parameter name="mode" value="utgivere"/>
+            <map:parameter name="submode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
       <!-- individual page for each topic. -->
       <map:match pattern="admin/emner/*">
-        <map:call function="com.computas.sublima.app.controller.admin.TopicController">
-          <map:parameter name="mode" value="emner"/>
-          <map:parameter name="submode" value="{1}"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.TopicController">
+            <map:parameter name="mode" value="emner"/>
+            <map:parameter name="submode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
       <!-- all other admin pages. Returns a 404 if the page is not found. -->
       <map:match pattern="admin/*">
-        <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-          <map:parameter name="mode" value="{1}"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+            <map:parameter name="mode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
       <!-- action to update a publisher -->
       <map:match pattern="updatepublisher">
-        <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
-          <map:parameter name="mode" value="utgivere"/>
-          <map:parameter name="submode" value="updatepublisher"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
+            <map:parameter name="mode" value="utgivere"/>
+            <map:parameter name="submode" value="updatepublisher"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
       <map:match pattern="admin/database/*">
-        <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-          <map:parameter name="mode" value="database"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+            <map:parameter name="mode" value="database"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
       <!-- action to insert a new publisher -->
       <map:match pattern="insertpublisher">
-        <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
-          <map:parameter name="mode" value="utgivere"/>
-          <map:parameter name="submode" value="insertpublisher"/>
-        </map:call>
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
+            <map:parameter name="mode" value="utgivere"/>
+            <map:parameter name="submode" value="insertpublisher"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="login"/>
       </map:match>
 
     </map:pipeline>

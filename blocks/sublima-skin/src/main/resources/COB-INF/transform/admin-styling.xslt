@@ -116,7 +116,7 @@
                         <label for="dct:description">Beskrivelse</label>
                     </td>
                     <td>
-                        <input id="dct:description" type="text" name="dct:description" size="40"/>
+                      <textarea id="dct:description" name="dct:description" rows="6" cols="40">...</textarea>
                     </td>
                 </tr>
                 <tr>
@@ -212,7 +212,7 @@
             <head>
                 <title>
                     <xsl:call-template name="title"/>
-                    - Detektor
+                   Detektor
                 </title>
                 <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
             </head>

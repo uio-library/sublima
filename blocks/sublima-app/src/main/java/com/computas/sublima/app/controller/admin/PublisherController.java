@@ -147,7 +147,7 @@ public class PublisherController implements StatelessAppleController {
                       "{\n" +
                       "<" + publisherURI + "> a foaf:Agent ;\n" +
                       "foaf:name \"" + publishername + "\"@no ;\n" +
-                      "dct:description \"" + description + "\"@no . \n" +
+                      "dct:description \"\"\"" + description + "\"\"\"@no . \n" +
                       "}";
 
       logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);

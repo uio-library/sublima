@@ -36,7 +36,8 @@
                         <label for="dct:subject/skos:Concept/skos:definition">Beskrivelse</label>
                     </td>
                     <td>
-                        <input id="dct:subject/skos:Concept/skos:definition" type="text" name="dct:subject/skos:Concept/skos:definition" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/skos:definition}"/>
+                      <textarea id="dct:subject/skos:Concept/skos:definition" name="dct:subject/skos:Concept/skos:definition" rows="6" cols="40"><xsl:value-of
+                                select="./c:topicdetails/rdf:RDF/skos:Concept/skos:definition"/>...</textarea>
                     </td>
                 </tr>
 
@@ -97,8 +98,9 @@
                     <td>
                         <label for="dct:subject/skos:Concept/skos:note">Kommentar</label>
                     </td>
-                    <td>
-                        <input id="dct:subject/skos:Concept/skos:note" type="text" name="dct:subject/skos:Concept/skos:note" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/skos:note}"/>
+                  <td>
+                      <textarea id="dct:subject/skos:Concept/skos:note" name="dct:subject/skos:Concept/skos:note" rows="6" cols="40"><xsl:value-of
+                                select="./c:topicdetails/rdf:RDF/skos:Concept/skos:note"/>...</textarea>
                     </td>
                 </tr>
 
@@ -139,7 +141,8 @@
                         <label for="dct:subject/skos:Concept/skos:definition">Beskrivelse</label>
                     </td>
                     <td>
-                        <input id="dct:subject/skos:Concept/skos:definition" type="text" name="dct:subject/skos:Concept/skos:definition" size="40" value="{./c:tempvalues/c:tempvalues/skos:definition}"/>
+                      <textarea id="dct:subject/skos:Concept/skos:definition" name="dct:subject/skos:Concept/skos:definition" rows="6" cols="40"><xsl:value-of
+                                select="./c:tempvalues/c:tempvalues/skos:definition"/>...</textarea>
                     </td>
                 </tr>
               
@@ -201,7 +204,8 @@
                         <label for="dct:subject/skos:Concept/skos:note">Kommentar</label>
                     </td>
                     <td>
-                        <input id="dct:subject/skos:Concept/skos:note" type="text" name="dct:subject/skos:Concept/skos:note" size="40" value="{./c:tempvalues/c:tempvalues/skos:note}"/>
+                        <textarea id="dct:subject/skos:Concept/skos:note" name="dct:subject/skos:Concept/skos:note" rows="6" cols="40"><xsl:value-of
+                                select="./c:tempvalues/c:tempvalues/skos:note"/>...</textarea>
                     </td>
                 </tr>
                 
