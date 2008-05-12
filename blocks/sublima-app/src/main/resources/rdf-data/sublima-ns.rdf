@@ -1,0 +1,49 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sioc="http://rdfs.org/sioc/ns#"
+    xmlns:sub="http://xmlns.computas.com/sublima#" > 
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#keywords">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#url">
+    <rdfs:range rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#committer">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#User"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#LocalURI">
+    <rdfs:comment xml:lang="en">The local URI assigned to a URI</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#stripped">
+    <rdfs:domain rdf:resource="http://www.w3.org/2007/ont/http#ResponseMessage"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#status">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="">
+    <rdfs:comment>An ontology containing some simple properties and classes for use in the Sublima project.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#Resource">
+    <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Site"/>
+    <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#comment">
+    <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+</rdf:RDF>
