@@ -54,7 +54,7 @@ img {
   margin: 0;
 }
 
-#header ul {
+#header ul {   
   clear: left;
   float: left;
   width: 100%;
@@ -199,7 +199,19 @@ p.validationmessage {
 }
 
 .facets {
-  background: #00FF00;
+  clear: both;
+  float: left;
+  width: 100%;
+
+  }
+
+.facet {
+  float: left;  
+  margin:1em;
+}
+
+.facet ul  {
+    padding-left:1em;
 }
 
 .activities {
