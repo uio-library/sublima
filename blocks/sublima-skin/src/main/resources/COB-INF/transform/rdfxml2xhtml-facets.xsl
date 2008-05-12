@@ -19,7 +19,7 @@
   <xsl:template match="rdf:RDF" mode="facets">
     <xsl:variable name="baseurlparams">
       <xsl:choose>
-	<xsl:when test="/c:page/c:mode = 'topic'">
+  	<xsl:when test="/c:page/c:mode = 'topic'">
 	  <xsl:text>../search-result?dct:subject/skos:prefLabel=</xsl:text>
 	  <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
 	  <xsl:text>&amp;</xsl:text>
@@ -36,21 +36,36 @@
 	</xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
+    
+    <div class="facets">
+   <div class="facet">
+   Språk
    <ul>
       <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
 	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
       </xsl:apply-templates> 
    </ul>
+   </div>
+   
+   <div class="facet">
+   Målgruppe
    <ul>
       <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
 	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
       </xsl:apply-templates> 
    </ul>
+    </div>
+
+    <div class="facet">    
+    Emne
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:subject" mode="facets">
 	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
       </xsl:apply-templates>
     </ul>
+    </div>
+    </div>
+    <br/>
    </xsl:template>
 
 

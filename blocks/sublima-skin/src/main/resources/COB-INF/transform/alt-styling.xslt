@@ -18,6 +18,7 @@
   <xsl:import href="tipsform.xsl"/>
   <xsl:import href="loginform.xsl"/>
 
+
   <xsl:param name="baseurl"/>
 
   <!-- A debug template that dumps the source tree. Do not remove
@@ -33,24 +34,8 @@ this, just comment out the call-template -->
   </xsl:template>
 
   <xsl:template name="tips"> <!-- I have no idea why it didn't work to have a normal node-based template -->
-    <xsl:choose>
-      <xsl:when test="c:page/c:mode = 'form'">
-        <xsl:apply-templates select="c:page/c:tips" mode="form"/>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:copy-of select="c:page/c:tips/*"/>
   </xsl:template>
-
-  <xsl:template name="messages">
-        <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
-        <ul>
-          <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
-            <li>
-              <xsl:value-of select="." /><br/>
-            </li>
-          </xsl:for-each>
-        </ul>
-      </xsl:if>
-    </xsl:template>
 
   <xsl:template match="/">
 
@@ -87,18 +72,25 @@ this, just comment out the call-template -->
           <h2>Sublima 0.8</h2>
           <ul>
             <li>
-              <a href="{$baseurl}/" class="active">A-Å</a>
+              <a href="{$baseurl}/" class="active">Søk</a>
             </li>
             <li>
               <a href="{$baseurl}/advancedsearch">Avansert søk
               </a>
             </li>
             <li>
+              <a href="{$baseurl}/a-z">A-Å
+              </a>
+            </li>
+            <!--
+            <li>
               <a href="{$baseurl}/admin">Administrasjon
               </a>
             </li>
+            -->
           </ul>
 
+            <!--
           <p id="layoutdims">
             Brødsmuler her? |
             <a href="#">Smule 1</a>
@@ -107,7 +99,15 @@ this, just comment out the call-template -->
             |
             <strong>Nåværende smule</strong>
           </p>
+           -->
+           
+           <p id="layoutdims">
+            <a href="#">Login</a>
+           </p>
         </div>
+        
+        
+        
         <div class="colmask threecol">
           <div class="colmid">
             <div class="colleft">
@@ -118,91 +118,96 @@ this, just comment out the call-template -->
 		-->
 
        <!-- Column 1 start -->
+		
+		<!-- Search -->
+	    <!-- Search is shown when advanced search is not -->	
 		<xsl:if test="not(c:page/c:advancedsearch/node())">
 		  <form name="freetextSearch" action="{$baseurl}/search-result" method="get">
 		    <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
 		    <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
 		    <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
 		    <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
-		    <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
 		    <input type="hidden" name="interface-language" value="{$interface-language}"/>
-                    
-		    <table>
-                      <tr>
-                        <td>
-                          <input id="keyword" class="searchbox" type="text"
-                                 name="searchstring" size="50"/>
-                        </td>
-                        <td>
-                          <input type="submit" value="Søk"/>
-                        </td>
-                        <td>
-                          <a href="{$baseurl}/advancedsearch">Avansert søk</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <input type="radio" name="booleanoperator" value="AND" checked="true"/>OG
-                          <input type="radio" name="booleanoperator" value="OR"/>
-                          ELLER
-                          <input type="checkbox" name="deepsearch" value="deepsearch"/>
-                          Søk også i de eksterne ressursene
-                        </td>
-                      </tr>
-                    </table>
-                  </form>
-                </xsl:if>
-                  <xsl:if test="c:page/c:mode = 'topic'">
+             <br/>
+            <input id="keyword" class="searchbox" type="text"
+                   name="searchstring" size="40"/>
+            <input type="submit" value="Søk"/><br/>
+            <input type="radio" name="booleanoperator" value="AND" checked="true"/>OG
+            <input type="radio" name="booleanoperator" value="OR"/>
+            ELLER
+            <input type="checkbox" name="deepsearch" value="deepsearch"/>
+            Søk også i de eksterne ressursene
+          </form>
+        </xsl:if>
+        
+        <!-- Facets -->
+        <!-- Facets are shown if the c:/page/c:facets exists in the XML --> 
+           <xsl:if test="c:page/c:facets">
+            <h3>Velg avgrensning</h3>
+            <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
+          </xsl:if>
+        
+                
+        
+        <!-- Advanced search -->        
+        <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
+        <xsl:call-template name="advancedsearch"/>
+        <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
+        
+        <!-- Tips -->
+        <xsl:call-template name="tips"/>
 
-                    <h3>Navigering</h3>
-                    <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
-                      <xsl:with-param name="role">this-param</xsl:with-param>
-                    </xsl:apply-templates>
+        <!-- Login -->
+        <xsl:apply-templates select="c:page/c:login" mode="login"/>
+        
+        <!-- Resource Description (details) -->
+        <xsl:if test="c:page/c:mode = 'resource'">
+            <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="resource"/>
+        </xsl:if>
+                
+        <!-- Browse (A-Z)? -->    
+        <xsl:if test="c:page/c:mode = 'browse'">
+            <xsl:apply-templates select="c:page/c:browse" mode="browse"/>
+        </xsl:if>
 
-                  </xsl:if>
-                <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
-                <xsl:call-template name="advancedsearch"/>
-                <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
-                <xsl:call-template name="messages"/>
-                <xsl:call-template name="tips"/>
-                <xsl:apply-templates select="c:page/c:login" mode="login"/>
-
-                <xsl:choose>
-                  <xsl:when test="c:page/c:mode = 'resource'">
-                    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="resource"/>
-                  </xsl:when>
-                    <xsl:when test="c:page/c:mode = 'browse'">
-                         <xsl:apply-templates select="c:page/c:browse" mode="browse"/>
-                    </xsl:when>
-                  <xsl:otherwise>
-                      <h3>Ressurser</h3>
-                      <!-- Søkeresultatene -->
-                      <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
-                      <!-- Column 1 end -->
-                  </xsl:otherwise>
-                </xsl:choose>
-              </div>
-              <div class="col2">
-                <!-- Column 2 start -->
-                  <h3>Fasetter</h3>
-                  <xsl:if test="c:page/c:facets">
-
-                    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
-                  </xsl:if>
-
-                <!-- Column 2 end -->
-              </div>
-              <div class="col3">
-                <!-- Column 3 start -->
-                <!-- xsl:if test="c:page/c:mode = 'search-result'" -->
-                <h2>Mine aktiviteter</h2>
-                <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a>
-                <br/>
-                <a href="{$baseurl}/admin">Administrasjon</a>
-
-
-                <!-- /xsl:if -->
-                <!-- Column 3 end -->
+        <!-- Search results -->
+        <xsl:if test="c:page/c:mode != 'browse' and c:page/c:mode != 'resource'">
+            <h3>Ressurser</h3>
+            <!-- Søkeresultatene -->
+            <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
+        </xsl:if>
+        
+         <!-- Column 1 end -->
+      </div>
+              
+              
+              
+              
+              
+      <div class="col2">
+          <!-- Column 2 (left) start -->
+            <h2>Mine aktiviteter</h2>
+            <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a>
+            <br/>
+            <a href="{$baseurl}/admin">Administrasjon</a>
+       
+           <!-- Column 2 end -->
+       </div>
+       
+       <div class="col3">
+            <!-- Column 3 start -->
+        
+        <!-- Navigation -->
+        <!-- Navigation is only shown when one topic is in focus -->
+        <!-- Discussion is open on showing a different navigation scheme when more then one topic is in focus --> 
+        <xsl:if test="c:page/c:mode = 'topic'">
+            <h3>Navigering</h3>
+            <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
+                <xsl:with-param name="role">this-param</xsl:with-param>
+             </xsl:apply-templates>
+        </xsl:if>
+     
+            <!-- Column 3 end -->
               </div>
             </div>
 
