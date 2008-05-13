@@ -348,21 +348,53 @@ public class Form2SparqlServiceTest extends TestCase {
   
   public void testConvertForm2SparqlTwoValuesOneFree() {
 	    // Single value test
+        Form2SparqlService myServicefree = new Form2SparqlService(new String[]{"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>"}, new String[]{"dc:title"});
 	    testMap.put("dc:title", testString);
 	    testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
 	    testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
-	    myService.addFreetextField("dc:title"); // this parameter is a magic string
-	    String resultString = myService.convertForm2Sparql(testMap);
+	    String resultString = myServicefree.convertForm2Sparql(testMap);
 	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +"DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
 	  }
-    
+
+  public void testConvertForm2SparqlTwoValuesSubjectFree() {
+	    // Single value test
+        String expectS = StringUtils.join("\n", new String[]{"PREFIX dct: <http://purl.org/dc/terms/>",
+                "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+                "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+                "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {",
+                "?resource dct:subject ?var1 .",
+                "{ ?var1 skos:prefLabel ?free2 .",
+                "?free2 pf:textMatch '+Dansk' . }",
+                "UNION { ?var1 skos:altLabel ?free2 .",
+                "?free2 pf:textMatch '+Dansk' . }",
+                "UNION { ?var1 skos:hiddenLabel ?free2 .",
+                "?free2 pf:textMatch '+Dansk' . }",
+                "",
+                "?resource dct:audience ?var2 .",
+                "?var2 rdfs:label \"Detektor\"@no .",
+                "?resource ?p ?rest .",
+                "}"});
+      //                                     http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/search-result?freetext-field=dct:title&freetext-field=dct:subject/all-labels&freetext-field=dct:description&freetext-field=dct:publisher/foaf:name&prefix=dct:%20%3Chttp://purl.org/dc/terms/%3E&prefix=foaf:%20%3Chttp://xmlns.com/foaf/0.1/%3E&prefix=sub:%20%3Chttp://xmlns.computas.com/sublima%23%3E&prefix=rdfs:%20%3Chttp://www.w3.org/2000/01/rdf-schema%23%3E&prefix=skos:%20%3Chttp://www.w3.org/2004/02/skos/core%23%3E&interface-language=no&dct:subject/all-labels=Dansk&dct:audience/rdfs:label=Detektor
+   //  prefix=dct%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E&prefix=foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E&prefix=sub%3A+%3Chttp%3A%2F%2Fxmlns.computas.com%2Fsublima%23%3E&prefix=rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E&prefix=skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E&dct%3Atitle=&dct%3Asubject%2Fall-labels=Dansk&dct%3Adescription=&dct%3Apublisher%2Ffoaf%3Aname=&dct%3AdateAccepted=&dct%3AdateSubmitted=&dct%3Aformat=&dct%3Aidentifier=&dct%3Alanguage%2Frdfs%3Alabel=&dct%3Aaudience%2Frdfs%3Alabel=&sub%3Acommitter%2Frdfs%3Alabel=
+        testMap.put("dct:subject/all-labels", new String[]{"Dansk"});
+	    testMap.put("dct:audience/rdfs:label", new String[]{"Detektor"});
+	    testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
+	    myService.addFreetextField("dct:title"); // this parameter is a magic string
+        myService.addFreetextField("dct:subject/all-labels"); // this parameter is a magic string
+        myService.addPrefix("rdfs: <http://www.w3.org/2000/01/rdf-schema#>");
+        String resultString = myService.convertForm2Sparql(testMap);
+	    assertEquals("Expected result and actual result not equal", expectS, resultString);
+	  }
+
   public void testConvertForm2SparqlTwoValuesBothFree() {
 	    // Single value test
+        Form2SparqlService myServicefree = new Form2SparqlService(new String[]{"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>"}, new String[]{"dc:title"});
 	    testMap.put("dc:title", testString);
 	    testMap.put("dc:description", new String[]{"A Very Light Jet Aircraft under construction."});
-	    myService.addFreetextField("dc:title");
-        myService.addFreetextField("dc:description"); 
-	    String resultString = myService.convertForm2Sparql(testMap);
+        myServicefree.addFreetextField("dc:description"); 
+	    String resultString = myServicefree.convertForm2Sparql(testMap);
 	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +  "DESCRIBE ?resource ?rest WHERE {\n?resource dc:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dc:description ?free2 .\n?free2 pf:textMatch '+A Very Light Jet Aircraft under construction.' .\n?resource ?p ?rest .\n}", resultString);
 	  }
 

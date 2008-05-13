@@ -54,6 +54,7 @@ public class Form2SparqlService {
 
     public Form2SparqlService(String[] pr) {
         prefixes = new ArrayList<String>(Arrays.asList(pr));
+        freetextFields = null;
     }
 
     public Form2SparqlService(String[] pr, String[] ff) {
@@ -115,7 +116,13 @@ public class Form2SparqlService {
       */
 
 
-      public void addFreetextField(String freetextField) { freetextFields.add(freetextField); }
+      public void addFreetextField(String freetextField) {
+        if (freetextFields == null) {
+            freetextFields = new ArrayList<String>(Arrays.asList(freetextField));
+        } else {
+            freetextFields.add(freetextField);
+        }
+      }
 
 
 	/**
