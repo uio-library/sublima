@@ -167,38 +167,40 @@ public class Form2SparqlService {
                     if (freetextFields != null)  {
 						myRDFObject.setFreetext(freetextFields.indexOf(key)+1);
 					}
-                    n3Buffer.append("\n{ ?var1 skos:prefLabel ");
+                    n3Buffer.append("\n{ "+ var +"skos:prefLabel ");
                     n3Buffer.append(myRDFObject.toN3());
-                    n3Buffer.append(" }\nUNION { ?var1 skos:altLabel ");
+                    n3Buffer.append(" }\nUNION { "+ var +"skos:altLabel ");
                     n3Buffer.append(myRDFObject.toN3());
-                    n3Buffer.append(" }\nUNION { ?var1 skos:hiddenLabel ");
+                    n3Buffer.append(" }\nUNION { "+ var +"skos:hiddenLabel ");
                     n3Buffer.append(myRDFObject.toN3());
                     n3Buffer.append(" }\n");
-                    return n3Buffer.toString();
+                } else {
+                    n3Buffer.append("\n" + var + qname + " ");
                 }
-                n3Buffer.append("\n" + var + qname + " ");
-				if ("".equals(value)) { //value == "") { // Then, it is a block with no value, which will be caught by a catch-all
+                if ("".equals(value)) { // Then, it is a block with no value, which will be caught by a catch-all
 					return "\n";
 				}
 				if (!subjectVarList.contains(var)) {
 					subjectVarList.add(var);
 				}
 
-				if (keys.length == j && !"".equals(value)) { //value != "") { 
-					// Then we are on the actual form input value
-					RDFObject myRDFObject = new RDFObject(value, language);
-					if (freetextFields != null)  {
-						myRDFObject.setFreetext(freetextFields.indexOf(key)+1);	
-					}
-					n3Buffer.append(myRDFObject.toN3());
-				} else { // Then we have to connect the object of this
-					// statement to the subject of the next
-					var = "?var" + variablecount + " "; // Might need more work
-					// to ensure uniqueness
-					logger.debug("Using unique N3 variable " + var);
-					n3Buffer.append(var + ".");
-					variablecount++;
-				}
+                if (!"all-labels".equals(qname)) {
+                    if (keys.length == j && !"".equals(value)) {
+                        // Then we are on the actual form input value
+                        RDFObject myRDFObject = new RDFObject(value, language);
+                        if (freetextFields != null)  {
+                            myRDFObject.setFreetext(freetextFields.indexOf(key)+1);
+                        }
+                        n3Buffer.append(myRDFObject.toN3());
+                    } else { // Then we have to connect the object of this
+                        // statement to the subject of the next
+                        var = "?var" + variablecount + " "; // Might need more work
+                        // to ensure uniqueness
+                        logger.debug("Using unique N3 variable " + var);
+                        n3Buffer.append(var + ".");
+                        variablecount++;
+                    }
+                }
 			}
 		}
 		logger.trace("Returning N3: " + n3Buffer.toString());
