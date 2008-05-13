@@ -58,6 +58,7 @@ public class SearchController implements StatelessAppleController {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
             "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
             "WHERE {",
             "        ?resource dct:language ?lang;",
@@ -118,6 +119,7 @@ public class SearchController implements StatelessAppleController {
     params.append("\n    <param key=\"prefix\">");
     params.append("\n      <value>dct: &lt;http://purl.org/dc/terms/&gt;</value>");
     params.append("\n      <value>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema%23&gt;</value>");
+    params.append("\n      <value>skos: &lt;http://www.w3.org/2004/02/skos/core%23&gt;</value>");
     params.append("\n    </param>");
 
     params.append("\n    <param key=\"interface-language\">");
@@ -157,7 +159,7 @@ public class SearchController implements StatelessAppleController {
 
 
     if ("resource".equalsIgnoreCase(mode)) {
-      parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>", "rdfs: <http://www.w3.org/2000/01/rdf-schema#>"});
+      parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>", "rdfs: <http://www.w3.org/2000/01/rdf-schema#>", "skos: <http://www.w3.org/2004/02/skos/core#>"});
       parameterMap.put("interface-language", new String[]{req.getSitemapParameter("interface-language")});
       parameterMap.put("dct:identifier", new String[]{getProperty("sublima.base.url") + "resource/"
               + req.getSitemapParameter("name")});
@@ -168,7 +170,7 @@ public class SearchController implements StatelessAppleController {
       parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});
       parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>",
               "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-              "pf: <http://jena.hpl.hp.com/ARQ/property#>"});
+              "pf: <http://jena.hpl.hp.com/ARQ/property#>", "skos: <http://www.w3.org/2004/02/skos/core#>"});
       parameterMap.remove("booleanoperator");
     }
 
