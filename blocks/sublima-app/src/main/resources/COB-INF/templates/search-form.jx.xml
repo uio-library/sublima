@@ -68,7 +68,7 @@
             <label for="type">Type</label>
           </td>
           <td>
-            <input id="type" type="text" name="dct:type" size="20"/>
+            <input id="type" type="text" name="dct:format" size="20"/>
           </td>
         </tr>
         <tr>
