@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <packaging>jar</packaging>
@@ -12,7 +13,7 @@
   </parent>
   <artifactId>sublima-query</artifactId>
   <version>1.0-SNAPSHOT</version>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.apache.cocoon</groupId>
@@ -30,45 +31,49 @@
       <groupId>org.apache.cocoon</groupId>
       <artifactId>cocoon-apples-impl</artifactId>
     </dependency>
-	<dependency>
-	  <groupId>javax.servlet</groupId>
-	  <artifactId>servlet-api</artifactId>
-	  <scope>provided</scope>
-	</dependency>     
-    
- 	<dependency>
-	  <groupId>commons-httpclient</groupId>
-	  <artifactId>commons-httpclient</artifactId>
-	</dependency>   
-    
     <dependency>
-      <groupId>org.joseki</groupId>
-      <artifactId>joseki</artifactId>    
+      <groupId>org.apache.cocoon</groupId>
+      <artifactId>cocoon-auth-impl</artifactId>
     </dependency>
     <dependency>
-          <groupId>org.apache.lucene</groupId>
-          <artifactId>lucene-core</artifactId>
-        </dependency>    
-       <dependency>  
-    	  <groupId>org.slf4j</groupId>
-    	  <artifactId>slf4j-log4j12</artifactId>
-    	  <scope>test</scope>
-       </dependency>
-     <dependency>
-        <groupId>com.hp.hpl.jena</groupId>
-        <artifactId>jena</artifactId>
-        <scope>compile</scope>
-     </dependency>
-     <dependency>
-        <groupId>com.hp.hpl.jena</groupId>
-        <artifactId>arq</artifactId>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <scope>compile</scope>
-      </dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.joseki</groupId>
+      <artifactId>joseki</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>jena</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>arq</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
 </project>
