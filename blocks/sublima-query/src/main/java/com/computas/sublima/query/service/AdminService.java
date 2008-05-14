@@ -2,14 +2,11 @@ package com.computas.sublima.query.service;
 
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import static com.computas.sublima.query.service.SettingsService.*;
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
-
-import java.net.URLEncoder;
-import java.io.UnsupportedEncodingException;
 
 /**
  * A class to support the administration of Sublima
@@ -163,8 +160,8 @@ public class AdminService {
   public Object getResourceByURI(String uri) {
 
     try {
-        //uri = URLEncoder.encode(uri, "UTF-8");
-        uri = "<" + uri + ">";
+      //uri = URLEncoder.encode(uri, "UTF-8");
+      uri = "<" + uri + ">";
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -172,7 +169,7 @@ public class AdminService {
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
-            "DESCRIBE "+ uri,// + " ?publisher ?subjects",
+            "DESCRIBE " + uri,// + " ?publisher ?subjects",
             /*"WHERE {",
             uri + " dct:language ?lang;",
             "		    dct:publisher ?publisher ;",
@@ -279,6 +276,34 @@ public class AdminService {
             "}"});
 
     logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
+
+  public String getAllUsers() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "DESCRIBE ?user",
+            "WHERE {",
+            "    ?user a sioc:User ;",
+            "        rdfs:label ?label .",
+            "FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
+
+    logger.trace("AdminService.getAllUsers() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
+
+  public String getUserByURI(String uri) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "DESCRIBE <" + uri + ">"});
+
+    logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
