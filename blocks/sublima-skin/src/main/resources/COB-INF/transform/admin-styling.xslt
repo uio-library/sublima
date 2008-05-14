@@ -222,9 +222,9 @@
       <body>
 
         <div id="header">
-          <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
+          <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
 
-          <h2>Sublima 0.8</h2>
+          <h2>Sublima 0.9</h2>
           <ul>
             <li>
               <a href="{$baseurl}/">A-Å</a>
