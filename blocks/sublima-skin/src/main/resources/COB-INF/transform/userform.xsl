@@ -87,7 +87,7 @@
   <xsl:template match="c:user" mode="usertemp">
 
     <form name="useredit" action="{$baseurl}/admin/bbrukere/bruker" method="POST">
-      <input type="hidden" name="uri" value="{./c:userdetails/rdf:RDF/sioc:User/@rdf:about}"/>
+      <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
       <table>
         <tr>
           <td>
@@ -96,7 +96,7 @@
           <td>
             <input id="sioc:email" type="text"
                    name="sioc:email" size="40"
-                   value="{./c:tempvalues/rdf:RDF/sioc:User/sioc:email}"/>
+                   value="{./c:tempvalues/c:tempvalues/sioc:email}"/>
           </td>
         </tr>
 
@@ -107,7 +107,7 @@
           <td>
             <input id="rdfs:label" type="text"
                    name="rdfs:label" size="40"
-                   value="{./c:tempvalues/rdf:RDF/sioc:User/rdfs:label}"/>
+                   value="{./c:tempvalues/c:tempvalues/rdfs:label}"/>
           </td>
         </tr>
 
