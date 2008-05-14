@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:c="http://xmlns.computas.com/cocoon">
+        xmlns:c="http://xmlns.computas.com/cocoon"
+        xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  <c:loggedin><jx:out value="#{loggedin}" xmlize="false"/></c:loggedin>
   <c:result-list></c:result-list>
 
   <c:navigation></c:navigation>

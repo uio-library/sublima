@@ -12,6 +12,7 @@
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
         xmlns="http://www.w3.org/1999/xhtml">
+  <c:loggedin><jx:out value="#{loggedin}" xmlize="false"/></c:loggedin>
 
   <c:content>
     <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>

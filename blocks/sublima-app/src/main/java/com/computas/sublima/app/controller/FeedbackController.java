@@ -6,6 +6,7 @@ import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
+import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
@@ -17,12 +18,14 @@ public class FeedbackController implements StatelessAppleController {
   private String mode;
   private SparulDispatcher sparulDispatcher;
   boolean success = false;
+  private ApplicationManager appMan;
 
   //todo Check how to send error messages with Cocoon (like Struts 2's s:actionmessage)
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
 
     this.mode = req.getSitemapParameter("mode");
+    boolean loggedIn = appMan.isLoggedIn("Sublima");
 
     if ("resourcecomment".equalsIgnoreCase(mode)) {
       String uri = req.getCocoonRequest().getParameter("uri");
@@ -78,6 +81,7 @@ public class FeedbackController implements StatelessAppleController {
       messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\"></c:messages>");
       bizData.put("messages", messageBuffer.toString());
       bizData.put("mode", "form");
+      bizData.put("loggedin", loggedIn);
       res.sendPage("xml/tips", bizData);
       return;
     }
@@ -106,6 +110,7 @@ public class FeedbackController implements StatelessAppleController {
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "form");
+        bizData.put("loggedin", loggedIn);
         res.sendPage("xml/tips", bizData);
         return;  
       }
@@ -132,12 +137,14 @@ public class FeedbackController implements StatelessAppleController {
           messageBuffer.append("</c:messages>\n");
           bizData.put("messages", messageBuffer.toString());
           bizData.put("mode", "ok");
+          bizData.put("loggedin", loggedIn);
           res.sendPage("xml/tips", bizData);
           return;
         } else {
           messageBuffer.append("<c:message>Det skjedde noe galt. Kontroller alle feltene og prøv igjen</c:message>");
           messageBuffer.append("</c:messages>\n");
           bizData.put("mode", "form");
+          bizData.put("loggedin", loggedIn);
           bizData.put("messages", messageBuffer.toString());
           res.sendPage("xml/tips", bizData);
           return;
@@ -147,6 +154,7 @@ public class FeedbackController implements StatelessAppleController {
         messageBuffer.append("<c:message>Feil ved angitt URL. Vennligst kontroller at linken du oppga fungerer.</c:message>");
         messageBuffer.append("</c:messages>\n");
         bizData.put("mode", "form");
+        bizData.put("loggedin", loggedIn);
         res.sendPage("xml/tips", bizData);
         return;
       }
@@ -158,6 +166,10 @@ public class FeedbackController implements StatelessAppleController {
 
   public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
+  }
+
+  public void setAppMan(ApplicationManager appMan) {
+    this.appMan = appMan;
   }
 
 }

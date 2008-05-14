@@ -16,6 +16,7 @@
   <bean name="com.computas.sublima.app.controller.FeedbackController"
         class="com.computas.sublima.app.controller.FeedbackController">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    <property name="appMan" ref="org.apache.cocoon.auth.ApplicationManager"/>
   </bean>
 
   <bean name="com.computas.sublima.app.controller.admin.AdminController"
