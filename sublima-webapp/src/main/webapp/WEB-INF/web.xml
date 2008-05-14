@@ -58,21 +58,19 @@
   </filter-mapping>
 
 
-  <!-- filter>
-  <filter-name>Set Character Encoding</filter-name>
-  <filter-class>com.computas.sublima.app.filter.SetCharacterEncodingFilter</filter-class>
-  <init-param>
-    <param-name>encoding</param-name>
-    <param-value>UTF-8</param-value>
-  </init-param>
-  </filter -->
+  <filter>
+    <filter-name>Charset Filter</filter-name>
+    <filter-class>com.computas.sublima.app.filter.SetCharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>requestEncoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
 
-<!-- either mapping to URL pattern -->
-
-  <!-- filter-mapping>
-    <filter-name>Set Character Encoding</filter-name>
+  <filter-mapping>
+    <filter-name>Charset Filter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping -->
+  </filter-mapping>
 
   <!--+
       | Use the Cocoon debug filter together with the Cocoon demo webapp
@@ -119,25 +117,25 @@
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
-  
+
   <!-- COPIED FROM THE XPATCH -->
-  
-  	<!-- The Joseki SPARQL servlet -->
-	  <servlet>
-	    <servlet-name>SPARQL service processor</servlet-name>
-	    <servlet-class>org.joseki.http.Servlet</servlet-class>
-	    <!-- Configuration file -->
-	    <init-param>
-	      <param-name>org.joseki.rdfserver.config</param-name>
-	      <param-value>joseki-config.ttl</param-value>
-	    </init-param>
-	  </servlet> 
-      <servlet-mapping>
-        <servlet-name>SPARQL service processor</servlet-name>
-        <url-pattern>/sparql</url-pattern>
-      </servlet-mapping>
-      
-      <!-- AuthenticationFilter -->
+
+  <!-- The Joseki SPARQL servlet -->
+  <servlet>
+    <servlet-name>SPARQL service processor</servlet-name>
+    <servlet-class>org.joseki.http.Servlet</servlet-class>
+    <!-- Configuration file -->
+    <init-param>
+      <param-name>org.joseki.rdfserver.config</param-name>
+      <param-value>joseki-config.ttl</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SPARQL service processor</servlet-name>
+    <url-pattern>/sparql</url-pattern>
+  </servlet-mapping>
+
+  <!-- AuthenticationFilter -->
   <filter>
     <description>Authentication and authorization</description>
     <display-name>AuthenticationFilter</display-name>
@@ -147,8 +145,8 @@
   <filter-mapping>
     <filter-name>AuthenticationFilter</filter-name>
     <servlet-name>DispatcherServlet</servlet-name>
-  </filter-mapping>  
-  
+  </filter-mapping>
+
   <!-- END COPIED FROM THE XPATCH -->
 
 </web-app>
