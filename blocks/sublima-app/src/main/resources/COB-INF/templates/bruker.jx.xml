@@ -14,9 +14,7 @@
         xmlns="http://www.w3.org/1999/xhtml">
   <c:title>Sublima administrasjon</c:title>
 
-  <c:mode>
-    <jx:out value="#{mode}" xmlize="false"/>
-  </c:mode>
+  <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
 
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -43,17 +41,21 @@
       <h3>Bruker</h3>
     </c:text>
 
-    <c:userdetails>
-      <jx:out value="#{userdetails}" xmlize="true"/>
-    </c:userdetails>
+    <c:user>
 
-    <c:allroles>
-      <jx:out value="#{allroles}" xmlize="true"/>
-    </c:allroles>
+      <c:userdetails>
+        <jx:out value="#{userdetails}" xmlize="true"/>
+      </c:userdetails>
 
-    <c:tempvalues>
-      <jx:out value="#{tempvalues}" xmlize="true"/>
-    </c:tempvalues>
+      <c:allroles>
+        <jx:out value="#{allroles}" xmlize="true"/>
+      </c:allroles>
+
+      <c:tempvalues>
+        <jx:out value="#{tempvalues}" xmlize="true"/>
+      </c:tempvalues>
+
+    </c:user>
 
   </c:content>
 
