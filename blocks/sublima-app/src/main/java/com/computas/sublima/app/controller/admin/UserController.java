@@ -1,19 +1,17 @@
 package com.computas.sublima.app.controller.admin;
 
-import com.computas.sublima.app.adhoc.ImportData;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.AdminService;
-import static com.computas.sublima.query.service.SettingsService.*;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: mha
@@ -33,7 +31,8 @@ public class UserController implements StatelessAppleController {
           "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
           "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
           "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
+          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
+          "PREFIX sioc: <http://rdfs.org/sioc/ns#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
   String[] prefixArray = {
@@ -43,7 +42,8 @@ public class UserController implements StatelessAppleController {
           "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
           "wdr: <http://www.w3.org/2007/05/powder#>",
           "skos: <http://www.w3.org/2004/02/skos/core#>",
-          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
+          "lingvoj: <http://www.lingvoj.org/ontology#>",
+          "sioc: <http://rdfs.org/sioc/ns#>"};
   String prefixes = StringUtils.join("\n", prefixArray);
 
   private static Logger logger = Logger.getLogger(AdminController.class);
@@ -55,12 +55,155 @@ public class UserController implements StatelessAppleController {
     this.submode = req.getSitemapParameter("submode");
 
     if ("brukere".equalsIgnoreCase(mode)) {
-      res.sendPage("xml2/brukere", null);
-      return;
-    } else {
-      res.sendStatus(404);
-      return;
+      if ("".equalsIgnoreCase(submode)) {
+        res.sendPage("xml2/brukere", null);
+        return;
+      } else if ("ny".equalsIgnoreCase(submode)) {
+        editUser(req, res, "ny", null);
+        return;
+      } else if ("emne".equalsIgnoreCase(submode)) {
+        editUser(req, res, "edit", null);
+        return;
+      } else if ("alle".equalsIgnoreCase(submode)) {
+        listUsers(req, res);
+        return;
+      } else if ("roller".equalsIgnoreCase(submode)) {
+        return;
+      } else {
+        res.sendStatus(404);
+        return;
+      }
     }
+  }
+
+  public void editUser(AppleRequest req, AppleResponse res, String type, String messages) {
+    StringBuffer messageBuffer = new StringBuffer();
+    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append(messages);
+    Map<String, Object> bizData = new HashMap<String, Object>();
+
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+      bizData.put("tempvalues", "<empty></empty>");
+
+      if ("ny".equalsIgnoreCase(type)) {
+        bizData.put("userdetails", "<empty></empty>");
+        bizData.put("allroles", "<empty></empty>");
+      } else {
+        bizData.put("tempvalues", "<empty></empty>");
+        bizData.put("mode", "topicedit");
+      }
+      bizData.put("messages", "<empty></empty>");
+      res.sendPage("xml2/bruker", bizData);
+
+      // When POST try to save the user. Return error messages upon failure, and success message upon great success
+    } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+
+      // 1. Mellomlagre alle verdier
+      // 2. Valider alle verdier
+      // 3. Forsøk å lagre
+
+      StringBuffer tempValues = getTempValues(req);
+      String tempPrefixes = "<c:tempvalues \n" +
+              "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+              "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+              "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+              "xmlns:c=\"http://xmlns.computas.com/cocoon\">\n";
+
+      String validationMessages = validateRequest(req);
+      if (!"".equalsIgnoreCase(validationMessages)) {
+        messageBuffer.append(validationMessages + "\n");
+        messageBuffer.append("</c:messages>\n");
+
+        bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+        bizData.put("messages", messageBuffer.toString());
+        bizData.put("mode", "topictemp");
+
+        res.sendPage("xml2/bruker", bizData);
+
+      } else {
+        // Generate an identifier if a uri is not given
+        String uri;
+        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
+          uri = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel").replace(" ", "_");
+          uri = uri.replace(",", "_");
+          uri = uri.replace(".", "_");
+          uri = getProperty("sublima.base.url") + "topic/" + uri + "_" + uri.hashCode();
+        } else {
+          uri = req.getCocoonRequest().getParameter("uri");
+        }
+
+        StringBuffer deleteString = new StringBuffer();
+        StringBuffer whereString = new StringBuffer();
+        deleteString.append(completePrefixes);
+        deleteString.append("\nDELETE\n{\n");
+        whereString.append("\nWHERE\n{\n");
+        deleteString.append("<" + uri + "> a sioc:User .\n");
+        deleteString.append("}\n");
+        whereString.append("<" + uri + "> a sioc:User .\n");
+        whereString.append("}\n");
+
+
+        StringBuffer insertString = new StringBuffer();
+        insertString.append(completePrefixes);
+        insertString.append("\nINSERT\n{\n");
+        insertString.append("<" + uri + "> a sioc:User ;\n");
+
+        insertString.append("}");
+
+        deleteString.append(whereString.toString());
+
+        boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
+        boolean insertSuccess = sparulDispatcher.query(insertString.toString());
+
+
+        logger.trace("TopicController.editTopic --> DELETE QUERY:\n" + deleteString.toString());
+        logger.trace("TopicController.editTopic --> INSERT QUERY:\n" + insertString.toString());
+
+        logger.trace("TopicController.editTopic --> DELETE QUERY RESULT: " + deleteSuccess);
+        logger.trace("TopicController.editTopic --> INSERT QUERY RESULT: " + insertSuccess);
+
+        if (deleteSuccess && insertSuccess) {
+          messageBuffer.append("<c:message>Nytt emne lagt til!</c:message>\n");
+
+        } else {
+          messageBuffer.append("<c:message>Feil ved lagring av nytt emne</c:message>\n");
+          bizData.put("topicdetails", "<empty></empty>");
+        }
+
+        if (deleteSuccess && insertSuccess) {
+          bizData.put("tempvalues", "<empty></empty>");
+          bizData.put("mode", "topicedit");
+          bizData.put("alltopics", adminService.getAllTopics());
+        } else {
+          bizData.put("status", adminService.getAllStatuses());
+          bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+          bizData.put("mode", "topictemp");
+          bizData.put("alltopics", adminService.getAllTopics());
+        }
+
+        messageBuffer.append("</c:messages>\n");
+
+        bizData.put("messages", messageBuffer.toString());
+
+        res.sendPage("xml2/bruker", bizData);
+      }
+    }
+  }
+
+  public void listUsers(AppleRequest req, AppleResponse res) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("allusers", adminService.getAllUsers());
+    res.sendPage("xml2/brukere_alle", bizData);
+  }
+
+  private String validateRequest(AppleRequest req) {
+    return "";
+  }
+
+  private StringBuffer getTempValues(AppleRequest req) {
+    StringBuffer tempValues = new StringBuffer();
+
+    return tempValues;
   }
 
   public void setSparqlDispatcher

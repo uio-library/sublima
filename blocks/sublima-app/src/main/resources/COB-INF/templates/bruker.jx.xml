@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns:lingvoj="http://www.lingvoj.org/ontology#"
+        xmlns:wdr="http://www.w3.org/2007/05/powder#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:c="http://xmlns.computas.com/cocoon"
+        xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+        xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        xmlns:sub="http://xmlns.computas.com/sublima#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns="http://www.w3.org/1999/xhtml">
+  <c:title>Sublima administrasjon</c:title>
+
+  <c:mode>
+    <jx:out value="#{mode}" xmlize="false"/>
+  </c:mode>
+
+  <c:breadcrumbs>
+    <c:breadcrumb title="Sublima"></c:breadcrumb>
+    <c:breadcrumb title="Admin">admin</c:breadcrumb>
+    <c:breadcrumb title="Brukere">admin/brukere/</c:breadcrumb>
+  </c:breadcrumbs>
+
+  <c:menu>
+    <c:menuelement title="Emner" link="admin/emner/"/>
+    <c:menuelement title="Ressurser" link="admin/ressurser/"/>
+    <c:menuelement title="Brukere" link="admin/brukere/">
+      <c:childmenuelement title="Ny" link="admin/brukere/ny"/>
+      <c:childmenuelement title="Vis alle" link="admin/brukere/alle"/>
+      <c:childmenuelement title="Roller" link="admin/brukere/roller"/>
+    </c:menuelement>
+    <c:menuelement title="Utgivere" link="admin/utgivere/"/>
+    <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
+    <c:menuelement title="Database" link="admin/database/"/>
+  </c:menu>
+
+  <c:content>
+
+    <c:text>
+      <h3>Bruker</h3>
+    </c:text>
+
+    <c:userdetails>
+      <jx:out value="#{userdetails}" xmlize="true"/>
+    </c:userdetails>
+
+    <c:allroles>
+      <jx:out value="#{allroles}" xmlize="true"/>
+    </c:allroles>
+
+    <c:tempvalues>
+      <jx:out value="#{tempvalues}" xmlize="true"/>
+    </c:tempvalues>
+
+  </c:content>
+
+</c:page>
