@@ -17,6 +17,8 @@
     <xsl:param name="interface-language">no</xsl:param>
 
     <xsl:template match="c:login" mode="login">
+
+      Inntil brukeradministrasjon er implementert er brukernavn og passord: Computas
        <form action="do-login" method="post">
          <table>
            <tr>
