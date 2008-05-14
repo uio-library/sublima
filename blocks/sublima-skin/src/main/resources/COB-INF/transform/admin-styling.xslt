@@ -19,6 +19,7 @@
   <xsl:import href="themeselection.xsl"/>
   <xsl:import href="topicjoin.xsl"/>
   <xsl:import href="allusers.xsl"/>
+  <xsl:import href="userform.xsl"/>
   <xsl:output method="xml"
               encoding="UTF-8"
               indent="no"/>
@@ -56,6 +57,19 @@
 
   <xsl:template name="upload">
     <xsl:copy-of select="c:page/c:content/c:upload/*"/>
+  </xsl:template>
+
+  <xsl:template name="userdetails">
+
+    <xsl:choose>
+      <xsl:when test="c:page/c:mode = 'usertemp'">
+        <xsl:apply-templates select="c:page/c:content/c:user" mode="usertemp"/>
+      </xsl:when>
+      <xsl:when test="c:page/c:mode = 'useredit'">
+        <xsl:apply-templates select="c:page/c:content/c:user" mode="useredit"/>
+      </xsl:when>
+    </xsl:choose>
+
   </xsl:template>
 
   <xsl:template name="topicdetails">
@@ -264,6 +278,8 @@
                 <xsl:call-template name="alltopics"/>
 
                 <xsl:call-template name="topicdetails"/>
+
+                <xsl:call-template name="userdetails"/>
 
                 <xsl:apply-templates select="c:page/c:content/c:allusers" mode="list"/>
 

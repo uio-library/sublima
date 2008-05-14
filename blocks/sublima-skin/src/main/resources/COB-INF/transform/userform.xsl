@@ -20,7 +20,7 @@
 
   <xsl:template match="c:user" mode="useredit">
 
-    <form name="useredit" action="{$baseurl}/admin/bbrukere/bruker" method="POST">
+    <form name="useredit" action="{$baseurl}/admin/brukere/bruker" method="POST">
       <input type="hidden" name="uri" value="{./c:userdetails/rdf:RDF/sioc:User/@rdf:about}"/>
       <table>
         <tr>
@@ -30,7 +30,7 @@
           <td>
             <input id="sioc:email" type="text"
                    name="sioc:email" size="40"
-                   value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email}"/>
+                   value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email/@rdf:resource}"/>
           </td>
         </tr>
 
@@ -62,7 +62,7 @@
           </td>
           <td>
             <input id="password2" type="password"
-                   name="password" size="40"
+                   name="password2" size="40"
                    value="passwordplaceholder"/>
           </td>
         </tr>
@@ -86,7 +86,7 @@
 
   <xsl:template match="c:user" mode="usertemp">
 
-    <form name="useredit" action="{$baseurl}/admin/bbrukere/bruker" method="POST">
+    <form name="useredit" action="{$baseurl}/admin/brukere/bruker" method="POST">
       <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
       <table>
         <tr>
@@ -128,7 +128,7 @@
           </td>
           <td>
             <input id="password2" type="password"
-                   name="password" size="40"
+                   name="password2" size="40"
                    />
           </td>
         </tr>
