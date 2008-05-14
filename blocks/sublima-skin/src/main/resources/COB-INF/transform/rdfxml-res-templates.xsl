@@ -96,42 +96,13 @@
     <xsl:value-of select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
-  <!-- There are two ways to do this; either address a literal, which
-       is in the model, or hardcode a value in the XSLT. In most
-       cases, we want to keep the values in the database, but there
-       might be exceptions. The status of the resource and the type of
-       the resource might be such exceptions. In particular, in cases
-       where the search interface consists of a drop-down, it has
-       performance benefits and makes the query simpler and we don't
-       have to search a literal, when the URI rather than the literal
-       is searched for. -->
-
   <xsl:template match="wdr:describedBy">
     <xsl:value-of select="./rdf:Description/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
   <xsl:template match="dct:format">
-    <xsl:choose>
-      <xsl:when test="@rdf:resource='http://purl.org/dc/dcmitype/Text'">
-	<xsl:choose>
-	  <xsl:when test="$interface-language='en'">Text</xsl:when>
-	  <xsl:when test="$interface-language='no'">Tekst</xsl:when>
-	</xsl:choose>
-      </xsl:when>
-      <xsl:when test="@rdf:resource='http://purl.org/dc/dcmitype/Image'">
-	<xsl:choose>
-	  <xsl:when test="$interface-language='en'">Image</xsl:when>
-	  <xsl:when test="$interface-language='no'">Bilde</xsl:when>
-	</xsl:choose>
-      </xsl:when>
-      <xsl:when test="@rdf:resource='http://purl.org/dc/dcmitype/Film'">
-	<xsl:choose>
-	  <xsl:when test="$interface-language='en'">Film</xsl:when>
-	  <xsl:when test="$interface-language='no'">Film</xsl:when>
-	</xsl:choose>
-      </xsl:when>
+    <xsl:value-of select="./dct:MediaType/rdfs:label[@xml:lang=$interface-language]"/>
 
-    </xsl:choose>
     <xsl:if test="position() != last()">
       <xsl:text>, </xsl:text>
     </xsl:if>
