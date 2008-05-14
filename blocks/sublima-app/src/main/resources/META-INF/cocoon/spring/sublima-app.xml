@@ -40,6 +40,7 @@
         class="com.computas.sublima.app.controller.admin.TopicController">
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    <property name="appMan" ref="org.apache.cocoon.auth.ApplicationManager"/>
   </bean>
 
   <bean name="com.computas.sublima.app.controller.admin.UserController"

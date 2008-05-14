@@ -179,19 +179,27 @@ this, just comment out the call-template -->
         
          <!-- Column 1 end -->
       </div>
-              
-              
-              
-              
-              
+             
       <div class="col2">
           <!-- Column 2 (left) start -->
             <h2>Mine aktiviteter</h2>
-            <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a>
-            <br/>
-            <a href="{$baseurl}/admin">Administrasjon</a>
-       
-           <!-- Column 2 end -->
+            <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a><br/>
+        
+            <xsl:choose>
+              <xsl:when test="c:page/c:loggedin = 'true' ">
+                <a href="{$baseurl}/admin/emner/">Emner</a><br/>
+                <a href="{$baseurl}/admin/ressurser/">Ressurser</a><br/>
+                <a href="{$baseurl}/admin/brukere/">Brukere</a><br/>
+                <a href="{$baseurl}/admin/utgivere/">Utgivere</a><br/>
+                <a href="{$baseurl}/admin/lenkesjekk/">Lenkesjekk</a><br/>
+                <a href="{$baseurl}/admin/database/">Database</a><br/>
+              </xsl:when>
+              <xsl:otherwise>
+                <a href="{$baseurl}/login">Logg inn</a><br/>
+              </xsl:otherwise>
+            </xsl:choose>
+
+        <!-- Column 2 end -->
        </div>
        
        <div class="col3">

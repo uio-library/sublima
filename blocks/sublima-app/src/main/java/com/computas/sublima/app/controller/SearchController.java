@@ -20,9 +20,6 @@ import java.util.TreeMap;
 public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private ApplicationManager appMan;
-
-
-
   private String mode;
 
   private static Logger logger = Logger.getLogger(SearchController.class);

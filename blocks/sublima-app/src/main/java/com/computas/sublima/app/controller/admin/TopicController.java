@@ -9,6 +9,7 @@ import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.log4j.Logger;
 
 import java.util.Enumeration;
@@ -24,6 +25,7 @@ public class TopicController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
+  private ApplicationManager appMan;
   private String mode;
   private String submode;
   String[] completePrefixArray = {
@@ -59,6 +61,7 @@ public class TopicController implements StatelessAppleController {
 
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
+    boolean loggedIn = appMan.isLoggedIn("Sublima");
 
     if ("emner".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
@@ -84,12 +87,12 @@ public class TopicController implements StatelessAppleController {
         return;
       }
     } else if ("browse".equalsIgnoreCase(mode)) {
-      showTopicBrowsing(res, req);
+      showTopicBrowsing(res, req, loggedIn);
       return;
     }
   }
 
-  private void showTopicBrowsing(AppleResponse res, AppleRequest req) {
+  private void showTopicBrowsing(AppleResponse res, AppleRequest req, boolean loggedIn) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     if(!adminService.getThemeTopics().contains("sub:theme")) {
     bizData.put("themetopics", "<empty></empty>");      
@@ -99,6 +102,7 @@ public class TopicController implements StatelessAppleController {
     }
 
     bizData.put("mode", "browse");
+    bizData.put("loggedin", loggedIn);
     res.sendPage("xml/browse", bizData);
   }
 
@@ -448,6 +452,10 @@ public class TopicController implements StatelessAppleController {
       result.put(paramName, request.getParameterValues(paramName));
     }
     return result;
+  }
+
+  public void setAppMan(ApplicationManager appMan) {
+    this.appMan = appMan;
   }
 }
 
