@@ -40,7 +40,7 @@
           <map:parameter name="password" value="{request-param:password}"/>
           <map:redirect-to uri="admin"/>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <!-- ========================================= -->
@@ -50,7 +50,7 @@
         <map:act type="cauth-logout">
           <map:parameter name="application" value="Sublima"/>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <!-- To test SPARQL queries -->
@@ -73,7 +73,7 @@
           </map:serialize>
           <map:serialize type="xml"/>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
 
       </map:match>
 
@@ -86,7 +86,7 @@
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <map:match pattern="admin/lenkesjekk/*">
@@ -97,7 +97,7 @@
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <map:match pattern="admin/brukere/*">
@@ -108,7 +108,7 @@
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <!-- individual page for each publisher. -->
@@ -120,7 +120,7 @@
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <!-- individual page for each topic. -->
@@ -132,7 +132,7 @@
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <!-- all other admin pages. Returns a 404 if the page is not found. -->
@@ -143,7 +143,7 @@
             <map:parameter name="mode" value="{../1}"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <!-- action to update a publisher -->
@@ -155,7 +155,7 @@
             <map:parameter name="submode" value="updatepublisher"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <map:match pattern="admin/database/*">
@@ -165,7 +165,7 @@
             <map:parameter name="mode" value="database"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <!-- action to insert a new publisher -->
@@ -177,7 +177,7 @@
             <map:parameter name="submode" value="insertpublisher"/>
           </map:call>
         </map:act>
-        <map:redirect-to uri="login"/>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
     </map:pipeline>
