@@ -79,33 +79,25 @@
 
   <xsl:template match="dct:subject" mode="facets">
     <xsl:param name="baseurlparams"/>
-    <xsl:variable name="index" select="position()" />
-    <xsl:variable name="last" select="last()" />
-    <xsl:if test="./skos:Concept"> <!-- This should iterate all unique topics -->
-        <li>
-	  <xsl:if test="$index &gt; 2">
-	    <xsl:attribute name="class">collapse</xsl:attribute>
-	    <xsl:attribute name="style">display : none;</xsl:attribute>
-	  </xsl:if>
-          <xsl:variable name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
-	   <a> <!-- The following builds the URL. -->
-	   <xsl:attribute name="href">
-	       <xsl:value-of select="$baseurlparams"/>
-	       <xsl:text>dct:subject/skos:prefLabel=</xsl:text>
-	       <xsl:value-of select="$this-label"/>
-	   </xsl:attribute>
-	   <xsl:value-of select="$this-label"/>
-	   </a>
-	   <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
-	   <xsl:text> (</xsl:text>
-	   <xsl:value-of select="count(//dct:subject[@rdf:resource=$uri])+1"/>)
-	    </li>
-    </xsl:if>
-    
+    <li>
+      <xsl:if test="position() &gt; 2">
+	<xsl:attribute name="class">collapse</xsl:attribute>
+	<xsl:attribute name="style">display : none;</xsl:attribute>
+      </xsl:if>
+      <xsl:variable name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+      <a> <!-- The following builds the URL. -->
+	<xsl:attribute name="href">
+	  <xsl:value-of select="$baseurlparams"/>
+	  <xsl:text>dct:subject/skos:prefLabel=</xsl:text>
+	  <xsl:value-of select="$this-label"/>
+	</xsl:attribute>
+	<xsl:value-of select="$this-label"/>
+      </a>
+      <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
+      <xsl:text> (</xsl:text>
+      <xsl:value-of select="count(//dct:subject[@rdf:resource=$uri])+1"/>)
+    </li>
   </xsl:template>
-
-
-
 
 
 
