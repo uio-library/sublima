@@ -199,15 +199,32 @@ p.validationmessage {
 }
 
 .facets {
-  clear: both;
-  float: left;
   width: 100%;
-
-  }
+  overflow: hidden;
+   background:#F7F7F7;
+ 
+ }
+/*
+.facets ul {
+     max-height:3em; 
+}
+*/
+  
+/*  
+.facets ul:hover {
+  background: red;
+  max-height:100%;
+} 
+*/
+  
+.facets a:active {
+    background:red;
+}
 
 .facet {
   float: left;  
-  margin:1em;
+   padding:1em;
+  
 }
 
 .facet ul  {
@@ -225,3 +242,5 @@ p.validationmessage {
 .resources dd {
   padding-bottom: .2em;
 }
+
+
