@@ -63,6 +63,9 @@ this, just comment out the call-template -->
         </title>
         <!-- link rel="stylesheet" type="text/css" href="http://detektor.deichman.no/stylesheet.css"/> -->
         <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
+        <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
+        <script type="text/javascript" src="styles/expand.js"></script>
+
       </head>
       <body>
 
@@ -142,11 +145,12 @@ this, just comment out the call-template -->
         
         <!-- Facets -->
         <!-- Facets are shown if the c:/page/c:facets exists in the XML --> 
+        <xsl:if test="c:page/c:mode != 'resource' or c:page/c:mode != 'browse'">
            <xsl:if test="c:page/c:facets">
             <h3>Velg avgrensning</h3>
             <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
           </xsl:if>
-        
+        </xsl:if>
                 
         
         <!-- Advanced search -->        
