@@ -175,7 +175,7 @@ this, just comment out the call-template -->
         </xsl:if>
 
         <!-- Search results -->
-        <xsl:if test="c:page/c:mode != 'browse' and c:page/c:mode != 'resource'">
+        <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
             <h3>Ressurser</h3>
             <!-- Søkeresultatene -->
             <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
@@ -229,7 +229,7 @@ this, just comment out the call-template -->
           <p>A Free Software Project supported by
             <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
             and
-            <a href="http://www.computas.com">Computas AS</a>
+            <a href="http://www.computas.com/">Computas AS</a>
             , 2008
           </p>
         </div>

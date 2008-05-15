@@ -59,23 +59,15 @@
     <div class="facet">    
     Emne
     <ul>
-       <xsl:apply-templates select="sub:Resource/dct:subject[skos:Concept][position() &lt; 2]" mode="facets">
-	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-      </xsl:apply-templates>
-     
-    
-    <xsl:if test="sub:Resource/dct:subject[skos:Concept][position() &lt; 3]">
-     <span class="full_txt" id="full_txt" style="display:none;">
-       <xsl:apply-templates select="sub:Resource/dct:subject[skos:Concept][position() &gt; 1]" mode="facets">
-	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+      <xsl:apply-templates select="sub:Resource/dct:subject[skos:Concept]" mode="facets">
+	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+	<!-- xsl:with-param name="collapse" select="position() &lt; 2"/ -->
       </xsl:apply-templates> 
-     </span>
-    </xsl:if>
-    
+            
     </ul>
 
-    <xsl:if test="sub:Resource/dct:subject[skos:Concept][position() &lt; 3]">
-     <span class="more" id="more"><a href="javascript:void(0);showHide('full_txt');showHide('more');" >more &#187;</a></span>
+    <xsl:if test="sub:Resource/dct:subject[skos:Concept][position() &gt; 1]">
+      <span class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" >more &#187;</a></span>
     </xsl:if>
 
     
@@ -90,7 +82,11 @@
     <xsl:variable name="index" select="position()" />
     <xsl:variable name="last" select="last()" />
     <xsl:if test="./skos:Concept"> <!-- This should iterate all unique topics -->
-        <li> 
+        <li>
+	  <xsl:if test="$index &gt; 2">
+	    <xsl:attribute name="class">collapse</xsl:attribute>
+	    <xsl:attribute name="style">display : none;</xsl:attribute>
+	  </xsl:if>
           <xsl:variable name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
 	   <a> <!-- The following builds the URL. -->
 	   <xsl:attribute name="href">

@@ -292,6 +292,10 @@
         <map:read src="resources/styles/{2}.css" mime-type="text/css"/>
       </map:match>
 
+      <map:match pattern="**/*.js">
+        <map:read src="resources/styles/{2}.js" mime-type="text/javascript"/>
+      </map:match>
+
     </map:pipeline>
 
     <map:pipeline internal-only="true">
