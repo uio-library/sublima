@@ -145,7 +145,7 @@ this, just comment out the call-template -->
         
         <!-- Facets -->
         <!-- Facets are shown if the c:/page/c:facets exists in the XML --> 
-        <xsl:if test="c:page/c:mode != 'resource' or c:page/c:mode != 'browse'">
+        <xsl:if test="c:page/c:mode != 'resource' and c:page/c:mode != 'browse'">
            <xsl:if test="c:page/c:facets">
             <h3>Velg avgrensning</h3>
             <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
