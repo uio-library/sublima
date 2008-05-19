@@ -50,7 +50,7 @@
             <select name="type">
               <option value="RDF/XML">RDF/XML</option>
               <option value="N3">N3</option>
-              <option value="Turtle">Turtle</option>
+              <option value="Turtle" selected="selected">Turtle</option>
             </select>
           </td>
         </tr>

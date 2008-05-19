@@ -61,7 +61,6 @@
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:subject[skos:Concept]" mode="facets">
 	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-	<!-- xsl:with-param name="collapse" select="position() &lt; 2"/ -->
       </xsl:apply-templates> 
             
     </ul>
@@ -80,7 +79,7 @@
   <xsl:template match="dct:subject" mode="facets">
     <xsl:param name="baseurlparams"/>
     <li>
-      <xsl:if test="position() &gt; 2">
+      <xsl:if test="position() &gt; 2"> <!-- This number sets how many items should be shown untill the user clicks "more" -->
 	<xsl:attribute name="class">collapse</xsl:attribute>
 	<xsl:attribute name="style">display : none;</xsl:attribute>
       </xsl:if>
