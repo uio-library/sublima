@@ -41,6 +41,15 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/skos:altLabel">Synonymer</label>
+                    </td>
+                    <td>
+                      <input id="dct:subject/skos:Concept/skos:skos:altLabel" type="text" name="dct:subject/skos:Concept/skos:altLabel" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/skos:altLabel}"/>
+                    </td>
+                </tr>
+
               </table>
               <p>Relaterte emner</p>
               <table>
@@ -143,6 +152,15 @@
                     <td>
                       <textarea id="dct:subject/skos:Concept/skos:definition" name="dct:subject/skos:Concept/skos:definition" rows="6" cols="40"><xsl:value-of
                                 select="./c:tempvalues/c:tempvalues/skos:definition"/>...</textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/skos:altLabel">Synonymer</label>
+                    </td>
+                    <td>
+                      <input id="dct:subject/skos:Concept/skos:skos:altLabel" type="text" name="dct:subject/skos:Concept/skos:altLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:altLabel}"/>
                     </td>
                 </tr>
               
