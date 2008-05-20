@@ -32,7 +32,7 @@
             </p>
         </c:text>
       <c:upload>
-        <form name="upload" action="database" method="POST">
+        <form action="database" method="POST">
       <table>
         <tr>
           <td align="right">
