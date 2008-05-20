@@ -20,7 +20,7 @@
 
   <xsl:template match="c:user" mode="useredit">
 
-    <form name="useredit" action="{$baseurl}/admin/brukere/bruker" method="POST">
+    <form action="{$baseurl}/admin/brukere/bruker" method="POST">
       <input type="hidden" name="uri" value="{./c:userdetails/rdf:RDF/sioc:User/@rdf:about}"/>
       <table>
         <tr>
@@ -86,7 +86,7 @@
 
   <xsl:template match="c:user" mode="usertemp">
 
-    <form name="useredit" action="{$baseurl}/admin/brukere/bruker" method="POST">
+    <form action="{$baseurl}/admin/brukere/bruker" method="POST">
       <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
       <table>
         <tr>

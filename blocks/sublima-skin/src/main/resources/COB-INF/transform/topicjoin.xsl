@@ -18,7 +18,7 @@
     <xsl:param name="interface-language">no</xsl:param>
 
     <xsl:template match="c:join" mode="topicjoin">
-        <form name="topicjoin" action="{$baseurl}/admin/emner/koble" method="POST">
+        <form action="{$baseurl}/admin/emner/koble" method="POST">
             <table>
                 <tr>
                     <td>

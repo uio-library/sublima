@@ -18,7 +18,7 @@
     <xsl:param name="interface-language">no</xsl:param>
     <xsl:template match="c:resourcedetails" mode="edit">
 
-        <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
+        <form action="{$baseurl}/admin/ressurser/ny" method="POST">
 
             <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
             <input type="hidden" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
@@ -254,7 +254,7 @@
 
   <xsl:template match="c:resourcedetails" mode="temp">
 
-        <form name="new_resource" action="{$baseurl}/admin/ressurser/ny" method="POST">
+        <form action="{$baseurl}/admin/ressurser/ny" method="POST">
 
             <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
             <input type="hidden" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>

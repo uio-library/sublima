@@ -21,7 +21,7 @@
    <xsl:variable name="ucletters">ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ</xsl:variable>
 
     <xsl:template match="c:theme" mode="theme">
-        <form name="themeselection" action="{$baseurl}/admin/emner/tema" method="POST">
+        <form action="{$baseurl}/admin/emner/tema" method="POST">
             <table>
                 <tr>
                     <td>

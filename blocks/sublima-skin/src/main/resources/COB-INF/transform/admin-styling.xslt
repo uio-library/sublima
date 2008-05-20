@@ -117,7 +117,7 @@
   <!-- New publisher -->
   <xsl:template name="new_publisher">
 
-    <form name="new_publisher" action="insertpublisher" method="GET">
+    <form action="insertpublisher" method="GET">
       <table>
         <tr>
           <td>
@@ -164,11 +164,10 @@
   <!-- Publisherdetails -->
   <xsl:template name="publisherdetails">
 
-    <form name="rename_publisher" action="updatepublisher" method="GET">
+    <form action="updatepublisher" method="GET">
       <table>
         <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/foaf:Agent" mode="edit"/>
-        <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Agent"
-                             mode="edit"/>
+        <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Agent" mode="edit"/>
         <tr>
           <td></td>
           <td>
@@ -337,6 +336,15 @@
                               <a>
                                 <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/></xsl:attribute><xsl:value-of select="@title"/></a>
                             </li>
+                            <xsl:if test="c:childmenuelement">
+                              <ul>
+                                <xsl:for-each select="c:childmenuelement">
+                                <li>
+                                  <a><xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/></xsl:attribute><xsl:value-of select="@title"/></a>
+                                </li>
+                                </xsl:for-each>
+                            </ul>
+                          </xsl:if>
                           </xsl:for-each>
                         </ul>
                       </xsl:if>
