@@ -111,7 +111,7 @@
     </table>
     <br/>
     <p>Send inn en kommentar angående denne ressursen</p>
-    <form name="resourcecomment" action="{$baseurl}/resourcecomment" method="GET">
+    <form action="{$baseurl}/resourcecomment" method="GET">
         <input type="hidden" name="uri" value="{sub:Resource/@rdf:about}"/>
         <input type="hidden" name="resource" value="{sub:Resource/dct:identifier/@rdf:resource}"/>
       <table>
