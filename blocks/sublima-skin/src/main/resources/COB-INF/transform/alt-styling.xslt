@@ -120,8 +120,10 @@ this, just comment out the call-template -->
 		
 		<!-- Search -->
 	    <!-- Search is shown when advanced search is not -->	
-		<xsl:if test="not(c:page/c:advancedsearch/node())">
+        <xsl:if test="not(c:page/c:advancedsearch/node())">
+		
 		  <form action="{$baseurl}/search-result" method="get">
+		  <fieldset>
 		    <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
 		    <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
 		    <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
@@ -131,12 +133,14 @@ this, just comment out the call-template -->
             <input id="keyword" class="searchbox" type="text"
                    name="searchstring" size="40"/>
             <input type="submit" value="Søk"/><br/>
-            <input type="radio" name="booleanoperator" value="AND" checked="true"/>OG
+            <input type="radio" name="booleanoperator" value="AND" checked="checked"/>OG
             <input type="radio" name="booleanoperator" value="OR"/>
             ELLER
             <input type="checkbox" name="deepsearch" value="deepsearch"/>
             Søk også i de eksterne ressursene
+            </fieldset>
           </form>
+          
         </xsl:if>
         
         <!-- Facets -->
