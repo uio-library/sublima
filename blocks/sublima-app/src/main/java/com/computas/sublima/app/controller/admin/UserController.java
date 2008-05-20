@@ -154,8 +154,8 @@ public class UserController implements StatelessAppleController {
         insertString.append(completePrefixes);
         insertString.append("\nINSERT\n{\n");
         insertString.append("<" + uri + "> a sioc:User ;\n");
-        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n") ;
-        insertString.append("    sioc:email <mailto:" + req.getCocoonRequest().getParameter("sioc:email") + "> .\n") ;
+        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n");
+        insertString.append("    sioc:email <mailto:" + req.getCocoonRequest().getParameter("sioc:email") + "> .\n");
         insertString.append("}");
 
         deleteString.append(whereString.toString());
@@ -210,7 +210,16 @@ public class UserController implements StatelessAppleController {
 
   private StringBuffer getTempValues(AppleRequest req) {
     StringBuffer tempValues = new StringBuffer();
-    
+
+    String uri = req.getCocoonRequest().getParameter("uri");
+    String temp_email = req.getCocoonRequest().getParameter("sioc:email");
+    String temp_name = req.getCocoonRequest().getParameter("rdfs:label");
+
+    //Create an XML structure for the selected values, to use in the JX template
+
+    tempValues.append("<rdf:about>" + uri + "</rdf:about>\n");
+    tempValues.append("<sioc:email>" + temp_email + "</sioc:email>\n");
+    tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
 
     return tempValues;
   }
