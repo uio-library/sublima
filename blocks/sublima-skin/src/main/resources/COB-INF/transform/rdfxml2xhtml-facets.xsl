@@ -129,7 +129,7 @@
 
   <xsl:template match="dct:audience" mode="facets">
     <xsl:param name="baseurlparams"/>
-    <xsl:if test="./dct:AgentClass"> <!-- This should iterate all unique languages -->
+    <xsl:if test="./dct:AgentClass"> 
       <li>
 	<xsl:variable name="this-label" select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
 	<a> <!-- The following builds the URL. -->
