@@ -8,7 +8,7 @@
   <c:navigation></c:navigation>
 
   <c:advancedsearch>
-    <form name="dcSearch" action="search-result" method="GET">
+    <form action="search-result" method="GET">
       <input type="hidden" name="interface-language" value="no"/>
       <input type="hidden" name="freetext-field" value="dct:title"/>
       <input type="hidden" name="freetext-field" value="dct:subject/all-labels"/>
