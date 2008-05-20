@@ -33,10 +33,6 @@ this, just comment out the call-template -->
     <xsl:copy-of select="c:page/c:advancedsearch/*"/>
   </xsl:template>
 
-  <xsl:template name="tips"> <!-- I have no idea why it didn't work to have a normal node-based template -->
-    <xsl:copy-of select="c:page/c:tips/*"/>
-  </xsl:template>
-
   <xsl:template match="/">
 
     <html>
@@ -125,7 +121,7 @@ this, just comment out the call-template -->
 		<!-- Search -->
 	    <!-- Search is shown when advanced search is not -->	
 		<xsl:if test="not(c:page/c:advancedsearch/node())">
-		  <form name="freetextSearch" action="{$baseurl}/search-result" method="get">
+		  <form action="{$baseurl}/search-result" method="get">
 		    <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
 		    <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
 		    <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
@@ -159,7 +155,7 @@ this, just comment out the call-template -->
         <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
         
         <!-- Tips -->
-        <xsl:call-template name="tips"/>
+        <xsl:apply-templates select="c:page/c:tips" mode="form"/>
 
         <!-- Login -->
         <xsl:apply-templates select="c:page/c:login" mode="login"/>
