@@ -414,9 +414,10 @@ public class ResourceController implements StatelessAppleController {
       validationMessages.append("<c:message>Minst en mediatype må være valgt</c:message>\n");
     }
 
+    /* Commented out due to the lack of dct:audience in SMIL test data
     if (req.getCocoonRequest().getParameterValues("dct:audience") == null) {
       validationMessages.append("<c:message>Minst en målgruppe må være valgt</c:message>\n");
-    }
+    }*/
 
     if (req.getCocoonRequest().getParameterValues("dct:subject") == null) {
       validationMessages.append("<c:message>Minst ett emne må være valgt</c:message>\n");
@@ -503,7 +504,7 @@ public class ResourceController implements StatelessAppleController {
                     //"              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
-            "        ?resource wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;",
+            "        ?resource wdr:describedBy <" + getProperty("sublima.base.url") + "status/til_godkjenning> ;",
             "                  dct:title ?title .",
             //"                  dct:identifier ?identifier .",
             "}"});
