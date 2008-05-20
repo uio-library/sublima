@@ -2,6 +2,7 @@ package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.URLActions;
 import com.computas.sublima.query.SparulDispatcher;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -32,6 +33,9 @@ public class FeedbackController implements StatelessAppleController {
       String email = req.getCocoonRequest().getParameter("email");
       String comment = req.getCocoonRequest().getParameter("comment");
 
+      String generatedUserURI = getProperty("sublima.base.url") + "user/visitor/" + email.hashCode();
+      String generatedCommentURI = getProperty("sublima.base.url") + "comment/resource/" + email.hashCode() + comment.hashCode();
+
       String commentString = StringUtils.join("\n", new String[]{
               "PREFIX dct: <http://purl.org/dc/terms/>",
               "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
@@ -39,20 +43,11 @@ public class FeedbackController implements StatelessAppleController {
               "PREFIX sioc:<http://rdfs.org/sioc/ns#>",
               "INSERT",
               "{",
-              "    <" + uri + ">" + " sub:comment ?a .",
-              "        ?a a sioc:Item ;",
-              "            sioc:content \"" + comment + "\" ;",
-              "        sioc:has_creator ?b .",
-              "        ?b a sioc:User ;" +
-              "            sioc:email <mailto:" + email + "> .",
-              "}",
-              "WHERE",
-              "{",
-              "    <" + uri + ">" + " sub:comment ?a .",
-              "        ?a a sioc:Item ;",
-              "            sioc:content \"" + comment + "\" ;",
-              "        sioc:has_creator ?b .",
-              "        ?b a sioc:User ;" +
+              "    <" + uri + ">" + " sub:comment <" + generatedCommentURI + "> .",
+              "        <" + generatedCommentURI + "> a sioc:Item ;",
+              "            sioc:content \"\"\"" + comment + "\"\"\" ;",
+              "        sioc:has_creator <" + generatedUserURI + "> .",
+              "        <" + generatedUserURI + "> a sioc:User ;",
               "            sioc:email <mailto:" + email + "> .",
               "}"});
 
@@ -127,7 +122,7 @@ public class FeedbackController implements StatelessAppleController {
                         "<" + url + "> dct:title " + "\"" + tittel + "\"@no . \n" +
                         "<" + url + "> dct:description " + "\"" + beskrivelse + "\"@no . \n" +
                         "<" + url + "> sub:keywords " + "\"" + stikkord.toString() + "\"@no . \n" +
-                        "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> . }\n";
+                        "<" + url + "> wdr:describedBy <" + getProperty("sublima.base.url") + "status/til_godkjenning> . }\n";
 
         success = sparulDispatcher.query(insertTipString);
         logger.trace("sendTips --> RESULT: " + success);
