@@ -51,7 +51,7 @@
         <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>
 
         <c:related>
-            <c:relation><jx:out value="#{relation}" xmlize="true"/></c:relation>
+            <c:relation><jx:out value="#{relationdetails}" xmlize="true"/></c:relation>
             <c:tempvalues>
                 <jx:out value="#{tempvalues}" xmlize="true"/>
             </c:tempvalues>

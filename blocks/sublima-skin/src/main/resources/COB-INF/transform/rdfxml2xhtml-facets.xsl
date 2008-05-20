@@ -40,7 +40,7 @@
     <div class="facets">
    <div class="facet">
    Språk
-   <xsl:if select="sub:Resource/dct:language">
+   <xsl:if test="sub:Resource/dct:language">
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
 	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
@@ -51,7 +51,7 @@
    
    <div class="facet">
    Målgruppe
-   <xsl:if select="sub:Resource/dct:audience">
+   <xsl:if test="sub:Resource/dct:audience">
    <ul>
       <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
 	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
@@ -62,7 +62,7 @@
 
     <div class="facet">    
     Emne
-   <xsl:if select="sub:Resource/dct:subject">
+   <xsl:if test="sub:Resource/dct:subject">
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:subject[skos:Concept]" mode="facets">
 	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>

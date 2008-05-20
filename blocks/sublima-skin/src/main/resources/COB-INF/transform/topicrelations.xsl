@@ -19,13 +19,14 @@
 
     <xsl:template match="c:related" mode="topicrelatededit">
         <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
+            <input type="hidden" name="uri" value="{./c:relation/rdf:RDF/skos:semanticRelation/@rdf:about}"/>
             <table>
                 <tr>
                     <td>
-                        <label for="skos:Concept">Emner</label>
+                        <label for="skos:semanticRelation/rdfs:label">Relasjonstype</label>
                     </td>
                     <td>
-                      <input id="skos:Concept/skos:prefLabel" type="text" name="skos:Concept/skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:Concept/skos:prefLabel}" /></td>
+                      <input id="skos:semanticRelation/rdfs:label" type="text" name="skos:semanticRelation/rdfs:label" size="40" value="{./c:relation/rdf:RDF/skos:semanticRelation/rdfs:label}" /></td>
                 </tr>
              
                 <tr>
@@ -34,7 +35,36 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" value="Slå sammen"/>
+                        <input type="submit" value="Lagre relasjonstype"/>
+                    </td>
+                    <td>
+                        <input type="reset" value="Rens skjema"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </xsl:template>
+
+      <xsl:template match="c:related" mode="topicrelatedtemp">
+        <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
+            <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
+            <table>
+                <tr>
+                    <td>
+                        <label for="skos:semanticRelation/rdfs:label">Relasjonstype</label>
+                    </td>
+                    <td>
+                      <input id="skos:semanticRelation/rdfs:label" type="text" name="skos:semanticRelation/rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/rdfs:label}" /></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Lagre relasjonstype"/>
                     </td>
                     <td>
                         <input type="reset" value="Rens skjema"/>

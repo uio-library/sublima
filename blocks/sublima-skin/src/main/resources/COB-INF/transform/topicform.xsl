@@ -77,6 +77,37 @@
                         </select>
                     </td>
                 </tr>
+
+                <tr>
+                    <td>
+                        <label for="dct:subject/skos:Concept/skos:semanticRelation/rdf:resource">Relasjon</label>
+                    </td>
+                    <td>
+                        <xsl:for-each select="dct:subject/skos:Concept/skos:semanticRelation">
+                           <select id="dct:subject/skos:Concept/skos:semanticRelation/rdf:resource" name="dct:subject/skos:Concept/skos:broader/rdf:resource" multiple="multiple">  
+                        </xsl:for-each>
+                        <select id="dct:subject/skos:Concept/skos:semanticRelation/rdf:resource" name="dct:subject/skos:Concept/skos:broader/rdf:resource" multiple="multiple">
+                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
+                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:choose>
+                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/skos:broader/@rdf:resource">
+                                        <option value="{./@rdf:about}" selected="selected">
+                                            <xsl:value-of select="./skos:prefLabel"/>
+                                        </option>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <option value="{./@rdf:about}">
+                                            <xsl:value-of select="./skos:prefLabel"/>
+                                        </option>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </select>
+                    </td>
+                </tr>
+
+
+
                 <tr>
                     <td>
                         <label for="wdr:describedBy">Status</label>

@@ -20,6 +20,8 @@
   <xsl:import href="topicjoin.xsl"/>
   <xsl:import href="allusers.xsl"/>
   <xsl:import href="userform.xsl"/>
+  <xsl:import href="topicrelations.xsl"/>
+
   <xsl:output method="xml"
               encoding="UTF-8"
               indent="no"/>
@@ -110,6 +112,18 @@
       </xsl:when>
       <xsl:when test="c:page/c:mode = 'temp'">
         <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="temp"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+    <xsl:template name="topicrelations">
+
+    <xsl:choose>
+      <xsl:when test="c:page/c:mode = 'topicrelatededit'">
+        <xsl:apply-templates select="c:page/c:content/c:related" mode="topicrelatededit"/>
+      </xsl:when>
+      <xsl:when test="c:page/c:mode = 'topicrelatedtemp'">
+        <xsl:apply-templates select="c:page/c:content/c:related" mode="topicrelatedtemp"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -279,6 +293,8 @@
                 <xsl:call-template name="topicdetails"/>
 
                 <xsl:call-template name="userdetails"/>
+
+                <xsl:call-template name="topicrelations"/>
 
                 <xsl:apply-templates select="c:page/c:content/c:allusers" mode="list"/>
 

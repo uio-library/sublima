@@ -27,6 +27,7 @@
             <c:childmenuelement title="Vis alle" link="admin/emner/alle"/>
             <c:childmenuelement title="Slå sammen" link="admin/emner/koble"/>
           <c:childmenuelement title="Temaemner" link="admin/emner/tema"/>
+          <c:childmenuelement title="Relasjoner" link="admin/emner/relasjoner/"/>
         </c:menuelement>
         <c:menuelement title="Ressurser" link="admin/ressurser/"/>
         <c:menuelement title="Brukere" link="admin/brukere/"/>
@@ -60,6 +61,10 @@
             <c:statuses>
                 <jx:out value="#{status}" xmlize="true"/>
             </c:statuses>
+
+            <c:relationtypes>
+                <jx:out value="#{relationtypes}" xmlize="true"/>
+            </c:relationtypes>
 
             <c:tempvalues>
                 <jx:out value="#{tempvalues}" xmlize="true"/>

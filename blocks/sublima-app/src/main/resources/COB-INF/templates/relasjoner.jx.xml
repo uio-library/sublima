@@ -28,7 +28,7 @@
       <c:childmenuelement title="Slå sammen" link="admin/emner/koble"/>
       <c:childmenuelement title="Temaemner" link="admin/emner/tema"/>
       <c:childmenuelement title="Relasjoner" link="admin/emner/relasjoner/">
-        <c:childmenuelement title="Ny" link="admin/emner/relasjoner/ny"/>
+        <c:childmenuelement title="Ny" link="admin/emner/relasjoner/relasjon"/>
         <c:childmenuelement title="Vis alle" link="admin/emner/relasjoner/alle"/>
       </c:childmenuelement>
     </c:menuelement>
