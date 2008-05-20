@@ -6,7 +6,7 @@
     <h2>Pilot 1 - Search using Dublin Core metadata</h2>
     <h3>Purpose: demonstrate architecture top-down</h3>
     <br/>
-    <form name="dcSearch" action="{$baseurl}/search-result" method="get">
+    <form action="{$baseurl}/search-result" method="get">
       <div>
         <input type="hidden" name="interface-language" value="no"/>
         <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
