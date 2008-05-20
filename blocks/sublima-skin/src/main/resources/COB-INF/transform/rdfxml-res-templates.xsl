@@ -17,45 +17,56 @@
 
   <xsl:template match="foaf:Agent|foaf:Person|foaf:Group|foaf:Organization" mode="external-link">
     <xsl:choose>
-      <xsl:when test="foaf:homepage and foaf:name/@xml:lang=$interface-language">
+      <xsl:when test="foaf:homepage">
 	<a href="{foaf:homepage/@rdf:resource}"><xsl:value-of select="foaf:name"/></a>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:value-of select="foaf:name[@xml:lang=$interface-language]"/>
+	<xsl:value-of select="foaf:name"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
   <xsl:template match="dct:title" mode="internal-link">
-    <xsl:if test="@xml:lang=$interface-language">
-      <a href="{../dct:identifier/@rdf:resource}"><xsl:value-of select="."/></a>
-    </xsl:if>
+    <a href="{../dct:identifier/@rdf:resource}"><xsl:value-of select="."/></a>
   </xsl:template>
 
   <xsl:template match="dct:title" mode="external-link">
-    <xsl:if test="@xml:lang=$interface-language">
-      <a href="{../@rdf:about}"><xsl:value-of select="."/></a>
-    </xsl:if>
+    <a href="{../@rdf:about}"><xsl:value-of select="."/></a>
   </xsl:template>
   
   <xsl:template match="dct:description">
-    <xsl:if test="@xml:lang=$interface-language">
-      <xsl:value-of select="." disable-output-escaping="yes"/>
-      <!-- xsl:copy-of select="node()"/ -->
-    </xsl:if>
+    <xsl:value-of select="." disable-output-escaping="yes"/>
   </xsl:template>
 
   <xsl:template match="sub:committer">
-    <xsl:value-of select="./sioc:User/rdfs:label[@xml:lang=$interface-language]"/>
+    <xsl:value-of select="./sioc:User/rdfs:label"/>
   </xsl:template>
   
   <xsl:template match="dct:audience">
-    <xsl:value-of select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+    <xsl:value-of select="./dct:AgentClass/rdfs:label"/>
   </xsl:template>
 
   <xsl:template match="dct:dateAccepted|dct:dateSubmitted">
     <xsl:value-of select="substring-before(., 'T')"/>
   </xsl:template>
+
+  <xsl:template match="dct:publisher">
+   <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>
+	<xsl:apply-templates select="//foaf:*[@rdf:about=$uri]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates select="./foaf:*" mode="external-link" />
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text> </xsl:text>
+  </xsl:template>
+
+
+  <!-- The following fields are meant to be in available in all
+       languages that has an interface, thus, we need to check the
+       interface language here. -->
 
   <xsl:template match="dct:subject">
    <xsl:choose>
@@ -73,19 +84,6 @@
     <xsl:if test="position() != last()">
       <xsl:text>, </xsl:text>
     </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="dct:publisher">
-   <xsl:choose>
-      <xsl:when test="./@rdf:resource">
-	<xsl:variable name="uri" select="./@rdf:resource"/>
-	<xsl:apply-templates select="//foaf:*[@rdf:about=$uri]"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:apply-templates select="./*" mode="external-link" />
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text> </xsl:text>
   </xsl:template>
 
   <xsl:template match="sub:Audience">
