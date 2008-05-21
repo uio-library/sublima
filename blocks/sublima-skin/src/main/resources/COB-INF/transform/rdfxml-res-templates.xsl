@@ -54,7 +54,7 @@
    <xsl:choose>
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
-	<xsl:apply-templates select="//foaf:*[@rdf:about=$uri]"/>
+	<xsl:apply-templates select="//foaf:*[@rdf:about=$uri]" mode="external-link"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:apply-templates select="./foaf:*" mode="external-link" />
