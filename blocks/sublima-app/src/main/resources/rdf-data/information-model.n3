@@ -31,8 +31,8 @@
 #
 dct:subject 		rdfs:range 	owl:Class ;
 			a 		owl:ObjectProperty ;
-			rdfs:domain	sub:Resource .
-#dct:subject rdfs:range skos:Concept .         
+			rdfs:domain	sub:Resource ;
+            rdfs:range skos:Concept .         
 	
 #	
 dct:title		rdfs:range 	rdfs:Literal ;		
@@ -124,32 +124,48 @@ wdr:describedBy		rdfs:range 	wdr:DR ;
 
 
 ######################################################
-# FOR TOPICS
+# TOPICS
 ######################################################
+
+skos:prefLabel a owl:AnnotationProperty ;
+            rdfs:domain skos:Concept .
+    
+# skos:definition
+ sub:definition a owl:DatatypeProperty ;
+			rdfs:domain	skos:Concept .		
+    
+skos:altLabel a owl:DatatypeProperty ;
+            rdfs:domain skos:Concept .
+
+skos:hiddenLabel a owl:DatatypeProperty ;
+            rdfs:domain skos:Concept .
+
+wdr:describedBy a owl:DatatypeProperty ;
+            rdfs:domain skos:Concept ;
+            rdfs:range wdr:DR .
+
+# skos:note is used for comments
+# this is imported from skos vocabulary	
+ skos:note  a owl:DatatypeProperty ;
+			rdfs:domain skos:Concept ;
+			rdfs:range	    rdf:XMLLiteral .
 
 # sub:classification is used for classification
 # e.g. ISBN 
 sub:classification
-			a		owl:AnnotationProperty ; 
-			rdfs:domain     skos:Concept .	       		       	
-
-# skos:note is used for comments
-# this is imported from skos vocabulary	
-# skos:note
-#			a		owl:AnnotationProperty ;
-#			rdfs:domain rdfs:Resource ;
-#           rdfs:range  rdfs:Resource .
-
-# skos:definition
-# sub:description		a		owl:AnnotationProperty ;
-#			rdfs:domain	skos:Concept .		
+			a		 owl:DatatypeProperty ;
+			rdfs:domain     skos:Concept ;	
+			rdfs:range	    rdf:XMLLiteral .
 
 
-#sub:isMainConceptOf  a owl:ObjectProperty ; 
-#    rdfs:range skos:ConceptScheme ;
-#    rdfs:domain skos:Concept ;
-#    owl:inverseOf skos:hasTopConcept . 
+sub:theme a owl:DatatypeProperty ;
+            rdfs:domain skos:Concept ;
+            rdfs:range   xsd:boolean .
 
+sub:isMainConceptOf  a owl:ObjectProperty ; 
+            rdfs:range skos:ConceptScheme ;
+            rdfs:domain skos:Concept ;
+            owl:inverseOf skos:hasTopConcept . 
 
 
 ########################
@@ -206,6 +222,9 @@ sub:classification
 <http://purl.org/dc/dcmitype/Text> a dct:MediaType ;
 	rdfs:label "Text"@en ;
 	rdfs:label "Tekst"@no .
+
+
+
 
 
 #########################
