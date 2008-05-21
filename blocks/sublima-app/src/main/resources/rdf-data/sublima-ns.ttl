@@ -3,6 +3,8 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix sub: <http://xmlns.computas.com/sublima#> . 
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .  
+@prefix http: <http://www.w3.org/2007/ont/http#> .
 
 <>	rdfs:comment "An ontology containing some simple properties and classes for use in the Sublima project." .
 
@@ -21,7 +23,7 @@ sub:Resource		a 		rdfs:Class;
 
 sub:stripped		rdfs:range 	rdfs:Literal ;		
 			a 		owl:AnnotationProperty ;
-			rdfs:domain	<http://www.w3.org/2007/ont/http#ResponseMessage> .
+			rdfs:domain	http:ResponseMessage .
 
 sub:status		rdfs:range 	rdfs:Literal ;		
 			a 		owl:AnnotationProperty ;
@@ -39,3 +41,9 @@ sub:comment rdfs:domain sub:Resource ;
 # free text keyword			
 sub:keywords     rdfs:domain sub:Resource ;
             a   owl:AnnotationProperty . 
+            
+            
+sub:isMainConceptOf  a owl:ObjectProperty ; 
+    rdfs:range skos:ConceptScheme ;
+    rdfs:domain skos:Concept ;
+    owl:inverseOf skos:hasTopConcept . 

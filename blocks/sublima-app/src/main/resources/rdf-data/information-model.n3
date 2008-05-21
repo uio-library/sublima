@@ -18,7 +18,7 @@
 @prefix sub: <http://xmlns.computas.com/sublima#> . 
 @prefix wdr: <http://www.w3.org/2007/05/powder#> .
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .  
 
 ######################################################
@@ -145,10 +145,10 @@ sub:classification
 #			rdfs:domain	skos:Concept .		
 
 
-sub:isMainConceptOf  a owl:ObjectProperty ; 
-    rdfs:range skos:ConceptScheme ;
-    rdfs:domain skos:Concept ;
-    owl:inverseOf skos:hasTopConcept . 
+#sub:isMainConceptOf  a owl:ObjectProperty ; 
+#    rdfs:range skos:ConceptScheme ;
+#    rdfs:domain skos:Concept ;
+#    owl:inverseOf skos:hasTopConcept . 
 
 
 
