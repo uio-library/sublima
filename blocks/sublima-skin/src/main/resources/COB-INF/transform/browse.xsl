@@ -13,21 +13,23 @@
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
-    <xsl:param name="baseurl"/>
-    <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="baseurl"/>
+  <xsl:param name="interface-language">no</xsl:param>
 
-    <xsl:template match="c:browse" mode="browse">
-        Utvalgte emner (for demo)
-        <ul>
-            <xsl:for-each select="./rdf:RDF/skos:Concept">
-                <xsl:sort select="./skos:prefLabel"/>
-                <li>
-                    <a href="{./@rdf:about}">
-                        <xsl:value-of select="./skos:prefLabel"/>
-                    </a>
-                </li>
-            </xsl:for-each>
-        </ul>
+  <xsl:template match="c:browse" mode="browse">
+    Utvalgte emner (for demo)
+    <xsl:if test="./rdf:RDF/skos:Concept">
+      <ul>
+        <xsl:for-each select="./rdf:RDF/skos:Concept">
+          <xsl:sort select="./skos:prefLabel"/>
+          <li>
+            <a href="{./@rdf:about}">
+              <xsl:value-of select="./skos:prefLabel"/>
+            </a>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </xsl:if>
 
-    </xsl:template>
+  </xsl:template>
 </xsl:stylesheet>

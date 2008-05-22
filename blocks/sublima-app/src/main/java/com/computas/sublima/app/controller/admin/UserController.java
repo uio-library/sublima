@@ -1,8 +1,9 @@
 package com.computas.sublima.app.controller.admin;
 
+import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.query.service.AdminService;
+import com.computas.sublima.query.service.DatabaseService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -10,6 +11,9 @@ import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +26,7 @@ public class UserController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
+  DatabaseService dbService = new DatabaseService();
   private String mode;
   private String submode;
   String[] completePrefixArray = {
@@ -109,29 +114,140 @@ public class UserController implements StatelessAppleController {
               "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
               "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
               "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-              "xmlns:sioc: \"http://rdfs.org/sioc/ns#\">\n";
+              "xmlns:sioc= \"http://rdfs.org/sioc/ns#\">\n";
 
       String validationMessages = validateRequest(req);
       if (!"".equalsIgnoreCase(validationMessages)) {
         messageBuffer.append(validationMessages + "\n");
         messageBuffer.append("</c:messages>\n");
 
+        bizData.put("userdetails", "<empty></empty>");
         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "usertemp");
+        bizData.put("allroles", "<empty></empty>");
 
         res.sendPage("xml2/bruker", bizData);
 
       } else {
-        // Generate an identifier if a uri is not given
+
+        boolean newUser = false;
+
+        // Generate an identifier if a uri is not given and insert the user in the USER-table
         String uri;
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
           uri = req.getCocoonRequest().getParameter("rdfs:label").replace(" ", "_");
           uri = uri.replace(",", "_");
           uri = uri.replace(".", "_");
           uri = getProperty("sublima.base.url") + "user/" + uri + "_" + uri.hashCode();
+
+          String deleteSql = "DELETE FROM users WHERE username ='" + req.getCocoonRequest().getParameter("sioc:email") + "'"; 
+
+          String insertSql = "INSERT INTO users "
+                  + "(username) "
+                  + "VALUES "
+                  + "('" + req.getCocoonRequest().getParameter("sioc:email") + "')";
+          try {
+            int deletedRows = dbService.doSQLUpdate(deleteSql);
+            int insertedRows = dbService.doSQLUpdate(insertSql);
+            newUser = true;
+            // Fails if username already exists. Give feedback to the user.
+          } catch (SQLException e) {
+            e.printStackTrace();
+            /*
+            logger.trace("TopicController.editUser --> NEW USER: INSERT USERNAME FAILED\n");
+            messageBuffer.append("<c:message>Brukernavnet finnes fra før</c:message>\n</c:messages>\n");
+
+            bizData.put("userdetails", "<empty></empty>");
+            bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+            bizData.put("messages", messageBuffer.toString());
+            bizData.put("mode", "usertemp");
+            bizData.put("allroles", "<empty></empty>");
+
+            res.sendPage("xml2/bruker", bizData);*/
+            return;
+          }
+
+
         } else {
           uri = req.getCocoonRequest().getParameter("uri");
+        }
+
+        // HER HAR MAN BRUKERNAVN I USER-TABELLEN UANSETT
+
+        if (!newUser) {
+          // If the user has changed her e-mail address (username), we must update it in the USER-table
+          if (!("mailto:" + req.getCocoonRequest().getParameter("sioc:email")).equalsIgnoreCase(req.getCocoonRequest().getParameter("oldusername"))) {
+            //Strip away the sioc mailto
+            String[] username = req.getCocoonRequest().getParameter("oldusername").split(":");
+            String insertSql = "UPDATE users "
+                    + "SET username = '" + req.getCocoonRequest().getParameter("sioc:email") + "' "
+                    + "WHERE username = '" + username[1] + "'";
+
+            try {
+              int insertedRows = dbService.doSQLUpdate(insertSql);
+            } catch (SQLException e) {
+              e.printStackTrace();
+              logger.trace("TopicController.editUser --> EXISTING USER: INSERT USERINFO FAILED\n");
+            }
+
+          }
+        }
+
+        // If it's a new user and the passowrd is "passwordplaceholder" give an errormessage (can't do this in validation because of existing user/unchanged password thingie
+        if (newUser && req.getCocoonRequest().getParameter("password1").equalsIgnoreCase("passwordplaceholder")) {
+          messageBuffer.append("<c:message>Passordet må angis på nytt</c:message>\n</c:messages>\n");
+
+          bizData.put("userdetails", "<empty></empty>");
+          bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+          bizData.put("messages", messageBuffer.toString());
+          bizData.put("mode", "usertemp");
+          bizData.put("allroles", "<empty></empty>");
+
+          res.sendPage("xml2/bruker", bizData);
+        }
+
+        // If the given password is "passwordplaceholder", then the user hasn't changed her password and we leave it as it is
+        if (!req.getCocoonRequest().getParameter("password1").equalsIgnoreCase("passwordplaceholder")) {
+          // Encrypt the password and store it in a database table
+          int insertedRows = 0;
+          try {
+            String password = adminService.generateSHA1(req.getCocoonRequest().getParameter("password1"));
+            logger.trace("TopicController.editUser --> GENERATE PASSWORD SHA1 " + password + "\n");
+
+            String insertSql = "UPDATE users "
+                    + "SET password = '" + password + "' "
+                    + "WHERE username = '" + req.getCocoonRequest().getParameter("sioc:email") + "'";
+
+            logger.trace("TopicController.editUser --> INSERT USERINFO:\n" + insertSql);
+
+            try {
+              insertedRows = dbService.doSQLUpdate(insertSql);
+            } catch (SQLException e) {
+              e.printStackTrace();
+              logger.trace("TopicController.editUser --> INSERT USERINFO FAILED\n");
+            }
+
+
+          } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+          } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+          }
+
+          // If insertedRows is 0, then the insert failed and we give the user a proper feedback
+          if (insertedRows == 0) {
+            messageBuffer.append("<c:message>En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prøv igjen</c:message>" + "\n");
+            messageBuffer.append("</c:messages>\n");
+            bizData.put("userdetails", "<empty></empty>");
+            bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+            bizData.put("messages", messageBuffer.toString());
+            bizData.put("mode", "usertemp");
+            bizData.put("allroles", "<empty></empty>");
+
+            res.sendPage("xml2/bruker", bizData);
+            return;
+          }
         }
 
         StringBuffer deleteString = new StringBuffer();
@@ -179,7 +295,7 @@ public class UserController implements StatelessAppleController {
         }
 
         if (deleteSuccess && insertSuccess) {
-          bizData.put("userdetails", adminService.getUserByURI(req.getCocoonRequest().getParameter("uri")));
+          bizData.put("userdetails", adminService.getUserByURI(uri));
           bizData.put("tempvalues", "<empty></empty>");
           bizData.put("allroles", "<empty></empty>");
           bizData.put("mode", "useredit");
@@ -205,7 +321,28 @@ public class UserController implements StatelessAppleController {
   }
 
   private String validateRequest(AppleRequest req) {
-    return "";
+    StringBuffer validationMessages = new StringBuffer();
+
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:email")) || req.getCocoonRequest().getParameter("sioc:email") == null) {
+      validationMessages.append("<c:message>E-post (brukernavn) kan ikke være blank</c:message>\n");
+    }
+
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
+      validationMessages.append("<c:message>Navn kan ikke være blank</c:message>\n");
+    }
+
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("password1")) ||
+            req.getCocoonRequest().getParameter("password1") == null ||
+            "".equalsIgnoreCase(req.getCocoonRequest().getParameter("password2")) ||
+            req.getCocoonRequest().getParameter("password2") == null) {
+      validationMessages.append("<c:message>Passordfeltene kan ikke være blanke, og må være like</c:message>\n");
+    }
+
+    if (!req.getCocoonRequest().getParameter("password1").equals(req.getCocoonRequest().getParameter("password2"))) {
+      validationMessages.append("<c:message>Passordfeltene må være like</c:message>\n");
+    }
+
+    return validationMessages.toString();
   }
 
   private StringBuffer getTempValues(AppleRequest req) {
@@ -214,12 +351,13 @@ public class UserController implements StatelessAppleController {
     String uri = req.getCocoonRequest().getParameter("uri");
     String temp_email = req.getCocoonRequest().getParameter("sioc:email");
     String temp_name = req.getCocoonRequest().getParameter("rdfs:label");
+    String temp_oldusername = req.getCocoonRequest().getParameter("oldusername");
 
     //Create an XML structure for the selected values, to use in the JX template
-
     tempValues.append("<rdf:about>" + uri + "</rdf:about>\n");
     tempValues.append("<sioc:email>" + temp_email + "</sioc:email>\n");
     tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
+    tempValues.append("<c:oldusername>" + temp_oldusername + "</c:oldusername>");
 
     return tempValues;
   }

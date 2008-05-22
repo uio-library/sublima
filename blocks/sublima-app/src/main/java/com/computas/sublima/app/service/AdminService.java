@@ -1,4 +1,4 @@
-package com.computas.sublima.query.service;
+package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
@@ -7,6 +7,10 @@ import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * A class to support the administration of Sublima
@@ -24,22 +28,22 @@ public class AdminService {
 
   /**
    * Method to get all relation types
+   *
    * @return RDF XML result
    */
   public String getAllRelationTypes() {
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX dct: <http://purl.org/dc/terms/>",
-      "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
-      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-      "CONSTRUCT {",
-      "    ?relation a skos:semanticRelation ;",
-      "    rdfs:label ?label .",
-      "}",
-      "WHERE {",
-      "?relation a skos:semanticRelation ;",
-      "rdfs:label ?label .",
-      "FILTER langMatches( lang(?label), \"no\" )",
-      "}"});
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT {",
+            "    ?relation a skos:semanticRelation ;",
+            "    rdfs:label ?label .",
+            "}",
+            "WHERE {",
+            "?relation a skos:semanticRelation ;",
+            "rdfs:label ?label .",
+            "FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
 
     logger.trace("AdminService.getAllRelationTypes() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -55,18 +59,18 @@ public class AdminService {
   public String getAllPublishers() {
 
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX dct: <http://purl.org/dc/terms/>",
-      "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
-      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-      "CONSTRUCT {",
-      "    ?publisher a foaf:Agent ;",
-      "    foaf:name ?name .",
-      "}",
-      "WHERE {",
-      "?publisher a foaf:Agent ;",
-      "foaf:name ?name .",
-      "FILTER langMatches( lang(?name), \"no\" )",
-      "}"});
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT {",
+            "    ?publisher a foaf:Agent ;",
+            "    foaf:name ?name .",
+            "}",
+            "WHERE {",
+            "?publisher a foaf:Agent ;",
+            "foaf:name ?name .",
+            "FILTER langMatches( lang(?name), \"no\" )",
+            "}"});
 
     logger.trace("AdminService.getAllPublishers() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -81,17 +85,17 @@ public class AdminService {
    */
   public String getAllStatuses() {
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
-      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-      "CONSTRUCT {",
-      "    ?status a wdr:DR ;",
-      "    rdfs:label ?label .",
-      "}",
-      "WHERE {",
-      "    ?status a wdr:DR ;",
-      "    rdfs:label ?label .",
-      "    FILTER langMatches( lang(?label), \"no\" )",
-      "}"});
+            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT {",
+            "    ?status a wdr:DR ;",
+            "    rdfs:label ?label .",
+            "}",
+            "WHERE {",
+            "    ?status a wdr:DR ;",
+            "    rdfs:label ?label .",
+            "    FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
 
 
     logger.trace("AdminService.getAllStatuses() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -107,17 +111,17 @@ public class AdminService {
    */
   public String getAllLanguages() {
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
-      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-      "CONSTRUCT {",
-      "?language a lingvoj:Lingvo ;",
-      "          rdfs:label ?label .",
-      "}",
-      "WHERE {",
-      "?language a lingvoj:Lingvo ;",
-      "          rdfs:label ?label .",
-      "FILTER langMatches( lang(?label), \"no\" )",
-      "}"});
+            "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT {",
+            "?language a lingvoj:Lingvo ;",
+            "          rdfs:label ?label .",
+            "}",
+            "WHERE {",
+            "?language a lingvoj:Lingvo ;",
+            "          rdfs:label ?label .",
+            "FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
 
     logger.trace("AdminService.getAllLanguages() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -133,17 +137,17 @@ public class AdminService {
   public String getAllMediaTypes() {
 
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX dct: <http://purl.org/dc/terms/>",
-      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-      "CONSTRUCT {",
-      "    ?mediatype a dct:MediaType ;",
-      "             rdfs:label ?label .",
-      "}",
-      "WHERE {",
-      "    ?mediatype a dct:MediaType ;",
-      "             rdfs:label ?label .",
-      "    FILTER langMatches( lang(?label), \"no\" )",
-      "}"});
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT {",
+            "    ?mediatype a dct:MediaType ;",
+            "             rdfs:label ?label .",
+            "}",
+            "WHERE {",
+            "    ?mediatype a dct:MediaType ;",
+            "             rdfs:label ?label .",
+            "    FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
 
     logger.trace("AdminService.getAllMediaTypes() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -159,17 +163,17 @@ public class AdminService {
   public String getAllAudiences() {
 
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX dct: <http://purl.org/dc/terms/>",
-      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-      "CONSTRUCT {",
-      "    ?audience a dct:AgentClass ;",
-      "             rdfs:label ?label .",
-      "}",
-      "WHERE {",
-      "    ?audience a dct:AgentClass ;",
-      "             rdfs:label ?label .",
-      "    FILTER langMatches( lang(?label), \"no\" )",
-      "}"});
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT {",
+            "    ?audience a dct:AgentClass ;",
+            "             rdfs:label ?label .",
+            "}",
+            "WHERE {",
+            "    ?audience a dct:AgentClass ;",
+            "             rdfs:label ?label .",
+            "    FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
 
     logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -193,12 +197,12 @@ public class AdminService {
     }
 
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX dct: <http://purl.org/dc/terms/>",
-      "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-      "DESCRIBE " + uri + " ?comment",
-      "WHERE {",
-      "  OPTIONAL { " + uri + " sub:comment ?comment . }",
-      "}"});
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            "DESCRIBE " + uri + " ?comment",
+            "WHERE {",
+            "  OPTIONAL { " + uri + " sub:comment ?comment . }",
+            "}"});
 
     logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -217,13 +221,13 @@ public class AdminService {
 
 
     String insertPublisherByName =
-      "PREFIX dct: <http://purl.org/dc/terms/>\n" +
-        "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
-        "INSERT\n" +
-        "{\n" +
-        "<" + publisherURI + "> a foaf:Agent ;\n" +
-        "foaf:name \"" + publishername + "\"@no .\n" +
-        "}";
+            "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+                    "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+                    "INSERT\n" +
+                    "{\n" +
+                    "<" + publisherURI + "> a foaf:Agent ;\n" +
+                    "foaf:name \"" + publishername + "\"@no .\n" +
+                    "}";
 
     logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);
     boolean success = false;
@@ -244,16 +248,16 @@ public class AdminService {
   public String getAllTopics() {
 
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-      "CONSTRUCT {",
-      "    ?topic a skos:Concept ;",
-      "        skos:prefLabel ?label .",
-      "}",
-      "WHERE {",
-      "    ?topic a skos:Concept ;",
-      "        skos:prefLabel ?label .",
-      "FILTER langMatches( lang(?label), \"no\" )",
-      "}"});
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "CONSTRUCT {",
+            "    ?topic a skos:Concept ;",
+            "        skos:prefLabel ?label .",
+            "}",
+            "WHERE {",
+            "    ?topic a skos:Concept ;",
+            "        skos:prefLabel ?label .",
+            "FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
 
     logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -263,12 +267,12 @@ public class AdminService {
 
   public String getTopicByURI(String uri) {
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX dct: <http://purl.org/dc/terms/>",
-      "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-      "DESCRIBE <" + uri + ">",
-      "WHERE {",
-      "<" + uri + "> a skos:Concept .",
-      "}"});
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "DESCRIBE <" + uri + ">",
+            "WHERE {",
+            "<" + uri + "> a skos:Concept .",
+            "}"});
 
     logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -278,12 +282,12 @@ public class AdminService {
 
   public String getTopicResourcesByURI(String uri) {
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX dct: <http://purl.org/dc/terms/>",
-      "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-      "DESCRIBE ?resource",
-      "WHERE {",
-      "    ?resource dct:subject <" + uri + "> . ",
-      "}"});
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "DESCRIBE ?resource",
+            "WHERE {",
+            "    ?resource dct:subject <" + uri + "> . ",
+            "}"});
 
     logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -293,12 +297,12 @@ public class AdminService {
 
   public String getThemeTopics() {
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-      "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
-      "DESCRIBE ?theme",
-      "WHERE {",
-      "    ?theme sub:theme \"true\"^^xsd:boolean .",
-      "}"});
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+            "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
+            "DESCRIBE ?theme",
+            "WHERE {",
+            "    ?theme sub:theme \"true\"^^xsd:boolean .",
+            "}"});
 
     logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -308,14 +312,14 @@ public class AdminService {
 
   public String getAllUsers() {
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
-      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-      "DESCRIBE ?user",
-      "WHERE {",
-      "    ?user a sioc:User ;",
-      "        rdfs:label ?label .",
-      "FILTER langMatches( lang(?label), \"no\" )",
-      "}"});
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "DESCRIBE ?user",
+            "WHERE {",
+            "    ?user a sioc:User ;",
+            "        rdfs:label ?label .",
+            "FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
 
     logger.trace("AdminService.getAllUsers() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -325,8 +329,8 @@ public class AdminService {
 
   public String getUserByURI(String uri) {
     String queryString = StringUtils.join("\n", new String[]{
-      "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
-      "DESCRIBE <" + uri + ">"});
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "DESCRIBE <" + uri + ">"});
 
     logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
@@ -336,11 +340,39 @@ public class AdminService {
 
   public String getRelationByURI(String uri) {
     String queryString = StringUtils.join("\n", new String[]{
-      "DESCRIBE <" + uri + ">"});
+            "DESCRIBE <" + uri + ">"});
 
     logger.trace("AdminService.getRelationByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
   }
+
+  private static String convertToHex(byte[] data) {
+    StringBuffer buf = new StringBuffer();
+    for (int i = 0; i < data.length; i++) {
+      int halfbyte = (data[i] >>> 4) & 0x0F;
+      int two_halfs = 0;
+      do {
+        if ((0 <= halfbyte) && (halfbyte <= 9))
+          buf.append((char) ('0' + halfbyte));
+        else
+          buf.append((char) ('a' + (halfbyte - 10)));
+        halfbyte = data[i] & 0x0F;
+      } while (two_halfs++ < 1);
+    }
+    return buf.toString();
+  }
+
+  public String generateSHA1(String text)
+          throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    MessageDigest md;
+    md = MessageDigest.getInstance("SHA-1");
+    byte[] sha1hash = new byte[40];
+    md.update(text.getBytes("UTF-8"), 0, text.length());
+    sha1hash = md.digest();
+    return convertToHex(sha1hash);
+  }
+
+
 }

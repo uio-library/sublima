@@ -1,19 +1,16 @@
 package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.adhoc.ImportData;
+import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.query.service.AdminService;
-import static com.computas.sublima.query.service.SettingsService.*;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.net.URLEncoder;
-import java.util.*;
 
 /**
  * @author: mha

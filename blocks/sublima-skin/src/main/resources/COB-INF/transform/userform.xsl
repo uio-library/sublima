@@ -22,6 +22,8 @@
 
     <form action="{$baseurl}/admin/brukere/bruker" method="POST">
       <input type="hidden" name="uri" value="{./c:userdetails/rdf:RDF/sioc:User/@rdf:about}"/>
+      <input type="hidden" name="oldusername" value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email/@rdf:resource}"/>
+
       <table>
         <tr>
           <td>
@@ -73,7 +75,7 @@
         </tr>
         <tr>
           <td>
-            <input type="submit" value="Lagre emne"/>
+            <input type="submit" value="Lagre bruker"/>
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>
@@ -88,6 +90,7 @@
 
     <form action="{$baseurl}/admin/brukere/bruker" method="POST">
       <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
+      <input type="hidden" name="oldusername" value="{./c:tempvalues/c:tempvalues/c:oldusername}"/>
       <table>
         <tr>
           <td>
@@ -139,7 +142,7 @@
         </tr>
         <tr>
           <td>
-            <input type="submit" value="Lagre emne"/>
+            <input type="submit" value="Lagre bruker"/>
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>

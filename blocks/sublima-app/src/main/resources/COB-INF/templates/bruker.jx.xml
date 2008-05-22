@@ -11,6 +11,7 @@
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns:sioc= "http://rdfs.org/sioc/ns#"
         xmlns="http://www.w3.org/1999/xhtml">
   <c:title>Sublima administrasjon</c:title>
 
@@ -40,6 +41,8 @@
     <c:text>
       <h3>Bruker</h3>
     </c:text>
+
+    <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>
 
     <c:user>
 

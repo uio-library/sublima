@@ -1,12 +1,18 @@
 package com.computas.sublima.app.controller.admin;
 
+import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.query.service.DatabaseService;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.AuthenticationException;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.auth.impl.AbstractSecurityHandler;
 import org.apache.cocoon.auth.impl.StandardUser;
-import org.apache.commons.lang.StringUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 
 /**
@@ -15,26 +21,56 @@ import java.util.Map;
  */
 public class LoginController extends AbstractSecurityHandler {
 
-  /**
-   * The properties.
-   */
+  DatabaseService dbService = new DatabaseService();
+  AdminService adminService = new AdminService();
 
   public User login(final Map loginContext) throws AuthenticationException {
 
+    Statement statement = null;
+
     //todo Get the username from DB and check if it exists
     final String name = (String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_USERNAME_KEY);
+    final String password = (String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_PASSWORD_KEY);
 
     if (name == null) {
       throw new AuthenticationException("Required user name property is missing for login.");
-    }
+    } else {
 
-    //todo Get the password for the given user from DB
-    final String password = (String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_PASSWORD_KEY);
+      if (name.equalsIgnoreCase("Computas") && password.equalsIgnoreCase("Computas")) {
+      } else {
 
 
-    // todo Check if the given password and the DB password match
-    if (!StringUtils.equals(password, "Computas")) {
-      return null;
+        String sql = "SELECT * FROM users WHERE username = '" + name + "'";
+
+        try {
+          statement = dbService.doSQLQuery(sql);
+          ResultSet rs = statement.getResultSet();
+
+          if (!rs.next()) { //empty
+            throw new AuthenticationException("Username is wrong or does not exist.");
+          }
+
+          //todo Get the password for the given user from DB
+
+
+          if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
+            return null;
+          }
+
+          statement.close();
+
+        } catch (SQLException e) {
+          e.printStackTrace();
+          return null;
+        } catch (NoSuchAlgorithmException e) {
+          e.printStackTrace();
+          return null;
+        } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+          return null;
+        }
+
+      }
     }
 
     final User user = new StandardUser(name);
