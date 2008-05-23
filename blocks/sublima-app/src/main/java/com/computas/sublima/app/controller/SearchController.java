@@ -30,6 +30,8 @@ public class SearchController implements StatelessAppleController {
 
     this.mode = req.getSitemapParameter("mode");
 
+    logger.trace("SearchController: Language from sitemap is " +req.getSitemapParameter("interface-language"));
+
     // The initial advanced search page
     if ("advancedsearch".equalsIgnoreCase(mode)) {
       res.sendPage("xhtml/search-form", null);
