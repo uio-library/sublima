@@ -25,40 +25,40 @@
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.controller.admin.PublisherController"
-        class="com.computas.sublima.app.controller.admin.PublisherController">
+  <bean name="com.computas.sublima.app.controller.PublisherController"
+        class="com.computas.sublima.app.controller.PublisherController">
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.controller.admin.ResourceController"
-        class="com.computas.sublima.app.controller.admin.ResourceController">
+  <bean name="com.computas.sublima.app.controller.ResourceController"
+        class="com.computas.sublima.app.controller.ResourceController">
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.controller.admin.TopicController"
-        class="com.computas.sublima.app.controller.admin.TopicController">
+  <bean name="com.computas.sublima.app.controller.TopicController"
+        class="com.computas.sublima.app.controller.TopicController">
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
     <property name="appMan" ref="org.apache.cocoon.auth.ApplicationManager"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.controller.admin.UserController"
-        class="com.computas.sublima.app.controller.admin.UserController">
+  <bean name="com.computas.sublima.app.controller.UserController"
+        class="com.computas.sublima.app.controller.UserController">
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.controller.admin.LinkcheckController"
-        class="com.computas.sublima.app.controller.admin.LinkcheckController">
+  <bean name="com.computas.sublima.app.controller.LinkcheckController"
+        class="com.computas.sublima.app.controller.LinkcheckController">
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
   <!-- This is a simple security handler: -->
   <bean name="org.apache.cocoon.auth.SecurityHandler/Sublima"
-        class="com.computas.sublima.app.controller.admin.LoginController"
+        class="com.computas.sublima.app.controller.LoginController"
         scope="singleton">
   </bean>
 
