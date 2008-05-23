@@ -1,8 +1,9 @@
-package com.computas.sublima.app.controller.admin;
+package com.computas.sublima.app.controller;
 
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.controller.admin.AdminController;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -10,6 +11,7 @@ import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.auth.ApplicationManager;
+import org.apache.cocoon.auth.impl.StandardApplicationManager;
 import org.apache.log4j.Logger;
 
 import java.util.Enumeration;
@@ -77,7 +79,25 @@ public class TopicController implements StatelessAppleController {
         editRelation(res, req, null);
         return;
       }
+    } else if ("a-z".equalsIgnoreCase(mode)) {
+      getTopicsByLetter(res, req, submode);
     }
+  }
+
+  /**
+   * Method to get all topics starting with the given letter(s).
+   * Used in the A-Z topic browsing
+   * @param res
+   * @param req
+   * @param letter 
+   */
+  private void getTopicsByLetter(AppleResponse res, AppleRequest req, String letter) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+
+    bizData.put("themetopics", adminService.getTopicsByLetter(letter));
+    bizData.put("mode", "browse");
+    bizData.put("loggedin", "<empty></empty>");
+    res.sendPage("xml/browse", bizData);
   }
 
   private void editRelation(AppleResponse res, AppleRequest req, Object o) {

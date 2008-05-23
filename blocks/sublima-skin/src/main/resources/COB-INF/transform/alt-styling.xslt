@@ -17,6 +17,7 @@
   <xsl:import href="browse.xsl"/>
   <xsl:import href="tipsform.xsl"/>
   <xsl:import href="loginform.xsl"/>
+  <xsl:import href="a-z.xsl"/>
 
 
   <xsl:param name="baseurl"/>
@@ -163,6 +164,9 @@ this, just comment out the call-template -->
 
         <!-- Login -->
         <xsl:apply-templates select="c:page/c:login" mode="login"/>
+
+        <!-- A-Z -->
+        <xsl:apply-templates select="c:page/c:a-z" mode="a-z"/>                
         
         <!-- Resource Description (details) -->
         <xsl:if test="c:page/c:mode = 'resource'">

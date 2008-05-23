@@ -1,6 +1,7 @@
-package com.computas.sublima.app.controller.admin;
+package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.controller.admin.AdminController;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.hp.hpl.jena.sparql.util.StringUtils;

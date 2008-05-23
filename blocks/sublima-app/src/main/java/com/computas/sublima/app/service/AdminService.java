@@ -375,4 +375,22 @@ public class AdminService {
   }
 
 
+  public String getTopicsByLetter(String letter) {
+    if (letter.equalsIgnoreCase("0-9")) {
+      letter = "[0-9]";
+    }
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "DESCRIBE ?topic",
+            "WHERE {",
+            "?topic a skos:Concept ;",
+            "    skos:prefLabel ?label .",
+            "FILTER regex(str(?label), \"^" + letter + "\", \"i\")",
+            "}"});
+
+    logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
 }

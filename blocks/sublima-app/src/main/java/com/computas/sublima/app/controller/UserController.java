@@ -1,6 +1,7 @@
-package com.computas.sublima.app.controller.admin;
+package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.controller.admin.AdminController;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
@@ -73,6 +74,7 @@ public class UserController implements StatelessAppleController {
         listUsers(req, res);
         return;
       } else if ("roller".equalsIgnoreCase(submode)) {
+        res.sendPage("xml2/roller", null);
         return;
       } else {
         res.sendStatus(404);
