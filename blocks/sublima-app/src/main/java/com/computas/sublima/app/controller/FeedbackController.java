@@ -111,7 +111,12 @@ public class FeedbackController implements StatelessAppleController {
       }
 
       //todo We have to get the interface-language @no from somewhere
-      if ("200".equals(status)) {
+      if ("302".equals(status) ||
+            "303".equals(status) ||
+            "304".equals(status) ||
+            "305".equals(status) ||
+            "307".equals(status) ||
+            status.startsWith("2")) {
         String insertTipString =
                 "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                         "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +

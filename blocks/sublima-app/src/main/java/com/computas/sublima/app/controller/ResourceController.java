@@ -383,6 +383,7 @@ public class ResourceController implements StatelessAppleController {
   /**
    * Method to validate the request upon insert of new resource.
    * Checks all parameters and gives error message if one or more required values are null
+   * Also chekcs for duplicates, and gives an error message when the resource URI is already registered.
    *
    * @param req
    * @return
@@ -396,6 +397,16 @@ public class ResourceController implements StatelessAppleController {
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url")) || req.getCocoonRequest().getParameter("sub:url") == null) {
       validationMessages.append("<c:message>URL kan ikke være blank</c:message>\n");
+    } else {
+      String resource = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url"));
+      if (resource.contains(req.getCocoonRequest().getParameter("sub:url"))) {
+        validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");  
+      }
+
+      if (!adminService.validateURL(req.getCocoonRequest().getParameter("sub:url"))) {
+        validationMessages.append("<c:message>Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</c:message>\n");
+
+      }
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:description")) || req.getCocoonRequest().getParameter("dct:description") == null) {
@@ -505,7 +516,7 @@ public class ResourceController implements StatelessAppleController {
                     //"              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
-            "        ?resource wdr:describedBy <" + getProperty("sublima.base.url") + "status/til_godkjenning> ;",
+            "        ?resource wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;",
             "                  dct:title ?title .",
             //"                  dct:identifier ?identifier .",
             "}"});

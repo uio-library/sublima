@@ -254,11 +254,14 @@
           <h2>Sublima 0.9</h2>
           <ul>
             <li>
-              <a href="{$baseurl}/">A-Å</a>
+              <a href="{$baseurl}/">Søk</a>
             </li>
             <li>
               <a href="{$baseurl}/advancedsearch">Avansert søk
               </a>
+            </li>
+            <li>
+              <a href="{$baseurl}/a-z">A-Å</a>
             </li>
             <li>
               <a href="{$baseurl}/admin" class="active">Administrasjon

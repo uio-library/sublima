@@ -393,4 +393,28 @@ public class AdminService {
 
     return queryResult.toString();
   }
+
+  public boolean validateURL(String url) {
+    String ourcode;
+    try {
+      // Do a URL check so that we know we have a valid URL
+      URLActions urlAction = new URLActions(url);
+      ourcode = urlAction.getCode();
+    }
+    catch (NullPointerException e) {
+      e.printStackTrace();
+      return false;
+    }
+
+    if ("302".equals(ourcode) ||
+            "303".equals(ourcode) ||
+            "304".equals(ourcode) ||
+            "305".equals(ourcode) ||
+            "307".equals(ourcode) ||
+            ourcode.startsWith("2")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
