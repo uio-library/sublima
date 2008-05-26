@@ -19,6 +19,31 @@
       </map:action>
       
     </map:matchers>
+
+    <map:serializers>
+      <map:serializer name="xml" mime-type="text/xml"
+		      src="org.apache.cocoon.serialization.XMLSerializer">
+	<map:encoding>UTF-8</map:encoding>
+      </map:serializer>
+      
+      <map:serializer name="xhtml"
+		      src="org.apache.cocoon.serialization.XMLSerializer"
+		      mime-type="text/html; charset=UTF-8" 
+		      >
+	<map:doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</map:doctype-public>
+	<map:doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</map:doctype-system>
+	<map:encoding>UTF-8</map:encoding>
+      </map:serializer>
+
+      <map:serializer name="html" mime-type="text/html; charset=UTF-8"
+		      src="org.apache.cocoon.serialization.HTMLSerializer">
+	<map:encoding>UTF-8</map:encoding>
+	
+	<!-- the following common doctype is only included for completeness, it has no impact on encoding>
+	     <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
+	     <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system -->
+      </map:serializer>
+    </map:serializers>
   </map:components>
       
   <map:pipelines>

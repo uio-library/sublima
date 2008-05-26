@@ -58,8 +58,8 @@ this, just comment out the call-template -->
 
           Detektor
         </title>
-        <!-- link rel="stylesheet" type="text/css" href="http://detektor.deichman.no/stylesheet.css"/> -->
-        <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
+   
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
         <script type="text/javascript" src="styles/expand.js"></script>
 

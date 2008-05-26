@@ -244,6 +244,7 @@
           <xsl:call-template name="title"/>
           Detektor
         </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
       </head>
       <body>
