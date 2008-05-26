@@ -195,10 +195,11 @@ public class TopicController implements StatelessAppleController {
           req, boolean loggedIn) {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
-    if (!adminService.getThemeTopics().contains("sub:theme")) {
+    String themeTopics = adminService.getThemeTopics();
+    if (!themeTopics.contains("sub:theme")) {
       bizData.put("themetopics", "<empty></empty>");
     } else {
-      bizData.put("themetopics", adminService.getThemeTopics());
+      bizData.put("themetopics", themeTopics);
     }
 
     bizData.put("mode", "browse");
