@@ -516,7 +516,7 @@ public class ResourceController implements StatelessAppleController {
                     //"              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
-            "        ?resource wdr:describedBy <http://sublima.computas.com/status/til_godkjenning> ;",
+            "        ?resource wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> ;",
             "                  dct:title ?title .",
             //"                  dct:identifier ?identifier .",
             "}"});

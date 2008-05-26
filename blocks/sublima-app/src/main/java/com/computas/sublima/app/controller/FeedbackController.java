@@ -127,7 +127,7 @@ public class FeedbackController implements StatelessAppleController {
                         "<" + url + "> dct:title " + "\"" + tittel + "\"@no . \n" +
                         "<" + url + "> dct:description " + "\"" + beskrivelse + "\"@no . \n" +
                         "<" + url + "> sub:keywords " + "\"" + stikkord.toString() + "\"@no . \n" +
-                        "<" + url + "> wdr:describedBy <" + getProperty("sublima.base.url") + "status/til_godkjenning> . }\n";
+                        "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> . }\n";
 
         success = sparulDispatcher.query(insertTipString);
         logger.trace("sendTips --> RESULT: " + success);
