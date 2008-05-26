@@ -8,9 +8,12 @@
 
       <map:match pattern="sublima-styling">
         <map:generate src="service-consumer:"/>
-        <map:transform src="transform/alt-styling.xslt">
-          <map:parameter name="baseurl" value="{request:contextPath}"/>
-        </map:transform>
+	<map:act type="locale">
+	  <map:transform src="transform/alt-styling.xslt">
+	    <map:parameter name="baseurl" value="{request:contextPath}"/>
+	    <map:parameter name="interface-language" value="{language}"/>
+	  </map:transform>
+	</map:act>
         <map:serialize type="xhtml"/>
       </map:match>
 

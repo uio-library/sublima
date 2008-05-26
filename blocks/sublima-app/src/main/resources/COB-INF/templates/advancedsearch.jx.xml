@@ -9,7 +9,6 @@
 
   <c:advancedsearch>
     <form action="search-result" method="GET">
-      <input type="hidden" name="interface-language" value="no"/>
       <input type="hidden" name="freetext-field" value="dct:title"/>
       <input type="hidden" name="freetext-field" value="dct:subject/all-labels"/>
       <input type="hidden" name="freetext-field" value="dct:description"/>

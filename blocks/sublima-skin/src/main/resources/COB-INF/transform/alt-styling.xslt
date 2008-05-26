@@ -129,7 +129,6 @@ this, just comment out the call-template -->
 		    <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
 		    <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
 		    <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
-		    <input type="hidden" name="interface-language" value="{$interface-language}"/>
              <br/>
             <input id="keyword" class="searchbox" type="text"
                    name="searchstring" size="40"/>
