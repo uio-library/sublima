@@ -70,6 +70,32 @@
         </tr>
 
         <tr>
+            <td>
+              <label for="sioc:role">Rolle</label>
+            </td>
+            <td>
+              <select id="sioc:role"
+                      name="sioc:role">
+                <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/skos:Role">
+                  <xsl:sort select="./rdfs:label"/>
+                  <xsl:choose>
+                    <xsl:when
+                            test="./@rdf:about = /c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/sioc:Role/@rdf:resource">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./rdfs:label"/>
+                      </option>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./rdfs:label"/>
+                      </option>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>
+              </select>
+            </td>
+        </tr>
+        <tr>
           <td></td>
           <td></td>
         </tr>
@@ -134,6 +160,33 @@
                    name="password2" size="40"
                    />
           </td>
+        </tr>
+
+        <tr>
+            <td>
+              <label for="sioc:role">Rolle</label>
+            </td>
+            <td>
+              <select id="sioc:role"
+                      name="sioc:role">
+                <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/skos:Role">
+                  <xsl:sort select="./rdfs:label"/>
+                  <xsl:choose>
+                    <xsl:when
+                            test="./@rdf:about = /c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/sioc:Role/@rdf:resource">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./rdfs:label"/>
+                      </option>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./rdfs:label"/>
+                      </option>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>
+              </select>
+            </td>
         </tr>
 
         <tr>
