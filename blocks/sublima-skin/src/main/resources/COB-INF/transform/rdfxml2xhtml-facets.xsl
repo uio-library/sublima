@@ -49,16 +49,17 @@
    </xsl:if>
    </div>
    
-   <div class="facet">
-   Målgruppe
    <xsl:if test="sub:Resource/dct:audience">
-   <ul>
-      <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
-	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-      </xsl:apply-templates> 
-   </ul>
+     <div class="facet">
+       Målgruppe
+       <ul>
+	 <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
+	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+	 </xsl:apply-templates> 
+       </ul>
+     </div>
    </xsl:if>
-    </div>
+   
 
     <div class="facet">    
     Emne
