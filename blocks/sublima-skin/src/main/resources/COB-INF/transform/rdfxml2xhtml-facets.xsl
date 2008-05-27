@@ -20,8 +20,8 @@
     <xsl:variable name="baseurlparams">
       <xsl:choose>
   	<xsl:when test="/c:page/c:mode = 'topic'">
-	  <xsl:text>../search-result?dct:subject/skos:prefLabel=</xsl:text>
-	  <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+	  <xsl:text>../search-result?dct:subject=</xsl:text>
+	  <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about"/>
 	  <xsl:text>&amp;</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
@@ -89,15 +89,16 @@
 	<xsl:attribute name="style">display : none;</xsl:attribute>
       </xsl:if>
       <xsl:variable name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+      <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
+
       <a> <!-- The following builds the URL. -->
 	<xsl:attribute name="href">
 	  <xsl:value-of select="$baseurlparams"/>
-	  <xsl:text>dct:subject/skos:prefLabel=</xsl:text>
-	  <xsl:value-of select="$this-label"/>
+	  <xsl:text>dct:subject=</xsl:text>
+	  <xsl:value-of select="$uri"/>
 	</xsl:attribute>
 	<xsl:value-of select="$this-label"/>
       </a>
-      <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
       <xsl:text> (</xsl:text>
       <xsl:value-of select="count(//dct:subject[@rdf:resource=$uri])+1"/>)
     </li>
@@ -110,16 +111,16 @@
     <xsl:if test="./lingvoj:Lingvo"> <!-- This should iterate all unique languages -->
       <li>
 	<xsl:variable name="this-label" select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
+	<xsl:variable name="uri" select="./lingvoj:Lingvo/@rdf:about"/>
 	<a> <!-- The following builds the URL. -->
 	  <xsl:attribute name="href">
 	    <xsl:value-of select="$baseurlparams"/>
-	    <xsl:text>dct:language/rdfs:label=</xsl:text>
-	    <xsl:value-of select="$this-label"/>
+	    <xsl:text>dct:language=</xsl:text>
+	    <xsl:value-of select="$uri"/>
 	  </xsl:attribute>
 	  <xsl:value-of select="$this-label"/>
 	</a>
 
-	<xsl:variable name="uri" select="./lingvoj:Lingvo/@rdf:about"/>
 	<xsl:text> (</xsl:text>
 	<xsl:value-of select="count(//dct:language[@rdf:resource=$uri])+1"/>)
       </li>
@@ -132,11 +133,12 @@
     <xsl:if test="./dct:AgentClass"> 
       <li>
 	<xsl:variable name="this-label" select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+	<xsl:variable name="uri" select="./dct:AgentClass/@rdf:about"/>
 	<a> <!-- The following builds the URL. -->
 	  <xsl:attribute name="href">
 	    <xsl:value-of select="$baseurlparams"/>
-	    <xsl:text>dct:audience/rdfs:label=</xsl:text>
-	    <xsl:value-of select="$this-label"/>
+	    <xsl:text>dct:audience=</xsl:text>
+	    <xsl:value-of select="$uri"/>
 	  </xsl:attribute>
 	  <xsl:value-of select="$this-label"/>
 	</a>
