@@ -429,7 +429,7 @@ public class AdminService {
             "FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
-    logger.trace("AdminService.getAllUsers() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllRoles() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();

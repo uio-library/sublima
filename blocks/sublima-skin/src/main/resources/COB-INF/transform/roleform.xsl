@@ -30,7 +30,7 @@
           <td>
             <input id="rdfs:label" type="text"
                    name="rdfs:label" size="40"
-                   value="{./c:userdetails/rdf:RDF/sioc:Role/rdfs:label}"/>
+                   value="{./c:roledetails/rdf:RDF/sioc:Role/rdfs:label}"/>
           </td>
         </tr>
 
