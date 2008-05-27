@@ -16,7 +16,7 @@
         <c:menuelement title="Brukere" link="admin/brukere/">
           <c:childmenuelement title="Ny" link="admin/brukere/ny"/>
           <c:childmenuelement title="Vis alle" link="admin/brukere/alle"/>
-          <c:childmenuelement title="Roller" link="admin/brukere/roller"/>
+          <c:childmenuelement title="Roller" link="admin/brukere/roller/"/>
         </c:menuelement>
         <c:menuelement title="Utgivere" link="admin/utgivere/"/>
         <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>

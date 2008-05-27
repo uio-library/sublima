@@ -74,7 +74,7 @@ public class LoginController extends AbstractSecurityHandler {
     }
 
     final User user = new StandardUser(name);
-
+    user.setAttribute("role","administrator");
     //todo Set additional user attributes. Such as role etc.
     /*
     // check for additional attributes

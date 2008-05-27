@@ -1,17 +1,18 @@
 package com.computas.sublima.app.controller;
 
+import com.computas.sublima.app.controller.admin.AdminController;
+import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.app.service.AdminService;
-import com.computas.sublima.app.controller.admin.AdminController;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import org.apache.cocoon.auth.ApplicationManager;
+import org.apache.cocoon.auth.ApplicationUtil;
+import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.auth.ApplicationManager;
-import org.apache.cocoon.auth.impl.StandardApplicationManager;
 import org.apache.log4j.Logger;
 
 import java.util.Enumeration;
@@ -28,6 +29,8 @@ public class TopicController implements StatelessAppleController {
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
   private ApplicationManager appMan;
+  private ApplicationUtil appUtil = new ApplicationUtil();
+  private User user;
   private String mode;
   private String submode;
   String[] completePrefixArray = {"PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#>", "PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>", "PREFIX owl: 		<http://www.w3.org/2002/07/owl#>", "PREFIX foaf: 		<http://xmlns.com/foaf/0.1/>", "PREFIX lingvoj: 	<http://www.lingvoj.org/ontology#>", "PREFIX dcmitype: 	<http://purl.org/dc/dcmitype/>", "PREFIX dct: 		<http://purl.org/dc/terms/>", "PREFIX sub: 		<http://xmlns.computas.com/sublima#>", "PREFIX wdr: 		<http://www.w3.org/2007/05/powder#>", "PREFIX sioc: 		<http://rdfs.org/sioc/ns#>", "PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#>", "PREFIX topic: 		<topic/>", "PREFIX skos:		<http://www.w3.org/2004/02/skos/core#>"};
@@ -44,6 +47,9 @@ public class TopicController implements StatelessAppleController {
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
     boolean loggedIn = appMan.isLoggedIn("Sublima");
+    if (appUtil.getUser() != null) {
+      user = appUtil.getUser();
+    }
 
     if ("emner".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
@@ -87,9 +93,10 @@ public class TopicController implements StatelessAppleController {
   /**
    * Method to get all topics starting with the given letter(s).
    * Used in the A-Z topic browsing
+   *
    * @param res
    * @param req
-   * @param letter 
+   * @param letter
    */
   private void getTopicsByLetter(AppleResponse res, AppleRequest req, String letter) {
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -109,7 +116,7 @@ public class TopicController implements StatelessAppleController {
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
       bizData.put("allanguages", adminService.getAllLanguages());
       bizData.put("tempvalues", "<empty></empty>");
-      if("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
+      if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
         bizData.put("relationdetails", "<empty></empty>");
       } else {
         bizData.put("relationdetails", adminService.getRelationByURI(uri));
@@ -190,9 +197,9 @@ public class TopicController implements StatelessAppleController {
   }
 
   private void showTopicBrowsing
-      (AppleResponse
-          res, AppleRequest
-          req, boolean loggedIn) {
+          (AppleResponse
+                  res, AppleRequest
+                  req, boolean loggedIn) {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     String themeTopics = adminService.getThemeTopics();
@@ -208,9 +215,9 @@ public class TopicController implements StatelessAppleController {
   }
 
   private void mergeTopics
-      (AppleResponse
-          res, AppleRequest
-          req) {
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     StringBuffer messageBuffer = new StringBuffer();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -254,9 +261,9 @@ public class TopicController implements StatelessAppleController {
   }
 
   private void setThemeTopics
-      (AppleResponse
-          res, AppleRequest
-          req) {
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     StringBuffer messageBuffer = new StringBuffer();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -336,20 +343,20 @@ public class TopicController implements StatelessAppleController {
   }
 
   private void showTopics
-      (AppleResponse
-          res, AppleRequest
-          req) {
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("all_topics", adminService.getAllTopics());
     res.sendPage("xml2/emner_alle", bizData);
   }
 
   private void editTopic
-      (AppleResponse
-          res, AppleRequest
-          req, String
-          type, String
-          messages) {
+          (AppleResponse
+                  res, AppleRequest
+                  req, String
+                  type, String
+                  messages) {
 
     StringBuffer messageBuffer = new StringBuffer();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
@@ -495,8 +502,8 @@ public class TopicController implements StatelessAppleController {
 
 
   private StringBuffer getTempValues
-      (AppleRequest
-          req) {
+          (AppleRequest
+                  req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel");
     String[] temp_broader = req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource");
@@ -533,8 +540,8 @@ public class TopicController implements StatelessAppleController {
    * @return
    */
   private String validateRequest
-      (AppleRequest
-          req) {
+          (AppleRequest
+                  req) {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
@@ -550,21 +557,21 @@ public class TopicController implements StatelessAppleController {
 
 
   public void setSparqlDispatcher
-      (SparqlDispatcher
-          sparqlDispatcher) {
+          (SparqlDispatcher
+                  sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
   }
 
   public void setSparulDispatcher
-      (SparulDispatcher
-          sparulDispatcher) {
+          (SparulDispatcher
+                  sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 
   //todo Move to a Service-class
   private Map<String, String[]> createParametersMap
-      (Request
-          request) {
+          (Request
+                  request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {
@@ -575,8 +582,8 @@ public class TopicController implements StatelessAppleController {
   }
 
   public void setAppMan
-      (ApplicationManager
-          appMan) {
+          (ApplicationManager
+                  appMan) {
     this.appMan = appMan;
   }
 }

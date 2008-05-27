@@ -222,7 +222,7 @@ public class ResourceController implements StatelessAppleController {
 
         // If no validation failures at this point
         if (validated) {
-          String uri = req.getCocoonRequest().getParameter("sub:url");
+          String uri = req.getCocoonRequest().getParameter("sub:url").trim();
           int i = 0;
 
           StringBuffer deleteString = new StringBuffer();
@@ -395,15 +395,15 @@ public class ResourceController implements StatelessAppleController {
       validationMessages.append("<c:message>Tittel kan ikke være blank</c:message>\n");
     }
 
-    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url")) || req.getCocoonRequest().getParameter("sub:url") == null) {
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url").trim()) || req.getCocoonRequest().getParameter("sub:url").trim() == null) {
       validationMessages.append("<c:message>URL kan ikke være blank</c:message>\n");
     } else {
-      String resource = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url"));
-      if (resource.contains(req.getCocoonRequest().getParameter("sub:url"))) {
+      String resource = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim());
+      if (resource.contains(req.getCocoonRequest().getParameter("sub:url").trim())) {
         validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");  
       }
 
-      if (!adminService.validateURL(req.getCocoonRequest().getParameter("sub:url"))) {
+      if (!adminService.validateURL(req.getCocoonRequest().getParameter("sub:url").trim())) {
         validationMessages.append("<c:message>Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</c:message>\n");
 
       }

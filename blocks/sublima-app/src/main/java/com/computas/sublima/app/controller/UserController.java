@@ -1,7 +1,7 @@
 package com.computas.sublima.app.controller;
 
-import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.controller.admin.AdminController;
+import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
@@ -73,11 +73,16 @@ public class UserController implements StatelessAppleController {
       } else if ("alle".equalsIgnoreCase(submode)) {
         listUsers(req, res);
         return;
-      } else if ("roller".equalsIgnoreCase(submode)) {
-        res.sendPage("xml2/roller", null);
-        return;
       } else {
         res.sendStatus(404);
+        return;
+      }
+    } else if ("roller".equalsIgnoreCase(mode)) {
+      if ("".equalsIgnoreCase(submode) || submode == null) {
+        res.sendPage("xml2/roller", null);
+        return;
+      } else if ("rolle".equalsIgnoreCase(submode)) {
+        editRole(req, res, null);
         return;
       }
     }
@@ -88,6 +93,7 @@ public class UserController implements StatelessAppleController {
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("allroles", adminService.getAllRoles());
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       bizData.put("tempvalues", "<empty></empty>");
@@ -98,7 +104,6 @@ public class UserController implements StatelessAppleController {
         bizData.put("userdetails", adminService.getUserByURI(req.getCocoonRequest().getParameter("uri")));
       }
 
-      bizData.put("allroles", "<empty></empty>");
       bizData.put("mode", "useredit");
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/bruker", bizData);
@@ -110,7 +115,7 @@ public class UserController implements StatelessAppleController {
       // 2. Valider alle verdier
       // 3. Forsøk å lagre
 
-      StringBuffer tempValues = getTempValues(req);
+      StringBuffer tempValues = getUserTempValues(req);
       String tempPrefixes = "<c:tempvalues \n" +
               "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
               "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
@@ -118,7 +123,7 @@ public class UserController implements StatelessAppleController {
               "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
               "xmlns:sioc= \"http://rdfs.org/sioc/ns#\">\n";
 
-      String validationMessages = validateRequest(req);
+      String validationMessages = validateUserRequest(req);
       if (!"".equalsIgnoreCase(validationMessages)) {
         messageBuffer.append(validationMessages + "\n");
         messageBuffer.append("</c:messages>\n");
@@ -127,7 +132,6 @@ public class UserController implements StatelessAppleController {
         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "usertemp");
-        bizData.put("allroles", "<empty></empty>");
 
         res.sendPage("xml2/bruker", bizData);
 
@@ -143,7 +147,7 @@ public class UserController implements StatelessAppleController {
           uri = uri.replace(".", "_");
           uri = getProperty("sublima.base.url") + "user/" + uri + "_" + uri.hashCode();
 
-          String deleteSql = "DELETE FROM users WHERE username ='" + req.getCocoonRequest().getParameter("sioc:email") + "'"; 
+          String deleteSql = "DELETE FROM users WHERE username ='" + req.getCocoonRequest().getParameter("sioc:email") + "'";
 
           String insertSql = "INSERT INTO users "
                   + "(username) "
@@ -164,8 +168,6 @@ public class UserController implements StatelessAppleController {
             bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
-            bizData.put("allroles", "<empty></empty>");
-
             res.sendPage("xml2/bruker", bizData);*/
             return;
           }
@@ -204,7 +206,6 @@ public class UserController implements StatelessAppleController {
           bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
           bizData.put("messages", messageBuffer.toString());
           bizData.put("mode", "usertemp");
-          bizData.put("allroles", "<empty></empty>");
 
           res.sendPage("xml2/bruker", bizData);
         }
@@ -245,7 +246,6 @@ public class UserController implements StatelessAppleController {
             bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
-            bizData.put("allroles", "<empty></empty>");
 
             res.sendPage("xml2/bruker", bizData);
             return;
@@ -290,28 +290,136 @@ public class UserController implements StatelessAppleController {
 
         if (deleteSuccess && insertSuccess) {
           messageBuffer.append("<c:message>Bruker oppdatert!</c:message>\n");
+          bizData.put("userdetails", adminService.getUserByURI(uri));
+          bizData.put("tempvalues", "<empty></empty>");
+          bizData.put("mode", "useredit");
 
         } else {
           messageBuffer.append("<c:message>Feil ved oppdatering av bruker</c:message>\n");
           bizData.put("topicdetails", "<empty></empty>");
+          bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+          bizData.put("mode", "usertemp");
         }
 
-        if (deleteSuccess && insertSuccess) {
-          bizData.put("userdetails", adminService.getUserByURI(uri));
-          bizData.put("tempvalues", "<empty></empty>");
-          bizData.put("allroles", "<empty></empty>");
-          bizData.put("mode", "useredit");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("messages", messageBuffer.toString());
+        res.sendPage("xml2/bruker", bizData);
+      }
+    }
+  }
+
+
+  public void editRole(AppleRequest req, AppleResponse res, String messages) {
+    StringBuffer messageBuffer = new StringBuffer();
+    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append(messages);
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("allroles", adminService.getAllRoles());
+
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+      bizData.put("tempvalues", "<empty></empty>");
+
+      if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
+        bizData.put("roledetails", "<empty></empty>");
+      } else {
+        bizData.put("roledetails", adminService.getRoleByURI(req.getCocoonRequest().getParameter("uri")));
+      }
+
+      bizData.put("mode", "roleedit");
+      bizData.put("messages", "<empty></empty>");
+      res.sendPage("xml2/rolle", bizData);
+
+      // When POST try to save the user. Return error messages upon failure, and success message upon great success
+    } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+
+      // 1. Mellomlagre alle verdier
+      // 2. Valider alle verdier
+      // 3. Forsøk å lagre
+
+      StringBuffer tempValues = getRoleTempValues(req);
+      String tempPrefixes = "<c:tempvalues \n" +
+              "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+              "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+              "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+              "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+              "xmlns:sioc= \"http://rdfs.org/sioc/ns#\">\n";
+
+      String validationMessages = validateRoleRequest(req);
+      if (!"".equalsIgnoreCase(validationMessages)) {
+        messageBuffer.append(validationMessages + "\n");
+        messageBuffer.append("</c:messages>\n");
+
+        bizData.put("roledetails", "<empty></empty>");
+        bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+        bizData.put("messages", messageBuffer.toString());
+        bizData.put("mode", "roletemp");
+
+        res.sendPage("xml2/rolle", bizData);
+
+      } else {
+
+        // Generate an identifier if a uri is not given and insert the user in the USER-table
+        String uri;
+        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
+          uri = req.getCocoonRequest().getParameter("rdfs:label").replace(" ", "_");
+          uri = uri.replace(",", "_");
+          uri = uri.replace(".", "_");
+          uri = getProperty("sublima.base.url") + "role/" + uri + "_" + uri.hashCode();
         } else {
+          uri = req.getCocoonRequest().getParameter("uri");
+        }
+
+        StringBuffer deleteString = new StringBuffer();
+        StringBuffer whereString = new StringBuffer();
+        deleteString.append(completePrefixes);
+        deleteString.append("\nDELETE\n{\n");
+        whereString.append("\nWHERE\n{\n");
+        deleteString.append("<" + uri + "> a sioc:Role .\n");
+        deleteString.append("<" + uri + "> rdfs:label ?name .\n");
+
+        deleteString.append("}\n");
+        whereString.append("<" + uri + "> a sioc:Role .\n");
+        whereString.append("<" + uri + "> rdfs:label ?name .\n");
+        whereString.append("}\n");
+
+
+        StringBuffer insertString = new StringBuffer();
+        insertString.append(completePrefixes);
+        insertString.append("\nINSERT\n{\n");
+        insertString.append("<" + uri + "> a sioc:Role ;\n");
+        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n");
+        insertString.append("}");
+
+        deleteString.append(whereString.toString());
+
+        boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
+        boolean insertSuccess = sparulDispatcher.query(insertString.toString());
+
+
+        logger.trace("TopicController.editRole --> DELETE QUERY:\n" + deleteString.toString());
+        logger.trace("TopicController.editRole --> INSERT QUERY:\n" + insertString.toString());
+
+        logger.trace("TopicController.editRole --> DELETE QUERY RESULT: " + deleteSuccess);
+        logger.trace("TopicController.editRole --> INSERT QUERY RESULT: " + insertSuccess);
+
+        if (deleteSuccess && insertSuccess) {
+          messageBuffer.append("<c:message>Rolle oppdatert!</c:message>\n");
+          bizData.put("roledetails", adminService.getRoleByURI(uri));
+          bizData.put("tempvalues", "<empty></empty>");
+          bizData.put("mode", "roleedit");
+
+        } else {
+          messageBuffer.append("<c:message>Feil ved oppdatering av rolle</c:message>\n");
+          bizData.put("topicdetails", "<empty></empty>");
           bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
-          bizData.put("allroles", "<empty></empty>");
-          bizData.put("mode", "usertemp");
+          bizData.put("mode", "roletemp");
         }
 
         messageBuffer.append("</c:messages>\n");
 
         bizData.put("messages", messageBuffer.toString());
 
-        res.sendPage("xml2/bruker", bizData);
+        res.sendPage("xml2/rolle", bizData);
       }
     }
   }
@@ -322,7 +430,7 @@ public class UserController implements StatelessAppleController {
     res.sendPage("xml2/brukere_alle", bizData);
   }
 
-  private String validateRequest(AppleRequest req) {
+  private String validateUserRequest(AppleRequest req) {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:email")) || req.getCocoonRequest().getParameter("sioc:email") == null) {
@@ -347,21 +455,37 @@ public class UserController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private StringBuffer getTempValues(AppleRequest req) {
+  private String validateRoleRequest(AppleRequest req) {
+    StringBuffer validationMessages = new StringBuffer();
+
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
+      validationMessages.append("<c:message>Navn kan ikke være blank</c:message>\n");
+    }
+
+    return validationMessages.toString();
+  }
+
+  private StringBuffer getUserTempValues(AppleRequest req) {
     StringBuffer tempValues = new StringBuffer();
 
     String uri = req.getCocoonRequest().getParameter("uri");
     String temp_email = req.getCocoonRequest().getParameter("sioc:email");
     String temp_name = req.getCocoonRequest().getParameter("rdfs:label");
     String temp_oldusername = req.getCocoonRequest().getParameter("oldusername");
+    String temp_role = req.getCocoonRequest().getParameter("sioc:role");
 
     //Create an XML structure for the selected values, to use in the JX template
     tempValues.append("<rdf:about>" + uri + "</rdf:about>\n");
     tempValues.append("<sioc:email>" + temp_email + "</sioc:email>\n");
     tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
     tempValues.append("<c:oldusername>" + temp_oldusername + "</c:oldusername>");
+    tempValues.append("<sioc:role>" + temp_role + "</sioc:role");
 
     return tempValues;
+  }
+
+  private StringBuffer getRoleTempValues(AppleRequest req) {
+    return null;
   }
 
   public void setSparqlDispatcher

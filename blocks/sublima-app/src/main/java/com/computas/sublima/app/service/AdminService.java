@@ -204,7 +204,7 @@ public class AdminService {
             "  OPTIONAL { " + uri + " sub:comment ?comment . }",
             "}"});
 
-    logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getResourceByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -416,5 +416,32 @@ public class AdminService {
     } else {
       return false;
     }
+  }
+
+  public String getAllRoles() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "DESCRIBE ?role",
+            "WHERE {",
+            "    ?role a sioc:Role ;",
+            "        rdfs:label ?label .",
+            "FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
+
+    logger.trace("AdminService.getAllUsers() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
+
+  public String getRoleByURI(String uri) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "DESCRIBE <" + uri + ">"});
+
+    logger.trace("AdminService.getRoleByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
   }
 }

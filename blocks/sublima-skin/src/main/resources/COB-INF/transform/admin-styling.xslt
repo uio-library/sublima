@@ -21,6 +21,7 @@
   <xsl:import href="allusers.xsl"/>
   <xsl:import href="userform.xsl"/>
   <xsl:import href="topicrelations.xsl"/>
+  <xsl:import href="roleform.xsl"/>
 
   <xsl:output method="xml"
               encoding="UTF-8"
@@ -59,6 +60,21 @@
 
   <xsl:template name="upload">
     <xsl:copy-of select="c:page/c:content/c:upload/*"/>
+  </xsl:template>
+
+  <xsl:template name="roledetails">
+
+    <xsl:choose>
+      <xsl:when test="c:page/c:mode = 'roletemp'">
+        <xsl:apply-templates select="c:page/c:content/c:role" mode="roletemp"/>
+      </xsl:when>
+      <xsl:when test="c:page/c:mode = 'roleedit'">
+        <xsl:apply-templates select="c:page/c:content/c:role" mode="roleedit"/>
+      </xsl:when>
+      <xsl:otherwise>
+      </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:template>
 
   <xsl:template name="userdetails">
@@ -297,6 +313,8 @@
                 <xsl:call-template name="topicdetails"/>
 
                 <xsl:call-template name="userdetails"/>
+
+                <xsl:call-template name="roledetails"/>
 
                 <xsl:call-template name="topicrelations"/>
 

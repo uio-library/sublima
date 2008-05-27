@@ -8,7 +8,7 @@
         <c:breadcrumb title="Sublima"></c:breadcrumb>
         <c:breadcrumb title="Admin">admin</c:breadcrumb>
         <c:breadcrumb title="Brukere">admin/brukere/</c:breadcrumb>
-      <c:breadcrumb title="Roller">admin/brukere/roller</c:breadcrumb>
+      <c:breadcrumb title="Roller">admin/brukere/roller/</c:breadcrumb>
     </c:breadcrumbs>
 
     <c:menu>
@@ -17,7 +17,10 @@
         <c:menuelement title="Brukere" link="admin/brukere/">
           <c:childmenuelement title="Ny" link="admin/brukere/ny"/>
           <c:childmenuelement title="Vis alle" link="admin/brukere/alle"/>
-          <c:childmenuelement title="Roller" link="admin/brukere/roller"/>
+          <c:childmenuelement title="Roller" link="admin/brukere/roller/">
+            <c:childmenuelement title="Ny" link="admin/brukere/roller/rolle"/>
+            <c:childmenuelement title="Vis alle" link="admin/brukere/roller/alle"/>
+          </c:childmenuelement>
         </c:menuelement>
         <c:menuelement title="Utgivere" link="admin/utgivere/"/>
         <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>

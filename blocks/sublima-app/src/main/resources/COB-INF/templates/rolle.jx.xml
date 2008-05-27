@@ -11,24 +11,29 @@
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
-        xmlns:sioc="http://rdfs.org/sioc/ns#"
+        xmlns:sioc= "http://rdfs.org/sioc/ns#"
         xmlns="http://www.w3.org/1999/xhtml">
-  <c:title>Sublima administrasjon</c:title>
+    <c:title>Sublima administrasjon</c:title>
 
-  <c:breadcrumbs>
+    <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
+
+    <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
         <c:breadcrumb title="Admin">admin</c:breadcrumb>
         <c:breadcrumb title="Brukere">admin/brukere/</c:breadcrumb>
-        <c:breadcrumb title="Alle">admin/brukere/alle/</c:breadcrumb>
+      <c:breadcrumb title="Roller">admin/brukere/roller</c:breadcrumb>
     </c:breadcrumbs>
 
-  <c:menu>
+    <c:menu>
         <c:menuelement title="Emner" link="admin/emner/"/>
         <c:menuelement title="Ressurser" link="admin/ressurser/"/>
         <c:menuelement title="Brukere" link="admin/brukere/">
           <c:childmenuelement title="Ny" link="admin/brukere/ny"/>
-          <c:childmenuelement title="Vis brukere" link="admin/brukere/alle"/>
-          <c:childmenuelement title="Roller" link="admin/brukere/roller/"/>
+          <c:childmenuelement title="Vis alle" link="admin/brukere/alle"/>
+          <c:childmenuelement title="Roller" link="admin/brukere/roller/">
+            <c:childmenuelement title="Ny" link="admin/brukere/roller/rolle"/>
+            <c:childmenuelement title="Vis alle" link="admin/brukere/roller/alle"/>
+          </c:childmenuelement>
         </c:menuelement>
         <c:menuelement title="Utgivere" link="admin/utgivere/"/>
         <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
@@ -36,12 +41,29 @@
     </c:menu>
 
   <c:content>
-    <c:text>
-      <h3>Vis brukere</h3>
-    </c:text>
 
-    <c:allusers>
-      <jx:out value="#{allusers}" xmlize="true"/>
-    </c:allusers>
-  </c:content>
+      <c:text>
+        <h3>Rolle</h3>
+      </c:text>
+
+      <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>
+
+      <c:role>
+
+        <c:roledetails>
+          <jx:out value="#{roledetails}" xmlize="true"/>
+        </c:roledetails>
+
+        <c:allroles>
+          <jx:out value="#{allroles}" xmlize="true"/>
+        </c:allroles>
+
+        <c:tempvalues>
+          <jx:out value="#{tempvalues}" xmlize="true"/>
+        </c:tempvalues>
+
+      </c:role>
+
+    </c:content>
+
 </c:page>
