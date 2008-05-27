@@ -229,6 +229,16 @@ public class Form2SparqlService {
 			setLanguage(parameterMap.get("interface-language")[0]);
 			parameterMap.remove("interface-language");
 		}	
+	
+		// locale is a parameter used by Cocoon's
+		// LocaleAction. It must also be removed from the
+		// parametermap if present.  
+
+		// If the interface-language from the locale is used,
+		// it is set elsewhere.
+		if (parameterMap.get("locale") != null) {
+		    parameterMap.remove("locale");
+		}	
 
         if (parameterMap.get("dct:subject/all-labels") != null) { // Then there are SKOS labels
            addPrefix("skos: <http://www.w3.org/2004/02/skos/core#>");
@@ -307,6 +317,18 @@ public class Form2SparqlService {
 			language = parameterMap.get("interface-language")[0];
 			parameterMap.remove("interface-language");
 		}
+
+		// locale is a parameter used by Cocoon's
+		// LocaleAction. It must also be removed from the
+		// parametermap if present.  
+
+		// If the interface-language from the locale is used,
+		// it is set elsewhere.
+		if (parameterMap.get("locale") != null) {
+		    parameterMap.remove("locale");
+		}	
+
+
 		String subject = new String();
 		if (parameterMap.get("the-resource") != null) {
 			subject = parameterMap.get("the-resource")[0];

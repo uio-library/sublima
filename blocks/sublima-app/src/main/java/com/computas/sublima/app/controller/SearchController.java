@@ -120,11 +120,6 @@ public class SearchController implements StatelessAppleController {
     params.append("\n      <value>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema%23&gt;</value>");
     params.append("\n      <value>skos: &lt;http://www.w3.org/2004/02/skos/core%23&gt;</value>");
     params.append("\n    </param>");
-
-    params.append("\n    <param key=\"interface-language\">");
-    params.append("\n      <value>" + req.getSitemapParameter("interface-language") + "</value>");
-    params.append("\n    </param>");
-
     params.append("\n  </request>\n");
 
     bizData.put("request", params.toString());
