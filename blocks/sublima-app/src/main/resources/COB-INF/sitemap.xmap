@@ -11,7 +11,7 @@
       <map:action name="locale" src="org.apache.cocoon.acting.LocaleAction">
 	<locale-attribute>locale</locale-attribute>
 	<use-locale>true</use-locale>
-	<default-locale language="en" country="US"/>
+	<default-locale language="no" country="NO"/>
 	<store-in-request>true</store-in-request>
 	<create-session>false</create-session>
 	<store-in-session>false</store-in-session>
