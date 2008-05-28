@@ -13,9 +13,9 @@
 	<use-locale>true</use-locale>
 	<default-locale language="no" country="NO"/>
 	<store-in-request>true</store-in-request>
-	<create-session>false</create-session>
-	<store-in-session>false</store-in-session>
-	<store-in-cookie>true</store-in-cookie>
+	<create-session>true</create-session>
+	<store-in-session>true</store-in-session>
+	<store-in-cookie>false</store-in-cookie>
       </map:action>
       
     </map:matchers>
