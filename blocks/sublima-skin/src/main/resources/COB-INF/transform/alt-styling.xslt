@@ -18,6 +18,7 @@
   <xsl:import href="tipsform.xsl"/>
   <xsl:import href="loginform.xsl"/>
   <xsl:import href="a-z.xsl"/>
+  <xsl:import href="set-lang.xsl"/>
 
 
   <xsl:param name="baseurl"/>
@@ -101,9 +102,14 @@ this, just comment out the call-template -->
           </p>
            -->
            
-           <p id="layoutdims">
-            <a href="#">Login</a>
-           </p>
+	   
+	    <!-- xsl:if test="c:page/c:mode != 'search-result'">
+	      <xsl:call-template name="set-langs"/>
+	    </xsl:if -->
+	   
+	    <p id="layoutdims">
+	      <a href="#">Login</a>
+	    </p>
         </div>
         
         

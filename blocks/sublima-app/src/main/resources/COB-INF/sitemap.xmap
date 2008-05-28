@@ -15,7 +15,7 @@
 	<store-in-request>true</store-in-request>
 	<create-session>false</create-session>
 	<store-in-session>false</store-in-session>
-	<store-in-cookie>false</store-in-cookie>
+	<store-in-cookie>true</store-in-cookie>
       </map:action>
       
     </map:matchers>
@@ -330,7 +330,7 @@
          <map:call function="com.computas.sublima.app.controller.SearchController">
             <map:parameter name="mode" value="search-result"/>
             <map:parameter name="interface-language" value="{language}"/>
-          </map:call>
+	 </map:call>
         </map:act>
         <map:call function="com.computas.sublima.app.controller.SearchController">
           <map:parameter name="mode" value="search-result"/>
@@ -339,7 +339,14 @@
       </map:match>
 
       <map:match pattern="topic/*">
-        <map:call function="com.computas.sublima.app.controller.SearchController">
+   	<map:act type="locale">
+	  <map:call function="com.computas.sublima.app.controller.SearchController">
+	    <map:parameter name="mode" value="topic"/>
+	    <map:parameter name="topic" value="{../1}"/>
+	    <map:parameter name="interface-language" value="{language}"/>
+	  </map:call>
+	</map:act>
+	<map:call function="com.computas.sublima.app.controller.SearchController">
           <map:parameter name="mode" value="topic"/>
           <map:parameter name="topic" value="{1}"/>
           <map:parameter name="interface-language" value="no"/>
