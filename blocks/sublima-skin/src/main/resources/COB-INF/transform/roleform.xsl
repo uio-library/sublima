@@ -43,15 +43,18 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="topic.edit"/>Legge til/Redigere</td>
+          <td><input type="checkbox" name="topic.edit"/>Legge til/Redigere
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="topic.approve"/>Godkjenne</td>
+          <td><input type="checkbox" name="topic.approve"/>Godkjenne
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="topic.delete"/>Slette</td>
+          <td><input type="checkbox" name="topic.delete"/>Slette
+          </td>
         </tr>
         <tr>
           <td></td>
@@ -59,15 +62,18 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="relation.edit"/>Legge til/Redigere</td>
+          <td><input type="checkbox" name="relation.edit"/>Legge til/Redigere
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="relation.approve"/>Godkjenne</td>
+          <td><input type="checkbox" name="relation.approve"/>Godkjenne
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="relation.delete"/>Slette</td>
+          <td><input type="checkbox" name="relation.delete"/>Slette
+          </td>
         </tr>
         <tr>
           <td></td>
@@ -75,15 +81,18 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="resource.edit"/>Legge til/Redigere</td>
+          <td><input type="checkbox" name="resource.edit"/>Legge til/Redigere
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="resource.approve"/>Godkjenne</td>
+          <td><input type="checkbox" name="resource.approve"/>Godkjenne
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="resource.delete"/>Slette</td>
+          <td><input type="checkbox" name="resource.delete"/>Slette
+          </td>
         </tr>
         <tr>
           <td></td>
@@ -91,15 +100,18 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="user.edit"/>Legge til/Redigere</td>
+          <td><input type="checkbox" name="user.edit"/>Legge til/Redigere
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="user.approve"/>Godkjenne</td>
+          <td><input type="checkbox" name="user.approve"/>Godkjenne
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="user.delete"/>Slette</td>
+          <td><input type="checkbox" name="user.delete"/>Slette
+          </td>
         </tr>
         <tr>
           <td></td>
@@ -107,15 +119,18 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="role.edit"/>Legge til/Redigere</td>
+          <td><input type="checkbox" name="role.edit"/>Legge til/Redigere
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="role.approve"/>Godkjenne</td>
+          <td><input type="checkbox" name="role.approve"/>Godkjenne
+          </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="role.delete"/>Slette</td>
+          <td><input type="checkbox" name="role.delete"/>Slette
+          </td>
         </tr>
 
 

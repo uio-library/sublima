@@ -183,10 +183,17 @@ public class UserController implements StatelessAppleController {
           // If the user has changed her e-mail address (username), we must update it in the USER-table
           if (!("mailto:" + req.getCocoonRequest().getParameter("sioc:email")).equalsIgnoreCase(req.getCocoonRequest().getParameter("oldusername"))) {
             //Strip away the sioc mailto
-            String[] username = req.getCocoonRequest().getParameter("oldusername").split(":");
-            String insertSql = "UPDATE users "
-                    + "SET username = '" + req.getCocoonRequest().getParameter("sioc:email") + "' "
-                    + "WHERE username = '" + username[1] + "'";
+            String insertSql;
+            if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("oldusername"))) {
+              insertSql = "INSERT INTO users "
+                      + "(username) "
+                      + "VALUES('" + req.getCocoonRequest().getParameter("sioc:email") + "')";
+            } else {
+              String[] username = req.getCocoonRequest().getParameter("oldusername").split(":");
+              insertSql = "UPDATE users "
+                      + "SET username = '" + req.getCocoonRequest().getParameter("sioc:email") + "' "
+                      + "WHERE username = '" + username[1] + "'";
+            }
 
             try {
               int insertedRows = dbService.doSQLUpdate(insertSql);
@@ -260,11 +267,13 @@ public class UserController implements StatelessAppleController {
         deleteString.append("<" + uri + "> a sioc:User .\n");
         deleteString.append("<" + uri + "> sioc:email ?email .\n");
         deleteString.append("<" + uri + "> rdfs:label ?name .\n");
+        deleteString.append("<" + uri + "> sioc:Role ?role .\n");
 
         deleteString.append("}\n");
         whereString.append("<" + uri + "> a sioc:User .\n");
         whereString.append("<" + uri + "> sioc:email ?email .\n");
         whereString.append("<" + uri + "> rdfs:label ?name .\n");
+        whereString.append("<" + uri + "> sioc:Role ?role .\n");
         whereString.append("}\n");
 
 
@@ -273,7 +282,8 @@ public class UserController implements StatelessAppleController {
         insertString.append("\nINSERT\n{\n");
         insertString.append("<" + uri + "> a sioc:User ;\n");
         insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n");
-        insertString.append("    sioc:email <mailto:" + req.getCocoonRequest().getParameter("sioc:email") + "> .\n");
+        insertString.append("    sioc:email <mailto:" + req.getCocoonRequest().getParameter("sioc:email") + "> ;\n");
+        insertString.append("    sioc:Role <" + req.getCocoonRequest().getParameter("sioc:role") + ">.\n");
         insertString.append("}");
 
         deleteString.append(whereString.toString());
@@ -296,7 +306,7 @@ public class UserController implements StatelessAppleController {
 
         } else {
           messageBuffer.append("<c:message>Feil ved oppdatering av bruker</c:message>\n");
-          bizData.put("topicdetails", "<empty></empty>");
+          bizData.put("userdetails", "<empty></empty>");
           bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
           bizData.put("mode", "usertemp");
         }
@@ -315,6 +325,7 @@ public class UserController implements StatelessAppleController {
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
+    //bizData.put("allanguages", adminService.getAllLanguages());
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       bizData.put("tempvalues", "<empty></empty>");
@@ -452,6 +463,10 @@ public class UserController implements StatelessAppleController {
       validationMessages.append("<c:message>Passordfeltene må være like</c:message>\n");
     }
 
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:role")) || req.getCocoonRequest().getParameter("sioc:role") == null) {
+      validationMessages.append("<c:message>En rolle må være valgt</c:message>\n");
+    }
+
     return validationMessages.toString();
   }
 
@@ -479,7 +494,7 @@ public class UserController implements StatelessAppleController {
     tempValues.append("<sioc:email>" + temp_email + "</sioc:email>\n");
     tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
     tempValues.append("<c:oldusername>" + temp_oldusername + "</c:oldusername>");
-    tempValues.append("<sioc:role>" + temp_role + "</sioc:role");
+    tempValues.append("<sioc:role>" + temp_role + "</sioc:role>");
 
     return tempValues;
   }

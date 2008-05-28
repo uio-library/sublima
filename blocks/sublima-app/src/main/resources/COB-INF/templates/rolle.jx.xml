@@ -62,6 +62,8 @@
           <jx:out value="#{tempvalues}" xmlize="true"/>
         </c:tempvalues>
 
+        <!--c:alllanguages><jx:out value="#{allanguages}" xmlize="true"/></c:alllanguages-->
+
       </c:role>
 
     </c:content>

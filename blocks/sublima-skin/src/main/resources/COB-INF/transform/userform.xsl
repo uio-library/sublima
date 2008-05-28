@@ -31,8 +31,9 @@
           </td>
           <td>
             <input id="sioc:email" type="text"
-                   name="sioc:email" size="40"
-                   value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email/@rdf:resource}"/>
+                   name="sioc:email" size="40"><xsl:attribute name="value"><xsl:value-of select="substring-after(./c:userdetails/rdf:RDF/sioc:User/sioc:email/@rdf:resource, ':')"/></xsl:attribute>
+            </input>
+
           </td>
         </tr>
 
@@ -76,7 +77,7 @@
             <td>
               <select id="sioc:role"
                       name="sioc:role">
-                <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/skos:Role">
+                <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/sioc:Role">
                   <xsl:sort select="./rdfs:label"/>
                   <xsl:choose>
                     <xsl:when
@@ -169,11 +170,11 @@
             <td>
               <select id="sioc:role"
                       name="sioc:role">
-                <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/skos:Role">
+                <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/sioc:Role">
                   <xsl:sort select="./rdfs:label"/>
                   <xsl:choose>
                     <xsl:when
-                            test="./@rdf:about = /c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/sioc:Role/@rdf:resource">
+                            test="./@rdf:about = /c:page/c:content/c:user/c:tempvalues/c:tempvalues/sioc:role">
                       <option value="{./@rdf:about}" selected="selected">
                         <xsl:value-of select="./rdfs:label"/>
                       </option>

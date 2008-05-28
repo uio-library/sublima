@@ -36,7 +36,7 @@
                         <label for="sub:url">URI</label>
                     </td>
                     <td>
-                        <input id="sub:url" type="text" name="sub:url" size="40" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}" />
+                        <input id="sub:url" type="text" name="sub:url" size="40" value="{./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource}" />
                     </td>
                 </tr>
                 <tr>
@@ -238,7 +238,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" value="Lagre ressurs"/>
+                        <input type="submit" value="Lagre ressurs" name="actionbutton"/><input type="submit" value="Slett ressurs" name="actionbutton"/>
                     </td>
                     <td>
                         <input type="reset" value="Rens skjema"/>

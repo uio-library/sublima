@@ -1,6 +1,7 @@
 package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.URLActions;
+import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -20,6 +21,7 @@ public class FeedbackController implements StatelessAppleController {
   private SparulDispatcher sparulDispatcher;
   boolean success = false;
   private ApplicationManager appMan;
+  private AdminService adminService = new AdminService();
 
   //todo Check how to send error messages with Cocoon (like Struts 2's s:actionmessage)
   @SuppressWarnings("unchecked")
@@ -88,11 +90,23 @@ public class FeedbackController implements StatelessAppleController {
       StringBuffer messageBuffer = new StringBuffer();
       messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
 
-      String url = req.getCocoonRequest().getParameter("url");
+      String url = req.getCocoonRequest().getParameter("url").trim();
       String tittel = req.getCocoonRequest().getParameter("tittel");
       String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
       String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(",");
       String status;
+
+      //Check if the resource already exists
+      String resource = (String) adminService.getResourceByURI(url);
+      if (resource.contains(url)) {
+        messageBuffer.append("<c:message>Ressursen du tipset om finnes allerede, men takk for innsatsen!</c:message>");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("messages", messageBuffer.toString());
+        bizData.put("mode", "form");
+        bizData.put("loggedin", loggedIn);
+        res.sendPage("xml/tips", bizData);
+        return;
+      }
 
       try {
         // Do a URL check so that we know we have a valid URL
@@ -127,7 +141,8 @@ public class FeedbackController implements StatelessAppleController {
                         "<" + url + "> dct:title " + "\"" + tittel + "\"@no . \n" +
                         "<" + url + "> dct:description " + "\"" + beskrivelse + "\"@no . \n" +
                         "<" + url + "> sub:keywords " + "\"" + stikkord.toString() + "\"@no . \n" +
-                        "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> . }\n";
+                        "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
+                        "<" + url + "> sub:url <" + url + "> .} }\n";
 
         success = sparulDispatcher.query(insertTipString);
         logger.trace("sendTips --> RESULT: " + success);
