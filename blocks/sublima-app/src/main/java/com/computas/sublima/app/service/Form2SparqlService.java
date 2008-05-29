@@ -2,7 +2,7 @@ package com.computas.sublima.app.service;
 
 import java.io.IOException;
 import com.computas.sublima.query.RDFObject;
-
+import com.computas.sublima.query.service.SearchService;
 import org.apache.log4j.Logger;
 
 import java.util.LinkedList;
@@ -333,21 +333,31 @@ public class Form2SparqlService {
 		if (parameterMap.get("the-resource") != null) {
 			subject = parameterMap.get("the-resource")[0];
 			parameterMap.remove("the-resource");
-		} else {
+		} 
+		else if (parameterMap.get("title-field") != null && parameterMap.get("subjecturi-prefix") != null) {
+			SearchService check = new SearchService();
+			subject = parameterMap.get("subjecturi-prefix")[0] + 
+				check.sanitizeStringForURI(parameterMap.get("title-field")[0]);
+			parameterMap.remove("title-field");
+			parameterMap.remove("subjecturi-prefix");
+		}
+		else {
 			throw new IOException(
-					"The subject is not given in the form of a 'the-resource' parameter.");
+					"The subject is given neither in the form of a 'the-resource' " +
+					"parameter or of a title-field and subjecturi-prefix combination.");
 		}
 
+		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-      if (e.getValue() != null) {
-        for (String s : e.getValue()) {
-          if (!"".equalsIgnoreCase(s) && s != null) {
-            RDFObject myRDFObject = new RDFObject(s, language);
-				    sparqlQueryBuffer.append("<" + subject + "> " + e.getKey()
-						+ " " + myRDFObject.toN3() + "\n");
-          }
-        }
-      }
+			if (e.getValue() != null) {
+				for (String s : e.getValue()) {
+					if (!"".equalsIgnoreCase(s) && s != null) {
+						RDFObject myRDFObject = new RDFObject(s, language);
+						sparqlQueryBuffer.append("<" + subject + "> " + e.getKey()
+								+ " " + myRDFObject.toN3() + "\n");
+					}
+				}
+			}
 
       /*
       if ((e.getValue() != null) && (e.getValue()[0] != "")) {
@@ -355,7 +365,7 @@ public class Form2SparqlService {
 				sparqlQueryBuffer.append("<" + subject + "> " + e.getKey()
 						+ " " + myRDFObject.toN3() + "\n");
 			} */
-		}
+		}	
 
 		sparqlQueryBuffer.append("}");
 		String returnString = sparqlQueryBuffer.toString();

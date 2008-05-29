@@ -2,6 +2,7 @@ package com.computas.sublima.query.service;
 
 import org.apache.log4j.Logger;
 
+import com.ibm.icu.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -99,6 +100,16 @@ public class SearchService {
     raw = raw.replace("\"", "\\\"");
 
     return raw;
+  }
+
+  public String sanitizeStringForURI(String raw) {
+     // Normalizer normalizer = new
+     String out = Normalizer.normalize(raw, Normalizer.NFD);
+     out = out.replaceAll("[^\\p{ASCII}]",""); // Removes all fluff on chars
+     out = out.toLowerCase();
+     out = out.replaceAll("\\s+", "-"); // All spaces become one -
+     out = out.replaceAll("[^\\w-]", ""); // Remove all now not a alphanumeric or -
+     return out;	
   }
 
   public void setDefaultBooleanOperator(String defaultBooleanOperator) {

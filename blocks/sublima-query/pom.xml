@@ -47,6 +47,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+    </dependency>
+
+
+    <dependency>
         <groupId>com.hp.hpl.jena</groupId>
         <artifactId>arq-extra</artifactId>
       </dependency>

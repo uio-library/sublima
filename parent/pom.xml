@@ -240,6 +240,16 @@
         <version>290508-SNAPSHOT</version>
         <scope>compile</scope>
       </dependency>
+      <!-- Unicode -->
+      <dependency>
+	<groupId>com.ibm.icu</groupId>
+	<artifactId>icu4j</artifactId>  
+	<version>3.4.4</version>
+        <scope>compile</scope>
+      </dependency>
+
+
+
     </dependencies>
   </dependencyManagement>
 

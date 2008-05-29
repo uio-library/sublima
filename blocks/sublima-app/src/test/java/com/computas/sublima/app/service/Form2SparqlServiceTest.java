@@ -421,6 +421,17 @@ public class Form2SparqlServiceTest extends TestCase {
 	 String resultString = myService.convertForm2Sparul(testMap);
 	 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
   }
+  
+  public void testConvertForm2SPARULSingleValueMakeSubject() throws IOException {
+		 // Single value test
+		 String expectS = "INSERT {\n<http://sublima.computas.com/test/pannekaker-med-blabr> rdfs:label \"Pannekaker med blåbær\"@no .\n}";
+		 testMap.put("rdfs:label", new String[]{"Pannekaker med blåbær"});
+		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
+		 testMap.put("subjecturi-prefix", new String[]{"http://sublima.computas.com/test/"}); // this parameter is a magic string
+		 testMap.put("title-field", new String[]{"Pannekaker med blåbær"});
+         String resultString = myService.convertForm2Sparul(testMap);
+		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
+	  }
 
   public void testConvertForm2SPARULTwoValuesEmpty() throws IOException {
 		 String expectS = "INSERT {\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}";
