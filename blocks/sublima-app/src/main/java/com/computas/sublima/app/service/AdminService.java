@@ -36,11 +36,11 @@ public class AdminService {
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "CONSTRUCT {",
-            "    ?relation a skos:semanticRelation ;",
+            "    ?relation rdfs:subPropertyOf skos:semanticRelation ;",
             "    rdfs:label ?label .",
             "}",
             "WHERE {",
-            "?relation a skos:semanticRelation ;",
+            "?relation rdfs:subPropertyOf skos:semanticRelation ;",
             "rdfs:label ?label .",
             "FILTER langMatches( lang(?label), \"no\" )",
             "}"});

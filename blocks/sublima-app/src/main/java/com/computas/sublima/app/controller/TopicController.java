@@ -146,14 +146,14 @@ public class TopicController implements StatelessAppleController {
       deleteString.append(completePrefixes);
       deleteString.append("\nDELETE\n{\n");
       whereString.append("\nWHERE\n{\n");
-      deleteString.append("<" + uri + "> a skos:semanticRelation .\n");
+      deleteString.append("<" + uri + "> rdfs:subPropertyOf skos:semanticRelation .\n");
       deleteString.append("}\n");
-      whereString.append("<" + uri + "> a skos:semanticRelation .\n");
+      whereString.append("<" + uri + "> rdfs:subPropertyOf skos:semanticRelation .\n");
       whereString.append("}\n");
 
       insertString.append(completePrefixes);
       insertString.append("\nINSERT\n{\n");
-      insertString.append("<" + uri + "> a skos:semanticRelation ;\n");
+      insertString.append("<" + uri + "> rdfs:subPropertyOf skos:semanticRelation ;\n");
       insertString.append("    rdfs:label \"\"\"" + req.getCocoonRequest().getParameter("skos:semanticRelation/rdfs:label") + "\"\"\"@no . \n");
       insertString.append("}\n");
 
