@@ -108,7 +108,6 @@ public class ResourceController implements StatelessAppleController {
     String allMediatypes = adminService.getAllMediaTypes();
     String allAudiences = adminService.getAllAudiences();
     String allStatuses = adminService.getAllStatuses();
-    String allPublishers = adminService.getAllPublishers();
 
     StringBuffer messageBuffer = new StringBuffer();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
@@ -120,7 +119,6 @@ public class ResourceController implements StatelessAppleController {
     bizData.put("mediatypes", allMediatypes);
     bizData.put("audience", allAudiences);
     bizData.put("status", allStatuses);
-    bizData.put("publishers", allPublishers);
 
     // When GET present a blank form with listvalues or prefilled with resource
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
@@ -133,7 +131,7 @@ public class ResourceController implements StatelessAppleController {
         bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("uri")));
         bizData.put("mode", "edit");
       }
-
+      bizData.put("publishers", adminService.getAllPublishers());
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/ressurs", bizData);
 
@@ -146,7 +144,7 @@ public class ResourceController implements StatelessAppleController {
                 "DELETE {\n" +
                 "<" + req.getCocoonRequest().getParameter("sub:url") + "> ?a ?o.\n" +
                 "} WHERE {\n" +
-                "<" + req.getCocoonRequest().getParameter("sub:url") + "> ?a ?o.}" ;                
+                "<" + req.getCocoonRequest().getParameter("sub:url") + "> ?a ?o.}" ;
 
         boolean deleteResourceSuccess = sparulDispatcher.query(deleteString);
 
@@ -190,14 +188,10 @@ public class ResourceController implements StatelessAppleController {
         String validationMessages = validateRequest(req);
         if (!"".equalsIgnoreCase(validationMessages)) {
           messageBuffer.append(validationMessages + "\n");
-          messageBuffer.append("</c:messages>\n");
 
           bizData.put("resource", "<empty></empty>");
           bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
-          bizData.put("messages", messageBuffer.toString());
           bizData.put("mode", "temp");
-
-          res.sendPage("xml2/ressurs", bizData);
 
         } else {
           Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
@@ -266,7 +260,7 @@ public class ResourceController implements StatelessAppleController {
             insertString.append(completePrefixes);
             insertString.append("\nINSERT\n{\n");
             insertString.append("<" + uri + "> a sub:Resource .\n");
-            insertString.append("<" + uri + "> sub:url \"" + uri + "\" .\n");
+            insertString.append("<" + uri + "> sub:url <" + uri + "> .\n");
 
             // Check all input parameters and "DELETE" those who have a value
             if (req.getCocoonRequest().getParameter("dct:title") != null) {
@@ -404,6 +398,7 @@ public class ResourceController implements StatelessAppleController {
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
+      bizData.put("publishers", adminService.getAllPublishers());
 
       res.sendPage("xml2/ressurs", bizData);
 
