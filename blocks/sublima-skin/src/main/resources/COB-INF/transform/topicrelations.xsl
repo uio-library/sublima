@@ -55,7 +55,14 @@
                         <label for="skos:semanticRelation/rdfs:label">Relasjonstype</label>
                     </td>
                     <td>
-                      <input id="skos:semanticRelation/rdfs:label" type="text" name="rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/rdfs:label}" /></td>
+                      <input id="skos:semanticRelation/rdfs:label" type="text" name="rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/rdfs:label}" />
+		<input type="hidden" name="rdfs:subPropertyOf" value="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
+		<input type="hidden" name="a" value="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+
+
+</td>
+
+
                 </tr>
 
                 <tr>
