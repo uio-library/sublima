@@ -4,6 +4,7 @@ import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
+import com.computas.sublima.query.service.DatabaseService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
@@ -11,6 +12,9 @@ import org.apache.log4j.Logger;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * A class to support the administration of Sublima
@@ -443,5 +447,43 @@ public class AdminService {
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
+  }
+
+  /**
+   * Method to get the role privileges based on the given URI.
+   * Returns the privileges as XML.
+   *
+   * @param roleuri
+   * @return
+   */
+  public String getRolePrivilegesAsXML(String roleuri) {
+    DatabaseService dbService = new DatabaseService();
+    Statement statement;
+    ResultSet resultSet;
+    StringBuffer xmlBuffer = new StringBuffer();
+
+    String getRolePrivilegesString = "SELECT privilege FROM roleprivilege WHERE role = '" + roleuri + "';";
+
+    xmlBuffer.append("<c:privileges>\n");
+
+
+    logger.trace("AdminService.getRolePrivilegesAsXML --> " + getRolePrivilegesString);
+
+    try {
+      statement = dbService.doSQLQuery(getRolePrivilegesString);
+      resultSet = statement.getResultSet();
+
+      while (resultSet.next()) {
+        xmlBuffer.append("<c:privilege>" + resultSet.getString(1) + "</c:privilege>");
+      }
+
+      xmlBuffer.append("</c:privileges>\n");
+    } catch (SQLException e) {
+      xmlBuffer.append("</c:privileges>\n");
+      e.printStackTrace();
+      logger.trace("AdminService.getRolePrivilegesAsXML --> FAILED\n");
+
+    }
+    return xmlBuffer.toString();
   }
 }

@@ -33,7 +33,6 @@
                    value="{./c:roledetails/rdf:RDF/sioc:Role/rdfs:label}"/>
           </td>
         </tr>
-
         <tr>
           <td>Rettigheter</td>
         </tr>
@@ -43,17 +42,44 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="topic.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privilege = 'topic.edit'">
+                <input type="checkbox" name="privileges" value="topic.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="topic.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="topic.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privilege = 'topic.approve'">
+                <input type="checkbox" name="privileges" value="topic.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="topic.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
+
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="topic.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privilege = 'topic.delete'">
+                <input type="checkbox" name="privileges" value="topic.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="topic.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
@@ -62,17 +88,44 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="relation.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privilege = 'relation.edit'">
+                <input type="checkbox" name="privileges" value="relation.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="relation.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="relation.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privilege = 'relation.approve'">
+                <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="relation.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="relation.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privilege = 'relation.delete'">
+                <input type="checkbox" name="privileges" value="relation.delete" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="relation.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
@@ -81,17 +134,26 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="resource.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privilege = 'relation.edit'">
+                <input type="checkbox" name="privileges" value="resource.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="resource.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="resource.approve"/>Godkjenne
+          <td><input type="checkbox" name="privileges" value="resource.approve"/>Godkjenne
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="resource.delete"/>Slette
+          <td><input type="checkbox" name="privileges" value="resource.delete"/>Slette
           </td>
         </tr>
         <tr>
@@ -100,17 +162,17 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="user.edit"/>Legge til/Redigere
+          <td><input type="checkbox" name="privileges" value="user.edit"/>Legge til/Redigere
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="user.approve"/>Godkjenne
+          <td><input type="checkbox" name="privileges" value="user.approve"/>Godkjenne
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="user.delete"/>Slette
+          <td><input type="checkbox" name="privileges" value="user.delete"/>Slette
           </td>
         </tr>
         <tr>
@@ -119,21 +181,19 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="role.edit"/>Legge til/Redigere
+          <td><input type="checkbox" name="privileges" value="role.edit"/>Legge til/Redigere
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="role.approve"/>Godkjenne
+          <td><input type="checkbox" name="privileges" value="role.approve"/>Godkjenne
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="role.delete"/>Slette
+          <td><input type="checkbox" name="privileges" value="role.delete"/>Slette
           </td>
         </tr>
-
-
         <tr>
           <td></td>
           <td></td>
@@ -165,7 +225,104 @@
                    value="{./c:tempvalues/c:tempvalues/rdfs:label}"/>
           </td>
         </tr>
-
+        <tr>
+          <td>Rettigheter</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Emner</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="topic.edit"/>Legge til/Redigere
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="topic.approve"/>Godkjenne
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="topic.delete"/>Slette
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Relasjoner</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="relation.edit"/>Legge til/Redigere
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="relation.approve"/>Godkjenne
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="relation.delete"/>Slette
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Ressurser</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="resource.edit"/>Legge til/Redigere
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="resource.approve"/>Godkjenne
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="resource.delete"/>Slette
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Brukere</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="user.edit"/>Legge til/Redigere
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="user.approve"/>Godkjenne
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="user.delete"/>Slette
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Roller</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="role.edit"/>Legge til/Redigere
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="role.approve"/>Godkjenne
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="checkbox" name="privileges" value="role.delete"/>Slette
+          </td>
+        </tr>
         <tr>
           <td></td>
           <td></td>

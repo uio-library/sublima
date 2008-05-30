@@ -332,8 +332,10 @@ public class UserController implements StatelessAppleController {
 
       if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
         bizData.put("roledetails", "<empty></empty>");
+        bizData.put("roleprivileges", "<empty></empty>");
       } else {
         bizData.put("roledetails", adminService.getRoleByURI(req.getCocoonRequest().getParameter("uri")));
+        bizData.put("roleprivileges", adminService.getRolePrivilegesAsXML(req.getCocoonRequest().getParameter("uri")));
       }
 
       bizData.put("mode", "roleedit");
@@ -361,6 +363,7 @@ public class UserController implements StatelessAppleController {
         messageBuffer.append("</c:messages>\n");
 
         bizData.put("roledetails", "<empty></empty>");
+        bizData.put("roleprivileges", "<empty></empty>");
         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "roletemp");
@@ -414,14 +417,33 @@ public class UserController implements StatelessAppleController {
         logger.trace("TopicController.editRole --> INSERT QUERY RESULT: " + insertSuccess);
 
         if (deleteSuccess && insertSuccess) {
+
+          // Delete old privileges to shortcut INSERT/UPDATE check. Add the role privilegies to the database
+          try {
+            String deletePrivilegeSql = "DELETE FROM roleprivileges WHERE role ='" + uri + "';";
+            dbService.doSQLUpdate(deletePrivilegeSql);
+            String insertPrivilegesSql;
+            for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
+              insertPrivilegesSql = "INSERT INTO roleprivileges(role, privilege) VALUES('" + uri + "','" + s + "');";
+
+              dbService.doSQLUpdate(insertPrivilegesSql);
+
+            }
+          }
+          catch (SQLException e) {
+            e.printStackTrace();
+          }
+
           messageBuffer.append("<c:message>Rolle oppdatert!</c:message>\n");
           bizData.put("roledetails", adminService.getRoleByURI(uri));
+          bizData.put("roleprivileges", adminService.getRolePrivilegesAsXML(req.getCocoonRequest().getParameter("uri")));
           bizData.put("tempvalues", "<empty></empty>");
           bizData.put("mode", "roleedit");
 
         } else {
           messageBuffer.append("<c:message>Feil ved oppdatering av rolle</c:message>\n");
-          bizData.put("topicdetails", "<empty></empty>");
+          bizData.put("roledetails", "<empty></empty>");
+          bizData.put("roleprivileges", "<empty></empty>");
           bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
           bizData.put("mode", "roletemp");
         }
@@ -500,7 +522,23 @@ public class UserController implements StatelessAppleController {
   }
 
   private StringBuffer getRoleTempValues(AppleRequest req) {
-    return null;
+    StringBuffer tempValues = new StringBuffer();
+
+    String uri = req.getCocoonRequest().getParameter("uri");
+    String temp_name = req.getCocoonRequest().getParameter("rdfs:label");
+
+    //Create an XML structure for the selected values, to use in the JX template
+    tempValues.append("<rdf:about>" + uri + "</rdf:about>\n");
+    tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
+
+    tempValues.append("<c:privileges>\n");
+    for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
+      tempValues.append("<c:privilege>" + s + "</c:privilege>\n");
+    }
+    tempValues.append("</c:privileges>\n");
+
+
+    return tempValues;
   }
 
   public void setSparqlDispatcher
