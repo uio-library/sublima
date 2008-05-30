@@ -343,8 +343,9 @@ public class Form2SparqlService {
 
 		StringBuffer sparqlQueryBuffer = new StringBuffer();
 		sparqlQueryBuffer.append(getPrefixString());
-		sparqlQueryBuffer.append("MODIFY\nDELETE { "+ subject +"?p ?o . }\nINSERT {\n");
-		
+		sparqlQueryBuffer.append("DELETE { "+ subject +"?p ?o . ");
+		sparqlQueryBuffer.append("}\nWHERE { "+ subject +"?p ?o . }\n");
+		sparqlQueryBuffer.append("\nINSERT DATA {\n");
 		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
 			if (e.getValue() != null) {
@@ -357,8 +358,8 @@ public class Form2SparqlService {
 				}
 			}
 		}	
+		sparqlQueryBuffer.append("}\n");
 
-		sparqlQueryBuffer.append("}\nWHERE { "+ subject +"?p ?o . }\n");
 		String returnString = sparqlQueryBuffer.toString();
 		logger.trace("Constructed SPARUL query: " + returnString);
 		return returnString;
