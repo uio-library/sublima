@@ -41,7 +41,7 @@
 	      </xsl:when>
 	      <xsl:otherwise>
 		<input type="hidden" name="title-field" value="rdfs:label"/>
-		<input type="hidden" name="subjecturi-prefix" value="{$baseurl}/topicrelations/"/>
+		<input type="hidden" name="subjecturi-prefix" value="topicrelations/"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
 	    <xsl:variable name="label" select="./c:tempvalues/c:tempvalues/rdfs:label"/>
