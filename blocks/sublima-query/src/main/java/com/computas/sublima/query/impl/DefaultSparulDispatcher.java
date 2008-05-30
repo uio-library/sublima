@@ -20,8 +20,8 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
     DatabaseService myDbService = new DatabaseService();
     IDBConnection connection = myDbService.getConnection();
 
-    /*
-    String updateQuery =  "PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
+    /* 
+    query =  "PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
                           "INSERT { <http://sublima.computas.com/agent/ife> foaf:name \"Institute for Energy Technology\"@de }";
     */
 
