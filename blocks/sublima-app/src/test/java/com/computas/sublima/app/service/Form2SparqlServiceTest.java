@@ -428,7 +428,7 @@ public class Form2SparqlServiceTest extends TestCase {
 		 testMap.put("rdfs:label", new String[]{"Pannekaker med blåbær"});
 		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
 		 testMap.put("subjecturi-prefix", new String[]{"http://sublima.computas.com/test/"}); // this parameter is a magic string
-		 testMap.put("title-field", new String[]{"Pannekaker med blåbær"});
+		 testMap.put("title-field", new String[]{"rdfs:label"});
          String resultString = myService.convertForm2Sparul(testMap);
 		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
 	  }

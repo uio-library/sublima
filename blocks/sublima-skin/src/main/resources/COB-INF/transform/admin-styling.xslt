@@ -45,6 +45,14 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- A debug template that dumps the source tree. Do not remove
+       this, just comment out the call-template -->
+  <xsl:template name="debug">
+    <div id="debug">
+      <xsl:copy-of select="*"/>
+    </div>
+  </xsl:template>
+
   <xsl:template name="messages">
     <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
       <ul>
@@ -128,18 +136,6 @@
       </xsl:when>
       <xsl:when test="c:page/c:mode = 'temp'">
         <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="temp"/>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-
-    <xsl:template name="topicrelations">
-
-    <xsl:choose>
-      <xsl:when test="c:page/c:mode = 'topicrelatededit'">
-        <xsl:apply-templates select="c:page/c:content/c:related" mode="topicrelatededit"/>
-      </xsl:when>
-      <xsl:when test="c:page/c:mode = 'topicrelatedtemp'">
-        <xsl:apply-templates select="c:page/c:content/c:related" mode="topicrelatedtemp"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -265,6 +261,10 @@
       </head>
       <body>
 
+	
+	    <xsl:call-template name="debug"/>
+	
+
         <div id="header">
           <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
 
@@ -316,7 +316,7 @@
 
                 <xsl:call-template name="roledetails"/>
 
-                <xsl:call-template name="topicrelations"/>
+                <xsl:apply-templates select="c:page/c:content/c:related"/>
 
                 <xsl:apply-templates select="c:page/c:content/c:allusers" mode="list"/>
 

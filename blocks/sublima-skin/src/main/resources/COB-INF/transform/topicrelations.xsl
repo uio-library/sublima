@@ -17,40 +17,38 @@
   <xsl:param name="baseurl"/>
     <xsl:param name="interface-language">no</xsl:param>
 
-    <xsl:template match="c:related" mode="topicrelatededit">
-        <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
-            <input type="hidden" name="uri" value="{./c:relation/rdf:RDF/skos:semanticRelation/@rdf:about}"/>
-            <table>
-                <tr>
-                    <td>
-                        <label for="skos:semanticRelation/rdfs:label">Relasjonstype</label>
-                    </td>
-                    <td>
-                      <input id="skos:semanticRelation/rdfs:label" type="text" name="skos:semanticRelation/rdfs:label" size="40" value="{./c:relation/rdf:RDF/skos:semanticRelation/rdfs:label}" /></td>
-                </tr>
-             
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="Lagre relasjonstype"/>
-                    </td>
-                    <td>
-                        <input type="reset" value="Rens skjema"/>
-                    </td>
-                </tr>
-            </table>
-        </form>
+    <xsl:template match="c:related">
+      <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
+      <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+      <input type="hidden" name="interface-language" value="{$interface-language}"/>
+	<xsl:choose>
+	  <xsl:when test="./c:tempvalues/c:tempvalues">
+	    <xsl:choose>
+	      <xsl:when test="./c:tempvalues/c:tempvalues/rdf:about">
+		<input type="hidden" name="the-resource" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>     
+	      </xsl:when>
+	      <xsl:otherwise>
+		<input type="hidden" name="title-field" value="rdfs:label"/>
+		<input type="hidden" name="subjecturi-prefix" value="{$baseurl}/topicrelations/"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:variable name="label" select="./c:tempvalues/c:tempvalues/rdfs:label"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:choose>
+	      <xsl:when test="./c:tempvalues/c:tempvalues/rdf:about">
+		<input type="hidden" name="the-resource" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>     
+	      </xsl:when>
+	      <xsl:otherwise>
+		<input type="hidden" name="title-field" value="rdfs:label"/>
+		<input type="hidden" name="subjecturi-prefix" value="{$baseurl}/topicrelations/"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:variable name="label" select="./c:tempvalues/c:tempvalues/rdfs:label"/>
+	  </xsl:otherwise>
 
-    </xsl:template>
 
-      <xsl:template match="c:related" mode="topicrelatedtemp">
-        <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
-            <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
-            <input type="hidden" name="title-field" value="rdfs:label"/>
-            <input type="hidden" name="subjecturi-prefix" value="{$baseurl}/topicrelations/"/>
+	</xsl:choose>
             <table>
                 <tr>
                     <td>

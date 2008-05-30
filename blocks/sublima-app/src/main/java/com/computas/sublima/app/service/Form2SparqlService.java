@@ -331,7 +331,7 @@ public class Form2SparqlService {
 		else if (parameterMap.get("title-field") != null && parameterMap.get("subjecturi-prefix") != null) {
 			SearchService check = new SearchService();
 			subject = "<" + parameterMap.get("subjecturi-prefix")[0] + 
-				check.sanitizeStringForURI(parameterMap.get("title-field")[0]) + "> ";
+				check.sanitizeStringForURI(parameterMap.get(parameterMap.get("title-field")[0])[0]) + "> ";
 			parameterMap.remove("title-field");
 			parameterMap.remove("subjecturi-prefix");
 		}

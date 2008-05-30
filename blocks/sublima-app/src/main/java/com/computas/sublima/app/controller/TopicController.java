@@ -2,6 +2,7 @@ package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.controller.admin.AdminController;
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
@@ -14,9 +15,11 @@ import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
+import java.io.IOException;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 
 /**
@@ -111,64 +114,53 @@ public class TopicController implements StatelessAppleController {
     StringBuffer messageBuffer = new StringBuffer();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
-    String uri = req.getCocoonRequest().getParameter("uri");
+    String uri = req.getCocoonRequest().getParameter("the-resource");
 
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
       bizData.put("allanguages", adminService.getAllLanguages());
       bizData.put("tempvalues", "<empty></empty>");
-      if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
+      if ("".equalsIgnoreCase(uri) || uri == null) {
         bizData.put("relationdetails", "<empty></empty>");
       } else {
         bizData.put("relationdetails", adminService.getRelationByURI(uri));
       }
 
-      bizData.put("mode", "topicrelatededit");
+      bizData.put("mode", "topicrelated");
 
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/relasjon", bizData);
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
+        Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
-      StringBuffer deleteString = new StringBuffer();
-      StringBuffer whereString = new StringBuffer();
-      StringBuffer insertString = new StringBuffer();
+        Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+        parameterMap.remove("prefix"); // The prefixes are magic variables
+        if (parameterMap.get("subjecturi-prefix") != null) {
+        	parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") + 
+        													   parameterMap.get("subjecturi-prefix")[0]});
+        }		
+        String sparqlQuery = new String();
+        try {
+        	sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+        }
+        catch (IOException e) {
+            messageBuffer.append("<c:message>Feil ved lagring av ny relasjonstype</c:message>\n");
+    	}
 
-      // Generate an identifier if a uri is not given
-      if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
-        uri = req.getCocoonRequest().getParameter("skos:semanticRelation/rdfs:label").replace(" ", "_");
-        uri = uri.replace(",", "_");
-        uri = uri.replace(".", "_");
-        uri = getProperty("sublima.base.url") + "topicrelation/" + uri + "_" + uri.hashCode();
-      } else {
-        uri = req.getCocoonRequest().getParameter("uri");
-      }
-
-      deleteString.append(completePrefixes);
-      deleteString.append("\nDELETE\n{\n");
-      whereString.append("\nWHERE\n{\n");
-      deleteString.append("<" + uri + "> rdfs:subPropertyOf skos:semanticRelation .\n");
-      deleteString.append("}\n");
-      whereString.append("<" + uri + "> rdfs:subPropertyOf skos:semanticRelation .\n");
-      whereString.append("}\n");
-
-      insertString.append(completePrefixes);
-      insertString.append("\nINSERT\n{\n");
-      insertString.append("<" + uri + "> rdfs:subPropertyOf skos:semanticRelation ;\n");
-      insertString.append("    rdfs:label \"\"\"" + req.getCocoonRequest().getParameter("skos:semanticRelation/rdfs:label") + "\"\"\"@no . \n");
-      insertString.append("}\n");
-
-      deleteString.append(whereString.toString());
-
+        logger.trace("TopicController.editRelation --> MODIFY QUERY:\n" + sparqlQuery);
+    	/*
       logger.trace("TopicController.editRelation --> DELETE QUERY:\n" + deleteString.toString());
       logger.trace("TopicController.editRelation --> INSERT QUERY:\n" + insertString.toString());
 
       boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
       boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-
-      logger.trace("TopicController.editRelation --> DELETE QUERY RESULT: " + deleteSuccess);
+*/
+        boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
+        
+     // logger.trace("TopicController.editRelation --> DELETE QUERY RESULT: " + deleteSuccess); 
       logger.trace("TopicController.editRelation --> INSERT QUERY RESULT: " + insertSuccess);
 
-      if (deleteSuccess && insertSuccess) {
+      if (insertSuccess) {
         messageBuffer.append("<c:message>Ny relasjonstype lagret</c:message>\n");
 
       } else {
@@ -176,7 +168,7 @@ public class TopicController implements StatelessAppleController {
         bizData.put("relationdetails", "<empty></empty>");
       }
 
-      if (deleteSuccess && insertSuccess) {
+      if (insertSuccess) {
         bizData.put("relationdetails", adminService.getRelationByURI(uri));
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "topicrelatededit");
@@ -193,7 +185,7 @@ public class TopicController implements StatelessAppleController {
       bizData.put("messages", messageBuffer.toString());
 
       res.sendPage("xml2/relasjon", bizData);
-    }
+    } 
   }
 
   private void showTopicBrowsing
@@ -392,7 +384,7 @@ public class TopicController implements StatelessAppleController {
 
       // 1. Mellomlagre alle verdier
       // 2. Valider alle verdier
-      // 3. Forsøk å lagre
+      // 3. Forsk  lagre
 
       StringBuffer tempValues = getTempValues(req);
       String tempPrefixes = "<c:tempvalues \n" + "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" + "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" + "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" + "xmlns:c=\"http://xmlns.computas.com/cocoon\">\n";
@@ -545,11 +537,11 @@ public class TopicController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
-      validationMessages.append("<c:message>Emnets tittel kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message>Emnets tittel kan ikke vre blank</c:message>\n");
     }
 
     if (req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
-      validationMessages.append("<c:message>En status må velges</c:message>\n");
+      validationMessages.append("<c:message>En status m velges</c:message>\n");
     }
 
     return validationMessages.toString();
