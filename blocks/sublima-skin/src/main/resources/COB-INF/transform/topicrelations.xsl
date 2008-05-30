@@ -49,13 +49,15 @@
       <xsl:template match="c:related" mode="topicrelatedtemp">
         <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
             <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
+            <input type="hidden" name="title-field" value="rdfs:label"/>
+            <input type="hidden" name="subjecturi-prefix" value="{$baseurl}/topicrelations/"/>
             <table>
                 <tr>
                     <td>
                         <label for="skos:semanticRelation/rdfs:label">Relasjonstype</label>
                     </td>
                     <td>
-                      <input id="skos:semanticRelation/rdfs:label" type="text" name="skos:semanticRelation/rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/rdfs:label}" /></td>
+                      <input id="skos:semanticRelation/rdfs:label" type="text" name="rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/rdfs:label}" /></td>
                 </tr>
 
                 <tr>

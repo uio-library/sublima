@@ -414,7 +414,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
   public void testConvertForm2SPARULSingleValue() throws IOException {
 	 // Single value test
-	 String expectS = "INSERT {\n<http://sublima.computas.com/agent/ife> foaf:name \"Institute for Energy Technology\"@en .\n}";
+	 String expectS = "MODIFY\nDELETE { <http://sublima.computas.com/agent/ife> ?p ?o . }\nINSERT {\n<http://sublima.computas.com/agent/ife> foaf:name \"Institute for Energy Technology\"@en .\n}\nWHERE { <http://sublima.computas.com/agent/ife> ?p ?o . }\n";
 	 testMap.put("foaf:name", new String[]{"Institute for Energy Technology"});
 	 testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
 	 testMap.put("the-resource", new String[]{"http://sublima.computas.com/agent/ife"}); // this parameter is a magic string
@@ -424,7 +424,7 @@ public class Form2SparqlServiceTest extends TestCase {
   
   public void testConvertForm2SPARULSingleValueMakeSubject() throws IOException {
 		 // Single value test
-		 String expectS = "INSERT {\n<http://sublima.computas.com/test/pannekaker-med-blabr> rdfs:label \"Pannekaker med blåbær\"@no .\n}";
+		 String expectS = "MODIFY\nDELETE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\nINSERT {\n<http://sublima.computas.com/test/pannekaker-med-blabr> rdfs:label \"Pannekaker med blåbær\"@no .\n}\nWHERE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\n";
 		 testMap.put("rdfs:label", new String[]{"Pannekaker med blåbær"});
 		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
 		 testMap.put("subjecturi-prefix", new String[]{"http://sublima.computas.com/test/"}); // this parameter is a magic string
@@ -434,7 +434,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	  }
 
   public void testConvertForm2SPARULTwoValuesEmpty() throws IOException {
-		 String expectS = "INSERT {\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}";
+		 String expectS = "MODIFY\nDELETE { <http://the-jet.com/> ?p ?o . }\nINSERT {\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}\nWHERE { <http://the-jet.com/> ?p ?o . }\n";
 		 testMap.put("dc:description", null);
 		 testMap.put("dc:title", new String[]{"Cirrus personlig jetfly"});
 		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
@@ -444,7 +444,7 @@ public class Form2SparqlServiceTest extends TestCase {
  }	
 
   public void testConvertForm2SPARULTwoValues() throws IOException {
-		 String expectS = "INSERT {\n<http://the-jet.com/> dc:description \"Et veldig lett jetfly (VLJ) som er under utarbeidelse.\"@no .\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}";
+		 String expectS = "MODIFY\nDELETE { <http://the-jet.com/> ?p ?o . }\nINSERT {\n<http://the-jet.com/> dc:description \"Et veldig lett jetfly (VLJ) som er under utarbeidelse.\"@no .\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}\nWHERE { <http://the-jet.com/> ?p ?o . }\n";
 		 testMap.put("dc:description", new String[]{"Et veldig lett jetfly (VLJ) som er under utarbeidelse."});
 		 testMap.put("dc:title", new String[]{"Cirrus personlig jetfly"});
 		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string

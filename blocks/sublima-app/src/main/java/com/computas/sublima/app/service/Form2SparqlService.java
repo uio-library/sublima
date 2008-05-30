@@ -291,7 +291,7 @@ public class Form2SparqlService {
 	}
 
 	/**
-	 * Returns a full SPARQL Update INSERT query based on a key-value Map. Only
+	 * Returns a full SPARQL Update MODIFY query based on a key-value Map. Only
 	 * triples can be inserted, it does not support the path-like notation of
 	 * the DESCRIBE methods. The subject resource must be sent as a key named
 	 * <tt>the-resource</tt> Like the DESCRIBE method, it may have a key
@@ -305,12 +305,6 @@ public class Form2SparqlService {
 
 	public String convertForm2Sparul(Map<String, String[]> parameterMap)
 			throws IOException {
-		// TODO Do this with an proper INSERT/UPDATE/MODIFY
-		// Using StringBuffer, since regular String can cause performance issues
-		// with large datasets
-		StringBuffer sparqlQueryBuffer = new StringBuffer();
-		sparqlQueryBuffer.append(getPrefixString());
-		sparqlQueryBuffer.append("INSERT {\n");
 
 		String language = new String();
 		if (parameterMap.get("interface-language") != null) {
@@ -331,13 +325,13 @@ public class Form2SparqlService {
 
 		String subject = new String();
 		if (parameterMap.get("the-resource") != null) {
-			subject = parameterMap.get("the-resource")[0];
+			subject = "<" + parameterMap.get("the-resource")[0] + "> ";
 			parameterMap.remove("the-resource");
 		} 
 		else if (parameterMap.get("title-field") != null && parameterMap.get("subjecturi-prefix") != null) {
 			SearchService check = new SearchService();
-			subject = parameterMap.get("subjecturi-prefix")[0] + 
-				check.sanitizeStringForURI(parameterMap.get("title-field")[0]);
+			subject = "<" + parameterMap.get("subjecturi-prefix")[0] + 
+				check.sanitizeStringForURI(parameterMap.get("title-field")[0]) + "> ";
 			parameterMap.remove("title-field");
 			parameterMap.remove("subjecturi-prefix");
 		}
@@ -347,27 +341,24 @@ public class Form2SparqlService {
 					"parameter or of a title-field and subjecturi-prefix combination.");
 		}
 
+		StringBuffer sparqlQueryBuffer = new StringBuffer();
+		sparqlQueryBuffer.append(getPrefixString());
+		sparqlQueryBuffer.append("MODIFY\nDELETE { "+ subject +"?p ?o . }\nINSERT {\n");
+		
 		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
 			if (e.getValue() != null) {
 				for (String s : e.getValue()) {
 					if (!"".equalsIgnoreCase(s) && s != null) {
 						RDFObject myRDFObject = new RDFObject(s, language);
-						sparqlQueryBuffer.append("<" + subject + "> " + e.getKey()
+						sparqlQueryBuffer.append(subject + e.getKey()
 								+ " " + myRDFObject.toN3() + "\n");
 					}
 				}
 			}
-
-      /*
-      if ((e.getValue() != null) && (e.getValue()[0] != "")) {
-				RDFObject myRDFObject = new RDFObject(e.getValue()[0], language);
-				sparqlQueryBuffer.append("<" + subject + "> " + e.getKey()
-						+ " " + myRDFObject.toN3() + "\n");
-			} */
 		}	
 
-		sparqlQueryBuffer.append("}");
+		sparqlQueryBuffer.append("}\nWHERE { "+ subject +"?p ?o . }\n");
 		String returnString = sparqlQueryBuffer.toString();
 		logger.trace("Constructed SPARUL query: " + returnString);
 		return returnString;
