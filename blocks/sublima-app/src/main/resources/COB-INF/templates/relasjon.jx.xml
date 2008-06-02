@@ -13,6 +13,7 @@
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
         xmlns="http://www.w3.org/1999/xhtml">
   <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
+  <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>
   <c:title>Sublima administrasjon</c:title>
 
   <c:breadcrumbs>

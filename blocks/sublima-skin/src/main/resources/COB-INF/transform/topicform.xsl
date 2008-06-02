@@ -203,7 +203,14 @@
         </tr>
         <tr>
           <td>
-            <input type="submit" value="Lagre emne"/>
+            <xsl:choose>
+              <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = 'topic.edit'">
+                <input type="submit" value="Lagre emne"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="submit" value="Lagre emne" disabled="true"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>

@@ -36,6 +36,8 @@ public class TopicController implements StatelessAppleController {
   private User user;
   private String mode;
   private String submode;
+  private String userPrivileges = "<empty/>";
+  private boolean loggedIn = false;
   String[] completePrefixArray = {"PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#>", "PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>", "PREFIX owl: 		<http://www.w3.org/2002/07/owl#>", "PREFIX foaf: 		<http://xmlns.com/foaf/0.1/>", "PREFIX lingvoj: 	<http://www.lingvoj.org/ontology#>", "PREFIX dcmitype: 	<http://purl.org/dc/dcmitype/>", "PREFIX dct: 		<http://purl.org/dc/terms/>", "PREFIX sub: 		<http://xmlns.computas.com/sublima#>", "PREFIX wdr: 		<http://www.w3.org/2007/05/powder#>", "PREFIX sioc: 		<http://rdfs.org/sioc/ns#>", "PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#>", "PREFIX topic: 		<topic/>", "PREFIX skos:		<http://www.w3.org/2004/02/skos/core#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
@@ -49,9 +51,11 @@ public class TopicController implements StatelessAppleController {
 
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
-    boolean loggedIn = appMan.isLoggedIn("Sublima");
+    loggedIn = appMan.isLoggedIn("Sublima");
+
     if (appUtil.getUser() != null) {
       user = appUtil.getUser();
+      userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
     }
 
     if ("emner".equalsIgnoreCase(mode)) {
@@ -78,7 +82,7 @@ public class TopicController implements StatelessAppleController {
         return;
       }
     } else if ("browse".equalsIgnoreCase(mode)) {
-      showTopicBrowsing(res, req, loggedIn);
+      showTopicBrowsing(res, req);
       return;
     } else if ("relasjoner".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
@@ -126,6 +130,8 @@ public class TopicController implements StatelessAppleController {
       }
 
       bizData.put("mode", "topicrelated");
+
+      bizData.put("userprivileges", userPrivileges);
 
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/relasjon", bizData);
@@ -179,7 +185,7 @@ public class TopicController implements StatelessAppleController {
         bizData.put("mode", "topicrelatedtemp");
         bizData.put("allanguages", adminService.getAllLanguages());
       }
-
+      bizData.put("userprivileges", userPrivileges);
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
@@ -191,7 +197,7 @@ public class TopicController implements StatelessAppleController {
   private void showTopicBrowsing
           (AppleResponse
                   res, AppleRequest
-                  req, boolean loggedIn) {
+                  req) {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     String themeTopics = adminService.getThemeTopics();
@@ -219,6 +225,7 @@ public class TopicController implements StatelessAppleController {
       bizData.put("alltopics", adminService.getAllTopics());
       bizData.put("mode", "topicjoin");
 
+      bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/koble", bizData);
 
@@ -247,6 +254,7 @@ public class TopicController implements StatelessAppleController {
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
+      bizData.put("userprivileges", userPrivileges);
 
       res.sendPage("xml2/koble", bizData);
     }
@@ -266,6 +274,7 @@ public class TopicController implements StatelessAppleController {
       bizData.put("alltopics", adminService.getAllTopics());
       bizData.put("mode", "theme");
 
+      bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/tema", bizData);
 
@@ -326,6 +335,7 @@ public class TopicController implements StatelessAppleController {
         bizData.put("alltopics", adminService.getAllTopics());
       }
 
+      bizData.put("userprivileges", userPrivileges);
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
@@ -375,7 +385,7 @@ public class TopicController implements StatelessAppleController {
         bizData.put("mode", "topicedit");
         bizData.put("relationtypes", adminService.getAllRelationTypes());
       }
-
+      bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/emne", bizData);
 
@@ -402,6 +412,7 @@ public class TopicController implements StatelessAppleController {
         bizData.put("alltopics", adminService.getAllTopics());
         bizData.put("mode", "topictemp");
         bizData.put("relationtypes", adminService.getAllRelationTypes());
+        bizData.put("userprivileges", userPrivileges);
 
         res.sendPage("xml2/emne", bizData);
 
@@ -482,7 +493,7 @@ public class TopicController implements StatelessAppleController {
           bizData.put("alltopics", adminService.getAllTopics());
           bizData.put("relationtypes", adminService.getAllRelationTypes());
         }
-
+        bizData.put("userprivileges", userPrivileges);
         messageBuffer.append("</c:messages>\n");
 
         bizData.put("messages", messageBuffer.toString());

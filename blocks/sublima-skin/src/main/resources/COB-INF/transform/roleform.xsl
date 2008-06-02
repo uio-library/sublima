@@ -28,9 +28,7 @@
             <label for="rdfs:label">Navn</label>
           </td>
           <td>
-            <input id="rdfs:label" type="text"
-                   name="rdfs:label" size="40"
-                   value="{./c:roledetails/rdf:RDF/sioc:Role/rdfs:label}"/>
+            <input id="rdfs:label" type="text" name="rdfs:label" size="40" value="{./c:roledetails/rdf:RDF/sioc:Role/rdfs:label}"/>
           </td>
         </tr>
         <tr>
@@ -44,7 +42,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privilege = 'topic.edit'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'topic.edit'">
                 <input type="checkbox" name="privileges" value="topic.edit" checked="checked"/>Legge til/Redigere
               </xsl:when>
               <xsl:otherwise>
@@ -57,7 +55,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privilege = 'topic.approve'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'topic.approve'">
                 <input type="checkbox" name="privileges" value="topic.approve" checked="checked"/>Godkjenne
               </xsl:when>
               <xsl:otherwise>
@@ -72,7 +70,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privilege = 'topic.delete'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'topic.delete'">
                 <input type="checkbox" name="privileges" value="topic.delete" checked="checked"/>Slette
               </xsl:when>
               <xsl:otherwise>
@@ -90,7 +88,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privilege = 'relation.edit'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.edit'">
                 <input type="checkbox" name="privileges" value="relation.edit" checked="checked"/>Legge til/Redigere
               </xsl:when>
               <xsl:otherwise>
@@ -104,7 +102,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privilege = 'relation.approve'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.approve'">
                 <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/>Legge til/Redigere
               </xsl:when>
               <xsl:otherwise>
@@ -118,7 +116,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privilege = 'relation.delete'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.delete'">
                 <input type="checkbox" name="privileges" value="relation.delete" checked="checked"/>Legge til/Redigere
               </xsl:when>
               <xsl:otherwise>
@@ -136,7 +134,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privilege = 'relation.edit'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.edit'">
                 <input type="checkbox" name="privileges" value="resource.edit" checked="checked"/>Legge til/Redigere
               </xsl:when>
               <xsl:otherwise>
@@ -220,9 +218,7 @@
             <label for="rdfs:label">Navn</label>
           </td>
           <td>
-            <input id="rdfs:label" type="text"
-                   name="rdfs:label" size="40"
-                   value="{./c:tempvalues/c:tempvalues/rdfs:label}"/>
+            <input id="rdfs:label" type="text" name="rdfs:label" size="40" value="{./c:tempvalues/c:tempvalues/rdfs:label}"/>
           </td>
         </tr>
         <tr>

@@ -378,7 +378,7 @@ public class UserController implements StatelessAppleController {
           uri = req.getCocoonRequest().getParameter("rdfs:label").replace(" ", "_");
           uri = uri.replace(",", "_");
           uri = uri.replace(".", "_");
-          uri = getProperty("sublima.base.url") + "role/" + uri + "_" + uri.hashCode();
+          uri = getProperty("sublima.base.url") + "role/" + uri;
         } else {
           uri = req.getCocoonRequest().getParameter("uri");
         }
@@ -420,14 +420,14 @@ public class UserController implements StatelessAppleController {
 
           // Delete old privileges to shortcut INSERT/UPDATE check. Add the role privilegies to the database
           try {
-            String deletePrivilegeSql = "DELETE FROM roleprivileges WHERE role ='" + uri + "';";
+            String deletePrivilegeSql = "DELETE FROM roleprivilege WHERE role ='" + uri + "';";
             dbService.doSQLUpdate(deletePrivilegeSql);
             String insertPrivilegesSql;
-            for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
-              insertPrivilegesSql = "INSERT INTO roleprivileges(role, privilege) VALUES('" + uri + "','" + s + "');";
-
-              dbService.doSQLUpdate(insertPrivilegesSql);
-
+            if(req.getCocoonRequest().getParameterValues("privileges") != null) {
+              for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
+                insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','" + s + "');";
+                dbService.doSQLUpdate(insertPrivilegesSql);
+              }
             }
           }
           catch (SQLException e) {
@@ -436,7 +436,7 @@ public class UserController implements StatelessAppleController {
 
           messageBuffer.append("<c:message>Rolle oppdatert!</c:message>\n");
           bizData.put("roledetails", adminService.getRoleByURI(uri));
-          bizData.put("roleprivileges", adminService.getRolePrivilegesAsXML(req.getCocoonRequest().getParameter("uri")));
+          bizData.put("roleprivileges", adminService.getRolePrivilegesAsXML(uri));
           bizData.put("tempvalues", "<empty></empty>");
           bizData.put("mode", "roleedit");
 
@@ -532,8 +532,10 @@ public class UserController implements StatelessAppleController {
     tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
 
     tempValues.append("<c:privileges>\n");
-    for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
-      tempValues.append("<c:privilege>" + s + "</c:privilege>\n");
+    if(req.getCocoonRequest().getParameterValues("privileges") != null) {
+      for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
+        tempValues.append("<c:privilege>" + s + "</c:privilege>\n");
+      }
     }
     tempValues.append("</c:privileges>\n");
 

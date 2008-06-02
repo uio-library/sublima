@@ -71,7 +71,6 @@
   </xsl:template>
 
   <xsl:template name="roledetails">
-
     <xsl:choose>
       <xsl:when test="c:page/c:mode = 'roletemp'">
         <xsl:apply-templates select="c:page/c:content/c:role" mode="roletemp"/>

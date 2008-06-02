@@ -4,6 +4,7 @@
         xmlns:c="http://xmlns.computas.com/cocoon">
   <c:title>Sublima administrasjon</c:title>
   <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
+  <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>
 
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -33,6 +34,7 @@
       <h3>Emne</h3>
       <br/>
     </c:text>
+    
 
     <c:messages>
       <jx:out value="#{messages}" xmlize="true"/>

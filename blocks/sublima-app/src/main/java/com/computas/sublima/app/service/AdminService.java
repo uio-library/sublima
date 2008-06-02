@@ -8,7 +8,17 @@ import com.computas.sublima.query.service.DatabaseService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -464,7 +474,7 @@ public class AdminService {
 
     String getRolePrivilegesString = "SELECT privilege FROM roleprivilege WHERE role = '" + roleuri + "';";
 
-    xmlBuffer.append("<c:privileges>\n");
+    xmlBuffer.append("<c:privileges xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
 
 
     logger.trace("AdminService.getRolePrivilegesAsXML --> " + getRolePrivilegesString);
@@ -485,5 +495,37 @@ public class AdminService {
 
     }
     return xmlBuffer.toString();
+  }
+
+  /**
+   * Method to get the user role based on the username
+   * This method use JAXP to perform a XPATH operation on the results from Joseki.
+   *
+   * @param name
+   * @return role
+   */
+  public String getUserRole(String name) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "SELECT ?role",
+            "WHERE {",
+            "?user a sioc:User ;",
+            "    sioc:Role ?role ;",
+            "    sioc:email <mailto:" + name + "> . }"});
+
+    logger.trace("AdminService.getUserRole() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+    try {
+
+      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("/sparql/results/result/binding/uri");
+      NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+      return nodes.item(0).getTextContent();
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "<empty/>";
+    }
   }
 }

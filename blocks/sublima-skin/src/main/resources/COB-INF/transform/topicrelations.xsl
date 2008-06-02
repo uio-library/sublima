@@ -16,7 +16,6 @@
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
   <xsl:param name="baseurl"/>
     <xsl:param name="interface-language">no</xsl:param>
-
     <xsl:template match="c:related">
       <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
       <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
