@@ -5,6 +5,8 @@ import com.hp.hpl.jena.util.*;
 import java.io.*;
 import java.util.*;
 import com.hp.hpl.jena.util.ResourceUtils;
+import com.hp.hpl.jena.reasoner.*;
+import com.hp.hpl.jena.reasoner.rulesys.*;
 public class ConvertSublimaResources {
 
 
@@ -139,13 +141,14 @@ public class ConvertSublimaResources {
             }
         }
 
-
+        // Add skos inverse triples
+        Model outModel = addSkosInverse(model);
 
         // write the RDF file
         OutputStream out = new FileOutputStream( outputFileName );
-        model.write(out, outFormat, base);
+        outModel.write(out, outFormat, base);
         
-        model.close();
+        outModel.close();
         return;      
     } 
     
@@ -155,7 +158,7 @@ public class ConvertSublimaResources {
     /** 
      * Similar to ResourceUtils.renameResource, but only works on subjects of a statement.
      **/
-        public static Resource renameSubject( Resource old, String uri ) {
+    private static Resource renameSubject( Resource old, String uri ) {
         Model m = old.getModel();
         List stmts = new ArrayList();
         
@@ -182,6 +185,21 @@ public class ConvertSublimaResources {
         
     
     
+    /**
+     * Add skos:broader and skos:narrower where appropriate using rules
+     **/
+    private static Model addSkosInverse(Model model) {
+        
+        String skosNs = "http://www.w3.org/2004/02/skos/core#";
+        PrintUtil.registerPrefix("skos", skosNs);
+        String rules =  "[inverseRule1: (?Y skos:broader ?X) -> (?X skos:narrower ?Y)]" +
+                        "[inverseRule2: (?X skos:narrower ?Y) -> (?Y skos:broader ?X)]";
+
+        Reasoner reasoner = new GenericRuleReasoner(Rule.parseRules(rules));
+        InfModel inf = ModelFactory.createInfModel(reasoner, model);
+        
+        return inf;
+    }
     
     
     
