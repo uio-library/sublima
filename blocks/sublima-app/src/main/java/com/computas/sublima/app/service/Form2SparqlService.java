@@ -291,16 +291,29 @@ public class Form2SparqlService {
 	}
 
 	/**
-	 * Returns a full SPARQL Update MODIFY query based on a key-value Map. Only
-	 * triples can be inserted, it does not support the path-like notation of
-	 * the DESCRIBE methods. The subject resource must be sent as a key named
-	 * <tt>the-resource</tt> Like the DESCRIBE method, it may have a key
+	 * Returns two SPARQL Update queries where the first deletes all statements 
+	 * with the given subject. It works based on a key-value Map, and the usual 
+	 * usage is to pass the query parameters from a HTTP request.
+	 * 
+	 * The subject can be given either directly by a URI in a key named <tt>the-resource</tt>,
+	 * or by sending a <tt>title-field</tt> key containing the name a key containing 
+	 * a user-given string, which will be stripped of accents and non-alphanumeric characters.
+	 * In the latter case <tt>subjecturi-prefix</tt> must also be given, and it should contain 
+	 * a valid URI which will be prepended to the above title, to give the full subject URI.
+	 * 
+	 * Different languages are supported. It may either be given as a key
 	 * <tt>interface-language</tt> that holds the language of any literal.
+	 * This may be overridden by giving the keys unique names, where one contains the literal, 
+	 * the other contains a Lingvoj language URI. See the test class for examples.
+	 * 
+	 * Only triples can be inserted, it does not support the path-like notation of
+	 * the DESCRIBE methods. The subject resource must be sent as a key named
+	 * <tt>the-resource</tt> 
 	 * 
 	 * @param parameterMap
 	 *            The data structure with the key-value-pairs.
-	 * @return A full SPARQL INSERT query.
-	 * @throws IOException
+	 * @return A full SPARQL Update query.
+	 * @throws IOException if no subject can be found or constructed.
 	 */
 
 	public String convertForm2Sparul(Map<String, String[]> parameterMap)
