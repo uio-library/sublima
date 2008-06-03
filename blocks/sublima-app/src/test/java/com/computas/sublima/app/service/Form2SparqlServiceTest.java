@@ -425,21 +425,20 @@ public class Form2SparqlServiceTest extends TestCase {
   public void testConvertForm2SPARULMoreWithLang() throws IOException {
 		 // Single value test
 		 String expectS = "DELETE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\nWHERE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\n\n" +
-		 		"INSERT DATA {\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jet\"@en, \"Jetfly\"@no ." +
-		 		"\n<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jet Aircraft\"@en, \"Jet\"@no, \"Jet Airplane\"@en, \"Jetflymaskin\"@no .\n" +
+		 		"INSERT DATA {\n"+
+		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jet Aircraft\"@en .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jet\"@no .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jet Airplane\"@en .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jetflymaskin\"@no .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jet\"@en .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jetfly\"@no .\n" +
 		 		"}\n";
-		 testMap.put("skos:prefLabel-1", new String[]{"Jet"});
-		 testMap.put("skos:prefLabel-1", new String[]{"http://www.lingvoj.org/lang/en"});
-		 testMap.put("skos:prefLabel-2", new String[]{"Jetfly"});
-		 testMap.put("skos:prefLabel-2", new String[]{"http://www.lingvoj.org/lang/no"});
-		 testMap.put("skos:altLabel-1", new String[]{"Jet Aircraft"});
-		 testMap.put("skos:altLabel-1", new String[]{"http://www.lingvoj.org/lang/en"});
-		 testMap.put("skos:altLabel-2", new String[]{"Jet"});
-		 testMap.put("skos:altLabel-2", new String[]{"http://www.lingvoj.org/lang/no"});
-		 testMap.put("skos:altLabel-3", new String[]{"Jet Airplane"});
-		 testMap.put("skos:altLabel-3", new String[]{"http://www.lingvoj.org/lang/en"});
-		 testMap.put("skos:altLabel-4", new String[]{"Jetflymaskin"});
-		 testMap.put("skos:altLabel-4", new String[]{"http://www.lingvoj.org/lang/no"});
+		 testMap.put("skos:prefLabel-1", new String[]{"Jet","http://www.lingvoj.org/lang/en"});
+		 testMap.put("skos:prefLabel-2", new String[]{"Jetfly","http://www.lingvoj.org/lang/no"});
+		 testMap.put("skos:altLabel-1", new String[]{"Jet Aircraft","http://www.lingvoj.org/lang/en"});
+		 testMap.put("skos:altLabel-2", new String[]{"Jet","http://www.lingvoj.org/lang/no"});
+		 testMap.put("skos:altLabel-3", new String[]{"Jet Airplane","http://www.lingvoj.org/lang/en"});
+		 testMap.put("skos:altLabel-4", new String[]{"http://www.lingvoj.org/lang/no","Jetflymaskin"});
 		 testMap.put("the-resource", new String[]{"http://sublima.computas.com/topic/Jet"}); // this parameter is a magic string
 		 myService.addPrefix("skos: <http://www.w3.org/2004/02/skos/core#>");
 		 String resultString = myService.convertForm2Sparul(testMap);
@@ -449,11 +448,11 @@ public class Form2SparqlServiceTest extends TestCase {
   
   public void testConvertForm2SPARULTwoValuesWithLang() throws IOException {
 		 // Single value test
-		 String expectS = "DELETE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\nWHERE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\n\nINSERT DATA {\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jet\"@en, \"Jetfly\"@no .\n}\n";
-		 testMap.put("skos:prefLabel-1", new String[]{"Jet"});
-		 testMap.put("skos:prefLabel-1", new String[]{"http://www.lingvoj.org/lang/en"});
-		 testMap.put("skos:prefLabel-2", new String[]{"Jetfly"});
-		 testMap.put("skos:prefLabel-2", new String[]{"http://www.lingvoj.org/lang/no"});
+		 String expectS = "DELETE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\nWHERE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\n\n" +
+		 		"INSERT DATA {\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jet\"@en ." +
+		 		"\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jetfly\"@no .\n}\n";
+		 testMap.put("skos:prefLabel-1", new String[]{"Jet","http://www.lingvoj.org/lang/en"});
+		 testMap.put("skos:prefLabel-2", new String[]{"Jetfly","http://www.lingvoj.org/lang/no"});
 		 testMap.put("the-resource", new String[]{"http://sublima.computas.com/topic/Jet"}); // this parameter is a magic string
 		 myService.addPrefix("skos: <http://www.w3.org/2004/02/skos/core#>");
 		 String resultString = myService.convertForm2Sparul(testMap);
