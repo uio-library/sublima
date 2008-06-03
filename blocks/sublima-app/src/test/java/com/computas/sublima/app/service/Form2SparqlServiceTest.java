@@ -472,6 +472,16 @@ public class Form2SparqlServiceTest extends TestCase {
          String resultString = myService.convertForm2Sparul(testMap);
 		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
 	  }
+ 
+  public void testConvertForm2SPARULSingleValueMakeSubjectWithLang() throws IOException {
+		 // Single value test
+		 String expectS = "DELETE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\nWHERE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\n\nINSERT DATA {\n<http://sublima.computas.com/test/pannekaker-med-blabr> rdfs:label \"Pannekaker med blåbær\"@no .\n}\n";
+		 testMap.put("rdfs:label-1", new String[]{"http://www.lingvoj.org/lang/no","Pannekaker med blåbær"});
+		 testMap.put("subjecturi-prefix", new String[]{"http://sublima.computas.com/test/"}); // this parameter is a magic string
+		 testMap.put("title-field", new String[]{"rdfs:label-1"});
+		 String resultString = myService.convertForm2Sparul(testMap);
+		 assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, resultString);
+	  }
 
   public void testConvertForm2SPARULTwoValuesEmpty() throws IOException {
 		 String expectS = "DELETE { <http://the-jet.com/> ?p ?o . }\nWHERE { <http://the-jet.com/> ?p ?o . }\n\nINSERT DATA {\n<http://the-jet.com/> dc:title \"Cirrus personlig jetfly\"@no .\n}\n";

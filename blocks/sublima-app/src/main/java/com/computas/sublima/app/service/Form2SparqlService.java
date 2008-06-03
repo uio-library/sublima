@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
+import java.util.Random;
+
 import com.hp.hpl.jena.sparql.util.StringUtils;
 
 /**
@@ -343,8 +345,15 @@ public class Form2SparqlService {
 		} 
 		else if (parameterMap.get("title-field") != null && parameterMap.get("subjecturi-prefix") != null) {
 			SearchService check = new SearchService();
+			Random rng = new Random();
+			String theTitle = Integer.toString(rng.nextInt(100000));
+			for (String field : parameterMap.get(parameterMap.get("title-field")[0])) {
+				if (! field.startsWith("http://www.lingvoj.org/lang/")) {
+					theTitle = field;
+				}
+			}
 			subject = "<" + parameterMap.get("subjecturi-prefix")[0] + 
-				check.sanitizeStringForURI(parameterMap.get(parameterMap.get("title-field")[0])[0]) + "> ";
+				check.sanitizeStringForURI(theTitle) + "> ";
 			parameterMap.remove("title-field");
 			parameterMap.remove("subjecturi-prefix");
 		}
