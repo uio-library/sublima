@@ -62,8 +62,6 @@
                 <input type="checkbox" name="privileges" value="topic.approve"/>Godkjenne
               </xsl:otherwise>
             </xsl:choose>
-
-
           </td>
         </tr>
         <tr>
@@ -77,7 +75,6 @@
                 <input type="checkbox" name="privileges" value="topic.delete"/>Slette
               </xsl:otherwise>
             </xsl:choose>
-
           </td>
         </tr>
         <tr>
@@ -95,7 +92,6 @@
                 <input type="checkbox" name="privileges" value="relation.edit"/>Legge til/Redigere
               </xsl:otherwise>
             </xsl:choose>
-
           </td>
         </tr>
         <tr>
@@ -103,13 +99,12 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.approve'">
-                <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/>Legge til/Redigere
+                <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/>Godkjenne
               </xsl:when>
               <xsl:otherwise>
                 <input type="checkbox" name="privileges" value="relation.approve"/>Godkjenne
               </xsl:otherwise>
             </xsl:choose>
-
           </td>
         </tr>
         <tr>
@@ -117,13 +112,12 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.delete'">
-                <input type="checkbox" name="privileges" value="relation.delete" checked="checked"/>Legge til/Redigere
+                <input type="checkbox" name="privileges" value="relation.delete" checked="checked"/>Slette
               </xsl:when>
               <xsl:otherwise>
                 <input type="checkbox" name="privileges" value="relation.delete"/>Slette
               </xsl:otherwise>
             </xsl:choose>
-
           </td>
         </tr>
         <tr>
@@ -146,12 +140,30 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="resource.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.approve'">
+                <input type="checkbox" name="privileges" value="resource.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="resource.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="resource.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.delete'">
+                <input type="checkbox" name="privileges" value="resource.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="resource.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
@@ -160,17 +172,41 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="user.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'user.edit'">
+                <input type="checkbox" name="privileges" value="user.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="user.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="user.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'user.approve'">
+                <input type="checkbox" name="privileges" value="user.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="user.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="user.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'user.delete'">
+                <input type="checkbox" name="privileges" value="user.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="user.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
@@ -179,17 +215,41 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="role.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'role.edit'">
+                <input type="checkbox" name="privileges" value="role.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="role.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="role.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'role.approve'">
+                <input type="checkbox" name="privileges" value="role.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="role.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="role.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'role.delete'">
+                <input type="checkbox" name="privileges" value="role.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="role.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
@@ -230,17 +290,44 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="topic.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'topic.edit'">
+                <input type="checkbox" name="privileges" value="topic.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="topic.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="topic.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'topic.approve'">
+                <input type="checkbox" name="privileges" value="topic.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="topic.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
+
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="topic.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'topic.delete'">
+                <input type="checkbox" name="privileges" value="topic.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="topic.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
@@ -249,17 +336,44 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="relation.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.edit'">
+                <input type="checkbox" name="privileges" value="relation.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="relation.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="relation.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.approve'">
+                <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="relation.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="relation.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.delete'">
+                <input type="checkbox" name="privileges" value="relation.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="relation.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
@@ -268,17 +382,44 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="resource.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.edit'">
+                <input type="checkbox" name="privileges" value="resource.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="resource.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="resource.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.approve'">
+                <input type="checkbox" name="privileges" value="resource.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="resource.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="resource.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.delete'">
+                <input type="checkbox" name="privileges" value="resource.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="resource.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
@@ -287,17 +428,41 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="user.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'user.edit'">
+                <input type="checkbox" name="privileges" value="user.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="user.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="user.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'user.approve'">
+                <input type="checkbox" name="privileges" value="user.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="user.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="user.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'user.delete'">
+                <input type="checkbox" name="privileges" value="user.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="user.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
@@ -306,17 +471,41 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="role.edit"/>Legge til/Redigere
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'role.edit'">
+                <input type="checkbox" name="privileges" value="role.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="role.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="role.approve"/>Godkjenne
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'role.approve'">
+                <input type="checkbox" name="privileges" value="role.approve" checked="checked"/>Godkjenne
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="role.approve"/>Godkjenne
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td><input type="checkbox" name="privileges" value="role.delete"/>Slette
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'role.delete'">
+                <input type="checkbox" name="privileges" value="role.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="role.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
         </tr>
         <tr>
