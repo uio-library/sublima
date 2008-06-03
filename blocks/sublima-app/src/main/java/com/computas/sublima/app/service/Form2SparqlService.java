@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Arrays;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 
@@ -304,7 +305,7 @@ public class Form2SparqlService {
 	 */
 
 	public String convertForm2Sparul(Map<String, String[]> parameterMap)
-			throws IOException {
+			throws IOException, NumberFormatException {
 
 		String language = new String();
 		if (parameterMap.get("interface-language") != null) {
@@ -347,11 +348,30 @@ public class Form2SparqlService {
 		sparqlQueryBuffer.append("}\nWHERE { "+ subject +"?p ?o . }\n");
 		sparqlQueryBuffer.append("\nINSERT DATA {\n");
 		
+		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
 			if (e.getValue() != null) {
+				String[] propertyplus = e.getKey().split("-");
+				String prop = propertyplus[0];
+				int whichobj = 0;
+				boolean langisgiven = false;
+				if (propertyplus.length >= 2) {
+					whichobj = Integer.parseInt(propertyplus[1]);
+				}	
+			    if (propertyplus.length >= 3 && propertyplus[2] == "lang") {
+			    	langisgiven = true;
+			    }
+			}	
+	    
+					
+				
+				
 				for (String s : e.getValue()) {
 					if (!"".equalsIgnoreCase(s) && s != null) {
+						
 						RDFObject myRDFObject = new RDFObject(s, language);
+						
+						
 						sparqlQueryBuffer.append(subject + e.getKey()
 								+ " " + myRDFObject.toN3() + "\n");
 					}
