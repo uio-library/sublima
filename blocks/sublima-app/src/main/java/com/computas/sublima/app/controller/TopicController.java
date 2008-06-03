@@ -15,12 +15,12 @@ import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
-import java.io.IOException;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.TreeMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author: mha
@@ -137,33 +137,33 @@ public class TopicController implements StatelessAppleController {
       res.sendPage("xml2/relasjon", bizData);
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
-        Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
+      Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
-        Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
-        parameterMap.remove("prefix"); // The prefixes are magic variables
-        if (parameterMap.get("subjecturi-prefix") != null) {
-        	parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") + 
-        													   parameterMap.get("subjecturi-prefix")[0]});
-        }		
-        String sparqlQuery = new String();
-        try {
-        	sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
-        }
-        catch (IOException e) {
-            messageBuffer.append("<c:message>Feil ved lagring av ny relasjonstype</c:message>\n");
-    	}
+      Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+      parameterMap.remove("prefix"); // The prefixes are magic variables
+      if (parameterMap.get("subjecturi-prefix") != null) {
+        parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
+                parameterMap.get("subjecturi-prefix")[0]});
+      }
+      String sparqlQuery = new String();
+      try {
+        sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+      }
+      catch (IOException e) {
+        messageBuffer.append("<c:message>Feil ved lagring av ny relasjonstype</c:message>\n");
+      }
 
-        logger.trace("TopicController.editRelation --> MODIFY QUERY:\n" + sparqlQuery);
-    	/*
-      logger.trace("TopicController.editRelation --> DELETE QUERY:\n" + deleteString.toString());
-      logger.trace("TopicController.editRelation --> INSERT QUERY:\n" + insertString.toString());
+      logger.trace("TopicController.editRelation --> MODIFY QUERY:\n" + sparqlQuery);
+      /*
+            logger.trace("TopicController.editRelation --> DELETE QUERY:\n" + deleteString.toString());
+            logger.trace("TopicController.editRelation --> INSERT QUERY:\n" + insertString.toString());
 
-      boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
-      boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-*/
-        boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
-        
-     // logger.trace("TopicController.editRelation --> DELETE QUERY RESULT: " + deleteSuccess); 
+            boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
+            boolean insertSuccess = sparulDispatcher.query(insertString.toString());
+      */
+      boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
+
+      // logger.trace("TopicController.editRelation --> DELETE QUERY RESULT: " + deleteSuccess);
       logger.trace("TopicController.editRelation --> INSERT QUERY RESULT: " + insertSuccess);
 
       if (insertSuccess) {
@@ -191,7 +191,7 @@ public class TopicController implements StatelessAppleController {
       bizData.put("messages", messageBuffer.toString());
 
       res.sendPage("xml2/relasjon", bizData);
-    } 
+    }
   }
 
   private void showTopicBrowsing
@@ -297,8 +297,8 @@ public class TopicController implements StatelessAppleController {
       insertString.append("\nINSERT\n{\n");
 
       for (String s : requestMap.keySet()) {
-        if (!requestMap.get(s)[0].equalsIgnoreCase("")) {
-          insertString.append("<" + requestMap.get(s)[0] + "> sub:theme \"true\"^^xsd:boolean .\n");
+        for (String t : requestMap.get(s)) {
+          insertString.append("<" + t + "> sub:theme \"true\"^^xsd:boolean .\n");
         }
       }
 
