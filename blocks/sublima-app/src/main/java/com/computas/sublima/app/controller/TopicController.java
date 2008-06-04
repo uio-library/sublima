@@ -153,18 +153,11 @@ public class TopicController implements StatelessAppleController {
         messageBuffer.append("<c:message>Feil ved lagring av ny relasjonstype</c:message>\n");
       }
 
-      logger.trace("TopicController.editRelation --> MODIFY QUERY:\n" + sparqlQuery);
-      /*
-            logger.trace("TopicController.editRelation --> DELETE QUERY:\n" + deleteString.toString());
-            logger.trace("TopicController.editRelation --> INSERT QUERY:\n" + insertString.toString());
+      logger.trace("TopicController.editRelation --> QUERY:\n" + sparqlQuery);
 
-            boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
-            boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-      */
       boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
 
-      // logger.trace("TopicController.editRelation --> DELETE QUERY RESULT: " + deleteSuccess);
-      logger.trace("TopicController.editRelation --> INSERT QUERY RESULT: " + insertSuccess);
+      logger.trace("TopicController.editRelation --> QUERY RESULT: " + insertSuccess);
 
       if (insertSuccess) {
         messageBuffer.append("<c:message>Ny relasjonstype lagret</c:message>\n");
@@ -174,16 +167,13 @@ public class TopicController implements StatelessAppleController {
         bizData.put("relationdetails", "<empty></empty>");
       }
 
+      bizData.put("relationdetails", adminService.getRelationByURI(uri));
+      bizData.put("mode", "topicrelated");
+      bizData.put("allanguages", adminService.getAllLanguages());
       if (insertSuccess) {
-        bizData.put("relationdetails", adminService.getRelationByURI(uri));
         bizData.put("tempvalues", "<empty></empty>");
-        bizData.put("mode", "topicrelatededit");
-        bizData.put("allanguages", adminService.getAllLanguages());
       } else {
-        bizData.put("relationdetails", adminService.getRelationByURI(uri));
         bizData.put("tempvalues", "<empty></empty>");
-        bizData.put("mode", "topicrelatedtemp");
-        bizData.put("allanguages", adminService.getAllLanguages());
       }
       bizData.put("userprivileges", userPrivileges);
       messageBuffer.append("</c:messages>\n");
