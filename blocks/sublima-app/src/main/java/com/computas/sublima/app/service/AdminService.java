@@ -510,7 +510,7 @@ public class AdminService {
             "SELECT ?role",
             "WHERE {",
             "?user a sioc:User ;",
-            "    sioc:email <mailto:" + name + "> . ",
+            "    sioc:email <mailto:" + name + "> ; ",
             "    sioc:has_function ?role .",
             "?role a sioc:Role . }"});
 
