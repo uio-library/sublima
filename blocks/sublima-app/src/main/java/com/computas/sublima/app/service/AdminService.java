@@ -510,8 +510,9 @@ public class AdminService {
             "SELECT ?role",
             "WHERE {",
             "?user a sioc:User ;",
-            "    sioc:Role ?role ;",
-            "    sioc:email <mailto:" + name + "> . }"});
+            "    sioc:email <mailto:" + name + "> . ",
+            "    sioc:has_function ?role .",
+            "?role a sioc:Role . }"});
 
     logger.trace("AdminService.getUserRole() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
