@@ -387,7 +387,21 @@ public class TopicController implements StatelessAppleController {
       // 3. Forsk  lagre
 
       StringBuffer tempValues = getTempValues(req);
-      String tempPrefixes = "<c:tempvalues \n" + "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" + "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" + "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" + "xmlns:c=\"http://xmlns.computas.com/cocoon\">\n";
+      String tempPrefixes = "<c:tempvalues \n" +
+                "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
+                "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+                "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+                "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+                "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+                "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+                "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+                "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+                "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+                "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+                "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+                "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+                "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
       String validationMessages = validateRequest(req);
       if (!"".equalsIgnoreCase(validationMessages)) {
@@ -532,18 +546,20 @@ public class TopicController implements StatelessAppleController {
    * @param req
    * @return
    */
-  private String validateRequest
-          (AppleRequest
-                  req) {
+  private String validateRequest(AppleRequest req) {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
-      validationMessages.append("<c:message>Emnets tittel kan ikke vre blank</c:message>\n");
+      validationMessages.append("<c:message>Emnets tittel kan ikke være blank</c:message>\n");
     }
 
-    if (req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
-      validationMessages.append("<c:message>En status m velges</c:message>\n");
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) || req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
+      validationMessages.append("<c:message>En status må velges</c:message>\n");
+    } else if (!userPrivileges.contains(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
+      validationMessages.append("<c:message>Rollen du har tillater ikke å lagre et emne med den valgte statusen.</c:message>\n");            
     }
+
+
 
     return validationMessages.toString();
   }

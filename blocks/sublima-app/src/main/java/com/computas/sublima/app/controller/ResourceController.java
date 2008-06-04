@@ -10,6 +10,8 @@ import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.auth.ApplicationUtil;
+import org.apache.cocoon.auth.User;
 import org.apache.log4j.Logger;
 
 import java.util.Enumeration;
@@ -26,6 +28,8 @@ public class ResourceController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
+  private ApplicationUtil appUtil = new ApplicationUtil();
+  private User user;
   private String mode;
   private String submode;
   String[] completePrefixArray = {
@@ -47,6 +51,7 @@ public class ResourceController implements StatelessAppleController {
           "skos: <http://www.w3.org/2004/02/skos/core#>",
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
   String prefixes = StringUtils.join("\n", prefixArray);
+  private String userPrivileges = "<empty/>";
 
   private static Logger logger = Logger.getLogger(AdminController.class);
 
@@ -55,6 +60,11 @@ public class ResourceController implements StatelessAppleController {
 
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
+
+    if (appUtil.getUser() != null) {
+      user = appUtil.getUser();
+      userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
+    }
 
     if ("ressurser".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
@@ -417,54 +427,56 @@ public class ResourceController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:title")) || req.getCocoonRequest().getParameter("dct:title") == null) {
-      validationMessages.append("<c:message>Tittel kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message>Tittel kan ikke vÃ¦re blank</c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url").trim()) || req.getCocoonRequest().getParameter("sub:url").trim() == null) {
-      validationMessages.append("<c:message>URL kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message>URL kan ikke vÃ¦re blank</c:message>\n");
     } else {
       // if the identifier is empty, then it's a new resource and we do a already-exists check
       if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url"))) {
         String resource = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim());
         if (resource.contains(req.getCocoonRequest().getParameter("sub:url").trim())) {
-          validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");
+          validationMessages.append("<c:message>En ressurs med denne URI finnes fra fÃ¸r</c:message>\n");
         }
       }
 
       if (!adminService.validateURL(req.getCocoonRequest().getParameter("sub:url").trim())) {
-        validationMessages.append("<c:message>Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</c:message>\n");
+        validationMessages.append("<c:message>Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prÃ¸v igjen.</c:message>\n");
 
       }
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:description")) || req.getCocoonRequest().getParameter("dct:description") == null) {
-      validationMessages.append("<c:message>Beskrivelsen kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message>Beskrivelsen kan ikke vÃ¦re blank</c:message>\n");
     }
 
     if (("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher")) || req.getCocoonRequest().getParameter("dct:publisher") == null) &&
             ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name")) || req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") == null)) {
-      validationMessages.append("<c:message>En utgiver må velges, eller et nytt utgivernavn angis</c:message>\n");
+      validationMessages.append("<c:message>En utgiver mÃ¥ velges, eller et nytt utgivernavn angis</c:message>\n");
     }
 
     if (req.getCocoonRequest().getParameterValues("dct:language") == null) {
-      validationMessages.append("<c:message>Minst ett språk må være valgt</c:message>\n");
+      validationMessages.append("<c:message>Minst ett sprÃ¥k mÃ¥ vÃ¦re valgt</c:message>\n");
     }
 
     if (req.getCocoonRequest().getParameterValues("dct:format") == null) {
-      validationMessages.append("<c:message>Minst en mediatype må være valgt</c:message>\n");
+      validationMessages.append("<c:message>Minst en mediatype mÃ¥ vÃ¦re valgt</c:message>\n");
     }
 
     /* Commented out due to the lack of dct:audience in SMIL test data
     if (req.getCocoonRequest().getParameterValues("dct:audience") == null) {
-      validationMessages.append("<c:message>Minst en målgruppe må være valgt</c:message>\n");
+      validationMessages.append("<c:message>Minst en mÃ¥lgruppe mÃ¥ vÃ¦re valgt</c:message>\n");
     }*/
 
     if (req.getCocoonRequest().getParameterValues("dct:subject") == null) {
-      validationMessages.append("<c:message>Minst ett emne må være valgt</c:message>\n");
+      validationMessages.append("<c:message>Minst ett emne mÃ¥ vÃ¦re valgt</c:message>\n");
     }
 
-    if (req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
-      validationMessages.append("<c:message>En status må velges</c:message>\n");
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) || req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
+      validationMessages.append("<c:message>En status mÃ¥ velges</c:message>\n");
+    } else if (!userPrivileges.contains(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
+      validationMessages.append("<c:message>Rollen du har tillater ikke Ã¥ lagre et emne med den valgte statusen.</c:message>\n");
     }
 
     return validationMessages.toString();

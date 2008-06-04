@@ -79,6 +79,30 @@
         </tr>
         <tr>
           <td></td>
+          <td>
+            <select id="topic.status" name="topic.status" multiple="true">
+              <option value=""/>
+              <xsl:for-each select="./c:allstatuses/rdf:RDF/wdr:DR">
+                  <xsl:sort select="./rdfs:label"/>
+                  <xsl:variable name="status">topic.status.<xsl:value-of select="./@rdf:about"/></xsl:variable>
+                  <xsl:choose>
+                      <xsl:when test="$status = /c:page/c:content/c:role/c:roleprivilegies/c:privileges/c:privilege">
+                          <option value="{./@rdf:about}" selected="selected">
+                              <xsl:value-of select="./rdfs:label"/>
+                          </option>
+                      </xsl:when>
+                      <xsl:otherwise>
+                          <option value="{./@rdf:about}">
+                              <xsl:value-of select="./rdfs:label"/>
+                          </option>
+                      </xsl:otherwise>
+                  </xsl:choose>
+              </xsl:for-each>
+          </select>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
           <td>Relasjoner</td>
         </tr>
         <tr>
@@ -164,6 +188,30 @@
               </xsl:otherwise>
             </xsl:choose>
 
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <select id="resource.status" name="resource.status" multiple="true">
+              <option value=""/>
+              <xsl:for-each select="./c:allstatuses/rdf:RDF/wdr:DR">
+                  <xsl:sort select="./rdfs:label"/>
+                  <xsl:variable name="status">resource.status.<xsl:value-of select="./@rdf:about"/></xsl:variable>
+                  <xsl:choose>
+                      <xsl:when test="$status = /c:page/c:content/c:role/c:roleprivilegies/c:privileges/c:privilege">
+                          <option value="{./@rdf:about}" selected="selected">
+                              <xsl:value-of select="./rdfs:label"/>
+                          </option>
+                      </xsl:when>
+                      <xsl:otherwise>
+                          <option value="{./@rdf:about}">
+                              <xsl:value-of select="./rdfs:label"/>
+                          </option>
+                      </xsl:otherwise>
+                  </xsl:choose>
+              </xsl:for-each>
+          </select>
           </td>
         </tr>
         <tr>

@@ -19,6 +19,7 @@
   <xsl:import href="themeselection.xsl"/>
   <xsl:import href="topicjoin.xsl"/>
   <xsl:import href="allusers.xsl"/>
+  <xsl:import href="allroles.xsl"/>
   <xsl:import href="userform.xsl"/>
   <xsl:import href="topicrelations.xsl"/>
   <xsl:import href="roleform.xsl"/>
@@ -318,6 +319,8 @@
                 <xsl:apply-templates select="c:page/c:content/c:related"/>
 
                 <xsl:apply-templates select="c:page/c:content/c:allusers" mode="list"/>
+                
+                <xsl:apply-templates select="c:page/c:content/c:allroles" mode="listallroles"/>
 
                 <xsl:apply-templates select="c:page/c:content/c:join" mode="topicjoin"/>
 

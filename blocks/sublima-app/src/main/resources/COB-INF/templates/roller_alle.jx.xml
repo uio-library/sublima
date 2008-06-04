@@ -15,8 +15,6 @@
         xmlns="http://www.w3.org/1999/xhtml">
   <c:title>Sublima administrasjon</c:title>
 
-  <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
-
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>
     <c:breadcrumb title="Admin">admin</c:breadcrumb>
@@ -41,41 +39,12 @@
   </c:menu>
 
   <c:content>
-
     <c:text>
-      <h3>Rolle</h3>
+      <h3>Vis roller</h3>
     </c:text>
 
-    <c:messages>
-      <jx:out value="#{messages}" xmlize="true"/>
-    </c:messages>
-
-    <c:role>
-
-      <c:roledetails>
-        <jx:out value="#{roledetails}" xmlize="true"/>
-      </c:roledetails>
-
-      <c:roleprivilegies>
-        <jx:out value="#{roleprivileges}" xmlize="true"/>
-      </c:roleprivilegies>
-
-      <c:allroles>
-        <jx:out value="#{allroles}" xmlize="true"/>
-      </c:allroles>
-
-      <c:allstatuses>
-        <jx:out value="#{allstatuses}" xmlize="true"/>
-      </c:allstatuses>
-
-      <c:tempvalues>
-        <jx:out value="#{tempvalues}" xmlize="true"/>
-      </c:tempvalues>
-
-      <!--c:alllanguages><jx:out value="#{allanguages}" xmlize="true"/></c:alllanguages-->
-
-    </c:role>
-
+    <c:allroles>
+      <jx:out value="#{allroles}" xmlize="true"/>
+    </c:allroles>
   </c:content>
-
 </c:page>

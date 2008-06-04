@@ -84,8 +84,17 @@ public class UserController implements StatelessAppleController {
       } else if ("rolle".equalsIgnoreCase(submode)) {
         editRole(req, res, null);
         return;
+      } else if ("alle".equalsIgnoreCase(submode)) {
+        listRoles(req, res);
+        return;
       }
     }
+  }
+
+  private void listRoles(AppleRequest req, AppleResponse res) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("allroles", adminService.getAllRoles());
+    res.sendPage("xml2/roller_alle", bizData);
   }
 
   public void editUser(AppleRequest req, AppleResponse res, String type, String messages) {
@@ -329,6 +338,7 @@ public class UserController implements StatelessAppleController {
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
+    bizData.put("allstatuses", adminService.getAllStatuses());
     //bizData.put("allanguages", adminService.getAllLanguages());
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
@@ -341,6 +351,7 @@ public class UserController implements StatelessAppleController {
         bizData.put("roledetails", adminService.getRoleByURI(req.getCocoonRequest().getParameter("uri")));
         bizData.put("roleprivileges", adminService.getRolePrivilegesAsXML(req.getCocoonRequest().getParameter("uri")));
       }
+
 
       bizData.put("mode", "roleedit");
       bizData.put("messages", "<empty></empty>");
@@ -366,6 +377,7 @@ public class UserController implements StatelessAppleController {
         messageBuffer.append(validationMessages + "\n");
         messageBuffer.append("</c:messages>\n");
 
+        bizData.put("allstatuses", adminService.getAllStatuses());
         bizData.put("roledetails", "<empty></empty>");
         bizData.put("roleprivileges", "<empty></empty>");
         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
@@ -400,6 +412,7 @@ public class UserController implements StatelessAppleController {
         whereString.append("<" + uri + "> rdfs:label ?name .\n");
         whereString.append("}\n");
 
+        req.getCocoonRequest().getParameterValues("topic.status");
 
         StringBuffer insertString = new StringBuffer();
         insertString.append(completePrefixes);
@@ -427,9 +440,24 @@ public class UserController implements StatelessAppleController {
             String deletePrivilegeSql = "DELETE FROM roleprivilege WHERE role ='" + uri + "';";
             dbService.doSQLUpdate(deletePrivilegeSql);
             String insertPrivilegesSql;
-            if(req.getCocoonRequest().getParameterValues("privileges") != null) {
+
+            if (req.getCocoonRequest().getParameterValues("privileges") != null) {
               for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
                 insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','" + s + "');";
+                dbService.doSQLUpdate(insertPrivilegesSql);
+              }
+            }
+
+            if (req.getCocoonRequest().getParameterValues("resource.status") != null) {
+              for (String s : req.getCocoonRequest().getParameterValues("resource.status")) {
+                insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','resource.status." + s + "');";
+                dbService.doSQLUpdate(insertPrivilegesSql);
+              }
+            }
+            
+            if (req.getCocoonRequest().getParameterValues("topic.status") != null) {
+              for (String s : req.getCocoonRequest().getParameterValues("topic.status")) {
+                insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','topic.status." + s + "');";
                 dbService.doSQLUpdate(insertPrivilegesSql);
               }
             }
@@ -452,10 +480,9 @@ public class UserController implements StatelessAppleController {
           bizData.put("mode", "roletemp");
         }
 
+        bizData.put("allstatuses", adminService.getAllStatuses());
         messageBuffer.append("</c:messages>\n");
-
         bizData.put("messages", messageBuffer.toString());
-
         res.sendPage("xml2/rolle", bizData);
       }
     }
@@ -536,7 +563,7 @@ public class UserController implements StatelessAppleController {
     tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
 
     tempValues.append("<c:privileges>\n");
-    if(req.getCocoonRequest().getParameterValues("privileges") != null) {
+    if (req.getCocoonRequest().getParameterValues("privileges") != null) {
       for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
         tempValues.append("<c:privilege>" + s + "</c:privilege>\n");
       }
