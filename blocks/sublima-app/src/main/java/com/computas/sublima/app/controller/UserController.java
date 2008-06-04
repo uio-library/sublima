@@ -113,7 +113,7 @@ public class UserController implements StatelessAppleController {
 
       // 1. Mellomlagre alle verdier
       // 2. Valider alle verdier
-      // 3. Forsøk å lagre
+      // 3. Forsk  lagre
 
       StringBuffer tempValues = getUserTempValues(req);
       String tempPrefixes = "<c:tempvalues \n" +
@@ -162,7 +162,7 @@ public class UserController implements StatelessAppleController {
             e.printStackTrace();
             /*
             logger.trace("TopicController.editUser --> NEW USER: INSERT USERNAME FAILED\n");
-            messageBuffer.append("<c:message>Brukernavnet finnes fra før</c:message>\n</c:messages>\n");
+            messageBuffer.append("<c:message>Brukernavnet finnes fra fr</c:message>\n</c:messages>\n");
 
             bizData.put("userdetails", "<empty></empty>");
             bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
@@ -207,7 +207,7 @@ public class UserController implements StatelessAppleController {
 
         // If it's a new user and the passowrd is "passwordplaceholder" give an errormessage (can't do this in validation because of existing user/unchanged password thingie
         if (newUser && req.getCocoonRequest().getParameter("password1").equalsIgnoreCase("passwordplaceholder")) {
-          messageBuffer.append("<c:message>Passordet må angis på nytt</c:message>\n</c:messages>\n");
+          messageBuffer.append("<c:message>Passordet m angis p nytt</c:message>\n</c:messages>\n");
 
           bizData.put("userdetails", "<empty></empty>");
           bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
@@ -247,7 +247,7 @@ public class UserController implements StatelessAppleController {
 
           // If insertedRows is 0, then the insert failed and we give the user a proper feedback
           if (insertedRows == 0) {
-            messageBuffer.append("<c:message>En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prøv igjen</c:message>" + "\n");
+            messageBuffer.append("<c:message>En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prv igjen</c:message>" + "\n");
             messageBuffer.append("</c:messages>\n");
             bizData.put("userdetails", "<empty></empty>");
             bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
@@ -267,13 +267,16 @@ public class UserController implements StatelessAppleController {
         deleteString.append("<" + uri + "> a sioc:User .\n");
         deleteString.append("<" + uri + "> sioc:email ?email .\n");
         deleteString.append("<" + uri + "> rdfs:label ?name .\n");
-        deleteString.append("<" + uri + "> sioc:Role ?role .\n");
+        deleteString.append("<" + uri + "> sioc:has_function ?role .\n");
+        deleteString.append("?role a sioc:Role .\n");
 
         deleteString.append("}\n");
         whereString.append("<" + uri + "> a sioc:User .\n");
         whereString.append("<" + uri + "> sioc:email ?email .\n");
         whereString.append("<" + uri + "> rdfs:label ?name .\n");
-        whereString.append("<" + uri + "> sioc:Role ?role .\n");
+        whereString.append("<" + uri + "> sioc:has_function ?role .\n");
+        whereString.append("?role a sioc:Role .\n");
+
         whereString.append("}\n");
 
 
@@ -283,7 +286,8 @@ public class UserController implements StatelessAppleController {
         insertString.append("<" + uri + "> a sioc:User ;\n");
         insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n");
         insertString.append("    sioc:email <mailto:" + req.getCocoonRequest().getParameter("sioc:email") + "> ;\n");
-        insertString.append("    sioc:Role <" + req.getCocoonRequest().getParameter("sioc:role") + ">.\n");
+        insertString.append("    sioc:has_function <" + req.getCocoonRequest().getParameter("sioc:role") + "> .\n");
+        insertString.append("<" + req.getCocoonRequest().getParameter("sioc:role") + "> a sioc:Role .\n");
         insertString.append("}");
 
         deleteString.append(whereString.toString());
@@ -347,7 +351,7 @@ public class UserController implements StatelessAppleController {
 
       // 1. Mellomlagre alle verdier
       // 2. Valider alle verdier
-      // 3. Forsøk å lagre
+      // 3. Forsk  lagre
 
       StringBuffer tempValues = getRoleTempValues(req);
       String tempPrefixes = "<c:tempvalues \n" +
@@ -467,26 +471,26 @@ public class UserController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:email")) || req.getCocoonRequest().getParameter("sioc:email") == null) {
-      validationMessages.append("<c:message>E-post (brukernavn) kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message>E-post (brukernavn) kan ikke vre blank</c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
-      validationMessages.append("<c:message>Navn kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message>Navn kan ikke vre blank</c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("password1")) ||
             req.getCocoonRequest().getParameter("password1") == null ||
             "".equalsIgnoreCase(req.getCocoonRequest().getParameter("password2")) ||
             req.getCocoonRequest().getParameter("password2") == null) {
-      validationMessages.append("<c:message>Passordfeltene kan ikke være blanke, og må være like</c:message>\n");
+      validationMessages.append("<c:message>Passordfeltene kan ikke vre blanke, og m vre like</c:message>\n");
     }
 
     if (!req.getCocoonRequest().getParameter("password1").equals(req.getCocoonRequest().getParameter("password2"))) {
-      validationMessages.append("<c:message>Passordfeltene må være like</c:message>\n");
+      validationMessages.append("<c:message>Passordfeltene m vre like</c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:role")) || req.getCocoonRequest().getParameter("sioc:role") == null) {
-      validationMessages.append("<c:message>En rolle må være valgt</c:message>\n");
+      validationMessages.append("<c:message>En rolle m vre valgt</c:message>\n");
     }
 
     return validationMessages.toString();
@@ -496,7 +500,7 @@ public class UserController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
-      validationMessages.append("<c:message>Navn kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message>Navn kan ikke vre blank</c:message>\n");
     }
 
     return validationMessages.toString();
