@@ -38,6 +38,7 @@
     </c:menu>
 
     <c:content>
+        <c:allanguages><jx:out value="#{allanguages}" xmlize="true"/></c:allanguages>
 
         <c:text>
             <h3>Emne</h3>

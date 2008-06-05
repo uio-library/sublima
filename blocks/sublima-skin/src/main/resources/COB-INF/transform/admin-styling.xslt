@@ -102,13 +102,18 @@
 
     <xsl:choose>
       <xsl:when test="c:page/c:mode = 'topictemp'">
-        <xsl:apply-templates select="c:page/c:content/c:topic" mode="topictemp"/>
+        <xsl:apply-templates select="c:page/c:content/c:topic">
+	  <xsl:with-param name="mode">topictemp</xsl:with-param>
+	</xsl:apply-templates>
         <br/>
         <h4>Ressurser tilknyttet emnet</h4>
         <xsl:apply-templates select="c:page/c:content/c:topic/c:topicresources/rdf:RDF" mode="results"/>
       </xsl:when>
       <xsl:when test="c:page/c:mode = 'topicedit'">
-        <xsl:apply-templates select="c:page/c:content/c:topic" mode="topicedit"/>
+        <xsl:apply-templates select="c:page/c:content/c:topic">
+	  <xsl:with-param name="mode">topicedit</xsl:with-param>
+	</xsl:apply-templates>
+
         <br/>
         <h4>Ressurser tilknyttet emnet</h4>
         <xsl:apply-templates select="c:page/c:content/c:topic/c:topicresources/rdf:RDF" mode="results"/>
