@@ -562,7 +562,15 @@
         </tr>
         <tr>
           <td>
-            <input type="submit" value="Lagre rolle"/>
+            <xsl:choose>
+              <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = 'role.edit'">
+                <input type="submit" value="Lagre rolle"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="submit" value="Lagre rolle" disabled="true"/>
+              </xsl:otherwise>
+            </xsl:choose>
+
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>

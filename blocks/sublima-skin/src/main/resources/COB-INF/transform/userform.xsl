@@ -102,7 +102,14 @@
         </tr>
         <tr>
           <td>
-            <input type="submit" value="Lagre bruker"/>
+            <xsl:choose>
+              <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = 'relation.edit'">
+                <input type="submit" value="Lagre bruker"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="submit" value="Lagre bruker" disabled="true"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>
