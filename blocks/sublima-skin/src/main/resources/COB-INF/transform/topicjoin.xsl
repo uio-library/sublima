@@ -14,6 +14,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
+  <xsl:import href="controlbutton.xsl"/>
   <xsl:param name="baseurl"/>
     <xsl:param name="interface-language">no</xsl:param>
 
@@ -56,7 +57,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" value="Slå sammen"/>
+                       <xsl:call-template name="controlbutton">
+                        <xsl:with-param name="privilege">topic.join</xsl:with-param>
+                        <xsl:with-param name="buttontext">Slå sammen</xsl:with-param>
+                      </xsl:call-template>
                     </td>
                     <td>
                         <input type="reset" value="Rens skjema"/>

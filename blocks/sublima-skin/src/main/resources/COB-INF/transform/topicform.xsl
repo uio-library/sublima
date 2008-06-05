@@ -14,6 +14,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
+  <xsl:import href="controlbutton.xsl"/>
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
 
@@ -203,14 +204,10 @@
         </tr>
         <tr>
           <td>
-            <xsl:choose>
-              <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = 'topic.edit'">
-                <input type="submit" value="Lagre emne"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <input type="submit" value="Lagre emne" disabled="true"/>
-              </xsl:otherwise>
-            </xsl:choose>
+             <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">topic.edit</xsl:with-param>
+              <xsl:with-param name="buttontext">Lagre emne</xsl:with-param>
+            </xsl:call-template>
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>

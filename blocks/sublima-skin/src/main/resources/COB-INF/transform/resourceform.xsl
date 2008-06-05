@@ -14,6 +14,8 @@
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
 
+  <xsl:import href="controlbutton.xsl"/>
+
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
   <xsl:template match="c:resourcedetails" mode="edit">
@@ -251,23 +253,15 @@
         <tr>
           <td>
 
-            <xsl:choose>
-              <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = 'topic.edit'">
-                <input type="submit" value="Lagre ressurs" name="actionbutton"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <input type="submit" value="Lagre ressurs" name="actionbutton" disabled="true"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">topic.edit</xsl:with-param>
+              <xsl:with-param name="buttontext">Lagre ressurs</xsl:with-param>
+            </xsl:call-template>
 
-            <xsl:choose>
-              <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = 'topic.delete'">
-                <input type="submit" value="Slett ressurs" name="actionbutton"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <input type="submit" value="Slett ressurs" name="actionbutton" disabled="true"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">topic.delete</xsl:with-param>
+              <xsl:with-param name="buttontext">Slett ressurs</xsl:with-param>
+            </xsl:call-template>
             
           </td>
           <td>

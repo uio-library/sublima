@@ -15,6 +15,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
+  <xsl:import href="controlbutton.xsl"/>
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
 
@@ -73,6 +74,32 @@
               </xsl:when>
               <xsl:otherwise>
                 <input type="checkbox" name="privileges" value="topic.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'topic.theme'">
+                <input type="checkbox" name="privileges" value="topic.theme" checked="checked"/>Sette temaemner
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="topic.theme"/>Sette temaemner
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'topic.join'">
+                <input type="checkbox" name="privileges" value="topic.join" checked="checked"/>Koble emner
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="topic.join"/>Koble emner
               </xsl:otherwise>
             </xsl:choose>
           </td>
@@ -302,11 +329,44 @@
         </tr>
         <tr>
           <td></td>
+          <td>Utgivere</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'publisher.edit'">
+                <input type="checkbox" name="privileges" value="publisher.edit" checked="checked"/>Legge til/Redigere
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="publisher.edit"/>Legge til/Redigere
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'publisher.delete'">
+                <input type="checkbox" name="privileges" value="publisher.delete" checked="checked"/>Slette
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="publisher.delete"/>Slette
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
           <td></td>
         </tr>
         <tr>
           <td>
-            <input type="submit" value="Lagre rolle"/>
+             <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">role.edit</xsl:with-param>
+              <xsl:with-param name="buttontext">Lagre rolle</xsl:with-param>
+            </xsl:call-template>
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>

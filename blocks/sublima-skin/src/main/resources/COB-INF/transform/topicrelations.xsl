@@ -14,6 +14,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
 	version="1.0">
   <xsl:import href="rdfxml2html-lang-dropdown.xsl"/>
+  <xsl:import href="controlbutton.xsl"/>
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
   <xsl:template match="c:related">
@@ -69,8 +70,13 @@
 	<input type="hidden" name="a" value="http://www.w3.org/2002/07/owl#ObjectProperty"/>
 	
 	<input type="submit" value="Lagre relasjonstype"/>
-	
-	<input type="reset" value="Rens skjema"/>
+
+  <xsl:call-template name="controlbutton">
+       <xsl:with-param name="privilege">relation.edit</xsl:with-param>
+       <xsl:with-param name="buttontext">Lagre relasjonstype</xsl:with-param>
+  </xsl:call-template>
+
+  <input type="reset" value="Rens skjema"/>
 	
       </fieldset>
       

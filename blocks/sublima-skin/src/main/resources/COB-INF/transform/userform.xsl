@@ -15,6 +15,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
+  <xsl:import href="controlbutton.xsl"/>
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
 
@@ -203,6 +204,10 @@
         </tr>
         <tr>
           <td>
+             <xsl:call-template name="controlbutton">
+                        <xsl:with-param name="privilege">user.edit</xsl:with-param>
+                        <xsl:with-param name="buttontext">Lagre bruker</xsl:with-param>
+                      </xsl:call-template>
             <input type="submit" value="Lagre bruker"/>
           </td>
           <td>
