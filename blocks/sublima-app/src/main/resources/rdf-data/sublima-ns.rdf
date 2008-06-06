@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <rdf:RDF
-    xmlns="file:/Users/dn/Documents/svn/sublima/trunk/blocks/sublima-app/src/main/resources/rdf-data/sublima-ns.rdf"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
     xmlns:owl="http://www.w3.org/2002/07/owl#"
@@ -17,15 +16,15 @@
   <owl:ObjectProperty rdf:about="http://xmlns.computas.com/sublima#url">
     <rdfs:domain>
       <rdf:Description rdf:about="http://xmlns.computas.com/sublima#Resource">
-        <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
         <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Site"/>
+        <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
       </rdf:Description>
     </rdfs:domain>
     <rdfs:range rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://xmlns.computas.com/sublima#committer">
-    <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#User"/>
     <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#User"/>
   </owl:ObjectProperty>
   <rdf:Description rdf:about="http://xmlns.computas.com/sublima#keywords">
     <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
@@ -43,8 +42,8 @@
     <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
   </owl:AnnotationProperty>
   <rdf:Description rdf:about="http://xmlns.computas.com/sublima#comment">
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
     <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </rdf:Description>
 </rdf:RDF>
 
