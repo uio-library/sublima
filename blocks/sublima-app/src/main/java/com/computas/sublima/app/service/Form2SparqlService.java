@@ -392,9 +392,11 @@ public class Form2SparqlService {
 							}
 						}
 					}
-					RDFObject myRDFObject = new RDFObject(object, language);
-					sparqlQueryBuffer.append(subject + property	
-						+ " " + myRDFObject.toN3() + "\n");	
+					if (!"".equalsIgnoreCase(object)) {	
+						RDFObject myRDFObject = new RDFObject(object, language);
+						sparqlQueryBuffer.append(subject + property	
+								+ " " + myRDFObject.toN3() + "\n");	
+					}
 				}	
 			}
 		}	

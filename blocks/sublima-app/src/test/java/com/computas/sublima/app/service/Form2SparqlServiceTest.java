@@ -460,7 +460,19 @@ public class Form2SparqlServiceTest extends TestCase {
 				 			+ expectS, resultString);
 	  }
 
-  
+  public void testConvertForm2SPARULTwoValuesOnlyLang() throws IOException {
+		 // Single value test
+		 String expectS = "DELETE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\nWHERE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\n\n" +
+		 		"INSERT DATA {\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jet\"@en .\n}\n";
+		 testMap.put("skos:prefLabel-1", new String[]{"Jet","http://www.lingvoj.org/lang/en"});
+		 testMap.put("skos:prefLabel-2", new String[]{"http://www.lingvoj.org/lang/no"});
+		 testMap.put("the-resource", new String[]{"http://sublima.computas.com/topic/Jet"}); // this parameter is a magic string
+		 myService.addPrefix("skos: <http://www.w3.org/2004/02/skos/core#>");
+		 String resultString = myService.convertForm2Sparul(testMap);
+		 assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" 
+				 			+ expectS, resultString);
+	  }
+
   
   public void testConvertForm2SPARULSingleValueMakeSubject() throws IOException {
 		 // Single value test
