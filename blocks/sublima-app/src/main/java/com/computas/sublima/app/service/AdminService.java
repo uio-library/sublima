@@ -49,14 +49,8 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "CONSTRUCT {",
-            "    ?relation rdfs:subPropertyOf skos:semanticRelation ;",
-            "    rdfs:label ?label .",
-            "}",
-            "WHERE {",
-            "?relation rdfs:subPropertyOf skos:semanticRelation ;",
-            "rdfs:label ?label .",
-            "FILTER langMatches( lang(?label), \"no\" )",
+            "DESCRIBE ?relation WHERE {",
+            "?relation rdfs:subPropertyOf skos:semanticRelation .",
             "}"});
 
     logger.trace("AdminService.getAllRelationTypes() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -283,9 +277,12 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-            "DESCRIBE <" + uri + ">",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "DESCRIBE <" + uri + "> ?rel",
             "WHERE {",
-            "<" + uri + "> a skos:Concept .",
+            "<" + uri + "> a skos:Concept ; ",
+            "     ?rel ?o . ",
+            "?rel rdfs:subPropertyOf skos:semanticRelation .",
             "}"});
 
     logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);

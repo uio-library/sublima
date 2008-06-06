@@ -10,6 +10,7 @@
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
@@ -84,7 +85,8 @@
 	  <xsl:with-param name="field"><xsl:text>skos:hiddenLabel-</xsl:text><xsl:value-of select="count(c:topicdetails/rdf:RDF/skos:Concept/skos:hiddenLabel)+1"/></xsl:with-param>
 	</xsl:call-template>
 
-
+      </table>
+      <table>
         <tr>
           <td>
             <label for="skos:definition">Beskrivelse</label>
@@ -102,20 +104,27 @@
       <p>Relaterte emner</p>
       <table>
 
-        <xsl:for-each select="skos:semanticRelation">
+        <xsl:for-each select="c:relationtypes/rdf:RDF/owl:ObjectProperty">
           <xsl:sort select="./rdfs:label"/>
-          <tr>
+	  <xsl:value-of select="./@rdf:about"/>
+	  <xsl:value-of select="concat(namespace-uri(/c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*), local-name(/c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*))"/>
+	  <xsl:if test="./@rdf:about = namespace-uri(/c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*)"> 
+	    <!-- Now, we know that the relation is actually being used in the data -->
+	    <tr>
+	      <th>
+		<label for="the-relation">Relasjon</label>
+	      </th>
             <td>
-              <label for="skos:semanticRelation/rdf:resource">Relasjon</label>
-            </td>
-            <td>
-              <select id="skos:semanticRelation/rdf:resource"
-                      name="skos:semanticRelation/rdf:resource">
-                <xsl:for-each select="/c:page/c:content/c:topic/c:relationtypes/rdf:RDF/skos:semanticRelation">
-                  <xsl:sort select="./rdfs:label"/>
-                  <xsl:choose>
+              <select id="the-relation"
+                      name="the-relation">
+		
+                <xsl:for-each select="/c:page/c:content/c:topic/c:relationtypes/rdf:RDF/owl:ObjectProperty">
+		  <!-- But now, we need to iterate all known relation types -->        
+		  <xsl:sort select="./rdfs:label"/>
+	
+		  <xsl:choose>
                     <xsl:when
-                            test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/skos:semanticRelation/@rdf:resource">
+                            test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*/@rdf:resource">
                       <option value="{./@rdf:about}" selected="selected">
                         <xsl:value-of select="./rdfs:label"/>
                       </option>
@@ -129,8 +138,8 @@
                 </xsl:for-each>
               </select>
 
-              <select id="skos:semanticRelation/rdf:resource"
-                      name="skos:semanticRelation/rdf:resource" multiple="multiple">
+              <select id="the-relation"
+                      name="the-relation" multiple="multiple">
                 <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
                   <xsl:sort select="./skos:prefLabel"/>
                   <xsl:choose>
@@ -150,15 +159,16 @@
               </select>
             </td>
           </tr>
-        </xsl:for-each>
+          </xsl:if>
+	</xsl:for-each>
 
 
         <tr>
           <td>
           </td>
           <td>
-            <select id="skos:semanticRelation/rdf:resource"
-                    name="skos:semanticRelation/rdf:resource">
+            <select id="the-relation"
+                    name="the-relation">
               <xsl:for-each select="/c:page/c:content/c:topic/c:relationtypes/rdf:RDF/skos:semanticRelation">
                 <xsl:sort select="./rdfs:label"/>
                 <xsl:choose>
@@ -177,8 +187,8 @@
               </xsl:for-each>
             </select>
 
-            <select id="skos:semanticRelation/rdf:resource"
-                    name="skos:semanticRelation/rdf:resource" multiple="multiple">
+            <select id="the-relation"
+                    name="the-relation" multiple="multiple">
               <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
                 <xsl:sort select="./skos:prefLabel"/>
                 <xsl:choose>
