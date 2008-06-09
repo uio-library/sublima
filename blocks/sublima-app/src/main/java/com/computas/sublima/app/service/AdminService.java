@@ -278,12 +278,9 @@ public class AdminService {
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "DESCRIBE <" + uri + "> ?rel",
+            "DESCRIBE <" + uri + ">",
             "WHERE {",
-            "<" + uri + "> a skos:Concept ; ",
-            "     ?rel ?o . ",
-            "?rel rdfs:subPropertyOf skos:semanticRelation .",
-            "}"});
+            "<" + uri + "> a skos:Concept . }"});
 
     logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
