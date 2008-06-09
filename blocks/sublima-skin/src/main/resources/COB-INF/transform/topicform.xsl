@@ -109,16 +109,13 @@
 	  <xsl:variable name="relation-uri" select="./@rdf:about"/>
 	  <tr>
 	    <th scope="row">
-	      <label>
-		<xsl:attribute name="for">
-		  <xsl:text>the-relation-</xsl:text><xsl:value-of select="position()"/>
-		</xsl:attribute>
+	      <label for="the-relation-{position()}">
 		<xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
 	      </label>
 	    </th>
 	    <td>
 	      <select id="the-relation-{position()}"
-		      name="the-relation" multiple="multiple">
+		      name="&lt;{$relation-uri}&gt;" multiple="multiple">
 		<xsl:for-each select="/c:page/c:content/c:topic/c:alltopics/rdf:RDF/skos:Concept">
 		  <xsl:choose>
 		    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*[concat(namespace-uri(), local-name()) = $relation-uri]/@rdf:resource">
