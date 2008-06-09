@@ -6,12 +6,12 @@ import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import org.apache.cocoon.auth.ApplicationUtil;
+import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.auth.ApplicationUtil;
-import org.apache.cocoon.auth.User;
 import org.apache.log4j.Logger;
 
 import java.util.Enumeration;
@@ -129,6 +129,7 @@ public class ResourceController implements StatelessAppleController {
     bizData.put("mediatypes", allMediatypes);
     bizData.put("audience", allAudiences);
     bizData.put("status", allStatuses);
+    bizData.put("userprivileges", userPrivileges);
 
     // When GET present a blank form with listvalues or prefilled with resource
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
@@ -150,11 +151,10 @@ public class ResourceController implements StatelessAppleController {
 
       if ("Slett ressurs".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton"))) {
 
-        String deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                "DELETE {\n" +
-                "<" + req.getCocoonRequest().getParameter("sub:url") + "> ?a ?o.\n" +
+        String deleteString = "DELETE {\n" +
+                "<" + req.getCocoonRequest().getParameter("uri") + "> ?a ?o.\n" +
                 "} WHERE {\n" +
-                "<" + req.getCocoonRequest().getParameter("sub:url") + "> ?a ?o.}" ;
+                "<" + req.getCocoonRequest().getParameter("uri") + "> ?a ?o. }";
 
         boolean deleteResourceSuccess = sparulDispatcher.query(deleteString);
 
@@ -169,7 +169,7 @@ public class ResourceController implements StatelessAppleController {
           bizData.put("mode", "edit");
 
         } else {
-          messageBuffer.append("<c:message>Feil ved lagring av ny ressurs</c:message>\n");
+          messageBuffer.append("<c:message>Feil ved sletting av ressurs</c:message>\n");
           bizData.put("tempvalues", "<empty></empty>");
           bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url")));
           bizData.put("mode", "edit");
@@ -408,6 +408,7 @@ public class ResourceController implements StatelessAppleController {
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
+      bizData.put("userprivileges", userPrivileges);
       bizData.put("publishers", adminService.getAllPublishers());
 
       res.sendPage("xml2/ressurs", bizData);
@@ -432,27 +433,38 @@ public class ResourceController implements StatelessAppleController {
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url").trim()) || req.getCocoonRequest().getParameter("sub:url").trim() == null) {
       validationMessages.append("<c:message>URL kan ikke være blank</c:message>\n");
-    } else {
-      // if the identifier is empty, then it's a new resource and we do a already-exists check
-      if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url"))) {
-        String resource = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim());
-        if (resource.contains(req.getCocoonRequest().getParameter("sub:url").trim())) {
-          validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");
-        }
+    }
+
+    if (req.getCocoonRequest().getParameter("uri") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri").trim())) {
+      // if the uri is empty, then it's a new resource and we do a already-exists check
+      // We have to check the url both with and without an ending /
+      String resourceWithEndingSlash;
+      String resourceWithoutEndingSlash;
+
+      if (req.getCocoonRequest().getParameter("sub:url").trim().endsWith("/")) {
+        resourceWithEndingSlash = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim());
+        resourceWithoutEndingSlash = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim().substring(0, req.getCocoonRequest().getParameter("sub:url").trim().length() - 1));
+      } else {
+        resourceWithoutEndingSlash = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim());
+        resourceWithEndingSlash = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim() + "/");
       }
 
-      if (!adminService.validateURL(req.getCocoonRequest().getParameter("sub:url").trim())) {
-        validationMessages.append("<c:message>Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</c:message>\n");
-
+      if (resourceWithEndingSlash.contains(req.getCocoonRequest().getParameter("sub:url").trim())
+              || resourceWithoutEndingSlash.contains(req.getCocoonRequest().getParameter("sub:url").trim())) {
+        validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");
       }
+    }
+
+    if (!adminService.validateURL(req.getCocoonRequest().getParameter("sub:url").trim())) {
+      validationMessages.append("<c:message>Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:description")) || req.getCocoonRequest().getParameter("dct:description") == null) {
       validationMessages.append("<c:message>Beskrivelsen kan ikke være blank</c:message>\n");
     }
 
-    if (("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher")) || req.getCocoonRequest().getParameter("dct:publisher") == null) &&
-            ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name")) || req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") == null)) {
+    if (("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher")) || req.getCocoonRequest().getParameter("dct:publisher") == null)
+            && ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name")) || req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") == null)) {
       validationMessages.append("<c:message>En utgiver må velges, eller et nytt utgivernavn angis</c:message>\n");
     }
 
