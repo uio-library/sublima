@@ -375,7 +375,6 @@ public class TopicController implements StatelessAppleController {
         bizData.put("mode", "topicedit");
         bizData.put("relationtypes", adminService.getAllRelationTypes());
       }
-      bizData.put("allanguages", adminService.getAllLanguages());
       bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/emne", bizData);
@@ -551,16 +550,14 @@ public class TopicController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
-      validationMessages.append("<c:message>Emnets tittel kan ikke vre blank</c:message>\n");
+      validationMessages.append("<c:message>Emnets tittel kan ikke være blank</c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) || req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
-      validationMessages.append("<c:message>En status m velges</c:message>\n");
+      validationMessages.append("<c:message>En status må velges</c:message>\n");
     } else if (!userPrivileges.contains(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
-      validationMessages.append("<c:message>Rollen du har tillater ikke  lagre et emne med den valgte statusen.</c:message>\n");            
+      validationMessages.append("<c:message>Rollen du har tillater ikke å lagre et emne med den valgte statusen.</c:message>\n");            
     }
-
-
 
     return validationMessages.toString();
   }

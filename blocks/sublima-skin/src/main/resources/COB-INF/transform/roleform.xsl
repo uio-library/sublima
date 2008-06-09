@@ -367,6 +367,7 @@
               <xsl:with-param name="privilege">role.edit</xsl:with-param>
               <xsl:with-param name="buttontext">Lagre rolle</xsl:with-param>
             </xsl:call-template>
+            <input type="submit" value="Lagre rolle"/>
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>

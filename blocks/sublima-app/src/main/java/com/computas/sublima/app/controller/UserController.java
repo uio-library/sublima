@@ -154,7 +154,7 @@ public class UserController implements StatelessAppleController {
           uri = req.getCocoonRequest().getParameter("rdfs:label").replace(" ", "_");
           uri = uri.replace(",", "_");
           uri = uri.replace(".", "_");
-          uri = getProperty("sublima.base.url") + "user/" + uri + "_" + uri.hashCode();
+          uri = getProperty("sublima.base.url") + "user/" + uri;
 
           String deleteSql = "DELETE FROM users WHERE username ='" + req.getCocoonRequest().getParameter("sioc:email") + "'";
 

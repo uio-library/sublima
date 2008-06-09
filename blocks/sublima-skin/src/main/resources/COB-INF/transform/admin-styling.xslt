@@ -148,32 +148,7 @@
   <!-- New publisher -->
   <xsl:template name="new_publisher">
 
-    <form action="insertpublisher" method="GET">
-      <table>
-        <tr>
-          <td>
-            <label for="new_publisher">Navn</label>
-          </td>
-          <td>
-            <input id="new_publisher" type="text" name="new_publisher" size="40"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="dct:description">Beskrivelse</label>
-          </td>
-          <td>
-            <textarea id="dct:description" name="dct:description" rows="6" cols="40">...</textarea>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            <input type="submit" value="Lagre utgiver"/>
-          </td>
-        </tr>
-      </table>
-    </form>
+    
   </xsl:template>
 
   <!-- Publisherlist -->

@@ -103,14 +103,11 @@
         </tr>
         <tr>
           <td>
-            <xsl:choose>
-              <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = 'relation.edit'">
-                <input type="submit" value="Lagre bruker"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <input type="submit" value="Lagre bruker" disabled="true"/>
-              </xsl:otherwise>
-            </xsl:choose>
+           <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">user.edit</xsl:with-param>
+              <xsl:with-param name="buttontext">Lagre bruker</xsl:with-param>
+            </xsl:call-template>
+            <input type="submit" value="Lagre bruker"/>
           </td>
           <td>
             <input type="reset" value="Rens skjema"/>

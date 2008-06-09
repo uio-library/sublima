@@ -16,6 +16,7 @@
   <c:title>Sublima administrasjon</c:title>
 
   <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
+  <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>
 
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>
