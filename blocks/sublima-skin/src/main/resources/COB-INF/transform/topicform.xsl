@@ -101,113 +101,43 @@
 
 
       </table>
-      <p>Relaterte emner</p>
+   
       <table>
-
+	<caption>Relaterte emner</caption>
         <xsl:for-each select="c:relationtypes/rdf:RDF/owl:ObjectProperty">
           <xsl:sort select="./rdfs:label"/>
-	  <xsl:value-of select="./@rdf:about"/>
-	  <xsl:value-of select="concat(namespace-uri(/c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*), local-name(/c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*))"/>
-	  <xsl:if test="./@rdf:about = namespace-uri(/c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*)"> 
-	    <!-- Now, we know that the relation is actually being used in the data -->
-	    <tr>
-	      <th>
-		<label for="the-relation">Relasjon</label>
-	      </th>
-            <td>
-              <select id="the-relation"
-                      name="the-relation">
-		
-                <xsl:for-each select="/c:page/c:content/c:topic/c:relationtypes/rdf:RDF/owl:ObjectProperty">
-		  <!-- But now, we need to iterate all known relation types -->        
-		  <xsl:sort select="./rdfs:label"/>
-	
+	  <xsl:variable name="relation-uri" select="./@rdf:about"/>
+	  <tr>
+	    <th scope="row">
+	      <label>
+		<xsl:attribute name="for">
+		  <xsl:text>the-relation-</xsl:text><xsl:value-of select="position()"/>
+		</xsl:attribute>
+		<xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+	      </label>
+	    </th>
+	    <td>
+	      <select id="the-relation-{position()}"
+		      name="the-relation" multiple="multiple">
+		<xsl:for-each select="/c:page/c:content/c:topic/c:alltopics/rdf:RDF/skos:Concept">
 		  <xsl:choose>
-                    <xsl:when
-                            test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*/@rdf:resource">
-                      <option value="{./@rdf:about}" selected="selected">
-                        <xsl:value-of select="./rdfs:label"/>
-                      </option>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <option value="{./@rdf:about}">
-                        <xsl:value-of select="./rdfs:label"/>
-                      </option>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:for-each>
-              </select>
-
-              <select id="the-relation"
-                      name="the-relation" multiple="multiple">
-                <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                  <xsl:sort select="./skos:prefLabel"/>
-                  <xsl:choose>
-                    <xsl:when
-                            test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/skos:semanticRelation/@rdf:resource">
-                      <option value="{./@rdf:about}" selected="selected">
-                        <xsl:value-of select="./skos:prefLabel"/>
-                      </option>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <option value="{./@rdf:about}">
-                        <xsl:value-of select="./skos:prefLabel"/>
-                      </option>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:for-each>
-              </select>
-            </td>
-          </tr>
-          </xsl:if>
+		    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*[concat(namespace-uri(), local-name()) = $relation-uri]/@rdf:resource">
+		      <option value="{./@rdf:about}" selected="selected">
+			<xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+		      </option>
+		    </xsl:when>
+		    <xsl:otherwise> 
+		      <option value="{./@rdf:about}">
+			<xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+		      </option>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:for-each>
+	      </select>
+	    </td>
+	  </tr>
+    
 	</xsl:for-each>
-
-
-        <tr>
-          <td>
-          </td>
-          <td>
-            <select id="the-relation"
-                    name="the-relation">
-              <xsl:for-each select="/c:page/c:content/c:topic/c:relationtypes/rdf:RDF/skos:semanticRelation">
-                <xsl:sort select="./rdfs:label"/>
-                <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/skos:semanticRelation/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label"/>
-                    </option>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./rdfs:label"/>
-                    </option>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:for-each>
-            </select>
-
-            <select id="the-relation"
-                    name="the-relation" multiple="multiple">
-              <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                <xsl:sort select="./skos:prefLabel"/>
-                <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/skos:semanticRelation/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./skos:prefLabel"/>
-                    </option>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./skos:prefLabel"/>
-                    </option>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:for-each>
-            </select>
-          </td>
-        </tr>
 
         <tr>
           <td>
