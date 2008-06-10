@@ -6,48 +6,61 @@
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
     xmlns:owl="http://www.w3.org/2002/07/owl#"
     xmlns:dct="http://purl.org/dc/terms/"
-    xmlns:p21="file:/Users/dn/Documents/svn/sublima/trunk/blocks/sublima-app/src/main/resources/rdf-data/information-model.rdf#"
+    xmlns:p14="file:/Users/dn/Documents/svn/sublima/trunk/blocks/sublima-app/src/main/resources/rdf-data/information-model.rdf#"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
     xmlns:wdr="http://www.w3.org/2007/05/powder#"
     xmlns:sioc="http://rdfs.org/sioc/ns#"
+    xmlns="file:/Users/dn/Documents/svn/sublima/trunk/blocks/sublima-app/src/main/resources/rdf-data/information-model.rdf"
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
     xmlns:sub="http://xmlns.computas.com/sublima#"
   xml:base="file:/Users/dn/Documents/svn/sublima/trunk/blocks/sublima-app/src/main/resources/rdf-data/information-model.rdf">
   <owl:Ontology rdf:about="file:/Users/dn/Documents/svn/sublima/trunk/blocks/sublima-app/src/main/resources/rdf-data/information-model.rdf"/>
   <owl:Class rdf:about="http://rdfs.org/sioc/ns#User"/>
+  <owl:ObjectProperty rdf:about="http://xmlns.computas.com/sublima#isSubjectOf">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/subject"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
     <owl:inverseOf>
       <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#hasTopConcept">
         <owl:inverseOf rdf:resource="http://xmlns.computas.com/sublima#isMainConceptOf"/>
       </rdf:Description>
     </owl:inverseOf>
-    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
-    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/language">
-    <rdfs:range rdf:resource="http://www.lingvoj.org/ontology#Lingvo"/>
     <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:range rdf:resource="http://www.lingvoj.org/ontology#Lingvo"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/subject">
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
     <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <owl:inverseOf rdf:resource="http://xmlns.computas.com/sublima#isSubjectOf"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/publisher">
-    <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
     <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/identifier">
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
     <rdfs:range rdf:resource="http://xmlns.computas.com/sublima#LocalURI"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/audience">
     <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/format">
-    <rdfs:range rdf:resource="http://purl.org/dc/terms/MediaType"/>
+  <owl:ObjectProperty rdf:about="http://www.w3.org/2007/05/powder#describedBy">
+    <rdfs:range rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
     <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/format">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:range rdf:resource="http://purl.org/dc/terms/MediaType"/>
   </owl:ObjectProperty>
   <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms/dateAccepted">
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
@@ -57,25 +70,19 @@
     <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
   </owl:DatatypeProperty>
   <owl:DatatypeProperty rdf:about="http://www.w3.org/2004/02/skos/core#note">
-    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
     <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
   </owl:DatatypeProperty>
   <owl:DatatypeProperty rdf:about="http://xmlns.computas.com/sublima#classification">
-    <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
     <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
   </owl:DatatypeProperty>
   <owl:DatatypeProperty rdf:about="http://www.w3.org/2004/02/skos/core#hiddenLabel">
     <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
   </owl:DatatypeProperty>
   <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms/dateSubmitted">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </owl:DatatypeProperty>
-  <owl:DatatypeProperty rdf:about="http://www.w3.org/2007/05/powder#describedBy">
-    <rdfs:range rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
-    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </owl:DatatypeProperty>
   <owl:DatatypeProperty rdf:about="http://xmlns.computas.com/sublima#theme">
     <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
@@ -85,44 +92,44 @@
     <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
   </owl:DatatypeProperty>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/Service">
-    <rdfs:label xml:lang="no">Service</rdfs:label>
     <rdfs:label xml:lang="en">Service</rdfs:label>
+    <rdfs:label xml:lang="no">Service</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/Event">
-    <rdfs:label xml:lang="no">Hendelse</rdfs:label>
     <rdfs:label xml:lang="en">Event</rdfs:label>
+    <rdfs:label xml:lang="no">Hendelse</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/PhysicalObject">
-    <rdfs:label xml:lang="no">Fysisk ting</rdfs:label>
     <rdfs:label xml:lang="en">Physical Object</rdfs:label>
+    <rdfs:label xml:lang="no">Fysisk ting</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/Software">
-    <rdfs:label xml:lang="no">Programvare</rdfs:label>
     <rdfs:label xml:lang="en">Software</rdfs:label>
+    <rdfs:label xml:lang="no">Programvare</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/Dataset">
-    <rdfs:label xml:lang="no">Datasett</rdfs:label>
     <rdfs:label xml:lang="en">Dataset</rdfs:label>
+    <rdfs:label xml:lang="no">Datasett</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/Collection">
-    <rdfs:label xml:lang="no">Samling</rdfs:label>
     <rdfs:label xml:lang="en">Collection</rdfs:label>
+    <rdfs:label xml:lang="no">Samling</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/InteractiveResource">
-    <rdfs:label xml:lang="no">Interaktiv ressurs</rdfs:label>
     <rdfs:label xml:lang="en">Interactive Resource</rdfs:label>
+    <rdfs:label xml:lang="no">Interaktiv ressurs</rdfs:label>
   </dct:MediaType>
   <rdf:Description rdf:about="http://purl.org/dc/terms/description">
-    <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
     <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
   </rdf:Description>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/Sound">
-    <rdfs:label xml:lang="no">Lyd</rdfs:label>
     <rdfs:label xml:lang="en">Sound</rdfs:label>
+    <rdfs:label xml:lang="no">Lyd</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/Text">
-    <rdfs:label xml:lang="no">Tekst</rdfs:label>
     <rdfs:label xml:lang="en">Text</rdfs:label>
+    <rdfs:label xml:lang="no">Tekst</rdfs:label>
   </dct:MediaType>
   <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel">
     <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
@@ -132,16 +139,16 @@
     <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </rdf:Description>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/StillImage">
-    <rdfs:label xml:lang="no">Bilde</rdfs:label>
     <rdfs:label xml:lang="en">StillImage</rdfs:label>
+    <rdfs:label xml:lang="no">Bilde</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/MovingImage">
-    <rdfs:label xml:lang="no">Film</rdfs:label>
     <rdfs:label xml:lang="en">Moving Image</rdfs:label>
+    <rdfs:label xml:lang="no">Film</rdfs:label>
   </dct:MediaType>
   <dct:MediaType rdf:about="http://purl.org/dc/dcmitype/Image">
-    <rdfs:label xml:lang="no">Avbildning</rdfs:label>
     <rdfs:label xml:lang="en">Image</rdfs:label>
+    <rdfs:label xml:lang="no">Avbildning</rdfs:label>
   </dct:MediaType>
 </rdf:RDF>
 

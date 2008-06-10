@@ -32,7 +32,8 @@
 dct:subject 		rdfs:range 	owl:Class ;
 			a 		owl:ObjectProperty ;
 			rdfs:domain	sub:Resource ;
-            rdfs:range skos:Concept .         
+            rdfs:range skos:Concept .  
+            
 	
 #	
 dct:title		rdfs:range 	rdfs:Literal ;		
@@ -166,6 +167,11 @@ sub:isMainConceptOf  a owl:ObjectProperty ;
             rdfs:range skos:ConceptScheme ;
             rdfs:domain skos:Concept ;
             owl:inverseOf skos:hasTopConcept . 
+
+sub:isSubjectOf a owl:ObjectProperty ;
+            rdfs:domain skos:Concept;
+            rdfs:range sub:Resource ;
+            owl:inverseOf dct:subject .                   
 
 
 ########################
