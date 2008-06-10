@@ -166,16 +166,21 @@ public class Form2SparqlService {
                 if ("dct:subject/all-labels".equals(key) && "all-labels".equals(qname)) {
                     logger.debug("Will expand the search to include all labels");
                     RDFObject myRDFObject = new RDFObject(value, language);
-                    if (freetextFields != null)  {
-						myRDFObject.setFreetext(freetextFields.indexOf(key)+1);
+                    String thisObjectString = null;
+                    if (freetextFields == null)  {
+                    	int freetextNo = freetextFields.indexOf(key)+1;
+                    	n3Buffer.append("?free" + freetextNo + " pf:textMatch '+" + value + "' .");
+                    //	thisObjectString = 
+					} else {
+						thisObjectString = myRDFObject.toN3();
 					}
-                    n3Buffer.append("\n{ "+ var +"skos:prefLabel ");
-                    n3Buffer.append(myRDFObject.toN3());
-                    n3Buffer.append(" }\nUNION { "+ var +"skos:altLabel ");
-                    n3Buffer.append(myRDFObject.toN3());
-                    n3Buffer.append(" }\nUNION { "+ var +"skos:hiddenLabel ");
-                    n3Buffer.append(myRDFObject.toN3());
-                    n3Buffer.append(" }\n");
+                    n3Buffer.append("\nOPTIONAL { "+ var +"skos:prefLabel ");
+                    n3Buffer.append(thisObjectString);
+                    n3Buffer.append(" }\nOPTIONAL { "+ var +"skos:altLabel ");
+                    n3Buffer.append(thisObjectString);
+                    n3Buffer.append(" }\nOPTIONAL { "+ var +"skos:hiddenLabel ");
+                    n3Buffer.append(thisObjectString);
+                    n3Buffer.append(" }\nFILTER ( bound( "+ var +") )\n");
                 } else {
                     n3Buffer.append("\n" + var + qname + " ");
                 }
