@@ -437,20 +437,7 @@ public class ResourceController implements StatelessAppleController {
 
     if (req.getCocoonRequest().getParameter("uri") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri").trim())) {
       // if the uri is empty, then it's a new resource and we do a already-exists check
-      // We have to check the url both with and without an ending /
-      String resourceWithEndingSlash;
-      String resourceWithoutEndingSlash;
-
-      if (req.getCocoonRequest().getParameter("sub:url").trim().endsWith("/")) {
-        resourceWithEndingSlash = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim());
-        resourceWithoutEndingSlash = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim().substring(0, req.getCocoonRequest().getParameter("sub:url").trim().length() - 1));
-      } else {
-        resourceWithoutEndingSlash = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim());
-        resourceWithEndingSlash = (String) adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url").trim() + "/");
-      }
-
-      if (resourceWithEndingSlash.contains(req.getCocoonRequest().getParameter("sub:url").trim())
-              || resourceWithoutEndingSlash.contains(req.getCocoonRequest().getParameter("sub:url").trim())) {
+      if(adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("sub:url"))) {
         validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");
       }
     }

@@ -96,9 +96,7 @@ public class FeedbackController implements StatelessAppleController {
       String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(",");
       String status;
 
-      //Check if the resource already exists
-      String resource = (String) adminService.getResourceByURI(url);
-      if (resource.contains(url)) {
+      if (adminService.checkForDuplicatesByURI(url)) {
         messageBuffer.append("<c:message>Ressursen du tipset om finnes allerede, men takk for innsatsen!</c:message>");
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
@@ -142,7 +140,7 @@ public class FeedbackController implements StatelessAppleController {
                         "<" + url + "> dct:description " + "\"" + beskrivelse + "\"@no . \n" +
                         "<" + url + "> sub:keywords " + "\"" + stikkord.toString() + "\"@no . \n" +
                         "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
-                        "<" + url + "> sub:url <" + url + "> .} }\n";
+                        "<" + url + "> sub:url <" + url + "> . }\n";
 
         success = sparulDispatcher.query(insertTipString);
         logger.trace("sendTips --> RESULT: " + success);
@@ -156,7 +154,7 @@ public class FeedbackController implements StatelessAppleController {
           res.sendPage("xml/tips", bizData);
           return;
         } else {
-          messageBuffer.append("<c:message>Det skjedde noe galt. Kontroller alle feltene og prøv igjen</c:message>");
+          messageBuffer.append("<c:message>Det skjedde noe galt. Kontroller alle feltene og prï¿½v igjen</c:message>");
           messageBuffer.append("</c:messages>\n");
           bizData.put("mode", "form");
           bizData.put("loggedin", loggedIn);
@@ -170,6 +168,7 @@ public class FeedbackController implements StatelessAppleController {
         messageBuffer.append("</c:messages>\n");
         bizData.put("mode", "form");
         bizData.put("loggedin", loggedIn);
+        bizData.put("messages", messageBuffer.toString());
         res.sendPage("xml/tips", bizData);
         return;
       }

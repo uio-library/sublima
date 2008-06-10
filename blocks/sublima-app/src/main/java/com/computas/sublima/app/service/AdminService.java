@@ -8,6 +8,7 @@ import com.computas.sublima.query.service.DatabaseService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -521,6 +522,34 @@ public class AdminService {
     } catch (Exception e) {
       e.printStackTrace();
       return "<empty/>";
+    }
+  }
+
+  /**
+   * Method to check if a given URL already exists as and URI in the data. Checks both with and without a trailing /.
+   * @param url
+   * @return
+   */
+  public boolean checkForDuplicatesByURI(String url) {
+    String resourceWithEndingSlash;
+    String resourceWithoutEndingSlash;
+
+    // We have to check the url both with and without an ending /
+    if (url.endsWith("/")) {
+      resourceWithEndingSlash = (String) getResourceByURI(url);
+      url = url.substring(0, url.length() - 1);
+      resourceWithoutEndingSlash = (String) getResourceByURI(url);
+
+    } else {
+      resourceWithoutEndingSlash = (String) getResourceByURI(url);
+      resourceWithEndingSlash = (String) getResourceByURI(url + "/");
+    }
+
+    if (resourceWithEndingSlash.contains(url)
+            || resourceWithoutEndingSlash.contains(url)) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
