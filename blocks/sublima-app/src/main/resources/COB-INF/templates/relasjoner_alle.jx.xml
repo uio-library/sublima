@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:c="http://xmlns.computas.com/cocoon">
+  <c:title>Sublima administrasjon</c:title>
+
+  <c:breadcrumbs>
+      <c:breadcrumb title="Sublima"></c:breadcrumb>
+      <c:breadcrumb title="Admin">admin</c:breadcrumb>
+      <c:breadcrumb title="Emner">admin/emner/</c:breadcrumb>
+      <c:breadcrumb title="Relasjoner">admin/emner/relasjoner/</c:breadcrumb>
+      <c:breadcrumb title="Alle">admin/emner/relasjoner/alle</c:breadcrumb>
+    </c:breadcrumbs>
+
+    <c:menu>
+      <c:menuelement title="Emner" link="admin/emner/">
+        <c:childmenuelement title="Nytt" link="admin/emner/nytt"/>
+        <c:childmenuelement title="Vis alle" link="admin/emner/alle"/>
+        <c:childmenuelement title="Slå sammen" link="admin/emner/koble"/>
+        <c:childmenuelement title="Temaemner" link="admin/emner/tema"/>
+        <c:childmenuelement title="Relasjoner" link="admin/emner/relasjoner/">
+          <c:childmenuelement title="Ny" link="admin/emner/relasjoner/relasjon"/>
+          <c:childmenuelement title="Vis alle" link="admin/emner/relasjoner/alle"/>
+        </c:childmenuelement>
+      </c:menuelement>
+      <c:menuelement title="Ressurser" link="admin/ressurser/"/>
+      <c:menuelement title="Brukere" link="admin/brukere/"/>
+      <c:menuelement title="Utgivere" link="admin/utgivere/"/>
+      <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
+      <c:menuelement title="Database" link="admin/database/"/>
+    </c:menu>
+
+
+  <c:content>
+    <c:text>
+      <h3>Relasjoner - alle</h3>
+    </c:text>
+
+    <c:relations>
+      <jx:out value="#{all_relations}" xmlize="true"/>
+    </c:relations>
+  </c:content>
+</c:page>

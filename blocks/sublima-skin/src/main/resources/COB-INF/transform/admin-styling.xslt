@@ -23,6 +23,7 @@
   <xsl:import href="userform.xsl"/>
   <xsl:import href="topicrelations.xsl"/>
   <xsl:import href="roleform.xsl"/>
+  <xsl:import href="allrelationtypes.xsl"/>
 
   <xsl:output method="xml"
               encoding="UTF-8"
@@ -301,6 +302,8 @@
                 <xsl:apply-templates select="c:page/c:content/c:allusers" mode="list"/>
                 
                 <xsl:apply-templates select="c:page/c:content/c:allroles" mode="listallroles"/>
+
+                <xsl:apply-templates select="c:page/c:content/c:relations" mode="listallrelationtypes"/>
 
                 <xsl:apply-templates select="c:page/c:content/c:join" mode="topicjoin"/>
 

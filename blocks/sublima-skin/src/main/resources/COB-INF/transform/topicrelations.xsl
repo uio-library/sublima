@@ -9,6 +9,7 @@
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
+        xmlns:owl="http://www.w3.org/2002/07/owl#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
@@ -40,7 +41,10 @@
 	      <xsl:when test="./c:tempvalues/c:tempvalues/rdf:about">
 		<input type="hidden" name="the-resource" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>     
 	      </xsl:when>
-	      <xsl:otherwise>
+        <xsl:when test="./c:relation/rdf:RDF/owl:ObjectProperty/@rdf:about">
+		<input type="hidden" name="the-resource" value="{./c:relation/rdf:RDF/owl:ObjectProperty/@rdf:about}"/>
+	      </xsl:when>
+        <xsl:otherwise>
 		<input type="hidden" name="title-field" value="rdfs:label-1"/>
 		<input type="hidden" name="subjecturi-prefix" value="topicrelations/"/>
 	      </xsl:otherwise>
@@ -54,10 +58,23 @@
 	<h3>Relasjonstype</h3>
 	<table>
 	  <tr><th>Navn</th><th>Språk</th></tr>
-	  <tr>
-	    <td><input type="text" name="rdfs:label-1" size="20"  /></td>
-	    <td>
-	      <select name="rdfs:label-1">
+      <xsl:for-each select="./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label">
+        <tr>
+        <td><input type="text" name="rdfs:label-{position()}" size="20" value="{.}" /></td>
+        <td>
+	        <select name="rdfs:label-{position()}">
+            <xsl:apply-templates select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo" mode="list-options">
+              <xsl:with-param name="default-language" select="./@xml:lang"/>
+              <xsl:sort select="./rdfs:label[@xml:lang=$interface-language]"/>
+            </xsl:apply-templates>
+	        </select>
+	    </td>
+      </tr>
+      </xsl:for-each>
+    <tr>
+      <td><input type="text" name="rdfs:label-{count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+1}" size="20" /></td>
+	    <td>Antall: <xsl:value-of select="count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+1"/>                             
+	      <select name="rdfs:label-{count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+1}">
 		<xsl:apply-templates select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo" mode="list-options">
 		  <xsl:with-param name="default-language" select="$interface-language"/>
 		  <xsl:sort select="./rdfs:label[@xml:lang=$interface-language]"/>

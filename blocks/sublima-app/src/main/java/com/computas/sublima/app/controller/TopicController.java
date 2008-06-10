@@ -91,6 +91,9 @@ public class TopicController implements StatelessAppleController {
       } else if ("relasjon".equalsIgnoreCase(submode)) {
         editRelation(res, req, null);
         return;
+      } else if ("alle".equalsIgnoreCase(submode)) {
+        showRelations(res, req);
+        return;
       }
     } else if ("a-z".equalsIgnoreCase(mode)) {
       getTopicsByLetter(res, req, submode);
@@ -120,8 +123,11 @@ public class TopicController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     String uri = req.getCocoonRequest().getParameter("the-resource");
 
+    bizData.put("allanguages", adminService.getAllLanguages());
+    bizData.put("userprivileges", userPrivileges);
+
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
-      bizData.put("allanguages", adminService.getAllLanguages());
+
       bizData.put("tempvalues", "<empty></empty>");
       if ("".equalsIgnoreCase(uri) || uri == null) {
         bizData.put("relationdetails", "<empty></empty>");
@@ -145,7 +151,7 @@ public class TopicController implements StatelessAppleController {
         parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
                 parameterMap.get("subjecturi-prefix")[0]});
       }
-      String sparqlQuery = new String();
+      String sparqlQuery = null;
       try {
         sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
       }
@@ -161,21 +167,22 @@ public class TopicController implements StatelessAppleController {
 
       if (insertSuccess) {
         messageBuffer.append("<c:message>Ny relasjonstype lagret</c:message>\n");
+        bizData.put("relationdetails", adminService.getRelationByURI(uri));
 
       } else {
         messageBuffer.append("<c:message>Feil ved lagring av ny relasjonstype</c:message>\n");
         bizData.put("relationdetails", "<empty></empty>");
       }
 
-      bizData.put("relationdetails", adminService.getRelationByURI(uri));
+
       bizData.put("mode", "topicrelated");
-      bizData.put("allanguages", adminService.getAllLanguages());
+
       if (insertSuccess) {
         bizData.put("tempvalues", "<empty></empty>");
       } else {
         bizData.put("tempvalues", "<empty></empty>");
       }
-      bizData.put("userprivileges", userPrivileges);
+
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
@@ -389,20 +396,20 @@ public class TopicController implements StatelessAppleController {
 
       StringBuffer tempValues = getTempValues(req);
       String tempPrefixes = "<c:tempvalues \n" +
-                "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
-                "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
-                "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
-                "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
-                "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
-                "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-                "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
-                "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
-                "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
-                "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
-                "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-                "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-                "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
+              "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
+              "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+              "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+              "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+              "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+              "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+              "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+              "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+              "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+              "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+              "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+              "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+              "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+              "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
       String validationMessages = validateRequest(req);
       if (!"".equalsIgnoreCase(validationMessages)) {
@@ -557,7 +564,7 @@ public class TopicController implements StatelessAppleController {
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) || req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
       validationMessages.append("<c:message>En status må velges</c:message>\n");
     } else if (!userPrivileges.contains(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
-      validationMessages.append("<c:message>Rollen du har tillater ikke å lagre et emne med den valgte statusen.</c:message>\n");            
+      validationMessages.append("<c:message>Rollen du har tillater ikke å lagre et emne med den valgte statusen.</c:message>\n");
     }
 
     return validationMessages.toString();
@@ -593,6 +600,12 @@ public class TopicController implements StatelessAppleController {
           (ApplicationManager
                   appMan) {
     this.appMan = appMan;
+  }
+
+  private void showRelations(AppleResponse res, AppleRequest req) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("all_relations", adminService.getAllRelationTypes());
+    res.sendPage("xml2/relasjoner_alle", bizData);
   }
 }
 
