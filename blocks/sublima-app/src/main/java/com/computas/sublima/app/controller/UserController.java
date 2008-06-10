@@ -10,6 +10,9 @@ import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
+import org.apache.cocoon.auth.ApplicationManager;
+import org.apache.cocoon.auth.ApplicationUtil;
+import org.apache.cocoon.auth.User;
 import org.apache.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
@@ -28,6 +31,10 @@ public class UserController implements StatelessAppleController {
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
   DatabaseService dbService = new DatabaseService();
+  private ApplicationUtil appUtil = new ApplicationUtil();
+  private User user;
+  private String userPrivileges = "<empty/>";
+  private boolean loggedIn = false;
   private String mode;
   private String submode;
   String[] completePrefixArray = {
@@ -59,6 +66,11 @@ public class UserController implements StatelessAppleController {
 
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
+    if (appUtil.getUser() != null) {
+          user = appUtil.getUser();
+          userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
+        }
+
 
     if ("brukere".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
@@ -103,6 +115,7 @@ public class UserController implements StatelessAppleController {
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
+    bizData.put("userprivileges", userPrivileges);
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       bizData.put("tempvalues", "<empty></empty>");
@@ -339,6 +352,7 @@ public class UserController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
     bizData.put("allstatuses", adminService.getAllStatuses());
+    bizData.put("userprivileges", userPrivileges);
     //bizData.put("allanguages", adminService.getAllLanguages());
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
