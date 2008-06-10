@@ -169,19 +169,19 @@ public class Form2SparqlService {
                     String thisObjectString = null;
                     if (freetextFields != null && freetextFields.contains("dct:subject/all-labels"))  {
                     	int freetextNo = freetextFields.indexOf(key)+1;
-                    	n3Buffer.append("?free" + freetextNo + " pf:textMatch '+" + value + "' .");
-                    	thisObjectString = "?free" + freetextNo;
+                    	n3Buffer.append("\n?free" + freetextNo + " pf:textMatch '+" + value + "' .");
+                    	thisObjectString = "?free" + freetextNo + " .";
 					} else {
 						thisObjectString = myRDFObject.toN3();
 					}
-                    n3Buffer.append("\nOPTIONAL {\n?resource dct:subject " + var +" .\n"+ var +"skos:prefLabel ");
+                    n3Buffer.append("\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:prefLabel ");
                     n3Buffer.append(thisObjectString);
-                    n3Buffer.append(" }\nOPTIONAL {\n?resource dct:subject " + var +" .\n "+ var +"skos:altLabel ");
+                    n3Buffer.append(" }\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:altLabel ");
                     n3Buffer.append(thisObjectString);
-                    n3Buffer.append(" }\nOPTIONAL {\n?resource dct:subject " + var +" .\n "+ var +"skos:hiddenLabel ");
+                    n3Buffer.append(" }\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:hiddenLabel ");
                     n3Buffer.append(thisObjectString);
                     n3Buffer.append(" }\nFILTER ( bound( "+ var +") )\n");
-                } else {
+                } else if (!"dct:subject".equals(qname)) {
                     n3Buffer.append("\n" + var + qname + " ");
                 }
                 if ("".equals(value)) { // Then, it is a block with no value, which will be caught by a catch-all
@@ -204,7 +204,9 @@ public class Form2SparqlService {
                         var = "?var" + variablecount + " "; // Might need more work
                         // to ensure uniqueness
                         logger.debug("Using unique N3 variable " + var);
-                        n3Buffer.append(var + ".");
+                        if(!"dct:subject".equals(qname)) {
+                        	n3Buffer.append(var + ".");
+                        }
                         variablecount++;
                     }
                 }
