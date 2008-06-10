@@ -82,14 +82,14 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFormField2N3AllSubjectLabels() {
-    String expectS = "\n?resource dct:subject ?var1 .\n{ ?var1 skos:prefLabel \"Jet\" . }\nUNION { ?var1 skos:altLabel \"Jet\" . }\nUNION { ?var1 skos:hiddenLabel \"Jet\" . }\n";
+    String expectS = "\n?resource dct:subject ?var1 .\nOPTIONAL { ?var1 skos:prefLabel \"Jet\" . }\nOPTIONAL { ?var1 skos:altLabel \"Jet\" . }\nOPTIONAL { ?var1 skos:hiddenLabel \"Jet\" . }\nFILTER ( bound(?var1) )\n";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dct:subject/all-labels", testString));
   }
 
   public void testConvertFormField2N3AllSubjectLabelsFree() {
-    String expectS = "\n?resource dct:subject ?var1 .\n{ ?var1 skos:prefLabel ?free1 .\n?free1 pf:textMatch '+Jet' . }\nUNION { ?var1 skos:altLabel ?free1 .\n?free1 pf:textMatch '+Jet' . }\nUNION { ?var1 skos:hiddenLabel ?free1 .\n?free1 pf:textMatch '+Jet' . }\n";
+    String expectS = "\n?free1 pf:textMatch '+Jet' .\nOPTIONAL { ?resource dct:subject ?var1 .\n?var1 skos:prefLabel ?free1 . }\nOPTIONAL { ?resource dct:subject ?var1 .\n?var1 skos:altLabel ?free1 . }\nOPTIONAL { ?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel ?free1 . }\nFILTER ( bound(?var1) )\n";
     testString[0] = "Jet";
     myService.addFreetextField("dct:subject/all-labels");
     assertEquals("Expected result and actual result not equal", expectS,
@@ -364,13 +364,14 @@ public class Form2SparqlServiceTest extends TestCase {
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                 "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {",
-                "?resource dct:subject ?var2 .",
-                "{ ?var2 skos:prefLabel ?free2 .",
                 "?free2 pf:textMatch '+Dansk' . }",
-                "UNION { ?var2 skos:altLabel ?free2 .",
-                "?free2 pf:textMatch '+Dansk' . }",
-                "UNION { ?var2 skos:hiddenLabel ?free2 .",
-                "?free2 pf:textMatch '+Dansk' . }",
+                "OPTIONAL { ?resource dct:subject ?var2 .",
+                "?var2 skos:prefLabel ?free2 . }",
+                "OPTIONAL { ?resource dct:subject ?var2 .",
+                "?var2 skos:altLabel ?free2 .",
+                "OPTIONAL { ?resource dct:subject ?var2 .",
+                "?var2 skos:hiddenLabel ?free2 . }",
+                "FILTER ( bound(?var2) )",
                 "",
                 "?resource dct:audience ?var1 .",
                 "?var1 rdfs:label \"Detektor\"@no .",
