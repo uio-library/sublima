@@ -82,7 +82,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFormField2N3AllSubjectLabels() {
-    String expectS = "\n?resource dct:subject ?var1 .\nOPTIONAL { ?var1 skos:prefLabel \"Jet\" . }\nOPTIONAL { ?var1 skos:altLabel \"Jet\" . }\nOPTIONAL { ?var1 skos:hiddenLabel \"Jet\" . }\nFILTER ( bound( ?var1 ) )\n";
+    String expectS = "\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:prefLabel \"Jet\" . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:altLabel \"Jet\" . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel \"Jet\" . }\nFILTER ( bound( ?var1 ) )\n";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dct:subject/all-labels", testString));
