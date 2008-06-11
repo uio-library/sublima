@@ -77,7 +77,7 @@ public class LoginController extends AbstractSecurityHandler {
 
     // Get the user role and set it as an attribute
     if (name.equalsIgnoreCase("Computas")) {
-      user.setAttribute("role", "Computas");
+      user.setAttribute("role", "http://localhost:8180/sublima-webapp-1.0-SNAPSHOT/role/Computas");
     } else {
       user.setAttribute("role", adminService.getUserRole(name));
     }
