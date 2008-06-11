@@ -242,9 +242,9 @@
       </head>
       <body>
 
-	
+	<!-- 
 	    <xsl:call-template name="debug"/>
-	
+	-->
 
         <div id="header">
           <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>

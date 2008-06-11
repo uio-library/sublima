@@ -24,6 +24,11 @@
     <xsl:param name="mode"/>
 
     <form action="{$baseurl}/admin/emner/emne" method="POST">
+      <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
+      <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+      <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
+      <input type="hidden" name="prefix" value="lingvoj: &lt;http://www.lingvoj.org/ontology#&gt;"/>
+
       <xsl:choose>
 	<xsl:when test="./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about">
 	  <input type="hidden" name="the-resource" value="{./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about}"/>

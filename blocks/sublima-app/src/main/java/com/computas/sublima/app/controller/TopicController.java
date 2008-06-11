@@ -389,7 +389,7 @@ public class TopicController implements StatelessAppleController {
 
       // When POST try to save the resource. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-
+	Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
       // 1. Mellomlagre alle verdier
       // 2. Valider alle verdier
       // 3. Forsk  lagre
@@ -411,108 +411,80 @@ public class TopicController implements StatelessAppleController {
               "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
               "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
-      String validationMessages = validateRequest(req);
-      if (!"".equalsIgnoreCase(validationMessages)) {
-        messageBuffer.append(validationMessages + "\n");
-        messageBuffer.append("</c:messages>\n");
+//       String validationMessages = validateRequest(req);
+//       if (!"".equalsIgnoreCase(validationMessages)) {
+//         messageBuffer.append(validationMessages + "\n");
+//         messageBuffer.append("</c:messages>\n");
 
-        bizData.put("topicdetails", "<empty></empty>");
-        bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
-        bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
-        bizData.put("messages", messageBuffer.toString());
-        bizData.put("status", adminService.getAllStatuses());
-        bizData.put("alltopics", adminService.getAllTopics());
-        bizData.put("mode", "topictemp");
-        bizData.put("relationtypes", adminService.getAllRelationTypes());
-        bizData.put("userprivileges", userPrivileges);
+//         bizData.put("topicdetails", "<empty></empty>");
+//         bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
+//         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+//         bizData.put("messages", messageBuffer.toString());
+//         bizData.put("status", adminService.getAllStatuses());
+//         bizData.put("alltopics", adminService.getAllTopics());
+//         bizData.put("mode", "topictemp");
+//         bizData.put("relationtypes", adminService.getAllRelationTypes());
+//         bizData.put("userprivileges", userPrivileges);
 
-        res.sendPage("xml2/emne", bizData);
+//         res.sendPage("xml2/emne", bizData);
 
-      } else {
-        // Generate an identifier if a uri is not given
-        String uri;
-        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
-          uri = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel").replace(" ", "_");
-          uri = uri.replace(",", "_");
-          uri = uri.replace(".", "_");
-          uri = getProperty("sublima.base.url") + "topic/" + uri + "_" + uri.hashCode();
-        } else {
-          uri = req.getCocoonRequest().getParameter("uri");
-        }
+//       } else {
+    	  Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+    	  parameterMap.remove("prefix"); // The prefixes are magic variables
+    	  parameterMap.remove("actionbutton"); // The name of the submit button
+    	  if (parameterMap.get("subjecturi-prefix") != null) {
+	      parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
+								 parameterMap.get("subjecturi-prefix")[0]});
+    	  }
+	  
+    	  String sparqlQuery = null;
+    	  try {
+    		  sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);	
+    	  }
+    	  catch (IOException e) {
+    		  messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
+    	  }
+    	  
+    	  String uri = form2SparqlService.getURI();
+    	  
+    	  logger.trace("TopicController.editTopic --> SPARUL QUERY:\n" + sparqlQuery);
+    	  boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
 
-        StringBuffer deleteString = new StringBuffer();
-        StringBuffer whereString = new StringBuffer();
-        deleteString.append(completePrefixes);
-        deleteString.append("\nDELETE\n{\n");
-        whereString.append("\nWHERE\n{\n");
-        deleteString.append("<" + uri + "> a skos:Concept .\n");
-        deleteString.append("}\n");
-        whereString.append("<" + uri + "> a skos:Concept .\n");
-        whereString.append("}\n");
+    	  logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
 
+    	  if (insertSuccess) {
+    		  messageBuffer.append("<c:message>Nytt emne lagt til!</c:message>\n");
+    		  
+    	  } else {
+    		  messageBuffer.append("<c:message>Feil ved lagring av nytt emne</c:message>\n");
+    		  bizData.put("topicdetails", "<empty></empty>");
+    	  }
 
-        StringBuffer insertString = new StringBuffer();
-        insertString.append(completePrefixes);
-        insertString.append("\nINSERT\n{\n");
-        insertString.append("<" + uri + "> a skos:Concept ;\n");
-        insertString.append("skos:prefLabel \"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") + "\"@no ;\n");
-        insertString.append("wdr:describedBy <" + req.getCocoonRequest().getParameter("wdr:describedBy") + "> ;\n");
-        insertString.append("skos:definition \"\"\"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:definition") + "\"\"\"@no ;\n");
-        insertString.append("skos:note \"\"\"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:note") + "\"\"\"@no ;\n");
-        insertString.append("skos:altLabel \"\"\"" + req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:altLabel") + "\"\"\"@no .\n");
+    	  if (insertSuccess) {
+    		  bizData.put("topicdetails", adminService.getTopicByURI(uri));
+    		  bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
+    		  bizData.put("status", adminService.getAllStatuses());
+    		  bizData.put("tempvalues", "<empty></empty>");
+    		  bizData.put("mode", "topicedit");
+    		  bizData.put("alltopics", adminService.getAllTopics());
+    		  bizData.put("relationtypes", adminService.getAllRelationTypes());
+    	  } else {
+    		  bizData.put("topicdetails", adminService.getTopicByURI(uri));
+    		  bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
+    		  bizData.put("status", adminService.getAllStatuses());
+    		  bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+    		  bizData.put("mode", "topictemp");
+    		  bizData.put("alltopics", adminService.getAllTopics());
+    		  bizData.put("relationtypes", adminService.getAllRelationTypes());
+    	  }
+    	  bizData.put("userprivileges", userPrivileges);
+    	  messageBuffer.append("</c:messages>\n");
 
-        if (req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource") != null) {
-          for (String s : req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource")) {
-            insertString.append("<" + uri + "> skos:broader <" + s + "> .\n");
-          }
-        }
-        insertString.append("}");
+    	  bizData.put("messages", messageBuffer.toString());
 
-        deleteString.append(whereString.toString());
-
-        boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
-        boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-
-
-        logger.trace("TopicController.editTopic --> DELETE QUERY:\n" + deleteString.toString());
-        logger.trace("TopicController.editTopic --> INSERT QUERY:\n" + insertString.toString());
-
-        logger.trace("TopicController.editTopic --> DELETE QUERY RESULT: " + deleteSuccess);
-        logger.trace("TopicController.editTopic --> INSERT QUERY RESULT: " + insertSuccess);
-
-        if (deleteSuccess && insertSuccess) {
-          messageBuffer.append("<c:message>Nytt emne lagt til!</c:message>\n");
-
-        } else {
-          messageBuffer.append("<c:message>Feil ved lagring av nytt emne</c:message>\n");
-          bizData.put("topicdetails", "<empty></empty>");
-        }
-
-        if (deleteSuccess && insertSuccess) {
-          bizData.put("topicdetails", adminService.getTopicByURI(uri));
-          bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
-          bizData.put("status", adminService.getAllStatuses());
-          bizData.put("tempvalues", "<empty></empty>");
-          bizData.put("mode", "topicedit");
-          bizData.put("alltopics", adminService.getAllTopics());
-          bizData.put("relationtypes", adminService.getAllRelationTypes());
-        } else {
-          bizData.put("topicdetails", adminService.getTopicByURI(uri));
-          bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
-          bizData.put("status", adminService.getAllStatuses());
-          bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
-          bizData.put("mode", "topictemp");
-          bizData.put("alltopics", adminService.getAllTopics());
-          bizData.put("relationtypes", adminService.getAllRelationTypes());
-        }
-        bizData.put("userprivileges", userPrivileges);
-        messageBuffer.append("</c:messages>\n");
-
-        bizData.put("messages", messageBuffer.toString());
-
-        res.sendPage("xml2/emne", bizData);
-      }
-    }
+    	  res.sendPage("xml2/emne", bizData);
+	  //      }
+    }	
   }
 
 
