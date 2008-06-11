@@ -76,7 +76,12 @@ public class LoginController extends AbstractSecurityHandler {
     final User user = new StandardUser(name);
 
     // Get the user role and set it as an attribute
-    user.setAttribute("role", adminService.getUserRole(name));
+    if (name.equalsIgnoreCase("Computas")) {
+      user.setAttribute("role", "Computas");
+    } else {
+      user.setAttribute("role", adminService.getUserRole(name));
+    }
+
 
 
     //todo Set additional user attributes. Such as role etc.
