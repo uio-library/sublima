@@ -73,7 +73,7 @@
       </xsl:for-each>
     <tr>
       <td><input type="text" name="rdfs:label-{count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+1}" size="20" /></td>
-	    <td>Antall: <xsl:value-of select="count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+1"/>                             
+	    <td>                             
 	      <select name="rdfs:label-{count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+1}">
 		<xsl:apply-templates select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo" mode="list-options">
 		  <xsl:with-param name="default-language" select="$interface-language"/>
