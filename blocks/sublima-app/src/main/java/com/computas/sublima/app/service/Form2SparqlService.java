@@ -44,6 +44,8 @@ public class Form2SparqlService {
 	private static Logger logger = Logger.getLogger(Form2SparqlService.class);
 	
 	private String language;
+	
+	private String SparulSubjectURI;
 
 	private List<String> prefixes = new ArrayList<String>();
 
@@ -85,6 +87,15 @@ public class Form2SparqlService {
 	 */
 	public String getLanguage() {
 		return language;
+	}
+	
+	/**
+	 * Returns the Subject URI created or used by the SPARQL Update query just created.
+	 * 
+	 * @return a String containing a URI.
+	 */
+	public String getURI() {
+		return SparulSubjectURI;
 	}
 
 	/**
@@ -345,9 +356,8 @@ public class Form2SparqlService {
 		}	
 
 
-		String subject = new String();
 		if (parameterMap.get("the-resource") != null) {
-			subject = "<" + parameterMap.get("the-resource")[0] + "> ";
+			SparulSubjectURI = parameterMap.get("the-resource")[0];
 			parameterMap.remove("the-resource");
 		} 
 		else if (parameterMap.get("title-field") != null && parameterMap.get("subjecturi-prefix") != null) {
@@ -359,8 +369,7 @@ public class Form2SparqlService {
 					theTitle = field;
 				}
 			}
-			subject = "<" + parameterMap.get("subjecturi-prefix")[0] + 
-				check.sanitizeStringForURI(theTitle) + "> ";
+			SparulSubjectURI = parameterMap.get("subjecturi-prefix")[0] + check.sanitizeStringForURI(theTitle);
 			parameterMap.remove("title-field");
 			parameterMap.remove("subjecturi-prefix");
 		}
@@ -372,8 +381,8 @@ public class Form2SparqlService {
 
 		StringBuffer sparqlQueryBuffer = new StringBuffer();
 		sparqlQueryBuffer.append(getPrefixString());
-		sparqlQueryBuffer.append("DELETE { "+ subject +"?p ?o . ");
-		sparqlQueryBuffer.append("}\nWHERE { "+ subject +"?p ?o . }\n");
+		sparqlQueryBuffer.append("DELETE { <"+ SparulSubjectURI +"> ?p ?o . ");
+		sparqlQueryBuffer.append("}\nWHERE { <"+ SparulSubjectURI +"> ?p ?o . }\n");
 		sparqlQueryBuffer.append("\nINSERT DATA {\n");
 		
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
@@ -383,7 +392,7 @@ public class Form2SparqlService {
 					for (String value : e.getValue()) {	
 						if (!"".equalsIgnoreCase(value) && value != null) {
 							RDFObject myRDFObject = new RDFObject(value, language);
-							sparqlQueryBuffer.append(subject + property
+							sparqlQueryBuffer.append("<" + SparulSubjectURI + "> " + property
 								+ " " + myRDFObject.toN3() + "\n");
 						}
 					}
@@ -401,7 +410,7 @@ public class Form2SparqlService {
 					}
 					if (!"".equalsIgnoreCase(object)) {	
 						RDFObject myRDFObject = new RDFObject(object, language);
-						sparqlQueryBuffer.append(subject + property	
+						sparqlQueryBuffer.append("<" + SparulSubjectURI + "> " + property	
 								+ " " + myRDFObject.toN3() + "\n");	
 					}
 				}	
