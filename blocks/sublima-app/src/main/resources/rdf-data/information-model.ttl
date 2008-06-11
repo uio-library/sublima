@@ -173,6 +173,15 @@ sub:isSubjectOf a owl:ObjectProperty ;
             rdfs:range sub:Resource ;
             owl:inverseOf dct:subject .                   
 
+skos:narrower 	a 			owl:ObjectProperty ;
+		rdfs:label		"Smalere"@no ; 
+		rdfs:subPropertyOf	skos:semanticRelation . 
+ 
+skos:broader 	a 			owl:ObjectProperty ;
+		rdfs:label		"Bredere"@no ; 
+		rdfs:subPropertyOf	skos:semanticRelation . 
+
+
 
 ########################
 # MediaType

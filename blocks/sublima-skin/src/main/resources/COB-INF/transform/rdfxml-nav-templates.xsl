@@ -4,6 +4,7 @@
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
   xmlns:dct="http://purl.org/dc/terms/" 
+  xmlns:owl="http://www.w3.org/2002/07/owl#" 
   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
   xmlns:sub="http://xmlns.computas.com/sublima#"
   xmlns:sioc="http://rdfs.org/sioc/ns#"
@@ -19,6 +20,11 @@
     <xsl:variable name="uri" select="@rdf:about"/>
     <div class="skos:Concept">
       <p>
+	<xsl:variable name="label-uri" select="concat(namespace-uri(..), local-name(..))"/>
+	<xsl:if test="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]">
+	  <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]"/>
+	  <xsl:text>: </xsl:text>
+	</xsl:if>
 	<xsl:choose>
 	  <xsl:when test="$role='this-param'">
 	    <h4><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></h4>
@@ -28,20 +34,17 @@
 	  </xsl:otherwise>
 	</xsl:choose>
       </p>
-      <xsl:if test="skos:altLabel[@xml:lang=$interface-language]">
+      <xsl:if test="$role='this-param' and skos:altLabel[@xml:lang=$interface-language]">
 	<p>
 	  Synonym: <xsl:value-of select="skos:altLabel[@xml:lang=$interface-language]"/>
 	</p>
       </xsl:if>
-      <xsl:if test="skos:broader/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
-	Bredere: <xsl:apply-templates select="skos:broader/skos:Concept"/>
-      </xsl:if>
-      <xsl:if test="skos:narrower/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
-	Smalere: <xsl:apply-templates select="skos:narrower/skos:Concept"/>
-      </xsl:if>
-      <xsl:if test="skos:related/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
-	Relatert: <xsl:apply-templates select="skos:related/skos:Concept"/>
-      </xsl:if>
+
+      <!-- Now, run through all nodes that has skos:Concept as child
+	   node. These will be nodes that this concept has a relation
+           to. -->
+      <xsl:apply-templates select="./*/skos:Concept"/>
+	
     </div>
     
   </xsl:template>

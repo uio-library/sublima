@@ -71,38 +71,21 @@ public class SearchController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
 
+    // This query, which bears its name for historical reasons, relies
+    // on that all relations are explicitly stated. I.e. a triple for
+    // both skos:broader and skos:narrower must exist.
+
     String sparqlConstructQuery =
-            "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                    "prefix owl: <http://www.w3.org/2002/07/owl#>\n" +
-                    "prefix dct: <http://purl.org/dc/terms/>\n" +
-                    "prefix sub: <http://xmlns.computas.com/sublima#>\n" +
-                    "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-                    "CONSTRUCT {\n" +
-                    subject + " skos:prefLabel ?label ; \n" +
-                    " a skos:Concept;\n" +
-                    " skos:altLabel ?synLabel ;\n" +
-                    " skos:related ?relSub ;\n" +
-                    " skos:broader ?btSub ;\n" +
-                    " skos:narrower ?ntSub .\n" +
-                    " ?relSub skos:prefLabel ?relLabel ;\n" +
-                    " a skos:Concept .\n" +
-                    " ?btSub skos:prefLabel ?btLabel ;\n" +
-                    " a skos:Concept .\n" +
-                    " ?ntSub skos:prefLabel ?ntLabel ;\n" +
-                    " a skos:Concept .\n" +
-                    " }\n" +
-                    " WHERE {\n" +
-                    subject + " skos:prefLabel ?label .\n" +
-                    subject + " a skos:Concept .\n" +
-                    " OPTIONAL { " + subject + " skos:altLabel ?synLabel  . }\n" +
-                    " OPTIONAL { " + subject + " skos:related ?relSub .\n" +
-                    " ?relSub skos:prefLabel ?relLabel . }\n" +
-                    " OPTIONAL { " + subject + " skos:broader ?btSub .\n" +
-                    " ?btSub a skos:Concept ;\n" +
-                    "     skos:prefLabel ?btLabel . }\n" +
-                    " OPTIONAL { ?ntSub skos:broader " + subject + " .\n" +
-                    " ?ntSub a skos:Concept ;\n" +
-                    "     skos:prefLabel ?ntLabel . } }";
+	"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+	"prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+	"DESCRIBE " + subject + " ?therelation ?object WHERE {\n" +
+	"  OPTIONAL {\n" +
+	"    ?therelation rdfs:subPropertyOf skos:semanticRelation .\n    "+
+	subject + " ?therelation ?object ;\n" +
+        "            a skos:Concept .\n" +
+        "    ?object a skos:Concept .\n" +
+	"  }\n}";
+                   
 
     logger.trace("doGetTopic: SPARQL CONSTUCT query sent to dispatcher: " + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);

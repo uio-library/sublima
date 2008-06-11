@@ -144,7 +144,6 @@
 	  <xsl:value-of select="$this-label"/>
 	</a>
 
-	<xsl:variable name="uri" select="./dct:AgentClass/@rdf:about"/>
 	<xsl:text> (</xsl:text>
 	<xsl:value-of select="count(//dct:audience[@rdf:resource=$uri])+1"/>)
       </li>
