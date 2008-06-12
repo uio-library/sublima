@@ -192,7 +192,7 @@ public class Form2SparqlService {
                     n3Buffer.append(" }\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:hiddenLabel ");
                     n3Buffer.append(thisObjectString);
                     n3Buffer.append(" }\nFILTER ( bound( "+ var +") )\n");
-                } else if (!"dct:subject".equals(qname)) {
+                } else if (!("dct:subject".equals(qname) && "dct:subject/all-labels".equals(key))) {
                     n3Buffer.append("\n" + var + qname + " ");
                 }
                 if ("".equals(value)) { // Then, it is a block with no value, which will be caught by a catch-all
@@ -215,7 +215,7 @@ public class Form2SparqlService {
                         var = "?var" + variablecount + " "; // Might need more work
                         // to ensure uniqueness
                         logger.debug("Using unique N3 variable " + var);
-                        if(!"dct:subject".equals(qname)) {
+                        if(!( "dct:subject".equals(qname) && "dct:subject/all-labels".equals(key))) {
                         	n3Buffer.append(var + ".");
                         }
                         variablecount++;
