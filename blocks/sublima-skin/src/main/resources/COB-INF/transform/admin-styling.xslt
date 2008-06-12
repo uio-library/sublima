@@ -235,7 +235,7 @@
       <head>
         <title>
           <xsl:call-template name="title"/>
-          Detektor
+          Smil
         </title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
@@ -247,9 +247,9 @@
 	-->
 
         <div id="header">
-          <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
+          <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
 
-          <h2>Sublima 0.9</h2>
+          <h2>Sublima 0.9.5</h2>
           <ul>
             <li>
               <a href="{$baseurl}/">Søk</a>

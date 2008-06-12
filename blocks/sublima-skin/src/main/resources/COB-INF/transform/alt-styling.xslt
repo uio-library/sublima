@@ -57,7 +57,7 @@ this, just comment out the call-template -->
             </xsl:when>
           </xsl:choose>
 
-          Detektor
+          Smil
         </title>
    
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -68,9 +68,9 @@ this, just comment out the call-template -->
       <body>
 
         <div id="header">
-          <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
+          <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
 
-          <h2>Sublima 0.9.2</h2>
+          <h2>Sublima 0.9.5</h2>
           <ul>
             <li>
               <a href="{$baseurl}/" class="active">Søk</a>
