@@ -14,7 +14,8 @@
   <xsl:import href="rdfxml2xhtml-facets.xsl"/>
   <xsl:import href="rdfxml2xhtml-table.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
-  <xsl:import href="browse.xsl"/>
+  <xsl:import href="browse.xsl"/> 
+  <xsl:import href="headers.xsl"/>
   <xsl:import href="tipsform.xsl"/>
   <xsl:import href="loginform.xsl"/>
   <xsl:import href="a-z.xsl"/>
@@ -38,8 +39,8 @@ this, just comment out the call-template -->
   <xsl:template match="/">
 
     <html>
-      <head>
-        <title>
+      <xsl:call-template name="head">
+	<xsl:with-param name="title">
           <xsl:choose>
             <xsl:when test="c:page/c:mode = 'topic'">
               <xsl:value-of
@@ -49,22 +50,15 @@ this, just comment out the call-template -->
                 <xsl:value-of
                         select="c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]"/>
               </xsl:if>
-              <xsl:text> | </xsl:text>
+
             </xsl:when>
             <xsl:when test="c:page/c:mode = 'resource'">
               <xsl:value-of select="c:page/c:result-list/rdf:RDF/sub:Resource/dct:title"/>
-              <xsl:text> | </xsl:text>
             </xsl:when>
           </xsl:choose>
-
-          Smil
-        </title>
+	</xsl:with-param>
+      </xsl:call-template>
    
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
-        <script type="text/javascript" src="styles/expand.js"></script>
-
-      </head>
       <body>
 
         <div id="header">

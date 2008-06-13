@@ -16,6 +16,7 @@
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
   <xsl:import href="resourceform.xsl"/>
   <xsl:import href="topicform.xsl"/>
+  <xsl:import href="headers.xsl"/>
   <xsl:import href="themeselection.xsl"/>
   <xsl:import href="topicjoin.xsl"/>
   <xsl:import href="allusers.xsl"/>
@@ -30,10 +31,6 @@
               indent="no"/>
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
-
-  <xsl:template name="title">
-    <xsl:copy-of select="c:page/c:title/*"/>
-  </xsl:template>
 
   <xsl:template name="contenttext">
     <xsl:copy-of select="c:page/c:content/c:text/*"/>
@@ -232,14 +229,12 @@
   <xsl:template match="/">
 
     <html>
-      <head>
-        <title>
-          <xsl:call-template name="title"/>
-          Smil
-        </title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
-      </head>
+      
+      <xsl:call-template name="head">
+	<xsl:with-param name="title">
+	  <xsl:copy-of select="c:page/c:title/*"/> <!-- Title is really a string, so is this any point? -->
+	</xsl:with-param>
+      </xsl:call-template>
       <body>
 
 	<!-- 
