@@ -89,7 +89,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFormField2N3AllSubjectLabelsFree() {
-    String expectS = "\n?free1 pf:textMatch '+Jet' .\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:prefLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:altLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel ?free1 . }\nFILTER ( bound( ?var1 ) )\n";
+    String expectS = "\n?free1 pf:textMatch '+Jet*' .\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:prefLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:altLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel ?free1 . }\nFILTER ( bound( ?var1 ) )\n";
     testString[0] = "Jet";
     myService.addFreetextField("dct:subject/all-labels");
     assertEquals("Expected result and actual result not equal", expectS,
@@ -364,7 +364,7 @@ public class Form2SparqlServiceTest extends TestCase {
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                 "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {",
-                "?free2 pf:textMatch '+Dansk' .",
+                "?free2 pf:textMatch '+Dansk*' .",
                 "OPTIONAL {\n?resource dct:subject ?var2 .",
                 "?var2 skos:prefLabel ?free2 . }",
                 "OPTIONAL {\n?resource dct:subject ?var2 .",

@@ -180,7 +180,7 @@ public class Form2SparqlService {
                     String thisObjectString = null;
                     if (freetextFields != null && freetextFields.contains("dct:subject/all-labels"))  {
                     	int freetextNo = freetextFields.indexOf(key)+1;
-                    	n3Buffer.append("\n?free" + freetextNo + " pf:textMatch '+" + value + "' .");
+                    	n3Buffer.append("\n?free" + freetextNo + " pf:textMatch '+" + value + "*' .");
                     	thisObjectString = "?free" + freetextNo + " .";
 					} else {
 						thisObjectString = myRDFObject.toN3();
