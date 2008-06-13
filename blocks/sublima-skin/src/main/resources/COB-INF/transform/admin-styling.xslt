@@ -237,40 +237,15 @@
       </xsl:call-template>
       <body>
 
+	<xsl:call-template name="headers">
+	  <xsl:with-param name="baseurl" select="$baseurl"/>
+	</xsl:call-template>
+
 	<!-- 
 	    <xsl:call-template name="debug"/>
 	-->
 
-        <div id="header">
-          <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
 
-          <h2>Sublima 0.9.5</h2>
-          <ul>
-            <li>
-              <a href="{$baseurl}/">Søk</a>
-            </li>
-            <li>
-              <a href="{$baseurl}/advancedsearch">Avansert søk
-              </a>
-            </li>
-            <li>
-              <a href="{$baseurl}/a-z">A-Å</a>
-            </li>
-            <li>
-              <a href="{$baseurl}/admin" class="active">Administrasjon
-              </a>
-            </li>
-          </ul>
-
-          <p id="layoutdims">
-            <xsl:for-each select="c:page/c:breadcrumbs/c:breadcrumb">
-              <a>
-                <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/></xsl:attribute><xsl:value-of select="@title"/></a>
-              <xsl:text> | </xsl:text>
-            </xsl:for-each>
-
-          </p>
-        </div>
         <div class="colmask threecol">
           <div class="colmid">
             <div class="colleft">

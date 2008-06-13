@@ -61,53 +61,10 @@ this, just comment out the call-template -->
    
       <body>
 
-        <div id="header">
-          <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
+	<xsl:call-template name="headers">
+	  <xsl:with-param name="baseurl" select="$baseurl"/>
+	</xsl:call-template>
 
-          <h2>Sublima 0.9.5</h2>
-          <ul>
-            <li>
-              <a href="{$baseurl}/" class="active">Søk</a>
-            </li>
-            <li>
-              <a href="{$baseurl}/advancedsearch">Avansert søk
-              </a>
-            </li>
-            <li>
-              <a href="{$baseurl}/a-z">A-Å
-              </a>
-            </li>
-            <!--
-            <li>
-              <a href="{$baseurl}/admin">Administrasjon
-              </a>
-            </li>
-            -->
-          </ul>
-
-            <!--
-          <p id="layoutdims">
-            Brødsmuler her? |
-            <a href="#">Smule 1</a>
-            |
-            <a href="#">Smule 2</a>
-            |
-            <strong>Nåværende smule</strong>
-          </p>
-           -->
-           
-	   
-	    <!-- xsl:if test="c:page/c:mode != 'search-result'">
-	      <xsl:call-template name="set-langs"/>
-	    </xsl:if -->
-	   
-	    <p id="layoutdims">
-	      <a href="#">Login</a>
-	    </p>
-        </div>
-        
-        
-        
         <div class="colmask threecol">
           <div class="colmid">
             <div class="colleft">

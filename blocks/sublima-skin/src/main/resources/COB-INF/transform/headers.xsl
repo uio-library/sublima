@@ -25,4 +25,52 @@
     </head>
   </xsl:template>
 
+  <xsl:template name="headers">
+    <xsl:param name="baseurl"/>
+    <div id="header">
+      <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
+      
+      <h2>Sublima 0.9.5</h2>
+      <ul>
+	<li>
+	  <a href="{$baseurl}/" class="active">Søk</a>
+	</li>
+	<li>
+	  <a href="{$baseurl}/advancedsearch">Avansert søk
+	  </a>
+	</li>
+	<li>
+	  <a href="{$baseurl}/a-z">A-Å
+	  </a>
+	</li>
+	<!--
+	    <li>
+              <a href="{$baseurl}/admin">Administrasjon
+	      </a>
+	      </li>
+	-->
+      </ul>
+      
+ 
+            <p id="layoutdims">
+            <xsl:for-each select="c:page/c:breadcrumbs/c:breadcrumb">
+              <a>
+                <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/></xsl:attribute><xsl:value-of select="@title"/></a>
+              <xsl:text> | </xsl:text>
+            </xsl:for-each>
+
+          </p>
+	   
+      <!-- xsl:if test="c:page/c:mode != 'search-result'">
+	   <xsl:call-template name="set-langs"/>
+	   </xsl:if -->
+      
+      <p id="layoutdims">
+	<a href="#">Login</a>
+      </p>
+    </div>
+  </xsl:template>
+
+
 </xsl:stylesheet>
+
