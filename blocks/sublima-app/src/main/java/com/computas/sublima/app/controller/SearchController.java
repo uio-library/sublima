@@ -30,7 +30,7 @@ public class SearchController implements StatelessAppleController {
 
     this.mode = req.getSitemapParameter("mode");
 
-    logger.trace("SearchController: Language from sitemap is " +req.getSitemapParameter("interface-language"));
+    logger.trace("SearchController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
 
     // The initial advanced search page
     if ("advancedsearch".equalsIgnoreCase(mode)) {
@@ -58,7 +58,7 @@ public class SearchController implements StatelessAppleController {
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-            "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
+                    "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
             "WHERE {",
             "        ?resource dct:language ?lang;",
             "				 dct:publisher ?publisher ;",
@@ -76,16 +76,16 @@ public class SearchController implements StatelessAppleController {
     // both skos:broader and skos:narrower must exist.
 
     String sparqlConstructQuery =
-	"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-	"prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-	"DESCRIBE " + subject + " ?therelation ?object WHERE {\n" +
-	"  OPTIONAL {\n" +
-	"    ?therelation rdfs:subPropertyOf skos:semanticRelation .\n    "+
-	subject + " ?therelation ?object ;\n" +
-        "            a skos:Concept .\n" +
-        "    ?object a skos:Concept .\n" +
-	"  }\n}";
-                   
+            "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                    "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                    "DESCRIBE " + subject + " ?therelation ?object WHERE {\n" +
+                    "  OPTIONAL {\n" +
+                    "    ?therelation rdfs:subPropertyOf skos:semanticRelation .\n    " +
+                    subject + " ?therelation ?object ;\n" +
+                    "            a skos:Concept .\n" +
+                    "    ?object a skos:Concept .\n" +
+                    "  }\n}";
+
 
     logger.trace("doGetTopic: SPARQL CONSTUCT query sent to dispatcher: " + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);
@@ -133,6 +133,23 @@ public class SearchController implements StatelessAppleController {
   public void doAdvancedSearch(AppleResponse res, AppleRequest req, boolean loggedIn) {
     // Get all parameteres from the HTML form as Map
     Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
+    Map<String, Object> bizData = new HashMap<String, Object>();
+
+    // Boolean that can be set to false if we don't want the actual search to be performed. Typically when the search string is empty.
+    boolean doSearch = true;
+
+    // Temporary to override the sparql query upopn freetext search
+    boolean freetext = false;
+    String searchStringOverriden = null;
+
+    // Create an XML structure of the search criterias. This could probably be nore generic.
+    StringBuffer xmlSearchParametersBuffer = new StringBuffer();
+    xmlSearchParametersBuffer.append("<c:searchparams xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    xmlSearchParametersBuffer.append("\t<c:searchstring>" + req.getCocoonRequest().getParameter("searchstring") + "</c:searchstring>\n");
+    xmlSearchParametersBuffer.append("\t<c:operator>" + req.getCocoonRequest().getParameter("booleanoperator") + "</c:operator>\n");
+    xmlSearchParametersBuffer.append("\t<c:deepsearch>" + req.getCocoonRequest().getParameter("deepsearch") + "</c:deepsearch>\n");
+    xmlSearchParametersBuffer.append("\t<c:sortby>" + req.getCocoonRequest().getParameter("sort") + "</c:sortby>\n");
+    xmlSearchParametersBuffer.append("</c:searchparams>\n");
 
 
     if ("resource".equalsIgnoreCase(mode)) {
@@ -144,13 +161,20 @@ public class SearchController implements StatelessAppleController {
     }
 
     if (parameterMap.get("searchstring") != null) {
-      parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});
-      parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>",
-              "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-              "pf: <http://jena.hpl.hp.com/ARQ/property#>", "skos: <http://www.w3.org/2004/02/skos/core#>"});
-      parameterMap.remove("booleanoperator");
+      if (req.getCocoonRequest().getParameter("searchstring").trim().equalsIgnoreCase("")) {
+        doSearch = false;
+      } else {
+        // When true, we override the searchstring later in the code
+        freetext = true;
+        searchStringOverriden = freeTextSearchString(res, req);
+        parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});
+        parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>",
+                "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+                "pf: <http://jena.hpl.hp.com/ARQ/property#>", "skos: <http://www.w3.org/2004/02/skos/core#>"});
+        parameterMap.remove("booleanoperator");
+        parameterMap.remove("sort");
+      }
     }
-
     // sending the result
     String sparqlQuery = null;
     // Check for magic prefixes
@@ -164,14 +188,68 @@ public class SearchController implements StatelessAppleController {
     } else {
       res.sendStatus(400);
     }
+    /*
+    if (freetext) {
+      sparqlQuery =
+              "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+              "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+              "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
+              "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+              "PREFIX sub: <http://xmlns.computas.com/subima#>\n" +
+              "CONSTRUCT {\n" +
+              "  ?subject ?px2 ?ox2 .\n" +
+              "  ?publisher ?px3 ?ox3 .\n" +
+              "  ?resource ?px1 ?ox1 .\n" +
+              "  ?resource sub:score ?score . \n" +
+              "  ?ox1 ?px4 ?ox4 .\n" +
+              "}\n" +
+              "\n" +
+              "\n" +
+              "WHERE {\n" +
+              "  (?lit ?score) pf:textMatch '" + searchStringOverriden + "' .\n" +
+              "  {\n" +
+              "    ?resource ?p1 ?lit;\n" +
+              "              dct:subject ?subject ;\n" +
+              "              dct:publisher ?publisher .\n" +
+              "  }\n" +
+              "  UNION\n" +
+              "  {\n" +
+              "      ?resource dct:subject ?subject1 .\n" +
+              "      ?subject1 ?p2 ?lit .\n" +
+              "      ?resource dct:subject ?subject ;\n" +
+              "                dct:publisher ?publisher .\n" +
+              "  }\n" +
+              "  UNION\n" +
+              "  {\n" +
+              "      ?resource dct:publisher ?publisher1 .\n" +
+              "      ?publisher1 ?p3 ?lit .\n" +
+              "      ?resource dct:subject ?subject ;\n" +
+              "                dct:publisher ?publisher .\n" +
+              "  }\n" +
+              "?resource ?px1 ?ox1 .\n" +
+              "?ox1 ?px4 ?ox4 .\n" +
+              "?subject ?px2 ?ox2 .\n" +
+              "?publisher ?px3 ?ox3 .\n" +
+              "}";
+    }*/
 
     logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
-    Object queryResult = sparqlDispatcher.query(sparqlQuery);
 
-    Map<String, Object> bizData = new HashMap<String, Object>();
+    Object queryResult;
+    if (doSearch) {
+      queryResult = sparqlDispatcher.query(sparqlQuery);
+    }
+    else {
+      queryResult = "<empty/>";
+    }
+
+
+
     bizData.put("result-list", queryResult);
     bizData.put("navigation", "<empty></empty>");
     bizData.put("mode", mode);
+
+    bizData.put("searchparams", xmlSearchParametersBuffer.toString());
 
     // This is such a 1999 way of doing things. There should be a generic SAX events generator 
     // or something that would serialise this data structure automatically in a one-liner, 
