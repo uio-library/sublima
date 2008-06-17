@@ -458,6 +458,7 @@ public class UserController implements StatelessAppleController {
             if (req.getCocoonRequest().getParameterValues("privileges") != null) {
               for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
                 insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','" + s + "');";
+                logger.trace(insertPrivilegesSql);
                 dbService.doSQLUpdate(insertPrivilegesSql);
               }
             }
@@ -465,6 +466,7 @@ public class UserController implements StatelessAppleController {
             if (req.getCocoonRequest().getParameterValues("resource.status") != null) {
               for (String s : req.getCocoonRequest().getParameterValues("resource.status")) {
                 insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','resource.status." + s + "');";
+                logger.trace(insertPrivilegesSql);
                 dbService.doSQLUpdate(insertPrivilegesSql);
               }
             }
@@ -472,6 +474,7 @@ public class UserController implements StatelessAppleController {
             if (req.getCocoonRequest().getParameterValues("topic.status") != null) {
               for (String s : req.getCocoonRequest().getParameterValues("topic.status")) {
                 insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','topic.status." + s + "');";
+                logger.trace(insertPrivilegesSql);
                 dbService.doSQLUpdate(insertPrivilegesSql);
               }
             }
