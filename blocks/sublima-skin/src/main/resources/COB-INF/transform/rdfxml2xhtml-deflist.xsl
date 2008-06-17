@@ -18,12 +18,16 @@
   <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="rdf:RDF" mode="results">
+    <xsl:param name="sorting"/>
+    
     <dl>
       <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-	<dt>
+        <xsl:sort select="./*[name() = $sorting]"/>
+
+  <dt>
 	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  <xsl:text> har emne </xsl:text>	  
-	  <xsl:apply-templates select="./dct:subject"/>
+	  <xsl:text> har emne </xsl:text>
+    <xsl:apply-templates select="./dct:subject"/>
 	</dt>
 	<dd>
 	  <div style="font-size:small"><xsl:text>Publisert av: </xsl:text>

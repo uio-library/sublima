@@ -70,9 +70,7 @@ this, just comment out the call-template -->
             <div class="colleft">
               <div class="col1">
 
-		<!--
 		  <xsl:call-template name="debug"/>
-		-->
 
        <!-- Column 1 start -->
 		
@@ -88,16 +86,59 @@ this, just comment out the call-template -->
 		    <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
              <br/>
             <input id="keyword" class="searchbox" type="text"
-                   name="searchstring" size="40"/>
+                   name="searchstring" size="40" value="{c:page/c:searchparams/c:searchparams/c:searchstring}"/>
             <input type="submit" value="Søk"/><br/>
-            <input type="radio" name="booleanoperator" value="AND" checked="checked"/>OG
-            <input type="radio" name="booleanoperator" value="OR"/>
-            ELLER
-            <input type="checkbox" name="deepsearch" value="deepsearch"/>
+
+            <xsl:choose>
+              <xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">
+                <input type="radio" name="booleanoperator" value="AND"/>OG
+                <input type="radio" name="booleanoperator" value="OR" checked="true"/>ELLER
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="radio" name="booleanoperator" value="AND" checked="true"/>OG
+                <input type="radio" name="booleanoperator" value="OR" />ELLER
+              </xsl:otherwise>
+            </xsl:choose>
+            <br/>
+
+            <xsl:choose>
+              <xsl:when test="c:page/c:searchparams/c:searchparams/c:deepsearch = 'true'">
+                <input type="checkbox" name="deepsearch" value="deepsearch" checked="true"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="deepsearch" value="deepsearch"/>
+              </xsl:otherwise>
+            </xsl:choose>
             Søk også i de eksterne ressursene
-            </fieldset>
+            <br/>
+            Sorter etter 
+            <select id="sort" name="sort">
+              <option value="">
+                <xsl:if test="c:page/c:searchparams/c:searchparams/c:deepsearch/c:sortby = ''">
+                  <xsl:attribute name="selected">true</xsl:attribute>
+                </xsl:if>
+                Relevans
+               </option>
+              <option value="dct:dateAccepted">
+                <xsl:if test="c:page/c:searchparams/c:searchparams/c:deepsearch/c:sortby = 'dct:dateAccepted'">
+                  <xsl:attribute name="selected">true</xsl:attribute>
+                </xsl:if>
+                Dato
+               </option>
+              <option value="dct:title">
+                <xsl:if test="c:page/c:searchparams/c:searchparams/c:deepsearch/c:sortby = 'dct:title'">
+                  <xsl:attribute name="selected">true</xsl:attribute>
+                </xsl:if>
+                Tittel
+               </option>
+            </select>
+          </fieldset>
           </form>
           
+        </xsl:if>
+
+        <xsl:if test="c:page/c:mode = 'search-result'">
+          Antall treff: <xsl:value-of select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
         </xsl:if>
         
         <!-- Facets -->
@@ -138,7 +179,9 @@ this, just comment out the call-template -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
             <h3>Ressurser</h3>
             <!-- Søkeresultatene -->
-            <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results"/>
+            <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results">
+              <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
+            </xsl:apply-templates>
         </xsl:if>
         
          <!-- Column 1 end -->
