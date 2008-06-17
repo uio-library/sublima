@@ -373,12 +373,12 @@ public class ResourceController implements StatelessAppleController {
 
             deleteString.append(whereString.toString());
 
+            logger.trace("AdminController.editResource --> DELETE QUERY:\n" + deleteString.toString());
+            logger.trace("AdminController.editResource --> INSERT QUERY:\n" + insertString.toString());
+
             deleteSuccess = sparulDispatcher.query(deleteString.toString());
             insertSuccess = sparulDispatcher.query(insertString.toString());
 
-            // String sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
-            logger.trace("AdminController.editResource --> DELETE QUERY:\n" + deleteString.toString());
-            logger.trace("AdminController.editResource --> INSERT QUERY:\n" + insertString.toString());
             //validated = sparulDispatcher.query(sparqlQuery);
             logger.trace("AdminController.editResource --> DELETE QUERY RESULT: " + deleteSuccess);
             logger.trace("AdminController.editResource --> INSERT QUERY RESULT: " + insertSuccess);
