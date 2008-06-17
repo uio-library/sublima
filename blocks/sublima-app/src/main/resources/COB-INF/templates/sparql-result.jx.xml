@@ -2,6 +2,7 @@
 <page  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" xmlns="http://xmlns.computas.com/cocoon">
   <mode><jx:out value="#{mode}"/></mode>
   <loggedin><jx:out value="#{loggedin}" xmlize="false"/></loggedin>
+  <searchparams><jx:out value="#{searchparams}" xmlize="true"/></searchparams>
   <result-list><jx:out value="#{result-list}" xmlize="true"/></result-list>
 
   <navigation><jx:out value="#{navigation}" xmlize="true"/></navigation>
