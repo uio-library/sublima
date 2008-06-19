@@ -79,6 +79,9 @@ public class ResourceController implements StatelessAppleController {
       } else if ("edit".equalsIgnoreCase(submode)) {
         editResource(res, req, "edit", null);
         return;
+      } else if ("checkurl".equalsIgnoreCase(submode)) {
+        registerNewResourceURL(req, res);
+        return;
       } else {
         return;
       }
@@ -87,6 +90,84 @@ public class ResourceController implements StatelessAppleController {
       return;
     }
   }
+
+  /**
+   * Method to do the first step in the registration process for new resources.
+   * This method checks the given URL and forwards the user to the resource form if valid.
+   * Otherwise an error message is displayed.
+   *
+   * @param req
+   * @param res
+   */
+  private void registerNewResourceURL(AppleRequest req, AppleResponse res) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    StringBuffer messageBuffer = new StringBuffer();
+    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    bizData.put("userprivileges", userPrivileges);
+
+    String tempPrefixes = "<c:tempvalues \n" +
+                "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
+                "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+                "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+                "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+                "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+                "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+                "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+                "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+                "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+                "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+                "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+                "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+                "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
+
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+
+      bizData.put("messages", "<empty/>");
+      bizData.put("tempvalues", "<empty/>");
+      res.sendPage("xml2/ressurs-prereg", bizData);
+
+    } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+      String url = req.getCocoonRequest().getParameter("sub:url");
+      bizData.put("tempvalues", tempPrefixes + "<sub:url>" + req.getCocoonRequest().getParameter("sub:url") + "</sub:url></c:tempvalues>\n");
+      
+      if (!"".equalsIgnoreCase(url)) {
+        if (adminService.validateURL(url)) {
+          if (adminService.checkForDuplicatesByURI(url)) {
+            messageBuffer.append("<c:message>Oppgitt URL er allerede registrert på en ressurs.</c:message>\n");
+            messageBuffer.append("</c:messages>\n");
+            res.sendPage("xml2/ressurs", bizData);
+
+          } else { // The URL is okay
+            messageBuffer.append("<c:message>Oppgitt URL funnet OK.</c:message>");
+            messageBuffer.append("</c:messages>\n");
+            
+            bizData.put("topics", adminService.getAllTopics());
+            bizData.put("languages", adminService.getAllLanguages());
+            bizData.put("mediatypes", adminService.getAllMediaTypes());
+            bizData.put("audience", adminService.getAllAudiences());
+            bizData.put("status", adminService.getAllStatuses());
+            bizData.put("publishers", adminService.getAllPublishers());
+            bizData.put("userprivileges", userPrivileges);
+            bizData.put("mode", "temp");
+            bizData.put("messages", messageBuffer.toString());
+            bizData.put("resource", "<empty/>");
+            res.sendPage("xml2/ressurs", bizData);
+          }
+        } else {
+          messageBuffer.append("<c:message>Oppgitt URL gir en ugyldig statuskode. Vennligst kontroller URL i en nettleser.</c:message>\n");
+          messageBuffer.append("</c:messages>\n");
+          res.sendPage("xml2/ressurs", bizData);
+        }
+
+      } else {
+        messageBuffer.append("<c:message>URL kan ikke være blank.</c:message>\n");
+        messageBuffer.append("</c:messages>\n");
+        res.sendPage("xml2/ressurs", bizData);
+      }
+    }
+  }
+
 
   /**
    * Method to add new resources and edit existing ones
@@ -101,7 +182,12 @@ public class ResourceController implements StatelessAppleController {
    * @param type     - String "new" or "edit"
    * @param messages
    */
-  private void editResource(AppleResponse res, AppleRequest req, String type, String messages) {
+  private void editResource
+          (AppleResponse
+                  res, AppleRequest
+                  req, String
+                  type, String
+                  messages) {
 
     boolean validated = true;
     boolean deleteSuccess = false;
@@ -136,15 +222,14 @@ public class ResourceController implements StatelessAppleController {
       bizData.put("tempvalues", "<empty></empty>");
 
       if ("ny".equalsIgnoreCase(type)) {
-        bizData.put("resource", "<empty></empty>");
-        bizData.put("mode", "edit");
+        registerNewResourceURL(req, res);
+        return;
       } else {
         bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("uri")));
         bizData.put("mode", "edit");
+        bizData.put("messages", "<empty></empty>");
+        res.sendPage("xml2/ressurs", bizData);
       }
-      bizData.put("publishers", adminService.getAllPublishers());
-      bizData.put("messages", "<empty></empty>");
-      res.sendPage("xml2/ressurs", bizData);
 
       // When POST try to save the resource. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
@@ -424,7 +509,9 @@ public class ResourceController implements StatelessAppleController {
    * @param req
    * @return
    */
-  private String validateRequest(AppleRequest req) {
+  private String validateRequest
+          (AppleRequest
+                  req) {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:title")) || req.getCocoonRequest().getParameter("dct:title") == null) {
@@ -437,7 +524,7 @@ public class ResourceController implements StatelessAppleController {
 
     if (req.getCocoonRequest().getParameter("uri") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri").trim())) {
       // if the uri is empty, then it's a new resource and we do a already-exists check
-      if(adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("sub:url"))) {
+      if (adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("sub:url"))) {
         validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");
       }
     }
@@ -481,7 +568,9 @@ public class ResourceController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private StringBuffer getTempValues(AppleRequest req) {
+  private StringBuffer getTempValues
+          (AppleRequest
+                  req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:title");
     String temp_uri = req.getCocoonRequest().getParameter("sub:url");
@@ -555,7 +644,7 @@ public class ResourceController implements StatelessAppleController {
                     //"              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
-            "        ?resource wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> ;",
+            "        ?resource wdr:describedBy <" + getProperty("sublima.base.url") + "status/nytt_forslag> ;",
             "                  dct:title ?title .",
             //"                  dct:identifier ?identifier .",
             "}"});
@@ -599,7 +688,9 @@ public class ResourceController implements StatelessAppleController {
   }
 
   //todo Move to a Service-class
-  private Map<String, String[]> createParametersMap(Request request) {
+  private Map<String, String[]> createParametersMap
+          (Request
+                  request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {
