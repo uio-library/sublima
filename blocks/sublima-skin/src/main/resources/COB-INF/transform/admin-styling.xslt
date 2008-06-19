@@ -25,6 +25,8 @@
   <xsl:import href="topicrelations.xsl"/>
   <xsl:import href="roleform.xsl"/>
   <xsl:import href="allrelationtypes.xsl"/>
+  <xsl:import href="resourceprereg.xsl"/>
+
 
   <xsl:output method="xml"
               encoding="UTF-8"
@@ -279,6 +281,10 @@
 
                 <xsl:if test="c:page/c:content/c:resourcedetails">
                   <xsl:call-template name="resourcedetails"/>
+                </xsl:if>
+
+                <xsl:if test="c:page/c:content/c:resourceprereg">
+                  <xsl:apply-templates select="c:page/c:content/c:resourceprereg" mode="resourceprereg"/>
                 </xsl:if>
 
                 <!-- Publishers index -->
