@@ -126,7 +126,7 @@ public class RDFObject implements Serializable {
 			logger.trace("Found Literal " + getValue());
 			if (freetext != null && freetext > 0) { // Should this literal be treated as a free text?
 				n3Buffer.append("?free" + freetext + " .\n"); // The actual previous object
-				n3Buffer.append("?free" + freetext + " pf:textMatch '+" + getValue() + "' .");
+				n3Buffer.append("?free" + freetext + " pf:textMatch '+" + getValue() + "*' .");
 			} else {
 				n3Buffer.append("\"\"\"" + getValue() + "\"\"\"");
 				if (language != null) {

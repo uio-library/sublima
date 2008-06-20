@@ -37,7 +37,7 @@ public class Form2SparqlServiceTest extends TestCase {
 
   public void setUp() throws Exception {
     testMap = new TreeMap<String, String[]>();
-    expectedString = "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title \"Cirrus Personal Jet\"";
+    expectedString = "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title \"\"\"Cirrus Personal Jet\"\"\"";
     testString = new String[1];
     testString[0] = "Cirrus Personal Jet";
     List emptyList = new LinkedList();
@@ -69,20 +69,20 @@ public class Form2SparqlServiceTest extends TestCase {
 
 
   public void testConvertFormField2N3SingleLiteral() {
-    String expectS = "\n?resource dct:title \"Cirrus Personal Jet\" .";
+    String expectS = "\n?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dct:title", testString));
   }
 
   public void testConvertFormField2N3DualLiteral() {
-    String expectS = "\n?resource dct:subject ?var1 .\n?var1 rdfs:label \"Jet\" .";
+    String expectS = "\n?resource dct:subject ?var1 .\n?var1 rdfs:label \"\"\"Jet\"\"\" .";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dct:subject/rdfs:label", testString));
   }
 
   public void testConvertFormField2N3AllSubjectLabels() {
-    String expectS = "\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:prefLabel \"Jet\" . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:altLabel \"Jet\" . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel \"Jet\" . }\nFILTER ( bound( ?var1 ) )\n";
+    String expectS = "\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:prefLabel \"\"\"Jet\"\"\" . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:altLabel \"\"\"Jet\"\"\" . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel \"\"\"Jet\"\"\" . }\nFILTER ( bound( ?var1 ) )\n";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dct:subject/all-labels", testString));
@@ -97,14 +97,14 @@ public class Form2SparqlServiceTest extends TestCase {
   }
     
   public void testConvertFormField2N3SingleFree() {
-	  String expectS = "\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .";
+	  String expectS = "\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet*' .";
       myService.addFreetextField("dct:title");
       assertEquals("Expected result and actual result not equal", expectS,
 			  myService.convertFormField2N3("dct:title", testString));
   }	
 
   public void testConvertFormField2N3DualFree() {
-	  String expectS = "\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet' .";
+	  String expectS = "\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet*' .";
 	  testString[0] = "Jet";
       myService.addFreetextField("dct:subject/rdfs:label");
       assertEquals("Expected result and actual result not equal", expectS,
@@ -113,21 +113,21 @@ public class Form2SparqlServiceTest extends TestCase {
 
   public void testConvertFormField2N3SingleLiteralLang() {
     myService.setLanguage("en");
-    String expectS = "\n?resource dct:title \"Cirrus Personal Jet\"@en .";
+    String expectS = "\n?resource dct:title \"\"\"Cirrus Personal Jet\"\"\"@en .";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dct:title", testString));
   }
 
   public void testConvertFormField2N3DualLiteralLang() {
     myService.setLanguage("en");
-    String expectS = "\n?resource dct:subject ?var1 .\n?var1 rdfs:label \"Jet\"@en .";
+    String expectS = "\n?resource dct:subject ?var1 .\n?var1 rdfs:label \"\"\"Jet\"\"\"@en .";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("dct:subject/rdfs:label", testString));
   }
 
   public void testConvertFormField2N3TripleLiteral() {
-    String expectS = "\n?resource ex:example ?var1 .\n?var1 foo:foobar ?var2 .\n?var2 bar:foo \"Jet\" .";
+    String expectS = "\n?resource ex:example ?var1 .\n?var1 foo:foobar ?var2 .\n?var2 bar:foo \"\"\"Jet\"\"\" .";
     testString[0] = "Jet";
     assertEquals("Expected result and actual result not equal", expectS,
             myService.convertFormField2N3("ex:example/foo:foobar/bar:foo", testString));
@@ -162,7 +162,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFormField2N3DoubleDual() {
-    String expectS = "\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dct:subject ?var2 .\n?var2 rdfs:label \"Jet\" .";
+    String expectS = "\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dct:subject ?var2 .\n?var2 rdfs:label \"\"\"Jet\"\"\" .";
     testString[0] = "http://www.cirrusdesign.com/";
     String actual = myService.convertFormField2N3("dct:publisher/foaf:homepage", testString);
     testString[0] = "Jet";
@@ -172,7 +172,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
   
   public void testConvertFormField2N3DoubleDualOneFree() {
-	    String expectS = "\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dct:subject ?var2 .\n?var2 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet' .";
+	    String expectS = "\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dct:subject ?var2 .\n?var2 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet*' .";
 	    testString[0] = "http://www.cirrusdesign.com/";
 	    String actual = myService.convertFormField2N3("dct:publisher/foaf:homepage", testString);
 	    testString[0] = "Jet";
@@ -183,7 +183,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
     public void testConvertFormField2N3DoubleDualBothFree() {
-        String expectS = "\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?free2 .\n?free2 pf:textMatch '+Jet' .";
+        String expectS = "\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet*' .\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?free2 .\n?free2 pf:textMatch '+Jet*' .";
         testString[0] = "Cirrus Personal Jet";
        myService.addFreetextField("dct:title");
         myService.addFreetextField("dct:subject/rdfs:label");
@@ -222,7 +222,7 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>", 
 		       "DESCRIBE ?subject ?publisher ?resource ?rest WHERE {",
-		       "?resource dct:title \"Cirrus Personal Jet\" .",
+		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
 		       "  ?lit pf:textMatch ( 'engine*' 100) .",
 		       "  {",
 		       "    ?resource ?p1 ?lit;",
@@ -343,7 +343,7 @@ public class Form2SparqlServiceTest extends TestCase {
     testMap.put("dct:description", new String[]{"A Very Light Jet Aircraft under construction."});
     testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
     String resultString = myService.convertForm2Sparql(testMap);
-    assertEquals("Expected result and actual result not equal", expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title \"Cirrus Personal Jet\"@en .\n?resource dct:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
+    assertEquals("Expected result and actual result not equal", expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title \"\"\"Cirrus Personal Jet\"\"\"@en .\n?resource dct:description \"\"\"A Very Light Jet Aircraft under construction.\"\"\"@en .\n?resource ?p ?rest .\n}", resultString);
   }
   
   public void testConvertForm2SparqlTwoValuesOneFree() {
@@ -353,7 +353,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("dct:description", new String[]{"A Very Light Jet Aircraft under construction."});
 	    testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
 	    String resultString = myServicefree.convertForm2Sparql(testMap);
-	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +"DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dct:description \"A Very Light Jet Aircraft under construction.\"@en .\n?resource ?p ?rest .\n}", resultString);
+	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +"DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet*' .\n?resource dct:description \"\"\"A Very Light Jet Aircraft under construction.\"\"\"@en .\n?resource ?p ?rest .\n}", resultString);
 	  }
 
   public void testConvertForm2SparqlTwoValuesSubjectFree() {
@@ -374,7 +374,7 @@ public class Form2SparqlServiceTest extends TestCase {
                 "FILTER ( bound( ?var2 ) )",
                 "",
                 "?resource dct:audience ?var1 .",
-                "?var1 rdfs:label \"Detektor\"@no .",
+                "?var1 rdfs:label \"\"\"Detektor\"\"\"@no .",
                 "?resource ?p ?rest .",
                 "}"});
 
@@ -395,11 +395,11 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("dct:description", new String[]{"A Very Light Jet Aircraft under construction."});
         myServicefree.addFreetextField("dct:description"); 
 	    String resultString = myServicefree.convertForm2Sparql(testMap);
-	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +  "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet' .\n?resource dct:description ?free2 .\n?free2 pf:textMatch '+A Very Light Jet Aircraft under construction.' .\n?resource ?p ?rest .\n}", resultString);
+	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +  "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus Personal Jet*' .\n?resource dct:description ?free2 .\n?free2 pf:textMatch '+A Very Light Jet Aircraft under construction.*' .\n?resource ?p ?rest .\n}", resultString);
 	  }
 
   public void testConvertFor2SPARQLDoubleDual() {
-    String expectS = "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {\n?resource dct:subject ?var2 .\n?var2 rdfs:label \"Jet\" .\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource ?p ?rest .\n}";
+    String expectS = "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {\n?resource dct:subject ?var2 .\n?var2 rdfs:label \"\"\"Jet\"\"\" .\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource ?p ?rest .\n}";
     testMap.put("dct:subject/rdfs:label", new String[]{"Jet"});
     testMap.put("dct:publisher/foaf:homepage", new String[]{"http://www.cirrusdesign.com/"});
     String actual = myService.convertForm2Sparql(testMap);
@@ -407,7 +407,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFor2SPARQLDoubleEmpty() {
-    String expectS = "DESCRIBE ?resource ?var1 ?rest WHERE {\n?resource dct:subject ?var1 .\n?var1 rdfs:label \"Jet\" .\n\n?resource ?p ?rest .\n}";
+    String expectS = "DESCRIBE ?resource ?var1 ?rest WHERE {\n?resource dct:subject ?var1 .\n?var1 rdfs:label \"\"\"Jet\"\"\" .\n\n?resource ?p ?rest .\n}";
     testMap.put("dct:subject/rdfs:label", new String[]{"Jet"});
     testMap.put("dct:publisher", new String[]{""});
     String actual = myService.convertForm2Sparql(testMap);
@@ -415,7 +415,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
   public void testConvertForm2SPARULSingleValue() throws IOException {
 	 // Single value test
-	 String expectS = "DELETE { <http://sublima.computas.com/agent/ife> ?p ?o . }\nWHERE { <http://sublima.computas.com/agent/ife> ?p ?o . }\n\nINSERT DATA {\n<http://sublima.computas.com/agent/ife> foaf:name \"Institute for Energy Technology\"@en .\n}\n";
+	 String expectS = "DELETE { <http://sublima.computas.com/agent/ife> ?p ?o . }\nWHERE { <http://sublima.computas.com/agent/ife> ?p ?o . }\n\nINSERT DATA {\n<http://sublima.computas.com/agent/ife> foaf:name \"\"\"Institute for Energy Technology\"\"\"@en .\n}\n";
 	 testMap.put("foaf:name", new String[]{"Institute for Energy Technology"});
 	 testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
 	 testMap.put("the-resource", new String[]{"http://sublima.computas.com/agent/ife"}); // this parameter is a magic string
@@ -427,12 +427,12 @@ public class Form2SparqlServiceTest extends TestCase {
 		 // Single value test
 		 String expectS = "DELETE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\nWHERE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\n\n" +
 		 		"INSERT DATA {\n"+
-		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jet Aircraft\"@en .\n" +
-		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jet\"@no .\n" +
-		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jet Airplane\"@en .\n" +
-		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"Jetflymaskin\"@no .\n" +
-		 		"<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jet\"@en .\n" +
-		 		"<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jetfly\"@no .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"\"\"Jet Aircraft\"\"\"@en .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"\"\"Jet\"\"\"@no .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"\"\"Jet Airplane\"\"\"@en .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:altLabel \"\"\"Jetflymaskin\"\"\"@no .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:prefLabel \"\"\"Jet\"\"\"@en .\n" +
+		 		"<http://sublima.computas.com/topic/Jet> skos:prefLabel \"\"\"Jetfly\"\"\"@no .\n" +
 		 		"}\n";
 		 testMap.put("skos:prefLabel-1", new String[]{"Jet","http://www.lingvoj.org/lang/en"});
 		 testMap.put("skos:prefLabel-2", new String[]{"Jetfly","http://www.lingvoj.org/lang/no"});
@@ -450,8 +450,8 @@ public class Form2SparqlServiceTest extends TestCase {
   public void testConvertForm2SPARULTwoValuesWithLang() throws IOException {
 		 // Single value test
 		 String expectS = "DELETE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\nWHERE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\n\n" +
-		 		"INSERT DATA {\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jet\"@en ." +
-		 		"\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jetfly\"@no .\n}\n";
+		 		"INSERT DATA {\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"\"\"Jet\"\"\"@en ." +
+		 		"\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"\"\"Jetfly\"\"\"@no .\n}\n";
 		 testMap.put("skos:prefLabel-1", new String[]{"Jet","http://www.lingvoj.org/lang/en"});
 		 testMap.put("skos:prefLabel-2", new String[]{"Jetfly","http://www.lingvoj.org/lang/no"});
 		 testMap.put("the-resource", new String[]{"http://sublima.computas.com/topic/Jet"}); // this parameter is a magic string
@@ -464,7 +464,7 @@ public class Form2SparqlServiceTest extends TestCase {
   public void testConvertForm2SPARULTwoValuesOnlyLang() throws IOException {
 		 // Single value test
 		 String expectS = "DELETE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\nWHERE { <http://sublima.computas.com/topic/Jet> ?p ?o . }\n\n" +
-		 		"INSERT DATA {\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"Jet\"@en .\n}\n";
+		 		"INSERT DATA {\n<http://sublima.computas.com/topic/Jet> skos:prefLabel \"\"\"Jet\"\"\"@en .\n}\n";
 		 testMap.put("skos:prefLabel-1", new String[]{"Jet","http://www.lingvoj.org/lang/en"});
 		 testMap.put("skos:prefLabel-2", new String[]{"http://www.lingvoj.org/lang/no"});
 		 testMap.put("the-resource", new String[]{"http://sublima.computas.com/topic/Jet"}); // this parameter is a magic string
@@ -477,7 +477,7 @@ public class Form2SparqlServiceTest extends TestCase {
   
   public void testConvertForm2SPARULSingleValueMakeSubject() throws IOException {
 		 // Single value test
-		 String expectS = "DELETE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\nWHERE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\n\nINSERT DATA {\n<http://sublima.computas.com/test/pannekaker-med-blabr> rdfs:label \"Pannekaker med blåbær\"@no .\n}\n";
+		 String expectS = "DELETE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\nWHERE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\n\nINSERT DATA {\n<http://sublima.computas.com/test/pannekaker-med-blabr> rdfs:label \"\"\"Pannekaker med blåbær\"\"\"@no .\n}\n";
 		 testMap.put("rdfs:label", new String[]{"Pannekaker med blåbær"});
 		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
 		 testMap.put("subjecturi-prefix", new String[]{"http://sublima.computas.com/test/"}); // this parameter is a magic string
@@ -488,7 +488,7 @@ public class Form2SparqlServiceTest extends TestCase {
  
   public void testConvertForm2SPARULSingleValueMakeSubjectWithLang() throws IOException {
 		 // Single value test
-		 String expectS = "DELETE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\nWHERE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\n\nINSERT DATA {\n<http://sublima.computas.com/test/pannekaker-med-blabr> rdfs:label \"Pannekaker med blåbær\"@no .\n}\n";
+		 String expectS = "DELETE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\nWHERE { <http://sublima.computas.com/test/pannekaker-med-blabr> ?p ?o . }\n\nINSERT DATA {\n<http://sublima.computas.com/test/pannekaker-med-blabr> rdfs:label \"\"\"Pannekaker med blåbær\"\"\"@no .\n}\n";
 		 testMap.put("rdfs:label-1", new String[]{"http://www.lingvoj.org/lang/no","Pannekaker med blåbær"});
 		 testMap.put("subjecturi-prefix", new String[]{"http://sublima.computas.com/test/"}); // this parameter is a magic string
 		 testMap.put("title-field", new String[]{"rdfs:label-1"});
@@ -497,7 +497,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	  }
 
   public void testConvertForm2SPARULTwoValuesEmpty() throws IOException {
-		 String expectS = "DELETE { <http://the-jet.com/> ?p ?o . }\nWHERE { <http://the-jet.com/> ?p ?o . }\n\nINSERT DATA {\n<http://the-jet.com/> dct:title \"Cirrus personlig jetfly\"@no .\n}\n";
+		 String expectS = "DELETE { <http://the-jet.com/> ?p ?o . }\nWHERE { <http://the-jet.com/> ?p ?o . }\n\nINSERT DATA {\n<http://the-jet.com/> dct:title \"\"\"Cirrus personlig jetfly\"\"\"@no .\n}\n";
 		 testMap.put("dct:description", null);
 		 testMap.put("dct:title", new String[]{"Cirrus personlig jetfly"});
 		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
@@ -507,7 +507,7 @@ public class Form2SparqlServiceTest extends TestCase {
  }	
 
   public void testConvertForm2SPARULTwoValues() throws IOException {
-		 String expectS = "DELETE { <http://the-jet.com/> ?p ?o . }\nWHERE { <http://the-jet.com/> ?p ?o . }\n\nINSERT DATA {\n<http://the-jet.com/> dct:description \"Et veldig lett jetfly (VLJ) som er under utarbeidelse.\"@no .\n<http://the-jet.com/> dct:title \"Cirrus personlig jetfly\"@no .\n}\n";
+		 String expectS = "DELETE { <http://the-jet.com/> ?p ?o . }\nWHERE { <http://the-jet.com/> ?p ?o . }\n\nINSERT DATA {\n<http://the-jet.com/> dct:description \"\"\"Et veldig lett jetfly (VLJ) som er under utarbeidelse.\"\"\"@no .\n<http://the-jet.com/> dct:title \"\"\"Cirrus personlig jetfly\"\"\"@no .\n}\n";
 		 testMap.put("dct:description", new String[]{"Et veldig lett jetfly (VLJ) som er under utarbeidelse."});
 		 testMap.put("dct:title", new String[]{"Cirrus personlig jetfly"});
 		 testMap.put("interface-language", new String[]{"no"}); // this parameter is a magic string
