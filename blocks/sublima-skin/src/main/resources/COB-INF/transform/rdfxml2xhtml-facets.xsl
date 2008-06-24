@@ -11,6 +11,7 @@
   xmlns:sioc="http://rdfs.org/sioc/ns#"
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
@@ -39,7 +40,7 @@
     
     <div class="facets">
    <div class="facet">
-   Språk
+   <i18n:text key="language">Språk</i18n:text>
    <xsl:if test="sub:Resource/dct:language">
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
@@ -51,7 +52,7 @@
    
    <xsl:if test="sub:Resource/dct:audience">
      <div class="facet">
-       Målgruppe
+       <i18n:text key="audience">Målgruppe</i18n:text>
        <ul>
 	 <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
 	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
@@ -62,8 +63,8 @@
    
 
     <div class="facet">    
-    Emne
-   <xsl:if test="sub:Resource/dct:subject">
+    <i18n:text key="topic">Emne</i18n:text> 
+    <xsl:if test="sub:Resource/dct:subject">
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:subject[skos:Concept]" mode="facets">
 	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
@@ -72,7 +73,7 @@
     </xsl:if>
 
     <xsl:if test="sub:Resource/dct:subject[skos:Concept][position() &gt; 1]">
-      <span class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" >more &#187;</a></span>
+      <span class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" ><i18n:text key="more">more</i18n:text> &#187;</a></span>
     </xsl:if>
 
     

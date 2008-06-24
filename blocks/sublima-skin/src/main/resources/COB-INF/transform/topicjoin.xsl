@@ -11,6 +11,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
@@ -23,7 +24,7 @@
             <table>
                 <tr>
                     <td>
-                        <label for="skos:Concept">Emner</label>
+                        <label for="skos:Concept"><i18n:text key="topics">Emner</i18n:text></label>
                     </td>
                     <td>
                         <select id="skos:Concept" name="skos:Concept" multiple="multiple">
@@ -47,7 +48,7 @@
                 </tr>
 
                 <tr>
-                    <td><label for="skos:Concept/skos:prefLabel">Felles navn</label></td>
+                    <td><label for="skos:Concept/skos:prefLabel"><i18n:text key="topic.commonname">Felles navn</i18n:text></label></td>
                     <td><input id="skos:Concept/skos:prefLabel" type="text" name="skos:Concept/skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:Concept/skos:prefLabel}" /></td>
                 </tr>
              
@@ -59,11 +60,11 @@
                     <td>
                        <xsl:call-template name="controlbutton">
                         <xsl:with-param name="privilege">topic.join</xsl:with-param>
-                        <xsl:with-param name="buttontext">Slå sammen</xsl:with-param>
+                        <xsl:with-param name="buttontext"><i18n:text key="button.join">Slå sammen</i18n:text></xsl:with-param>
                       </xsl:call-template>
                     </td>
                     <td>
-                        <input type="reset" value="Rens skjema"/>
+                        <input type="reset" value="button.empty" i18n:attr="button.empty"/>
                     </td>
                 </tr>
             </table>

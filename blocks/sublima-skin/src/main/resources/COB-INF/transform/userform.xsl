@@ -11,6 +11,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sioc="http://rdfs.org/sioc/ns#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
@@ -28,7 +29,7 @@
       <table>
         <tr>
           <td>
-            <label for="sioc:email">E-post (brukernavn)</label>
+            <label for="sioc:email"><i18n:text key="email">E-post</i18n:text>(<i18n:text key="username">brukernavn</i18n:text>)</label>
           </td>
           <td>
             <input id="sioc:email" type="text"
@@ -40,7 +41,7 @@
 
         <tr>
           <td>
-            <label for="rdfs:label">Navn</label>
+            <label for="rdfs:label"><i18n:text key="name">Navn</i18n:text></label>
           </td>
           <td>
             <input id="rdfs:label" type="text"
@@ -51,7 +52,7 @@
 
         <tr>
           <td>
-            <label for="password1">Passord</label>
+            <label for="password1"><i18n:text key="password">Passord</i18n:text></label>
           </td>
           <td>
             <input id="password1" type="password"
@@ -62,7 +63,7 @@
 
         <tr>
           <td>
-            <label for="password2">Gjenta passord</label>
+            <label for="password2"><i18n:text key="repeat">Gjenta</i18n:text> <i18n:text key="password">passord</i18n:text></label>
           </td>
           <td>
             <input id="password2" type="password"
@@ -73,7 +74,7 @@
 
         <tr>
             <td>
-              <label for="sioc:role">Rolle</label>
+              <label for="sioc:role"><i18n:text key="role">Rolle</i18n:text></label>
             </td>
             <td>
               <select id="sioc:role"
@@ -105,12 +106,11 @@
           <td>
            <xsl:call-template name="controlbutton">
               <xsl:with-param name="privilege">user.edit</xsl:with-param>
-              <xsl:with-param name="buttontext">Lagre bruker</xsl:with-param>
+              <xsl:with-param name="buttontext"><i18n:text key="button.saveuser">Lagre bruker</i18n:text></xsl:with-param>
             </xsl:call-template>
-            <input type="submit" value="Lagre bruker"/>
           </td>
           <td>
-            <input type="reset" value="Rens skjema"/>
+            <input type="reset" value="button.empty" i18n:attr="button.empty"/>
           </td>
         </tr>
       </table>

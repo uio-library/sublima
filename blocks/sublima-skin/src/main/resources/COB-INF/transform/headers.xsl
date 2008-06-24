@@ -8,6 +8,7 @@
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         version="1.0">
 
   <xsl:template name="head">
@@ -33,15 +34,14 @@
       <h2>Sublima 0.9.5</h2>
       <ul>
 	<li>
-	  <a href="{$baseurl}/" class="active">Søk</a>
+	  <a href="{$baseurl}/" class="active"><i18n:text key="menu.search">Søk</i18n:text></a>
 	</li>
 	<li>
-	  <a href="{$baseurl}/advancedsearch">Avansert søk
+	  <a href="{$baseurl}/advancedsearch"><i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
 	  </a>
 	</li>
 	<li>
-	  <a href="{$baseurl}/a-z">A-Å
-	  </a>
+	  <a href="{$baseurl}/a-z"><i18n:text key="menu.az">A-Å</i18n:text></a>
 	</li>
 	<!--
 	    <li>
@@ -66,7 +66,7 @@
 	   </xsl:if -->
       
       <p id="layoutdims">
-	<a href="#">Login</a>
+	<a href="{$baseurl}/login"><i18n:text key="admin.login">Login</i18n:text></a>
       </p>
     </div>
   </xsl:template>

@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<catalogue xml:lang="no">
+
+  <!-- menu -->
+  <message key="menu.heading">Aktiviteter</message>
+  <message key="menu.tips">Tips oss om en ny ressurs</message>
+  <message key="menu.topic">Emner</message>
+  <message key="menu.resource">Ressurser</message>
+  <message key="menu.user">Brukere</message>
+  <message key="menu.publisher">Utgivere</message>
+  <message key="menu.link">Lenkesjekk</message>
+  <message key="menu.database">Database</message>
+  <message key="menu.search">Søk</message>
+  <message key="menu.advancedsearch">Avansert søk</message>
+  <message key="menu.az">A-Å</message>
+  <message key="menu.new">Ny</message>
+  <message key="menu.showall">Vis alle</message>
+  <message key="menu.roles">Roller</message>
+
+  <!-- search -->
+  <message key="search.boolean.and">OG</message>
+  <message key="search.boolean.or">ELLER</message>
+  <message key="search.sortby">Sorter etter</message>
+  <message key="search.externalresources">Inkluder eksterne ressurser</message>
+  <message key="search.sortby.relevance">Relevans</message>
+  <message key="search.sortby.date">Dato</message>
+  <message key="search.numberofhits">Antall treff</message>
+  <message key="search.submit">Søk</message>
+
+  <!-- facets -->
+  <message key="facets.heading">Velg avgrensning</message>
+
+  <!-- results -->
+  <message key="resources.heading">Ressurser</message>
+  <message key="search.result.hastopic">har emne</message>
+  <message key="search.result.publishedby">Publisert av</message>
+
+  <!-- topics -->
+  <message key="topic.related">Relaterte emner</message>
+  <message key="topic.commonname">Felles navn</message>
+
+  <!-- navigation -->
+  <message key="topic.navigation">Navigasjon</message>
+
+  <!-- validation -->
+  <message key="validation.providedurlok">Angitt URL godkjent.</message>
+  <message key="validation.topic.notitle">Emnet mangler tittel</message>
+
+  <!-- resource form -->
+  <message key="resource.sendcomment">Send inn en kommentar angående denne ressursen</message>
+  <message key="resource.choosepublisher">Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet under</message>
+  <message key="resource.usercomments">Brukernes kommentarer</message>
+
+  <!-- administration -->
+  <message key="admin.login">Logg inn</message>
+  <message key="admin.topic.usedby">Ressurser tilknyttet emnet</message>
+  <message key="admin.publisher.resources">Ressurser tilknyttet utgiveren</message>
+  <message key="admin.linkcheck.gone">Satt til borte grunnet entydig besked fra tilbyder</message>
+  <message key="admin.linkcheck.inactive">Satt inaktive pga varige problemer</message>
+  <message key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</message>
+  <message key="admin.approvedby">Redaksjonelt godkjent av</message>
+  <message key="admin.posteddate">Innsendt</message>
+  <message key="admin.accepteddate">Godkjent</message>
+  <message key="admin.intro">På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima du vil administrere fra linkene til venstre.</message>
+
+  <!-- tips -->
+  <message key="tips.heading"><h2>Fant du ikke det du lette etter?</h2><br/><p>Tips oss gjerne dersom du finner sider som du tror vi kunne satt pris på!</p></message>
+  <message key="tips.suggestedtopics">Forslag til emner på ressursen (kommaseparert)</message>
+  <message key="tips.submit">Send inn</message>
+
+  <!-- general -->
+  <message key="sublima.footer">Et fri programvareprosjekt støttet av <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> og <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
+  <message key="language">Språk</message>
+  <message key="name">Navn</message>
+  <message key="description">Beskrivelse</message>
+  <message key="audience">Målgruppe</message>
+  <message key="topic">Emne</message>
+  <message key="topics">Emner</message>
+  <message key="more">mer</message>
+  <message key="type">Type</message>
+  <message key="status">Status</message>
+  <message key="email">E-post</message>
+  <message key="comment">Kommentar</message>
+  <message key="synonym">Synonym</message>
+  <message key="url">URL</message>
+  <message key="title">Tittel</message>
+  <message key="username">Brukernavn</message>
+  <message key="password">Passord</message>
+  <message key="publisher">Utgiver</message>
+  <message key="publishers">Utgivere</message>
+  <message key="mediatype">Mediatype</message>
+  <message key="text">Tekst</message>
+  <message key="typo">Skrivefeil</message>
+  <message key="repeat">Gjenta</message>
+  <message key="role">Rolle</message>
+  <message key="roles">Roller</message>
+  <message key="rights">Rettigheter</message>
+  <message key="addedit">Legge til/Redigere</message>
+  <message key="approve">Godkjenne</message>
+  <message key="delete">Slette</message>
+  <message key="setthemetopics">Sette temaemner</message>
+  <message key="jointopics">Koble emner</message>
+  <message key="relations">Relasjoner</message>
+  <message key="resources">Ressurser</message>
+  <message key="user">Bruker</message>
+  <message key="users">Brukere</message>
+  <message key="administration">administrasjon</message>
+
+  <!-- buttons -->
+  <message key="button.saveresource">Lagre ressurs</message>
+  <message key="button.deleteresource">Slett ressurs</message>
+  <message key="button.savetopic">Lagre emne</message>
+  <message key="button.savethemetopics">Lagre valgte temaemner</message>
+  <message key="button.empty">Tøm skjema</message>
+  <message key="button.join">Slå sammen</message>
+  <message key="button.saveuser">Lagre bruker</message>
+  <message key="button.saverelation">Lagre relasjon</message>
+  <message key="button.saverole">Lagre rolle</message>
+  <message key="button.next">Neste</message>
+
+</catalogue>

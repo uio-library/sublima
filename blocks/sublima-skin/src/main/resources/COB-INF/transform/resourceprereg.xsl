@@ -11,6 +11,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
 
@@ -24,7 +25,7 @@
       <table>
         <tr>
           <td>
-            <label for="sub:url">URL</label>
+            <label for="sub:url"><i18n:text key="url">URL</i18n:text></label>
           </td>
           <td>
             <input id="sub:url" type="text" name="sub:url" size="40"
@@ -36,12 +37,12 @@
 
             <xsl:call-template name="controlbutton">
               <xsl:with-param name="privilege">topic.edit</xsl:with-param>
-              <xsl:with-param name="buttontext">Gå videre</xsl:with-param>
+              <xsl:with-param name="buttontext"><i18n:text key="button.next">Neste</i18n:text></xsl:with-param>
             </xsl:call-template>
 
           </td>
           <td>
-            <input type="reset" value="Rens skjema"/>
+            <input type="reset" value="button.empty" i18n:attr="value"/>
           </td>
         </tr>
       </table>

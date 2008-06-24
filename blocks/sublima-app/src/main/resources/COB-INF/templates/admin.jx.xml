@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns="http://www.w3.org/1999/xhtml"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:c="http://xmlns.computas.com/cocoon">
-    <c:title>Sublima administrasjon</c:title>
+    <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -10,20 +11,19 @@
     </c:breadcrumbs>
 
     <c:menu>
-        <c:menuelement title="Emner" link="admin/emner/"/>
-        <c:menuelement title="Ressurser" link="admin/ressurser/"/>
-        <c:menuelement title="Brukere" link="admin/brukere/"/>
-        <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-        <c:menuelement title="Database" link="admin/database/"/>
+        <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
+        <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+        <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
+        <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+        <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+        <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
     </c:menu>
 
     <c:content>
         <c:text>
-            <h3>Sublima administrasjon</h3>
-            <p>
-                På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima
-                du vil administrere fra linkene til venstre.
+            <h3>Sublima <i18n:text key="administration">administrasjon</i18n:text></h3>
+            <p><i18n:text key="admin.intro">På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima
+                du vil administrere fra linkene til venstre.</i18n:text>
             </p>
         </c:text>
     </c:content>

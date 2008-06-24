@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<catalogue xml:lang="en">
+  
+  <!-- menu -->
+  <message key="menu.heading">Actions</message>
+  <message key="menu.tips">Tips us about new resources</message>
+  <message key="menu.topic">Topics</message>
+  <message key="menu.resource">Resources</message>
+  <message key="menu.user">Users</message>
+  <message key="menu.publisher">Publishers</message>
+  <message key="menu.link">Linkcheck</message>
+  <message key="menu.database">Database</message>
+  <message key="menu.search">Search</message>
+  <message key="menu.advancedsearch">Advanced search</message>
+  <message key="menu.az">A-Z</message>
+  <message key="menu.new">New</message>
+  <message key="menu.showall">Show all</message>
+  <message key="menu.roles">Roles</message>
+
+  <!-- search -->
+  <message key="search.boolean.and">AND</message>
+  <message key="search.boolean.or">OR</message>
+  <message key="search.sortby">Sort by</message>
+  <message key="search.externalresources">Include external resources</message>
+  <message key="search.sortby.relevance">Relevance</message>
+  <message key="search.sortby.date">Date</message>
+  <message key="search.numberofhits">Number of hits</message>
+  <message key="search.submit">Search</message>
+
+  <!-- facets -->
+  <message key="facets.heading">Filter by</message>
+
+  <!-- results -->
+  <message key="resources.heading">Resources</message>
+  <message key="search.result.hastopic">has topic</message>
+  <message key="search.result.publishedby">Published by</message>
+
+  <!-- topics -->
+  <message key="topic.related">Related topics</message>
+  <message key="topic.commonname">Common name</message>
+
+  <!-- navigation -->
+   <message key="topic.navigation">Navigation</message>
+
+  <!-- validation -->
+  <message key="validation.providedurlok">Provided URL validated.</message>
+  <message key="validation.topic.notitle">Topic has no title</message>
+
+  <!-- resource -->
+  <message key="resource.sendcomment">Comment on this resource</message>
+  <message key="resource.choosepublisher">Choose a publisher from the dropdown list, or leave it empty and name a new publisher in the following field</message>
+  <message key="resource.usercomments">Users comments</message>
+
+  <!-- administration -->
+  <message key="admin.login">Log in</message>
+  <message key="admin.topic.usedby">Resources with topic associated</message>
+  <message key="admin.publisher.resources">Resources from this publisher</message>
+  <message key="admin.linkcheck.gone">Status GONE due to notice from provider.</message>
+  <message key="admin.linkcheck.inactive">Status INACTIVE due to lasting problems.</message>
+  <message key="admin.linkcheck.manual">Satus CHECK due to problems upon connection.</message>
+  <message key="admin.approvedby">Approved by</message>
+  <message key="admin.posteddate">Posted</message>
+  <message key="admin.accepteddate">Accepted</message>
+  <message key="admin.intro">On this page you can administer topics, resources, users and publishers. Choose which part of Sublima you would like to administer from the menu on the left.</message>
+  <i18n:text key="admin.intro">
+                På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima
+                du vil administrere fra linkene til venstre.</i18n:text>
+
+
+
+  <!-- tips -->
+  <message key="tips.heading"><h2>Don't find what you're looking for?</h2><br/><p>Please send us a tip if you find that information elsewhere, and we'll include it in our resources!</p></message>
+  <message key="tips.suggestedtopics">Suggestions to suitable topics (comma separated)</message>
+  <message key="tips.submit">Send</message>
+
+  <!-- a-z -->
+  <message key="az.heading">Alphabetical list of topics</message>
+
+  <!-- general -->
+  <message key="sublima.footer">A Free Software Project supported by <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> and <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
+  <message key="language">Language</message>
+  <message key="name">Name</message>
+  <message key="description">Description</message>
+  <message key="audience">Audience</message>
+  <message key="topic">Topic</message>
+  <message key="topics">Topics</message>
+  <message key="more">more</message>
+  <message key="type">Type</message>
+  <message key="status">Status</message>
+  <message key="email">E-mail</message>
+  <message key="comment">Comment</message>
+  <message key="synonym">Synonym</message>
+  <message key="url">URL</message>
+  <message key="title">Title</message>
+  <message key="username">Username</message>
+  <message key="password">Password</message>
+  <message key="publisher">Publisher</message>
+  <message key="publishers">Publishers</message>
+  <message key="mediatype">Mediatype</message>
+  <message key="text">Text</message>
+  <message key="typo">Typo</message>
+  <message key="repeat">Repeat</message>
+  <message key="role">Role</message>
+  <message key="roles">Roles</message>
+  <message key="relationtype">Relasjonstype</message>
+  <message key="rights">Rights</message>
+  <message key="addedit">Add/Edit</message>
+  <message key="approve">Approve</message>
+  <message key="delete">Delete</message>
+  <message key="setthemetopics">Set theme topics</message>
+  <message key="jointopics">Merge topics</message>
+  <message key="relations">Relations</message>
+  <message key="resources">Resources</message>
+  <message key="user">User</message>
+  <message key="users">Users</message>
+  <message key="roles">Roles</message>
+  <message key="administration">administration</message>
+
+  <!-- buttons -->
+  <message key="button.saveresource">Save resource</message>
+  <message key="button.deleteresource">Delete resource</message>
+  <message key="button.savetopic">Save topic</message>
+  <message key="button.savethemetopics">Save selection</message>
+  <message key="button.join">Merge</message>
+  <message key="button.empty">Reset form</message>
+  <message key="button.saveuser">Save user</message>
+  <message key="button.saverelation">Save relation</message>
+  <message key="button.saverole">Save role</message>
+  <message key="button.next">Next</message>
+
+</catalogue>

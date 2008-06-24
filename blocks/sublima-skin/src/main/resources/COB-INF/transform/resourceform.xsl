@@ -11,6 +11,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
 
@@ -29,7 +30,7 @@
       <table>
         <tr>
           <td>
-            <label for="dct:title">Tittel</label>
+            <label for="dct:title"><i18n:text key="title">Tittel</i18n:text></label>
           </td>
           <td>
             <input id="dct:title" type="text" name="dct:title" size="40"
@@ -38,7 +39,7 @@
         </tr>
         <tr>
           <td>
-            <label for="sub:url">URI</label>
+            <label for="sub:url"><i18n:text key="uri">URI</i18n:text></label>
           </td>
           <td>
             <input id="sub:url" type="text" name="sub:url" size="40"
@@ -47,7 +48,7 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:description">Beskrivelse</label>
+            <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
           </td>
           <td>
             <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of
@@ -57,14 +58,13 @@
         </tr>
       </table>
       <br/>
-      <p>Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i
-        tekstfeltet
-        under
+      <p>
+        <i18n:text key="resource.choosepublisher">Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet under</i18n:text>
       </p>
       <table>
         <tr>
           <td>
-            <label for="dct:publisher/foaf:Agent/@rdf:about">Utgiver</label>
+            <label for="dct:publisher/foaf:Agent/@rdf:about"><i18n:text key="publisher">Utgiver</i18n:text></label>
           </td>
           <td>
             <select id="dct:publisher" name="dct:publisher">
@@ -97,7 +97,7 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:language">Språk</label>
+            <label for="dct:language"><i18n:text key="language">Språk</i18n:text></label>
           </td>
           <td>
             <select id="dct:language" name="dct:language" multiple="multiple" size="10">
@@ -122,7 +122,7 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:format">Mediatype</label>
+            <label for="dct:format"><i18n:text key="mediatype">Mediatype</i18n:text></label>
           </td>
           <td>
             <select id="dct:format" name="dct:format" multiple="multiple" size="10">
@@ -148,7 +148,7 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:audience">Målgruppe</label>
+            <label for="dct:audience"><i18n:text key="audience">Målgruppe</i18n:text></label>
           </td>
           <td>
             <select id="dct:audience" name="dct:audience" multiple="multiple" size="10">
@@ -174,7 +174,7 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:subject">Emner</label>
+            <label for="dct:subject"><i18n:text key="topics">Emner</i18n:text></label>
           </td>
           <td>
             <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
@@ -199,7 +199,7 @@
         </tr>
         <tr>
           <td>
-            <label for="rdfs:comment">Kommentar</label>
+            <label for="rdfs:comment"><i18n:text key="comment">Kommentar</i18n:text></label>
           </td>
           <td>
             <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40">...
@@ -210,7 +210,7 @@
         </tr>
         <tr>
           <td>
-            <label for="wdr:describedBy">Status</label>
+            <label for="wdr:describedBy"><i18n:text key="status">Status</i18n:text></label>
           </td>
           <td>
             <select id="wdr:describedBy" name="wdr:describedBy">
@@ -240,7 +240,7 @@
           </td>
         </tr>
         <tr>
-          <td>Brukernes kommentarer</td>
+          <td><i18n:text key="resource.usercomments">Brukernes kommentarer</i18n:text></td>
           <td>
             <ul>
               <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/sub:comment">
@@ -256,17 +256,17 @@
 
             <xsl:call-template name="controlbutton">
               <xsl:with-param name="privilege">topic.edit</xsl:with-param>
-              <xsl:with-param name="buttontext">Lagre ressurs</xsl:with-param>
+              <xsl:with-param name="buttontext"><i18n:text key="button.saveresource">Lagre ressurs</i18n:text></xsl:with-param>
             </xsl:call-template>
 
             <xsl:call-template name="controlbutton">
               <xsl:with-param name="privilege">topic.delete</xsl:with-param>
-              <xsl:with-param name="buttontext">Slett ressurs</xsl:with-param>
+              <xsl:with-param name="buttontext"><i18n:text key="button.deleteresource">Slett ressurs</i18n:text></xsl:with-param>
             </xsl:call-template>
             
           </td>
           <td>
-            <input type="reset" value="Rens skjema"/>
+            <input type="reset" value="button.empty" i18n:attr="value"/>
           </td>
         </tr>
       </table>
@@ -284,7 +284,7 @@
       <table>
         <tr>
           <td>
-            <label for="dct:title">Tittel</label>
+            <label for="dct:title"><i18n:text key="resource.title"/></label>
           </td>
           <td>
             <input id="dct:title" type="text" name="dct:title" size="40"

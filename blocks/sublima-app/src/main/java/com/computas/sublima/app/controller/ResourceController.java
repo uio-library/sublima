@@ -102,7 +102,7 @@ public class ResourceController implements StatelessAppleController {
   private void registerNewResourceURL(AppleRequest req, AppleResponse res) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
     bizData.put("userprivileges", userPrivileges);
 
     String tempPrefixes = "<c:tempvalues \n" +
@@ -136,10 +136,11 @@ public class ResourceController implements StatelessAppleController {
           if (adminService.checkForDuplicatesByURI(url)) {
             messageBuffer.append("<c:message>Oppgitt URL er allerede registrert på en ressurs.</c:message>\n");
             messageBuffer.append("</c:messages>\n");
-            res.sendPage("xml2/ressurs", bizData);
+            bizData.put("messages", messageBuffer.toString());
+            res.sendPage("xml2/ressurs-prereg", bizData);
 
           } else { // The URL is okay
-            messageBuffer.append("<c:message>Oppgitt URL funnet OK.</c:message>");
+            messageBuffer.append("<c:message><i18n:text key=\"validation.providedurlok\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>");
             messageBuffer.append("</c:messages>\n");
             
             bizData.put("topics", adminService.getAllTopics());
@@ -157,13 +158,15 @@ public class ResourceController implements StatelessAppleController {
         } else {
           messageBuffer.append("<c:message>Oppgitt URL gir en ugyldig statuskode. Vennligst kontroller URL i en nettleser.</c:message>\n");
           messageBuffer.append("</c:messages>\n");
-          res.sendPage("xml2/ressurs", bizData);
+          bizData.put("messages", messageBuffer.toString());
+          res.sendPage("xml2/ressurs-prereg", bizData);
         }
 
       } else {
         messageBuffer.append("<c:message>URL kan ikke være blank.</c:message>\n");
         messageBuffer.append("</c:messages>\n");
-        res.sendPage("xml2/ressurs", bizData);
+        bizData.put("messages", messageBuffer.toString());
+        res.sendPage("xml2/ressurs-prereg", bizData);
       }
     }
   }
@@ -206,7 +209,7 @@ public class ResourceController implements StatelessAppleController {
     String allStatuses = adminService.getAllStatuses();
 
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
     messageBuffer.append(messages);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -277,6 +280,7 @@ public class ResourceController implements StatelessAppleController {
                 "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
                 "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
                 "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+                "xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"\n" +
                 "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
         // Check if all required fields are filled out, if not return error messages
@@ -515,7 +519,7 @@ public class ResourceController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:title")) || req.getCocoonRequest().getParameter("dct:title") == null) {
-      validationMessages.append("<c:message>Tittel kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"empty_title\">uoversatt</i18n:text></c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url").trim()) || req.getCocoonRequest().getParameter("sub:url").trim() == null) {

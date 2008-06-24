@@ -9,6 +9,7 @@
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
@@ -19,8 +20,7 @@
 
   <xsl:template match="c:tips" mode="form">
 
-    <h2>Fant du ikke det du lette etter?</h2>
-    <p>Tips oss gjerne dersom du finner sider som du tror vi kunne satt pris på!</p>
+    <i18n:text key="tips.heading"><h2>Fant du ikke det du lette etter?</h2><br/><p>Tips oss gjerne dersom du finner sider som du tror vi kunne satt pris på!</p></i18n:text>
     <br/>
     <xsl:if test="../c:content/c:messages/c:messages/c:message">
       <ul>
@@ -38,7 +38,7 @@
       <table>
         <tr>
           <td align="right">
-            <label for="url">URL</label>
+            <label for="url"><i18n:text key="url">URL</i18n:text></label>
           </td>
           <td>
             <input id="url" type="text" name="url" size="40"/>
@@ -46,7 +46,7 @@
         </tr>
         <tr>
           <td align="right">
-            <label for="tittel">Tittel</label>
+            <label for="tittel"><i18n:text key="title">Tittel</i18n:text></label>
           </td>
           <td>
             <input id="tittel" type="text" name="tittel" size="40"/>
@@ -54,7 +54,7 @@
         </tr>
         <tr>
           <td align="right">
-            <label for="beskrivelse">Beskrivelse</label>
+            <label for="beskrivelse"><i18n:text key="description">Beskrivelse</i18n:text></label>
           </td>
           <td>
             <textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40">...</textarea>
@@ -62,7 +62,7 @@
         </tr>
         <tr>
           <td align="right">
-            <label for="stikkord">Forslag til emner på ressursen (kommaseparert)</label>
+            <label for="stikkord"><i18n:text key="tips.suggestedtopics">Forslag til emner på ressursen (kommaseparert)</i18n:text></label>
           </td>
           <td>
             <input id="stikkord" type="text" name="stikkord" size="40"/>
@@ -71,7 +71,7 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" value="Send inn"/>
+            <input type="submit" value="tips.submit" i18n:attr="value"/>
           </td>
         </tr>
       </table>

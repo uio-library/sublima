@@ -11,6 +11,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
@@ -32,6 +33,7 @@
               encoding="UTF-8"
               indent="no"/>
   <xsl:param name="baseurl"/>
+  <xsl:param name="locale"/>
   <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template name="contenttext">
@@ -106,7 +108,7 @@
 	  <xsl:with-param name="mode">topictemp</xsl:with-param>
 	</xsl:apply-templates>
         <br/>
-        <h4>Ressurser tilknyttet emnet</h4>
+        <h4><i18n:text key="admin.topic.usedby">Ressurser tilknyttet emnet</i18n:text></h4>
         <xsl:apply-templates select="c:page/c:content/c:topic/c:topicresources/rdf:RDF" mode="results"/>
       </xsl:when>
       <xsl:when test="c:page/c:mode = 'topicedit'">
@@ -115,7 +117,7 @@
 	</xsl:apply-templates>
 
         <br/>
-        <h4>Ressurser tilknyttet emnet</h4>
+        <h4><i18n:text key="admin.topic.usedby">Ressurser tilknyttet emnet</i18n:text></h4>
         <xsl:apply-templates select="c:page/c:content/c:topic/c:topicresources/rdf:RDF" mode="results"/>
       </xsl:when>
     </xsl:choose>
@@ -183,7 +185,7 @@
       </table>
     </form>
     <br/>
-    <h4>Ressurser tilknyttet utgiveren</h4>
+    <h4><i18n:text key="admin.publisher.resources">Ressurser tilknyttet utgiveren</i18n:text></h4>
 
     <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF" mode="results"/>
 
@@ -192,7 +194,7 @@
   <xsl:template name="linkcheck">
 
     <xsl:if test="c:page/c:content/c:linkcheck/c:status_check/rdf:RDF/sub:Resource">
-      <p>Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</p>
+      <p><i18n:text key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</i18n:text></p>
       <ul>
         <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_check/rdf:RDF/sub:Resource">
           <li>
@@ -204,7 +206,7 @@
 
     <!-- Linkcheck status inactive -->
     <xsl:if test="c:page/c:content/c:linkcheck/c:status_inactive/rdf:RDF/sub:Resource">
-      <p>Satt inaktive pga varige problemer</p>
+      <p><i18n:text key="admin.linkcheck.inactive">Satt inaktive pga varige problemer</i18n:text></p>
       <ul>
         <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_inactive/rdf:RDF/sub:Resource">
           <li>
@@ -216,7 +218,7 @@
 
     <!-- Linkcheck status resource -->
     <xsl:if test="c:page/c:content/c:status_gone/rdf:RDF/sub:Resource">
-      <p>Satt til borte grunnet entydig besked fra tilbyder</p>
+      <p><i18n:text key="admin.linkcheck.gone">Satt til borte grunnet entydig besked fra tilbyder</i18n:text></p>
       <ul>
         <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_gone/rdf:RDF/sub:Resource">
           <li>
@@ -253,6 +255,9 @@
             <div class="colleft">
               <div class="col1">
                 <!-- Column 1 start -->
+                <xsl:call-template name="debug"/>
+
+                Locale: <xsl:value-of select="$locale"/><br/>
                 <xsl:call-template name="contenttext"/>
 
                 <xsl:call-template name="messages"/>
@@ -361,11 +366,11 @@
           </div>
         </div>
         <div id="footer">
-          <p>A Free Software Project supported by
+          <p><i18n:text key="sublima.footer">A Free Software Project supported by
             <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
             and
             <a href="http://www.computas.com">Computas AS</a>
-            , 2008
+            , 2008</i18n:text>
           </p>
         </div>
       </body>

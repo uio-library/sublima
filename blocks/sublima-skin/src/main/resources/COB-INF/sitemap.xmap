@@ -3,31 +3,46 @@
              xsi:schemaLocation="http://apache.org/cocoon/sitemap/1.0 http://cocoon.apache.org/schema/sitemap/cocoon-sitemap-1.0.xsd"
              xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
+  <map:components>
+     <map:transformers>
+      <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
+
+     <catalogues default="messages">
+       <catalogue id="messages" name="messages" location="translations" />
+     </catalogues>
+   </map:transformer>
+    </map:transformers>
+  </map:components>
+
   <map:pipelines>
     <map:pipeline>
 
       <map:match pattern="sublima-styling">
-	<map:act type="locale">
-	  <map:generate src="service-consumer:"/>
-	  <map:transform src="transform/alt-styling.xslt">
-	    <map:parameter name="baseurl" value="{request:contextPath}"/>
-	    <map:parameter name="interface-language" value="{language}"/>
-	  </map:transform>
-	  <map:serialize type="xhtml"/>
-	</map:act>
-	<map:generate src="service-consumer:"/>
-	<map:transform src="transform/alt-styling.xslt">
-	  <map:parameter name="baseurl" value="{request:contextPath}"/>
-	</map:transform>
-	<map:serialize type="xhtml"/>
+        <map:act type="locale">
+          <map:generate src="service-consumer:"/>
+          <map:transform src="transform/alt-styling.xslt">
+            <map:parameter name="baseurl" value="{request:contextPath}"/>
+            <map:parameter name="interface-language" value="{language}"/>
+          </map:transform>
+          <map:transform type="i18n">
+            <map:parameter name="locale" value="{language}"/>
+          </map:transform>
+          <map:serialize type="xhtml"/>
+        </map:act>
       </map:match>
 
       <map:match pattern="admin-styling">
-        <map:generate src="service-consumer:"/>
-        <map:transform src="transform/admin-styling.xslt">
-          <map:parameter name="baseurl" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="xhtml"/>
+        <map:act type="locale">
+          <map:generate src="service-consumer:"/>
+          <map:transform src="transform/admin-styling.xslt">
+            <map:parameter name="baseurl" value="{request:contextPath}"/>
+            <map:parameter name="locale" value="{language}"/>
+          </map:transform>
+          <map:transform type="i18n">
+            <map:parameter name="locale" value="{language}"/>
+          </map:transform>
+          <map:serialize type="xhtml"/>
+        </map:act>
       </map:match>
 
     </map:pipeline>

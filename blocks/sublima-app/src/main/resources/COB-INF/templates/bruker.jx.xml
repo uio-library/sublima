@@ -12,8 +12,9 @@
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
         xmlns:sioc= "http://rdfs.org/sioc/ns#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml">
-  <c:title>Sublima administrasjon</c:title>
+  <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
   <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
   <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>
@@ -21,26 +22,26 @@
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>
     <c:breadcrumb title="Admin">admin</c:breadcrumb>
-    <c:breadcrumb title="Brukere">admin/brukere/</c:breadcrumb>
+    <c:breadcrumb title="menu.user" i18n:attr="title">admin/brukere/</c:breadcrumb>
   </c:breadcrumbs>
 
   <c:menu>
-    <c:menuelement title="Emner" link="admin/emner/"/>
-    <c:menuelement title="Ressurser" link="admin/ressurser/"/>
-    <c:menuelement title="Brukere" link="admin/brukere/">
-      <c:childmenuelement title="Ny" link="admin/brukere/ny"/>
-      <c:childmenuelement title="Vis alle" link="admin/brukere/alle"/>
-      <c:childmenuelement title="Roller" link="admin/brukere/roller/"/>
+    <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
+    <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+    <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title">
+      <c:childmenuelement title="menu.new" link="admin/brukere/ny" i18n:attr="title"/>
+      <c:childmenuelement title="menu.showall" link="admin/brukere/alle" i18n:attr="title"/>
+      <c:childmenuelement title="menu.roles" link="admin/brukere/roller/" i18n:attr="title"/>
     </c:menuelement>
-    <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-    <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-    <c:menuelement title="Database" link="admin/database/"/>
+    <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+    <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+    <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
   </c:menu>
 
   <c:content>
 
     <c:text>
-      <h3>Bruker</h3>
+      <h3><i18n:text key="user">Bruker</i18n:text></h3>
     </c:text>
 
     <c:messages><jx:out value="#{messages}" xmlize="true"/></c:messages>

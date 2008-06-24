@@ -10,6 +10,7 @@
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
@@ -17,7 +18,7 @@
   <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="c:a-z" mode="a-z">
-    Alfabetisk navigering av emner<br/>
+    <i18n:text key="az.heading">Alfabetisk navigering av emner</i18n:text><br/>
     <a href="{$baseurl}/emner/a">A</a><br/>
     <a href="{$baseurl}/emner/b">B</a><br/>
     <a href="{$baseurl}/emner/c">C</a><br/>

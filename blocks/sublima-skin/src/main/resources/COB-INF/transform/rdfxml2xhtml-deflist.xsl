@@ -10,6 +10,7 @@
   xmlns:sioc="http://rdfs.org/sioc/ns#"
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <xsl:import href="rdfxml-res-templates.xsl"/>
@@ -26,11 +27,11 @@
 
   <dt>
 	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  <xsl:text> har emne </xsl:text>
+	  <i18n:text key="search.result.hastopic">har emne</i18n:text><xsl:text> </xsl:text>
     <xsl:apply-templates select="./dct:subject"/>
 	</dt>
 	<dd>
-	  <div style="font-size:small"><xsl:text>Publisert av: </xsl:text>
+	  <div style="font-size:small"><i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
 	    <xsl:apply-templates select="dct:publisher"/>
 	    <xsl:text> </xsl:text>
 	    <xsl:apply-templates select="./dct:dateAccepted"/>

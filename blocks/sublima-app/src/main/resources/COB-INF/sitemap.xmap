@@ -44,6 +44,7 @@
 	     <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system -->
       </map:serializer>
     </map:serializers>
+   
   </map:components>
       
   <map:pipelines>

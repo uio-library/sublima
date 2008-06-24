@@ -9,6 +9,7 @@
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
@@ -18,22 +19,27 @@
 
     <xsl:template match="c:login" mode="login">
 
-      Inntil brukeradministrasjon er implementert er brukernavn og passord: Computas
        <form action="do-login" method="post">
          <table>
            <tr>
              <td>
-               <input type="text" name="username" title="Username: " />
+               <label for="username"><i18n:text key="username">Brukernavn</i18n:text></label>
+             </td>
+             <td>
+               <input type="text" name="username" id="username"/>
              </td>
            </tr>
            <tr>
              <td>
-               <input type="password" name="password" title="Password: " />
+               <label for="password"><i18n:text key="password">Passord</i18n:text></label>
+             </td>
+             <td>
+               <input type="password" name="password" id="password" />
              </td>
            </tr>
            <tr>
              <td>
-               <input type="submit" value="Logg inn"/>
+               <input type="submit" value="admin.login" i18n:attr="value"/>
              </td>
            </tr>
          </table>

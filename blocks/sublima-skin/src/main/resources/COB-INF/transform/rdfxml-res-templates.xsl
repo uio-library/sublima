@@ -10,6 +10,7 @@
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr skos"
   >
@@ -78,7 +79,7 @@
 	<a href="{./skos:Concept/@rdf:about}"><xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/></a>
       </xsl:when>
       <xsl:otherwise>
-	<span class="warning">Emne mangler tittel</span>
+	<span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel</i18n:text></span>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:if test="position() != last()">
@@ -110,8 +111,8 @@
     <input type="hidden" name="uri" value="{./@rdf:about}" />
 
     <tr>
-      <td>Språk</td>
-      <td>Navn</td>
+      <td><i18n:text key="language">Språk</i18n:text></td>
+      <td><i18n:text key="name">Navn</i18n:text></td>
     </tr>
     <xsl:for-each select="./foaf:name">
       <tr>
@@ -139,7 +140,7 @@
 
     <tr>
         <td>
-            <label for="dct:description">Beskrivelse</label>
+            <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
         </td>
         <td>
             <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of select="./dct:description"/>...</textarea>

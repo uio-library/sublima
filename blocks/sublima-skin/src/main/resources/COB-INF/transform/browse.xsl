@@ -17,7 +17,6 @@
   <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="c:browse" mode="browse">
-    Utvalgte emner (for demo)
     <xsl:if test="./rdf:RDF/skos:Concept">
       <ul>
         <xsl:for-each select="./rdf:RDF/skos:Concept">

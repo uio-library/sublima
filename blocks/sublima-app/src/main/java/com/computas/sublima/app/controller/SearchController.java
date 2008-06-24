@@ -107,6 +107,7 @@ public class SearchController implements StatelessAppleController {
 
     bizData.put("request", params.toString());
     bizData.put("loggedin", loggedIn);
+    bizData.put("searchparams", "<empty/>");
     res.sendPage("xml/sparql-result", bizData);
   }
 

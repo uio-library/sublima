@@ -5,6 +5,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
@@ -87,49 +88,51 @@ this, just comment out the call-template -->
              <br/>
             <input id="keyword" class="searchbox" type="text"
                    name="searchstring" size="40" value="{c:page/c:searchparams/c:searchparams/c:searchstring}"/>
-            <input type="submit" value="Søk"/><br/>
+            <input type="submit" value="search.submit" i18n:attr="value"/>
+              <br/>
 
             <xsl:choose>
               <xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">
-                <input type="radio" name="booleanoperator" value="AND"/>OG
-                <input type="radio" name="booleanoperator" value="OR" checked="true"/>ELLER
+                <input type="radio" name="booleanoperator" value="AND"/><i18n:text key="search.boolean.and">OG</i18n:text>
+                <input type="radio" name="booleanoperator" value="OR" checked="true"/><i18n:text key="search_boolean_or">ELLER</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="radio" name="booleanoperator" value="AND" checked="true"/>OG
-                <input type="radio" name="booleanoperator" value="OR" />ELLER
+                <input type="radio" name="booleanoperator" value="AND" checked="true"/><i18n:text key="search.boolean.and">OG</i18n:text>
+                <input type="radio" name="booleanoperator" value="OR" /><i18n:text key="search.boolean.or">ELLER</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
             <br/>
 
             <xsl:choose>
-              <xsl:when test="c:page/c:searchparams/c:searchparams/c:deepsearch = 'true'">
+              <xsl:when test="c:page/c:searchparams/c:searchparams/c:deepsearch = 'deepsearch'">
                 <input type="checkbox" name="deepsearch" value="deepsearch" checked="true"/>
               </xsl:when>
               <xsl:otherwise>
                 <input type="checkbox" name="deepsearch" value="deepsearch"/>
               </xsl:otherwise>
             </xsl:choose>
-            Søk også i de eksterne ressursene
+            <i18n:text key="search.externalresources">Søk også i de eksterne ressursene</i18n:text>
             <br/>
-            Sorter etter 
+            <i18n:text key="search.sortby">Sorter etter</i18n:text>
+
             <select id="sort" name="sort">
               <option value="">
-                <xsl:if test="c:page/c:searchparams/c:searchparams/c:deepsearch/c:sortby = ''">
-                  <xsl:attribute name="selected">true</xsl:attribute>
+                <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = ''">
+                  <xsl:attribute name="selected">selected</xsl:attribute>
                 </xsl:if>
-                Relevans
+                <i18n:text key="search.sortby.relevance">Relevans</i18n:text>
                </option>
               <option value="dct:dateAccepted">
-                <xsl:if test="c:page/c:searchparams/c:searchparams/c:deepsearch/c:sortby = 'dct:dateAccepted'">
-                  <xsl:attribute name="selected">true</xsl:attribute>
+                <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:dateAccepted'">
+                  <xsl:attribute name="selected">selected</xsl:attribute>
                 </xsl:if>
-                Dato
+                <i18n:text key="search.sortby.date">Dato</i18n:text>
                </option>
               <option value="dct:title">
-                <xsl:if test="c:page/c:searchparams/c:searchparams/c:deepsearch/c:sortby = 'dct:title'">
-                  <xsl:attribute name="selected">true</xsl:attribute>
+                <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:title'">
+                  <xsl:attribute name="selected">selected</xsl:attribute>
                 </xsl:if>
-                Tittel
+                <i18n:text key="title">Tittel</i18n:text>
                </option>
             </select>
           </fieldset>
@@ -138,14 +141,14 @@ this, just comment out the call-template -->
         </xsl:if>
 
         <xsl:if test="c:page/c:mode = 'search-result'">
-          Antall treff: <xsl:value-of select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
+          <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
         </xsl:if>
         
         <!-- Facets -->
         <!-- Facets are shown if the c:/page/c:facets exists in the XML --> 
         <xsl:if test="c:page/c:mode != 'resource' and c:page/c:mode != 'browse'">
            <xsl:if test="c:page/c:facets">
-            <h3>Velg avgrensning</h3>
+            <h3><i18n:text key="facets.heading">Velg avgrensning</i18n:text></h3>
             <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
           </xsl:if>
         </xsl:if>
@@ -177,7 +180,7 @@ this, just comment out the call-template -->
 
         <!-- Search results -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-            <h3>Ressurser</h3>
+            <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
             <!-- Søkeresultatene -->
             <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results">
               <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
@@ -189,21 +192,18 @@ this, just comment out the call-template -->
              
       <div class="col2">
           <!-- Column 2 (left) start -->
-            <h2>Mine aktiviteter</h2>
-            <a href="{$baseurl}/tips">Tips oss om en ny ressurs</a><br/>
+            <h2><i18n:text key="menu.heading">Mine aktiviteter</i18n:text></h2>
+            <a href="{$baseurl}/tips"><i18n:text key="menu.tips">Tips oss om en ny ressurs</i18n:text></a><br/>
         
             <xsl:choose>
               <xsl:when test="c:page/c:loggedin = 'true' ">
-                <a href="{$baseurl}/admin/emner/">Emner</a><br/>
-                <a href="{$baseurl}/admin/ressurser/">Ressurser</a><br/>
-                <a href="{$baseurl}/admin/brukere/">Brukere</a><br/>
-                <a href="{$baseurl}/admin/utgivere/">Utgivere</a><br/>
-                <a href="{$baseurl}/admin/lenkesjekk/">Lenkesjekk</a><br/>
-                <a href="{$baseurl}/admin/database/">Database</a><br/>
+                <a href="{$baseurl}/admin/emner/"><i18n:text key="menu.topic">Emner</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/ressurser/"><i18n:text key="menu.resource">Ressurser</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/brukere/"><i18n:text key="menu.user">Brukere</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/utgivere/"><i18n:text key="menu.publisher">Utgivere</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/lenkesjekk/"><i18n:text key="menu.link">Lenkesjekk</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/database/"><i18n:text key="menu.database">Database</i18n:text></a><br/>
               </xsl:when>
-              <xsl:otherwise>
-                <a href="{$baseurl}/login">Logg inn</a><br/>
-              </xsl:otherwise>
             </xsl:choose>
 
         <!-- Column 2 end -->
@@ -216,7 +216,7 @@ this, just comment out the call-template -->
         <!-- Navigation is only shown when one topic is in focus -->
         <!-- Discussion is open on showing a different navigation scheme when more then one topic is in focus --> 
         <xsl:if test="c:page/c:mode = 'topic'">
-            <h3>Navigering</h3>
+            <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
             <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
                 <xsl:with-param name="role">this-param</xsl:with-param>
              </xsl:apply-templates>
@@ -229,11 +229,11 @@ this, just comment out the call-template -->
           </div>
         </div>
         <div id="footer">
-          <p>A Free Software Project supported by
+          <p><i18n:text key="sublima.footer">A Free Software Project supported by
             <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
             and
             <a href="http://www.computas.com/">Computas AS</a>
-            , 2008
+            , 2008</i18n:text>
           </p>
         </div>
 

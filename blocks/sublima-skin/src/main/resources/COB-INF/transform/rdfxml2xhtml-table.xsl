@@ -10,6 +10,7 @@
   xmlns:sioc="http://rdfs.org/sioc/ns#"
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <xsl:import href="rdfxml-res-templates.xsl"/>
@@ -28,7 +29,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Publisert av:
+    <i18n:text key="search.result.publishedby">Publisert av</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:publisher" mode="external-link" />
@@ -36,7 +37,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Emner:
+	  <i18n:text key="topics">Emner</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:subject"/>
@@ -44,7 +45,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Beskrivelse
+	  <i18n:text key="description">Beskrivelse</i18n:text>
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:description"/>
@@ -52,7 +53,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Redaksjonelt godkjent av:
+	  <i18n:text key="admin.approvedby">Redaksjonelt godkjent av</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/sub:committer"/>
@@ -60,7 +61,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Innsendt dato:
+	  <i18n:text key="admin.posteddate">Innsendt</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:dateSubmitted"/>
@@ -69,7 +70,7 @@
      
       <tr>
 	<th scope="row">
-	  Akseptert dato:
+	  <i18n:text key="admin.accepteddate">Akseptert</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:dateAccepted"/>
@@ -77,7 +78,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Språk:
+	  <i18n:text key="language">Språk</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:language"/>
@@ -85,7 +86,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Type:
+	  <i18n:text key="type">Type</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:format"/>
@@ -93,7 +94,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Status:
+	  <i18n:text key="status">Status</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/wdr:describedBy"/>
@@ -101,7 +102,7 @@
       </tr>
       <tr>
 	<th scope="row">
-	  Ment for:
+	  <i18n:text key="audience">Målgruppe</i18n:text>:
 	</th>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:audience" />
@@ -110,14 +111,14 @@
      
     </table>
     <br/>
-    <p>Send inn en kommentar angående denne ressursen</p>
+    <p><i18n:text key="resource.sendcomment">Send inn en kommentar angående denne ressursen</i18n:text></p>
     <form action="{$baseurl}/resourcecomment" method="GET">
         <input type="hidden" name="uri" value="{sub:Resource/@rdf:about}"/>
         <input type="hidden" name="resource" value="{sub:Resource/dct:identifier/@rdf:resource}"/>
       <table>
         <tr>
           <td align="right">
-            <label for="email">Din e-post</label>
+            <label for="email"><i18n:text key="email">E-post</i18n:text></label>
           </td>
           <td>
             <input id="email" type="text" name="email" size="40"/>
@@ -125,7 +126,7 @@
         </tr>
         <tr>
           <td align="right">
-            <label for="comment">Kommentar</label>
+            <label for="comment"><i18n:text key="comment">Kommentar</i18n:text></label>
           </td>
           <td>
             <textarea id="comment" name="comment" rows="6" cols="40">...</textarea>

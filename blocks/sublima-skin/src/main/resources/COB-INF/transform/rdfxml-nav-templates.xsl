@@ -10,6 +10,7 @@
   xmlns:sioc="http://rdfs.org/sioc/ns#"
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr"
@@ -36,7 +37,7 @@
       </p>
       <xsl:if test="$role='this-param' and skos:altLabel[@xml:lang=$interface-language]">
 	<p>
-	  Synonym: <xsl:value-of select="skos:altLabel[@xml:lang=$interface-language]"/>
+	  <i18n:text key="synonym">Synonym</i18n:text>: <xsl:value-of select="skos:altLabel[@xml:lang=$interface-language]"/>
 	</p>
       </xsl:if>
 

@@ -11,6 +11,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:owl="http://www.w3.org/2002/07/owl#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
 	version="1.0">
@@ -55,9 +56,9 @@
 
 	</xsl:choose>
 	
-	<h3>Relasjonstype</h3>
+	<h3><i18n:text key="relationtype">Relasjonstype</i18n:text></h3>
 	<table>
-	  <tr><th>Navn</th><th>Språk</th></tr>
+	  <tr><th><i18n:text key="name">Navn</i18n:text></th><th><i18n:text key="language">Språk</i18n:text></th></tr>
       <xsl:for-each select="./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label">
         <tr>
         <td><input type="text" name="rdfs:label-{position()}" size="20" value="{.}" /></td>
@@ -90,10 +91,10 @@
 
   <xsl:call-template name="controlbutton">
        <xsl:with-param name="privilege">relation.edit</xsl:with-param>
-       <xsl:with-param name="buttontext">Lagre relasjonstype</xsl:with-param>
+       <xsl:with-param name="buttontext"><i18n:text key="button.saverelation">Lagre relasjonstype</i18n:text></xsl:with-param>
   </xsl:call-template>
 
-  <input type="reset" value="Rens skjema"/>
+  <input type="reset" value="button.empty" i18n:attr="button.empty"/>
 	
       </fieldset>
       
