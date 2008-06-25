@@ -14,6 +14,7 @@ import java.util.Arrays;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.app.service.IndexService;
 
 /**
  * Form2SparqlService Tester.
@@ -406,6 +407,15 @@ public class Form2SparqlServiceTest extends TestCase {
     assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, actual);
   }
 
+  public void testConvertFor2SPARQLDoubleDualSELECT() {
+	  	IndexService indexService = new IndexService();
+	    String expectS = "SELECT ?object1 ?object2 WHERE {\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?object1 .\n?resource dct:publisher ?var2 .\n?var2 foaf:homepage ?object2 .\n}";
+	    String[] testArr = new String[]{"dct:subject/rdfs:label", "dct:publisher/foaf:homepage"};
+	    String actual = indexService.getFreetextToIndex(testArr, new String[]{"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>"});
+	    assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, actual);
+	  }
+
+  
   public void testConvertFor2SPARQLDoubleEmpty() {
     String expectS = "DESCRIBE ?resource ?var1 ?rest WHERE {\n?resource dct:subject ?var1 .\n?var1 rdfs:label \"\"\"Jet\"\"\" .\n\n?resource ?p ?rest .\n}";
     testMap.put("dct:subject/rdfs:label", new String[]{"Jet"});

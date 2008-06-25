@@ -182,6 +182,8 @@ public class Form2SparqlService {
                     	int freetextNo = freetextFields.indexOf(key)+1;
                     	n3Buffer.append("\n?free" + freetextNo + " pf:textMatch '+" + value + "*' .");
                     	thisObjectString = "?free" + freetextNo + " .";
+					} else if (value == null) {
+						thisObjectString = "?object" + values.length + " .";
 					} else {
 						thisObjectString = myRDFObject.toN3();
 					}
@@ -205,11 +207,15 @@ public class Form2SparqlService {
                 if (!"all-labels".equals(qname)) {
                     if (keys.length == j && !"".equals(value)) {
                         // Then we are on the actual form input value
-                        RDFObject myRDFObject = new RDFObject(value, language);
-                        if (freetextFields != null)  {
-                            myRDFObject.setFreetext(freetextFields.indexOf(key)+1);
-                        }
-                        n3Buffer.append(myRDFObject.toN3());
+                    	if (value == null) {
+                    		n3Buffer.append("?object" + values.length + " .");
+    					} else {
+    						RDFObject myRDFObject = new RDFObject(value, language);
+    						if (freetextFields != null)  {
+    							myRDFObject.setFreetext(freetextFields.indexOf(key)+1);
+	    					}
+    						n3Buffer.append(myRDFObject.toN3());
+    					}
                     } else { // Then we have to connect the object of this
                         // statement to the subject of the next
                         var = "?var" + variablecount + " "; // Might need more work

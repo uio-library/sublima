@@ -24,6 +24,8 @@ public class RDFObject implements Serializable {
 
 	private String value = null;
 
+	private int index = 0;
+
 	private String language = null;
 
 	private Integer freetext = null;
@@ -31,6 +33,16 @@ public class RDFObject implements Serializable {
 	public RDFObject() {
 	}
 
+	/**
+	 * Constructor where a variable with an index number can be returned.
+	 * 
+	 * @param value
+	 *            The value of the object.
+	 */
+	public RDFObject(Integer index) {
+		this.index = index;
+	}
+	
 	/**
 	 * Constructor where the value of the object can be entered.
 	 * 
@@ -109,6 +121,9 @@ public class RDFObject implements Serializable {
 	public String toN3() {
 		// TODO: Move this to a method of its own if other serialisations are
 		// required
+		if (index > 0) {
+			return "?object" + index;
+		}
 		StringBuffer n3Buffer = new StringBuffer();
 		// Very ad-hoc date detection, doesn't support negative years,
 		// fractions of seconds or timezones

@@ -4,6 +4,7 @@ import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.app.service.Form2SparqlService;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.query.*;
@@ -21,6 +22,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -160,4 +163,25 @@ public class IndexService {
     }
   }
 
+  public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
+	  Form2SparqlService form2SparqlService = new Form2SparqlService(prefixes);
+	  StringBuffer queryBuffer = new StringBuffer();
+	  queryBuffer.append(form2SparqlService.getPrefixString());
+	  queryBuffer.append("SELECT");
+	  for (int i=1;i<=fieldsToIndex.length;i++) {
+		  queryBuffer.append(" ?object");
+		  queryBuffer.append(i);
+	  }
+	  queryBuffer.append(" WHERE {");
+	  HashMap paramMap = new HashMap<String, String[]>();
+	  ArrayList nullValues = new ArrayList<String>();
+	  for (String field : fieldsToIndex) {
+		  nullValues.add(null);
+		  queryBuffer.append(form2SparqlService.convertFormField2N3(field, 
+				  (String[]) nullValues.toArray(new String [nullValues.size ()]) // Don't ask me why
+				  ));
+	  }
+	  return queryBuffer.toString();
+  }
+  
 }
