@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns="http://www.w3.org/1999/xhtml"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:c="http://xmlns.computas.com/cocoon">
-    <c:title>Sublima administrasjon</c:title>
+    <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -21,14 +22,13 @@
 
     <c:content>
         <c:text>
-            <h3>Lest inn data til databasen</h3>
-            <p>
+            <p><i18n:text key="upload.instructions">
                 Angi fil/URL og konverteringstypen i feltene nedenfor.<br/><br/>
                 Format for filer:<br/>
                 file:\Sti\til\fil\information-model.n3<br/>
                 <br/>
                 Format for URL:<br/>
-                http://www.urltilfil.com/information-model.n3<br/>
+                http://www.urltilfil.com/information-model.n3<br/></i18n:text>
             </p>
         </c:text>
       <c:upload>
@@ -36,7 +36,7 @@
       <table>
         <tr>
           <td align="right">
-            <label for="location">Lokasjon</label>
+            <label for="location"><i18n:text key="location">Lokasjon</i18n:text></label>
           </td>
           <td>
             <input id="location" type="text" name="location" size="40"/>
@@ -44,7 +44,7 @@
         </tr>
         <tr>
           <td align="right">
-            <label for="tittel">Type</label>
+            <label for="tittel"><i18n:text key="type">Type</i18n:text></label>
           </td>
           <td>
             <select name="type">
@@ -57,7 +57,7 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" value="Les inn"/>
+            <input type="submit" value="button.read" i18n:attr="value"/>
           </td>
         </tr>
       </table>

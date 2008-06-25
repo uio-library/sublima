@@ -10,9 +10,10 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
         xmlns="http://www.w3.org/1999/xhtml">
-  <c:title>Sublima administrasjon</c:title>
+  <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -41,10 +42,6 @@
 
   <c:content>
     <c:text>
-      <h3>Emner</h3>
-      <p>
-        Her kommer administrasjon av emner
-      </p>
     </c:text>
   </c:content>
 </c:page>

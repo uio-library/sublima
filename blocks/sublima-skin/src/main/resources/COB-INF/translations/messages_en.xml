@@ -16,6 +16,9 @@
   <message key="menu.new">New</message>
   <message key="menu.showall">Show all</message>
   <message key="menu.roles">Roles</message>
+  <message key="menu.join">Merge</message>
+  <message key="menu.theme">Theme topics</message>
+  <message key="menu.relations">Relations</message>
 
   <!-- search -->
   <message key="search.boolean.and">AND</message>
@@ -40,7 +43,7 @@
   <message key="topic.commonname">Common name</message>
 
   <!-- navigation -->
-   <message key="topic.navigation">Navigation</message>
+  <message key="topic.navigation">Navigation</message>
 
   <!-- validation -->
   <message key="validation.providedurlok">Provided URL validated.</message>
@@ -62,19 +65,26 @@
   <message key="admin.posteddate">Posted</message>
   <message key="admin.accepteddate">Accepted</message>
   <message key="admin.intro">On this page you can administer topics, resources, users and publishers. Choose which part of Sublima you would like to administer from the menu on the left.</message>
-  <i18n:text key="admin.intro">
-                På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima
-                du vil administrere fra linkene til venstre.</i18n:text>
 
-
-
-  <!-- tips -->
+    <!-- tips -->
   <message key="tips.heading"><h2>Don't find what you're looking for?</h2><br/><p>Please send us a tip if you find that information elsewhere, and we'll include it in our resources!</p></message>
   <message key="tips.suggestedtopics">Suggestions to suitable topics (comma separated)</message>
   <message key="tips.submit">Send</message>
+  <message key="tips.thanks">Thanks for the tip!</message>
 
   <!-- a-z -->
   <message key="az.heading">Alphabetical list of topics</message>
+
+  <!-- linkcheck -->
+  <message key="linkcheck.run">Perform linkcheck (NB! Might take a while)</message>
+
+  <!-- upload -->
+  <message key="upload.instructions">Name the file/URL and convertiontype in the fields below.<br/><br/>
+                Format for files:<br/>
+                file:\path\to\file\information-model.n3<br/>
+                <br/>
+                Format for URL:<br/>
+                http://www.urltofile.com/information-model.n3<br/></message>
 
   <!-- general -->
   <message key="sublima.footer">A Free Software Project supported by <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> and <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
@@ -109,12 +119,17 @@
   <message key="delete">Delete</message>
   <message key="setthemetopics">Set theme topics</message>
   <message key="jointopics">Merge topics</message>
+  <message key="relation">Relation</message>
   <message key="relations">Relations</message>
+  <message key="resource">Resource</message>
   <message key="resources">Resources</message>
   <message key="user">User</message>
   <message key="users">Users</message>
   <message key="roles">Roles</message>
   <message key="administration">administration</message>
+  <message key="suggested">Suggested</message>
+  <message key="back">Back</message>
+  <message key="location">Location</message>
 
   <!-- buttons -->
   <message key="button.saveresource">Save resource</message>
@@ -127,5 +142,8 @@
   <message key="button.saverelation">Save relation</message>
   <message key="button.saverole">Save role</message>
   <message key="button.next">Next</message>
+  <message key="button.read">Read</message>
 
 </catalogue>
+
+

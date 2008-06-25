@@ -7,14 +7,14 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
         xmlns="http://www.w3.org/1999/xhtml">
 
-    <c:title>Sublima administrasjon</c:title>
-    <!--c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode-->
+    <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
     <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>
 
     <c:breadcrumbs>
@@ -38,7 +38,7 @@
     <c:content>
 
         <c:text>
-            <h3>Ressurs</h3>
+            <h3><i18n:text key="resource">Ressurs</i18n:text></h3>
         </c:text>
         <c:resourceprereg>
 

@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:c="http://xmlns.computas.com/cocoon">
-    <c:title>Sublima administrasjon</c:title>
+    <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
         <c:breadcrumb title="Admin">admin</c:breadcrumb>
-        <c:breadcrumb title="Lenkesjekk">admin/lenkesjekk/</c:breadcrumb>
+        <c:breadcrumb title="menu.link" i18n:attr="title">admin/lenkesjekk/</c:breadcrumb>
     </c:breadcrumbs>
 
     <c:menu>
-        <c:menuelement title="Emner" link="admin/emner/"/>
-        <c:menuelement title="Ressurser" link="admin/ressurser/"/>
-        <c:menuelement title="Brukere" link="admin/brukere/"/>
-        <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-        <c:menuelement title="Database" link="admin/database/"/>
+        <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
+        <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+        <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
+        <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+        <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+        <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
     </c:menu>
 
     <c:content>
         <c:text>
-            <h3>Lenkesjekk</h3>
+            <h3><i18n:text key="link">Lenkesjekk</i18n:text></h3>
             <br/>
             <br/>
-            <a href="{$baseurl}/admin/lenkesjekk/run">Kjør lenkesjekk (NB! Kan ta lang tid)</a>
+            <a href="{$baseurl}/admin/lenkesjekk/run"><i18n:text key="linkcheck.run">Kjør lenkesjekk (NB! Kan ta lang tid)</i18n:text></a>
         </c:text>
         <c:linkcheck>
             <c:status_check>

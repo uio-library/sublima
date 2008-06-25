@@ -16,6 +16,9 @@
   <message key="menu.new">Ny</message>
   <message key="menu.showall">Vis alle</message>
   <message key="menu.roles">Roller</message>
+  <message key="menu.join">Slå sammen</message>
+  <message key="menu.theme">Temaemner</message>
+  <message key="menu.relations">Relasjoner</message>
 
   <!-- search -->
   <message key="search.boolean.and">OG</message>
@@ -67,6 +70,21 @@
   <message key="tips.heading"><h2>Fant du ikke det du lette etter?</h2><br/><p>Tips oss gjerne dersom du finner sider som du tror vi kunne satt pris på!</p></message>
   <message key="tips.suggestedtopics">Forslag til emner på ressursen (kommaseparert)</message>
   <message key="tips.submit">Send inn</message>
+  <message key="tips.thanks">Thanks for the tip!</message>
+
+  <!-- a-z -->
+  <message key="az.heading">Alfabetisk navigering i emnene</message>
+
+  <!-- linkcheck -->
+  <message key="linkcheck.run">Kjør lenkesjekk (NB! Kan ta lang tid)</message>
+
+  <!-- upload -->
+  <message key="upload.instructions">Angi fil/URL og konverteringstypen i feltene nedenfor.<br/><br/>
+                Format for filer:<br/>
+                file:\Sti\til\fil\information-model.n3<br/>
+                <br/>
+                Format for URL:<br/>
+                http://www.urltilfil.com/information-model.n3<br/></message>
 
   <!-- general -->
   <message key="sublima.footer">Et fri programvareprosjekt støttet av <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> og <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
@@ -100,11 +118,16 @@
   <message key="delete">Slette</message>
   <message key="setthemetopics">Sette temaemner</message>
   <message key="jointopics">Koble emner</message>
+  <message key="relation">Relasjon</message>
   <message key="relations">Relasjoner</message>
+  <message key="resource">Ressurs</message>
   <message key="resources">Ressurser</message>
   <message key="user">Bruker</message>
   <message key="users">Brukere</message>
   <message key="administration">administrasjon</message>
+  <message key="suggested">Foreslått</message>
+  <message key="back">Tilbake</message>
+  <message key="location">Lokasjon</message>
 
   <!-- buttons -->
   <message key="button.saveresource">Lagre ressurs</message>
@@ -117,5 +140,6 @@
   <message key="button.saverelation">Lagre relasjon</message>
   <message key="button.saverole">Lagre rolle</message>
   <message key="button.next">Neste</message>
+  <message key="button.read">Les inn</message>
 
 </catalogue>

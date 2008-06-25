@@ -10,6 +10,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
         xmlns="http://www.w3.org/1999/xhtml">
     <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
@@ -19,29 +20,29 @@
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
         <c:breadcrumb title="Admin">admin</c:breadcrumb>
-        <c:breadcrumb title="Emner">admin/emner/</c:breadcrumb>
+        <c:breadcrumb title="menu.topic" i18n:attr="title">admin/emner/</c:breadcrumb>
     </c:breadcrumbs>
 
     <c:menu>
-        <c:menuelement title="Emner" link="admin/emner/">
-            <c:childmenuelement title="Nytt" link="admin/emner/nytt"/>
-            <c:childmenuelement title="Vis alle" link="admin/emner/alle"/>
-            <c:childmenuelement title="Slå sammen" link="admin/emner/koble"/>
-          <c:childmenuelement title="Temaemner" link="admin/emner/tema"/>
-          <c:childmenuelement title="Relasjoner" link="admin/emner/relasjoner/"/>
-        </c:menuelement>
-        <c:menuelement title="Ressurser" link="admin/ressurser/"/>
-        <c:menuelement title="Brukere" link="admin/brukere/"/>
-        <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-        <c:menuelement title="Database" link="admin/database/"/>
+      <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title">
+          <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/emner/nytt"/>
+          <c:childmenuelement title="menu.showall" i18n:attr="title" link="admin/emner/alle"/>
+          <c:childmenuelement title="menu.join" i18n:attr="title" link="admin/emner/koble"/>
+          <c:childmenuelement title="menu.theme" i18n:attr="title" link="admin/emner/tema"/>
+          <c:childmenuelement title="menu.relations" i18n:attr="title" link="admin/emner/relasjoner/"/>
+      </c:menuelement>
+      <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+      <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
+      <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+      <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+      <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
     </c:menu>
 
     <c:content>
         <c:allanguages><jx:out value="#{allanguages}" xmlize="true"/></c:allanguages>
 
         <c:text>
-            <h3>Emne</h3>
+            <h3><i18n:text key="topic">Emne</i18n:text></h3>
             <br/>
         </c:text>
 

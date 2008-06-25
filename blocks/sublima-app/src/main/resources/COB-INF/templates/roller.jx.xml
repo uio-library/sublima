@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns="http://www.w3.org/1999/xhtml"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:c="http://xmlns.computas.com/cocoon">
-    <c:title>Sublima administrasjon</c:title>
+    <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -29,10 +30,7 @@
 
     <c:content>
         <c:text>
-            <h3>Roller</h3>
-            <p>
-                Her kommer administrasjon av roller
-            </p>
+            <h3><i18n:text key="roles">Roller</i18n:text></h3>
         </c:text>
     </c:content>
 </c:page>

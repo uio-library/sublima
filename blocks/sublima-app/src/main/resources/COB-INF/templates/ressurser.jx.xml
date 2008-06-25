@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:c="http://xmlns.computas.com/cocoon">
-    <c:title>Sublima administrasjon</c:title>
+    <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -24,7 +25,7 @@
 
     <c:content>
         <c:text>
-            <h3>Ressurser</h3>
+            <h3><i18n:text key="resources">Ressurser</i18n:text></h3>
             <p>
             </p>
         </c:text>

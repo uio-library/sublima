@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:c="http://xmlns.computas.com/cocoon">
-  <c:title>Sublima administrasjon</c:title>
+  <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>
     <c:breadcrumb title="Admin">admin</c:breadcrumb>
-    <c:breadcrumb title="Emner">admin/emner/</c:breadcrumb>
-    <c:breadcrumb title="Emner">admin/emner/alle</c:breadcrumb>
+    <c:breadcrumb title="menu.topic" i18n:attr="title">admin/emner/</c:breadcrumb>
+    <c:breadcrumb title="menu.showall" i18n:attr="title">admin/emner/alle</c:breadcrumb>
   </c:breadcrumbs>
 
   <c:menu>
-    <c:menuelement title="Emner" link="admin/emner/">
-      <c:childmenuelement title="Nytt" link="admin/emner/nytt"/>
-      <c:childmenuelement title="Vis alle" link="admin/emner/alle"/>
-      <c:childmenuelement title="Slå sammen" link="admin/emner/koble"/>
-      <c:childmenuelement title="Temaemner" link="admin/emner/tema"/>
-      <c:childmenuelement title="Relasjoner" link="admin/emner/relasjoner/"/>
-    </c:menuelement>
-    <c:menuelement title="Ressurser" link="admin/ressurser/"/>
-    <c:menuelement title="Brukere" link="admin/brukere/"/>
-    <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-    <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-    <c:menuelement title="Database" link="admin/database/"/>
-  </c:menu>
+      <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title">
+          <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/emner/nytt"/>
+          <c:childmenuelement title="menu.showall" i18n:attr="title" link="admin/emner/alle"/>
+          <c:childmenuelement title="menu.join" i18n:attr="title" link="admin/emner/koble"/>
+          <c:childmenuelement title="menu.theme" i18n:attr="title" link="admin/emner/tema"/>
+          <c:childmenuelement title="menu.relations" i18n:attr="title" link="admin/emner/relasjoner/"/>
+      </c:menuelement>
+      <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+      <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
+      <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+      <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+      <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
+    </c:menu>
 
   <c:content>
     <c:text>
-      <h3>Emner - alle</h3>
     </c:text>
 
     <c:topics>

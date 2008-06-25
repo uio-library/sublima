@@ -8,6 +8,7 @@
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
@@ -19,8 +20,8 @@
   </c:content>
 
   <c:tips>
-    <h3>Takk for tipset!</h3>
-    <a href="{$baseurl}">Tilbake</a>
+    <h3><i18n:text key="tips.thanks">Takk for tipset!</i18n:text></h3>
+    <a href="{$baseurl}"><i18n:text key="back">Tilbake</i18n:text></a>
   </c:tips>
 
 </c:page>
