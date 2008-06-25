@@ -169,13 +169,13 @@ public class Form2SparqlService {
 	public String convertFormField2N3(String key, String[] values) {
 		StringBuffer n3Buffer = new StringBuffer();
 		String[] keys = key.split("/");
-		for (String value : values) { // TODO low-pri: Optimize to comma-separate values.
-			String var = "?resource "; // The first SPARQL variable will always be resource
-			int j = 0;
-			for (String qname : keys) {
-				j++;
-                if ("dct:subject/all-labels".equals(key) && "all-labels".equals(qname)) {
-                    logger.debug("Will expand the search to include all labels");
+		String var = "?resource "; // The first SPARQL variable will always be resource
+		int j = 0;
+		for (String qname : keys) {
+			j++;
+			if ("dct:subject/all-labels".equals(key) && "all-labels".equals(qname)) {
+				logger.debug("Will expand the search to include all labels");
+				for (String value : values) {
                     RDFObject myRDFObject = new RDFObject(value, language);
                     String thisObjectString = null;
                     if (freetextFields != null && freetextFields.contains("dct:subject/all-labels"))  {
@@ -185,7 +185,7 @@ public class Form2SparqlService {
 					} else if (value == null) {
 						thisObjectString = "?object" + values.length + " .";
 					} else {
-						thisObjectString = myRDFObject.toN3();
+						thisObjectString = myRDFObject.toN3() + " .";
 					}
                     n3Buffer.append("\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:prefLabel ");
                     n3Buffer.append(thisObjectString);
@@ -194,29 +194,42 @@ public class Form2SparqlService {
                     n3Buffer.append(" }\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:hiddenLabel ");
                     n3Buffer.append(thisObjectString);
                     n3Buffer.append(" }\nFILTER ( bound( "+ var +") )\n");
-                } else if (!("dct:subject".equals(qname) && "dct:subject/all-labels".equals(key))) {
-                    n3Buffer.append("\n" + var + qname + " ");
-                }
-                if ("".equals(value)) { // Then, it is a block with no value, which will be caught by a catch-all
-					return "\n";
 				}
-				if (!subjectVarList.contains(var)) {
-					subjectVarList.add(var);
-				}
+			} else if (!("dct:subject".equals(qname) && "dct:subject/all-labels".equals(key))) {
+				n3Buffer.append("\n" + var + qname + " ");
+			}
+			if ("".equals(values[0])) { // Then, it is a block with no value, which will be caught by a catch-all
+				return "\n";
+			}
+			if (!subjectVarList.contains(var)) {
+				subjectVarList.add(var);
+			}
 
-                if (!"all-labels".equals(qname)) {
-                    if (keys.length == j && !"".equals(value)) {
-                        // Then we are on the actual form input value
-                    	if (value == null) {
-                    		n3Buffer.append("?object" + values.length + " .");
+			if (!"all-labels".equals(qname)) {
+				if (keys.length == j && !"".equals(values[0])) {
+					// Then we are on the actual form input value
+					int i = 0;
+					for (String value : values) {
+						i++;
+						if (value == null) {
+							if (i == 1) {	
+								n3Buffer.append("?object" + values.length);
+								n3Buffer.append(" .");
+							}
     					} else {
     						RDFObject myRDFObject = new RDFObject(value, language);
     						if (freetextFields != null)  {
     							myRDFObject.setFreetext(freetextFields.indexOf(key)+1);
 	    					}
-    						n3Buffer.append(myRDFObject.toN3());
+    						n3Buffer.append(myRDFObject.toN3()); 
+    						if (i == values.length) {
+    							n3Buffer.append(" .");
+    						} else {	
+    							n3Buffer.append(", ");
+    						}
     					}
-                    } else { // Then we have to connect the object of this
+                    }
+				} else { // Then we have to connect the object of this
                         // statement to the subject of the next
                         var = "?var" + variablecount + " "; // Might need more work
                         // to ensure uniqueness
@@ -228,7 +241,6 @@ public class Form2SparqlService {
                     }
                 }
 			}
-		}
 		logger.trace("Returning N3: " + n3Buffer.toString());
 		return n3Buffer.toString();
 	}
@@ -399,7 +411,7 @@ public class Form2SparqlService {
 						if (!"".equalsIgnoreCase(value) && value != null) {
 							RDFObject myRDFObject = new RDFObject(value, language);
 							sparqlQueryBuffer.append("<" + SparulSubjectURI + "> " + property
-								+ " " + myRDFObject.toN3() + "\n");
+								+ " " + myRDFObject.toN3() + " .\n");
 						}
 					}
 				} else { // Then, the language is included as an URI in one of the values
@@ -417,7 +429,7 @@ public class Form2SparqlService {
 					if (!"".equalsIgnoreCase(object)) {	
 						RDFObject myRDFObject = new RDFObject(object, language);
 						sparqlQueryBuffer.append("<" + SparulSubjectURI + "> " + property	
-								+ " " + myRDFObject.toN3() + "\n");	
+								+ " " + myRDFObject.toN3() + " .\n");	
 					}
 				}	
 			}

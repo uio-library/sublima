@@ -130,24 +130,23 @@ public class RDFObject implements Serializable {
 		if (getValue().matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}")) {
 			logger.trace("Found xsd:dateTime " + getValue());
 			n3Buffer.append("\"" + getValue()
-					+ "\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .");
+					+ "\"^^<http://www.w3.org/2001/XMLSchema#dateTime>");
 		}
 		// To check if we have a URI, use regexp from RFC 2396, modified
 		else if (getValue().matches(
 				"^([^:/?#]+):(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?")) {
 			logger.debug("Found URI " + getValue());
-			n3Buffer.append("<" + getValue() + "> .");
+			n3Buffer.append("<" + getValue() + ">");
 		} else { // We have a literal
 			logger.trace("Found Literal " + getValue());
 			if (freetext != null && freetext > 0) { // Should this literal be treated as a free text?
 				n3Buffer.append("?free" + freetext + " .\n"); // The actual previous object
-				n3Buffer.append("?free" + freetext + " pf:textMatch '+" + getValue() + "*' .");
+				n3Buffer.append("?free" + freetext + " pf:textMatch '+" + getValue() + "*'");
 			} else {
 				n3Buffer.append("\"\"\"" + getValue() + "\"\"\"");
 				if (language != null) {
 					n3Buffer.append("@" + language);
 				}
-				n3Buffer.append(" .");
 			}
 		}
 		return n3Buffer.toString();

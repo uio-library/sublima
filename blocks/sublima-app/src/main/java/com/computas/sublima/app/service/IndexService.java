@@ -181,6 +181,7 @@ public class IndexService {
 				  (String[]) nullValues.toArray(new String [nullValues.size ()]) // Don't ask me why
 				  ));
 	  }
+	  queryBuffer.append("\n}");
 	  return queryBuffer.toString();
   }
   
