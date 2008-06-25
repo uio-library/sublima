@@ -12,7 +12,6 @@
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
-        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml">
 
     <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>

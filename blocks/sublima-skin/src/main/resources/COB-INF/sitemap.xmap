@@ -5,7 +5,7 @@
 
   <map:components>
      <map:transformers>
-      <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
+      <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer" logger="sitemap.transformer.i18n">
 
      <catalogues default="messages">
        <catalogue id="messages" name="messages" location="translations" />
@@ -34,6 +34,9 @@
       <map:match pattern="admin-styling">
         <map:act type="locale">
           <map:generate src="service-consumer:"/>
+          <map:transform type="i18n">
+            <map:parameter name="locale" value="{language}"/>
+          </map:transform>
           <map:transform src="transform/admin-styling.xslt">
             <map:parameter name="baseurl" value="{request:contextPath}"/>
             <map:parameter name="locale" value="{language}"/>

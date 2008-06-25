@@ -66,7 +66,7 @@
 	   </xsl:if -->
       
       <p id="layoutdims">
-	<a href="{$baseurl}/login"><i18n:text key="admin.login">Login</i18n:text></a>
+	<a href="{$baseurl}/login">Admin</a>
       </p>
     </div>
   </xsl:template>

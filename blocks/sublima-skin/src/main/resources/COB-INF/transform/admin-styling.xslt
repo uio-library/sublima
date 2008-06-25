@@ -60,6 +60,7 @@
     <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
       <ul>
         <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
+          <xsl:value-of select="."/>
           <li>
             <xsl:value-of select="."/>
             <br/>
