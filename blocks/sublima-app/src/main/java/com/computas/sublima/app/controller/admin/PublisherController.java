@@ -1,4 +1,4 @@
-package com.computas.sublima.app.controller;
+package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
@@ -108,7 +108,7 @@ public class PublisherController implements StatelessAppleController {
     String description = req.getCocoonRequest().getParameter("dct:description");
 
     if ("".equalsIgnoreCase(publishername) || publishername == null) {
-      messageBuffer.append("<c:message>Utgivernavn må angis</c:message>\n");
+      messageBuffer.append("<c:message>Utgivernavn mï¿½ angis</c:message>\n");
     } else {
 
       // Check if a publisher by that name already exists
@@ -232,7 +232,7 @@ public class PublisherController implements StatelessAppleController {
     }
 
     if (emptyName) {
-      messageBuffer.append("<c:message>Navn kan ikke være blankt</c:message>\n");
+      messageBuffer.append("<c:message>Navn kan ikke vï¿½re blankt</c:message>\n");
     } else {
 
       for (int i = 0; i < filterList.size(); i++) {

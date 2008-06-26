@@ -22,6 +22,7 @@
         <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
         <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
         <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
+
     </c:menu>
 
     <c:content>

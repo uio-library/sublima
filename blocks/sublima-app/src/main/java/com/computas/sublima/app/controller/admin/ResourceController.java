@@ -1,4 +1,4 @@
-package com.computas.sublima.app.controller;
+package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.controller.admin.AdminController;
 import com.computas.sublima.app.service.AdminService;
@@ -519,7 +519,7 @@ public class ResourceController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:title")) || req.getCocoonRequest().getParameter("dct:title") == null) {
-      validationMessages.append("<c:message><i18n:text key=\"empty_title\">uoversatt</i18n:text></c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"validation.topic.notitle\">uoversatt</i18n:text></c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url").trim()) || req.getCocoonRequest().getParameter("sub:url").trim() == null) {

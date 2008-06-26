@@ -50,7 +50,6 @@
 	      </li>
 	-->
       </ul>
-      
  
             <p id="layoutdims">
             <!--xsl:for-each select="c:page/c:breadcrumbs/c:breadcrumb">

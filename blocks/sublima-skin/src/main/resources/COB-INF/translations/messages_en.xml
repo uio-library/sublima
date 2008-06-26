@@ -131,6 +131,7 @@
   <message key="suggested">Suggested</message>
   <message key="back">Back</message>
   <message key="location">Location</message>
+  <message key="search">Search</message>
 
   <!-- buttons -->
   <message key="button.saveresource">Save resource</message>

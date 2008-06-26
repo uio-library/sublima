@@ -1,4 +1,4 @@
-package com.computas.sublima.app.controller;
+package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.controller.admin.AdminController;
