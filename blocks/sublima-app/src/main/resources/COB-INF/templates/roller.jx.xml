@@ -13,20 +13,20 @@
     </c:breadcrumbs>
 
     <c:menu>
-        <c:menuelement title="Emner" link="admin/emner/"/>
-        <c:menuelement title="Ressurser" link="admin/ressurser/"/>
-        <c:menuelement title="Brukere" link="admin/brukere/">
-          <c:childmenuelement title="Ny" link="admin/brukere/ny"/>
-          <c:childmenuelement title="Vis alle" link="admin/brukere/alle"/>
-          <c:childmenuelement title="Roller" link="admin/brukere/roller/">
-            <c:childmenuelement title="Ny" link="admin/brukere/roller/rolle"/>
-            <c:childmenuelement title="Vis alle" link="admin/brukere/roller/alle"/>
-          </c:childmenuelement>
-        </c:menuelement>
-        <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-        <c:menuelement title="Database" link="admin/database/"/>
-    </c:menu>
+    <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
+    <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+    <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title">
+      <c:childmenuelement title="menu.new" link="admin/brukere/ny" i18n:attr="title"/>
+      <c:childmenuelement title="menu.showall" link="admin/brukere/alle" i18n:attr="title"/>
+      <c:childmenuelement title="menu.roles" link="admin/brukere/roller/" i18n:attr="title">
+        <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/brukere/roller/rolle"/>
+        <c:childmenuelement title="menu.showall" i18n:attr="title" link="admin/brukere/roller/alle"/>
+      </c:childmenuelement>
+    </c:menuelement>
+    <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+    <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+    <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
+  </c:menu>
 
     <c:content>
         <c:text>

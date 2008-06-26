@@ -19,6 +19,7 @@
   <message key="menu.join">Slå sammen</message>
   <message key="menu.theme">Temaemner</message>
   <message key="menu.relations">Relasjoner</message>
+  <message key="menu.suggested">Foreslåtte</message>
 
   <!-- search -->
   <message key="search.boolean.and">OG</message>

@@ -6,19 +6,13 @@
         xmlns:sparql="http://www.w3.org/2005/sparql-results#">
     <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
-    <c:breadcrumbs>
-        <c:breadcrumb title="Sublima"></c:breadcrumb>
-        <c:breadcrumb title="Admin">admin</c:breadcrumb>
-        <c:breadcrumb title="Utgivere">admin/utgivere/</c:breadcrumb>
-    </c:breadcrumbs>
-
-    <c:menu>
-        <c:menuelement title="Emner" link="admin/emner/"/>
-        <c:menuelement title="Ressurser" link="admin/ressurser/"/>
-        <c:menuelement title="Brukere" link="admin/brukere/"/>
-        <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-        <c:menuelement title="Database" link="admin/database/"/>
+     <c:menu>
+        <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
+        <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+        <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
+        <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+        <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+        <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
     </c:menu>
 
     <c:content>

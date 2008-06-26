@@ -53,11 +53,11 @@
       
  
             <p id="layoutdims">
-            <xsl:for-each select="c:page/c:breadcrumbs/c:breadcrumb">
+            <!--xsl:for-each select="c:page/c:breadcrumbs/c:breadcrumb">
               <a>
                 <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/></xsl:attribute><xsl:value-of select="@title"/></a>
               <xsl:text> | </xsl:text>
-            </xsl:for-each>
+            </xsl:for-each-->
 
           </p>
 	   

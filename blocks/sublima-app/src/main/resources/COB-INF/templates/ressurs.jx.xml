@@ -25,15 +25,15 @@
     </c:breadcrumbs>
 
     <c:menu>
-        <c:menuelement title="Emner" link="admin/emner/"/>
-        <c:menuelement title="Ressurser" link="admin/ressurser/">
-            <c:childmenuelement title="Ny" link="admin/ressurser/ny"/>
-            <c:childmenuelement title="Foreslåtte" link="admin/ressurser/foreslaatte"/>
-        </c:menuelement>
-        <c:menuelement title="Brukere" link="admin/brukere/"/>
-        <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-        <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-        <c:menuelement title="Database" link="admin/database/"/>
+      <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
+      <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title">
+        <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/ressurser/ny"/>
+        <c:childmenuelement title="menu.suggested" i18n:attr="title" link="admin/ressurser/foreslaatte"/>
+      </c:menuelement>
+      <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
+      <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+      <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+      <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
     </c:menu>
 
     <c:content>

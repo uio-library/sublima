@@ -14,20 +14,19 @@
   </c:breadcrumbs>
 
   <c:menu>
-    <c:menuelement title="Emner" link="admin/emner/">
-      <c:childmenuelement title="Nytt" link="admin/emner/nytt"/>
-      <c:childmenuelement title="Vis alle" link="admin/emner/alle"/>
-      <c:childmenuelement title="Slå sammen" link="admin/emner/koble"/>
-      <c:childmenuelement title="Temaemner" link="admin/emner/tema"/>
-      <c:childmenuelement title="Relasjoner" link="admin/emner/relasjoner/"/>
-    </c:menuelement>
-    <c:menuelement title="Ressurser" link="admin/ressurser/"/>
-    <c:menuelement title="Brukere" link="admin/brukere/"/>
-    <c:menuelement title="Utgivere" link="admin/utgivere/"/>
-    <c:menuelement title="Lenkesjekk" link="admin/lenkesjekk/"/>
-    <c:menuelement title="Database" link="admin/database/"/>
-  </c:menu>
-
+      <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title">
+          <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/emner/nytt"/>
+          <c:childmenuelement title="menu.showall" i18n:attr="title" link="admin/emner/alle"/>
+          <c:childmenuelement title="menu.join" i18n:attr="title" link="admin/emner/koble"/>
+          <c:childmenuelement title="menu.theme" i18n:attr="title" link="admin/emner/tema"/>
+          <c:childmenuelement title="menu.relations" i18n:attr="title" link="admin/emner/relasjoner/"/>
+      </c:menuelement>
+      <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+      <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
+      <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+      <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+      <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
+    </c:menu>
   <c:content>
 
     <c:text>

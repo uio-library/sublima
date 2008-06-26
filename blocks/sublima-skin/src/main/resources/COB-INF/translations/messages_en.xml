@@ -19,6 +19,7 @@
   <message key="menu.join">Merge</message>
   <message key="menu.theme">Theme topics</message>
   <message key="menu.relations">Relations</message>
+  <message key="menu.suggested">Suggested</message>
 
   <!-- search -->
   <message key="search.boolean.and">AND</message>
