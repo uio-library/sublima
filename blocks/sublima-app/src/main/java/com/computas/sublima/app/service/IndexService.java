@@ -8,6 +8,8 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.query.QuerySolutionMap;
 import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.LARQ;
@@ -24,6 +26,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -163,8 +166,18 @@ public class IndexService {
     }
   }
 
-  public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
+  public String getQueryForIndex(String[] fieldsToIndex, String[] prefixes) {
 	  Form2SparqlService form2SparqlService = new Form2SparqlService(prefixes);
+	  return getTheIndexQuery(fieldsToIndex, form2SparqlService);
+  }
+ 
+  public String getQueryForIndex(String[] fieldsToIndex, String[] prefixes, String resource) {
+	  Form2SparqlService form2SparqlService = new Form2SparqlService(prefixes);
+	  form2SparqlService.setResourceSubject(resource);
+	  return getTheIndexQuery(fieldsToIndex, form2SparqlService);
+  }
+  
+  private String getTheIndexQuery(String[] fieldsToIndex, Form2SparqlService form2SparqlService) {
 	  StringBuffer queryBuffer = new StringBuffer();
 	  queryBuffer.append(form2SparqlService.getPrefixString());
 	  queryBuffer.append("SELECT");
@@ -173,7 +186,6 @@ public class IndexService {
 		  queryBuffer.append(i);
 	  }
 	  queryBuffer.append(" WHERE {");
-	  HashMap paramMap = new HashMap<String, String[]>();
 	  ArrayList nullValues = new ArrayList<String>();
 	  for (String field : fieldsToIndex) {
 		  nullValues.add(null);
@@ -185,4 +197,37 @@ public class IndexService {
 	  return queryBuffer.toString();
   }
   
+  
+  public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
+	  DatabaseService myDbService = new DatabaseService();
+	  IDBConnection connection = myDbService.getConnection();
+	  ModelRDB model = ModelRDB.open(connection);
+	  
+	  String queryString = getQueryForIndex(fieldsToIndex, prefixes);
+
+	  Query query = QueryFactory.create(queryString);
+	  QueryExecution qExec = QueryExecutionFactory.create(query, model);
+	  ResultSet resultSet = qExec.execSelect();
+	  //model.close();
+
+	  try {
+		  connection.close();
+	  } catch (SQLException e) {
+		  e.printStackTrace();
+	  }
+
+	  logger.info("SUBLIMA: getFreetextToIndex() --> Indexing - Fetched all literals that we need to index");
+	  StringBuffer resultBuffer = new StringBuffer();
+	  while (resultSet.hasNext()) {
+	       QuerySolution soln = resultSet.nextSolution();
+	       Iterator<String> it = soln.varNames();
+	       while (it.hasNext()) {
+	    	   String var = it.next();
+	    	   Literal l = soln.getLiteral(var);
+	    	   resultBuffer.append("\n");
+	    	   resultBuffer.append(l.getString());
+	       }
+	  }
+	  return resultBuffer.toString();
+	}
 }
