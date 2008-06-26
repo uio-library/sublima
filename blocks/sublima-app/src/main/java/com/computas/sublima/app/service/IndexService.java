@@ -198,13 +198,20 @@ public class IndexService {
   }
   
   
+  public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes, String resource) {
+	  String queryString = getQueryForIndex(fieldsToIndex, prefixes, resource);
+	  return getTheFreetextToIndex(queryString);
+  }
   public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
+	  String queryString = getQueryForIndex(fieldsToIndex, prefixes);
+	  return getTheFreetextToIndex(queryString);  
+  }
+  
+  private String getTheFreetextToIndex(String queryString) {
 	  DatabaseService myDbService = new DatabaseService();
 	  IDBConnection connection = myDbService.getConnection();
 	  ModelRDB model = ModelRDB.open(connection);
 	  
-	  String queryString = getQueryForIndex(fieldsToIndex, prefixes);
-
 	  Query query = QueryFactory.create(queryString);
 	  QueryExecution qExec = QueryExecutionFactory.create(query, model);
 	  ResultSet resultSet = qExec.execSelect();
