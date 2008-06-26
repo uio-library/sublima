@@ -45,6 +45,8 @@ public class Form2SparqlService {
 	
 	private String language;
 	
+	private String resourceSubject = "?resource ";
+	
 	private String SparulSubjectURI;
 
 	private List<String> prefixes = new ArrayList<String>();
@@ -88,6 +90,27 @@ public class Form2SparqlService {
 	public String getLanguage() {
 		return language;
 	}
+	
+   /**
+	 * Can be used to set the resource string, i.e. the "top subject" of the query. If not 
+	 * set, it will default to "?resource" 
+	 *
+	 * @param subject
+	 *            The subject string
+	 */
+	public void setResourceSubject(String subject) {
+		resourceSubject = subject + " ";
+	}
+
+	/**
+	 * Returns the resourceSubject
+	 * 
+	 * @return the subject string
+	 */
+	public String getResourceSubject() {
+		return resourceSubject.trim();
+	}
+
 	
 	/**
 	 * Returns the Subject URI created or used by the SPARQL Update query just created.
@@ -169,7 +192,7 @@ public class Form2SparqlService {
 	public String convertFormField2N3(String key, String[] values) {
 		StringBuffer n3Buffer = new StringBuffer();
 		String[] keys = key.split("/");
-		String var = "?resource "; // The first SPARQL variable will always be resource
+		String var = resourceSubject; // The first SPARQL variable will always be resource
 		int j = 0;
 		for (String qname : keys) {
 			j++;
@@ -187,11 +210,11 @@ public class Form2SparqlService {
 					} else {
 						thisObjectString = myRDFObject.toN3() + " .";
 					}
-                    n3Buffer.append("\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:prefLabel ");
+                    n3Buffer.append("\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var +".\n"+ var +"skos:prefLabel ");
                     n3Buffer.append(thisObjectString);
-                    n3Buffer.append(" }\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:altLabel ");
+                    n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var +".\n"+ var +"skos:altLabel ");
                     n3Buffer.append(thisObjectString);
-                    n3Buffer.append(" }\nOPTIONAL {\n?resource dct:subject " + var +".\n"+ var +"skos:hiddenLabel ");
+                    n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var +".\n"+ var +"skos:hiddenLabel ");
                     n3Buffer.append(thisObjectString);
                     n3Buffer.append(" }\nFILTER ( bound( "+ var +") )\n");
 				}
@@ -319,7 +342,7 @@ public class Form2SparqlService {
 			
 		sparqlQueryBuffer.append("?rest WHERE {");
 		sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
-		sparqlQueryBuffer.append("\n?resource ?p ?rest .");
+		sparqlQueryBuffer.append("\n" + resourceSubject + "?p ?rest .");
 		sparqlQueryBuffer.append("\n}");
 		sparqlQueryBuffer.insert(0, getPrefixString());
 		String returnString = sparqlQueryBuffer.toString();
@@ -451,13 +474,13 @@ public class Form2SparqlService {
 	 * 
 	 */
     public String freeTextQuery (String searchstring, boolean deepsearch) {
-        if (!subjectVarList.contains("?resource ")) {
-            subjectVarList.add("?resource ");
+        if (!subjectVarList.contains(resourceSubject)) {
+            subjectVarList.add(resourceSubject);
         }
         String result = StringUtils.join("\n", new String[]{
 					"\n  ?lit pf:textMatch ( '" + searchstring + "' 100) .",
 					"  {",
-					"    ?resource ?p1 ?lit;",
+					"    " + resourceSubject + "?p1 ?lit;",
 					"              dct:subject ?subject ;",
 					"              dct:publisher ?publisher "});
         if (deepsearch) {
@@ -466,9 +489,9 @@ public class Form2SparqlService {
         result = result +             ".\n  }" +  StringUtils.join("\n", new String[]{
 					"\n  UNION",
 					"  {",
-					"      ?resource dct:subject ?subject1 .",
+					"      " + resourceSubject + "dct:subject ?subject1 .",
 					"      ?subject1 ?p2 ?lit .",
-					"      ?resource dct:subject ?subject ;",
+					"      " + resourceSubject + "dct:subject ?subject ;",
 					"                dct:publisher ?publisher "});
         if (deepsearch) {
             result = result + ";\n                link:request ?request ";
@@ -476,17 +499,17 @@ public class Form2SparqlService {
         result = result +             ".\n  }" +  StringUtils.join("\n", new String[]{
                     "\n  UNION",
 					"  {",
-					"      ?resource dct:publisher ?publisher1 .",
+					"      " + resourceSubject + "dct:publisher ?publisher1 .",
 					"      ?publisher1 ?p2 ?lit .",
-					"      ?resource dct:subject ?subject ;",
+					"      " + resourceSubject + "dct:subject ?subject ;",
 					"                dct:publisher ?publisher "});
         if (deepsearch) {
             result = result + StringUtils.join("\n", new String[]{
                     ";\n                link:request ?request .",
                     "  }\n  UNION\n  {",
-                    "      ?resource link:request ?request1 .",
+                    "      " + resourceSubject + "link:request ?request1 .",
                     "      ?request1 sub:stripped ?lit .",
-                    "      ?resource dct:subject ?subject ;",
+                    "      " + resourceSubject + "dct:subject ?subject ;",
                     "                dct:publisher ?publisher ;",
                     "                link:request ?request "});
         }
