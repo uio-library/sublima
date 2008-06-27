@@ -245,6 +245,7 @@ public class IndexService {
 	    		   resultBuffer.append(l.getString());
 	    	   }
 	       }
+	       resultBuffer.insert(0, subprop);
 		   resultBuffer.append("\"\"\" .\n");
 	  }
 	  return resultBuffer.toString();
