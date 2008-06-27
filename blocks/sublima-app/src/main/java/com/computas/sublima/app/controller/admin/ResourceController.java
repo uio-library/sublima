@@ -229,6 +229,7 @@ public class ResourceController implements StatelessAppleController {
         return;
       } else {
         bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("uri")));
+        bizData.put("publishers", adminService.getAllPublishers());
         bizData.put("mode", "edit");
         bizData.put("messages", "<empty></empty>");
         res.sendPage("xml2/ressurs", bizData);
