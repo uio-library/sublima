@@ -9,6 +9,7 @@ import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.query.QuerySolutionMap;
 import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
@@ -181,6 +182,9 @@ public class IndexService {
 	  StringBuffer queryBuffer = new StringBuffer();
 	  queryBuffer.append(form2SparqlService.getPrefixString());
 	  queryBuffer.append("SELECT");
+	  if (form2SparqlService.getResourceSubject().equals("?resource")) {
+		  queryBuffer.append(" ?resource");  
+ 	  }
 	  for (int i=1;i<=fieldsToIndex.length;i++) {
 		  queryBuffer.append(" ?object");
 		  queryBuffer.append(i);
@@ -200,14 +204,14 @@ public class IndexService {
   
   public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes, String resource) {
 	  String queryString = getQueryForIndex(fieldsToIndex, prefixes, resource);
-	  return getTheFreetextToIndex(queryString);
+	  return getTheFreetextToIndex(queryString, resource);
   }
   public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
 	  String queryString = getQueryForIndex(fieldsToIndex, prefixes);
-	  return getTheFreetextToIndex(queryString);  
+	  return getTheFreetextToIndex(queryString, "resource");  
   }
   
-  private String getTheFreetextToIndex(String queryString) {
+  private String getTheFreetextToIndex(String queryString, String resourceOrVarName) {
 	  DatabaseService myDbService = new DatabaseService();
 	  IDBConnection connection = myDbService.getConnection();
 	  ModelRDB model = ModelRDB.open(connection);
@@ -227,13 +231,21 @@ public class IndexService {
 	  StringBuffer resultBuffer = new StringBuffer();
 	  while (resultSet.hasNext()) {
 	       QuerySolution soln = resultSet.nextSolution();
+	       String subprop = resourceOrVarName + " sub:literals \"\"\"";
 	       Iterator<String> it = soln.varNames();
 	       while (it.hasNext()) {
 	    	   String var = it.next();
-	    	   Literal l = soln.getLiteral(var);
-	    	   resultBuffer.append("\n");
-	    	   resultBuffer.append(l.getString());
+	    	
+	    	   if (var == resourceOrVarName) {
+	    		   Resource r = soln.getResource(var);
+	    		   subprop = "<" + r.getURI() + "> sub:literals \"\"\"";
+	    	   } else {
+	    		   Literal l = soln.getLiteral(var);
+	    		   resultBuffer.append("\n");
+	    		   resultBuffer.append(l.getString());
+	    	   }
 	       }
+		   resultBuffer.append("\"\"\" .\n");
 	  }
 	  return resultBuffer.toString();
 	}
