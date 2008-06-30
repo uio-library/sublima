@@ -236,13 +236,15 @@ public class IndexService {
 	       while (it.hasNext()) {
 	    	   String var = it.next();
 	    	
-	    	   if (var == resourceOrVarName) {
+	    	   if (var.equals(resourceOrVarName)) {
 	    		   Resource r = soln.getResource(var);
 	    		   subprop = "<" + r.getURI() + "> sub:literals \"\"\"";
-	    	   } else {
+	    	   } else if (soln.getResource(var).isLiteral()) {
 	    		   Literal l = soln.getLiteral(var);
 	    		   resultBuffer.append("\n");
 	    		   resultBuffer.append(l.getString());
+	    	   } else {
+	    		   logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
 	    	   }
 	       }
 	       resultBuffer.insert(0, subprop);
