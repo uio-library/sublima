@@ -73,7 +73,7 @@ public class IndexService {
 
       logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Indexed all model statements");
       // -- Finish indexing
-      larqBuilder.closeWriter();
+      larqBuilder.closeForWriting();
       logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Closed index for writing");
       // -- Create the access index
       IndexLARQ index = larqBuilder.getIndex();

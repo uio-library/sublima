@@ -141,7 +141,19 @@ public class RDFObject implements Serializable {
 			logger.trace("Found Literal " + getValue());
 			if (freetext != null && freetext > 0) { // Should this literal be treated as a free text?
 				n3Buffer.append("?free" + freetext + " .\n"); // The actual previous object
-				n3Buffer.append("?free" + freetext + " pf:textMatch '+" + getValue() + "*'");
+                n3Buffer.append("?free" + freetext + " pf:textMatch '");
+                String[] words = getValue().split(" ");
+                if (words.length == 1) {
+                    n3Buffer.append("+" + getValue().trim() + "*");
+                } else if (words.length > 1) {
+                   for (String word : words) {
+                       n3Buffer.append("+" + word.trim() + " ");
+                   }
+                } else {
+                    logger.info("RDFObject freetext: " + getValue() + "was not used.");
+                }
+
+                n3Buffer.append("'");
 			} else {
 				n3Buffer.append("\"\"\"" + getValue() + "\"\"\"");
 				if (language != null) {
