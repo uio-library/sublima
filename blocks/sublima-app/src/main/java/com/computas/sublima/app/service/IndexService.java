@@ -24,10 +24,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -198,7 +195,11 @@ public class IndexService {
 				  ));
 	  }
 	  queryBuffer.append("\n}");
-	  return queryBuffer.toString();
+      if (form2SparqlService.getResourceSubject().equals("?resource")) {
+		  queryBuffer.append("\nGROUP BY ?resource\n");  
+ 	  }
+
+      return queryBuffer.toString();
   }
   
   
@@ -229,27 +230,34 @@ public class IndexService {
 
 	  logger.info("SUBLIMA: getFreetextToIndex() --> Indexing - Fetched all literals that we need to index");
 	  StringBuffer resultBuffer = new StringBuffer();
-	  while (resultSet.hasNext()) {
-	       QuerySolution soln = resultSet.nextSolution();
-	       String subprop = resourceOrVarName + " sub:literals \"\"\"";
-	       Iterator<String> it = soln.varNames();
-	       while (it.hasNext()) {
-	    	   String var = it.next();
-	    	
-	    	   if (var.equals(resourceOrVarName)) {
-	    		   Resource r = soln.getResource(var);
-	    		   subprop = "<" + r.getURI() + "> sub:literals \"\"\"";
-	    	   } else if (soln.getResource(var).isLiteral()) {
-	    		   Literal l = soln.getLiteral(var);
-	    		   resultBuffer.append("\n");
-	    		   resultBuffer.append(l.getString());
-	    	   } else {
-	    		   logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
-	    	   }
-	       }
-	       resultBuffer.insert(0, subprop);
-		   resultBuffer.append("\"\"\" .\n");
-	  }
+      Set literals = new HashSet<String>();
+      while (resultSet.hasNext()) {
+          QuerySolution soln = resultSet.nextSolution();
+          String subprop = resourceOrVarName + " sub:literals \"\"\"";
+          Iterator<String> it = soln.varNames();
+          while (it.hasNext()) {
+              String var = it.next();
+              if (soln.get(var).isResource()) {
+                  // This means two things: 1) Right now, we have the a URI of a Resource, which stands out from the
+                  //                           literals we need to index
+                  //                        2) We are retrieving multiple Resources, if there is a single Resource,
+                  //                           the URI will not be in the data returned.
+                  Resource r = soln.getResource(var);
+                  subprop = "<" + r.getURI() + "> sub:literals \"\"\"";
+                  resultBuffer.append("<" + r.getURI() + "> sub:literals \"\"\"");
+              } else if (soln.get(var).isLiteral()) {
+                  Literal l = soln.getLiteral(var);
+                  String literal = l.getString().replace("\\","\\\\");
+                  resultBuffer.append(literal);
+                  resultBuffer.append("\n");
+              } else {
+                  logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
+              }
+          }
+
+          resultBuffer.append("\"\"\" .\n");
+
+      }
 	  return resultBuffer.toString();
 	}
 }
