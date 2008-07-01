@@ -129,6 +129,8 @@
   <message key="suggested">Foreslått</message>
   <message key="back">Tilbake</message>
   <message key="location">Lokasjon</message>
+  <message key="search">Søk</message>
+  <message key="topconcept">Hovedemne</message>
 
   <!-- buttons -->
   <message key="button.saveresource">Lagre ressurs</message>
