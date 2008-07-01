@@ -440,7 +440,7 @@ public class Form2SparqlService {
 		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
 			if (e.getValue() != null) {
 				String property = e.getKey();
-				if (property == property.split("-")[0]) { // Then we have normal triple
+				if (property.equals(property.split("-")[0]) || (property.startsWith("<") && property.endsWith(">"))) { // Then we have normal triple
 					for (String value : e.getValue()) {	
 						if (!"".equalsIgnoreCase(value) && value != null) {
 							RDFObject myRDFObject = new RDFObject(value, language);
