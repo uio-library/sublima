@@ -204,15 +204,76 @@ public class IndexService {
   
   
   public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes, String resource) {
-	  String queryString = getQueryForIndex(fieldsToIndex, prefixes, resource);
-	  return getTheFreetextToIndex(queryString, resource);
+      String queryString = getQueryForIndex(fieldsToIndex, prefixes, resource);
+      ResultSet resultSet = getFreetextToIndexResultSet(queryString);
+      StringBuffer resultBuffer = new StringBuffer();
+      Set literals = new HashSet<String>();
+
+      while (resultSet.hasNext()) {
+          QuerySolution soln = resultSet.nextSolution();
+          Iterator<String> it = soln.varNames();
+          while (it.hasNext()) {
+              String var = it.next();
+              if (soln.get(var).isLiteral()) {
+                  Literal l = soln.getLiteral(var);
+                  String literal = l.getString().replace("\\","\\\\");
+                  literals.add(literal);  // This should ensure uniqueness
+              } else {
+                  logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that sublima.searchfields config is correct.");
+              }
+          }
+      }
+      resultBuffer.append(resource);
+      resultBuffer.append(" sub:literals \"\"\"");
+      resultBuffer.append(literals.toString());
+      resultBuffer.append("\"\"\" .\n");
+    
+      return resultBuffer.toString();
   }
+
+
   public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
-	  String queryString = getQueryForIndex(fieldsToIndex, prefixes);
-	  return getTheFreetextToIndex(queryString, "resource");  
-  }
+      String queryString = getQueryForIndex(fieldsToIndex, prefixes);
+      ResultSet resultSet = getFreetextToIndexResultSet(queryString);
+      StringBuffer resultBuffer = new StringBuffer();
+      Set literals = new HashSet<String>();
+      String resource = new String();
+      while (resultSet.hasNext()) {
+          QuerySolution soln = resultSet.nextSolution();
+          Iterator<String> it = soln.varNames();
+          while (it.hasNext()) {
+              String var = it.next();
+              if (soln.get(var).isResource()) {
+                  Resource r = soln.getResource(var);
+                  if (! r.getURI().equals(resource)) { // So, we have a new Resource
+                      // Add the old one to the output buffer
+                      resultBuffer.append("<" + resource);
+                      resultBuffer.append("> sub:literals \"\"\"");
+                      resultBuffer.append(literals.toString());
+                      resultBuffer.append("\"\"\" .\n");
+                      // Reset to the new resource
+                      resource = r.getURI();
+                      literals = null;
+                  }
+              } else if (soln.get(var).isLiteral()) {
+                  Literal l = soln.getLiteral(var);
+                  String literal = l.getString().replace("\\","\\\\");
+                  literals.add(literal);  // This should ensure uniqueness                 
+              } else {
+                  logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
+              }
+
+              resultBuffer.append("<" + resource);
+              resultBuffer.append("> sub:literals \"\"\"");
+              resultBuffer.append(literals.toString());
+              resultBuffer.append("\"\"\" .\n");
+          }
+      }
+	  return resultBuffer.toString();
+	}
+
   
-  private String getTheFreetextToIndex(String queryString, String resourceOrVarName) {
+  private ResultSet getFreetextToIndexResultSet(String queryString) {
 	  DatabaseService myDbService = new DatabaseService();
 	  IDBConnection connection = myDbService.getConnection();
 	  ModelRDB model = ModelRDB.open(connection);
@@ -229,35 +290,6 @@ public class IndexService {
 	  }
 
 	  logger.info("SUBLIMA: getFreetextToIndex() --> Indexing - Fetched all literals that we need to index");
-	  StringBuffer resultBuffer = new StringBuffer();
-      Set literals = new HashSet<String>();
-      while (resultSet.hasNext()) {
-          QuerySolution soln = resultSet.nextSolution();
-          String subprop = resourceOrVarName + " sub:literals \"\"\"";
-          Iterator<String> it = soln.varNames();
-          while (it.hasNext()) {
-              String var = it.next();
-              if (soln.get(var).isResource()) {
-                  // This means two things: 1) Right now, we have the a URI of a Resource, which stands out from the
-                  //                           literals we need to index
-                  //                        2) We are retrieving multiple Resources, if there is a single Resource,
-                  //                           the URI will not be in the data returned.
-                  Resource r = soln.getResource(var);
-                  subprop = "<" + r.getURI() + "> sub:literals \"\"\"";
-                  resultBuffer.append("<" + r.getURI() + "> sub:literals \"\"\"");
-              } else if (soln.get(var).isLiteral()) {
-                  Literal l = soln.getLiteral(var);
-                  String literal = l.getString().replace("\\","\\\\");
-                  resultBuffer.append(literal);
-                  resultBuffer.append("\n");
-              } else {
-                  logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
-              }
-          }
-
-          resultBuffer.append("\"\"\" .\n");
-
-      }
-	  return resultBuffer.toString();
-	}
+      return resultSet;
+  }
 }
