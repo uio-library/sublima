@@ -203,8 +203,19 @@ public class Form2SparqlService {
                     String thisObjectString = null;
                     if (freetextFields != null && freetextFields.contains("dct:subject/all-labels"))  {
                     	int freetextNo = freetextFields.indexOf(key)+1;
-                    	n3Buffer.append("\n?free" + freetextNo + " pf:textMatch '+" + value + "*' .");
-                    	thisObjectString = "?free" + freetextNo + " .";
+                    	n3Buffer.append("\n?free" + freetextNo + " pf:textMatch '");
+                        String[] words = value.split(" ");
+                        if (words.length == 1) {
+                            n3Buffer.append("+" + value.trim() + "*");
+                        } else if (words.length > 1) {
+                            for (String word : words) {
+                                n3Buffer.append("+" + word.trim() + " ");
+                            }
+                        } else {
+                            logger.info("Form2SPARQL freetext: " + value + "was not used.");
+                        }
+                        n3Buffer.append("' .");
+                        thisObjectString = "?free" + freetextNo + " .";
 					} else if (value == null) {
 						thisObjectString = "?object" + values.length + " .";
 					} else {
