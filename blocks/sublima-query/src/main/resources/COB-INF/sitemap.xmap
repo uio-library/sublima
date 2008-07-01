@@ -6,11 +6,11 @@
   <map:flow language="spring-apples"/>
 
   <map:pipelines>  
-    <map:pipeline>
+    <!-- map:pipeline>
       <map:match pattern="sparql">
         <map:call function="com.computas.sublima.query.controller.SparqlQuery"/>
       </map:match>
-    </map:pipeline>
+    </map:pipeline -->
     
     <map:pipeline internal-only="true">
       <map:match pattern="rdf/*">
