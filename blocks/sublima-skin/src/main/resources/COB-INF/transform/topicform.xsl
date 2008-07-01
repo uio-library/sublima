@@ -19,16 +19,33 @@
   <xsl:import href="controlbutton.xsl"/>
   <xsl:import href="rdfxml2html-lang-dropdown.xsl"/>
   <xsl:param name="baseurl"/>
+  <xsl:param name="servername"/>
+  <xsl:param name="serverport"/>
   <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="c:topic">
     <xsl:param name="mode"/>
 
+    <xsl:variable name="port">
+      <xsl:choose>
+        <xsl:when test="$serverport = '80'">
+        </xsl:when>
+        <xsl:otherwise>
+          :<xsl:value-of select="$serverport"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+
+
+
     <form action="{$baseurl}/admin/emner/emne" method="POST">
+
       <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
       <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
       <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
       <input type="hidden" name="prefix" value="lingvoj: &lt;http://www.lingvoj.org/ontology#&gt;"/>
+      <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
 
       <xsl:choose>
 	<xsl:when test="./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about">
@@ -93,6 +110,19 @@
 
       </table>
       <table>
+        <tr>
+          <td><label for="sub:isMainConceptOf"><i18n:text key="topconcept">Hovedemne</i18n:text></label></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:topicdetails/rdf:RDF/skos:Concept/sub:isMainConceptOf">
+                <input type="checkbox" name="sub:isMainConceptOf" value="{concat('http://', $servername, $port, $baseurl, '/topic')}" checked="checked"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="sub:isMainConceptOf" value="{concat('http://', $servername, $port, $baseurl, '/topic')}"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+          </tr>
         <tr>
           <td>
             <label for="skos:definition"><i18n:text key="description">Beskrivelse</i18n:text></label>
@@ -194,7 +224,7 @@
 	    </xsl:call-template>
           </td>
           <td>
-            <input type="reset" value="button.empty" i18n:attr="button.empty"/>
+            <input type="reset" value="button.empty" i18n:attr="value"/>
           </td>
         </tr>
       </table>
