@@ -253,7 +253,7 @@ public class IndexService {
                       resultBuffer.append("\"\"\" .\n");
                       // Reset to the new resource
                       resource = r.getURI();
-                      literals = null;
+                      literals.clear();
                   }
               } else if (soln.get(var).isLiteral()) {
                   Literal l = soln.getLiteral(var);
@@ -262,11 +262,12 @@ public class IndexService {
               } else {
                   logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
               }
-
-              resultBuffer.append("<" + resource);
-              resultBuffer.append("> sub:literals \"\"\"");
-              resultBuffer.append(literals.toString());
-              resultBuffer.append("\"\"\" .\n");
+              if (!resultSet.hasNext()) {
+                  resultBuffer.append("<" + resource);
+                  resultBuffer.append("> sub:literals \"\"\"");
+                  resultBuffer.append(literals.toString());
+                  resultBuffer.append("\"\"\" .\n");
+              }
           }
       }
 	  return resultBuffer.toString();
