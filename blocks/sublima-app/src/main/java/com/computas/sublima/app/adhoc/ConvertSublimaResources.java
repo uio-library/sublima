@@ -191,10 +191,17 @@ public class ConvertSublimaResources {
     private static Model addSkosInverse(Model model) {
         
         String skosNs = "http://www.w3.org/2004/02/skos/core#";
+        String dctNs = "http://purl.org/dc/terms/";
+        String subNs = "http://xmlns.computas.com/sublima#";
+        
         PrintUtil.registerPrefix("skos", skosNs);
+        PrintUtil.registerPrefix("dct", dctNs);
+        PrintUtil.registerPrefix("sub", subNs);
+
+
         String rules =  "[inverseRule1: (?Y skos:broader ?X) -> (?X skos:narrower ?Y)]" +
                         "[inverseRule2: (?X skos:narrower ?Y) -> (?Y skos:broader ?X)]";
-
+                        
         Reasoner reasoner = new GenericRuleReasoner(Rule.parseRules(rules));
         InfModel inf = ModelFactory.createInfModel(reasoner, model);
         
