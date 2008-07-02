@@ -125,7 +125,13 @@ public class RDFObject implements Serializable {
 			return "?object" + index;
 		}
 		StringBuffer n3Buffer = new StringBuffer();
-		// Very ad-hoc date detection, doesn't support negative years,
+
+    // Detect if its a xsd boolean
+    if (getValue().equalsIgnoreCase("true") || getValue().equalsIgnoreCase("false")) {
+      logger.trace("Found xsd:boolean " + getValue());
+      n3Buffer.append("\"" + getValue() + "\"^^<http://www.w3.org/2001/XMLSchema#boolean>");
+    }
+    // Very ad-hoc date detection, doesn't support negative years,
 		// fractions of seconds or timezones
 		if (getValue().matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}")) {
 			logger.trace("Found xsd:dateTime " + getValue());
