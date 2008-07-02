@@ -4,6 +4,7 @@ import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
@@ -14,6 +15,7 @@ import com.hp.hpl.jena.query.QuerySolutionMap;
 import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.LARQ;
+import com.hp.hpl.jena.query.larq.IndexBuilderSubject;
 import com.hp.hpl.jena.shared.DoesNotExistException;
 import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -22,9 +24,14 @@ import org.postgresql.util.PSQLException;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.net.*;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -36,9 +43,17 @@ import java.util.*;
 public class IndexService {
 
   private static Logger logger = Logger.getLogger(IndexService.class);
-  private DefaultSparulDispatcher sparulDispatcher;
+  private SparulDispatcher sparulDispatcher = new DefaultSparulDispatcher();
   private SearchService searchService = new SearchService();
-  
+  /*String[] prefixArray = {
+          "dct: <http://purl.org/dc/terms/>",
+          "foaf: <http://xmlns.com/foaf/0.1/>",
+          "sub: <http://xmlns.computas.com/sublima#>",
+          "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+          "wdr: <http://www.w3.org/2007/05/powder#>",
+          "skos: <http://www.w3.org/2004/02/skos/core#>",
+          "lingvoj: <http://www.lingvoj.org/ontology#>"};
+  */
   /**
    * Method to create an index based on the internal content
    */
@@ -48,7 +63,29 @@ public class IndexService {
     IDBConnection connection = myDbService.getConnection();
     ResultSet resultSet;
     IndexBuilderString larqBuilder;
+    /*
+    // Get the indexstring for all resources and insert them
+    StringBuffer insertIndexes = new StringBuffer();
+    insertIndexes.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+    insertIndexes.append("INSERT DATA {\n");
+    insertIndexes.append(getFreetextToIndex(SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";")));
+    insertIndexes.append("}");
 
+    try{
+      // Create file
+      FileWriter fstream = new FileWriter("C:\\Prosjekter\\out.txt");
+          BufferedWriter out = new BufferedWriter(fstream);
+      out.write(insertIndexes.toString());
+      //Close the output stream
+      out.close();
+    }catch (Exception e){//Catch exception if any
+      System.err.println("Error: " + e.getMessage());
+    } */
+
+    //boolean insertSuccess = sparulDispatcher.query(insertIndexes.toString());
+    //logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Inserted sub:literal " + insertSuccess);
+
+    //System.out.println(allIndexInserts);
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created database connection " + connection.getDatabaseType());
 
     // -- Read and index all literal strings.
@@ -64,17 +101,20 @@ public class IndexService {
 
     //Create a model based on the one in the DB
     try {
-      ModelRDB model = ModelRDB.open(connection);
+      //SettingsService.getModel();
+      //ModelRDB model = ModelRDB.open(connection);
       // -- Create an index based on existing statements
-      larqBuilder.indexStatements(model.listStatements());
+      larqBuilder.indexStatements(SettingsService.getModel().listStatements());
+      SettingsService.getModel().register(larqBuilder);
+
 
       logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Indexed all model statements");
       // -- Finish indexing
-      larqBuilder.closeForWriting();
+      //larqBuilder.closeWriter();
       logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Closed index for writing");
       // -- Create the access index
       IndexLARQ index = larqBuilder.getIndex();
-      model.close();
+      //model.close();
 
       // -- Make globally available
       LARQ.setDefaultIndex(index);
@@ -195,86 +235,20 @@ public class IndexService {
 				  ));
 	  }
 	  queryBuffer.append("\n}");
-      if (form2SparqlService.getResourceSubject().equals("?resource")) {
-		  queryBuffer.append("\nGROUP BY ?resource\n");  
- 	  }
-
-      return queryBuffer.toString();
+	  return queryBuffer.toString();
   }
   
   
   public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes, String resource) {
-      String queryString = getQueryForIndex(fieldsToIndex, prefixes, resource);
-      ResultSet resultSet = getFreetextToIndexResultSet(queryString);
-      StringBuffer resultBuffer = new StringBuffer();
-      Set literals = new HashSet<String>();
-
-      while (resultSet.hasNext()) {
-          QuerySolution soln = resultSet.nextSolution();
-          Iterator<String> it = soln.varNames();
-          while (it.hasNext()) {
-              String var = it.next();
-              if (soln.get(var).isLiteral()) {
-                  Literal l = soln.getLiteral(var);
-                  String literal = l.getString().replace("\\","\\\\");
-                  literals.add(literal);  // This should ensure uniqueness
-              } else {
-                  logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that sublima.searchfields config is correct.");
-              }
-          }
-      }
-      resultBuffer.append(resource);
-      resultBuffer.append(" sub:literals \"\"\"");
-      resultBuffer.append(literals.toString());
-      resultBuffer.append("\"\"\" .\n");
-    
-      return resultBuffer.toString();
+	  String queryString = getQueryForIndex(fieldsToIndex, prefixes, resource);
+	  return getTheFreetextToIndex(queryString, resource);
   }
-
-
   public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
-      String queryString = getQueryForIndex(fieldsToIndex, prefixes);
-      ResultSet resultSet = getFreetextToIndexResultSet(queryString);
-      StringBuffer resultBuffer = new StringBuffer();
-      Set literals = new HashSet<String>();
-      String resource = new String();
-      while (resultSet.hasNext()) {
-          QuerySolution soln = resultSet.nextSolution();
-          Iterator<String> it = soln.varNames();
-          while (it.hasNext()) {
-              String var = it.next();
-              if (soln.get(var).isResource()) {
-                  Resource r = soln.getResource(var);
-                  if (! r.getURI().equals(resource)) { // So, we have a new Resource
-                      // Add the old one to the output buffer
-                      resultBuffer.append("<" + resource);
-                      resultBuffer.append("> sub:literals \"\"\"");
-                      resultBuffer.append(literals.toString());
-                      resultBuffer.append("\"\"\" .\n");
-                      // Reset to the new resource
-                      resource = r.getURI();
-                      literals.clear();
-                  }
-              } else if (soln.get(var).isLiteral()) {
-                  Literal l = soln.getLiteral(var);
-                  String literal = l.getString().replace("\\","\\\\");
-                  literals.add(literal);  // This should ensure uniqueness                 
-              } else {
-                  logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
-              }
-              if (!resultSet.hasNext()) {
-                  resultBuffer.append("<" + resource);
-                  resultBuffer.append("> sub:literals \"\"\"");
-                  resultBuffer.append(literals.toString());
-                  resultBuffer.append("\"\"\" .\n");
-              }
-          }
-      }
-	  return resultBuffer.toString();
-	}
-
+	  String queryString = getQueryForIndex(fieldsToIndex, prefixes);
+	  return getTheFreetextToIndex(queryString, "resource");  
+  }
   
-  private ResultSet getFreetextToIndexResultSet(String queryString) {
+  private String getTheFreetextToIndex(String queryString, String resourceOrVarName) {
 	  DatabaseService myDbService = new DatabaseService();
 	  IDBConnection connection = myDbService.getConnection();
 	  ModelRDB model = ModelRDB.open(connection);
@@ -291,6 +265,30 @@ public class IndexService {
 	  }
 
 	  logger.info("SUBLIMA: getFreetextToIndex() --> Indexing - Fetched all literals that we need to index");
-      return resultSet;
-  }
+	  StringBuffer resultBuffer = new StringBuffer();
+	  while (resultSet.hasNext()) {
+	       QuerySolution soln = resultSet.nextSolution();
+	       String subprop = resourceOrVarName + " sub:literals \"\"\"";
+	       Iterator<String> it = soln.varNames();
+	       while (it.hasNext()) {
+	    	   String var = it.next();
+	    	   //System.out.println("Var: " + var + "\nisResource() " + soln.get(var).isResource() + "\nisLiteral() " + soln.get(var).isLiteral());
+	    	   if (soln.get(var).isResource()) {  //var.equalsIgnoreCase(resourceOrVarName)) {
+	    		   Resource r = soln.getResource(var);
+	    		   subprop = "<" + r.getURI() + "> sub:literals \"\"\"";
+             resultBuffer.append("<" + r.getURI() + "> sub:literals \"\"\"");
+           } else if (soln.get(var).isLiteral()) {
+	    		   Literal l = soln.getLiteral(var);
+             String literal = l.getString().replace("\\","\\\\");
+             resultBuffer.append(literal);
+             resultBuffer.append("\n");
+           } else {
+	    		   logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
+	    	   }
+	       }
+	       //resultBuffer.insert(0, subprop);
+		   resultBuffer.append("\"\"\" .\n");
+	  }
+	  return resultBuffer.toString();
+	}
 }
