@@ -28,16 +28,10 @@
 
     <xsl:variable name="port">
       <xsl:choose>
-        <xsl:when test="$serverport = '80'">
-        </xsl:when>
-        <xsl:otherwise>
-          :<xsl:value-of select="$serverport"/>
-        </xsl:otherwise>
+        <xsl:when test="$serverport = '80'"></xsl:when>
+        <xsl:otherwise><xsl:text>:</xsl:text><xsl:value-of select="$serverport"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
-
-
 
     <form action="{$baseurl}/admin/emner/emne" method="POST">
 
