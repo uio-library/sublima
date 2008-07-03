@@ -40,6 +40,8 @@
       <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
       <input type="hidden" name="prefix" value="lingvoj: &lt;http://www.lingvoj.org/ontology#&gt;"/>
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
+      <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
+      <input type="hidden" name="rdf:type" value="http://www.w3.org/2004/02/skos/core#Concept"/>
 
       <xsl:choose>
 	<xsl:when test="./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about">
