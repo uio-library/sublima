@@ -68,33 +68,20 @@ public class SearchController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", queryResult);
 
-    // This query, which bears its name for historical reasons, relies
-    // on that all relations are explicitly stated. I.e. a triple for
-    // both skos:broader and skos:narrower must exist.
-/*
-    String sparqlConstructQuery =
-            "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                    "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-                    "DESCRIBE " + subject + " ?therelation ?object WHERE {\n" +
-                    "  OPTIONAL {\n" +
-                    "    ?therelation rdfs:subPropertyOf skos:semanticRelation .\n    " +
-                    subject + " ?therelation ?object ;\n" +
-                    "            a skos:Concept .\n" +
-                    "    ?object a skos:Concept .\n" +
-                    "  }\n}";
-*/
-
-
-String sparqlConstructQuery =
+    // This query, relies on that all relations are explicitly stated.
+    // I.e. a triple for both skos:broader and skos:narrower must exist.
+     String sparqlConstructQuery =
         "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"+
         "prefix skos: <http://www.w3.org/2004/02/skos/core#> \n"+
+        "prefix owl: <http://www.w3.org/2002/07/owl#> \n"+
         "CONSTRUCT {\n"+
          subject + "  ?semrelation ?object ; \n"+
         "skos:prefLabel ?preflabel ; \n"+
         "skos:altLabel ?altlabel ;  \n"+     
         "a skos:Concept .\n"+
         "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n"+
-        "rdfs:label ?semrellabel .\n"+
+        "rdfs:label ?semrellabel ;\n"+
+        "                a owl:ObjectProperty .\n"+       
         "?object skos:prefLabel ?preflabel2 ; \n"+
         " a skos:Concept .\n"+
         "}\n"+
@@ -105,11 +92,12 @@ String sparqlConstructQuery =
          "   skos:prefLabel ?preflabel ;\n"+
          "   skos:altLabel ?altlabel .\n"+
          "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n"+
-         "                rdfs:label ?semrellabel .\n"+
+         "                rdfs:label ?semrellabel ;\n"+
+         "                a owl:ObjectProperty .\n"+       
          "?object  a skos:Concept ;\n"+
          "     skos:prefLabel ?preflabel2 .\n"+
          "}\n"+ 
-         "}"
+         "}";
 
 
 
