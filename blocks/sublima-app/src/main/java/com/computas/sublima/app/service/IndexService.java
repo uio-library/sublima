@@ -68,10 +68,12 @@ public class IndexService {
     for (int i = 0; i <= list.size(); i++) {
       StringBuffer insertString = new StringBuffer();
       insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+      insertString.append("DELETE { ?s sub:literals ?o . }\n");
+      insertString.append("WHERE { ?s sub:literals ?o . }\n");
       insertString.append("INSERT DATA {\n");
 
       while (j < partsOfArray) {
-        insertString.append(list.get(j) + "\n");
+        insertString.append(list.get(j).toString() + "\n");
         j++;
       }
 
@@ -267,8 +269,8 @@ public class IndexService {
     ResultSet resultSet = getFreetextToIndexResultSet(queryString);
     ArrayList<String> list = new ArrayList<String>();
     StringBuffer resultBuffer = new StringBuffer();
-    Set literals = new HashSet<String>();
-    String resource = new String();
+    Set<String> literals = new HashSet<String>();
+    String resource = null;
     while (resultSet.hasNext()) {
       QuerySolution soln = resultSet.nextSolution();
       Iterator<String> it = soln.varNames();
@@ -280,7 +282,9 @@ public class IndexService {
             // Add the old one to the output buffer
             resultBuffer.append("<" + resource);
             resultBuffer.append("> sub:literals \"\"\"");
-            resultBuffer.append(literals.toString());
+            for (String s : literals) {
+              resultBuffer.append(s);  
+            }
             resultBuffer.append("\"\"\" .\n");
 
             list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
