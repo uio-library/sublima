@@ -6,7 +6,7 @@
   http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
 
   <bean id="com.computas.sublima.sublima-detektor-skin.service" class="org.apache.cocoon.sitemap.SitemapServlet">
-    <servlet:context mount-path="/sublima-detektor-skin" context-path="file:///home/kkj/someDir">
+    <servlet:context mount-path="/sublima-detektor-skin" context-path="file:///home/kkj/dev/sublima/blocks/sublima-detektor-skin/src/main/resources/COB-INF/transform/">
      <servlet:connections>
        <entry key="super" value-ref="com.computas.sublima.sublima-skin.service"/>
      </servlet:connections>
