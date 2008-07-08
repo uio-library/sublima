@@ -317,10 +317,10 @@ public class IndexService {
                   HashMap<String, String> headers = urlAction.getHTTPmap();
                   String contentType = headers.get("httph:content-type");
 
-                  if (contentType.startsWith("application/xhtml+xml") ||
+                  if (contentType != null && (contentType.startsWith("application/xhtml+xml") ||
                           contentType.startsWith("text/html") ||
                           contentType.startsWith("text/plain") ||
-                          contentType.startsWith("text/xml")) {
+                          contentType.startsWith("text/xml"))) {
                     insertString.append("\n" + urlAction.strippedContent(null).replace("\\", "\\\\") + "\"\"\" .\n");
 
                     insertString.append("}\n");
