@@ -33,6 +33,8 @@
               encoding="UTF-8"
               indent="no"/>
   <xsl:param name="baseurl"/>
+  <xsl:param name="servername"/>
+  <xsl:param name="serverport"/>
   <xsl:param name="locale"/>
   <xsl:param name="interface-language">no</xsl:param>
 
@@ -60,7 +62,6 @@
     <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
       <ul>
         <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
-          <xsl:value-of select="."/>
           <li>
             <xsl:value-of select="."/>
             <br/>

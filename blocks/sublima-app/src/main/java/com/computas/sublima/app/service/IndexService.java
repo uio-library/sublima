@@ -65,11 +65,16 @@ public class IndexService {
     int partsOfArray = steps;
     int j = 0;
 
+    StringBuffer deleteString = new StringBuffer();
+    deleteString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+    deleteString.append("DELETE { ?s sub:literals ?o . }\n");
+    deleteString.append("WHERE { ?s sub:literals ?o . }\n");
+    boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
+    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Delete existing literals: " + deleteSuccess);
+
     for (int i = 0; i <= list.size(); i++) {
       StringBuffer insertString = new StringBuffer();
       insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
-      insertString.append("DELETE { ?s sub:literals ?o . }\n");
-      insertString.append("WHERE { ?s sub:literals ?o . }\n");
       insertString.append("INSERT DATA {\n");
 
       while (j < partsOfArray) {
@@ -86,7 +91,7 @@ public class IndexService {
       i = partsOfArray;
 
       if (partsOfArray > list.size() || (partsOfArray + steps) > list.size()) {
-        partsOfArray = list.size();   
+        partsOfArray = list.size();
       } else {
         partsOfArray += steps;
       }
@@ -270,6 +275,15 @@ public class IndexService {
     ArrayList<String> list = new ArrayList<String>();
     StringBuffer resultBuffer = new StringBuffer();
     Set<String> literals = new HashSet<String>();
+    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.checkurl.onstartup"));
+    if (indexExternalContent) {
+      StringBuffer deleteString = new StringBuffer();
+      deleteString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+      deleteString.append("DELETE { ?s sub:externaliterals ?o . }\n");
+      deleteString.append("WHERE { ?s sub:externaliterals ?o . }\n");
+      boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
+      logger.info("SUBLIMA: getFreetextToIndex() --> Delete external literals: " + deleteSuccess);
+    }
     String resource = null;
     while (resultSet.hasNext()) {
       QuerySolution soln = resultSet.nextSolution();
@@ -278,16 +292,57 @@ public class IndexService {
         String var = it.next();
         if (soln.get(var).isResource()) {
           Resource r = soln.getResource(var);
-          if (!r.getURI().equals(resource)) { // So, we have a new Resource
+          if (!r.getURI().equals(resource)) { // So, we have a new Resource and we get the external content if the checkurl.onstartup paramtere is true
+
+            if (indexExternalContent && (resource != null)) {
+              StringBuffer insertString = new StringBuffer();
+              insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+              insertString.append("INSERT DATA {\n");
+
+              URLActions urlAction = new URLActions(resource);
+              String code = urlAction.getCode();
+
+              if ("302".equals(code) ||
+                      "303".equals(code) ||
+                      "304".equals(code) ||
+                      "305".equals(code) ||
+                      "307".equals(code) ||
+                      code.startsWith("2")) {
+                try {
+                  insertString.append("<" + resource + "> sub:externaliterals \"\"\"");
+                  for (String s : literals) {
+                    insertString.append(s);
+                  }
+                  HashMap<String, String> headers = urlAction.getHTTPmap();
+                  String contentType = headers.get("httph:content-type");
+
+                  if ("application/xhtml+xml".equalsIgnoreCase(contentType) ||
+                          "text/html".equalsIgnoreCase(contentType) ||
+                          "text/plain".equalsIgnoreCase(contentType) ||
+                          "text/xml".equalsIgnoreCase(contentType)) {
+                    insertString.append("\n" + urlAction.strippedContent(null).replace("\\", "\\\\") + "\"\"\" .\n");
+
+                    insertString.append("}\n");
+
+                    boolean insertSuccess = sparulDispatcher.query(insertString.toString());
+                    logger.info("SUBLIMA: getFreetextToIndex() --> Insert external literals: " + insertSuccess);
+                  }
+                } catch (UnsupportedEncodingException e) {
+                  logger.warn("SUBLIMA: Indexing external content gave UnsupportedEncodingException for resource " + resource);
+                }
+              }
+            }
+
             // Add the old one to the output buffer
             resultBuffer.append("<" + resource);
             resultBuffer.append("> sub:literals \"\"\"");
             for (String s : literals) {
-              resultBuffer.append(s);  
+              resultBuffer.append(s);
             }
             resultBuffer.append("\"\"\" .\n");
 
-            list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
+            //list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
+            list.add(resultBuffer.toString());
 
             // Reset to the new resource
             resource = r.getURI();
@@ -303,16 +358,18 @@ public class IndexService {
         if (!resultSet.hasNext()) {
           resultBuffer.append("<" + resource);
           resultBuffer.append("> sub:literals \"\"\"");
-          resultBuffer.append(literals.toString());
+          for (String s : literals) {
+            resultBuffer.append(s);
+          }
           resultBuffer.append("\"\"\" .\n");
-          list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
+          //list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
+          list.add(resultBuffer.toString());
         }
       }
     }
     //return resultBuffer.toString();
     return list;
   }
-
 
   private ResultSet getFreetextToIndexResultSet(String queryString) {
     DatabaseService myDbService = new DatabaseService();

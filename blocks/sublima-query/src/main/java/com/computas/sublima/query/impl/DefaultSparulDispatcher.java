@@ -2,9 +2,14 @@ package com.computas.sublima.query.impl;
 
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
+import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.update.*;
+import com.hp.hpl.jena.query.larq.LARQ;
+import com.hp.hpl.jena.query.larq.IndexBuilderString;
+import com.hp.hpl.jena.query.larq.IndexLARQ;
+import com.hp.hpl.jena.query.larq.ARQLuceneException;
 import org.apache.cocoon.configuration.Settings;
 
 import java.sql.SQLException;
@@ -26,33 +31,39 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
     */
 
     //Create a model based on the one in the DB
-    ModelRDB model = ModelRDB.open(connection);
+    //ModelRDB model = ModelRDB.open(connection);
+    
 
     //Get a GraphStore and load the graph from the Model
     GraphStore graphStore = GraphStoreFactory.create();
-    graphStore.setDefaultGraph(model.getGraph());
+    graphStore.setDefaultGraph(SettingsService.getModel().getGraph());
 
     try {
       //Try to execute the updateQuery (SPARQL/Update)
       UpdateRequest updateRequest = UpdateFactory.create(query);
+      
       updateRequest.exec(graphStore);
+      //model.close();
     }
     catch (UpdateException e) {
-      model.close();
+      //model.close();
       e.printStackTrace();
       return false;
     }
-
+    catch (ARQLuceneException e) {
+      e.printStackTrace();
+    }
+    /*
     finally {
       try {
         connection.close();
-        model.close();
+        //model.close();
       }
       catch (SQLException e) {
-        model.close();
+        //model.close();
         e.printStackTrace();
       }
-    }
+    } */
 
     // Return true if update success
     return true;
