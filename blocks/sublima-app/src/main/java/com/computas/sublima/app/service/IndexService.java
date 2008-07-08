@@ -273,7 +273,7 @@ public class IndexService {
     String queryString = getQueryForIndex(fieldsToIndex, prefixes);
     ResultSet resultSet = getFreetextToIndexResultSet(queryString);
     ArrayList<String> list = new ArrayList<String>();
-    StringBuffer resultBuffer = new StringBuffer();
+
     Set<String> literals = new HashSet<String>();
     boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.checkurl.onstartup"));
     if (indexExternalContent) {
@@ -289,6 +289,7 @@ public class IndexService {
       QuerySolution soln = resultSet.nextSolution();
       Iterator<String> it = soln.varNames();
       while (it.hasNext()) {
+        StringBuffer resultBuffer = new StringBuffer();
         String var = it.next();
         if (soln.get(var).isResource()) {
           Resource r = soln.getResource(var);
