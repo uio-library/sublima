@@ -279,8 +279,8 @@ public class IndexService {
     if (indexExternalContent) {
       StringBuffer deleteString = new StringBuffer();
       deleteString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
-      deleteString.append("DELETE { ?s sub:externaliterals ?o . }\n");
-      deleteString.append("WHERE { ?s sub:externaliterals ?o . }\n");
+      deleteString.append("DELETE { ?s sub:externalliterals ?o . }\n");
+      deleteString.append("WHERE { ?s sub:externalliterals ?o . }\n");
       boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
       logger.info("SUBLIMA: getFreetextToIndex() --> Delete external literals: " + deleteSuccess);
     }
@@ -310,7 +310,7 @@ public class IndexService {
                       "307".equals(code) ||
                       code.startsWith("2")) {
                 try {
-                  insertString.append("<" + resource + "> sub:externaliterals \"\"\"");
+                  insertString.append("<" + resource + "> sub:externalliterals \"\"\"");
                   for (String s : literals) {
                     insertString.append(s + " ");
                   }
