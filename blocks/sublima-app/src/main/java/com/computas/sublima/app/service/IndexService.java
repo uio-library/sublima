@@ -275,7 +275,7 @@ public class IndexService {
     ArrayList<String> list = new ArrayList<String>();
 
     Set<String> literals = new HashSet<String>();
-    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.checkurl.onstartup"));
+    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
     if (indexExternalContent) {
       StringBuffer deleteString = new StringBuffer();
       deleteString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
@@ -312,21 +312,22 @@ public class IndexService {
                 try {
                   insertString.append("<" + resource + "> sub:externaliterals \"\"\"");
                   for (String s : literals) {
-                    insertString.append(s);
+                    insertString.append(s + " ");
                   }
                   HashMap<String, String> headers = urlAction.getHTTPmap();
                   String contentType = headers.get("httph:content-type");
 
-                  if ("application/xhtml+xml".equalsIgnoreCase(contentType) ||
-                          "text/html".equalsIgnoreCase(contentType) ||
-                          "text/plain".equalsIgnoreCase(contentType) ||
-                          "text/xml".equalsIgnoreCase(contentType)) {
+                  if (contentType.startsWith("application/xhtml+xml") ||
+                          contentType.startsWith("text/html") ||
+                          contentType.startsWith("text/plain") ||
+                          contentType.startsWith("text/xml")) {
                     insertString.append("\n" + urlAction.strippedContent(null).replace("\\", "\\\\") + "\"\"\" .\n");
 
                     insertString.append("}\n");
 
                     boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-                    logger.info("SUBLIMA: getFreetextToIndex() --> Insert external literals: " + insertSuccess);
+                    logger.info("SUBLIMA: getFreetextToIndex() --> Insert external literals with content type " + contentType + " returned: " + insertSuccess);
+
                   }
                 } catch (UnsupportedEncodingException e) {
                   logger.warn("SUBLIMA: Indexing external content gave UnsupportedEncodingException for resource " + resource);
@@ -338,7 +339,7 @@ public class IndexService {
             resultBuffer.append("<" + resource);
             resultBuffer.append("> sub:literals \"\"\"");
             for (String s : literals) {
-              resultBuffer.append(s);
+              resultBuffer.append(s + " ");
             }
             resultBuffer.append("\"\"\" .\n");
 

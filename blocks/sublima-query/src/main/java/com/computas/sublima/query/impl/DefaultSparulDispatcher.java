@@ -11,6 +11,7 @@ import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.ARQLuceneException;
 import org.apache.cocoon.configuration.Settings;
+import org.postgresql.util.PSQLException;
 
 import java.sql.SQLException;
 
@@ -52,6 +53,11 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
     }
     catch (ARQLuceneException e) {
       e.printStackTrace();
+      return false;
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+      return false;
     }
     /*
     finally {
