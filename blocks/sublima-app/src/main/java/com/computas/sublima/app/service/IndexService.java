@@ -237,7 +237,7 @@ public class IndexService {
       queryBuffer.append("\n}");
     }
     queryBuffer.append("\n}");
-    logger.info("SUBLIMA: Indexing - SPARQL query to get all literals:\n" + queryBuffer.toString() );
+    logger.info("SUBLIMA: Indexing - SPARQL query to get all literals:\n" + queryBuffer.toString());
 
     return queryBuffer.toString();
   }
@@ -294,81 +294,85 @@ public class IndexService {
       while (it.hasNext()) {
         StringBuffer resultBuffer = new StringBuffer();
         String var = it.next();
-        if (soln.get(var).isResource()) {
-          Resource r = soln.getResource(var);
-          if (!r.getURI().equals(resource)) { // So, we have a new Resource and we get the external content if the checkurl.onstartup paramtere is true
 
-            if (indexExternalContent && (resource != null)) {
-              StringBuffer insertString = new StringBuffer();
-              insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
-              insertString.append("INSERT DATA {\n");
+        if (soln.get(var) != null) {
+          if (soln.get(var).isResource()) {
+            Resource r = soln.getResource(var);
+            if (!r.getURI().equals(resource)) { // So, we have a new Resource and we get the external content if the checkurl.onstartup paramtere is true
 
-              URLActions urlAction = new URLActions(resource);
-              String code = urlAction.getCode();
+              if (indexExternalContent && (resource != null)) {
+                StringBuffer insertString = new StringBuffer();
+                insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+                insertString.append("INSERT DATA {\n");
 
-              if ("302".equals(code) ||
-                      "303".equals(code) ||
-                      "304".equals(code) ||
-                      "305".equals(code) ||
-                      "307".equals(code) ||
-                      code.startsWith("2")) {
-                try {
-                  insertString.append("<" + resource + "> sub:externalliterals \"\"\"");
-                  for (String s : literals) {
-                    insertString.append(s + " ");
+                URLActions urlAction = new URLActions(resource);
+                String code = urlAction.getCode();
+
+                if ("302".equals(code) ||
+                        "303".equals(code) ||
+                        "304".equals(code) ||
+                        "305".equals(code) ||
+                        "307".equals(code) ||
+                        code.startsWith("2")) {
+                  try {
+                    insertString.append("<" + resource + "> sub:externalliterals \"\"\"");
+                    for (String s : literals) {
+                      insertString.append(s + " ");
+                    }
+                    HashMap<String, String> headers = urlAction.getHTTPmap();
+                    String contentType = headers.get("httph:content-type");
+
+                    if (contentType != null && (contentType.startsWith("application/xhtml+xml") ||
+                            contentType.startsWith("text/html") ||
+                            contentType.startsWith("text/plain") ||
+                            contentType.startsWith("text/xml"))) {
+                      insertString.append("\n" + urlAction.strippedContent(null).replace("\\", "\\\\") + "\"\"\" .\n");
+
+                      insertString.append("}\n");
+
+                      boolean insertSuccess = sparulDispatcher.query(insertString.toString());
+                      logger.info("SUBLIMA: getFreetextToIndex() --> Insert external literals with content type " + contentType + " returned: " + insertSuccess);
+
+                    }
+                  } catch (UnsupportedEncodingException e) {
+                    logger.warn("SUBLIMA: Indexing external content gave UnsupportedEncodingException for resource " + resource);
                   }
-                  HashMap<String, String> headers = urlAction.getHTTPmap();
-                  String contentType = headers.get("httph:content-type");
-
-                  if (contentType != null && (contentType.startsWith("application/xhtml+xml") ||
-                          contentType.startsWith("text/html") ||
-                          contentType.startsWith("text/plain") ||
-                          contentType.startsWith("text/xml"))) {
-                    insertString.append("\n" + urlAction.strippedContent(null).replace("\\", "\\\\") + "\"\"\" .\n");
-
-                    insertString.append("}\n");
-
-                    boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-                    logger.info("SUBLIMA: getFreetextToIndex() --> Insert external literals with content type " + contentType + " returned: " + insertSuccess);
-
-                  }
-                } catch (UnsupportedEncodingException e) {
-                  logger.warn("SUBLIMA: Indexing external content gave UnsupportedEncodingException for resource " + resource);
                 }
               }
-            }
 
-            // Add the old one to the output buffer
+              // Add the old one to the output buffer
+              resultBuffer.append("<" + resource);
+              resultBuffer.append("> sub:literals \"\"\"");
+              for (String s : literals) {
+                resultBuffer.append(s + " ");
+              }
+              resultBuffer.append("\"\"\" .\n");
+
+              //list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
+              list.add(resultBuffer.toString());
+
+              // Reset to the new resource
+              resource = r.getURI();
+              literals.clear();
+            }
+          } else if (soln.get(var).isLiteral()) {
+            Literal l = soln.getLiteral(var);
+            String literal = l.getString().replace("\\", "\\\\");
+            literals.add(literal);  // This should ensure uniqueness
+          } else {
+            logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
+          }
+
+          if (!resultSet.hasNext()) {
             resultBuffer.append("<" + resource);
             resultBuffer.append("> sub:literals \"\"\"");
             for (String s : literals) {
-              resultBuffer.append(s + " ");
+              resultBuffer.append(s);
             }
             resultBuffer.append("\"\"\" .\n");
-
             //list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
             list.add(resultBuffer.toString());
-
-            // Reset to the new resource
-            resource = r.getURI();
-            literals.clear();
           }
-        } else if (soln.get(var).isLiteral()) {
-          Literal l = soln.getLiteral(var);
-          String literal = l.getString().replace("\\", "\\\\");
-          literals.add(literal);  // This should ensure uniqueness
-        } else {
-          logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
-        }
-        if (!resultSet.hasNext()) {
-          resultBuffer.append("<" + resource);
-          resultBuffer.append("> sub:literals \"\"\"");
-          for (String s : literals) {
-            resultBuffer.append(s);
-          }
-          resultBuffer.append("\"\"\" .\n");
-          //list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
-          list.add(resultBuffer.toString());
         }
       }
     }
