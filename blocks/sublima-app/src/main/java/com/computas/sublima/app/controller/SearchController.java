@@ -205,50 +205,6 @@ public class SearchController implements StatelessAppleController {
     } else {
       res.sendStatus(400);
     }
-    /*
-    if (freetext) {
-      sparqlQuery =
-              "PREFIX dct: <http://purl.org/dc/terms/>\n" +
-              "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-              "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
-              "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-              "PREFIX sub: <http://xmlns.computas.com/subima#>\n" +
-              "CONSTRUCT {\n" +
-              "  ?subject ?px2 ?ox2 .\n" +
-              "  ?publisher ?px3 ?ox3 .\n" +
-              "  ?resource ?px1 ?ox1 .\n" +
-              "  ?resource sub:score ?score . \n" +
-              "  ?ox1 ?px4 ?ox4 .\n" +
-              "}\n" +
-              "\n" +
-              "\n" +
-              "WHERE {\n" +
-              "  (?lit ?score) pf:textMatch '" + searchStringOverriden + "' .\n" +
-              "  {\n" +
-              "    ?resource ?p1 ?lit;\n" +
-              "              dct:subject ?subject ;\n" +
-              "              dct:publisher ?publisher .\n" +
-              "  }\n" +
-              "  UNION\n" +
-              "  {\n" +
-              "      ?resource dct:subject ?subject1 .\n" +
-              "      ?subject1 ?p2 ?lit .\n" +
-              "      ?resource dct:subject ?subject ;\n" +
-              "                dct:publisher ?publisher .\n" +
-              "  }\n" +
-              "  UNION\n" +
-              "  {\n" +
-              "      ?resource dct:publisher ?publisher1 .\n" +
-              "      ?publisher1 ?p3 ?lit .\n" +
-              "      ?resource dct:subject ?subject ;\n" +
-              "                dct:publisher ?publisher .\n" +
-              "  }\n" +
-              "?resource ?px1 ?ox1 .\n" +
-              "?ox1 ?px4 ?ox4 .\n" +
-              "?subject ?px2 ?ox2 .\n" +
-              "?publisher ?px3 ?ox3 .\n" +
-              "}";
-    }*/
 
     logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
 

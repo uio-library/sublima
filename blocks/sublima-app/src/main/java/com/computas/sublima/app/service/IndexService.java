@@ -230,11 +230,14 @@ public class IndexService {
     ArrayList nullValues = new ArrayList<String>();
     for (String field : fieldsToIndex) {
       nullValues.add(null);
+      queryBuffer.append("\nOPTIONAL {");
       queryBuffer.append(form2SparqlService.convertFormField2N3(field,
               (String[]) nullValues.toArray(new String[nullValues.size()]) // Don't ask me why
       ));
+      queryBuffer.append("\n}");
     }
     queryBuffer.append("\n}");
+    logger.info("SUBLIMA: Indexing - SPARQL query to get all literals:\n" + queryBuffer.toString() );
 
     return queryBuffer.toString();
   }

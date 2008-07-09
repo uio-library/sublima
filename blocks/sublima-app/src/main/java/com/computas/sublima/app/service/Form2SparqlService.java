@@ -319,17 +319,13 @@ public class Form2SparqlService {
 
 
         if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
-		    sparqlQueryBuffer.append("?subject ?publisher ");
-
             //Do deep search in external resources or not
             boolean deepsearch = false;
+            addPrefix("sub: <http://xmlns.computas.com/sublima#>");
             if (parameterMap.get("deepsearch") != null && "deepsearch".equalsIgnoreCase(parameterMap.get("deepsearch")[0])) {
                 deepsearch = true;
-                addPrefix("sub: <http://xmlns.computas.com/sublima#>");
-                addPrefix("link: <http://www.w3.org/2007/ont/link#>");
-                sparqlQueryBuffer.append("?request ");
                 parameterMap.remove("deepsearch");
-               logger.debug("SUBLIMA: Deep search enabled");
+                logger.debug("SUBLIMA: Deep search enabled");
             }
             n3List.add(freeTextQuery(parameterMap.get("searchstring")[0], deepsearch));
 //		    logger.trace("n3List so far in freetext:\n"+n3List.toString());
@@ -488,45 +484,13 @@ public class Form2SparqlService {
         if (!subjectVarList.contains(resourceSubject)) {
             subjectVarList.add(resourceSubject);
         }
-        String result = StringUtils.join("\n", new String[]{
-					"\n  ?lit pf:textMatch ( '" + searchstring + "' 100) .",
-					"  {",
-					"    " + resourceSubject + "?p1 ?lit;",
-					"              dct:subject ?subject ;",
-					"              dct:publisher ?publisher "});
+        String result = "\n?lit pf:textMatch ( '" + searchstring + "' 100) .";
+	
         if (deepsearch) {
-            result = result + ";\n              link:request ?request ";
+            result = result + "\n?resource sub:externalliterals ?lit .";
+        } else {
+            result = result + "\n?resource sub:literals ?lit .";
         }
-        result = result +             ".\n  }" +  StringUtils.join("\n", new String[]{
-					"\n  UNION",
-					"  {",
-					"      " + resourceSubject + "dct:subject ?subject1 .",
-					"      ?subject1 ?p2 ?lit .",
-					"      " + resourceSubject + "dct:subject ?subject ;",
-					"                dct:publisher ?publisher "});
-        if (deepsearch) {
-            result = result + ";\n                link:request ?request ";
-        }
-        result = result +             ".\n  }" +  StringUtils.join("\n", new String[]{
-                    "\n  UNION",
-					"  {",
-					"      " + resourceSubject + "dct:publisher ?publisher1 .",
-					"      ?publisher1 ?p2 ?lit .",
-					"      " + resourceSubject + "dct:subject ?subject ;",
-					"                dct:publisher ?publisher "});
-        if (deepsearch) {
-            result = result + StringUtils.join("\n", new String[]{
-                    ";\n                link:request ?request .",
-                    "  }\n  UNION\n  {",
-                    "      " + resourceSubject + "link:request ?request1 .",
-                    "      ?request1 sub:stripped ?lit .",
-                    "      " + resourceSubject + "dct:subject ?subject ;",
-                    "                dct:publisher ?publisher ;",
-                    "                link:request ?request "});
-        }
-        result = result + ".\n  }";
-    
-
         return result;
     }
 

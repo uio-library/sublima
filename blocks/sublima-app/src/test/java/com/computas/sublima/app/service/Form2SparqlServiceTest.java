@@ -228,28 +228,12 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX dct: <http://purl.org/dc/terms/>",
 		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>", 
-		       "DESCRIBE ?subject ?publisher ?resource ?rest WHERE {",
+               "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+               "DESCRIBE ?resource ?rest WHERE {",
 		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
-		       "  ?lit pf:textMatch ( 'engine*' 100) .",
-		       "  {",
-		       "    ?resource ?p1 ?lit;",
-		       "              dct:subject ?subject ;",
-		       "              dct:publisher ?publisher .",
-		       "  }",
-		       "  UNION",
-		       "  {",
-		       "      ?resource dct:subject ?subject1 .",
-		       "      ?subject1 ?p2 ?lit .",
-		       "      ?resource dct:subject ?subject ;",
-		       "                dct:publisher ?publisher .",
-		       "  }",
-		       "  UNION",
-		       "  {",
-		       "      ?resource dct:publisher ?publisher1 .",
-		       "      ?publisher1 ?p2 ?lit .",
-		       "      ?resource dct:subject ?subject ;",
-		       "                dct:publisher ?publisher .",
-		       "  }\n?resource ?p ?rest .\n}"}), resultString);
+		       "?lit pf:textMatch ( 'engine*' 100) .",
+               "?resource sub:literals ?lit .",
+               "?resource ?p ?rest .\n}"}), resultString);
   }
 
     public void testConvertForm2SparqlNoValueFreetextDeep() {
@@ -266,39 +250,10 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-               "PREFIX link: <http://www.w3.org/2007/ont/link#>",
-               "DESCRIBE ?subject ?publisher ?request ?resource ?rest WHERE {",
-		       "  ?lit pf:textMatch ( 'engine*' 100) .",
-		       "  {",
-		       "    ?resource ?p1 ?lit;",
-		       "              dct:subject ?subject ;",
-		       "              dct:publisher ?publisher ;",
-               "              link:request ?request .",
-               "  }",
-		       "  UNION",
-		       "  {",
-		       "      ?resource dct:subject ?subject1 .",
-		       "      ?subject1 ?p2 ?lit .",
-		       "      ?resource dct:subject ?subject ;",
-		       "                dct:publisher ?publisher ;",
-	           "                link:request ?request .",
-               "  }",
-		       "  UNION",
-		       "  {",
-		       "      ?resource dct:publisher ?publisher1 .",
-		       "      ?publisher1 ?p2 ?lit .",
-		       "      ?resource dct:subject ?subject ;",
-		       "                dct:publisher ?publisher ;",
-               "                link:request ?request .",
-		       "  }",
-		       "  UNION",
-		       "  {",
-		       "      ?resource link:request ?request1 .",
-		       "      ?request1 sub:stripped ?lit .",
-		       "      ?resource dct:subject ?subject ;",
-		       "                dct:publisher ?publisher ;",
-               "                link:request ?request .",
-		       "  }\n?resource ?p ?rest .\n}"}), resultString);
+               "DESCRIBE ?resource ?rest WHERE {",
+		       "?lit pf:textMatch ( 'engine*' 100) .",
+               "?resource sub:externalliterals ?lit .",
+               "?resource ?p ?rest .\n}"}), resultString);
   }
 
     public void testConvertForm2SparqlNoValueFreetext() {
@@ -311,28 +266,12 @@ public class Form2SparqlServiceTest extends TestCase {
 		   StringUtils.join("\n", new String[]{
 		       "PREFIX dct: <http://purl.org/dc/terms/>",
 		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
-		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
-		       "DESCRIBE ?subject ?publisher ?resource ?rest WHERE {",
-		       "  ?lit pf:textMatch ( 'engine*' 100) .",
-		       "  {",
-		       "    ?resource ?p1 ?lit;",
-		       "              dct:subject ?subject ;",
-		       "              dct:publisher ?publisher .",
-		       "  }",
-		       "  UNION",
-		       "  {",
-		       "      ?resource dct:subject ?subject1 .",
-		       "      ?subject1 ?p2 ?lit .",
-		       "      ?resource dct:subject ?subject ;",
-		       "                dct:publisher ?publisher .",
-		       "  }",
-		       "  UNION",
-		       "  {",
-		       "      ?resource dct:publisher ?publisher1 .",
-		       "      ?publisher1 ?p2 ?lit .",
-		       "      ?resource dct:subject ?subject ;",
-		       "                dct:publisher ?publisher .",
-		       "  }\n?resource ?p ?rest .\n}"}), resultString);
+               "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+               "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+		       "DESCRIBE ?resource ?rest WHERE {",
+		       "?lit pf:textMatch ( 'engine*' 100) .",
+               "?resource sub:literals ?lit .",
+		       "?resource ?p ?rest .\n}"}), resultString);
   }
 
 
@@ -413,9 +352,9 @@ public class Form2SparqlServiceTest extends TestCase {
     assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, actual);
   }
 
-  public void testConvertFor2SPARQLDoubleDualSELECT() {
+  public void testConvertForm2SPARQLDoubleDualSELECT() {
 	  	IndexService indexService = new IndexService();
-	    String expectS = "SELECT ?resource ?object1 ?object2 WHERE {\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?object1 .\n?resource dct:publisher ?var2 .\n?var2 foaf:homepage ?object2 .\n}\nGROUP BY ?resource\n";
+	    String expectS = "SELECT ?resource ?object1 ?object2 WHERE {\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?object1 .\n}\nOPTIONAL {\n?resource dct:publisher ?var2 .\n?var2 foaf:homepage ?object2 .\n}\n}";
 	    String[] testArr = new String[]{"dct:subject/rdfs:label", "dct:publisher/foaf:homepage"};
 	    String actual = indexService.getQueryForIndex(testArr, new String[]{"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>"});
 	    assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, actual);
@@ -423,7 +362,7 @@ public class Form2SparqlServiceTest extends TestCase {
 
   public void testConvertFor2SPARQLDoubleDualSELECTFixedResource() {
 	  	IndexService indexService = new IndexService();
-	    String expectS = "SELECT ?object1 ?object2 WHERE {\n<http://the-jet.com/> dct:subject ?var1 .\n?var1 rdfs:label ?object1 .\n<http://the-jet.com/> dct:publisher ?var2 .\n?var2 foaf:homepage ?object2 .\n}";
+	    String expectS = "SELECT ?object1 ?object2 WHERE {\nOPTIONAL {\n<http://the-jet.com/> dct:subject ?var1 .\n?var1 rdfs:label ?object1 .\n}\nOPTIONAL {\n<http://the-jet.com/> dct:publisher ?var2 .\n?var2 foaf:homepage ?object2 .\n}\n}";
 	    String[] testArr = new String[]{"dct:subject/rdfs:label", "dct:publisher/foaf:homepage"};
 	    String actual = indexService.getQueryForIndex(testArr, new String[]{"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>"}, "<http://the-jet.com/>");
 	    assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, actual);
