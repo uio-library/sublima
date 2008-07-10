@@ -83,6 +83,23 @@
 
   <!-- Servlet Context Listener ======================================= -->
 
+  <!-- This is here due to a problem with the server not starting, see
+       http://www.mail-archive.com/users@cocoon.apache.org/msg42588.html
+  -->
+
+  <filter>
+    <filter-name>springRequestContextFilter</filter-name>
+    <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>springRequestContextFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+
   <!--+
       | Declare Spring context listener which sets up the Spring Application Context
       | containing all Cocoon components (and user defined beans as well).
