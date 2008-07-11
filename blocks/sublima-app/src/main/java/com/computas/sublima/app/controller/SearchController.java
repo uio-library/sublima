@@ -103,7 +103,7 @@ public class SearchController implements StatelessAppleController {
 
 
 
-    logger.trace("doGetTopic: SPARQL CONSTUCT query sent to dispatcher: " + sparqlConstructQuery);
+    logger.trace("doGetTopic: SPARQL CONSTRUCT query sent to dispatcher:\n" + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);
 
     bizData.put("navigation", queryResult);
