@@ -231,7 +231,7 @@ public class Form2SparqlServiceTest extends TestCase {
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                "DESCRIBE ?resource ?rest WHERE {",
 		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
-		       "?lit pf:textMatch ( 'engine*' 100) .",
+		       "?lit pf:textMatch 'engine*' .",
                "?resource sub:literals ?lit .",
                "?resource ?p ?rest .\n}"}), resultString);
   }
@@ -251,7 +251,7 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                "DESCRIBE ?resource ?rest WHERE {",
-		       "?lit pf:textMatch ( 'engine*' 100) .",
+		       "?lit pf:textMatch 'engine*' .",
                "?resource sub:externalliterals ?lit .",
                "?resource ?p ?rest .\n}"}), resultString);
   }
@@ -269,7 +269,7 @@ public class Form2SparqlServiceTest extends TestCase {
                "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
 		       "DESCRIBE ?resource ?rest WHERE {",
-		       "?lit pf:textMatch ( 'engine*' 100) .",
+		       "?lit pf:textMatch 'engine*' .",
                "?resource sub:literals ?lit .",
 		       "?resource ?p ?rest .\n}"}), resultString);
   }

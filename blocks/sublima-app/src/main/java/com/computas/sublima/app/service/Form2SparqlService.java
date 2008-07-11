@@ -484,7 +484,7 @@ public class Form2SparqlService {
         if (!subjectVarList.contains(resourceSubject)) {
             subjectVarList.add(resourceSubject);
         }
-        String result = "\n?lit pf:textMatch ( '" + searchstring + "' 100) .";
+        String result = "\n?lit pf:textMatch '" + searchstring + "' .";
 	
         if (deepsearch) {
             result = result + "\n?resource sub:externalliterals ?lit .";
