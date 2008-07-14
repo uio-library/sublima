@@ -32,38 +32,7 @@
                 http://www.urltilfil.com/information-model.n3<br/></i18n:text>
             </p>
         </c:text>
-      <c:upload>
-        <form action="database" method="POST">
-      <table>
-        <tr>
-          <td align="right">
-            <label for="location"><i18n:text key="location">Lokasjon</i18n:text></label>
-          </td>
-          <td>
-            <input id="location" type="text" name="location" size="40"/>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">
-            <label for="tittel"><i18n:text key="type">Type</i18n:text></label>
-          </td>
-          <td>
-            <select name="type">
-              <option value="RDF/XML">RDF/XML</option>
-              <option value="N3">N3</option>
-              <option value="Turtle" selected="selected">Turtle</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            <input type="submit" value="button.read" i18n:attr="value"/>
-          </td>
-        </tr>
-      </table>
-    </form>
-      </c:upload>
+      <c:upload/>
     </c:content>
 
 </c:page>
