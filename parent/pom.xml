@@ -67,11 +67,11 @@
         <artifactId>cocoon-flowscript-impl</artifactId>
         <version>1.0.0</version>
       </dependency>
-      <dependency>
+      <!--dependency>
         <groupId>org.apache.cocoon</groupId>
         <artifactId>cocoon-ajax-impl</artifactId>
         <version>1.0.0</version>
-      </dependency>
+      </dependency-->
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>
@@ -242,12 +242,18 @@
       </dependency>
       <!-- Unicode -->
       <dependency>
-	<groupId>com.ibm.icu</groupId>
-	<artifactId>icu4j</artifactId>  
-	<version>3.4.4</version>
+        <groupId>com.ibm.icu</groupId>
+        <artifactId>icu4j</artifactId>
+        <version>3.4.4</version>
         <scope>compile</scope>
       </dependency>
 
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.2.1</version>
+        <scope>compile</scope>
+      </dependency>
 
 
     </dependencies>
