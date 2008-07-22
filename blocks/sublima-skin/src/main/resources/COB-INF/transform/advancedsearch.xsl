@@ -22,11 +22,18 @@
     <script type="text/javascript">
         $(document).ready(function(){
           $("#subject").autocomplete("autocomplete", {
-            minChars: 3 });
+            minChars: 3,
+            extraParams : { action:"topic" }
+            });
+
+          $("#publisher").autocomplete("autocomplete", {
+            minChars: 3,
+            extraParams : { action:"publisher" }
+            });
         });
     </script>
 
-    <form action="search-result" method="GET" autocomplete="off">
+    <form action="search-result" method="GET">
       <input type="hidden" name="freetext-field" value="dct:title"/>
       <input type="hidden" name="freetext-field" value="dct:subject/all-labels"/>
       <input type="hidden" name="freetext-field" value="dct:description"/>

@@ -1,6 +1,9 @@
 package com.computas.sublima.app.ajax;
 
 import com.computas.sublima.app.service.AdminService;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -10,12 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ArrayList;
-
-import org.json.JSONObject;
-import org.json.JSONException;
-import org.json.JSONArray;
 
 /**
  * @author: mha
@@ -34,21 +31,28 @@ public class Autocomplete extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
           throws IOException, ServletException {
 
-    String action = "complete";//request.getParameter("action");
+    String action = request.getParameter("action");
     String partialname = request.getParameter("q");
     if (partialname != null) partialname = partialname.trim().toLowerCase();
     StringBuffer buffer = new StringBuffer();
 
-    if ("complete".equals(action)) {
-      String result = adminService.getTopicByPartialNameAsJSON(partialname);
+    String result = "";
+    if ("topic".equals(action)) {
+      result = adminService.getTopicByPartialNameAsJSON(partialname);
+    } else if ("publisher".equals(action)) {
+      result = adminService.getPublisherByPartialNameAsJSON(partialname);
+    }
+
+    if (!"".equals(result)) {
+
       try {
         JSONObject json = new JSONObject(result);
         json = json.getJSONObject("results");
         JSONArray jsonArray = json.getJSONArray("bindings");
 
         for (int i = 0; i < jsonArray.length(); i++) {
-          JSONObject obj2 = (JSONObject)jsonArray.get(i);
-          obj2 = (JSONObject)obj2.get("label");
+          JSONObject obj2 = (JSONObject) jsonArray.get(i);
+          obj2 = (JSONObject) obj2.get("label");
           buffer.append(obj2.get("value") + "|" + obj2.get("value") + "\n");
         }
 
@@ -56,6 +60,7 @@ public class Autocomplete extends HttpServlet {
         e.printStackTrace();
       }
       if (!"".equals(buffer.toString())) {
+        response.setCharacterEncoding("UTF-8");
         response.getWriter().write(buffer.toString());
       } else {
         //nothing to show

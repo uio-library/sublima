@@ -307,6 +307,24 @@ public class AdminService {
     return queryResult.toString();
   }
 
+  public String getPublisherByPartialNameAsJSON(String name) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "SELECT ?label",
+            "WHERE {",
+            "?o a foaf:Agent ; ",
+            "       foaf:name ?label .",
+            "FILTER regex(str(?label), \"^" + name + "\",\"i\")",
+            "}"});
+
+    logger.trace("AdminService.getPublisherByPartialNameAsJSON() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
+
+    return queryResult.toString();
+  }
+
   public String getTopicResourcesByURI(String uri) {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
