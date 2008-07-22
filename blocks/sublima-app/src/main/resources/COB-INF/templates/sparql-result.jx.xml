@@ -7,8 +7,6 @@
 
   <navigation><jx:out value="#{navigation}" xmlize="true"/></navigation>
 
-  <advancedsearch></advancedsearch>
-
   <facets>
   <jx:out value="#{request}" xmlize="true"/>
   </facets>

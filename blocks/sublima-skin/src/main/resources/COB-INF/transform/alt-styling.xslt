@@ -21,6 +21,7 @@
   <xsl:import href="loginform.xsl"/>
   <xsl:import href="a-z.xsl"/>
   <xsl:import href="set-lang.xsl"/>
+  <xsl:import href="advancedsearch.xsl"/>
 
 
   <xsl:param name="baseurl"/>
@@ -77,7 +78,7 @@ this, just comment out the call-template -->
 		
 		<!-- Search -->
 	    <!-- Search is shown when advanced search is not -->	
-        <xsl:if test="not(c:page/c:advancedsearch/node())">
+        <xsl:if test="not(c:page/c:advancedsearch)">
 		
 		  <form action="{$baseurl}/search-result" method="get">
 		  <fieldset>
@@ -156,7 +157,8 @@ this, just comment out the call-template -->
         
         <!-- Advanced search -->        
         <!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
-        <xsl:call-template name="advancedsearch"/>
+        <!--xsl:call-template name="advancedsearch"/-->
+        <xsl:apply-templates select="c:page/c:advancedsearch" mode="advancedsearch"/>
         <!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
         
         <!-- Tips -->

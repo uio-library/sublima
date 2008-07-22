@@ -21,8 +21,14 @@
    
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
       <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
-      <script type="text/javascript" src="styles/expand.js"></script>
-      
+      <link rel="stylesheet" href="styles/jquery.autocomplete.css" type="text/css" />
+      <script src="styles/jquery.js" type="text/javascript" />
+      <script type="text/javascript">var dummy = null;</script>      
+      <script src="styles/jquery.bgiframe.min.js" type="text/javascript"/>
+      <script type="text/javascript">var dummy = null;</script>
+      <script src="styles/jquery.autocomplete.js" type="text/javascript" />
+      <script type="text/javascript">var dummy = null;</script>
+          
     </head>
   </xsl:template>
 

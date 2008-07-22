@@ -22,6 +22,11 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
       <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
       <script type="text/javascript" src="styles/expand.js"></script>
+      <link rel="stylesheet" href="styles/autocomplete.css" type="text/css"/>
+      <script type="text/javascript" src="styles/expand.js"/>
+      <script type="text/javascript" src="styles/jquery.js"/>
+      <script type="text/javascript" src="styles/dimensions.js"/>
+      <script type="text/javascript" src="styles/autocomplete.js"/>
       
     </head>
   </xsl:template>

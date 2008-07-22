@@ -135,6 +135,16 @@
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <description>AutoCompletes Form Input using XmlHttpRequest Objects</description>
+    <servlet-name> AutocompleteServlet </servlet-name>
+    <servlet-class>com.computas.sublima.app.ajax.Autocomplete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AutocompleteServlet</servlet-name>
+    <url-pattern>/autocomplete</url-pattern>
+  </servlet-mapping>
+
   <!-- COPIED FROM THE XPATCH -->
 
   <!-- The Joseki SPARQL servlet -->

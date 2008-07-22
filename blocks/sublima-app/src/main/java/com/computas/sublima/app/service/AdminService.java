@@ -289,6 +289,24 @@ public class AdminService {
     return queryResult.toString();
   }
 
+  public String getTopicByPartialNameAsJSON(String name) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "SELECT ?label",
+            "WHERE {",
+            "?o a skos:Concept ; ",
+            "       skos:prefLabel ?label .",
+            "FILTER regex(str(?label), \"^" + name + "\",\"i\")", 
+            "}"});
+
+    logger.trace("AdminService.getTopicByPartialName() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
+
+    return queryResult.toString();
+  }
+
   public String getTopicResourcesByURI(String uri) {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
