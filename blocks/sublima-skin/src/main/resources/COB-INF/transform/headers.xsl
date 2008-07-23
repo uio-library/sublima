@@ -28,6 +28,9 @@
       <script type="text/javascript">var dummy = null;</script>
       <script src="styles/jquery.autocomplete.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
+      <script src="styles/expand.js" type="text/javascript" />
+      <script type="text/javascript">var dummy = null;</script>
+
           
     </head>
   </xsl:template>
