@@ -6,4 +6,6 @@ public interface SparqlDispatcher {
 	// sparql dispatcher shouldn't return a string object	
 	Object query(String sparqlQuery);
 
+  String getResultsAsJSON(String sparqlQuery);
+
 }
