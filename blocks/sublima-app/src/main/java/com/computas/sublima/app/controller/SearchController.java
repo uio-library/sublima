@@ -113,7 +113,11 @@ public class SearchController implements StatelessAppleController {
     // or something that would serialise this data structure automatically in a one-liner,
     // but I couldn't find it. Arguably a TODO.
     StringBuffer params = new StringBuffer();
-    params.append("  <request>\n");
+    String uri = req.getCocoonRequest().getRequestURI();
+    if (req.getCocoonRequest().getQueryString() != null) {
+        uri += "?" + req.getCocoonRequest().getQueryString();
+    }
+    params.append("  <request uri=\""+ uri +"\">\n");
     params.append("\n    <param key=\"prefix\">");
     params.append("\n      <value>dct: &lt;http://purl.org/dc/terms/&gt;</value>");
     params.append("\n      <value>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema%23&gt;</value>");
@@ -228,7 +232,11 @@ public class SearchController implements StatelessAppleController {
     // or something that would serialise this data structure automatically in a one-liner, 
     // but I couldn't find it. Arguably a TODO.
     StringBuffer params = new StringBuffer();
-    params.append("  <request>\n");
+    String uri = req.getCocoonRequest().getRequestURI();
+    if (req.getCocoonRequest().getQueryString() != null) {
+        uri += "?" + req.getCocoonRequest().getQueryString();
+    }
+    params.append("  <request uri=\""+uri+"\">\n");
     for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
       String key = keys.nextElement().toString();
       params.append("\n    <param key=\"" + key + "\">");
