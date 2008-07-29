@@ -109,15 +109,9 @@ public class SearchController implements StatelessAppleController {
     bizData.put("navigation", queryResult);
     bizData.put("mode", mode);
 
-    // This is such a 1999 way of doing things. There should be a generic SAX events generator
-    // or something that would serialise this data structure automatically in a one-liner,
-    // but I couldn't find it. Arguably a TODO.
-    StringBuffer params = new StringBuffer();
-    String uri = req.getCocoonRequest().getRequestURI();
-    if (req.getCocoonRequest().getQueryString() != null) {
-        uri += "?" + req.getCocoonRequest().getQueryString();
-    }
-    params.append("  <request uri=\""+ uri +"\">\n");
+    StringBuffer params = getMostOfTheRequestXML(req);
+
+    // These will not be brought along unless we add it as request parameters, which is hackish.
     params.append("\n    <param key=\"prefix\">");
     params.append("\n      <value>dct: &lt;http://purl.org/dc/terms/&gt;</value>");
     params.append("\n      <value>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema%23&gt;</value>");
@@ -227,28 +221,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("mode", mode);
 
     bizData.put("searchparams", xmlSearchParametersBuffer.toString());
-
-    // This is such a 1999 way of doing things. There should be a generic SAX events generator 
-    // or something that would serialise this data structure automatically in a one-liner, 
-    // but I couldn't find it. Arguably a TODO.
-    StringBuffer params = new StringBuffer();
-    String uri = req.getCocoonRequest().getRequestURI();
-    if (req.getCocoonRequest().getQueryString() != null) {
-        uri += "?" + req.getCocoonRequest().getQueryString();
-    }
-    params.append("  <request uri=\""+uri+"\">\n");
-    for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
-      String key = keys.nextElement().toString();
-      params.append("\n    <param key=\"" + key + "\">");
-      String[] values = req.getCocoonRequest().getParameterValues(key);
-      for (String value : values) {
-        value = value.replaceAll("<", "&lt;");
-        value = value.replaceAll(">", "&gt;");
-        value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
-        params.append("\n      <value>" + value + "</value>");
-      }
-      params.append("\n    </param>");
-    }
+    StringBuffer params = getMostOfTheRequestXML(req);
     params.append("\n  </request>\n");
 
     bizData.put("request", params.toString());
@@ -256,7 +229,37 @@ public class SearchController implements StatelessAppleController {
     res.sendPage("xml/sparql-result", bizData);
   }
 
-  private Map<String, String[]> createParametersMap(Request request) {
+  private StringBuffer getMostOfTheRequestXML(AppleRequest req) {
+      // This is such a 1999 way of doing things. There should be a generic SAX events generator
+      // or something that would serialise this data structure automatically in a one-liner,
+      // but I couldn't find it. Arguably a TODO.
+      StringBuffer params = new StringBuffer();
+      String uri = req.getCocoonRequest().getRequestURI();
+      int paramcount = 0;
+      params.append("  <request justbaseurl=\""+ uri + "\" ");
+      if (req.getCocoonRequest().getQueryString() != null) {
+          uri += "?" + req.getCocoonRequest().getQueryString();
+          paramcount = req.getCocoonRequest().getParameters().size();
+      }
+    params.append("paramcount=\""+ paramcount + "\" ");
+     params.append("requesturl=\""+ uri);
+      params.append("\">\n");
+      for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
+          String key = keys.nextElement().toString();
+          params.append("\n    <param key=\"" + key + "\">");
+          String[] values = req.getCocoonRequest().getParameterValues(key);
+          for (String value : values) {
+            value = value.replaceAll("<", "&lt;");
+            value = value.replaceAll(">", "&gt;");
+            value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+            params.append("\n      <value>" + value + "</value>");
+          }
+          params.append("\n    </param>");
+      }
+      return params;
+  }
+
+    private Map<String, String[]> createParametersMap(Request request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {
