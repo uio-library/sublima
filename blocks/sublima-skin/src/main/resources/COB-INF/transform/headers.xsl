@@ -70,8 +70,9 @@
           </p>
 	   
 
-	  <xsl:call-template name="set-langs"/>
-
+	  <xsl:call-template name="set-langs">
+	    <xsl:with-param name="baseurl" select="$baseurl"/>
+	  </xsl:call-template>
       
       <p id="layoutdims">
 	<a href="{$baseurl}/login">Admin</a>

@@ -4,36 +4,55 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:c="http://xmlns.computas.com/cocoon"
    version="1.0">
+  
+  <xsl:template name="lang-text">
+    <xsl:param name="url"/>
+    <a lang="no" hreflang="no" href="{$url}no">Norsk</a>, 
+    <a lang="en" hreflang="en" href="{$url}en">English</a>, 
+    <a lang="da" hreflang="da" href="{$url}da">Dansk</a>, 
+    <a lang="sv" hreflang="sv" href="{$url}sv">Svenska</a>, 
+  </xsl:template>
 
-  <xsl:template name="set-langs">
+  
+  <xsl:template name="set-langs"> 
+    <xsl:param name="baseurl"/>
     <div class="set-langs">
       Sett språk til:
       <xsl:choose>
 	<xsl:when test="not(/c:page/c:facets/c:request/@paramcount) or /c:page/c:facets/c:request/@paramcount = 0">
-	  <a href="?locale=no">Norsk</a>, 
-	  <a href="?locale=da">Dansk</a>, 
-	  <a href="?locale=sv">Svenska</a>, 
+	  <xsl:call-template name="lang-text">
+	    <xsl:with-param name="url"><xsl:text>?locale=</xsl:text></xsl:with-param>
+	  </xsl:call-template>
 	</xsl:when>
 	<xsl:when test="/c:page/c:facets/c:request/c:param">
-	  <xsl:variable name="baseurlparams">
-	    <xsl:value-of select="/c:page/c:facets/c:request/@justbaseurl"/>
-	    <xsl:text>?</xsl:text>
-	    <xsl:for-each select="/c:page/c:facets/c:request/c:param">
-	      <xsl:for-each select="c:value">
-		<xsl:if test="text() and not(../@key = 'locale')">
-		  <xsl:value-of select="../@key"/>=<xsl:value-of select="."/>&amp;<xsl:text/>
-		</xsl:if>
+	  <xsl:call-template name="lang-text">
+	    <xsl:with-param name="url">
+	      <xsl:value-of select="/c:page/c:facets/c:request/@justbaseurl"/>
+	      <xsl:text>?</xsl:text>
+	      <xsl:for-each select="/c:page/c:facets/c:request/c:param">
+		<xsl:for-each select="c:value">
+		  <xsl:if test="text() and not(../@key = 'locale')">
+		    <xsl:value-of select="../@key"/>=<xsl:value-of select="."/>&amp;<xsl:text/>
+		  </xsl:if>
+		</xsl:for-each>
 	      </xsl:for-each>
-	    </xsl:for-each>
-	  </xsl:variable>
-	  <a href="{$baseurlparams}&amp;locale=no">Norsk</a>, 
-	  <a href="{$baseurlparams}&amp;locale=da">Dansk</a>, 
-	  <a href="{$baseurlparams}&amp;locale=sv">Svenska</a>, 
-
+	      <xsl:text>&amp;locale=</xsl:text>
+	    </xsl:with-param>
+	  </xsl:call-template>
 	</xsl:when>
+	<xsl:otherwise>
+	  <!-- drop down to a provide a localised link to the root page -->
+	  <xsl:call-template name="lang-text">
+	    <xsl:with-param name="url">
+	      <xsl:value-of select="$baseurl"/>
+	      <xsl:text>?locale=</xsl:text>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:otherwise>
+	
       </xsl:choose>
       
-	eller se <a href="http://www.w3.org/International/questions/qa-lang-priorities">hvordan sette nettleserens språk</a>.
+      eller se <a href="http://www.w3.org/International/questions/qa-lang-priorities">hvordan sette nettleserens språk</a>.
     </div>
   </xsl:template>
 </xsl:stylesheet>
