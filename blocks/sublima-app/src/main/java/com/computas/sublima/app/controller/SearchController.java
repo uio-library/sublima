@@ -239,6 +239,7 @@ public class SearchController implements StatelessAppleController {
       params.append("  <request justbaseurl=\""+ uri + "\" ");
       if (req.getCocoonRequest().getQueryString() != null) {
           uri += "?" + req.getCocoonRequest().getQueryString();
+          uri = uri.replaceAll("&", "&amp;");
           paramcount = req.getCocoonRequest().getParameters().size();
       }
     params.append("paramcount=\""+ paramcount + "\" ");
@@ -249,10 +250,11 @@ public class SearchController implements StatelessAppleController {
           params.append("\n    <param key=\"" + key + "\">");
           String[] values = req.getCocoonRequest().getParameterValues(key);
           for (String value : values) {
-            value = value.replaceAll("<", "&lt;");
-            value = value.replaceAll(">", "&gt;");
-            value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
-            params.append("\n      <value>" + value + "</value>");
+              value = value.replaceAll("&", "&amp;");
+              value = value.replaceAll("<", "&lt;");
+              value = value.replaceAll(">", "&gt;");
+              value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+              params.append("\n      <value>" + value + "</value>");
           }
           params.append("\n    </param>");
       }

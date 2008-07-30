@@ -69,9 +69,9 @@
 
           </p>
 	   
-      <!-- xsl:if test="c:page/c:mode != 'search-result'">
-	   <xsl:call-template name="set-langs"/>
-	   </xsl:if -->
+
+	  <xsl:call-template name="set-langs"/>
+
       
       <p id="layoutdims">
 	<a href="{$baseurl}/login">Admin</a>
