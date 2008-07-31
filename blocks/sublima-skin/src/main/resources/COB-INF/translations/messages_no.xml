@@ -17,7 +17,7 @@
   <message key="menu.showall">Vis alle</message>
   <message key="menu.roles">Roller</message>
   <message key="menu.join">Slå sammen</message>
-  <message key="menu.theme">Temaemner</message>
+  <message key="menu.theme">Tema</message>
   <message key="menu.relations">Relasjoner</message>
   <message key="menu.suggested">Foreslåtte</message>
 
@@ -49,6 +49,7 @@
   <!-- validation -->
   <message key="validation.providedurlok">Angitt URL godkjent.</message>
   <message key="validation.topic.notitle">Emnet mangler tittel</message>
+  <message key="validation.urlexists">Oppgitt URL er allerede registrert på en ressurs.</message>
 
   <!-- resource form -->
   <message key="resource.sendcomment">Send inn en kommentar angående denne ressursen</message>
@@ -59,8 +60,8 @@
   <message key="admin.login">Logg inn</message>
   <message key="admin.topic.usedby">Ressurser tilknyttet emnet</message>
   <message key="admin.publisher.resources">Ressurser tilknyttet utgiveren</message>
-  <message key="admin.linkcheck.gone">Satt til borte grunnet entydig besked fra tilbyder</message>
-  <message key="admin.linkcheck.inactive">Satt inaktive pga varige problemer</message>
+  <message key="admin.linkcheck.gone">Ressursen er permanent borte</message>
+  <message key="admin.linkcheck.inactive">Satt inaktiv pga varige problemer</message>
   <message key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</message>
   <message key="admin.approvedby">Redaksjonelt godkjent av</message>
   <message key="admin.posteddate">Innsendt</message>
@@ -69,9 +70,9 @@
 
   <!-- tips -->
   <message key="tips.heading"><h2>Fant du ikke det du lette etter?</h2><br/><p>Tips oss gjerne dersom du finner sider som du tror vi kunne satt pris på!</p></message>
-  <message key="tips.suggestedtopics">Forslag til emner på ressursen (kommaseparert)</message>
+  <message key="tips.suggestedtopics">Forslag til emner på ressursen</message>
   <message key="tips.submit">Send inn</message>
-  <message key="tips.thanks">Thanks for the tip!</message>
+  <message key="tips.thanks">Takk for tipset!</message>
 
   <!-- a-z -->
   <message key="az.heading">Alfabetisk navigering i emnene</message>
@@ -117,7 +118,7 @@
   <message key="addedit">Legge til/Redigere</message>
   <message key="approve">Godkjenne</message>
   <message key="delete">Slette</message>
-  <message key="setthemetopics">Sette temaemner</message>
+  <message key="setthemetopics">Sette tema</message>
   <message key="jointopics">Koble emner</message>
   <message key="relation">Relasjon</message>
   <message key="relations">Relasjoner</message>
@@ -128,15 +129,18 @@
   <message key="administration">administrasjon</message>
   <message key="suggested">Foreslått</message>
   <message key="back">Tilbake</message>
-  <message key="location">Lokasjon</message>
+  <message key="location">Fil</message>
   <message key="search">Søk</message>
   <message key="topconcept">Hovedemne</message>
+  <message key="repladeurlwithuri">Erstatt URL med URI</message>
+
+
 
   <!-- buttons -->
   <message key="button.saveresource">Lagre ressurs</message>
   <message key="button.deleteresource">Slett ressurs</message>
   <message key="button.savetopic">Lagre emne</message>
-  <message key="button.savethemetopics">Lagre valgte temaemner</message>
+  <message key="button.savethemetopics">Lagre valgte tema</message>
   <message key="button.empty">Tøm skjema</message>
   <message key="button.join">Slå sammen</message>
   <message key="button.saveuser">Lagre bruker</message>

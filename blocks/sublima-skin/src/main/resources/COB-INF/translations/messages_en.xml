@@ -49,6 +49,7 @@
   <!-- validation -->
   <message key="validation.providedurlok">Provided URL validated.</message>
   <message key="validation.topic.notitle">Topic has no title</message>
+  <message key="validation.urlexists">The URL given is already registered as a resource.</message>
 
   <!-- resource -->
   <message key="resource.sendcomment">Comment on this resource</message>
@@ -61,7 +62,7 @@
   <message key="admin.publisher.resources">Resources from this publisher</message>
   <message key="admin.linkcheck.gone">Status GONE due to notice from provider.</message>
   <message key="admin.linkcheck.inactive">Status INACTIVE due to lasting problems.</message>
-  <message key="admin.linkcheck.manual">Satus CHECK due to problems upon connection.</message>
+  <message key="admin.linkcheck.manual">Status CHECK due to problems upon connection.</message>
   <message key="admin.approvedby">Approved by</message>
   <message key="admin.posteddate">Posted</message>
   <message key="admin.accepteddate">Accepted</message>
@@ -69,7 +70,7 @@
 
     <!-- tips -->
   <message key="tips.heading"><h2>Don't find what you're looking for?</h2><br/><p>Please send us a tip if you find that information elsewhere, and we'll include it in our resources!</p></message>
-  <message key="tips.suggestedtopics">Suggestions to suitable topics (comma separated)</message>
+  <message key="tips.suggestedtopics">Suggestions to suitable topics</message>
   <message key="tips.submit">Send</message>
   <message key="tips.thanks">Thanks for the tip!</message>
 
@@ -133,6 +134,7 @@
   <message key="location">Location</message>
   <message key="search">Search</message>
   <message key="topconcept">Main topic</message>
+  <message key="repladeurlwithuri">Replace URL with URI</message>
 
   <!-- buttons -->
   <message key="button.saveresource">Save resource</message>
