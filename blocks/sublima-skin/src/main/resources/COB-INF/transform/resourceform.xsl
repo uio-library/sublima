@@ -16,46 +16,75 @@
         version="1.0">
 
   <xsl:import href="controlbutton.xsl"/>
+  <xsl:import href="labels.xsl"/>
 
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
   <xsl:template match="c:resourcedetails" mode="edit">
 
     <form action="{$baseurl}/admin/ressurser/ny" method="POST">
+      <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
+      <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+      <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
+      <input type="hidden" name="prefix" value="lingvoj: &lt;http://www.lingvoj.org/ontology#&gt;"/>
+      <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
+      <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
+      <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
+      <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
+      <input type="hidden" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier}"/>
 
-      <input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/>
-      <input type="hidden" name="uri" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}"/>
-      <input type="hidden" name="dct:identifier"
-             value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
+      <!--input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/ -->
+      <!-- input type="hidden" name="uri" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}"/ -->
+      <!-- input type="hidden" name="dct:identifier"
+             value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/ -->
+
+      <table>
+        <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/dct:title">
+          <xsl:call-template name="labels">
+            <xsl:with-param name="label"><i18n:text key="title">Tittel</i18n:text></xsl:with-param>
+            <xsl:with-param name="value" select="."/>
+            <xsl:with-param name="default-language" select="@xml:lang"/>
+            <xsl:with-param name="field"><xsl:text>dct:title-</xsl:text><xsl:value-of select="position()"/></xsl:with-param>
+            <xsl:with-param name="type">text</xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+
+        <xsl:call-template name="labels">
+          <xsl:with-param name="label"><i18n:text key="title">Tittel</i18n:text></xsl:with-param>
+          <xsl:with-param name="default-language" select="$interface-language"/>
+          <xsl:with-param name="field"><xsl:text>dct:title-</xsl:text><xsl:value-of select="count(./c:resource/rdf:RDF/sub:Resource/dct:title)+1"/></xsl:with-param>
+          <xsl:with-param name="type">text</xsl:with-param>
+        </xsl:call-template>
+      </table>
+      
       <table>
         <tr>
           <td>
-            <label for="dct:title"><i18n:text key="title">Tittel</i18n:text></label>
+            <label for="the-resource"><i18n:text key="url">URL</i18n:text></label>
           </td>
           <td>
-            <input id="dct:title" type="text" name="dct:title" size="40"
-                   value="{./c:resource/rdf:RDF/sub:Resource/dct:title}"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="sub:url"><i18n:text key="uri">URI</i18n:text></label>
-          </td>
-          <td>
-            <input id="sub:url" type="text" name="sub:url" size="40"
+            <input id="the-resource" type="text" name="the-resource" size="40"
                    value="{./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource}"/>
           </td>
         </tr>
-        <tr>
-          <td>
-            <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
-          </td>
-          <td>
-            <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of
-                    select="./c:resource/rdf:RDF/sub:Resource/dct:description"/>...
-            </textarea>
-          </td>
-        </tr>
+      </table>
+      <table>
+        <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/dct:description">
+          <xsl:call-template name="labels">
+            <xsl:with-param name="label"><i18n:text key="description">Beskrivelse</i18n:text></xsl:with-param>
+            <xsl:with-param name="value" select="."/>
+            <xsl:with-param name="default-language" select="@xml:lang"/>
+            <xsl:with-param name="field"><xsl:text>dct:description-</xsl:text><xsl:value-of select="position()"/></xsl:with-param>
+            <xsl:with-param name="type">textarea</xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+
+        <xsl:call-template name="labels">
+          <xsl:with-param name="label"><i18n:text key="description">Beskrivelse</i18n:text></xsl:with-param>
+          <xsl:with-param name="default-language" select="$interface-language"/>
+          <xsl:with-param name="field"><xsl:text>dct:description-</xsl:text><xsl:value-of select="count(./c:resource/rdf:RDF/sub:Resource/dct:description)+1"/></xsl:with-param>
+          <xsl:with-param name="type">textarea</xsl:with-param>
+        </xsl:call-template>
       </table>
       <br/>
       <p>
@@ -89,19 +118,12 @@
           </td>
         </tr>
         <tr>
-          <td></td>
-          <td>
-            <input id="dct:publisher/foaf:Agent/foaf:name" type="text"
-                   name="dct:publisher/foaf:Agent/foaf:name" size="40"/>
-          </td>
-        </tr>
-        <tr>
           <td>
             <label for="dct:language"><i18n:text key="language">Språk</i18n:text></label>
           </td>
           <td>
             <select id="dct:language" name="dct:language" multiple="multiple" size="10">
-              <xsl:for-each select="./c:languages/rdf:RDF/lingvoj:Lingvo">
+              <xsl:for-each select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo">
                 <xsl:sort select="./rdfs:label"/>
                 <xsl:choose>
                   <xsl:when
@@ -255,13 +277,13 @@
           <td>
 
             <xsl:call-template name="controlbutton">
-              <xsl:with-param name="privilege">topic.edit</xsl:with-param>
-              <xsl:with-param name="buttontext"><i18n:text key="button.saveresource">Lagre ressurs</i18n:text></xsl:with-param>
+              <xsl:with-param name="privilege">resource.edit</xsl:with-param>
+              <xsl:with-param name="buttontext">button.saveresource</xsl:with-param>
             </xsl:call-template>
 
             <xsl:call-template name="controlbutton">
-              <xsl:with-param name="privilege">topic.delete</xsl:with-param>
-              <xsl:with-param name="buttontext"><i18n:text key="button.deleteresource">Slett ressurs</i18n:text></xsl:with-param>
+              <xsl:with-param name="privilege">resource.delete</xsl:with-param>
+              <xsl:with-param name="buttontext">button.deleteresource</xsl:with-param>
             </xsl:call-template>
             
           </td>
@@ -274,7 +296,7 @@
   </xsl:template>
 
 
-  <xsl:template match="c:resourcedetails" mode="temp">
+  <!--xsl:template match="c:resourcedetails" mode="temp">
 
     <form action="{$baseurl}/admin/ressurser/ny" method="POST">
 
@@ -502,6 +524,6 @@
         </tr>
       </table>
     </form>
-  </xsl:template>
+  </xsl:template-->
 
 </xsl:stylesheet>
