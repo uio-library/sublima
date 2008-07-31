@@ -98,6 +98,7 @@
 	  <xsl:value-of select="$baseurlparams"/>
 	  <xsl:text>dct:subject=</xsl:text>
 	  <xsl:value-of select="$uri"/>
+	  <xsl:value-of select="$aloc"/>
 	</xsl:attribute>
 	<xsl:value-of select="$this-label"/>
       </a>
@@ -119,6 +120,7 @@
 	    <xsl:value-of select="$baseurlparams"/>
 	    <xsl:text>dct:language=</xsl:text>
 	    <xsl:value-of select="$uri"/>
+	    <xsl:value-of select="$aloc"/>
 	  </xsl:attribute>
 	  <xsl:value-of select="$this-label"/>
 	</a>
@@ -141,6 +143,7 @@
 	    <xsl:value-of select="$baseurlparams"/>
 	    <xsl:text>dct:audience=</xsl:text>
 	    <xsl:value-of select="$uri"/>
+	    <xsl:value-of select="$aloc"/>
 	  </xsl:attribute>
 	  <xsl:value-of select="$this-label"/>
 	</a>

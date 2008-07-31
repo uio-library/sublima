@@ -31,7 +31,7 @@
 	    <h4><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></h4>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <a href="{$uri}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
+	    <a href="{$uri}{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
 	  </xsl:otherwise>
 	</xsl:choose>
       </p>

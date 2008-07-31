@@ -25,6 +25,22 @@
 
 
   <xsl:param name="baseurl"/>
+  <xsl:param name="querystring"/>
+  <xsl:param name="interface-language"/>
+
+  <xsl:param name="qloc">
+    <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
+      <xsl:text>?locale=</xsl:text>
+      <xsl:value-of select="$interface-language"/>
+    </xsl:if>
+  </xsl:param>
+  <xsl:param name="aloc">
+    <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
+      <xsl:text>&amp;locale=</xsl:text>
+      <xsl:value-of select="$interface-language"/>
+    </xsl:if>
+  </xsl:param>
+
 
   <!-- A debug template that dumps the source tree. Do not remove
 this, just comment out the call-template -->
@@ -62,7 +78,7 @@ this, just comment out the call-template -->
       </xsl:call-template>
    
       <body>
-
+	<xsl:value-of select="$querystring"/>
 	<xsl:call-template name="headers">
 	  <xsl:with-param name="baseurl" select="$baseurl"/>
 	</xsl:call-template>
@@ -71,7 +87,7 @@ this, just comment out the call-template -->
           <div class="colmid">
             <div class="colleft">
               <div class="col1">
-		<!-- 
+		<!--
 		  <xsl:call-template name="debug"/>
 		-->
        <!-- Column 1 start -->
@@ -195,16 +211,16 @@ this, just comment out the call-template -->
       <div class="col2">
           <!-- Column 2 (left) start -->
             <h2><i18n:text key="menu.heading">Mine aktiviteter</i18n:text></h2>
-            <a href="{$baseurl}/tips"><i18n:text key="menu.tips">Tips oss om en ny ressurs</i18n:text></a><br/>
+            <a href="{$baseurl}/tips{$qloc}"><i18n:text key="menu.tips">Tips oss om en ny ressurs</i18n:text></a><br/>
         
             <xsl:choose>
               <xsl:when test="c:page/c:loggedin = 'true' ">
-                <a href="{$baseurl}/admin/emner/"><i18n:text key="menu.topic">Emner</i18n:text></a><br/>
-                <a href="{$baseurl}/admin/ressurser/"><i18n:text key="menu.resource">Ressurser</i18n:text></a><br/>
-                <a href="{$baseurl}/admin/brukere/"><i18n:text key="menu.user">Brukere</i18n:text></a><br/>
-                <a href="{$baseurl}/admin/utgivere/"><i18n:text key="menu.publisher">Utgivere</i18n:text></a><br/>
-                <a href="{$baseurl}/admin/lenkesjekk/"><i18n:text key="menu.link">Lenkesjekk</i18n:text></a><br/>
-                <a href="{$baseurl}/admin/database/"><i18n:text key="menu.database">Database</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/emner/{$qloc}"><i18n:text key="menu.topic">Emner</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/ressurser/{$qloc}"><i18n:text key="menu.resource">Ressurser</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/brukere/{$qloc}"><i18n:text key="menu.user">Brukere</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/utgivere/{$qloc}"><i18n:text key="menu.publisher">Utgivere</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/lenkesjekk/{$qloc}"><i18n:text key="menu.link">Lenkesjekk</i18n:text></a><br/>
+                <a href="{$baseurl}/admin/database/{$qloc}"><i18n:text key="menu.database">Database</i18n:text></a><br/>
               </xsl:when>
             </xsl:choose>
 

@@ -43,18 +43,18 @@
       <h2>Sublima 0.9.6.1</h2>
       <ul>
 	<li>
-	  <a href="{$baseurl}/" class="active"><i18n:text key="menu.search">Søk</i18n:text></a>
+	  <a href="{$baseurl}/{$qloc}" class="active"><i18n:text key="menu.search">Søk</i18n:text></a>
 	</li>
 	<li>
-	  <a href="{$baseurl}/advancedsearch"><i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
+	  <a href="{$baseurl}/advancedsearch{$qloc}"><i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
 	  </a>
 	</li>
 	<li>
-	  <a href="{$baseurl}/a-z"><i18n:text key="menu.az">A-Å</i18n:text></a>
+	  <a href="{$baseurl}/a-z{$qloc}"><i18n:text key="menu.az">A-Å</i18n:text></a>
 	</li>
 	<!--
 	    <li>
-              <a href="{$baseurl}/admin">Administrasjon
+              <a href="{$baseurl}/admin{$qloc}">Administrasjon
 	      </a>
 	      </li>
 	-->
@@ -63,7 +63,7 @@
             <p id="layoutdims">
             <!--xsl:for-each select="c:page/c:breadcrumbs/c:breadcrumb">
               <a>
-                <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/></xsl:attribute><xsl:value-of select="@title"/></a>
+                <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/><xsl:value-of select="$qloc"/>}</xsl:attribute><xsl:value-of select="@title"/></a>
               <xsl:text> | </xsl:text>
             </xsl:for-each-->
 
@@ -75,7 +75,7 @@
 	  </xsl:call-template>
       
       <p id="layoutdims">
-	<a href="{$baseurl}/login">Admin</a>
+	<a href="{$baseurl}/login{$qloc}">Admin</a>
       </p>
     </div>
   </xsl:template>

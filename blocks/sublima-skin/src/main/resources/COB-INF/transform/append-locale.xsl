@@ -11,7 +11,7 @@
         xmlns:xh="http://www.w3.org/1999/xhtml"
         version="1.0">
   
-  <xsl:param name="baseurl">http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/</xsl:param>
+  <xsl:param name="servername">/</xsl:param>
   <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="/">
@@ -37,7 +37,7 @@
 	      </xsl:choose>
 	    </xsl:variable>
 	    <xsl:choose>
-	      <xsl:when test="starts-with($uri, $baseurl)">
+	      <xsl:when test="contains($uri, $servername)">
 		<xsl:value-of select="concat($uri, $qoramp, 'locale=', $interface-language)"/>
 	      </xsl:when>
 	      <xsl:when test="not(starts-with($uri, 'http'))">
@@ -55,6 +55,7 @@
       </xsl:attribute>
 
       <xsl:copy-of select="@class|@id|@style|@lang|@hreflang|@onfocus|@onblur|@tabindex"/>
+      <xsl:apply-templates select="node()" mode="copy"/>
     </a>
   </xsl:template>
 

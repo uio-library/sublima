@@ -24,7 +24,7 @@
       
       <tr>
 	<th colspan="2" scope="col">
-	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/> <xsl:if test="../../c:loggedin = 'true'"> - <a href="{$baseurl}/admin/ressurser/edit?uri={sub:Resource/@rdf:about}">[Edit]</a> </xsl:if>
+	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/> <xsl:if test="../../c:loggedin = 'true'"> - <a href="{$baseurl}/admin/ressurser/edit?uri={sub:Resource/@rdf:about}{$aloc}">[Edit]</a> </xsl:if>
     </th>
       </tr>
       <tr>
