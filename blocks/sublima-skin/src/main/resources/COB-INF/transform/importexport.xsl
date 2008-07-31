@@ -19,7 +19,7 @@
   <xsl:param name="baseurl"/>
 
   <xsl:template match="c:upload" mode="upload">
-    <form action="database" method="POST">
+    <form action="upload" method="POST" enctype="multipart/form-data">
       <table>
         <tr>
           <td align="right">
@@ -28,7 +28,7 @@
             </label>
           </td>
           <td>
-            <input id="location" type="text" name="location" size="40"/>
+            <input id="location" type="file" name="location" size="40"/>
           </td>
         </tr>
         <tr>
@@ -63,7 +63,7 @@
             </label>
           </td>
           <td>
-            <input id="location" type="text" name="location" size="40"/>
+            <input id="location" type="file" name="location" size="40"/>
           </td>
         </tr>
         <tr>
