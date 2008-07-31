@@ -5,6 +5,7 @@
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
         xmlns:lingvoj="http://www.lingvoj.org/ontology#"
+        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:template name="controlbutton" mode="list-options">
@@ -12,10 +13,10 @@
     <xsl:param name="buttontext"/>
     <xsl:choose>
       <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = $privilege">
-        <input type="submit" value="{$buttontext}" name="actionbutton"/>
+        <input type="submit" value="{$buttontext}" name="actionbutton" i18n:attr="value"/>
       </xsl:when>
       <xsl:otherwise>
-        <input type="submit" value="{$buttontext}" name="actionbutton" disabled="true"/>
+        <input type="submit" value="{$buttontext}" name="actionbutton" disabled="true" i18n:attr="value"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
