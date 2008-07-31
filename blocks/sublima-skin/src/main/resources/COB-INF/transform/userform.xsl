@@ -23,8 +23,23 @@
   <xsl:template match="c:user" mode="useredit">
 
     <form action="{$baseurl}/admin/brukere/bruker" method="POST">
-      <input type="hidden" name="uri" value="{./c:userdetails/rdf:RDF/sioc:User/@rdf:about}"/>
-      <input type="hidden" name="oldusername" value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email/@rdf:resource}"/>
+      <input type="hidden" name="oldusername" value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email}"/>
+
+      <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+      <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
+      <input type="hidden" name="prefix" value="sioc: &lt;http://rdfs.org/sioc/ns#&gt;"/>
+      <input type="hidden" name="rdf:type" value="http://rdfs.org/sioc/ns#User"/>
+      <input type="hidden" name="interface-language" value="{$interface-language}"/>
+
+      <xsl:choose>
+        <xsl:when test="./c:userdetails/rdf:RDF/sioc:User/@rdf:about">
+          <input type="hidden" name="the-resource" value="{./c:userdetails/rdf:RDF/sioc:User/@rdf:about}"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <input type="hidden" name="title-field" value="sioc:email"/>
+          <input type="hidden" name="subjecturi-prefix" value="user/"/>
+        </xsl:otherwise>
+      </xsl:choose>
 
       <table>
         <tr>
@@ -33,7 +48,7 @@
           </td>
           <td>
             <input id="sioc:email" type="text"
-                   name="sioc:email" size="40"><xsl:attribute name="value"><xsl:value-of select="substring-after(./c:userdetails/rdf:RDF/sioc:User/sioc:email/@rdf:resource, ':')"/></xsl:attribute>
+                   name="sioc:email" size="40" value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email}">
             </input>
 
           </td>
@@ -74,11 +89,11 @@
 
         <tr>
             <td>
-              <label for="sioc:role"><i18n:text key="role">Rolle</i18n:text></label>
+              <label for="sioc:has_function"><i18n:text key="role">Rolle</i18n:text></label>
             </td>
             <td>
-              <select id="sioc:role"
-                      name="sioc:role">
+              <select id="sioc:has_function"
+                      name="sioc:has_function">
                 <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/sioc:Role">
                   <xsl:sort select="./rdfs:label"/>
                   <xsl:choose>
@@ -110,7 +125,7 @@
             </xsl:call-template>
           </td>
           <td>
-            <input type="reset" value="button.empty" i18n:attr="button.empty"/>
+            <input type="reset" value="button.empty" i18n:attr="value"/>
           </td>
         </tr>
       </table>
