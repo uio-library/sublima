@@ -39,6 +39,8 @@
 
     <c:content>
 
+      <c:allanguages><jx:out value="#{languages}" xmlize="true"/></c:allanguages>
+
         <c:text>
             <h3><i18n:text key="resource">Ressurs</i18n:text></h3>
         </c:text>
@@ -53,9 +55,6 @@
             <c:publishers>
                 <jx:out value="#{publishers}" xmlize="true"/>
             </c:publishers>
-            <c:languages>
-                <jx:out value="#{languages}" xmlize="true"/>
-            </c:languages>
             <c:mediatypes>
                 <jx:out value="#{mediatypes}" xmlize="true"/>
             </c:mediatypes>
