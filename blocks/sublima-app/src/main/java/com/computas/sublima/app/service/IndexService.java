@@ -67,6 +67,7 @@ public class IndexService {
 
     StringBuffer deleteString = new StringBuffer();
     deleteString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+    deleteString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
     deleteString.append("DELETE { ?s sub:literals ?o . }\n");
     deleteString.append("WHERE { ?s sub:literals ?o . }\n");
     boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
@@ -75,6 +76,7 @@ public class IndexService {
     for (int i = 0; i <= list.size(); i++) {
       StringBuffer insertString = new StringBuffer();
       insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+      insertString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
       insertString.append("INSERT DATA {\n");
 
       while (j < partsOfArray) {
@@ -303,6 +305,7 @@ public class IndexService {
               if (indexExternalContent && (resource != null)) {
                 StringBuffer insertString = new StringBuffer();
                 insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+                insertString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
                 insertString.append("INSERT DATA {\n");
 
                 URLActions urlAction = new URLActions(resource);
@@ -344,7 +347,7 @@ public class IndexService {
               resultBuffer.append("<" + resource);
               resultBuffer.append("> sub:literals \"\"\"");
               for (String s : literals) {
-                resultBuffer.append(s + " ");
+                resultBuffer.append(s.trim() + ". ");
               }
               resultBuffer.append("\"\"\" .\n");
 
@@ -367,7 +370,7 @@ public class IndexService {
             resultBuffer.append("<" + resource);
             resultBuffer.append("> sub:literals \"\"\"");
             for (String s : literals) {
-              resultBuffer.append(s);
+              resultBuffer.append(s.trim() + ". ");
             }
             resultBuffer.append("\"\"\" .\n");
             //list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
