@@ -1,25 +1,28 @@
 package com.computas.sublima.app.controller.admin;
 
-import com.computas.sublima.app.controller.admin.AdminController;
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import org.apache.cocoon.auth.ApplicationUtil;
+import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.auth.ApplicationManager;
-import org.apache.cocoon.auth.ApplicationUtil;
-import org.apache.cocoon.auth.User;
+import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author: mha
@@ -67,9 +70,9 @@ public class UserController implements StatelessAppleController {
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
     if (appUtil.getUser() != null) {
-          user = appUtil.getUser();
-          userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
-        }
+      user = appUtil.getUser();
+      userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
+    }
 
 
     if ("brukere".equalsIgnoreCase(mode)) {
@@ -123,7 +126,7 @@ public class UserController implements StatelessAppleController {
       if ("ny".equalsIgnoreCase(type)) {
         bizData.put("userdetails", "<empty></empty>");
       } else {
-        bizData.put("userdetails", adminService.getUserByURI(req.getCocoonRequest().getParameter("uri")));
+        bizData.put("userdetails", adminService.getUserByURI(req.getCocoonRequest().getParameter("the-resource")));
       }
 
       bizData.put("mode", "useredit");
@@ -161,14 +164,7 @@ public class UserController implements StatelessAppleController {
 
         boolean newUser = false;
 
-        // Generate an identifier if a uri is not given and insert the user in the USER-table
-        String uri;
-        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
-          uri = req.getCocoonRequest().getParameter("rdfs:label").replace(" ", "_");
-          uri = uri.replace(",", "_");
-          uri = uri.replace(".", "_");
-          uri = getProperty("sublima.base.url") + "user/" + uri;
-
+        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("the-resource")) || req.getCocoonRequest().getParameter("the-resource") == null) {
           String deleteSql = "DELETE FROM users WHERE username ='" + req.getCocoonRequest().getParameter("sioc:email") + "'";
 
           String insertSql = "INSERT INTO users "
@@ -193,17 +189,12 @@ public class UserController implements StatelessAppleController {
             res.sendPage("xml2/bruker", bizData);*/
             return;
           }
-
-
-        } else {
-          uri = req.getCocoonRequest().getParameter("uri");
         }
-
         // HER HAR MAN BRUKERNAVN I USER-TABELLEN UANSETT
 
         if (!newUser) {
           // If the user has changed her e-mail address (username), we must update it in the USER-table
-          if (!("mailto:" + req.getCocoonRequest().getParameter("sioc:email")).equalsIgnoreCase(req.getCocoonRequest().getParameter("oldusername"))) {
+          if (!(req.getCocoonRequest().getParameter("sioc:email")).equalsIgnoreCase(req.getCocoonRequest().getParameter("oldusername"))) {
             //Strip away the sioc mailto
             String insertSql;
             if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("oldusername"))) {
@@ -281,52 +272,36 @@ public class UserController implements StatelessAppleController {
           }
         }
 
-        StringBuffer deleteString = new StringBuffer();
-        StringBuffer whereString = new StringBuffer();
-        deleteString.append(completePrefixes);
-        deleteString.append("\nDELETE\n{\n");
-        whereString.append("\nWHERE\n{\n");
-        deleteString.append("<" + uri + "> a sioc:User .\n");
-        deleteString.append("<" + uri + "> sioc:email ?email .\n");
-        deleteString.append("<" + uri + "> rdfs:label ?name .\n");
-        deleteString.append("<" + uri + "> sioc:has_function ?role .\n");
-        deleteString.append("?role a sioc:Role .\n");
+        Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
-        deleteString.append("}\n");
-        whereString.append("<" + uri + "> a sioc:User .\n");
-        whereString.append("<" + uri + "> sioc:email ?email .\n");
-        whereString.append("<" + uri + "> rdfs:label ?name .\n");
-        whereString.append("<" + uri + "> sioc:has_function ?role .\n");
-        whereString.append("?role a sioc:Role .\n");
+        Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+        parameterMap.remove("prefix"); // The prefixes are magic variables
+        parameterMap.remove("password1"); // The passwords as stored seperatly in an RDB
+        parameterMap.remove("password2"); // The passwords as stored seperatly in an RDB
+        parameterMap.remove("oldusername"); // Field to check wether the user changes the username (email) or not
+        parameterMap.remove("actionbutton"); // The name of the submit button
+        if (parameterMap.get("subjecturi-prefix") != null) {
+          parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
+                  parameterMap.get("subjecturi-prefix")[0]});
+        }
 
-        whereString.append("}\n");
+        String sparqlQuery = null;
+        try {
+          sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+        }
+        catch (IOException e) {
+          messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
+        }
 
+        boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
 
-        StringBuffer insertString = new StringBuffer();
-        insertString.append(completePrefixes);
-        insertString.append("\nINSERT\n{\n");
-        insertString.append("<" + uri + "> a sioc:User ;\n");
-        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n");
-        insertString.append("    sioc:email <mailto:" + req.getCocoonRequest().getParameter("sioc:email") + "> ;\n");
-        insertString.append("    sioc:has_function <" + req.getCocoonRequest().getParameter("sioc:role") + "> .\n");
-        insertString.append("<" + req.getCocoonRequest().getParameter("sioc:role") + "> a sioc:Role .\n");
-        insertString.append("}");
+        logger.trace("TopicController.editUser --> INSERT QUERY:\n" + sparqlQuery);
 
-        deleteString.append(whereString.toString());
-
-        boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
-        boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-
-
-        logger.trace("TopicController.editUser --> DELETE QUERY:\n" + deleteString.toString());
-        logger.trace("TopicController.editUser --> INSERT QUERY:\n" + insertString.toString());
-
-        logger.trace("TopicController.editUser --> DELETE QUERY RESULT: " + deleteSuccess);
         logger.trace("TopicController.editUser --> INSERT QUERY RESULT: " + insertSuccess);
 
-        if (deleteSuccess && insertSuccess) {
+        if (insertSuccess) {
           messageBuffer.append("<c:message>Bruker oppdatert!</c:message>\n");
-          bizData.put("userdetails", adminService.getUserByURI(uri));
+          bizData.put("userdetails", adminService.getUserByURI(form2SparqlService.getURI()));
           bizData.put("tempvalues", "<empty></empty>");
           bizData.put("mode", "useredit");
 
@@ -342,10 +317,15 @@ public class UserController implements StatelessAppleController {
         res.sendPage("xml2/bruker", bizData);
       }
     }
+
   }
 
 
-  public void editRole(AppleRequest req, AppleResponse res, String messages) {
+  public void editRole
+          (AppleRequest
+                  req, AppleResponse
+                  res, String
+                  messages) {
     StringBuffer messageBuffer = new StringBuffer();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
@@ -401,6 +381,8 @@ public class UserController implements StatelessAppleController {
         res.sendPage("xml2/rolle", bizData);
 
       } else {
+
+        req.getCocoonRequest().getParameters().size();
 
         // Generate an identifier if a uri is not given and insert the user in the USER-table
         String uri;
@@ -470,7 +452,7 @@ public class UserController implements StatelessAppleController {
                 dbService.doSQLUpdate(insertPrivilegesSql);
               }
             }
-            
+
             if (req.getCocoonRequest().getParameterValues("topic.status") != null) {
               for (String s : req.getCocoonRequest().getParameterValues("topic.status")) {
                 insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','topic.status." + s + "');";
@@ -505,13 +487,18 @@ public class UserController implements StatelessAppleController {
     }
   }
 
-  public void listUsers(AppleRequest req, AppleResponse res) {
+  public void listUsers
+          (AppleRequest
+                  req, AppleResponse
+                  res) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allusers", adminService.getAllUsers());
     res.sendPage("xml2/brukere_alle", bizData);
   }
 
-  private String validateUserRequest(AppleRequest req) {
+  private String validateUserRequest
+          (AppleRequest
+                  req) {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:email")) || req.getCocoonRequest().getParameter("sioc:email") == null) {
@@ -533,14 +520,16 @@ public class UserController implements StatelessAppleController {
       validationMessages.append("<c:message>Passordfeltene m vre like</c:message>\n");
     }
 
-    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:role")) || req.getCocoonRequest().getParameter("sioc:role") == null) {
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:has_function")) || req.getCocoonRequest().getParameter("sioc:has_function") == null) {
       validationMessages.append("<c:message>En rolle m vre valgt</c:message>\n");
     }
 
     return validationMessages.toString();
   }
 
-  private String validateRoleRequest(AppleRequest req) {
+  private String validateRoleRequest
+          (AppleRequest
+                  req) {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
@@ -550,7 +539,9 @@ public class UserController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private StringBuffer getUserTempValues(AppleRequest req) {
+  private StringBuffer getUserTempValues
+          (AppleRequest
+                  req) {
     StringBuffer tempValues = new StringBuffer();
 
     String uri = req.getCocoonRequest().getParameter("uri");
@@ -569,7 +560,9 @@ public class UserController implements StatelessAppleController {
     return tempValues;
   }
 
-  private StringBuffer getRoleTempValues(AppleRequest req) {
+  private StringBuffer getRoleTempValues
+          (AppleRequest
+                  req) {
     StringBuffer tempValues = new StringBuffer();
 
     String uri = req.getCocoonRequest().getParameter("uri");
@@ -601,6 +594,19 @@ public class UserController implements StatelessAppleController {
           (SparulDispatcher
                   sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
+  }
+
+  //todo Move to a Service-class
+  private Map<String, String[]> createParametersMap
+          (Request
+                  request) {
+    Map<String, String[]> result = new HashMap<String, String[]>();
+    Enumeration parameterNames = request.getParameterNames();
+    while (parameterNames.hasMoreElements()) {
+      String paramName = (String) parameterNames.nextElement();
+      result.put(paramName, request.getParameterValues(paramName));
+    }
+    return result;
   }
 }
 
