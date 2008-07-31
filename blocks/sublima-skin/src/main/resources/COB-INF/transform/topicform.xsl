@@ -17,7 +17,7 @@
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
   <xsl:import href="controlbutton.xsl"/>
-  <xsl:import href="rdfxml2html-lang-dropdown.xsl"/>
+  <xsl:import href="labels.xsl"/>
   <xsl:param name="baseurl"/>
   <xsl:param name="servername"/>
   <xsl:param name="serverport"/>
@@ -59,50 +59,56 @@
 	</tr>
 	
 	<xsl:for-each select="c:topicdetails/rdf:RDF/skos:Concept/skos:prefLabel">
-	  <xsl:call-template name="topic-labels">
+	  <xsl:call-template name="labels">
 	    <xsl:with-param name="label"><i18n:text key="title">Tittel</i18n:text></xsl:with-param>
 	    <xsl:with-param name="value" select="."/>
 	    <xsl:with-param name="default-language" select="@xml:lang"/>
 	    <xsl:with-param name="field"><xsl:text>skos:prefLabel-</xsl:text><xsl:value-of select="position()"/></xsl:with-param>
-	  </xsl:call-template>
+      <xsl:with-param name="type">text</xsl:with-param>
+    </xsl:call-template>
 	</xsl:for-each>
 
-	<xsl:call-template name="topic-labels">
+	<xsl:call-template name="labels">
 	  <xsl:with-param name="label"><i18n:text key="title">Tittel</i18n:text></xsl:with-param>
 	  <xsl:with-param name="default-language" select="$interface-language"/>
 	  <xsl:with-param name="field"><xsl:text>skos:prefLabel-</xsl:text><xsl:value-of select="count(c:topicdetails/rdf:RDF/skos:Concept/skos:prefLabel)+1"/></xsl:with-param>
-	</xsl:call-template>
+    <xsl:with-param name="type">text</xsl:with-param>
+  </xsl:call-template>
 
 
 	<xsl:for-each select="c:topicdetails/rdf:RDF/skos:Concept/skos:altLabel">
-	  <xsl:call-template name="topic-labels">
+	  <xsl:call-template name="labels">
 	    <xsl:with-param name="label"><i18n:text key="synonym">Synonym</i18n:text></xsl:with-param>
 	    <xsl:with-param name="value" select="."/>
 	    <xsl:with-param name="default-language" select="@xml:lang"/>
 	    <xsl:with-param name="field"><xsl:text>skos:altLabel-</xsl:text><xsl:value-of select="position()"/></xsl:with-param>
-	  </xsl:call-template>
+      <xsl:with-param name="type">text</xsl:with-param>
+    </xsl:call-template>
 	</xsl:for-each>
 
-	<xsl:call-template name="topic-labels">
+	<xsl:call-template name="labels">
 	  <xsl:with-param name="label"><i18n:text key="synonym">Synonym</i18n:text></xsl:with-param>
 	  <xsl:with-param name="default-language" select="$interface-language"/>
 	  <xsl:with-param name="field"><xsl:text>skos:altLabel-</xsl:text><xsl:value-of select="count(c:topicdetails/rdf:RDF/skos:Concept/skos:altLabel)+1"/></xsl:with-param>
-	</xsl:call-template>
+    <xsl:with-param name="type">text</xsl:with-param>
+  </xsl:call-template>
 
 	<xsl:for-each select="c:topicdetails/rdf:RDF/skos:Concept/skos:hiddenLabel">
-	  <xsl:call-template name="topic-labels">
+	  <xsl:call-template name="labels">
 	    <xsl:with-param name="label"><i18n:text key="typo">Skrivefeil</i18n:text></xsl:with-param>
 	    <xsl:with-param name="value" select="."/>
 	    <xsl:with-param name="default-language" select="@xml:lang"/>
 	    <xsl:with-param name="field"><xsl:text>skos:hiddenLabel-</xsl:text><xsl:value-of select="position()"/></xsl:with-param>
-	  </xsl:call-template>
+      <xsl:with-param name="type">text</xsl:with-param>
+    </xsl:call-template>
 	</xsl:for-each>
 
-	<xsl:call-template name="topic-labels">
+	<xsl:call-template name="labels">
 	  <xsl:with-param name="label"><i18n:text key="typo">Skrivefeil</i18n:text></xsl:with-param>
 	  <xsl:with-param name="default-language" select="$interface-language"/>
 	  <xsl:with-param name="field"><xsl:text>skos:hiddenLabel-</xsl:text><xsl:value-of select="count(c:topicdetails/rdf:RDF/skos:Concept/skos:hiddenLabel)+1"/></xsl:with-param>
-	</xsl:call-template>
+    <xsl:with-param name="type">text</xsl:with-param>
+  </xsl:call-template>
 
       </table>
       <table>
@@ -118,7 +124,7 @@
               </xsl:otherwise>
             </xsl:choose>
           </td>
-          </tr>
+        </tr>
         <tr>
           <td>
             <label for="skos:definition"><i18n:text key="description">Beskrivelse</i18n:text></label>
@@ -130,8 +136,6 @@
             </textarea>
           </td>
         </tr>
-
-
       </table>
    
       <table>
@@ -228,29 +232,4 @@
 
   </xsl:template>
 
-  <xsl:template name="topic-labels">
-    <xsl:param name="field"/>
-    <xsl:param name="label"/>
-    <xsl:param name="value"/>
-    <xsl:param name="default-language"/>
-    <tr>
-      <th scope="row">
-	<label for="{$field}"><xsl:value-of select="$label"/></label>
-      </th>
-      <td>
-	<input id="{$field}" type="text"
-	       name="{$field}" size="20"
-	       value="{$value}"/>
-      </td>
-      <td>
-	<select name="{$field}">
-	  <xsl:apply-templates select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo" mode="list-options">
-	    <xsl:with-param name="default-language" select="$default-language"/>
-	    <xsl:sort select="./rdfs:label[@xml:lang=$interface-language]"/>
-	  </xsl:apply-templates>
-	</select>
-      </td>
-
-    </tr>
-  </xsl:template>
 </xsl:stylesheet>
