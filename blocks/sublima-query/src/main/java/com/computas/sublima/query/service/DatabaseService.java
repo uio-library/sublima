@@ -4,6 +4,8 @@ package com.computas.sublima.query.service;
 import com.hp.hpl.jena.db.DBConnection;
 import com.hp.hpl.jena.db.IDBConnection;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.sql.*;
 
 /**
@@ -64,6 +66,7 @@ public class DatabaseService {
   /**
    * Method do do a SQL query. Returns a Statement instead of a ResultSet since a ResultSet is closed whenever the Statement is closed.
    * Use Statement.getResultSet() to get the actual ResultSet.
+   *
    * @param sql
    * @return Statement
    * @throws SQLException
@@ -79,4 +82,19 @@ public class DatabaseService {
 
     return stmt;
   }
+
+  public void writeModelToFile(String filename, String format) {
+
+    try {
+      // Create file
+      FileWriter fstream = new FileWriter(filename);
+      BufferedWriter out = new BufferedWriter(fstream);
+      SettingsService.getModel().write(out, format);     
+      //Close the output stream
+      out.close();
+    } catch (Exception e) {//Catch exception if any
+      System.err.println("Error: " + e.getMessage());
+    }
+  }
+  
 }
