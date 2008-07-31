@@ -27,6 +27,8 @@
   <xsl:import href="roleform.xsl"/>
   <xsl:import href="allrelationtypes.xsl"/>
   <xsl:import href="resourceprereg.xsl"/>
+  <xsl:import href="importexport.xsl"/>
+  <xsl:import href="set-lang.xsl"/>
 
 
   <xsl:output method="xml"
@@ -263,6 +265,8 @@
                 <xsl:call-template name="contenttext"/>
 
                 <xsl:call-template name="messages"/>
+
+                <xsl:apply-templates select="c:page/c:content/c:upload" mode="upload"/>
 
                 <xsl:call-template name="theme"/>
 
