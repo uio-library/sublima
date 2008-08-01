@@ -4,7 +4,10 @@
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
   <c:loggedin><jx:out value="#{loggedin}" xmlize="false"/></c:loggedin>
 
-  <c:parameters><jx:out value="#{parameters}" xmlize="true"/></c:parameters>
+  <c:languages><jx:out value="#{languages}" xmlize="true"/></c:languages>
+  <c:mediatypes><jx:out value="#{mediatypes}" xmlize="true"/></c:mediatypes>
+  <c:audiences><jx:out value="#{audiences}" xmlize="true"/></c:audiences>
+  <c:committers><jx:out value="#{committers}" xmlize="true"/></c:committers>
 
   <c:advancedsearch/>
 </c:page>
