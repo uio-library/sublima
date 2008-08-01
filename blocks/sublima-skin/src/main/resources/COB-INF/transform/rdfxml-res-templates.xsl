@@ -11,9 +11,12 @@
   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:c="http://xmlns.computas.com/cocoon"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr skos"
   >
+
+  <xsl:import href="labels.xsl"/>
 
 
   <xsl:template match="foaf:Agent|foaf:Person|foaf:Group|foaf:Organization" mode="external-link">
@@ -110,42 +113,23 @@
   <xsl:template match="foaf:Agent|foaf:Person|foaf:Group|foaf:Organization" mode="edit">
     <input type="hidden" name="uri" value="{./@rdf:about}" />
 
-    <tr>
-      <td><i18n:text key="language">Språk</i18n:text></td>
-      <td><i18n:text key="name">Navn</i18n:text></td>
-    </tr>
-    <xsl:for-each select="./foaf:name">
-      <tr>
-        <td>
-          <label for="foaf:Agent/foaf:name@{@xml:lang}"><xsl:value-of select="@xml:lang" /></label>
-        </td>
-        <td>
-          <input id="foaf:Agent/foaf:name@{@xml:lang}" type="text" name="foaf:Agent/foaf:name@{@xml:lang}" size="40">
-           <xsl:attribute name="value">
-            <xsl:value-of select="."/>
-           </xsl:attribute>
-          </input>
-        </td>
-      </tr>
-      
-    </xsl:for-each>
-    <tr>
-      <td>
-        <input id="new_lang" type="text" name="new_lang" size="5" />
-      </td>
-      <td>
-        <input id="new_name" type="text" name="new_name" size="40" />  
-      </td>
-    </tr>
 
-    <tr>
-        <td>
-            <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
-        </td>
-        <td>
-            <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of select="./dct:description"/>...</textarea>
-        </td>
-    </tr>
+     <xsl:for-each select="./foaf:name">
+          <xsl:call-template name="labels">
+            <xsl:with-param name="label"><i18n:text key="title">Navn</i18n:text></xsl:with-param>
+            <xsl:with-param name="value" select="."/>
+            <xsl:with-param name="default-language" select="@xml:lang"/>
+            <xsl:with-param name="field"><xsl:text>foaf:name-</xsl:text><xsl:value-of select="position()"/></xsl:with-param>
+            <xsl:with-param name="type">text</xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+
+        <xsl:call-template name="labels">
+          <xsl:with-param name="label"><i18n:text key="title">Navn</i18n:text></xsl:with-param>
+          <xsl:with-param name="default-language" select="$interface-language"/>
+          <xsl:with-param name="field"><xsl:text>foaf:name-</xsl:text><xsl:value-of select="count(foaf:name)+1"/></xsl:with-param>
+          <xsl:with-param name="type">text</xsl:with-param>
+        </xsl:call-template>
 
   </xsl:template>
 
