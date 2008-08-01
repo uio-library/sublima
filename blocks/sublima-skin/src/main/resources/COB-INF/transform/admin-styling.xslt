@@ -39,6 +39,18 @@
   <xsl:param name="serverport"/>
   <xsl:param name="locale"/>
   <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="qloc">
+    <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
+      <xsl:text>?locale=</xsl:text>
+      <xsl:value-of select="$interface-language"/>
+    </xsl:if>
+  </xsl:param>
+  <xsl:param name="aloc">
+    <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
+      <xsl:text>&amp;locale=</xsl:text>
+      <xsl:value-of select="$interface-language"/>
+    </xsl:if>
+  </xsl:param>
 
   <xsl:template name="contenttext">
     <xsl:copy-of select="c:page/c:content/c:text/*"/>
