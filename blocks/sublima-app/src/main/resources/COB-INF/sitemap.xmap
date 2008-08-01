@@ -289,7 +289,7 @@
       </map:match>
 
       <map:match pattern="advancedsearch">
-        <map:call function="com.computas.sublima.app.controller.SearchControllerController">
+        <map:call function="com.computas.sublima.app.controller.SearchController">
           <map:parameter name="mode" value="advancedsearch"/>
         </map:call>
         <!-- apply styling -->
