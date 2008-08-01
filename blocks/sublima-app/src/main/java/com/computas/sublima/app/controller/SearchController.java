@@ -31,8 +31,13 @@ public class SearchController implements StatelessAppleController {
 
     // The initial advanced search page
     if ("advancedsearch".equalsIgnoreCase(mode)) {
-      res.sendPage("xml/advancedsearch", null);
-      return;
+        Map<String, Object> bizData = new HashMap<String, Object>();
+        com.computas.sublima.app.service.AdminService adminservice = new com.computas.sublima.app.service.AdminService();
+        StringBuffer queryResult = new StringBuffer();
+        queryResult.append(adminservice.getDistinctAndUsedLabels("<http://www.lingvoj.org/ontology#Lingvo>", "<http://purl.org/dc/terms/language>"));
+        bizData.put("parameters", queryResult.toString());
+        res.sendPage("xml/advancedsearch", bizData);
+        return;
     }
 
     // If it's search-results for advanced search, topic instance or resource

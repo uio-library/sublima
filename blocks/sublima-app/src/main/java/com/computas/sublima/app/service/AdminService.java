@@ -141,15 +141,13 @@ public class AdminService {
    /**
    * Method to get distinct and used labels for different properties
    *
-   * @param rdfType The type of subject that you want.
-   * @param property The property that connects the resource to the subject
+   * @param rdfType The full URI with pointy brackets for the type of subject that you want.
+   * @param property The full URI with pointy brackets for the property that connects the resource to the subject
    * @return A String containing SPARQL Result Set XML with the languages
    */
-  public String getDistinctAndUsedLabels(String rdfType, String property ) {
+  public String getDistinctAndUsedLabels(String rdfType, String property) {
     String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "PREFIX dct: <http://purl.org/dc/terms/>",
             "SELECT DISTINCT ?uri ?label",
             "WHERE {",
             "?uri a " + rdfType + " ;",

@@ -3,5 +3,8 @@
         xmlns:c="http://xmlns.computas.com/cocoon"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
   <c:loggedin><jx:out value="#{loggedin}" xmlize="false"/></c:loggedin>
+
+  <c:parameters><jx:out value="#{parameters}" xmlize="true"/></c:parameters>
+
   <c:advancedsearch/>
 </c:page>
