@@ -289,13 +289,7 @@
       </map:match>
 
       <map:match pattern="advancedsearch">
-        <!--map:call function="com.computas.sublima.app.controller.SearchControllerController">
-          <map:parameter name="mode" value="advancedsearch"/>
-        </map:call-->
         <map:generate src="templates/advancedsearch.jx.xml" type="jx"/>
-        <!--map:transform type="servletService">
-          <map:parameter name="service" value="servlet:/navigation-and-facets"/>
-        </map:transform-->
         <!-- apply styling -->
         <map:serialize type="servletService">
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>

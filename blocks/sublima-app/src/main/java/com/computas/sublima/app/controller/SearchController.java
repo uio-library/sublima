@@ -29,12 +29,6 @@ public class SearchController implements StatelessAppleController {
 
     logger.trace("SearchController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
 
-    // The initial advanced search page
-    if ("advancedsearch".equalsIgnoreCase(mode)) {
-      res.sendPage("xhtml/search-form", null);
-      return;
-    }
-
     // If it's search-results for advanced search, topic instance or resource
     if ("resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode)) {
       doAdvancedSearch(res, req, loggedIn);
