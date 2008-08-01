@@ -10,7 +10,10 @@
         <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
         <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
         <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
-        <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+        <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title">
+          <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/utgivere/ny"/>
+          <c:childmenuelement title="menu.showall" i18n:attr="title" link="admin/utgivere/alle"/>
+        </c:menuelement>
         <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
         <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
     </c:menu>

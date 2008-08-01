@@ -220,30 +220,6 @@
         <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
-      <!-- action to update a publisher -->
-      <map:match pattern="updatepublisher">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
-            <map:parameter name="mode" value="utgivere"/>
-            <map:parameter name="submode" value="updatepublisher"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <!-- action to insert a new publisher -->
-      <map:match pattern="insertpublisher">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
-            <map:parameter name="mode" value="utgivere"/>
-            <map:parameter name="submode" value="insertpublisher"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
       <map:match pattern="emner/*">
         <map:call function="com.computas.sublima.app.controller.admin.TopicController">
           <map:parameter name="mode" value="a-z"/>

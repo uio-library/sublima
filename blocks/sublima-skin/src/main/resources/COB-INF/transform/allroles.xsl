@@ -22,7 +22,7 @@
       <xsl:for-each select="./rdf:RDF/sioc:Role">
         <xsl:sort select="./rdfs:label"/>
         <li>
-          <a href="{$baseurl}/admin/brukere/roller/rolle?uri={./@rdf:about}">
+          <a href="{$baseurl}/admin/brukere/roller/rolle?uri={./@rdf:about}{$aloc}">
             <xsl:value-of select="./rdfs:label"/>
           </a>
         </li>

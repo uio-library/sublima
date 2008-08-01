@@ -29,6 +29,7 @@
   <xsl:import href="resourceprereg.xsl"/>
   <xsl:import href="importexport.xsl"/>
   <xsl:import href="set-lang.xsl"/>
+  <xsl:import href="publisherform.xsl"/>
 
 
   <xsl:output method="xml"
@@ -39,17 +40,14 @@
   <xsl:param name="serverport"/>
   <xsl:param name="locale"/>
   <xsl:param name="interface-language">no</xsl:param>
+
   <xsl:param name="qloc">
-    <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
       <xsl:text>?locale=</xsl:text>
       <xsl:value-of select="$interface-language"/>
-    </xsl:if>
   </xsl:param>
   <xsl:param name="aloc">
-    <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
       <xsl:text>&amp;locale=</xsl:text>
       <xsl:value-of select="$interface-language"/>
-    </xsl:if>
   </xsl:param>
 
   <xsl:template name="contenttext">
@@ -145,7 +143,7 @@
       <xsl:for-each select="c:page/c:content/c:topics/rdf:RDF/skos:Concept">
         <xsl:sort select="./skos:prefLabel"/>
         <li>
-          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}"><xsl:value-of select="./skos:prefLabel"/></a>
+          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}{$aloc}"><xsl:value-of select="./skos:prefLabel"/></a>
         </li>
       </xsl:for-each>
     </ul>
@@ -163,48 +161,19 @@
     </xsl:choose>
   </xsl:template>
 
-  <!-- New publisher -->
-  <xsl:template name="new_publisher">
-
-    
-  </xsl:template>
-
   <!-- Publisherlist -->
   <xsl:template name="publisherlist">
-    <xsl:call-template name="new_publisher"/>
-    <br/>
     <ul>
       <xsl:for-each select="c:page/c:content/c:publisherlist/sparql:sparql/sparql:results/sparql:result">
         <li>
           <a>
-            <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:uri"/></xsl:attribute>
+            <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:uri"/><xsl:value-of
+                    select="$aloc"/></xsl:attribute>
             <xsl:value-of select="./sparql:binding[@name='name']/sparql:literal"/>
           </a>
         </li>
       </xsl:for-each>
     </ul>
-  </xsl:template>
-
-  <!-- Publisherdetails -->
-  <xsl:template name="publisherdetails">
-
-    <form action="updatepublisher" method="GET">
-      <table>
-        <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/foaf:Agent" mode="edit"/>
-        <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF/sub:Resource/dct:publisher/foaf:Agent" mode="edit"/>
-        <tr>
-          <td></td>
-          <td>
-            <input type="submit" value="Lagre navneendring"/>
-          </td>
-        </tr>
-      </table>
-    </form>
-    <br/>
-    <h4><i18n:text key="admin.publisher.resources">Ressurser tilknyttet utgiveren</i18n:text></h4>
-
-    <xsl:apply-templates select="c:page/c:content/c:publisherdetails/rdf:RDF" mode="results"/>
-
   </xsl:template>
 
   <xsl:template name="linkcheck">
@@ -302,6 +271,9 @@
 
                 <xsl:apply-templates select="c:page/c:content/c:join" mode="topicjoin"/>
 
+                <!-- Publisherdetails -->
+                <xsl:apply-templates select="c:page/c:content/c:publisherdetails"/>
+
                 <xsl:if test="c:page/c:content/c:resourcedetails">
                   <xsl:call-template name="resourcedetails"/>
                 </xsl:if>
@@ -313,11 +285,6 @@
                 <!-- Publishers index -->
                 <xsl:if test="c:page/c:content/c:publisherlist">
                   <xsl:call-template name="publisherlist"/>
-                </xsl:if>
-
-                <!-- Publishers details -->
-                <xsl:if test="c:page/c:content/c:publisherdetails/rdf:RDF">
-                  <xsl:call-template name="publisherdetails"/>
                 </xsl:if>
 
                 <!-- Linkcheck -->
@@ -332,7 +299,7 @@
                     <xsl:for-each
                             select="c:page/c:content/c:suggestedresources/rdf:RDF/sub:Resource">
                       <li>
-                        <a href="{$baseurl}/admin/ressurser/edit?uri={@rdf:about}"><xsl:value-of select="./dct:title"/></a>
+                        <a href="{$baseurl}/admin/ressurser/edit?uri={@rdf:about}{$aloc}"><xsl:value-of select="./dct:title"/></a>
                       </li>
                     </xsl:for-each>
                   </ul>
@@ -349,20 +316,20 @@
 
                       <li>
                         <a>
-                          <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/></xsl:attribute><xsl:value-of select="@title"/></a>
+                          <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/></xsl:attribute><xsl:value-of select="@title"/></a>
                       </li>
                       <xsl:if test="c:childmenuelement">
                         <ul>
                           <xsl:for-each select="c:childmenuelement">
                             <li>
                               <a>
-                                <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/></xsl:attribute><xsl:value-of select="@title"/></a>
+                                <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/></xsl:attribute><xsl:value-of select="@title"/></a>
                             </li>
                             <xsl:if test="c:childmenuelement">
                               <ul>
                                 <xsl:for-each select="c:childmenuelement">
                                 <li>
-                                  <a><xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/></xsl:attribute><xsl:value-of select="@title"/></a>
+                                  <a><xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/></xsl:attribute><xsl:value-of select="@title"/></a>
                                 </li>
                                 </xsl:for-each>
                             </ul>

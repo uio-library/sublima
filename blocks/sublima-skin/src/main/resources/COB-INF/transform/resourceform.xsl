@@ -32,7 +32,7 @@
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
       <input type="hidden" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier}"/>
-
+      
       <!--input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/ -->
       <!-- input type="hidden" name="uri" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}"/ -->
       <!-- input type="hidden" name="dct:identifier"
