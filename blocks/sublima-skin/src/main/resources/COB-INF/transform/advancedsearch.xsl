@@ -101,15 +101,7 @@
             <input id="type" type="text" name="dct:format" size="20"/>
           </td>
         </tr>
-        <tr>
-          <td align="right">
-            <label for="identifier">Identifier</label>
-          </td>
-          <td>
-            <input id="identifier" type="text" name="dct:identifier" size="20"/>
-          </td>
-        </tr>
-        <tr>
+         <tr>
           <td align="right">
             <label for="language">Language</label>
           </td>
