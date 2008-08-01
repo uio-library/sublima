@@ -138,6 +138,32 @@ public class AdminService {
     return queryResult.toString();
   }
 
+   /**
+   * Method to get distinct and used languages
+   *
+   * @return A String containing SPARQL Result Set XML with the languages
+   */
+  public String getDistinctLanguages() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "SELECT DISTINCT ?language ?label",
+            "WHERE {",
+            "?language a lingvoj:Lingvo ;",
+            "          rdfs:label ?label .",
+            "?res dct:language ?language"
+            "FILTER langMatches( lang(?label), \"no\" )",
+            "}"});
+
+    logger.trace("AdminService.getDistinctLanguages() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
+
+      
+
   /**
    * Method to get all media types
    *
