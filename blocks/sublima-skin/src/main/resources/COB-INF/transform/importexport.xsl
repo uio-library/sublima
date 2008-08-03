@@ -20,6 +20,7 @@
 
   <xsl:template match="c:upload" mode="upload">
     <form action="upload" method="POST" enctype="multipart/form-data">
+      <fieldset>
       <table>
         <tr>
           <td align="right">
@@ -52,6 +53,7 @@
           </td>
         </tr>
       </table>
+      </fieldset>
     </form>
 
     <form action="export" method="POST">

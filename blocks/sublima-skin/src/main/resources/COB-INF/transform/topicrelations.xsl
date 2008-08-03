@@ -87,8 +87,6 @@
 	<input type="hidden" name="rdfs:subPropertyOf" value="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
 	<input type="hidden" name="a" value="http://www.w3.org/2002/07/owl#ObjectProperty"/>
 	
-	<input type="submit" value="Lagre relasjonstype"/>
-
   <xsl:call-template name="controlbutton">
        <xsl:with-param name="privilege">relation.edit</xsl:with-param>
        <xsl:with-param name="buttontext"><i18n:text key="button.saverelation">Lagre relasjonstype</i18n:text></xsl:with-param>

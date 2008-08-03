@@ -24,15 +24,6 @@
             <h3><i18n:text key="publishers">Utgivere</i18n:text></h3>
             <br/>
         </c:text>
-
-        <c:messages>
-            <jx:out value="#{messages}" xmlize="true"/>
-        </c:messages>
-
-        <c:publisherlist>
-            <jx:out value="#{publisherlist}" xmlize="true"/>
-        </c:publisherlist>
-
     </c:content>
 
 </c:page>

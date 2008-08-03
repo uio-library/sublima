@@ -81,7 +81,7 @@ public class ResourceController implements StatelessAppleController {
       } else if ("edit".equalsIgnoreCase(submode)) {
         editResource(res, req, "edit", null);
         return;
-      } else if ("checkurl".equalsIgnoreCase(submode)) {
+      }else if ("checkurl".equalsIgnoreCase(submode)) {
         registerNewResourceURL(req, res);
         return;
       } else {
@@ -202,6 +202,7 @@ public class ResourceController implements StatelessAppleController {
 
     boolean validated = true;
     boolean insertSuccess = false;
+    boolean updateDate = false;
 
     String dctPublisher;
     String dctIdentifier;
@@ -245,7 +246,8 @@ public class ResourceController implements StatelessAppleController {
       // When POST try to save the resource. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
-      if ("Slett ressurs".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton"))) {
+      //todo This is not very robust, have to find another way to differentiate the different actions.
+      if ("Slett ressurs".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton")) || "Delete resource".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton"))) {
 
         String deleteString = "DELETE {\n" +
                 "<" + req.getCocoonRequest().getParameter("uri") + "> ?a ?o.\n" +
@@ -309,15 +311,18 @@ public class ResourceController implements StatelessAppleController {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateAccepted = dateFormat.format(date); //"2008-18-09T13:39:38";
-        committer = getProperty("sublima.base.url") + "user/det_usr00057";
-        user.getAttributeNames();
-        user.getId();
 
-        parameterMap.put("dct:dateAccepted", new String[]{dateAccepted});
-        parameterMap.put("sub:committer", new String[]{"http://sublima.computas.com/user/det_usr00057"});
+        // If the user checks that the resource should be marked as new, set updateDate to true
+        if (parameterMap.containsKey("markasnew")) {
+          updateDate = true;
+          parameterMap.remove("markasnew");
+        }
 
-        // Generate a dct:identifier if it's a new resource
+        parameterMap.put("sub:committer", new String[]{user.getId()});
+
+        // Generate a dct:identifier if it's a new resource, and set the time and date for approval
           if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier")) || req.getCocoonRequest().getParameter("dct:identifier") == null) {
+            updateDate = true;
             dctIdentifier = req.getCocoonRequest().getParameter("dct:title-1").replace(" ", "_");
             dctIdentifier = dctIdentifier.replace(",", "_");
             dctIdentifier = dctIdentifier.replace(".", "_");
@@ -325,6 +330,10 @@ public class ResourceController implements StatelessAppleController {
           } else {
             dctIdentifier = req.getCocoonRequest().getParameter("dct:identifier");
           }
+
+        if (updateDate) {
+          parameterMap.put("dct:dateAccepted", new String[]{dateAccepted});
+        }
 
         Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
         parameterMap.put("sub:url", parameterMap.get("the-resource"));

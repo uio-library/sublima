@@ -5,6 +5,7 @@
         xmlns:c="http://xmlns.computas.com/cocoon">
   <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
   <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
+  <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>
 
   <c:breadcrumbs>
     <c:breadcrumb title="Sublima"></c:breadcrumb>

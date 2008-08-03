@@ -274,6 +274,12 @@
           </td>
         </tr>
         <tr>
+          <td><i18n:text key="resourceasnew">Marker som ny</i18n:text></td>
+          <td>
+            <input type="checkbox" name="markasnew"/>
+          </td>
+        </tr>
+        <tr>
           <td>
 
             <xsl:call-template name="controlbutton">

@@ -277,6 +277,7 @@ public class TopicController implements StatelessAppleController {
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
       Map<String, String[]> requestMap = createParametersMap(req.getCocoonRequest());
+      requestMap.remove("actionbutton");
 
       StringBuffer deleteString = new StringBuffer();
       StringBuffer whereString = new StringBuffer();
@@ -389,7 +390,7 @@ public class TopicController implements StatelessAppleController {
 
       // When POST try to save the resource. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-	Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
+	    Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
       // 1. Mellomlagre alle verdier
       // 2. Valider alle verdier
       // 3. Forsk  lagre

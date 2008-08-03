@@ -34,8 +34,8 @@
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
 
       <xsl:choose>
-        <xsl:when test="./rdf:RDF/foaf:Agent/@rdf:about">
-          <input type="hidden" name="the-resource" value="{./rdf:RDF/foaf:Agent/@rdf:about}"/>
+        <xsl:when test="//foaf:Agent/@rdf:about">
+          <input type="hidden" name="the-resource" value="{//foaf:Agent/@rdf:about}"/>
         </xsl:when>
         <xsl:otherwise>
           <input type="hidden" name="title-field" value="foaf:name-1"/>
@@ -44,7 +44,7 @@
       </xsl:choose>
 
       <table>
-         <xsl:for-each select="./rdf:RDF/foaf:Agent/foaf:name">
+         <xsl:for-each select="//foaf:name">
           <xsl:call-template name="labels">
             <xsl:with-param name="label"><i18n:text key="title">Navn</i18n:text></xsl:with-param>
             <xsl:with-param name="value" select="."/>
@@ -57,7 +57,7 @@
         <xsl:call-template name="labels">
           <xsl:with-param name="label"><i18n:text key="title">Navn</i18n:text></xsl:with-param>
           <xsl:with-param name="default-language" select="$interface-language"/>
-          <xsl:with-param name="field"><xsl:text>foaf:name-</xsl:text><xsl:value-of select="count(./rdf:RDF/foaf:Agent/foaf:name)+1"/></xsl:with-param>
+          <xsl:with-param name="field"><xsl:text>foaf:name-</xsl:text><xsl:value-of select="count(//foaf:name)+1"/></xsl:with-param>
           <xsl:with-param name="type">text</xsl:with-param>
         </xsl:call-template>
 
@@ -69,7 +69,7 @@
           </td>
           <td>
             <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of
-                    select="./foaf:Agent/dct:description"/>...
+                    select="//foaf:Agent/dct:description"/>...
             </textarea>
           </td>
         </tr>

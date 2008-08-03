@@ -1,19 +1,22 @@
 package com.computas.sublima.app.controller.admin;
 
+import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.app.service.AdminService;
-import com.computas.sublima.app.controller.admin.AdminController;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
+import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author: mha
@@ -54,19 +57,15 @@ public class PublisherController implements StatelessAppleController {
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
 
-    if ("insertpublisher".equalsIgnoreCase(mode)) {
-      insertPublisherByName(res, req);
-      return;
-    }  // Publishers. Send the user to a page that displays a list of all publishers.
-    else if ("utgivere".equalsIgnoreCase(mode)) {
+    if ("utgivere".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
+        res.sendPage("xml2/utgivere", null);
+        return;
+      } else if ("ny".equalsIgnoreCase(submode)) {
+        editPublisher(res, req);
+        return;
+      } else if ("alle".equalsIgnoreCase(submode)) {
         showPublishersIndex(res, req, null);
-        return;
-      } else if ("updatepublisher".equalsIgnoreCase(submode)) {
-        updatePublisherByURI(res, req);
-        return;
-      } else if ("insertpublisher".equalsIgnoreCase(submode)) {
-        insertPublisherByName(res, req);
         return;
       } else {
         showPublisherByURI(res, req, null, null);
@@ -172,102 +171,51 @@ public class PublisherController implements StatelessAppleController {
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
-  private void updatePublisherByURI
+  private void editPublisher
           (AppleResponse
                   res, AppleRequest
                   req) {
-    String publisheruri = req.getCocoonRequest().getParameter("uri");
-    String publisherNewLang = req.getCocoonRequest().getParameter("new_lang");
-    String publisherNewName = req.getCocoonRequest().getParameter("new_name");
-    StringBuffer messageBuffer = new StringBuffer();
 
-    // Delete statement
-    StringBuffer deleteStringBuffer = new StringBuffer();
-    deleteStringBuffer.append(completePrefixes);
-    deleteStringBuffer.append("DELETE {\n");
-    deleteStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
-    deleteStringBuffer.append("foaf:name ?oldname .\n");
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+      showPublisherByURI(res, req, null, req.getCocoonRequest().getParameter("the-resource"));  
 
-    // Where statement for the delete
-    StringBuffer whereStringBuffer = new StringBuffer();
-    whereStringBuffer.append("WHERE {\n");
-    whereStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
-    whereStringBuffer.append("foaf:name ?oldname .\n");
-    whereStringBuffer.append("FILTER ( ");
+    } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+      StringBuffer messageBuffer = new StringBuffer();
 
-    // Insert statement
-    StringBuffer insertStringBuffer = new StringBuffer();
-    insertStringBuffer.append(completePrefixes);
-    insertStringBuffer.append("INSERT {\n");
+      Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
-    // If user has added a new name for a new language
-    if (!"".equalsIgnoreCase(publisherNewLang)
-            && publisherNewLang != null
-            && !"".equalsIgnoreCase(publisherNewName)
-            && publisherNewName != null) {
+      //logger.info("updatePublisherByURI() ---> " + publisheruri + " -- SPARUL DELETE  --> " + deleteString);
 
-      insertStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
-      insertStringBuffer.append("foaf:name" + " \"" + publisherNewName + "\"" + "@" + publisherNewLang + " .\n");
-    }
-
-    Map<String, String> parameterMap = req.getCocoonRequest().getParameters();
-    ArrayList filterList = new ArrayList();
-
-    boolean emptyName = false;
-
-    for (String s : parameterMap.keySet()) {
-      if (s.contains("@")) {
-        String[] partialString = s.split("@");
-
-        //If no name is provided, return error message
-        if ("".equalsIgnoreCase(parameterMap.get(s)) || parameterMap.get(s) == null) {
-          emptyName = true;
-        }
-
-        filterList.add("lang(?oldname) = \"" + partialString[1] + "\"");
-
-        insertStringBuffer.append("<" + publisheruri + "> a foaf:Agent ;\n");
-        insertStringBuffer.append("foaf:name" + " \"" + parameterMap.get(s) + "\"" + "@" + partialString[1] + " .\n");
-      }
-    }
-
-    if (emptyName) {
-      messageBuffer.append("<c:message>Navn kan ikke v�re blankt</c:message>\n");
-    } else {
-
-      for (int i = 0; i < filterList.size(); i++) {
-        whereStringBuffer.append(filterList.get(i));
-        if (filterList.size() - i != 1) {
-          whereStringBuffer.append(" || ");
-        }
+      Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+      parameterMap.remove("prefix"); // The prefixes are magic variables
+      parameterMap.remove("actionbutton"); // The name of the submit button
+      if (parameterMap.get("subjecturi-prefix") != null) {
+        parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
+                parameterMap.get("subjecturi-prefix")[0]});
       }
 
-      deleteStringBuffer.append("}\n");
-      whereStringBuffer.append(")\n}\n");
-      insertStringBuffer.append("}\n");
+      String sparqlQuery = null;
+      try {
+        sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+        logger.info("editPublisher() ---> SPARUL INSERT  --> " + sparqlQuery);
+      }
+      catch (IOException e) {
+        messageBuffer.append("<c:message>Feil ved lagring av utgiver</c:message>\n");
+      }
 
-      String deleteString = deleteStringBuffer.toString() + whereStringBuffer.toString();
-      String insertString = insertStringBuffer.toString();
-
-      logger.info("updatePublisherByURI() ---> " + publisheruri + " -- SPARUL DELETE  --> " + deleteString);
-
-      boolean success = false;
-      success = sparulDispatcher.query(deleteString);
-      logger.info("updatePublisherByURI() ---> " + publisheruri + " -- DELETE OLD NAME --> " + success);
-
-      logger.info("updatePublisherByURI() ---> " + publisheruri + " -- SPARUL INSERT  --> " + insertString);
-      success = false;
-      success = sparulDispatcher.query(insertString);
-      logger.info("updatePublisherByURI() ---> " + publisheruri + " -- INSERT NEW NAME --> " + success);
+      boolean success = sparulDispatcher.query(sparqlQuery);
+      logger.info("editPublisher() ---> INSERT --> " + success);
 
       if (success) {
         messageBuffer.append("<c:message>Utgiveren oppdatert</c:message>\n");
       } else {
         messageBuffer.append("<c:message>Feil ved oppdatering</c:message>\n");
       }
+
+      showPublisherByURI(res, req, messageBuffer.toString(), form2SparqlService.getURI());  
     }
 
-    showPublisherByURI(res, req, messageBuffer.toString(), publisheruri);
+
   }
 
   /**
@@ -311,6 +259,7 @@ public class PublisherController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("messages", messageBuffer.toString());
     bizData.put("publisherdetails", queryResult);
+    bizData.put("languages", adminService.getAllLanguages());
     res.sendPage("xml2/utgiver", bizData);
   }
 
@@ -347,7 +296,7 @@ public class PublisherController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("messages", messageBuffer.toString());
     bizData.put("publisherlist", queryResult);
-    res.sendPage("xml2/utgivere", bizData);
+    res.sendPage("xml2/utgivere_alle", bizData);
   }
 
   public void setSparqlDispatcher
@@ -360,6 +309,19 @@ public class PublisherController implements StatelessAppleController {
           (SparulDispatcher
                   sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
+  }
+
+  //todo Move to a Service-class
+  private Map<String, String[]> createParametersMap
+          (Request
+                  request) {
+    Map<String, String[]> result = new HashMap<String, String[]>();
+    Enumeration parameterNames = request.getParameterNames();
+    while (parameterNames.hasMoreElements()) {
+      String paramName = (String) parameterNames.nextElement();
+      result.put(paramName, request.getParameterValues(paramName));
+    }
+    return result;
   }
 
 }

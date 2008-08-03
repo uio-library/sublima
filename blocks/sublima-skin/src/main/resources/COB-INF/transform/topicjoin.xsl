@@ -64,7 +64,7 @@
                       </xsl:call-template>
                     </td>
                     <td>
-                        <input type="reset" value="button.empty" i18n:attr="button.empty"/>
+                        <input type="reset" value="button.empty" i18n:attr="value"/>
                     </td>
                 </tr>
             </table>
