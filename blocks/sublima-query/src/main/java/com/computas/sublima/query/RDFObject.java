@@ -142,7 +142,7 @@ public class RDFObject implements Serializable {
 		else if (getValue().matches(
 				"^([^:/?#\\s]+):(//([^/?#\\s]*))?([^?#]*)(\\?([^#]*))?(#(.*))?")) {
 			logger.debug("Found URI " + getValue());
-			n3Buffer.append("<" + getValue() + ">");
+			n3Buffer.append("<" + getValue().trim() + ">");
 		} else { // We have a literal
 			logger.trace("Found Literal " + getValue());
 			if (freetext != null && freetext > 0) { // Should this literal be treated as a free text?
@@ -161,7 +161,7 @@ public class RDFObject implements Serializable {
 
                 n3Buffer.append("'");
 			} else {
-				n3Buffer.append("\"\"\"" + getValue() + "\"\"\"");
+				n3Buffer.append("\"\"\"" + getValue().trim() + "\"\"\"");
 				if (language != null) {
 					if ("".equalsIgnoreCase(language)) {
             logger.fatal("Form does not specify value for: " + getValue() + "\n");
