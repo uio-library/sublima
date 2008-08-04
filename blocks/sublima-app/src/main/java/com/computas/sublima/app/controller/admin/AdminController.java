@@ -116,6 +116,7 @@ public class AdminController implements StatelessAppleController {
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       res.sendPage("xml2/upload", null);
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+      /*
       boolean isMultipart = ServletFileUpload.isMultipartContent(req.getCocoonRequest());
 
       // Create a factory for disk-based file items
@@ -174,9 +175,9 @@ public class AdminController implements StatelessAppleController {
       } catch (IOException e) {
         logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
       }
-
+      */
       ImportData importData = new ImportData();
-      importData.load(savedFile.getName(), type);
+      importData.load(req.getCocoonRequest().getParameter("location"), req.getCocoonRequest().getParameter("type"));
       res.sendPage("xml2/upload", null);
     }
   }
