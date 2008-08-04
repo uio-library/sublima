@@ -20,7 +20,7 @@
 
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
-  <xsl:template match="c:resourcedetails" mode="edit">
+  <xsl:template match="c:resourcedetails" mode="resourceedit">
 
     <form action="{$baseurl}/admin/ressurser/ny" method="POST">
       <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>

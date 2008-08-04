@@ -153,7 +153,7 @@
 
     <xsl:choose>
       <xsl:when test="c:page/c:mode = 'edit'">
-        <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="edit"/>
+        <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="resourceedit"/>
       </xsl:when>
       <xsl:when test="c:page/c:mode = 'temp'">
         <xsl:apply-templates select="c:page/c:content/c:resourcedetails" mode="temp"/>
