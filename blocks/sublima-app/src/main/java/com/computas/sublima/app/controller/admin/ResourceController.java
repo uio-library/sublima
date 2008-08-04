@@ -367,7 +367,6 @@ public class ResourceController implements StatelessAppleController {
 
         } else {
           messageBuffer.append("<c:message>Feil ved lagring av ny ressurs</c:message>\n");
-          bizData.put("resource", "<empty></empty>");
         }
       }
 
@@ -378,7 +377,7 @@ public class ResourceController implements StatelessAppleController {
       } else {
         bizData.put("resource", "<empty></empty>");
         bizData.put("tempvalues", "<empty/>");//tempPrefixes + tempValues.toString() + "</c:tempvalues>");
-        bizData.put("mode", "temp");
+        bizData.put("mode", "edit");
       }
       //}
 
