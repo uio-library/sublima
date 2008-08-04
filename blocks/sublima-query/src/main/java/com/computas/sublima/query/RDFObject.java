@@ -140,7 +140,7 @@ public class RDFObject implements Serializable {
 		}
 		// To check if we have a URI, use regexp from RFC 2396, modified
 		else if (getValue().matches(
-				"^([^:/?#]+):(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?")) {
+				"^([^:/?#\\s]+):(//([^/?#\\s]*))?([^?#]*)(\\?([^#]*))?(#(.*))?")) {
 			logger.debug("Found URI " + getValue());
 			n3Buffer.append("<" + getValue() + ">");
 		} else { // We have a literal
