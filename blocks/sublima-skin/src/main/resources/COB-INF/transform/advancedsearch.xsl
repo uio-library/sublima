@@ -134,7 +134,7 @@
 	  </label>
 	</th>
 	<td>
-	  <select multiple="multiple" id="{$field}" name="$field">
+	  <select multiple="multiple" id="{$field}" name="$field" size="3">
 	    <xsl:for-each select="./sq:results/sq:result">
 	      <option value="{./sq:binding[@name = 'uri']/sq:uri}">
 		<xsl:value-of select="./sq:binding[@name = 'label']/sq:literal"/>
