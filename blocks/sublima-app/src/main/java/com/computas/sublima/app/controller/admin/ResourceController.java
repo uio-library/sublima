@@ -269,7 +269,7 @@ public class ResourceController implements StatelessAppleController {
         } else {
           messageBuffer.append("<c:message>Feil ved sletting av ressurs</c:message>\n");
           bizData.put("tempvalues", "<empty></empty>");
-          bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("sub:url")));
+          bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource")));
           bizData.put("mode", "edit");
         }
 
@@ -309,7 +309,7 @@ public class ResourceController implements StatelessAppleController {
           */
 
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         dateAccepted = dateFormat.format(date); //"2008-18-09T13:39:38";
 
         // If the user checks that the resource should be marked as new, set updateDate to true
@@ -323,7 +323,7 @@ public class ResourceController implements StatelessAppleController {
         // Generate a dct:identifier if it's a new resource, and set the time and date for approval
           if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier")) || req.getCocoonRequest().getParameter("dct:identifier") == null) {
             updateDate = true;
-            dctIdentifier = req.getCocoonRequest().getParameter("dct:title-1").replace(" ", "_");
+            dctIdentifier = req.getCocoonRequest().getParameter("dct:title").replace(" ", "_");
             dctIdentifier = dctIdentifier.replace(",", "_");
             dctIdentifier = dctIdentifier.replace(".", "_");
             dctIdentifier = getProperty("sublima.base.url") + "resource/" + dctIdentifier + parameterMap.get("the-resource").hashCode();
@@ -375,7 +375,7 @@ public class ResourceController implements StatelessAppleController {
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "edit");
       } else {
-        bizData.put("resource", "<empty></empty>");
+        bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource")));
         bizData.put("tempvalues", "<empty/>");//tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("mode", "edit");
       }

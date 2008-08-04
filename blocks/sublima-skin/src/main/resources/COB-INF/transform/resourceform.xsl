@@ -32,6 +32,7 @@
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
       <input type="hidden" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier}"/>
+      <input type="hidden" name="interface-language" value="{$interface-language}"/>
       
       <!--input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/ -->
       <!-- input type="hidden" name="uri" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}"/ -->
@@ -39,25 +40,15 @@
              value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/ -->
 
       <table>
-        <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/dct:title">
-          <xsl:call-template name="labels">
-            <xsl:with-param name="label"><i18n:text key="title">Tittel</i18n:text></xsl:with-param>
-            <xsl:with-param name="value" select="."/>
-            <xsl:with-param name="default-language" select="@xml:lang"/>
-            <xsl:with-param name="field"><xsl:text>dct:title-</xsl:text><xsl:value-of select="position()"/></xsl:with-param>
-            <xsl:with-param name="type">text</xsl:with-param>
-          </xsl:call-template>
-        </xsl:for-each>
-
-        <xsl:call-template name="labels">
-          <xsl:with-param name="label"><i18n:text key="title">Tittel</i18n:text></xsl:with-param>
-          <xsl:with-param name="default-language" select="$interface-language"/>
-          <xsl:with-param name="field"><xsl:text>dct:title-</xsl:text><xsl:value-of select="count(./c:resource/rdf:RDF/sub:Resource/dct:title)+1"/></xsl:with-param>
-          <xsl:with-param name="type">text</xsl:with-param>
-        </xsl:call-template>
-      </table>
-      
-      <table>
+        <tr>
+        <td>
+            <label for="dct:title"><i18n:text key="title">Tittel</i18n:text></label>
+          </td>
+          <td>
+            <input id="dct:title" type="text" name="dct:title" size="40"
+                   value="{./c:resource/rdf:RDF/sub:Resource/dct:title}"/>
+          </td>
+        </tr>
         <tr>
           <td>
             <label for="the-resource"><i18n:text key="url">URL</i18n:text></label>
@@ -67,25 +58,18 @@
                    value="{./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource}"/>
           </td>
         </tr>
-      </table>
-      <table>
-        <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/dct:description">
-          <xsl:call-template name="labels">
-            <xsl:with-param name="label"><i18n:text key="description">Beskrivelse</i18n:text></xsl:with-param>
-            <xsl:with-param name="value" select="."/>
-            <xsl:with-param name="default-language" select="@xml:lang"/>
-            <xsl:with-param name="field"><xsl:text>dct:description-</xsl:text><xsl:value-of select="position()"/></xsl:with-param>
-            <xsl:with-param name="type">textarea</xsl:with-param>
-          </xsl:call-template>
-        </xsl:for-each>
+      <tr>
+        <td>
+          <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
+        </td>
+        <td>
+          <textarea id="dct:description" name="dct:description" rows="6" cols="40">...
+              <xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/>
+          </textarea>
+        </td>
+        </tr>
+        </table>
 
-        <xsl:call-template name="labels">
-          <xsl:with-param name="label"><i18n:text key="description">Beskrivelse</i18n:text></xsl:with-param>
-          <xsl:with-param name="default-language" select="$interface-language"/>
-          <xsl:with-param name="field"><xsl:text>dct:description-</xsl:text><xsl:value-of select="count(./c:resource/rdf:RDF/sub:Resource/dct:description)+1"/></xsl:with-param>
-          <xsl:with-param name="type">textarea</xsl:with-param>
-        </xsl:call-template>
-      </table>
       <br/>
       <p>
         <i18n:text key="resource.choosepublisher">Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet under</i18n:text>

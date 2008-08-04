@@ -163,7 +163,10 @@ public class RDFObject implements Serializable {
 			} else {
 				n3Buffer.append("\"\"\"" + getValue() + "\"\"\"");
 				if (language != null) {
-					n3Buffer.append("@" + language);
+					if ("".equalsIgnoreCase(language)) {
+            logger.fatal("Form does not specify value for: " + getValue() + "\n");
+          }
+          n3Buffer.append("@" + language);
 				}
 			}
 		}

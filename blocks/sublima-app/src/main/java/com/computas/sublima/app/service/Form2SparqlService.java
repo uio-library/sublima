@@ -451,7 +451,8 @@ public class Form2SparqlService {
 						if (!"".equalsIgnoreCase(value) && value != null) {
 							if (value.startsWith("http://www.lingvoj.org/lang/")) {
 								language = value.substring(value.lastIndexOf("/")+1, value.length());
-							} else {
+
+              } else {
 								object = value;
 							}
 						}
