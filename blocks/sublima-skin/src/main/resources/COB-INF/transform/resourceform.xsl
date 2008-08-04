@@ -63,18 +63,9 @@
           <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
         </td>
         <td>
-          <textarea id="dct:description" name="dct:description" rows="6" cols="40">...
-              <xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/>
-          </textarea>
+          <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:text> </xsl:text><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/></textarea>
         </td>
         </tr>
-        </table>
-
-      <br/>
-      <p>
-        <i18n:text key="resource.choosepublisher">Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet under</i18n:text>
-      </p>
-      <table>
         <tr>
           <td>
             <label for="dct:publisher/foaf:Agent/@rdf:about"><i18n:text key="publisher">Utgiver</i18n:text></label>
@@ -208,10 +199,7 @@
             <label for="rdfs:comment"><i18n:text key="comment">Kommentar</i18n:text></label>
           </td>
           <td>
-            <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40">...
-              <xsl:value-of
-                      select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/>
-            </textarea>
+            <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40"><xsl:text> </xsl:text><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/></textarea>
           </td>
         </tr>
         <tr>
