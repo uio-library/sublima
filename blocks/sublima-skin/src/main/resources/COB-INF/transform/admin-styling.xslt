@@ -83,10 +83,6 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template name="upload">
-    <xsl:copy-of select="c:page/c:content/c:upload/*"/>
-  </xsl:template>
-
   <xsl:template name="roledetails">
     <xsl:choose>
       <xsl:when test="c:page/c:mode = 'roletemp'">
@@ -250,8 +246,6 @@
                 <xsl:apply-templates select="c:page/c:content/c:upload" mode="upload"/>
 
                 <xsl:call-template name="theme"/>
-
-                <xsl:call-template name="upload"/>
 
                 <xsl:call-template name="alltopics"/>
 
