@@ -11,7 +11,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
-        xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:sq="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:param name="baseurl"/>
@@ -46,85 +46,73 @@
 
       <table>
         <tr>
-          <td align="right">
+          <th scope="row">
             <label for="title">Title</label>
-          </td>
+          </th>
           <td>
             <input id="title" type="text" name="dct:title" size="20"/>
           </td>
         </tr>
         <tr>
-          <td align="right">
+          <th scope="row">
             <label for="subject">Subject</label>
-          </td>
+          </th>
           <td>
             <input id="subject" type="text" name="dct:subject/all-labels" size="20"/>
           </td>
         </tr>
         <tr>
-          <td align="right">
+          <th scope="row">
             <label for="description">Description</label>
-          </td>
+          </th>
           <td>
             <input id="description" type="text" name="dct:description" size="20"/>
           </td>
         </tr>
         <tr>
-          <td align="right">
+          <th scope="row">
             <label for="publisher">Publisher</label>
-          </td>
+          </th>
           <td>
             <input id="publisher" type="text" name="dct:publisher/foaf:name" size="20"/>
           </td>
         </tr>
         <tr>
-          <td align="right">
+          <th scope="row">
             <label for="dateAccepted">DateAccepted</label>
-          </td>
+          </th>
           <td>
             <input id="dateAccepted" type="text" name="dct:dateAccepted" size="20"/>
           </td>
         </tr>
         <tr>
-          <td align="right">
+          <th scope="row">
             <label for="dateSubmitted">DateSubmitted</label>
-          </td>
+          </th>
           <td>
             <input id="dateSubmitted" type="text" name="dct:dateSubmitted" size="20"/>
           </td>
-        </tr>
-        <tr>
-          <td align="right">
-            <label for="type">Type</label>
-          </td>
-          <td>
-            <input id="type" type="text" name="dct:format" size="20"/>
-          </td>
-        </tr>
-         <tr>
-          <td align="right">
-            <label for="language">Language</label>
-          </td>
-          <td>
-            <input id="language" type="text" name="dct:language/rdfs:label" size="20"/>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">
-            <label for="audience">Audience</label>
-          </td>
-          <td>
-            <input id="audience" type="text" name="dct:audience/rdfs:label" size="20"/>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">
-            <label for="committer">Committer</label>
-          </td>
-          <td>
-            <input id="committer" type="text" name="sub:committer/rdfs:label" size="20"/>
-          </td>
-        </tr>
+	</tr>
+	<xsl:apply-templates select="/c:page/c:mediatypes/sq:sparql">
+	  <xsl:with-param name="field">dct:format</xsl:with-param>
+	  <xsl:with-param name="label">Type</xsl:with-param>
+	</xsl:apply-templates>
+
+	<xsl:apply-templates select="/c:page/c:languages/sq:sparql">
+	  <xsl:with-param name="field">dct:language</xsl:with-param>
+	  <xsl:with-param name="label">Språk</xsl:with-param>
+	</xsl:apply-templates>
+
+	<xsl:apply-templates select="/c:page/c:audiences/sq:sparql">
+	  <xsl:with-param name="field">dct:audience</xsl:with-param>
+	  <xsl:with-param name="label">Publikum</xsl:with-param>
+	</xsl:apply-templates>
+
+	<xsl:apply-templates select="/c:page/c:committers/sq:sparql">
+	  <xsl:with-param name="field">sub:committer</xsl:with-param>
+	  <xsl:with-param name="label">Godkjent av</xsl:with-param>
+	</xsl:apply-templates>
+
         <tr>
           <td></td>
           <td>
@@ -134,4 +122,30 @@
       </table>
     </form>
   </xsl:template>
+
+  <xsl:template match="sq:sparql">
+    <xsl:param name="field"/>
+    <xsl:param name="label"/>
+    <xsl:if test="./sq:results/sq:result">
+      <tr>
+	<th scope="row">
+	  <label for="{$field}">
+	    <xsl:value-of select="$label"/>
+	  </label>
+	</th>
+	<td>
+	  <select multiple="multiple" id="{$field}" name="$field">
+	    <xsl:for-each select="./sq:results/sq:result">
+	      <option value="{./sq:binding[@name = 'uri']/sq:uri}">
+		<xsl:value-of select="./sq:binding[@name = 'label']/sq:literal"/>
+	      </option>
+	    </xsl:for-each>
+	  </select>
+	</td>
+      </tr>
+      
+    </xsl:if>
+  </xsl:template>
+
+
 </xsl:stylesheet>
