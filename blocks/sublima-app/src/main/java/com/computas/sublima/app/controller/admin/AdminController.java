@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -177,7 +179,13 @@ public class AdminController implements StatelessAppleController {
       }
       */
       ImportData importData = new ImportData();
-      importData.load(req.getCocoonRequest().getParameter("location"), req.getCocoonRequest().getParameter("type"));
+      File file = new File(req.getCocoonRequest().getParameter("location"));
+
+      try {
+        importData.load( file.toURL().toString()/*req.getCocoonRequest().getParameter("location")*/, req.getCocoonRequest().getParameter("type"));
+      } catch (MalformedURLException e) {
+        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+      }
       res.sendPage("xml2/upload", null);
     }
   }
