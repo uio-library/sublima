@@ -76,35 +76,41 @@ public class SearchController implements StatelessAppleController {
 
     // This query, relies on that all relations are explicitly stated.
     // I.e. a triple for both skos:broader and skos:narrower must exist.
+    // Small fix added allowing concepts to not have relations at all.
      String sparqlConstructQuery =
         "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"+
         "prefix skos: <http://www.w3.org/2004/02/skos/core#> \n"+
         "prefix owl: <http://www.w3.org/2002/07/owl#> \n"+
         "CONSTRUCT {\n"+
-         subject + "  ?semrelation ?object ; \n"+
-        "skos:prefLabel ?preflabel ; \n"+
-        "skos:altLabel ?altlabel ;  \n"+     
-        "a skos:Concept .\n"+
+         subject + "\n" +
+        "   a skos:Concept ;\n"+
+        "   skos:prefLabel ?preflabel ; \n"+
+        "   skos:altLabel ?altlabel ;  \n"+     
+        "   ?semrelation ?object . \n"+
         "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n"+
-        "rdfs:label ?semrellabel ;\n"+
-        "                a owl:ObjectProperty .\n"+       
+        "   rdfs:label ?semrellabel ;\n"+
+        "   a owl:ObjectProperty .\n"+       
         "?object skos:prefLabel ?preflabel2 ; \n"+
-        " a skos:Concept .\n"+
+        "   a skos:Concept .\n"+
         "}\n"+
-        "WHERE {\n"+
-        "OPTIONAL {\n"+
-         subject + " ?semrelation ?object ;\n"+
-         "   a skos:Concept ;\n"+
+        "WHERE {\n"+ 
+         subject + "\n" + 
          "   skos:prefLabel ?preflabel ;\n"+
-         "   skos:altLabel ?altlabel .\n"+
+         "   a skos:Concept .\n"+
+         "OPTIONAL {\n"+
+         subject + "\n" + 
+         "   skos:altLabel ?altlabel .\n" +
+         "}\n"+
+         "OPTIONAL {\n" +
+         subject + "\n" + 
+         "   ?semrelation ?object .\n"+
          "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n"+
-         "                rdfs:label ?semrellabel ;\n"+
-         "                a owl:ObjectProperty .\n"+       
+         "   rdfs:label ?semrellabel ;\n"+
+         "   a owl:ObjectProperty .\n"+       
          "?object  a skos:Concept ;\n"+
-         "     skos:prefLabel ?preflabel2 .\n"+
+         "   skos:prefLabel ?preflabel2 .\n"+
          "}\n"+ 
          "}";
-
 
 
 
