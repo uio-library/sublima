@@ -87,9 +87,9 @@ this, just comment out the call-template -->
           <div class="colmid">
             <div class="colleft">
               <div class="col1">
-		<!--
+		
 		  <xsl:call-template name="debug"/>
-		-->
+		
        <!-- Column 1 start -->
 		
 		<!-- Search -->
@@ -196,17 +196,28 @@ this, just comment out the call-template -->
             <xsl:apply-templates select="c:page/c:browse" mode="browse"/>
         </xsl:if>
 
+
         <!-- Link to RSS representation of search result -->
-<!--
+        
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
+            <xsl:variable name="rss-url">    
+                <xsl:choose>
+                    <xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, '?')">
+                        <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, '?'), '.rss?', substring-after(/c:page/c:facets/c:request/@requesturl, '?'))"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat(/c:page/c:facets/c:request/@requesturl, '.rss')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <a>
             <xsl:attribute name="href">
-            <xsl:apply-templates select="/c:page/c:facets/c:request/" mode="rss-url"/> 
-            </xsl:attribute>
-            rss
+             <xsl:value-of select="$rss-url"/>
+            </xsl:attribute> 
+            RSS
             </a>
         </xsl:if>
--->
+
         <!-- Search results -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
             <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
