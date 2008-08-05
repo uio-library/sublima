@@ -18,6 +18,7 @@ public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private ApplicationManager appMan;
   private String mode;
+  private String format;
 
   private static Logger logger = Logger.getLogger(SearchController.class);
 
@@ -26,6 +27,10 @@ public class SearchController implements StatelessAppleController {
     boolean loggedIn = appMan.isLoggedIn("Sublima");
 
     this.mode = req.getSitemapParameter("mode");
+    this.format = req.getSitemapParameter("format");
+    if (format == null || "".equalsIgnoreCase(format)) {
+      format = "xml";
+    }
 
     logger.trace("SearchController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
 
@@ -134,7 +139,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("request", params.toString());
     bizData.put("loggedin", loggedIn);
     bizData.put("searchparams", "<empty/>");
-    res.sendPage("xml/sparql-result", bizData);
+    res.sendPage(format + "/sparql-result", bizData);
   }
 
 
@@ -238,7 +243,7 @@ public class SearchController implements StatelessAppleController {
 
     bizData.put("request", params.toString());
     bizData.put("loggedin", loggedIn);
-    res.sendPage("xml/sparql-result", bizData);
+    res.sendPage(format + "/sparql-result", bizData);
   }
 
   private StringBuffer getMostOfTheRequestXML(AppleRequest req) {
