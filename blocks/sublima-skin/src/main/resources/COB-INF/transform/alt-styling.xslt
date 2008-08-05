@@ -196,6 +196,17 @@ this, just comment out the call-template -->
             <xsl:apply-templates select="c:page/c:browse" mode="browse"/>
         </xsl:if>
 
+        <!-- Link to RSS representation of search result -->
+<!--
+        <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
+            <a>
+            <xsl:attribute name="href">
+            <xsl:apply-templates select="/c:page/c:facets/c:request/" mode="rss-url"/> 
+            </xsl:attribute>
+            rss
+            </a>
+        </xsl:if>
+-->
         <!-- Search results -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
             <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
