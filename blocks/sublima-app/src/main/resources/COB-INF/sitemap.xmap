@@ -67,7 +67,9 @@
         <map:serialize type="servletService">
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
         </map:serialize>
-        <map:serialize type="xml"/>
+        
+        <map:serialize type="xhtml"/>
+        
       </map:match>
 
       <!-- ========================================= -->
@@ -370,6 +372,31 @@
 
     </map:pipeline>
 
+
+    <map:pipeline internal-only="false">
+     
+      <map:match pattern="**/*.rss">
+       <map:act type="locale">
+         <map:call function="com.computas.sublima.app.controller.SearchController">
+            <map:parameter name="mode" value="search-result"/>
+            <map:parameter name="format" value="rss"/>
+            <map:parameter name="interface-language" value="{language}"/>
+	      </map:call>
+        </map:act>
+        <map:call function="com.computas.sublima.app.controller.SearchController">
+          <map:parameter name="mode" value="search-result"/>
+          <map:parameter name="format" value="rss"/>
+          <map:parameter name="interface-language" value="no"/>
+        </map:call>
+      </map:match>
+      
+    </map:pipeline>
+
+
+
+
+
+
     <map:pipeline internal-only="true">
 
       <map:match pattern="xhtml/*">
@@ -384,6 +411,16 @@
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
         </map:serialize>
       </map:match>
+      
+      <map:match pattern="rss/*">
+        <map:generate src="templates/{1}.jx.xml" type="jx"/>
+        <!-- apply styling -->
+        <map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:skin:/rss-styling"/>
+        </map:serialize>
+      </map:match>
+      
+      
 
       <map:match pattern="xml2/*">
         <map:generate src="templates/{1}.jx.xml" type="jx"/>
@@ -392,6 +429,7 @@
         </map:serialize>
         <!--map:serialize type="xml"/-->
       </map:match>
+
 
     </map:pipeline>
 
