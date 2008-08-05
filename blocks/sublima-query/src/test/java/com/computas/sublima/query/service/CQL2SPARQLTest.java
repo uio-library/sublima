@@ -18,11 +18,21 @@ import com.computas.sublima.query.exceptions.UnsupportedCQLFeatureException;
  * @version 1.0
  */
 public class CQL2SPARQLTest extends TestCase {
+    private String expectedPrefix;
+    private String expectedSuffix;
+
     public CQL2SPARQLTest(String name) {
         super(name);
     }
 
     public void setUp() throws Exception {
+        expectedPrefix = "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "DESCRIBE ?resource ?rest WHERE {\n" +
+                "?lit pf:textMatch '";
+        expectedSuffix = "' .\n?resource sub:literals ?lit .\n" +
+                "?resource ?p ?rest .\n" +
+                "}";
         super.setUp();
     }
 
@@ -36,8 +46,13 @@ public class CQL2SPARQLTest extends TestCase {
 
     public void testTerm() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
         CQL2SPARQL translator = new CQL2SPARQL("vondt");
-        assertEquals("Query not as expected:", "vondt+", translator.Level0());
+        assertEquals("Query not as expected:", expectedPrefix + "vondt*" + expectedSuffix, translator.Level0());
     }
+
+    public void testTermThreeWords() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
+         CQL2SPARQL translator = new CQL2SPARQL("\"vondt i magen\"");
+         assertEquals("Query not as expected:", expectedPrefix + "vondt* AND i* AND mage *" + expectedSuffix, translator.Level0());
+     }
 
      public void testIndexAndTerm() throws CQLParseException, IOException {
         CQL2SPARQL translator = new CQL2SPARQL("dc.title=vondt");

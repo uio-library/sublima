@@ -1,10 +1,12 @@
 package com.computas.sublima.query.service;
 
 import com.computas.sublima.query.exceptions.UnsupportedCQLFeatureException;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLTermNode;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
@@ -17,6 +19,7 @@ import java.io.IOException;
 public class CQL2SPARQL {
 
     private static CQLNode cqlRootNode;
+    static Logger logger = Logger.getLogger(CQL2SPARQL.class);
 
     public CQL2SPARQL(String cqlQuery) throws IOException, CQLParseException {
         CQLParser parser = new CQLParser();
@@ -39,8 +42,18 @@ public class CQL2SPARQL {
         if (! thisNode.getRelation().getBase().equals("=")) {
             throw new UnsupportedCQLFeatureException("Only Level 0 queries are supported. Relation not equals.");
         }
-        
-        return null;
+        SearchService searchService = new SearchService();
+
+        String searchString = searchService.buildSearchString(thisNode.getTerm()); // This is the freetext we will search for.
+        logger.debug("CQL2SPARQL: Search String is: " + searchString);
+        return  "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "DESCRIBE ?resource ?rest WHERE {\n" +
+                "?lit pf:textMatch '" + searchString + "' .\n" +
+                "?resource sub:literals ?lit .\n" +
+                "?resource ?p ?rest .\n" +
+                "}";
+
     }
 
 }
