@@ -10,4 +10,6 @@ package com.computas.sublima.query.exceptions;
  * Time: 9:23:11 AM
  */
 public class UnsupportedCQLFeatureException extends Exception {
+    public UnsupportedCQLFeatureException() {}
+    public UnsupportedCQLFeatureException(String msg) { super(msg); }
 }
