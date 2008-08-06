@@ -13,7 +13,7 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns="http://purl.org/rss/1.0/" 
   exclude-result-prefixes="rdf rdfs dct foaf sublima sioc lingvoj wdr ">
-  <xsl:import href="rdfxml-res-templates.xsl"/>
+
 
 
   <xsl:param name="interface-language">no</xsl:param>

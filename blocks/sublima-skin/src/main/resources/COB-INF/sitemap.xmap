@@ -41,7 +41,7 @@
           <map:transform type="i18n">
             <map:parameter name="locale" value="{language}"/>
           </map:transform>
-          <map:transform src="transform/rss-styling.xslt">
+          <map:transform src="transform/rss-styling.xsl">
             <map:parameter name="baseurl" value="{request:contextPath}"/>
             <map:parameter name="interface-language" value="{language}"/>
           </map:transform>

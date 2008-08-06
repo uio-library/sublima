@@ -13,7 +13,6 @@
 
   <xsl:import href="rdfxml2rss-deflist.xsl"/>
   <xsl:import href="rss-channel.xsl"/>
-  <xsl:import href="set-lang.xsl"/>
 
 
   <xsl:param name="baseurl"/>
