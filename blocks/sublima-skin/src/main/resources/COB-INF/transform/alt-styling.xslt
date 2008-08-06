@@ -203,10 +203,10 @@ this, just comment out the call-template -->
             <xsl:variable name="rss-url">    
                 <xsl:choose>
                     <xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, '?')">
-                        <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, '?'), '.rss?', substring-after(/c:page/c:facets/c:request/@requesturl, '?'))"/>
+                        <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, '.html?'), '.rss?', substring-after(/c:page/c:facets/c:request/@requesturl, '?'))"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="concat(/c:page/c:facets/c:request/@requesturl, '.rss')"/>
+                        <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, '.html'), '.rss')"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
