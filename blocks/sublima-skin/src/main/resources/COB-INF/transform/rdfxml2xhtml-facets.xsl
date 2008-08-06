@@ -111,6 +111,7 @@
 
   <xsl:template match="dct:language" mode="facets">
     <xsl:param name="baseurlparams"/>
+    
     <xsl:if test="./lingvoj:Lingvo"> <!-- This should iterate all unique languages -->
       <li>
 	<xsl:variable name="this-label" select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
@@ -124,11 +125,11 @@
 	  </xsl:attribute>
 	  <xsl:value-of select="$this-label"/>
 	</a>
-
-	<xsl:text> (</xsl:text>
-	<xsl:value-of select="count(//dct:language[@rdf:resource=$uri])+1"/>)
-      </li>
+    <bdo dir="ltr">
+	(<xsl:value-of select="count(//dct:language[@rdf:resource=$uri])+1"/>)
+	</bdo>  </li>
     </xsl:if>
+    
     
   </xsl:template>
 
