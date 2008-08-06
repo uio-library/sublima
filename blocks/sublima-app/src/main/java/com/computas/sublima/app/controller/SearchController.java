@@ -28,7 +28,7 @@ public class SearchController implements StatelessAppleController {
 
     this.mode = req.getSitemapParameter("mode");
     this.format = req.getSitemapParameter("format");
-    if (format == null || "".equalsIgnoreCase(format)) {
+    if (format == null || "html".equalsIgnoreCase(format) || "".equalsIgnoreCase(format)) {
       format = "xml";
     }
 

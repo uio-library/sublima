@@ -301,30 +301,33 @@
         <map:serialize type="xml"/>
       </map:match>
 
-     <map:match pattern="search-result">
+     <map:match pattern="search-result.*">
        <map:act type="locale">
          <map:call function="com.computas.sublima.app.controller.SearchController">
             <map:parameter name="mode" value="search-result"/>
             <map:parameter name="interface-language" value="{language}"/>
+	    <map:parameter name="format" value="{../1}"/>
 	 </map:call>
         </map:act>
       </map:match>
 
-      <map:match pattern="topic/*">
+      <map:match pattern="topic/*.*">
    	<map:act type="locale">
 	  <map:call function="com.computas.sublima.app.controller.SearchController">
 	    <map:parameter name="mode" value="topic"/>
 	    <map:parameter name="topic" value="{../1}"/>
+	    <map:parameter name="format" value="{../2}"/>
 	    <map:parameter name="interface-language" value="{language}"/>
 	  </map:call>
 	</map:act>
       </map:match>
 
-      <map:match pattern="resource/*">
+      <map:match pattern="resource/*.*">
 	<map:act type="locale">
 	  <map:call function="com.computas.sublima.app.controller.SearchController">
 	    <map:parameter name="mode" value="resource"/>
 	    <map:parameter name="name" value="{../1}"/>
+	    <map:parameter name="format" value="{../2}"/>
 	    <map:parameter name="interface-language" value="{language}"/>
 	  </map:call>
 	</map:act>
@@ -357,25 +360,6 @@
       </map:match>
 
     </map:pipeline>
-
-
-    <map:pipeline internal-only="false">
-     
-      <map:match pattern="**/*.rss">
-       <map:act type="locale">
-         <map:call function="com.computas.sublima.app.controller.SearchController">
-            <map:parameter name="mode" value="search-result"/>
-            <map:parameter name="format" value="rss"/>
-            <map:parameter name="interface-language" value="{language}"/>
-	      </map:call>
-        </map:act>
-      </map:match>
-      
-    </map:pipeline>
-
-
-
-
 
 
     <map:pipeline internal-only="true">
