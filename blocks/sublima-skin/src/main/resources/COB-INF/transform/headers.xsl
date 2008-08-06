@@ -20,6 +20,13 @@
       </title>
    
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <xsl:if test="not($rss-url = '')">
+	<link rel="alternate" 
+	      type="application/rss+xml" 
+	      title="RSS" 
+	      href="{$rss-url}" />
+      </xsl:if>
+
       <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
       <link rel="stylesheet" href="styles/jquery.autocomplete.css" type="text/css" />
       <script src="styles/jquery.js" type="text/javascript" />

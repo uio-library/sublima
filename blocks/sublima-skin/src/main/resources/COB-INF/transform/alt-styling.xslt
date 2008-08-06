@@ -41,7 +41,20 @@
     </xsl:if>
   </xsl:param>
 
-
+  <xsl:param name="rss-url">    
+    <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
+      <xsl:choose>
+	<xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, '?')">
+	  <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, '.html?'), '.rss?', substring-after(/c:page/c:facets/c:request/@requesturl, '?'))"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, '.html'), '.rss')"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:param>
+    
+    
   <!-- A debug template that dumps the source tree. Do not remove
 this, just comment out the call-template -->
   <xsl:template name="debug">
@@ -199,24 +212,14 @@ this, just comment out the call-template -->
 
         <!-- Link to RSS representation of search result -->
         
-        <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-            <xsl:variable name="rss-url">    
-                <xsl:choose>
-                    <xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, '?')">
-                        <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, '.html?'), '.rss?', substring-after(/c:page/c:facets/c:request/@requesturl, '?'))"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, '.html'), '.rss')"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
-            <a>
-            <xsl:attribute name="href">
-             <xsl:value-of select="$rss-url"/>
-            </xsl:attribute> 
-            RSS
-            </a>
-        </xsl:if>
+        <xsl:if test="not($rss-url = '')">
+	  <a>
+	    <xsl:attribute name="href">
+	      <xsl:value-of select="$rss-url"/>
+	    </xsl:attribute> 
+	    RSS
+	  </a>
+	</xsl:if>
 
         <!-- Search results -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
