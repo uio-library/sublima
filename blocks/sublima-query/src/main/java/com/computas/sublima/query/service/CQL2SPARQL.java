@@ -42,7 +42,7 @@ public class CQL2SPARQL {
         if (! thisNode.getRelation().getBase().equals("=")) {
             throw new UnsupportedCQLFeatureException("Only Level 0 queries are supported. Relation not equals.");
         }
-        SearchService searchService = new SearchService();
+        SearchService searchService = new SearchService("AND");
 
         String searchString = searchService.buildSearchString(thisNode.getTerm()); // This is the freetext we will search for.
         logger.debug("CQL2SPARQL: Search String is: " + searchString);

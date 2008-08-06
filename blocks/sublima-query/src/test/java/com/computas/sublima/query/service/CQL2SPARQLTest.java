@@ -51,16 +51,47 @@ public class CQL2SPARQLTest extends TestCase {
 
     public void testTermThreeWords() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
          CQL2SPARQL translator = new CQL2SPARQL("\"vondt i magen\"");
-         assertEquals("Query not as expected:", expectedPrefix + "vondt* AND i* AND mage *" + expectedSuffix, translator.Level0());
+         assertEquals("Query not as expected:", expectedPrefix + "vondt* AND i* AND magen*" + expectedSuffix, translator.Level0());
      }
+    public void testTermThreeWordsQuoted() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
+          CQL2SPARQL translator = new CQL2SPARQL("\"vondt \\\"i magen\\\"\"");
+          assertEquals("Query not as expected:", expectedPrefix + "vondt* AND \"i magen\"" + expectedSuffix, translator.Level0());
+      }
 
-     public void testIndexAndTerm() throws CQLParseException, IOException {
+     public void testLevel0IndexAndTerm() throws CQLParseException, IOException {
         CQL2SPARQL translator = new CQL2SPARQL("dc.title=vondt");
          try {
              String out = translator.Level0();
 		 }	catch (UnsupportedCQLFeatureException tmp) {
 			 assertTrue(true);
 		 }
+    }
+
+    public void testLevel0RelationAndTerm() throws CQLParseException, IOException {
+       CQL2SPARQL translator = new CQL2SPARQL("dc.description any vondt");
+        try {
+            String out = translator.Level0();
+        }	catch (UnsupportedCQLFeatureException tmp) {
+            assertTrue(true);
+        }
+    }
+
+    public void testLevel0Complex() throws CQLParseException, IOException {
+       CQL2SPARQL translator = new CQL2SPARQL("dc.title any vondt sortBy dc.subject/sort.ascending");
+        try {
+            String out = translator.Level0();
+        }	catch (UnsupportedCQLFeatureException tmp) {
+            assertTrue(true);
+        }
+   }
+
+    public void testUnparseable() throws UnsupportedCQLFeatureException, IOException {
+        try {
+            CQL2SPARQL translator = new CQL2SPARQL("any vondt");
+            String out = translator.Level0();
+        }	catch (CQLParseException tmp) {
+            assertTrue(true);
+        }
     }
 
 
