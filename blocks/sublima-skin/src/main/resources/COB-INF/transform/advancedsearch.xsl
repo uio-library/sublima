@@ -33,7 +33,7 @@
         });
     </script>
 
-    <form action="search-result" method="GET">
+    <form action="search-result.html" method="GET">
       <input type="hidden" name="freetext-field" value="dct:title"/>
       <input type="hidden" name="freetext-field" value="dct:subject/all-labels"/>
       <input type="hidden" name="freetext-field" value="dct:description"/>
