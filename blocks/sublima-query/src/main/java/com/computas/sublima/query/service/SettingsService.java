@@ -16,7 +16,6 @@ public class SettingsService {
   private static Settings cocoonSettings;
   private static ModelRDB model = null;
   static DatabaseService myDbService = new DatabaseService();
-  //IDBConnection connection = myDbService.getConnection();
   static IndexBuilderString larqBuilder = null;
 
   private SettingsService() {
