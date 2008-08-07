@@ -22,7 +22,7 @@
         <xsl:for-each select="./rdf:RDF/skos:Concept">
           <xsl:sort select="./skos:prefLabel"/>
           <li>
-            <a href="{./@rdf:about}{$qloc}">
+            <a href="{./@rdf:about}.html{$qloc}">
               <xsl:value-of select="./skos:prefLabel"/>
             </a>
           </li>

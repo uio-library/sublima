@@ -31,7 +31,7 @@
   </xsl:template>
 
   <xsl:template match="dct:title" mode="internal-link">
-    <a href="{../dct:identifier/@rdf:resource}{$qloc}"><xsl:value-of select="."/></a>
+    <a href="{../dct:identifier/@rdf:resource}.html{$qloc}"><xsl:value-of select="."/></a>
   </xsl:template>
 
   <xsl:template match="dct:title" mode="external-link">
@@ -76,10 +76,10 @@
    <xsl:choose>
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
-	<a href="{$uri}{$qloc}"><xsl:value-of select="//skos:Concept[@rdf:about=$uri]/skos:prefLabel[@xml:lang=$interface-language]"/></a>
+	<a href="{$uri}.html{$qloc}"><xsl:value-of select="//skos:Concept[@rdf:about=$uri]/skos:prefLabel[@xml:lang=$interface-language]"/></a>
       </xsl:when>
       <xsl:when test="./skos:Concept/@rdf:about">
-	<a href="{./skos:Concept/@rdf:about}{$qloc}"><xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/></a>
+	<a href="{./skos:Concept/@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/></a>
       </xsl:when>
       <xsl:otherwise>
 	<span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel</i18n:text></span>
