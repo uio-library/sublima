@@ -10,20 +10,12 @@ import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.net.URL;
 import java.net.MalformedURLException;
-import java.util.Iterator;
-import java.util.List;
+import java.net.URLEncoder;
 
 /**
  * @author: mha
@@ -94,19 +86,19 @@ public class AdminController implements StatelessAppleController {
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
       DatabaseService databaseService = new DatabaseService();
 
-
-      String filename = req.getCocoonRequest().getParameter("location");
-      String format = req.getCocoonRequest().getParameter("type");
+      String type = req.getCocoonRequest().getParameter("type");
+      File file = new File(req.getCocoonRequest().getParameter("location"));
 
       String replaceResourceWith = null;
       if (req.getCocoonRequest().getParameterValues("replacement") != null) {
         replaceResourceWith = "uri";
       }
-      //databaseService.writeModelToFile(filename, format);
+      databaseService.writeModelToFile(file.toString(), type);
       try {
-        convert.convert(filename, format, filename, format, replaceResourceWith);
+        ConvertSublimaResources.convert(file.toURL().toString(), type, file.getCanonicalPath(), type, replaceResourceWith);
       } catch (IOException e) {
-        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
+        e.printStackTrace();
       }
 
 
@@ -118,74 +110,21 @@ public class AdminController implements StatelessAppleController {
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       res.sendPage("xml2/upload", null);
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-      /*
-      boolean isMultipart = ServletFileUpload.isMultipartContent(req.getCocoonRequest());
-
-      // Create a factory for disk-based file items
-      DiskFileItemFactory factory = new DiskFileItemFactory();
-
-      // Set factory constraints
-      //factory.setSizeThreshold(500000000);
-      //factory.setRepository(new File("/tmp/sublima/upload"));
-
-      // Create a new file upload handler
-      ServletFileUpload upload = new ServletFileUpload(factory);
-
-      // Set overall request size constraint. Defaults to -1 --> no limit
-      //upload.setSizeMax(yourMaxRequestSize);
-
-      // Parse the request
-      List items = null;
-      try {
-        items = upload.parseRequest(req.getCocoonRequest());
-      } catch (FileUploadException e) {
-        logger.trace("AdminController.uploadForm --> Error during file upload.");
-      }
-
-      // Process the uploaded items
-      Iterator iter = items.iterator();
-      File savedFile = null;
-      while (iter.hasNext()) {
-        FileItem item = (FileItem) iter.next();
-
-        if (item.isFormField()) {
-          String name = item.getFieldName();
-          String value = item.getString();
-        } else {
-          String fieldName = item.getFieldName();
-          String fileName = item.getName();
-          String contentType = item.getContentType();
-          boolean isInMemory = item.isInMemory();
-          long sizeInBytes = item.getSize();
-
-          // Workaround to fix bug in item.getName() that returns full path on client machine.
-          File fullfile = new File(fileName);
-
-          savedFile = new File(factory.getRepository(), fullfile.getName());
-          try {
-            item.write(savedFile);
-          } catch (Exception e) {
-            logger.trace("AdminController.uploadForm --> Error during writing file to upload directory.");
-          }
-        }
-      }
 
       String type = req.getCocoonRequest().getParameter("type");
-
-      try {
-        convert.convert(savedFile.getName(), type, savedFile.getName(), type, "url");
-      } catch (IOException e) {
-        logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
-      }
-      */
-      ImportData importData = new ImportData();
       File file = new File(req.getCocoonRequest().getParameter("location"));
 
       try {
-        importData.load( file.toURL().toString()/*req.getCocoonRequest().getParameter("location")*/, req.getCocoonRequest().getParameter("type"));
+        ConvertSublimaResources.convert(file.toURL().toString(), type, file.getCanonicalPath(), type, "url");
+        ImportData.load(file.toURL().toString(), type);
       } catch (MalformedURLException e) {
-        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
+        e.printStackTrace();
+      } catch (IOException e) {
+        logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
+        e.printStackTrace();
       }
+
       res.sendPage("xml2/upload", null);
     }
   }
