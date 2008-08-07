@@ -163,7 +163,7 @@
   </servlet-mapping>
 
   <!-- AuthenticationFilter -->
-  <filter>
+  <!--filter>
     <description>Authentication and authorization</description>
     <display-name>AuthenticationFilter</display-name>
     <filter-name>AuthenticationFilter</filter-name>
@@ -172,7 +172,7 @@
   <filter-mapping>
     <filter-name>AuthenticationFilter</filter-name>
     <servlet-name>DispatcherServlet</servlet-name>
-  </filter-mapping>
+  </filter-mapping-->
 
   <!-- END COPIED FROM THE XPATCH -->
 
