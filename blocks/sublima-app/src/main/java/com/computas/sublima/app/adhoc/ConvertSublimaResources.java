@@ -107,7 +107,7 @@ public class ConvertSublimaResources {
     // read the RDF file
     RDFReader rdr = model.getReader(inFormat);
     File f = new File(inputFileName);
-    String base = "file:///" + f.getCanonicalPath().replace('\\', '/');
+    String base = f.toString(); //"file:///" + f.getCanonicalPath().replace('\\', '/');
     rdr.read(model, in, base);
 
 
