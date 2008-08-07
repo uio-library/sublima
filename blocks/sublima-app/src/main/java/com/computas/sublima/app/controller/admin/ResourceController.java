@@ -6,9 +6,9 @@ import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
-import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
@@ -16,9 +16,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.*;
-import java.text.SimpleDateFormat;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author: mha
@@ -81,7 +81,7 @@ public class ResourceController implements StatelessAppleController {
       } else if ("edit".equalsIgnoreCase(submode)) {
         editResource(res, req, "edit", null);
         return;
-      }else if ("checkurl".equalsIgnoreCase(submode)) {
+      } else if ("checkurl".equalsIgnoreCase(submode)) {
         registerNewResourceURL(req, res);
         return;
       } else {
@@ -321,15 +321,15 @@ public class ResourceController implements StatelessAppleController {
         parameterMap.put("sub:committer", new String[]{user.getId()});
 
         // Generate a dct:identifier if it's a new resource, and set the time and date for approval
-          if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier")) || req.getCocoonRequest().getParameter("dct:identifier") == null) {
-            updateDate = true;
-            dctIdentifier = req.getCocoonRequest().getParameter("dct:title").replace(" ", "_");
-            dctIdentifier = dctIdentifier.replace(",", "_");
-            dctIdentifier = dctIdentifier.replace(".", "_");
-            dctIdentifier = getProperty("sublima.base.url") + "resource/" + dctIdentifier + parameterMap.get("the-resource").hashCode();
-          } else {
-            dctIdentifier = req.getCocoonRequest().getParameter("dct:identifier");
-          }
+        if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier")) || req.getCocoonRequest().getParameter("dct:identifier") == null) {
+          updateDate = true;
+          dctIdentifier = req.getCocoonRequest().getParameter("dct:title").replace(" ", "_");
+          dctIdentifier = dctIdentifier.replace(",", "_");
+          dctIdentifier = dctIdentifier.replace(".", "_");
+          dctIdentifier = getProperty("sublima.base.url") + "resource/" + dctIdentifier + parameterMap.get("the-resource").hashCode();
+        } else {
+          dctIdentifier = req.getCocoonRequest().getParameter("dct:identifier");
+        }
 
         if (updateDate) {
           parameterMap.put("dct:dateAccepted", new String[]{dateAccepted});
@@ -338,7 +338,7 @@ public class ResourceController implements StatelessAppleController {
         Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
         parameterMap.put("sub:url", parameterMap.get("the-resource"));
         parameterMap.remove("dct:identifier");
-        parameterMap.put("dct:identifier", new String[] {dctIdentifier});
+        parameterMap.put("dct:identifier", new String[]{dctIdentifier});
         parameterMap.remove("prefix"); // The prefixes are magic variables
         parameterMap.remove("actionbutton"); // The name of the submit button
         if (parameterMap.get("subjecturi-prefix") != null) {
@@ -355,7 +355,6 @@ public class ResourceController implements StatelessAppleController {
         }
 
         //String uri = form2SparqlService.getURI();
-
 
         insertSuccess = sparulDispatcher.query(sparqlQuery);
 
@@ -379,9 +378,6 @@ public class ResourceController implements StatelessAppleController {
         bizData.put("tempvalues", "<empty/>");//tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("mode", "edit");
       }
-      //}
-
-      //}
 
       messageBuffer.append("</c:messages>\n");
 
