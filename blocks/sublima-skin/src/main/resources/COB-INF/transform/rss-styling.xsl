@@ -9,10 +9,11 @@
         xmlns:sublima="http://xmlns.computas.com/sublima#"
         xmlns="http://purl.org/rss/1.0/" 
         version="1.0">
-  <!-- xsl:output method="html" indent="yes"/ -->
-
+ 
   <xsl:import href="rdfxml2rss-deflist.xsl"/>
   <xsl:import href="rss-channel.xsl"/>
+
+  <xsl:output encoding="UTF-8" method="xml" media-type="application/rss+xml"/>
 
 
   <xsl:param name="baseurl"/>
