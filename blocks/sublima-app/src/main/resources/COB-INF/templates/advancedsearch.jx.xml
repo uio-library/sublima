@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<c:page xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:c="http://xmlns.computas.com/cocoon"
+<page
+        xmlns="http://xmlns.computas.com/cocoon"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
-  <c:loggedin><jx:out value="#{loggedin}" xmlize="false"/></c:loggedin>
+  <loggedin><jx:out value="#{loggedin}" xmlize="false"/></loggedin>
 
-  <c:languages><jx:out value="#{languages}" xmlize="true"/></c:languages>
-  <c:mediatypes><jx:out value="#{mediatypes}" xmlize="true"/></c:mediatypes>
-  <c:audiences><jx:out value="#{audiences}" xmlize="true"/></c:audiences>
-  <c:committers><jx:out value="#{committers}" xmlize="true"/></c:committers>
+  <languages><jx:out value="#{languages}" xmlize="true"/></languages>
+  <mediatypes><jx:out value="#{mediatypes}" xmlize="true"/></mediatypes>
+  <audiences><jx:out value="#{audiences}" xmlize="true"/></audiences>
+  <committers><jx:out value="#{committers}" xmlize="true"/></committers>
+  <facets><jx:out value="#{facets}" xmlize="true"/></facets>
 
-  <c:advancedsearch/>
-</c:page>
+  <advancedsearch/>
+</page>
