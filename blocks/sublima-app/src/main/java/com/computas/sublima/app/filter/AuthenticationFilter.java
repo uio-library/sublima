@@ -19,7 +19,6 @@ public class AuthenticationFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		System.out.println("~~~~~~~~~~~~~ AuthenticationFilter was called.");
 		String role = request.getParameter("role");
 		if("admin".equals(role))  {
 			HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -27,8 +26,6 @@ public class AuthenticationFilter implements Filter {
 			httpResponse.setHeader("WWW-Authenticate", "Basic realm=\"My Private Data\"");
 		}
 		
-		request.setAttribute(REQUEST_ATTR_ROLE, "blahhhh");
-		System.out.println("filter: role=" + request.getAttribute(REQUEST_ATTR_ROLE));
 		chain.doFilter(request, response);
 
 	}
