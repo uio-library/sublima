@@ -7,8 +7,11 @@ import com.hp.hpl.jena.shared.AlreadyExistsException;
 
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 public class ImportData {
 
+  private static Logger logger = Logger.getLogger(ImportData.class);
 
   public ImportData() {
   }
@@ -27,14 +30,17 @@ public class ImportData {
     try {
       ModelRDB model = ModelRDB.createModel(connection);
       model.read(url, lang);
+      logger.trace("ImportData.load() --> Created new model with data");
     }
     catch (AlreadyExistsException e) {
       ModelRDB model = ModelRDB.open(connection);
       model.read(url, lang);
+      logger.trace("ImportData.load() --> Updated existing model with new data");
     }
     finally {
       try {
         connection.close();
+
       } catch (SQLException e) {
         e.printStackTrace();
       }
