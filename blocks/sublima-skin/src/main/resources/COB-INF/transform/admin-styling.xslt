@@ -38,6 +38,7 @@
   <xsl:param name="baseurl"/>
   <xsl:param name="servername"/>
   <xsl:param name="serverport"/>
+  <xsl:param name="rss-url"/>
   <xsl:param name="locale"/>
   <xsl:param name="interface-language">no</xsl:param>
 
