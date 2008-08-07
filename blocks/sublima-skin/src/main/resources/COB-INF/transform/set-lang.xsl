@@ -55,5 +55,12 @@
       eller se <a href="http://www.w3.org/International/questions/qa-lang-priorities">hvordan sette nettleserens språk</a>.
     </div>
   </xsl:template>
+
+  <xsl:template name="hidden-locale-field">
+    <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
+      <input type="hidden" name="locale" value="{$interface-language}"/>
+    </xsl:if>
+  </xsl:template>
+
 </xsl:stylesheet>
 

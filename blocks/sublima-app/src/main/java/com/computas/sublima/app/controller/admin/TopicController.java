@@ -46,6 +46,26 @@ public class TopicController implements StatelessAppleController {
 
   private static Logger logger = Logger.getLogger(AdminController.class);
 
+  private String getRequestXML(AppleRequest req) {
+      // This is such a 1999 way of doing things. There should be a generic SAX events generator
+      // or something that would serialise this data structure automatically in a one-liner,
+      // but I couldn't find it. Also, the code should not be in each and every controller.
+      // Arguably a TODO.
+      StringBuffer params = new StringBuffer();
+      String uri = req.getCocoonRequest().getRequestURI();
+      int paramcount = 0;
+      params.append("  <c:request xmlns:c=\"http://xmlns.computas.com/cocoon\" justbaseurl=\""+ uri + "\" ");
+      if (req.getCocoonRequest().getQueryString() != null) {
+          uri += "?" + req.getCocoonRequest().getQueryString();
+          uri = uri.replaceAll("&", "&amp;");
+          paramcount = req.getCocoonRequest().getParameters().size();
+      }
+      params.append("paramcount=\""+ paramcount + "\" ");
+      params.append("requesturl=\""+ uri);
+      params.append("\"/>\n");
+      return params.toString();
+  }
+    
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
 
@@ -114,6 +134,7 @@ public class TopicController implements StatelessAppleController {
     bizData.put("themetopics", adminService.getTopicsByLetter(letter));
     bizData.put("mode", "browse");
     bizData.put("loggedin", "<empty></empty>");
+    bizData.put("facets", getRequestXML(req));
     res.sendPage("xml/browse", bizData);
   }
 
@@ -140,6 +161,7 @@ public class TopicController implements StatelessAppleController {
       bizData.put("userprivileges", userPrivileges);
 
       bizData.put("messages", "<empty></empty>");
+      bizData.put("facets", getRequestXML(req));
       res.sendPage("xml2/relasjon", bizData);
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
@@ -186,6 +208,7 @@ public class TopicController implements StatelessAppleController {
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
+      bizData.put("facets", getRequestXML(req));
 
       res.sendPage("xml2/relasjon", bizData);
     }
@@ -206,6 +229,8 @@ public class TopicController implements StatelessAppleController {
 
     bizData.put("mode", "browse");
     bizData.put("loggedin", loggedIn);
+    bizData.put("facets", getRequestXML(req));
+
     res.sendPage("xml/browse", bizData);
   }
 
@@ -224,6 +249,8 @@ public class TopicController implements StatelessAppleController {
 
       bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
+      bizData.put("facets", getRequestXML(req));
+
       res.sendPage("xml2/koble", bizData);
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
@@ -252,6 +279,7 @@ public class TopicController implements StatelessAppleController {
 
       bizData.put("messages", messageBuffer.toString());
       bizData.put("userprivileges", userPrivileges);
+      bizData.put("facets", getRequestXML(req));
 
       res.sendPage("xml2/koble", bizData);
     }
@@ -273,6 +301,8 @@ public class TopicController implements StatelessAppleController {
 
       bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
+      bizData.put("facets", getRequestXML(req));
+
       res.sendPage("xml2/tema", bizData);
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
@@ -337,6 +367,7 @@ public class TopicController implements StatelessAppleController {
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
+      bizData.put("facets", getRequestXML(req));
 
       res.sendPage("xml2/tema", bizData);
     }
@@ -348,6 +379,8 @@ public class TopicController implements StatelessAppleController {
                   req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("all_topics", adminService.getAllTopics());
+    bizData.put("facets", getRequestXML(req));
+
     res.sendPage("xml2/emner_alle", bizData);
   }
 
@@ -386,6 +419,8 @@ public class TopicController implements StatelessAppleController {
       }
       bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
+      bizData.put("facets", getRequestXML(req));
+
       res.sendPage("xml2/emne", bizData);
 
       // When POST try to save the resource. Return error messages upon failure, and success message upon great success
@@ -482,6 +517,7 @@ public class TopicController implements StatelessAppleController {
     	  messageBuffer.append("</c:messages>\n");
 
     	  bizData.put("messages", messageBuffer.toString());
+          bizData.put("facets", getRequestXML(req));
 
     	  res.sendPage("xml2/emne", bizData);
 	  //      }
@@ -578,6 +614,8 @@ public class TopicController implements StatelessAppleController {
   private void showRelations(AppleResponse res, AppleRequest req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("all_relations", adminService.getAllRelationTypes());
+    bizData.put("facets", getRequestXML(req));
+      
     res.sendPage("xml2/relasjoner_alle", bizData);
   }
 }

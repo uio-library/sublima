@@ -109,12 +109,13 @@ this, just comment out the call-template -->
 	    <!-- Search is shown when advanced search is not -->	
         <xsl:if test="not(c:page/c:advancedsearch)">
 		
-		  <form action="{$baseurl}/search-result" method="get">
+		  <form action="{$baseurl}/search-result.html" method="get">
 		  <fieldset>
 		    <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
 		    <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
 		    <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
 		    <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+		    <xsl:call-template name="hidden-locale-field"/>
              <br/>
             <input id="keyword" class="searchbox" type="text"
                    name="searchstring" size="40" value="{c:page/c:searchparams/c:searchparams/c:searchstring}"/>
