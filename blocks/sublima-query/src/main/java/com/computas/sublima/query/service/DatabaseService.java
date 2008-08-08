@@ -13,11 +13,11 @@ import java.sql.*;
  * Date: 08.jan.2008
  */
 public class DatabaseService {
-  private String M_DB_URL = "jdbc:postgresql://localhost/subdata";
-  private String M_DB_USER = "subuser";
-  private String M_DB_PASSWD = "subpasswd";
-  private String M_DB = "PostgreSQL";
-  private String M_DBDRIVER_CLASS = "org.postgresql.Driver";
+  private String M_DB_URL = SettingsService.getProperty("sublima.database.url");
+  private String M_DB_USER = SettingsService.getProperty("sublima.database.username");
+  private String M_DB_PASSWD = SettingsService.getProperty("sublima.database.password");
+  private String M_DB = SettingsService.getProperty("sublima.database.databasetype");
+  private String M_DBDRIVER_CLASS = SettingsService.getProperty("sublima.database.class");
 
   public IDBConnection getConnection() {
 
