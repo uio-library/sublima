@@ -1,14 +1,9 @@
 package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
-import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
-import com.hp.hpl.jena.db.IDBConnection;
-import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.query.larq.IndexBuilderString;
-import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -21,7 +16,6 @@ import org.postgresql.util.PSQLException;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -37,27 +31,12 @@ public class IndexService {
   private DefaultSparulDispatcher sparulDispatcher = new DefaultSparulDispatcher();
   private SearchService searchService = new SearchService();
 
+
   /**
-   * Method to create an index based on the internal content
+   * Method to update all resources with the concat of searchfields and external content
    */
-  public void createInternalResourcesMemoryIndex() {
-
-    DatabaseService myDbService = new DatabaseService();
-    IDBConnection connection = myDbService.getConnection();
-    ResultSet resultSet;
-
-    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created database connection " + connection.getDatabaseType());
-
-    // -- Read and index all literal strings.
-    File indexDir = new File(SettingsService.getProperty("sublima.index.directory"));
-    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
-    if ("memory".equals(SettingsService.getProperty("sublima.index.type"))) {
-      SettingsService.getIndexBuilderString(null);
-    } else {
-      SettingsService.getIndexBuilderString(indexDir);
-    }
-
-    // Insert all literals to be indexed
+  public void updateResourceSearchfield() {
+    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
     ArrayList<String> list = getFreetextToIndex(SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
 
     int steps = 500;
@@ -67,10 +46,23 @@ public class IndexService {
     StringBuffer deleteString = new StringBuffer();
     deleteString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
     deleteString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
-    deleteString.append("DELETE { ?s sub:literals ?o . }\n");
-    deleteString.append("WHERE { ?s sub:literals ?o . }\n");
+    deleteString.append("DELETE { ?s sub:literals ?o . ");
+
+    if (indexExternalContent) {
+      deleteString.append("\n?s sub:externalliterals ?o. \n");
+    }
+
+    deleteString.append("}\n");
+    deleteString.append("WHERE { ?s sub:literals ?o .");
+
+    if (indexExternalContent) {
+      deleteString.append("\n?s sub:externalliterals ?o. \n");
+    }
+
+    deleteString.append("}\n");
+
     boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
-    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Delete existing literals: " + deleteSuccess);
+    logger.info("SUBLIMA: updateResourceSearchfield() --> Delete existing literals: " + deleteSuccess);
 
     for (int i = 0; i <= list.size(); i++) {
       StringBuffer insertString = new StringBuffer();
@@ -86,7 +78,7 @@ public class IndexService {
       insertString.append("}\n");
 
       boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Insert literal from index " + i + " to index " + partsOfArray + ": " + insertSuccess);
+      logger.info("SUBLIMA: updateResourceSearchfield() --> Insert literal from index " + i + " to index " + partsOfArray + ": " + insertSuccess);
 
       j = partsOfArray;
       i = partsOfArray;
@@ -98,13 +90,29 @@ public class IndexService {
       }
     }
 
-    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> List contains " + list.size() + " new triples to index");
+    logger.info("SUBLIMA: updateResourceSearchfield() --> List contains " + list.size() + " new triples to index");
 
+  }
+
+  /**
+   * Method to create an index based on the internal content
+   */
+  public void createIndex() {
     try {
+
+      // -- Read and index all literal strings.
+      File indexDir = new File(SettingsService.getProperty("sublima.index.directory"));
+      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
+      if ("memory".equals(SettingsService.getProperty("sublima.index.type"))) {
+        SettingsService.getIndexBuilderString(null);
+      } else {
+        SettingsService.getIndexBuilderString(indexDir);
+      }
+
       // -- Create an index based on existing statements
       SettingsService.getIndexBuilderString(indexDir).indexStatements(SettingsService.getModel().listStatements());
       SettingsService.getModel().register(SettingsService.getIndexBuilderString(indexDir));
-      
+
       logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Indexed all model statements");
       logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Closed index for writing");
 
@@ -117,11 +125,6 @@ public class IndexService {
     }
 
     logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created RDF model from database");
-    try {
-      connection.close();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
   }
 
 
@@ -132,9 +135,6 @@ public class IndexService {
    */
   // todo Use SparqlDispatcher (needs to return ResultSet)
   private ResultSet getAllExternalResourcesURLs() {
-    DatabaseService myDbService = new DatabaseService();
-    IDBConnection connection = myDbService.getConnection();
-
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "SELECT ?url",
@@ -144,13 +144,6 @@ public class IndexService {
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
     ResultSet resultSet = qExec.execSelect();
-
-    try {
-      connection.close();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
     logger.info("SUBLIMA: getAllExternalResourcesURLs() --> Indexing - Fetched all resource URLs from the model");
     return resultSet;
   }
@@ -238,11 +231,6 @@ public class IndexService {
     ResultSet resultSet = getFreetextToIndexResultSet(queryString);
     StringBuffer resultBuffer = new StringBuffer();
     Set literals = new HashSet<String>();
-    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
-
-    if (indexExternalContent) {
-
-    }
 
     while (resultSet.hasNext()) {
       QuerySolution soln = resultSet.nextSolution();
@@ -268,20 +256,13 @@ public class IndexService {
 
 
   public ArrayList<String> getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
+    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
     String queryString = getQueryForIndex(fieldsToIndex, prefixes);
     ResultSet resultSet = getFreetextToIndexResultSet(queryString);
     ArrayList<String> list = new ArrayList<String>();
 
     Set<String> literals = new HashSet<String>();
-    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
-    if (indexExternalContent) {
-      StringBuffer deleteString = new StringBuffer();
-      deleteString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
-      deleteString.append("DELETE { ?s sub:externalliterals ?o . }\n");
-      deleteString.append("WHERE { ?s sub:externalliterals ?o . }\n");
-      boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
-      logger.info("SUBLIMA: getFreetextToIndex() --> Delete external literals: " + deleteSuccess);
-    }
+
     String resource = null;
     while (resultSet.hasNext()) {
       QuerySolution soln = resultSet.nextSolution();
@@ -295,47 +276,6 @@ public class IndexService {
             Resource r = soln.getResource(var);
             if (!r.getURI().equals(resource)) { // So, we have a new Resource and we get the external content if the checkurl.onstartup parameter is true
 
-              if (indexExternalContent && (resource != null)) {
-                StringBuffer insertString = new StringBuffer();
-                insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
-                insertString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
-                insertString.append("INSERT DATA {\n");
-
-                URLActions urlAction = new URLActions(resource);
-                String code = urlAction.getCode();
-
-                if ("302".equals(code) ||
-                        "303".equals(code) ||
-                        "304".equals(code) ||
-                        "305".equals(code) ||
-                        "307".equals(code) ||
-                        code.startsWith("2")) {
-                  try {
-                    insertString.append("<" + resource + "> sub:externalliterals \"\"\"");
-                    for (String s : literals) {
-                      insertString.append(s + " ");
-                    }
-                    HashMap<String, String> headers = urlAction.getHTTPmap();
-                    String contentType = headers.get("httph:content-type");
-
-                    if (contentType != null && (contentType.startsWith("application/xhtml+xml") ||
-                            contentType.startsWith("text/html") ||
-                            contentType.startsWith("text/plain") ||
-                            contentType.startsWith("text/xml"))) {
-                      insertString.append("\n" + urlAction.strippedContent(null).replace("\\", "\\\\") + "\"\"\" .\n");
-
-                      insertString.append("}\n");
-
-                      boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-                      logger.info("SUBLIMA: getFreetextToIndex() --> Insert external literals with content type " + contentType + " returned: " + insertSuccess);
-
-                    }
-                  } catch (UnsupportedEncodingException e) {
-                    logger.warn("SUBLIMA: Indexing external content gave UnsupportedEncodingException for resource " + resource);
-                  }
-                }
-              }
-
               // Add the old one to the output buffer
               resultBuffer.append("<" + resource);
               resultBuffer.append("> sub:literals \"\"\"");
@@ -344,8 +284,10 @@ public class IndexService {
               }
               resultBuffer.append("\"\"\" .\n");
 
-              //list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
               list.add(resultBuffer.toString());
+              if (indexExternalContent && (resource != null)) {
+                list.add(getResourceExternalLiteralsAsTriple(resource));
+              }
 
               // Reset to the new resource
               resource = r.getURI();
@@ -360,14 +302,19 @@ public class IndexService {
           }
 
           if (!resultSet.hasNext()) {
-            resultBuffer.append("<" + resource);
-            resultBuffer.append("> sub:literals \"\"\"");
+            StringBuffer endResultBuffer = new StringBuffer();
+            endResultBuffer.append("<" + resource);
+            endResultBuffer.append("> sub:literals \"\"\"");
             for (String s : literals) {
-              resultBuffer.append(s.trim() + ". ");
+              endResultBuffer.append(s.trim() + ". ");
             }
-            resultBuffer.append("\"\"\" .\n");
-            //list.add("<" + resource + "> sub:literals \"\"\"" + literals.toString() + "\"\"\" .");
-            list.add(resultBuffer.toString());
+            endResultBuffer.append("\"\"\" .\n");
+            list.add(endResultBuffer.toString());
+
+            if (indexExternalContent && (resource != null)) {
+              list.add(getResourceExternalLiteralsAsTriple(resource));
+            }
+
           }
         }
       }
@@ -377,36 +324,43 @@ public class IndexService {
   }
 
   private ResultSet getFreetextToIndexResultSet(String queryString) {
-    DatabaseService myDbService = new DatabaseService();
-    IDBConnection connection = myDbService.getConnection();
-    ModelRDB model = ModelRDB.open(connection);
-
     Query query = QueryFactory.create(queryString);
-    QueryExecution qExec = QueryExecutionFactory.create(query, model);
+    QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
     ResultSet resultSet = qExec.execSelect();
-    //model.close();
-
-    try {
-      connection.close();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
 
     logger.info("SUBLIMA: getFreetextToIndex() --> Indexing - Fetched all literals that we need to index");
     return resultSet;
   }
 
   /**
-   * Method to get the external content as an triple for a specific resource
+   * Method to get the external content as an triple for a specific resource including the internal literals
    *
    * @param resource
-   * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content""""
+   * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content including internal content""""
    */
-  public String getExternalContentAsTripleForResource(String resource) throws UnsupportedEncodingException {
-    StringBuffer insertString = new StringBuffer();
-    insertString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
-    insertString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
-    insertString.append("INSERT DATA {\n");
+  public String getResourceExternalLiteralsAsTriple(String resource) {
+    StringBuffer tripleString = new StringBuffer();
+
+    tripleString.append("<" + resource + "> sub:externalliterals \"\"\"");
+
+    // Get the internal literals and add them to the triple
+    tripleString.append(getResourceInternalLiteralsAsString(resource) + ".\n");
+
+    tripleString.append(getResourceExternalLiteralsAsString(resource) + ".\n");
+    
+    tripleString.append("\"\"\" .\n");
+
+    return tripleString.toString();
+  }
+
+/**
+   * Method to get the external content as an triple for a specific resource including the internal literals
+   *
+   * @param resource
+   * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content including internal content""""
+   */
+  public String getResourceExternalLiteralsAsString(String resource) {
+    StringBuffer tripleString = new StringBuffer();
 
     URLActions urlAction = new URLActions(resource);
     String code = urlAction.getCode();
@@ -418,10 +372,7 @@ public class IndexService {
             "307".equals(code) ||
             code.startsWith("2")) {
       try {
-        insertString.append("<" + resource + "> sub:externalliterals \"\"\"");
-        //for (String s : literals) {
-        //  insertString.append(s + " ");
-        //}
+
         HashMap<String, String> headers = urlAction.getHTTPmap();
         String contentType = headers.get("httph:content-type");
 
@@ -429,18 +380,72 @@ public class IndexService {
                 contentType.startsWith("text/html") ||
                 contentType.startsWith("text/plain") ||
                 contentType.startsWith("text/xml"))) {
-          insertString.append("\n" + urlAction.strippedContent(null).replace("\\", "\\\\") + "\"\"\" .\n");
 
-          insertString.append("}\n");
-
-          boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-          logger.info("SUBLIMA: getFreetextToIndex() --> Insert external literals with content type " + contentType + " returned: " + insertSuccess);
+          tripleString.append(urlAction.strippedContent(null).replace("\\", "\\\\"));
 
         }
       } catch (UnsupportedEncodingException e) {
         logger.warn("SUBLIMA: Indexing external content gave UnsupportedEncodingException for resource " + resource);
       }
     }
-    return "";
+    return tripleString.toString();
   }
+
+  /**
+   * Method to get the internal content as a string for a specific resource
+   *
+   * @param resource
+   * @return a String
+   */
+  public String getResourceInternalLiteralsAsString(String resource) {
+    StringBuffer returnString = new StringBuffer();
+
+    if (resource != null || "".equalsIgnoreCase(resource)) {
+
+      if (!resource.startsWith("<")) {
+        resource = "<" + resource + ">";
+      }
+
+      String queryString = getQueryForIndex(SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"), resource);
+      ResultSet resultSet = getFreetextToIndexResultSet(queryString);
+
+      while (resultSet.hasNext()) {
+        QuerySolution soln = resultSet.nextSolution();
+        Iterator<String> it = soln.varNames();
+        while (it.hasNext()) {
+          String var = it.next();
+          if (soln.get(var) != null) {
+            if (soln.get(var).isLiteral()) {
+              Literal l = soln.getLiteral(var);
+              String literal = l.getString().replace("\\", "\\\\");
+              returnString.append(literal + ". ");
+            } else {
+              logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that sublima.searchfields config is correct.");
+            }
+          }
+        }
+      }
+    }
+
+    return returnString.toString();
+
+  }
+
+  /**
+   * Method to get the internal content as a string for a specific resource
+   *
+   * @param resource
+   * @return a String
+   */
+  public String getResourceInternalLiteralsAsTriple(String resource) {
+    StringBuffer tripleString = new StringBuffer();
+
+    tripleString.append("<" + resource + "> sub:literals \"\"\"");
+    tripleString.append(getResourceInternalLiteralsAsString(resource));
+    tripleString.append("\"\"\" .");
+
+    return tripleString.toString();
+
+  }
+
 }

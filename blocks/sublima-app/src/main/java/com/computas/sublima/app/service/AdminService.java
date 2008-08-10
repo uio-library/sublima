@@ -47,6 +47,7 @@ public class AdminService {
    * @return RDF XML result
    */
   public String getAllRelationTypes() {
+    String queryResult;
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
@@ -55,9 +56,9 @@ public class AdminService {
             "}"});
 
     logger.trace("AdminService.getAllRelationTypes() --> SPARQL query sent to dispatcher: \n" + queryString);
-    Object queryResult = sparqlDispatcher.query(queryString);
+    queryResult = sparqlDispatcher.query(queryString).toString();
 
-    return queryResult.toString();
+    return queryResult;
   }
 
   /**
