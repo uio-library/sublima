@@ -247,12 +247,12 @@ public class ResourceController implements StatelessAppleController {
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
       //todo This is not very robust, have to find another way to differentiate the different actions.
-      if ("Slett ressurs".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton")) || "Delete resource".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton"))) {
+      if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {//"Slett ressurs".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton")) || "Delete resource".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton"))) {
 
         String deleteString = "DELETE {\n" +
-                "<" + req.getCocoonRequest().getParameter("uri") + "> ?a ?o.\n" +
+                "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
                 "} WHERE {\n" +
-                "<" + req.getCocoonRequest().getParameter("uri") + "> ?a ?o. }";
+                "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o. }";
 
         boolean deleteResourceSuccess = sparulDispatcher.query(deleteString);
 
@@ -262,15 +262,8 @@ public class ResourceController implements StatelessAppleController {
 
         if (deleteResourceSuccess) {
           messageBuffer.append("<c:message>Ressursen slettet!</c:message>\n");
-          bizData.put("resource", "<empty></empty>");
-          bizData.put("tempvalues", "<empty></empty>");
-          bizData.put("mode", "edit");
-
         } else {
           messageBuffer.append("<c:message>Feil ved sletting av ressurs</c:message>\n");
-          bizData.put("tempvalues", "<empty></empty>");
-          bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource")));
-          bizData.put("mode", "edit");
         }
 
       } else {
