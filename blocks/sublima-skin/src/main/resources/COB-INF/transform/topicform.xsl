@@ -131,9 +131,7 @@
           </td>
           <td>
             <textarea id="skos:definition" name="skos:definition"
-                      rows="6" cols="40"><xsl:value-of
-                    select="./c:topicdetails/rdf:RDF/skos:Concept/skos:definition"/>...
-            </textarea>
+                      rows="6" cols="40"><xsl:value-of select="./c:topicdetails/rdf:RDF/skos:Concept/skos:definition"/><xsl:text> </xsl:text></textarea>
           </td>
         </tr>
       </table>
@@ -206,7 +204,7 @@
           <td>
             <textarea id="skos:note" name="skos:note" rows="6"
                       cols="40"><xsl:value-of
-                    select="./c:topicdetails/rdf:RDF/skos:Concept/skos:note"/>...
+                    select="./c:topicdetails/rdf:RDF/skos:Concept/skos:note"/><xsl:text> </xsl:text>
             </textarea>
           </td>
         </tr>

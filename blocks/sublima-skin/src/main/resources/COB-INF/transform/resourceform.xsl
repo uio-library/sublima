@@ -63,7 +63,7 @@
           <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
         </td>
         <td>
-          <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:text> </xsl:text><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/></textarea>
+          <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/><xsl:text> </xsl:text></textarea>
         </td>
         </tr>
         <tr>
@@ -199,7 +199,7 @@
             <label for="rdfs:comment"><i18n:text key="comment">Kommentar</i18n:text></label>
           </td>
           <td>
-            <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40"><xsl:text> </xsl:text><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/></textarea>
+            <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40"><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/><xsl:text> </xsl:text></textarea>
           </td>
         </tr>
         <tr>
