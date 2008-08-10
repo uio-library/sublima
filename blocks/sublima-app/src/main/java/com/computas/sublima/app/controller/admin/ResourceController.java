@@ -2,6 +2,7 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
@@ -31,6 +32,7 @@ public class ResourceController implements StatelessAppleController {
   AdminService adminService = new AdminService();
   private ApplicationManager appMan;
   private ApplicationUtil appUtil = new ApplicationUtil();
+  private IndexService indexService = new IndexService();
   private User user;
   private String mode;
   private String submode;
@@ -356,6 +358,17 @@ public class ResourceController implements StatelessAppleController {
 
         if (insertSuccess) {
           messageBuffer.append("<c:message>Ny ressurs lagt til!</c:message>\n");
+
+          String updateIndexContent = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                  "DELETE { <" + req.getCocoonRequest().getParameter("the-resource") + "> sub:literals ?o . \n" +
+                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> sub:externalliterals ?o . }\n" +
+                  "WHERE { <" + req.getCocoonRequest().getParameter("the-resource") + "> sub:literals ?o . \n" +
+                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> sub:externalliterals ?o . }\n" +
+                  "INSERT DATA {\n" + indexService.getResourceInternalLiteralsAsTriple(req.getCocoonRequest().getParameter("the-resource")) +
+                  indexService.getResourceExternalLiteralsAsTriple(req.getCocoonRequest().getParameter("the-resource")) + "}";
+
+          boolean externalUpdate = sparulDispatcher.query(updateIndexContent);
+          logger.trace("AdminController.editResource --> INSERT RESOURCE INTERNAL AND EXTERNAL LITERALS: " + externalUpdate);
 
         } else {
           messageBuffer.append("<c:message>Feil ved lagring av ny ressurs</c:message>\n");
