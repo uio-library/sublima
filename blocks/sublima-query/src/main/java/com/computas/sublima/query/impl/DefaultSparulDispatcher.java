@@ -1,19 +1,13 @@
 package com.computas.sublima.query.impl;
 
 import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SettingsService;
-import com.hp.hpl.jena.db.IDBConnection;
-import com.hp.hpl.jena.db.ModelRDB;
-import com.hp.hpl.jena.update.*;
-import com.hp.hpl.jena.query.larq.LARQ;
-import com.hp.hpl.jena.query.larq.IndexBuilderString;
-import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.query.larq.ARQLuceneException;
+import com.hp.hpl.jena.query.larq.LARQ;
+import com.hp.hpl.jena.sparql.ARQNotImplemented;
+import com.hp.hpl.jena.update.*;
 import org.apache.cocoon.configuration.Settings;
-import org.postgresql.util.PSQLException;
-
-import java.sql.SQLException;
+import org.apache.log4j.Logger;
 
 /**
  * This component queries RDF triple stores using Sparul. It is threadsafe.
@@ -21,6 +15,7 @@ import java.sql.SQLException;
 public class DefaultSparulDispatcher implements SparulDispatcher {
 
   private Settings cocoonSettings;
+  private static Logger logger = Logger.getLogger(DefaultSparulDispatcher.class);
 
   public boolean query(String query) {
 
@@ -31,21 +26,25 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
     try {
       //Try to execute the updateQuery (SPARQL/Update)
       UpdateRequest updateRequest = UpdateFactory.create(query);
-      
       updateRequest.exec(graphStore);
-    
       LARQ.setDefaultIndex(SettingsService.getIndexBuilderString(null).getIndex());
-    }
-    catch (UpdateException e) {
-      //model.close();
+    } catch (ARQNotImplemented e) {
+      logger.warn("DefaultSparulDispatcher.query --> ARQNotImplemented exception. Returning TRUE and flagging reindexing.");
+      UpdateRequest updateRequest = UpdateFactory.create(query);
+
+      updateRequest.exec(graphStore);
+      LARQ.setDefaultIndex(SettingsService.getIndexBuilderString(null).getIndex());
+      return true;
+    } catch (UpdateException e) {
+      logger.warn("DefaultSparulDispatcher.query --> UpdateException. Returning FALSE");
       e.printStackTrace();
       return false;
-    }
-    catch (ARQLuceneException e) {
+    } catch (ARQLuceneException e) {
+      logger.warn("DefaultSparulDispatcher.query --> ARQLuceneException. Returning FALSE");
       e.printStackTrace();
       return false;
-    }
-    catch (Exception e) {
+    }catch (Exception e) {
+      logger.warn("DefaultSparulDispatcher.query --> Exception. Returning FALSE");
       e.printStackTrace();
       return false;
     }
