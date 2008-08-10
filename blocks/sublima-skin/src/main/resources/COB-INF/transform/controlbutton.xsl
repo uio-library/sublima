@@ -11,12 +11,24 @@
   <xsl:template name="controlbutton" mode="list-options">
     <xsl:param name="privilege"/>
     <xsl:param name="buttontext"/>
+    <xsl:param name="buttonname"/>
+    <xsl:param name="name">
+      <xsl:choose>
+        <xsl:when test="$buttonname = ''">
+          <xsl:text>actionbutton</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$buttonname"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
+
     <xsl:choose>
       <xsl:when test="/c:page/c:userprivileges/c:privileges/c:privilege = $privilege">
-        <input type="submit" value="{$buttontext}" name="actionbutton" i18n:attr="value"/>
+        <input type="submit" value="{$buttontext}" name="{$name}" i18n:attr="value"/>
       </xsl:when>
       <xsl:otherwise>
-        <input type="submit" value="{$buttontext}" name="actionbutton" disabled="true" i18n:attr="value"/>
+        <input type="submit" value="{$buttontext}" name="{$name}" disabled="true" i18n:attr="value"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
