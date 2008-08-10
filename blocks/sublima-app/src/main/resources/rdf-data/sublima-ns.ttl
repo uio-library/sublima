@@ -6,7 +6,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .  
 @prefix http: <http://www.w3.org/2007/ont/http#> .
 
-<>	rdfs:comment "An ontology containing some simple properties and classes for use in the Sublima project." .
+#<>	rdfs:comment "An ontology containing some simple properties and classes for use in the Sublima project." .
 
 
 sub:LocalURI		rdfs:subClassOf	sioc:Item ;
