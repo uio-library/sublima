@@ -1,0 +1,1 @@
+<jx:out value="#{result}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/>

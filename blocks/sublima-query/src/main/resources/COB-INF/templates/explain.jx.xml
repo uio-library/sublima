@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<sru:explainResponse xmlns:sru="http://www.loc.gov/zing/srw/">
+ <sru:version>1.1</sru:version>
+ <sru:record>
+   <sru:recordPacking>XML</sru:recordPacking>
+   <sru:recordSchema>http://explain.z3950.org/dtd/2.1/</sru:recordSchema>
+   <sru:recordData>
+
+   <zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.1/">
+     <zr:serverInfo protocol="SRU" version="1.2" transport="http" method="GET">
+        <zr:host>myserver.com</zr:host>
+        <zr:port>80</zr:port>
+        <zr:database>cgi/mysru</zr:database>
+     </zr:serverInfo>
+     <zr:databaseInfo>
+       <title lang="en" primary="true">SUBLIMA SRU Server</title>
+     </zr:databaseInfo>
+     <zr:indexInfo>
+       <zr:set name="dc" identifier="info:srw/cql-context-set/1/dc-v1.1"/>
+        <zr:index>
+          <zr:map><zr:name set="dc">title</zr:name></zr:map>
+        </zr:index>
+     </zr:indexInfo>
+     <zr:schemaInfo>
+        <zr:schema name="dc" identifier="info:srw/schema/1/dc-v1.1">
+          <zr:title>Simple Dublin Core</zr:title>
+        </zr:schema>
+     </zr:schemaInfo>
+    </zr:explain>
+
+   </sru:recordData>
+ </sru:record>
+</sru:explainResponse>
