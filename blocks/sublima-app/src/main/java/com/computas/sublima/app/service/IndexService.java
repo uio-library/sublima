@@ -35,9 +35,9 @@ public class IndexService {
   /**
    * Method to update all resources with the concat of searchfields and external content
    */
-  public void updateResourceSearchfield() {
-    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
-    ArrayList<String> list = getFreetextToIndex(SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+  public void updateResourceSearchfield(boolean indexExternalContent, String[] searchfields, String[] prefixes) {
+
+    ArrayList<String> list = getFreetextToIndex(searchfields, prefixes, indexExternalContent);
 
     int steps = 500;
     int partsOfArray = steps;
@@ -97,13 +97,13 @@ public class IndexService {
   /**
    * Method to create an index based on the internal content
    */
-  public void createIndex() {
+  public void createIndex(String indexDirectory, String indexType) {
     try {
 
       // -- Read and index all literal strings.
-      File indexDir = new File(SettingsService.getProperty("sublima.index.directory"));
+      File indexDir = new File(indexDirectory);
       logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
-      if ("memory".equals(SettingsService.getProperty("sublima.index.type"))) {
+      if ("memory".equals(indexType)) {
         SettingsService.getIndexBuilderString(null);
       } else {
         SettingsService.getIndexBuilderString(indexDir);
@@ -255,8 +255,7 @@ public class IndexService {
   }
 
 
-  public ArrayList<String> getFreetextToIndex(String[] fieldsToIndex, String[] prefixes) {
-    boolean indexExternalContent = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
+  public ArrayList<String> getFreetextToIndex(String[] fieldsToIndex, String[] prefixes, boolean indexExternalContent) {
     String queryString = getQueryForIndex(fieldsToIndex, prefixes);
     ResultSet resultSet = getFreetextToIndexResultSet(queryString);
     ArrayList<String> list = new ArrayList<String>();
@@ -286,7 +285,7 @@ public class IndexService {
 
               list.add(resultBuffer.toString());
               if (indexExternalContent && (resource != null)) {
-                list.add(getResourceExternalLiteralsAsTriple(resource));
+                list.add(getResourceExternalLiteralsAsTriple(resource, fieldsToIndex, prefixes));
               }
 
               // Reset to the new resource
@@ -312,7 +311,7 @@ public class IndexService {
             list.add(endResultBuffer.toString());
 
             if (indexExternalContent && (resource != null)) {
-              list.add(getResourceExternalLiteralsAsTriple(resource));
+              list.add(getResourceExternalLiteralsAsTriple(resource, fieldsToIndex, prefixes));
             }
 
           }
@@ -338,13 +337,13 @@ public class IndexService {
    * @param resource
    * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content including internal content""""
    */
-  public String getResourceExternalLiteralsAsTriple(String resource) {
+  public String getResourceExternalLiteralsAsTriple(String resource, String[] searchfields, String[] prefixes) {
     StringBuffer tripleString = new StringBuffer();
 
     tripleString.append("<" + resource + "> sub:externalliterals \"\"\"");
 
     // Get the internal literals and add them to the triple
-    tripleString.append(getResourceInternalLiteralsAsString(resource) + ".\n");
+    tripleString.append(getResourceInternalLiteralsAsString(resource, searchfields, prefixes) + ".\n");
 
     tripleString.append(getResourceExternalLiteralsAsString(resource) + ".\n");
     
@@ -397,7 +396,7 @@ public class IndexService {
    * @param resource
    * @return a String
    */
-  public String getResourceInternalLiteralsAsString(String resource) {
+  public String getResourceInternalLiteralsAsString(String resource, String[] searchfields, String[] prefixes ) {
     StringBuffer returnString = new StringBuffer();
 
     if (resource != null || "".equalsIgnoreCase(resource)) {
@@ -406,7 +405,7 @@ public class IndexService {
         resource = "<" + resource + ">";
       }
 
-      String queryString = getQueryForIndex(SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"), resource);
+      String queryString = getQueryForIndex(searchfields, prefixes, resource);
       ResultSet resultSet = getFreetextToIndexResultSet(queryString);
 
       while (resultSet.hasNext()) {
@@ -437,11 +436,11 @@ public class IndexService {
    * @param resource
    * @return a String
    */
-  public String getResourceInternalLiteralsAsTriple(String resource) {
+  public String getResourceInternalLiteralsAsTriple(String resource, String[] searchfields, String[] prefixes) {
     StringBuffer tripleString = new StringBuffer();
 
     tripleString.append("<" + resource + "> sub:literals \"\"\"");
-    tripleString.append(getResourceInternalLiteralsAsString(resource));
+    tripleString.append(getResourceInternalLiteralsAsString(resource, searchfields, prefixes));
     tripleString.append("\"\"\" .");
 
     return tripleString.toString();

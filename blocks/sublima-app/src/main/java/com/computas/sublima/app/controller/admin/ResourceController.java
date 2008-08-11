@@ -6,6 +6,7 @@ import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
+import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
@@ -364,8 +365,8 @@ public class ResourceController implements StatelessAppleController {
                   "<" + req.getCocoonRequest().getParameter("the-resource") + "> sub:externalliterals ?o . }\n" +
                   "WHERE { <" + req.getCocoonRequest().getParameter("the-resource") + "> sub:literals ?o . \n" +
                   "<" + req.getCocoonRequest().getParameter("the-resource") + "> sub:externalliterals ?o . }\n" +
-                  "INSERT DATA {\n" + indexService.getResourceInternalLiteralsAsTriple(req.getCocoonRequest().getParameter("the-resource")) +
-                  indexService.getResourceExternalLiteralsAsTriple(req.getCocoonRequest().getParameter("the-resource")) + "}";
+                  "INSERT DATA {\n" + indexService.getResourceInternalLiteralsAsTriple(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";")) +
+                  indexService.getResourceExternalLiteralsAsTriple(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";")) + "}";
 
           boolean externalUpdate = sparulDispatcher.query(updateIndexContent);
           logger.trace("AdminController.editResource --> INSERT RESOURCE INTERNAL AND EXTERNAL LITERALS: " + externalUpdate);
