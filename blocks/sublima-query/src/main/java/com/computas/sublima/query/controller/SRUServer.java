@@ -24,6 +24,7 @@ public class SRUServer implements StatelessAppleController {
         int errorcode = 0; // The diagnostics code
         String errormsg = "";
         String errordetail = "";
+        Object queryResult = null;
         String operation = req.getCocoonRequest().getParameter("operation");
         if ("explain".equalsIgnoreCase(operation) || req.getCocoonRequest().getParameters().size() == 0) {
             // Then, we have a valid Explain operation
@@ -31,7 +32,7 @@ public class SRUServer implements StatelessAppleController {
         if ("searchRetrieve".equals(operation)) {
             // The actual querying goes here.
 
-            String sparqlQuery = new String();
+            String sparqlQuery = null;
             try {
                 CQL2SPARQL converter = new CQL2SPARQL(req.getCocoonRequest().getParameter("query"));
                 sparqlQuery = converter.Level0();
@@ -54,14 +55,25 @@ public class SRUServer implements StatelessAppleController {
             if(sparqlQuery == null || "".equals(sparqlQuery)) {
                 throw new ProcessingException("A SPARQL query string has to be passed.");
             }
-            Object queryResult = sparqlDispatcher.query(sparqlQuery);
-            Map<String, Object> bizData = new HashMap<String, Object>();
-            bizData.put("result", queryResult);
-            res.sendPage("rdf/result-list", bizData);
+            queryResult = sparqlDispatcher.query(sparqlQuery);
         } else {
             errorcode = 4;
-            errormsg = "Server supports only explain and searchRetrieve."
+            errormsg = "Server supports only explain and searchRetrieve.";
         }
+        if (errorcode > 0) {
+            logger.debug("Some SRU error, code: " + errorcode + ". Message: " + errormsg);
+            Map<String, Object> bizData = new HashMap<String, Object>();
+            bizData.put("errorcode", errorcode);
+            bizData.put("errormsg", errormsg);
+            bizData.put("errordetail", errordetail);
+            res.sendPage("sru/error", bizData);
+        } else {
+            Map<String, Object> bizData = new HashMap<String, Object>();
+            bizData.put("result", queryResult);
+            res.sendPage("sru/result-list", bizData);
+
+        }
+
     }
 
 	public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
