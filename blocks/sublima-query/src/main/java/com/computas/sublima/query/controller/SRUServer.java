@@ -22,6 +22,7 @@ public class SRUServer implements StatelessAppleController {
 
     public void process(AppleRequest req, AppleResponse res) throws Exception {
         int errorcode = 0; // The diagnostics code
+        String sparqlQuery = null;
         String errormsg = "";
         String errordetail = "";
         Object queryResult = null;
@@ -32,8 +33,6 @@ public class SRUServer implements StatelessAppleController {
         } else
         if ("searchRetrieve".equals(operation)) {
             // The actual querying goes here.
-
-            String sparqlQuery = null;
             try {
                 CQL2SPARQL converter = new CQL2SPARQL(req.getCocoonRequest().getParameter("query"));
                 sparqlQuery = converter.Level0();
@@ -53,10 +52,6 @@ public class SRUServer implements StatelessAppleController {
                 errordetail = e.getMessage();
                 errormsg = e.getMessage();
             }
-            if(sparqlQuery == null || "".equals(sparqlQuery)) {
-                throw new ProcessingException("A SPARQL query string has to be passed.");
-            }
-            queryResult = sparqlDispatcher.query(sparqlQuery);
         } else {
             errorcode = 4;
             errormsg = "Server supports only explain and searchRetrieve.";
@@ -69,9 +64,10 @@ public class SRUServer implements StatelessAppleController {
             bizData.put("errordetail", errordetail);
             res.sendPage("sru/error", bizData);
         } else {
+            queryResult = sparqlDispatcher.query(sparqlQuery);
             Map<String, Object> bizData = new HashMap<String, Object>();
             bizData.put("result", queryResult);
-            res.sendPage("sru/sru-results", bizData);
+            //res.sendPage("sru/sru-results", bizData);
 
         }
 
