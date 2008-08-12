@@ -6,11 +6,11 @@
   <map:flow language="spring-apples"/>
 
   <map:pipelines>  
-    <!-- map:pipeline>
-      <map:match pattern="sparql">
-        <map:call function="com.computas.sublima.query.controller.SparqlQuery"/>
+    <map:pipeline>
+      <map:match pattern="sruserver">
+        <map:call function="com.computas.sublima.query.controller.SRUServer"/>
       </map:match>
-    </map:pipeline -->
+    </map:pipeline>
     
     <map:pipeline internal-only="true">
       <map:match pattern="rdf/*">
@@ -18,6 +18,14 @@
         <map:serialize type="rdf"/>
       </map:match>      
     </map:pipeline>
+
+   
+  <map:pipeline internal-only="true">
+    <map:match pattern="sru/*">
+      <map:generate src="templates/{1}.jx.xml" type="jx"/>
+      <map:serialize type="xml"/>
+    </map:match>      
+  </map:pipeline>
   </map:pipelines>
 
 </map:sitemap>

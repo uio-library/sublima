@@ -28,6 +28,7 @@ public class SRUServer implements StatelessAppleController {
         String operation = req.getCocoonRequest().getParameter("operation");
         if ("explain".equalsIgnoreCase(operation) || req.getCocoonRequest().getParameters().size() == 0) {
             // Then, we have a valid Explain operation
+            res.sendPage("sru/explain", null);
         } else
         if ("searchRetrieve".equals(operation)) {
             // The actual querying goes here.
@@ -70,7 +71,7 @@ public class SRUServer implements StatelessAppleController {
         } else {
             Map<String, Object> bizData = new HashMap<String, Object>();
             bizData.put("result", queryResult);
-            res.sendPage("sru/result-list", bizData);
+            res.sendPage("sru/sru-results", bizData);
 
         }
 
