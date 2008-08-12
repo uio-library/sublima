@@ -8,9 +8,9 @@
 
    <zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.1/">
      <zr:serverInfo protocol="SRU" version="1.2" transport="http" method="GET">
-        <zr:host>myserver.com</zr:host>
-        <zr:port>80</zr:port>
-        <zr:database>cgi/mysru</zr:database>
+        <zr:host>${request.getServerName()}</zr:host>
+        <zr:port>${request.getServerPort()}</zr:port>
+        <zr:database>${request.getRequestURI()}</zr:database>
      </zr:serverInfo>
      <zr:databaseInfo>
        <title lang="en" primary="true">SUBLIMA SRU Server</title>
