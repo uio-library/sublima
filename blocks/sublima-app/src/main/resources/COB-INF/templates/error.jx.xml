@@ -3,7 +3,7 @@
 	     xmlns="http://www.loc.gov/zing/srw/diagnostic/">
   <diagnostic>
     <uri>info:srw/diagnostic/1/<jx:out value="#{errorcode}" xmlize="false"/></uri>
-    <details><jx:out value="#{errordetails}" xmlize="false"/></details>
+    <details><jx:out value="#{errordetail}" xmlize="false"/></details>
     <message><jx:out value="#{errormsg}" xmlize="false"/></message>
   </diagnostic>
 </diagnostics>
