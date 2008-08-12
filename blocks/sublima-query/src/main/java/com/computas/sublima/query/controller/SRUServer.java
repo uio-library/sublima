@@ -61,6 +61,14 @@ public class SRUServer implements StatelessAppleController {
             errorcode = 4;
             errormsg = "Server supports only explain and searchRetrieve.";
         }
+        if (errorcode == 0) {
+            logger.trace("CQL-converted SPARQL query:\n" + sparqlQuery);
+            queryResult = sparqlDispatcher.query(sparqlQuery);
+            if (queryResult == null) {
+                errorcode = 47;
+                errormsg = "SPARQL Dispatcher returned a null result, the server may be at fault.";
+            }
+        }
         if (errorcode > 0) {
             logger.debug("Some SRU error, code: " + errorcode + ". Message: " + errormsg);
             Map<String, Object> bizData = new HashMap<String, Object>();
@@ -69,11 +77,9 @@ public class SRUServer implements StatelessAppleController {
             bizData.put("errordetail", errordetail);
             res.sendPage("sru/error", bizData);
         } else {
-            queryResult = sparqlDispatcher.query(sparqlQuery);
             Map<String, Object> bizData = new HashMap<String, Object>();
             bizData.put("result", queryResult);
-            //res.sendPage("sru/sru-results", bizData);
-
+            res.sendPage("sru/sru-results", bizData);
         }
 
     }
