@@ -6,16 +6,20 @@
    <sru:recordSchema>http://explain.z3950.org/dtd/2.1/</sru:recordSchema>
    <sru:recordData>
 
-   <zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.1/">
+   <zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.1/"
+	       xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
      <zr:serverInfo protocol="SRU" version="1.2" transport="http" method="GET">
-        <zr:host>${request.getServerName()}</zr:host>
-        <zr:port>${request.getServerPort()}</zr:port>
-        <zr:database>${request.getRequestURI()}</zr:database>
+        <zr:host><jx:out value="#{servername}" xmlize="false"/></zr:host>
+        <zr:port><jx:out value="#{serverport}" xmlize="false"/></zr:port>
+        <zr:database><jx:out value="#{requesturi}" xmlize="false"/></zr:database>
      </zr:serverInfo>
      <zr:databaseInfo>
        <title lang="en" primary="true">SUBLIMA SRU Server</title>
      </zr:databaseInfo>
-     <zr:indexInfo>
+     <!-- It doesn't really make much sense to describe an index in a
+          Level 0 implementation, so I break the spec on this point up
+          to further notice. -->
+     <!-- zr:indexInfo>
        <zr:set name="dc" identifier="info:srw/cql-context-set/1/dc-v1.1"/>
         <zr:index>
           <zr:map><zr:name set="dc">title</zr:name></zr:map>
@@ -25,7 +29,7 @@
         <zr:schema name="dc" identifier="info:srw/schema/1/dc-v1.1">
           <zr:title>Simple Dublin Core</zr:title>
         </zr:schema>
-     </zr:schemaInfo>
+     </zr:schemaInfo -->
     </zr:explain>
 
    </sru:recordData>
