@@ -180,7 +180,12 @@ public class SearchController implements StatelessAppleController {
     // Create an XML structure of the search criterias. This could probably be nore generic.
     StringBuffer xmlSearchParametersBuffer = new StringBuffer();
     xmlSearchParametersBuffer.append("<c:searchparams xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
-    xmlSearchParametersBuffer.append("\t<c:searchstring>" + req.getCocoonRequest().getParameter("searchstring") + "</c:searchstring>\n");
+    if (req.getCocoonRequest().getParameter("searchstring") == null) {
+      xmlSearchParametersBuffer.append("\t<c:searchstring></c:searchstring>\n");      
+    } else {
+      xmlSearchParametersBuffer.append("\t<c:searchstring>" + req.getCocoonRequest().getParameter("searchstring") + "</c:searchstring>\n");
+    }
+    
     xmlSearchParametersBuffer.append("\t<c:operator>" + req.getCocoonRequest().getParameter("booleanoperator") + "</c:operator>\n");
     xmlSearchParametersBuffer.append("\t<c:deepsearch>" + req.getCocoonRequest().getParameter("deepsearch") + "</c:deepsearch>\n");
     xmlSearchParametersBuffer.append("\t<c:sortby>" + req.getCocoonRequest().getParameter("sort") + "</c:sortby>\n");
