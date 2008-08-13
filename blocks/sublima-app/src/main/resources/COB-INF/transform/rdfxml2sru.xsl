@@ -5,7 +5,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:dct="http://purl.org/dc/terms/"
-    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+    xmlns:sioc="http://rdfs.org/sioc/ns#"
     xmlns:sub="http://xmlns.computas.com/sublima#"
     xmlns="http://www.loc.gov/zing/srw/" 
     xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
@@ -31,28 +31,46 @@
     <record>
       <recordPacking>XML</recordPacking>
       <recordData>
-	<xsl:apply-templates select="./dct:*"/> 
+	<xsl:apply-templates select="./dct:*"/> <xsl:text>FOOOOOOOO</xsl:text>
+	<xsl:copy-of select="./wdr:describedBy"/> <xsl:text>BAAAAAAAAR</xsl:text>
+	<xsl:value-of select="./sub:committer"/>
       </recordData>
     </record>
   </xsl:template>
 
-  <!-- First we take the DCT Properties that have text, e.g. dct:title -->
+  <!-- First we take the DCT Properties -->
   <xsl:template match="dct:*">
     <xsl:choose>
-    <xsl:when test="not(normalize-space(./text())='')">
+    <xsl:when test="name() = 'dct:identifier'">
       <xsl:copy-of select="."/>
     </xsl:when>
-      <xsl:otherwise>
-	DAHUUUUUUUUUUT
-      </xsl:otherwise>
+    <xsl:when test="./@rdf:resource">
+      <xsl:variable name="uri" select="./@rdf:resource"/>
+      <xsl:element name="{name()}" namespace="{namespace-uri()}">
+	<xsl:value-of select="$uri"/>
+	<xsl:copy-of select="//*[@rdf:about=$uri]"/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="."/>
+    </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-  <!-- the Identifier is a URI, shall never be expanded -->
-  <!-- xsl:template match="dct:identifier">
-    <xsl:copy-of select="."/>
-  </xsl:template -->
-
-  <!-- xsl:template match="dct:*/@rdf:resource" -->
+  <xsl:template match="sub:committer">FOOOOOOOoo
+    <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>
+	<xsl:element name="{name()}" namespace="{namespace-uri()}">
+	  <xsl:value-of select="$uri"/>
+	  <xsl:copy-of select="//sioc:User[@rdf:about=$uri]"/>
+	</xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+      <xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+    
+  </xsl:template>
 
 </xsl:stylesheet>
