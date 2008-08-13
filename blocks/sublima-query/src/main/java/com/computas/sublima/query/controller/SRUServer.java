@@ -39,6 +39,32 @@ public class SRUServer implements StatelessAppleController {
         if ("searchRetrieve".equals(operation)) {
             // The actual querying goes here.
             try {
+                Double version = new Double(req.getCocoonRequest().getParameter("version"));
+                if (version.doubleValue() > 1.1) {
+                    errorcode = 5;
+                    errordetail = "1.1";
+                    errormsg = "Unsupported version.";
+                }
+            } catch (NumberFormatException e) {
+                errorcode = 6;
+                errordetail = "version";
+                errormsg = e.getMessage();
+            }
+            if (req.getCocoonRequest().getParameter("recordSchema") != null) {
+                errorcode = 66;
+                errordetail = "cql.serverChoice";
+                errormsg = "Setting schema is not supported, only serverChoice.";
+            }
+            if (req.getCocoonRequest().getParameter("sortKey") != null) {
+                errorcode = 80;
+                errormsg = "Sort not supported.";
+            }
+
+            if ("string".equals(req.getCocoonRequest().getParameter("recordPacking"))) {
+                errorcode = 71;
+                errormsg = "Unsupported record packing.";
+            }
+            try {
                 CQL2SPARQL converter = new CQL2SPARQL(req.getCocoonRequest().getParameter("query"));
                 sparqlQuery = converter.Level0();
             }
