@@ -31,6 +31,7 @@ public class Autocomplete extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
           throws IOException, ServletException {
 
+    String language = request.getParameter("locale");
     String action = request.getParameter("action");
     String partialname = request.getParameter("q");
     if (partialname != null) partialname = partialname.trim().toLowerCase();
@@ -38,9 +39,9 @@ public class Autocomplete extends HttpServlet {
 
     String result = "";
     if ("topic".equals(action)) {
-      result = adminService.getTopicByPartialNameAsJSON(partialname);
+      result = adminService.getTopicByPartialNameAsJSON(partialname, language);
     } else if ("publisher".equals(action)) {
-      result = adminService.getPublisherByPartialNameAsJSON(partialname);
+      result = adminService.getPublisherByPartialNameAsJSON(partialname, language);
     }
 
     if (!"".equals(result)) {

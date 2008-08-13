@@ -317,7 +317,7 @@ public class AdminService {
     return queryResult.toString();
   }
 
-  public String getTopicByPartialNameAsJSON(String name) {
+  public String getTopicByPartialNameAsJSON(String name, String language) {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
@@ -326,7 +326,8 @@ public class AdminService {
             "WHERE {",
             "?o a skos:Concept ; ",
             "       skos:prefLabel ?label .",
-            "FILTER regex(str(?label), \"^" + name + "\",\"i\")", 
+            "FILTER regex(str(?label), \"^" + name + "\",\"i\")",
+            "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}"});
 
     logger.trace("AdminService.getTopicByPartialName() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -335,7 +336,7 @@ public class AdminService {
     return queryResult.toString();
   }
 
-  public String getPublisherByPartialNameAsJSON(String name) {
+  public String getPublisherByPartialNameAsJSON(String name, String language) {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
@@ -345,6 +346,7 @@ public class AdminService {
             "?o a foaf:Agent ; ",
             "       foaf:name ?label .",
             "FILTER regex(str(?label), \"^" + name + "\",\"i\")",
+            "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}"});
 
     logger.trace("AdminService.getPublisherByPartialNameAsJSON() --> SPARQL query sent to dispatcher: \n" + queryString);
