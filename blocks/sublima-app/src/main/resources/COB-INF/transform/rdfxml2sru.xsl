@@ -31,10 +31,28 @@
     <record>
       <recordPacking>XML</recordPacking>
       <recordData>
-	<xsl:copy-of select="."/>
+	<xsl:apply-templates select="./dct:*"/> 
       </recordData>
     </record>
   </xsl:template>
 
+  <!-- First we take the DCT Properties that have text, e.g. dct:title -->
+  <xsl:template match="dct:*">
+    <xsl:choose>
+      <xsl:when test="./text()">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+	DAHUUUUUUUUUUT
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- the Identifier is a URI, shall never be expanded -->
+  <!-- xsl:template match="dct:identifier">
+    <xsl:copy-of select="."/>
+  </xsl:template -->
+
+  <!-- xsl:template match="dct:*/@rdf:resource" -->
 
 </xsl:stylesheet>
