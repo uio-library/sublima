@@ -8,6 +8,7 @@
     xmlns:sioc="http://rdfs.org/sioc/ns#"
     xmlns:sub="http://xmlns.computas.com/sublima#"
     xmlns="http://www.loc.gov/zing/srw/" 
+    xmlns:wdr="http://www.w3.org/2007/05/powder#"
     xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
     xmlns:xcql="http://www.loc.gov/zing/cql/xcql/"
     version="1.0">
@@ -31,9 +32,9 @@
     <record>
       <recordPacking>XML</recordPacking>
       <recordData>
-	<xsl:apply-templates select="./dct:*"/> <xsl:text>FOOOOOOOO</xsl:text>
-	<xsl:copy-of select="./wdr:describedBy"/> <xsl:text>BAAAAAAAAR</xsl:text>
-	<xsl:value-of select="./sub:committer"/>
+	<xsl:apply-templates select="./sub:committer"/>
+	<xsl:apply-templates select="./dct:*"/>
+	<xsl:copy-of select="./wdr:describedBy"/>
       </recordData>
     </record>
   </xsl:template>
@@ -57,7 +58,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="sub:committer">FOOOOOOOoo
+  <xsl:template match="sub:committer">
     <xsl:choose>
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
@@ -70,7 +71,6 @@
       <xsl:copy-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
-    
   </xsl:template>
 
 </xsl:stylesheet>
