@@ -39,9 +39,9 @@
   <!-- First we take the DCT Properties that have text, e.g. dct:title -->
   <xsl:template match="dct:*">
     <xsl:choose>
-      <xsl:when test="./text()">
-	<xsl:copy-of select="."/>
-      </xsl:when>
+    <xsl:when test="not(normalize-space(./text())='')">
+      <xsl:copy-of select="."/>
+    </xsl:when>
       <xsl:otherwise>
 	DAHUUUUUUUUUUT
       </xsl:otherwise>
