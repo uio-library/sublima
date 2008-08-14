@@ -1,4 +1,7 @@
 <?xml version="1.0"?>
-<c:page xmlns:c="http://xmlns.computas.com/cocoon">
-<jx:out value="#{result}" xmlize="true" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"/>
+<c:page xmlns:c="http://xmlns.computas.com/cocoon" 
+	xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  <c:stylesheet><jx:out value="#{stylesheet}" xmlize="false"/></c:stylesheet> <!-- Order matters! -->
+  <jx:out value="#{result}" xmlize="true" />
+
 </c:page>

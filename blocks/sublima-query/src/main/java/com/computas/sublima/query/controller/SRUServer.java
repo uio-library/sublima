@@ -40,13 +40,18 @@ public class SRUServer implements StatelessAppleController {
             // The actual querying goes here.
             try {
                 Double version = new Double(req.getCocoonRequest().getParameter("version"));
-                if (version.doubleValue() > 1.1) {
+                if (version > 1.1) {
                     errorcode = 5;
                     errordetail = "1.1";
                     errormsg = "Unsupported version.";
                 }
             } catch (NumberFormatException e) {
                 errorcode = 6;
+                errordetail = "version";
+                errormsg = e.getMessage();
+            }
+            catch (NullPointerException e) {
+                errorcode = 7;
                 errordetail = "version";
                 errormsg = e.getMessage();
             }
@@ -96,6 +101,7 @@ public class SRUServer implements StatelessAppleController {
             }
         }
         if (errorcode > 0) {
+            // TODO: There should be an error code object, so all codes are returned in one message.
             logger.debug("Some SRU error, code: " + errorcode + ". Message: " + errormsg);
             Map<String, Object> bizData = new HashMap<String, Object>();
             bizData.put("errorcode", errorcode);
@@ -105,6 +111,7 @@ public class SRUServer implements StatelessAppleController {
         } else {
             Map<String, Object> bizData = new HashMap<String, Object>();
             bizData.put("result", queryResult);
+            bizData.put("stylesheet", req.getCocoonRequest().getParameter("stylesheet"));
             res.sendPage("sru/sru-results", bizData);
         }
 

@@ -15,6 +15,14 @@
 
   <xsl:output method="xml" indent="yes"/>
 
+  <xsl:template match="/c:page/c:stylesheet">
+   <xsl:if test="not(normalize-space(.) = '')">
+      <xsl:processing-instruction name="xml-stylesheet">
+	href="<xsl:value-of select="."/>" type="text/xml"
+      </xsl:processing-instruction>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="/c:page/rdf:RDF">
     <searchRetrieveResponse> 
       <version>1.1</version>
@@ -48,7 +56,6 @@
     <xsl:when test="./@rdf:resource">
       <xsl:variable name="uri" select="./@rdf:resource"/>
       <xsl:element name="{name()}" namespace="{namespace-uri()}">
-	<xsl:value-of select="$uri"/>
 	<xsl:copy-of select="//*[@rdf:about=$uri]"/>
       </xsl:element>
     </xsl:when>
@@ -63,7 +70,6 @@
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
 	<xsl:element name="{name()}" namespace="{namespace-uri()}">
-	  <xsl:value-of select="$uri"/>
 	  <xsl:copy-of select="//sioc:User[@rdf:about=$uri]"/>
 	</xsl:element>
       </xsl:when>
@@ -72,5 +78,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
 
 </xsl:stylesheet>

@@ -414,7 +414,7 @@
     <map:pipeline internal-only="true">
       <map:match pattern="sru/sru-results">
 	<map:generate src="templates/sru-results.jx.xml" type="jx"/>
-	<!-- map:transform src="file:///home/kkj/dev/sublima/blocks/sublima-app/src/main/resources/COB-INF/transform/rdfxml2sru.xsl"/ -->
+	<map:transform src="file:///home/kkj/dev/sublima/blocks/sublima-app/src/main/resources/COB-INF/transform/rdfxml2sru.xsl"/>
 	<map:serialize type="xml"/>
       </map:match>      
     </map:pipeline>
