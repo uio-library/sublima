@@ -38,6 +38,7 @@ public class SRUServer implements StatelessAppleController {
         } else
         if ("searchRetrieve".equals(operation)) {
             // The actual querying goes here.
+            // TODO: Deal with startRecord and maximumRecords, that are currently unsupported.
             try {
                 Double version = new Double(req.getCocoonRequest().getParameter("version"));
                 if (version > 1.1) {
