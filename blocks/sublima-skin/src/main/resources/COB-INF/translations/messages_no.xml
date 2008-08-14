@@ -134,8 +134,6 @@
   <message key="topconcept">Hovedemne</message>
   <message key="repladeurlwithuri">Erstatt URL med URI</message>
 
-
-
   <!-- buttons -->
   <message key="button.saveresource">Lagre ressurs</message>
   <message key="button.deleteresource">Slett ressurs</message>
