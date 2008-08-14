@@ -137,6 +137,7 @@
 	  <select id="{$field}" name="{$field}">
 	    <option value=""></option>
 	    <xsl:for-each select="./sq:results/sq:result">
+	      <xsl:sort select="./sq:binding[@name = 'label']/sq:literal"/>
 	      <option value="{./sq:binding[@name = 'uri']/sq:uri}">
 		<xsl:value-of select="./sq:binding[@name = 'label']/sq:literal"/>
 	      </option>
