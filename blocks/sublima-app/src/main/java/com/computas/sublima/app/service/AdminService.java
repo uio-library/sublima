@@ -571,7 +571,7 @@ public class AdminService {
             "SELECT ?role",
             "WHERE {",
             "?user a sioc:User ;",
-            "    sioc:email <mailto:" + name + "> ; ",
+            "    sioc:email " + name + " ;",
             "    sioc:has_function ?role .",
             "?role a sioc:Role . }"});
 
@@ -589,6 +589,24 @@ public class AdminService {
       e.printStackTrace();
       return "<empty/>";
     }
+  }
+
+  /**
+   * Method to get the user based on the e-mail
+   *
+   * @param email
+   * @return role
+   */
+  public String getUserByEmail(String email) {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "DESCRIBE ?user",
+            "WHERE {",
+            "?user a sioc:User ;",
+            "    sioc:email " + email + " . }"});
+
+    logger.trace("AdminService.getUserByName() --> SPARQL query sent to dispatcher: \n" + queryString);
+    return (String) sparqlDispatcher.query(queryString);
   }
 
   /**

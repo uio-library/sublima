@@ -58,10 +58,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'topic.approve'">
-                <input type="checkbox" name="privileges" value="topic.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="topic.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="topic.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="topic.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
           </td>
@@ -151,10 +151,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.approve'">
-                <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="relation.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="relation.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
           </td>
@@ -195,10 +195,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.approve'">
-                <input type="checkbox" name="privileges" value="resource.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="resource.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="resource.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="resource.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
 
@@ -264,10 +264,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'user.approve'">
-                <input type="checkbox" name="privileges" value="user.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="user.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="user.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="user.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
           </td>
@@ -307,10 +307,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'role.approve'">
-                <input type="checkbox" name="privileges" value="role.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="role.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="role.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="role.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
           </td>
@@ -415,10 +415,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'topic.approve'">
-                <input type="checkbox" name="privileges" value="topic.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="topic.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="topic.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="topic.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
 
@@ -489,10 +489,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.approve'">
-                <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="relation.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="relation.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="relation.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
 
@@ -535,10 +535,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.approve'">
-                <input type="checkbox" name="privileges" value="resource.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="resource.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="resource.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="resource.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
 
@@ -580,10 +580,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'user.approve'">
-                <input type="checkbox" name="privileges" value="user.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="user.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="user.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="user.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
           </td>
@@ -623,10 +623,10 @@
           <td>
             <xsl:choose>
               <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'role.approve'">
-                <input type="checkbox" name="privileges" value="role.approve" checked="checked"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="role.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="role.approve"/><i18n:text key="addedit">Godkjenne</i18n:text>
+                <input type="checkbox" name="privileges" value="role.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
           </td>

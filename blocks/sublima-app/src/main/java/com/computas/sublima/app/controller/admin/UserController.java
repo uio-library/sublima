@@ -118,6 +118,12 @@ public class UserController implements StatelessAppleController {
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
+
+    // Check wether the logged in user requests his/hers own page. If so, allow editing.
+    if(adminService.getUserByURI(req.getCocoonRequest().getParameter("the-resource")).contains(user.getId())) {
+      userPrivileges = userPrivileges.replace("</c:privileges>", "<c:privilege>user.edit</c:privilege></c:privileges>");
+    }
+
     bizData.put("userprivileges", userPrivileges);
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
@@ -280,6 +286,9 @@ public class UserController implements StatelessAppleController {
         parameterMap.remove("password2"); // The passwords as stored seperatly in an RDB
         parameterMap.remove("oldusername"); // Field to check wether the user changes the username (email) or not
         parameterMap.remove("actionbutton"); // The name of the submit button
+        String email = req.getCocoonRequest().getParameter("sioc:email");
+        parameterMap.remove("sioc:email");
+        parameterMap.put("sioc:email", new String[]{"mailto:" + email + ""});
         if (parameterMap.get("subjecturi-prefix") != null) {
           parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
                   parameterMap.get("subjecturi-prefix")[0]});
@@ -395,41 +404,25 @@ public class UserController implements StatelessAppleController {
           uri = req.getCocoonRequest().getParameter("uri");
         }
 
-        StringBuffer deleteString = new StringBuffer();
-        StringBuffer whereString = new StringBuffer();
-        deleteString.append(completePrefixes);
-        deleteString.append("\nDELETE\n{\n");
-        whereString.append("\nWHERE\n{\n");
-        deleteString.append("<" + uri + "> a sioc:Role .\n");
-        deleteString.append("<" + uri + "> rdfs:label ?name .\n");
-
-        deleteString.append("}\n");
-        whereString.append("<" + uri + "> a sioc:Role .\n");
-        whereString.append("<" + uri + "> rdfs:label ?name .\n");
-        whereString.append("}\n");
-
-        req.getCocoonRequest().getParameterValues("topic.status");
-
         StringBuffer insertString = new StringBuffer();
         insertString.append(completePrefixes);
-        insertString.append("\nINSERT\n{\n");
+        insertString.append("\nDELETE {\n");
+        insertString.append("<" + uri + "> a sioc:Role .\n");
+        insertString.append("<" + uri + "> rdfs:label ?name .\n}\n");
+        insertString.append("WHERE {\n");
+        insertString.append("<" + uri + "> a sioc:Role .\n");
+        insertString.append("<" + uri + "> rdfs:label ?name .\n}\n");
+        insertString.append("INSERT DATA {\n");
         insertString.append("<" + uri + "> a sioc:Role ;\n");
-        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n");
+        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n}");
+
+        boolean insertSuccess = sparulDispatcher.query(insertString.toString());
         insertString.append("}");
 
-        deleteString.append(whereString.toString());
-
-        boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
-        boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-
-
-        logger.trace("TopicController.editRole --> DELETE QUERY:\n" + deleteString.toString());
         logger.trace("TopicController.editRole --> INSERT QUERY:\n" + insertString.toString());
-
-        logger.trace("TopicController.editRole --> DELETE QUERY RESULT: " + deleteSuccess);
         logger.trace("TopicController.editRole --> INSERT QUERY RESULT: " + insertSuccess);
 
-        if (deleteSuccess && insertSuccess) {
+        if (insertSuccess) {
 
           // Delete old privileges to shortcut INSERT/UPDATE check. Add the role privilegies to the database
           try {

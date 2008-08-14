@@ -8,6 +8,9 @@ import org.apache.cocoon.auth.AuthenticationException;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.auth.impl.AbstractSecurityHandler;
 import org.apache.cocoon.auth.impl.StandardUser;
+import org.apache.cocoon.components.flow.apples.StatelessAppleController;
+import org.apache.cocoon.components.flow.apples.AppleRequest;
+import org.apache.cocoon.components.flow.apples.AppleResponse;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -15,26 +18,46 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @author: mha
  * Date: 08.mai.2008
  */
-public class LoginController extends AbstractSecurityHandler {
+public class LoginController extends AbstractSecurityHandler { //implements StatelessAppleController {
 
   DatabaseService dbService = new DatabaseService();
   AdminService adminService = new AdminService();
+  User user = null;
+  /*
+  public User doReturn(User user) {
+    return user;
+  }
+
+  public void process(AppleRequest appleRequest, AppleResponse appleResponse) throws Exception {
+
+    try {
+      HashMap<String, String> loginMap = new HashMap<String, String>();
+      loginMap.put("name", appleRequest.getCocoonRequest().getParameter("username"));
+      loginMap.put("password", appleRequest.getCocoonRequest().getParameter("password"));
+      doReturn(login(loginMap));
+
+      //appleResponse.sendPage("xml2/admin", null);
+
+    } catch (AuthenticationException e) {
+
+    }
+  }*/
 
   public User login(final Map loginContext) throws AuthenticationException {
 
     Statement statement = null;
 
-    //todo Get the username from DB and check if it exists
-    final String name = (String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_USERNAME_KEY);
-    final String password = (String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_PASSWORD_KEY);
+    final String name = (String) loginContext.get("name");//(String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_USERNAME_KEY);
+    final String password = (String) loginContext.get("password");//(String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_PASSWORD_KEY);
 
     if (name == null) {
-      throw new AuthenticationException("Required user name property is missing for login.");
+      return null;//throw new AuthenticationException("Required user name property is missing for login.");
     } else {
 
       if (name.equalsIgnoreCase("Computas") && password.equalsIgnoreCase("Computas")) {
@@ -48,11 +71,8 @@ public class LoginController extends AbstractSecurityHandler {
           ResultSet rs = statement.getResultSet();
 
           if (!rs.next()) { //empty
-            throw new AuthenticationException("Username is wrong or does not exist.");
+            return null;//throw new AuthenticationException("Username is wrong or does not exist.");
           }
-
-          //todo Get the password for the given user from DB
-
 
           if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
             return null;
@@ -62,26 +82,26 @@ public class LoginController extends AbstractSecurityHandler {
 
         } catch (SQLException e) {
           e.printStackTrace();
-          return null;
+          throw new AuthenticationException("Required user name property is missing for login.");
         } catch (NoSuchAlgorithmException e) {
           e.printStackTrace();
-          return null;
+          throw new AuthenticationException("Required user name property is missing for login.");
         } catch (UnsupportedEncodingException e) {
           e.printStackTrace();
-          return null;
+          throw new AuthenticationException("An error occured when trying to ");
         }
 
       }
     }
 
-    final User user = new StandardUser(name);
+    user = new StandardUser(name);
 
     // Get the user role and set it as an attribute
     if (name.equalsIgnoreCase("Computas")) {
       String role = SettingsService.getProperty("sublima.base.url") + "role/Computas";
       user.setAttribute("role", role);
     } else {
-      user.setAttribute("role", adminService.getUserRole(name));
+      user.setAttribute("role", adminService.getUserRole("<mailto:" + name + ">"));
     }
 
 
@@ -109,6 +129,5 @@ public class LoginController extends AbstractSecurityHandler {
   public void logout(final Map logoutContext, final User user) {
     // nothing to do here
   }
-
 
 }

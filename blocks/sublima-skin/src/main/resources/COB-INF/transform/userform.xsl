@@ -23,7 +23,7 @@
   <xsl:template match="c:user" mode="useredit">
 
     <form action="{$baseurl}/admin/brukere/bruker" method="POST">
-      <input type="hidden" name="oldusername" value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email}"/>
+      <input type="hidden" name="oldusername" value="{substring-after(./c:userdetails/rdf:RDF/sioc:User/sioc:email/@rdf:resource, 'mailto:')}"/>
 
       <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
       <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
@@ -48,7 +48,7 @@
           </td>
           <td>
             <input id="sioc:email" type="text"
-                   name="sioc:email" size="40" value="{./c:userdetails/rdf:RDF/sioc:User/sioc:email}">
+                   name="sioc:email" size="40" value="{substring-after(./c:userdetails/rdf:RDF/sioc:User/sioc:email/@rdf:resource, 'mailto:')}">
             </input>
 
           </td>
@@ -98,7 +98,7 @@
                   <xsl:sort select="./rdfs:label"/>
                   <xsl:choose>
                     <xsl:when
-                            test="./@rdf:about = /c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/sioc:Role/@rdf:resource">
+                            test="./@rdf:about = /c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/sioc:has_function/@rdf:resource">
                       <option value="{./@rdf:about}" selected="selected">
                         <xsl:value-of select="./rdfs:label"/>
                       </option>
@@ -185,16 +185,16 @@
 
         <tr>
             <td>
-              <label for="sioc:role">Rolle</label>
+              <label for="sioc:has_function">Rolle</label>
             </td>
             <td>
-              <select id="sioc:role"
-                      name="sioc:role">
+              <select id="sioc:has_function"
+                      name="sioc:has_function">
                 <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/sioc:Role">
                   <xsl:sort select="./rdfs:label"/>
                   <xsl:choose>
                     <xsl:when
-                            test="./@rdf:about = /c:page/c:content/c:user/c:tempvalues/c:tempvalues/sioc:role">
+                            test="./@rdf:about = /c:page/c:content/c:user/c:tempvalues/c:tempvalues/sioc:has_function">
                       <option value="{./@rdf:about}" selected="selected">
                         <xsl:value-of select="./rdfs:label"/>
                       </option>
@@ -220,10 +220,9 @@
                         <xsl:with-param name="privilege">user.edit</xsl:with-param>
                         <xsl:with-param name="buttontext">Lagre bruker</xsl:with-param>
                       </xsl:call-template>
-            <input type="submit" value="Lagre bruker"/>
           </td>
           <td>
-            <input type="reset" value="Rens skjema"/>
+            <input type="reset" value="button.empty" i18n:attr="value"/>
           </td>
         </tr>
       </table>
