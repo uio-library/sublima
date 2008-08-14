@@ -14,7 +14,7 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
-  <!-- xsl:import href="rdfxml-res-templates.xsl"/ -->
+
   <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="rdf:RDF" mode="facets">
@@ -102,8 +102,7 @@
 	</xsl:attribute>
 	<xsl:value-of select="$this-label"/>
       </a>
-      <xsl:text> (</xsl:text>
-      <xsl:value-of select="count(//dct:subject[@rdf:resource=$uri])+1"/>)
+      (<xsl:value-of select="count(//dct:subject[@rdf:resource=$uri])+1"/>)
     </li>
   </xsl:template>
 
@@ -125,9 +124,10 @@
 	  </xsl:attribute>
 	  <xsl:value-of select="$this-label"/>
 	</a>
-    <bdo dir="ltr">
-	(<xsl:value-of select="count(//dct:language[@rdf:resource=$uri])+1"/>)
-	</bdo>  </li>
+	<bdo dir="ltr">
+	  (<xsl:value-of select="count(//dct:language[@rdf:resource=$uri])+1"/>)
+	</bdo>  
+      </li>
     </xsl:if>
     
     
@@ -149,8 +149,7 @@
 	  <xsl:value-of select="$this-label"/>
 	</a>
 
-	<xsl:text> (</xsl:text>
-	<xsl:value-of select="count(//dct:audience[@rdf:resource=$uri])+1"/>)
+	(<xsl:value-of select="count(//dct:audience[@rdf:resource=$uri])+1"/>)
       </li>
     </xsl:if>
     
@@ -158,14 +157,14 @@
   
   
   <xsl:template match="root">
-<xsl:copy>
-<xsl:apply-templates>
-<xsl:sort select="position()"
-order="descending"
-data-type="number"/>
-</xsl:apply-templates>
-</xsl:copy>
-</xsl:template>
+    <xsl:copy>
+      <xsl:apply-templates>
+	<xsl:sort select="position()"
+		  order="descending"
+		  data-type="number"/>
+      </xsl:apply-templates>
+    </xsl:copy>
+  </xsl:template>
   
 
 </xsl:stylesheet>
