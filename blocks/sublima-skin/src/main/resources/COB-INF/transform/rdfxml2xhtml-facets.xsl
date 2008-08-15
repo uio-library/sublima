@@ -156,6 +156,33 @@
   </xsl:template>
   
   
+  <xsl:template name="remove-facets">
+    Subject = 
+    <a>
+      <xsl:attribute name="href">
+	<xsl:call-template name="uri-for-facet-remove">
+	  <xsl:with-param name="key">dct:subject</xsl:with-param>
+	  <xsl:with-param name="value">http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000591</xsl:with-param>
+	</xsl:call-template>
+      </xsl:attribute>
+      foo
+    </a>
+  </xsl:template>
+
+  <xsl:template name="uri-for-facet-remove">
+    <xsl:param name="key"/>
+    <xsl:param name="value"/>
+    <xsl:text>search-result.html?</xsl:text>
+    <xsl:for-each select="/c:page/c:facets/c:request/c:param">
+      <xsl:for-each select="c:value">
+	<xsl:if test="not(../@key = $key and . = $value)">
+	  <xsl:value-of select="../@key"/>=<xsl:value-of select="."/>&amp;<xsl:text/>
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:for-each>
+  </xsl:template>
+
+
   <xsl:template match="root">
     <xsl:copy>
       <xsl:apply-templates>
