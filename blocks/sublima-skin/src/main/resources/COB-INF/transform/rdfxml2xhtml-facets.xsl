@@ -163,21 +163,34 @@
     
   </xsl:template>
   
-  
+ 
   <xsl:template name="remove-facets">
-    Subject = 
-    <xsl:for-each select="/c:page/c:facets/c:request/c:param[@key =  'dct:subject']/c:value">
-      <a>
-	<xsl:attribute name="href">
-	  <xsl:call-template name="uri-for-facet-remove">
-	    <xsl:with-param name="key">dct:subject</xsl:with-param>
-	    <xsl:with-param name="value"><xsl:value-of select="."/></xsl:with-param>
-	  </xsl:call-template>
-	</xsl:attribute>
-	<xsl:value-of select="."/>
-      </a>
-      <xsl:text> | </xsl:text>   
-    </xsl:for-each>
+    <ul>
+      <xsl:call-template name="remove-facet-for-field">
+	<xsl:with-param name="key">dct:subject</xsl:with-param>
+	<xsl:with-param name="label">Subject</xsl:with-param>
+      </xsl:call-template>
+    </ul>
+  </xsl:template>
+
+  <xsl:template name="remove-facet-for-field">
+    <xsl:param name="key"/>
+    <xsl:param name="label"/>
+    <li>
+      <xsl:value-of select="$label"/>:
+      <xsl:for-each select="/c:page/c:facets/c:request/c:param[@key = $key]/c:value">
+	<a>
+	  <xsl:attribute name="href">
+	    <xsl:call-template name="uri-for-facet-remove">
+	      <xsl:with-param name="key">$key</xsl:with-param>
+	      <xsl:with-param name="value"><xsl:value-of select="."/></xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:attribute>
+	  <xsl:value-of select="."/>
+	</a>
+	<xsl:text> | </xsl:text>   
+      </xsl:for-each>
+    </li>
   </xsl:template>
 
   <xsl:template name="uri-for-facet-remove">
