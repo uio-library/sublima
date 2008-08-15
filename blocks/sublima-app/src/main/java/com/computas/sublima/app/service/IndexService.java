@@ -47,7 +47,6 @@ public class IndexService {
     deleteString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
     deleteString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
     deleteString.append("DELETE { ?s sub:literals ?o . ");
-
     /*
     if (indexExternalContent) {
       deleteString.append("\n?s sub:externalliterals ?o. \n");
@@ -94,7 +93,8 @@ public class IndexService {
       }
     }
 
-    list.clear();
+
+    list = null;
 
     logger.info("SUBLIMA: updateResourceSearchfield() --> List contains " + list.size() + " new triples to index");
 
@@ -108,7 +108,7 @@ public class IndexService {
 
       // -- Read and index all literal strings.
       File indexDir = new File(indexDirectory);
-      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Read and index all literal strings");
+      logger.info("SUBLIMA: createIndex() --> Indexing - Read and index all literal strings");
       if ("memory".equals(indexType)) {
         SettingsService.getIndexBuilderString(null);
       } else {
@@ -117,20 +117,21 @@ public class IndexService {
 
       // -- Create an index based on existing statements
       SettingsService.getIndexBuilderString(indexDir).indexStatements(SettingsService.getModel().listStatements());
+      //SettingsService.getModel();
       SettingsService.getModel().register(SettingsService.getIndexBuilderString(indexDir));
 
-      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Indexed all model statements");
-      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Closed index for writing");
+      logger.info("SUBLIMA: createIndex() --> Indexing - Indexed all model statements");
+      logger.info("SUBLIMA: createIndex() --> Indexing - Closed index for writing");
 
       // -- Make globally available // -- Create the access index
       LARQ.setDefaultIndex(SettingsService.getIndexBuilderString(indexDir).getIndex());
-      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Index now globally available");
+      logger.info("SUBLIMA: createIndex() --> Indexing - Index now globally available");
     }
     catch (DoesNotExistException e) {
-      logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - NO CONTENT IN DATABASE. Please fill DB from Admin/Database and restart Tomcat.");
+      logger.info("SUBLIMA: createIndex() --> Indexing - NO CONTENT IN DATABASE. Please fill DB from Admin/Database and restart Tomcat.");
     }
 
-    logger.info("SUBLIMA: createInternalResourcesMemoryIndex() --> Indexing - Created RDF model from database");
+    logger.info("SUBLIMA: createIndex() --> Indexing - Created RDF model from database");
   }
 
 
@@ -326,7 +327,11 @@ public class IndexService {
       }
     }
     //return resultBuffer.toString();
+    resultSet = null;
+    literals = null;
+
     return list;
+
   }
 
   private ResultSet getFreetextToIndexResultSet(String queryString) {
