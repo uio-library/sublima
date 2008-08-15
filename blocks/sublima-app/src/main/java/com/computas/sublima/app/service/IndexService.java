@@ -48,21 +48,25 @@ public class IndexService {
     deleteString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
     deleteString.append("DELETE { ?s sub:literals ?o . ");
 
+    /*
     if (indexExternalContent) {
       deleteString.append("\n?s sub:externalliterals ?o. \n");
     }
+    */
 
     deleteString.append("}\n");
     deleteString.append("WHERE { ?s sub:literals ?o .");
 
+    /*
     if (indexExternalContent) {
       deleteString.append("\n?s sub:externalliterals ?o. \n");
     }
+    */
 
     deleteString.append("}\n");
 
     boolean deleteSuccess = sparulDispatcher.query(deleteString.toString());
-    logger.info("SUBLIMA: updateResourceSearchfield() --> Delete existing literals: " + deleteSuccess);
+    logger.info("SUBLIMA: updateResourceSearchfield() --> Delete literals: " + deleteSuccess);
 
     for (int i = 0; i <= list.size(); i++) {
       StringBuffer insertString = new StringBuffer();
@@ -89,6 +93,8 @@ public class IndexService {
         partsOfArray += steps;
       }
     }
+
+    list.clear();
 
     logger.info("SUBLIMA: updateResourceSearchfield() --> List contains " + list.size() + " new triples to index");
 
@@ -285,7 +291,8 @@ public class IndexService {
 
               list.add(resultBuffer.toString());
               if (indexExternalContent && (resource != null)) {
-                list.add(getResourceExternalLiteralsAsTriple(resource, fieldsToIndex, prefixes));
+                indexResourceExternalLiterals(resource, fieldsToIndex, prefixes);
+                //list.add(getResourceExternalLiteralsAsTriple(resource, fieldsToIndex, prefixes));
               }
 
               // Reset to the new resource
@@ -350,6 +357,33 @@ public class IndexService {
     tripleString.append("\"\"\" .\n");
 
     return tripleString.toString();
+  }
+
+  /**
+   * Method to get the external content as an triple for a specific resource including the internal literals
+   *
+   * @param resource
+   * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content including internal content""""
+   */
+  public void indexResourceExternalLiterals(String resource, String[] searchfields, String[] prefixes) {
+    StringBuffer tripleString = new StringBuffer();
+
+    tripleString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
+    tripleString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
+    tripleString.append("DELETE { <" + resource + "> sub:externalliterals ?o . }\n");
+    tripleString.append("WHERE { <" + resource + "> sub:externalliterals ?o . }\n");
+    tripleString.append("INSERT DATA {\n");
+    tripleString.append("<" + resource + "> sub:externalliterals \"\"\"");
+
+    // Get the internal literals and add them to the triple
+    tripleString.append(getResourceInternalLiteralsAsString(resource, searchfields, prefixes) + ".\n");
+
+    tripleString.append(getResourceExternalLiteralsAsString(resource) + ".\n");
+
+    tripleString.append("\"\"\" .}\n");
+
+    boolean insertSuccess = sparulDispatcher.query(tripleString.toString());
+    logger.info("SUBLIMA: indexResourceExternalLiterals() --> Insert external literals for " + resource + " resulted in: " + insertSuccess);
   }
 
 /**
