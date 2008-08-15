@@ -27,14 +27,20 @@
 	  <xsl:text>: </xsl:text>
 	</xsl:if>
 	<xsl:choose>
+	
+	  <!-- The main concept --> 
 	  <xsl:when test="$role='this-param'">
 	    <h4><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></h4>
 	  </xsl:when>
+	  
+	  <!-- or any other concept -->
 	  <xsl:otherwise>
 	    <a href="{$uri}.html{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
 	  </xsl:otherwise>
 	</xsl:choose>
       </p>
+      
+      <!-- Synonyms -->
       <xsl:if test="$role='this-param' and skos:altLabel[@xml:lang=$interface-language]">
 	<p>
 	  <i18n:text key="synonym">Synonym</i18n:text>: <xsl:value-of select="skos:altLabel[@xml:lang=$interface-language]"/>
@@ -44,8 +50,15 @@
       <!-- Now, run through all nodes that has skos:Concept as child
 	   node. These will be nodes that this concept has a relation
            to. -->
-      <xsl:apply-templates select="./*/skos:Concept"/>
-	
+           
+      <!-- We could here also sort by the specific relation, i.e.  
+      //owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language] 
+      for now sorting alphabetically on all the concepts regardless of relation.
+      -->   
+      
+      <xsl:apply-templates select="./*/skos:Concept">
+	    <xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
+	  </xsl:apply-templates> 
     </div>
     
   </xsl:template>

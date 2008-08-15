@@ -45,6 +45,7 @@
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
 	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+ 	   <xsl:sort select="lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
       </xsl:apply-templates> 
     </ul>
    </xsl:if>
@@ -56,18 +57,25 @@
        <ul>
 	 <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
 	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+	    <xsl:sort select="dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
 	 </xsl:apply-templates> 
        </ul>
      </div>
    </xsl:if>
    
+   
+   
 
     <div class="facet">    
+   
+   <!-- sorted by preffered label -->
     <i18n:text key="topic">Emne</i18n:text> 
     <xsl:if test="sub:Resource/dct:subject">
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:subject[skos:Concept]" mode="facets">
-	<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+       
+	    <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+       <xsl:sort select="skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
       </xsl:apply-templates> 
     </ul>
     </xsl:if>
