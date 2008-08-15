@@ -47,7 +47,7 @@
     <div id="header">
       <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
       
-      <h2>Sublima 0.9.6.1</h2>
+      <h2>Sublima 1.0 RC-1</h2>
       <ul>
 	<li>
 	  <a href="{$baseurl}/{$qloc}" class="active"><i18n:text key="menu.search">Søk</i18n:text></a>
