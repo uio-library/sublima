@@ -18,7 +18,7 @@
 
   <xsl:param name="interface-language">no</xsl:param>
 
-  <xsl:template match="rdf:RDF" mode="results">
+  <xsl:template match="rdf:RDF" mode="results-short">
     <xsl:param name="sorting"/>
     
     <!-- views -->
@@ -43,28 +43,27 @@
 	</xsl:param>
     
     
-
+    <!--
     <a>
        <xsl:attribute name="href">
           <xsl:value-of select="concat($gen-req, '&amp;res-view=short')"/>
        </xsl:attribute>
-       short description</a>
-    <xsl:text>  </xsl:text>    
-<!--
+       short description
+    </a>    
+    -->
     <a>
        <xsl:attribute name="href">
           <xsl:value-of select="concat($gen-req, '&amp;res-view=medium')"/>
        </xsl:attribute>
-       medium description</a>
-    <xsl:text> </xsl:text>    
-      
--->
-      <a>
+       medium description
+    </a>    
+    <a>
        <xsl:attribute name="href">
         <xsl:value-of select="concat($gen-req, '&amp;res-view=full')"/>
        </xsl:attribute>
-       full description</a>
-    
+       full description
+    </a>
+
     
     
     <dl>
@@ -73,17 +72,7 @@
 
   <dt>
 	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  <i18n:text key="search.result.hastopic">har emne</i18n:text><xsl:text> </xsl:text>
-    <xsl:apply-templates select="./dct:subject"/>
 	</dt>
-	<dd>
-	  <div style="font-size:small"><i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
-	    <xsl:apply-templates select="dct:publisher"/>
-	    <xsl:text> </xsl:text>
-	    <xsl:apply-templates select="./dct:dateAccepted"/>
-	  </div>
-	  <xsl:apply-templates select="./dct:description"/>
-	</dd>
       </xsl:for-each>
     </dl>
   </xsl:template>

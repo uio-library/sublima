@@ -12,6 +12,8 @@
   <!-- xsl:output method="html" indent="yes"/ -->
   
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
+  <xsl:import href="rdfxml2xhtml-deflist-full.xsl"/>
+  <xsl:import href="rdfxml2xhtml-deflist-short.xsl"/>
   <xsl:import href="rdfxml2xhtml-facets.xsl"/>
   <xsl:import href="rdfxml2xhtml-table.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
@@ -27,6 +29,7 @@
   <xsl:param name="baseurl"/>
   <xsl:param name="querystring"/>
   <xsl:param name="interface-language"/>
+  
 
   <xsl:param name="qloc">
     <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
@@ -53,6 +56,14 @@
       </xsl:choose>
     </xsl:if>
   </xsl:param>
+  
+  <xsl:param name="res-view">
+    <xsl:if test="/c:page/c:facets/c:request/c:param[@key='res-view'] !=''">
+        <xsl:value-of select="/c:page/c:facets/c:request/c:param[@key='res-view']/c:value"/>
+    </xsl:if>
+  </xsl:param>
+
+    
   
   
   <!-- A debug template that dumps the source tree. Do not remove
@@ -91,6 +102,7 @@
       </xsl:call-template>
    
       <body>
+    
 	<xsl:value-of select="$querystring"/>
 	<xsl:call-template name="headers">
 	  <xsl:with-param name="baseurl" select="$baseurl"/>
@@ -100,10 +112,10 @@
 	  <div class="colmid">
 	    <div class="colleft">
 	      <div class="col1">
-		<!-- 
+		<!--
 		<xsl:call-template name="debug"/>
-		-->
-		<!-- Column 1 start -->
+	   -->
+			<!-- Column 1 start -->
 		
 		<!-- Search -->
 		<!-- Search is shown when advanced search is not -->	
@@ -226,9 +238,27 @@
 		<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
 		  <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
 		  <!-- Søkeresultatene -->
-		  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results">
-		    <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
-		  </xsl:apply-templates>
+	       <xsl:choose>	  
+    		 <xsl:when test="$res-view='full'">
+    		 
+    		  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results-full">
+		          <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
+	       	  </xsl:apply-templates>
+             </xsl:when>  
+
+    		 <xsl:when test="$res-view='short'">
+    		 
+    		  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results-short">
+		          <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
+	       	  </xsl:apply-templates>
+             </xsl:when>  
+		     
+		     <xsl:otherwise>
+		      <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results">
+		          <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
+	       	  </xsl:apply-templates>
+	        </xsl:otherwise>
+		  </xsl:choose>
 		</xsl:if>
 		
 		<!-- Column 1 end -->

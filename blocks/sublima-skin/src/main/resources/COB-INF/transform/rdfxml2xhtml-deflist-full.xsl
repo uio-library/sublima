@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:c="http://xmlns.computas.com/cocoon"
-  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"   
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
   xmlns:dct="http://purl.org/dc/terms/" 
   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
@@ -14,12 +14,14 @@
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <xsl:import href="rdfxml-res-templates.xsl"/>
-
+  <xsl:output indent="yes"/>
 
   <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="baseurl"/>
 
-  <xsl:template match="rdf:RDF" mode="results">
+  <xsl:template match="rdf:RDF" mode="results-full">
     <xsl:param name="sorting"/>
+    
     
     <!-- views -->
     <!-- "just" remove the res-view attribute -->
@@ -43,49 +45,127 @@
 	</xsl:param>
     
     
-
     <a>
        <xsl:attribute name="href">
           <xsl:value-of select="concat($gen-req, '&amp;res-view=short')"/>
        </xsl:attribute>
-       short description</a>
-    <xsl:text>  </xsl:text>    
-<!--
+       short description
+    </a>    
+    
     <a>
        <xsl:attribute name="href">
           <xsl:value-of select="concat($gen-req, '&amp;res-view=medium')"/>
        </xsl:attribute>
-       medium description</a>
-    <xsl:text> </xsl:text>    
-      
--->
-      <a>
+       medium description
+    </a>    
+    <!--
+    <a>
        <xsl:attribute name="href">
         <xsl:value-of select="concat($gen-req, '&amp;res-view=full')"/>
        </xsl:attribute>
-       full description</a>
+       full description
+    </a>
+    -->
     
+
     
-    
-    <dl>
-      <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
+    <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
         <xsl:sort select="./*[name() = $sorting]"/>
 
-  <dt>
-	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  <i18n:text key="search.result.hastopic">har emne</i18n:text><xsl:text> </xsl:text>
-    <xsl:apply-templates select="./dct:subject"/>
-	</dt>
-	<dd>
-	  <div style="font-size:small"><i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
-	    <xsl:apply-templates select="dct:publisher"/>
-	    <xsl:text> </xsl:text>
-	    <xsl:apply-templates select="./dct:dateAccepted"/>
-	  </div>
+    <br/>
+    <table>
+      
+      <tr>
+	<th colspan="2" scope="col">
+	  <xsl:apply-templates select="./dct:title" mode="external-link"/> <xsl:if test="../../c:loggedin = 'true'"> - <a href="{$baseurl}/admin/ressurser/edit?uri={./@rdf:about}{$aloc}">[Edit]</a> </xsl:if>
+    </th>
+      </tr>
+      <tr>
+	<th scope="row">
+    <i18n:text key="search.result.publishedby">Publisert av</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./dct:publisher" mode="external-link" />
+	</td>
+      </tr>
+      <tr>
+	<th scope="row">
+	  <i18n:text key="topics">Emner</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./dct:subject"/>
+	</td>
+      </tr>
+      <tr>
+	<th scope="row">
+	  <i18n:text key="description">Beskrivelse</i18n:text>
+	</th>
+	<td>
 	  <xsl:apply-templates select="./dct:description"/>
-	</dd>
-      </xsl:for-each>
-    </dl>
+	</td>
+      </tr>
+      <tr>
+	<th scope="row">
+	  <i18n:text key="admin.approvedby">Redaksjonelt godkjent av</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./sub:committer"/>
+	</td>
+      </tr>
+      <tr>
+	<th scope="row">
+	  <i18n:text key="admin.posteddate">Innsendt</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./dct:dateSubmitted"/>
+	</td>
+      </tr>
+     
+      <tr>
+	<th scope="row">
+	  <i18n:text key="admin.accepteddate">Akseptert</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./dct:dateAccepted"/>
+	</td>
+      </tr>
+      <tr>
+	<th scope="row">
+	  <i18n:text key="language">Språk</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./dct:language"/>
+	</td>
+      </tr>
+      <tr>
+	<th scope="row">
+	  <i18n:text key="type">Type</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./dct:format"/>
+	</td>
+      </tr>
+      <tr>
+	<th scope="row">
+	  <i18n:text key="status">Status</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./wdr:describedBy"/>
+	</td>
+      </tr>
+      <tr>
+	<th scope="row">
+	  <i18n:text key="audience">Målgruppe</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./dct:audience" />
+	</td>
+      </tr>
+     
+    </table>
+    
+    </xsl:for-each>
+
   </xsl:template>
 
 
