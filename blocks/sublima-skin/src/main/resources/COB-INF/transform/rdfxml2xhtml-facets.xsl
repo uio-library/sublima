@@ -179,14 +179,15 @@
     <li>
       <xsl:value-of select="$label"/>:
       <xsl:for-each select="/c:page/c:facets/c:request/c:param[@key = $key]/c:value">
+	<xsl:variable name="uri" select="."/>
 	<a>
 	  <xsl:attribute name="href">
 	    <xsl:call-template name="uri-for-facet-remove">
-	      <xsl:with-param name="key">$key</xsl:with-param>
-	      <xsl:with-param name="value"><xsl:value-of select="."/></xsl:with-param>
+	      <xsl:with-param name="key" select="$key"/>
+	      <xsl:with-param name="value" select="$uri"/>
 	    </xsl:call-template>
 	  </xsl:attribute>
-	  <xsl:value-of select="."/>
+	  <xsl:value-of select="//skos:Concept[@rdf:about = $uri]"/>
 	</a>
 	<xsl:text> | </xsl:text>   
       </xsl:for-each>
