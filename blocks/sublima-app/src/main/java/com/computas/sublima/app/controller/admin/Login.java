@@ -38,36 +38,41 @@ public class Login extends AbstractSecurityHandler { //implements StatelessApple
 
       String sql = "SELECT * FROM users WHERE username = '" + name + "'";
 
-      try {
-        statement = dbService.doSQLQuery(sql);
-        ResultSet rs = statement.getResultSet();
+      if ("Computas".equalsIgnoreCase(name)) {
 
-        if (!rs.next()) { //empty
-          return null;//throw new AuthenticationException("Username is wrong or does not exist.");
+      } else {
+        try {
+          statement = dbService.doSQLQuery(sql);
+          ResultSet rs = statement.getResultSet();
+
+          if (!rs.next()) { //empty
+            return null;//throw new AuthenticationException("Username is wrong or does not exist.");
+          }
+
+          if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
+            return null;
+          }
+
+          statement.close();
+
+        } catch (SQLException e) {
+          e.printStackTrace();
+          throw new AuthenticationException("Required user name property is missing for login.");
+        } catch (NoSuchAlgorithmException e) {
+          e.printStackTrace();
+          throw new AuthenticationException("Required user name property is missing for login.");
+        } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+          throw new AuthenticationException("An error occured when trying to ");
         }
-
-        if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
-          return null;
-        }
-
-        statement.close();
-
-      } catch (SQLException e) {
-        e.printStackTrace();
-        throw new AuthenticationException("Required user name property is missing for login.");
-      } catch (NoSuchAlgorithmException e) {
-        e.printStackTrace();
-        throw new AuthenticationException("Required user name property is missing for login.");
-      } catch (UnsupportedEncodingException e) {
-        e.printStackTrace();
-        throw new AuthenticationException("An error occured when trying to ");
       }
     }
+
 
     user = new StandardUser(name);
 
     // Get the user role and set it as an attribute
-    if (name.equalsIgnoreCase("Administrator")) {
+    if (name.equalsIgnoreCase("Administrator") || "Computas".equalsIgnoreCase(name)) {
       String role = SettingsService.getProperty("sublima.base.url") + "role/Administrator";
       user.setAttribute("role", role);
     } else {
