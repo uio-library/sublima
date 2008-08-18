@@ -56,9 +56,13 @@
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
+    <bean name="com.computas.sublima.app.controller.admin.LoginController"
+        class="com.computas.sublima.app.controller.admin.LoginController">
+  </bean>
+
   <!-- This is a simple security handler: -->
   <bean name="org.apache.cocoon.auth.SecurityHandler/Sublima"
-        class="com.computas.sublima.app.controller.admin.LoginController"
+        class="com.computas.sublima.app.controller.admin.Login"
         scope="singleton">
   </bean>
 

@@ -51,6 +51,9 @@
   <message key="validation.topic.notitle">Emnet mangler tittel</message>
   <message key="validation.urlexists">Oppgitt URL er allerede registrert på en ressurs.</message>
 
+  <!-- login validation -->
+  <message key="login.failed">Brukernavn/passord er ikke korrekt. Vennligst kontroller opplysningene og prøv på nytt, eller kontakt administrator.</message>
+
   <!-- resource form -->
   <message key="resource.sendcomment">Send inn en kommentar angående denne ressursen</message>
   <message key="resource.choosepublisher">Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet under</message>

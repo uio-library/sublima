@@ -2,132 +2,86 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.service.DatabaseService;
-import com.computas.sublima.query.service.SettingsService;
-import org.apache.cocoon.auth.ApplicationManager;
-import org.apache.cocoon.auth.AuthenticationException;
-import org.apache.cocoon.auth.User;
-import org.apache.cocoon.auth.impl.AbstractSecurityHandler;
-import org.apache.cocoon.auth.impl.StandardUser;
-import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
+import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: mha
  * Date: 08.mai.2008
  */
-public class LoginController extends AbstractSecurityHandler { //implements StatelessAppleController {
+public class LoginController implements StatelessAppleController {
 
   DatabaseService dbService = new DatabaseService();
   AdminService adminService = new AdminService();
-  User user = null;
-  /*
-  public User doReturn(User user) {
-    return user;
-  }
 
   public void process(AppleRequest appleRequest, AppleResponse appleResponse) throws Exception {
 
-    try {
-      HashMap<String, String> loginMap = new HashMap<String, String>();
-      loginMap.put("name", appleRequest.getCocoonRequest().getParameter("username"));
-      loginMap.put("password", appleRequest.getCocoonRequest().getParameter("password"));
-      doReturn(login(loginMap));
-
-      //appleResponse.sendPage("xml2/admin", null);
-
-    } catch (AuthenticationException e) {
-
-    }
-  }*/
-
-  public User login(final Map loginContext) throws AuthenticationException {
-
-    Statement statement = null;
-
-    final String name = (String) loginContext.get("name");//(String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_USERNAME_KEY);
-    final String password = (String) loginContext.get("password");//(String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_PASSWORD_KEY);
-
-    if (name == null) {
-      return null;//throw new AuthenticationException("Required user name property is missing for login.");
+    if ("showform".equalsIgnoreCase(appleRequest.getSitemapParameter("mode"))) {
+      Map<String, Object> bizData = new HashMap<String, Object>();
+      StringBuffer messageBuffer = new StringBuffer();
+      messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
+      messageBuffer.append("</c:messages>\n");
+      bizData.put("messages", messageBuffer.toString());
+      appleResponse.sendPage("xml/login", bizData);
     } else {
+      boolean continueLogin = true;
 
-      if (name.equalsIgnoreCase("Computas") && password.equalsIgnoreCase("Computas")) {
+      String name = appleRequest.getCocoonRequest().getParameter("username");
+      String password = appleRequest.getCocoonRequest().getParameter("password");
+
+      if (name == null) {
+        continueLogin = false;
       } else {
-
-
         String sql = "SELECT * FROM users WHERE username = '" + name + "'";
+        Statement statement = null;
 
         try {
           statement = dbService.doSQLQuery(sql);
           ResultSet rs = statement.getResultSet();
 
           if (!rs.next()) { //empty
-            return null;//throw new AuthenticationException("Username is wrong or does not exist.");
+            continueLogin = false;
           }
 
           if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
-            return null;
+            continueLogin = false;
           }
 
           statement.close();
 
         } catch (SQLException e) {
           e.printStackTrace();
-          throw new AuthenticationException("Required user name property is missing for login.");
+          continueLogin = false;
         } catch (NoSuchAlgorithmException e) {
           e.printStackTrace();
-          throw new AuthenticationException("Required user name property is missing for login.");
+          continueLogin = false;
         } catch (UnsupportedEncodingException e) {
           e.printStackTrace();
-          throw new AuthenticationException("An error occured when trying to ");
+          continueLogin = false;
         }
+      }
 
+      if (!continueLogin) {
+        Map<String, Object> bizData = new HashMap<String, Object>();
+        StringBuffer messageBuffer = new StringBuffer();
+        messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
+        messageBuffer.append("<c:message><i18n:text key=\"login.failed\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("messages", messageBuffer.toString());
+        appleResponse.sendPage("xml/login", bizData);
+
+      } else {
+        appleResponse.sendPage("do-login", null);
       }
     }
-
-    user = new StandardUser(name);
-
-    // Get the user role and set it as an attribute
-    if (name.equalsIgnoreCase("Computas")) {
-      String role = SettingsService.getProperty("sublima.base.url") + "role/Computas";
-      user.setAttribute("role", role);
-    } else {
-      user.setAttribute("role", adminService.getUserRole("<mailto:" + name + ">"));
-    }
-
-
-
-    //todo Set additional user attributes. Such as role etc.
-    /*
-    // check for additional attributes
-    final String prefix = name + '.';
-    final Iterator i = this.userProperties.entrySet().iterator();
-
-    while (i.hasNext()) {
-      final Map.Entry current = (Map.Entry) i.next();
-      if (current.getKey().toString().startsWith(prefix)) {
-        final String key = current.getKey().toString().substring(prefix.length());
-        user.setAttribute(key, current.getValue());
-      }
-    }*/
-
-    return user;
   }
-
-  /**
-   * @see org.apache.cocoon.auth.SecurityHandler#logout(java.util.Map, org.apache.cocoon.auth.User)
-   */
-  public void logout(final Map logoutContext, final User user) {
-    // nothing to do here
-  }
-
 }

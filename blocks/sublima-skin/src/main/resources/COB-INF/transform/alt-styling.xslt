@@ -25,7 +25,6 @@
   <xsl:import href="set-lang.xsl"/>
   <xsl:import href="advancedsearch.xsl"/>
 
-
   <xsl:param name="baseurl"/>
   <xsl:param name="querystring"/>
   <xsl:param name="interface-language"/>
@@ -72,6 +71,19 @@
     <div id="debug">
       <xsl:copy-of select="*"/>
     </div>
+  </xsl:template>
+
+  <xsl:template name="messages">
+    <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
+      <ul>
+        <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
+          <li>
+            <xsl:value-of select="."/>
+            <br/>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template name="advancedsearch"> <!-- I have no idea why it didn't work to have a normal node-based template -->
@@ -183,7 +195,9 @@
 		  
 		</xsl:if>
 
-		<xsl:if test="c:page/c:mode = 'search-result'">
+    <xsl:call-template name="messages"/>
+
+    <xsl:if test="c:page/c:mode = 'search-result'">
 		  <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
 		</xsl:if>
 		

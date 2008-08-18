@@ -62,28 +62,34 @@
 
           <map:redirect-to uri="admin"/>
         </map:act>
-        <map:generate src="templates/login.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-        
-        <map:serialize type="xhtml"/>
-        
+        <map:call function="com.computas.sublima.app.controller.admin.LoginController">
+          <map:parameter name="mode" value="showform"/>
+        </map:call>
       </map:match>
 
       <!-- ========================================= -->
       <!-- Form target which performs auth service   -->
       <!-- ========================================= -->
       <map:match pattern="do-login">
+        <!--map:call function="com.computas.sublima.app.controller.admin.LoginController"-->
         <!-- try to login -->
-        <map:act type="cauth-login">
-          <map:parameter name="application" value="Sublima"/>
-          <map:parameter name="name" value="{request-param:username}"/>
-          <map:parameter name="password" value="{request-param:password}"/>
-          <map:redirect-to uri="admin"/>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
+        <!--map:act type="locale"-->
+          <map:act type="cauth-login">
+            <!--map:parameter name="locale" value="{language}"/-->
+            <map:parameter name="application" value="Sublima"/>
+            <map:parameter name="name" value="{request-param:username}"/>
+            <map:parameter name="password" value="{request-param:password}"/>
+            <map:redirect-to uri="admin"/>
+          </map:act>
+          <map:redirect-to uri="{request:contextPath}/login"/>
+        <!--/map:call-->
+        <!--/map:act-->
+      </map:match>
+
+
+      <!-- Does the initial test before sending to the actual loginhandler. This because we want to display errors to the user when the auth fails -->
+      <map:match pattern="do-login2">
+        <map:call function="com.computas.sublima.app.controller.admin.LoginController"/>
       </map:match>
 
       <!-- ========================================= -->

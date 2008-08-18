@@ -19,7 +19,7 @@
 
     <xsl:template match="c:login" mode="login">
 
-       <form action="do-login" method="post">
+       <form action="do-login2" method="post">
          <table>
            <tr>
              <td>
