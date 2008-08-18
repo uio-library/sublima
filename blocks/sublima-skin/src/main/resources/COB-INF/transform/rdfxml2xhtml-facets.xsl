@@ -118,6 +118,17 @@
 	</xsl:otherwise>
       </xsl:choose>
       (<xsl:value-of select="$count"/>)
+      <xsl:if test="/c:page/c:facets/c:request/c:param[@key = 'dct:subject']/c:value = $uri">
+	<a>
+	  <xsl:attribute name="href">
+	    <xsl:call-template name="uri-for-facet-remove">
+	      <xsl:with-param name="key">dct:subject</xsl:with-param>
+	      <xsl:with-param name="value" select="$uri"/>
+	    </xsl:call-template>
+	  </xsl:attribute>
+	  Fjern
+	</a>
+      </xsl:if>
     </li>
   </xsl:template>
 
