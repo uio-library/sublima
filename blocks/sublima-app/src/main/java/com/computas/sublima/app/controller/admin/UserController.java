@@ -391,8 +391,6 @@ public class UserController implements StatelessAppleController {
 
       } else {
 
-        req.getCocoonRequest().getParameters().size();
-
         // Generate an identifier if a uri is not given and insert the user in the USER-table
         String uri;
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri")) || req.getCocoonRequest().getParameter("uri") == null) {
@@ -415,7 +413,7 @@ public class UserController implements StatelessAppleController {
         insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n}");
 
         boolean insertSuccess = sparulDispatcher.query(insertString.toString());
-        insertString.append("}");
+
 
         logger.trace("TopicController.editRole --> INSERT QUERY:\n" + insertString.toString());
         logger.trace("TopicController.editRole --> INSERT QUERY RESULT: " + insertSuccess);
