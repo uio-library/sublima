@@ -207,11 +207,6 @@
 		<xsl:if test="c:page/c:mode != 'resource' and c:page/c:mode != 'browse'">
 		  <xsl:if test="c:page/c:facets">
 
-		    <div>
-		      <h3>Fjern avgrensning         </h3>
-		      <xsl:call-template name="remove-facets"/>
-		    </div>
-
 		    <h3><i18n:text key="facets.heading">Velg avgrensning</i18n:text></h3>
 		    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
 		  </xsl:if>
