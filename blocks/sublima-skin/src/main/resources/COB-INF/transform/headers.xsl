@@ -50,7 +50,8 @@
       <h2>Sublima 1.0 RC-1</h2>
       <ul>
 	<li>
-	  <a href="{$baseurl}/{$qloc}" class="active"><i18n:text key="menu.search">Søk</i18n:text></a>
+	  <a href="{$baseurl}/{$qloc}" class="active">
+	  <i18n:text key="menu.search">Søk</i18n:text></a>
 	</li>
 	<li>
 	  <a href="{$baseurl}/advancedsearch{$qloc}"><i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
@@ -67,20 +68,12 @@
 	-->
       </ul>
  
-            <p id="layoutdims">
-            <!--xsl:for-each select="c:page/c:breadcrumbs/c:breadcrumb">
-              <a>
-                <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/><xsl:value-of select="$qloc"/>}</xsl:attribute><xsl:value-of select="@title"/></a>
-              <xsl:text> | </xsl:text>
-            </xsl:for-each-->
+      <p id="layoutdims"> 
+	<xsl:call-template name="set-langs">
+	  <xsl:with-param name="baseurl" select="$baseurl"/>
+	</xsl:call-template>
+      </p>
 
-          </p>
-	   
-
-	  <xsl:call-template name="set-langs">
-	    <xsl:with-param name="baseurl" select="$baseurl"/>
-	  </xsl:call-template>
-      
       <p id="layoutdims">
 	<a href="{$baseurl}/login{$qloc}">Admin</a>
       </p>
