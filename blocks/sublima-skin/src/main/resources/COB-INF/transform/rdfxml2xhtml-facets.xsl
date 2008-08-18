@@ -90,17 +90,33 @@
     <br/>
    </xsl:template>
 
-
   <xsl:template match="dct:subject" mode="facets">
     <xsl:param name="baseurlparams"/>
+    <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
+    <xsl:call-template name="facet-field">
+      <xsl:with-param name="max-facets-more">4</xsl:with-param>
+      <xsl:with-param name="this-field">dct:subject</xsl:with-param>
+      <xsl:with-param name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+      <xsl:with-param name="uri" select="$uri"/>
+      <xsl:with-param name="count"  select="count(//dct:subject[@rdf:resource=$uri])+1"/>
+      <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+ 
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="facet-field">
+    <xsl:param name="max-facets-more">3</xsl:param>
+    <xsl:param name="baseurlparams"/>
+    <xsl:param name="this-label"/>
+    <xsl:param name="this-field"/>
+    <xsl:param name="uri"/>
+    <xsl:param name="count"/>
     <li>
-      <xsl:if test="position() &gt; 2"> <!-- This number sets how many items should be shown untill the user clicks "more" -->
+      <xsl:if test="position() &gt; $max-facets-more"> <!-- This number sets how many items should be shown untill the user clicks "more" -->
 	<xsl:attribute name="class">collapse</xsl:attribute>
 	<xsl:attribute name="style">display : none;</xsl:attribute>
       </xsl:if>
-      <xsl:variable name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
-      <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
-      <xsl:variable name="count"  select="count(//dct:subject[@rdf:resource=$uri])+1"/>
+
       <xsl:choose>
 	<xsl:when test="$count = $numberofhits">
 	  <xsl:value-of select="$this-label"/>
@@ -109,7 +125,8 @@
 	  <a> <!-- The following builds the URL. -->
 	    <xsl:attribute name="href">
 	      <xsl:value-of select="$baseurlparams"/>
-	      <xsl:text>dct:subject=</xsl:text>
+	      <xsl:value-of select="$this-field"/>
+	      <xsl:text>=</xsl:text>
 	      <xsl:value-of select="$uri"/>
 	      <xsl:value-of select="$aloc"/>
 	    </xsl:attribute>
@@ -118,11 +135,11 @@
 	</xsl:otherwise>
       </xsl:choose>
       (<xsl:value-of select="$count"/>)
-      <xsl:if test="/c:page/c:facets/c:request/c:param[@key = 'dct:subject']/c:value = $uri">
+      <xsl:if test="/c:page/c:facets/c:request/c:param[@key = $this-field]/c:value = $uri">
 	<a>
 	  <xsl:attribute name="href">
 	    <xsl:call-template name="uri-for-facet-remove">
-	      <xsl:with-param name="key">dct:subject</xsl:with-param>
+	      <xsl:with-param name="key" select="$this-field"/>
 	      <xsl:with-param name="value" select="$uri"/>
 	    </xsl:call-template>
 	  </xsl:attribute>
