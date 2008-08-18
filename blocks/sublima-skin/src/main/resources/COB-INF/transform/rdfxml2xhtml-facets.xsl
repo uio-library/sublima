@@ -104,6 +104,35 @@
     </xsl:call-template>
   </xsl:template>
 
+  <xsl:template match="dct:language" mode="facets">
+    <xsl:param name="baseurlparams"/>
+    <xsl:variable name="uri" select="./lingvoj:Lingvo/@rdf:about"/>
+    <xsl:call-template name="facet-field">
+      <xsl:with-param name="max-facets-more">4</xsl:with-param>
+      <xsl:with-param name="this-field">dct:language</xsl:with-param>
+      <xsl:with-param name="this-label" select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
+      <xsl:with-param name="uri" select="$uri"/>
+      <xsl:with-param name="count"  select="count(//dct:language[@rdf:resource=$uri])+1"/>
+      <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+ 
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="dct:audience" mode="facets">
+    <xsl:param name="baseurlparams"/>
+    <xsl:variable name="uri" select="./dct:AgentClass/@rdf:about"/>
+    <xsl:call-template name="facet-field">
+      <xsl:with-param name="max-facets-more">4</xsl:with-param>
+      <xsl:with-param name="this-field">dct:audience</xsl:with-param>
+      <xsl:with-param name="this-label" select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+      <xsl:with-param name="uri" select="$uri"/>
+      <xsl:with-param name="count" select="count(//dct:audience[@rdf:resource=$uri])+1"/>
+      <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+    </xsl:call-template>  
+  </xsl:template>
+
+
+
   <xsl:template name="facet-field">
     <xsl:param name="max-facets-more">3</xsl:param>
     <xsl:param name="baseurlparams"/>
@@ -111,93 +140,46 @@
     <xsl:param name="this-field"/>
     <xsl:param name="uri"/>
     <xsl:param name="count"/>
-    <li>
-      <xsl:if test="position() &gt; $max-facets-more"> <!-- This number sets how many items should be shown untill the user clicks "more" -->
-	<xsl:attribute name="class">collapse</xsl:attribute>
-	<xsl:attribute name="style">display : none;</xsl:attribute>
-      </xsl:if>
-
-      <xsl:choose>
-	<xsl:when test="$count = $numberofhits">
-	  <xsl:value-of select="$this-label"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <a> <!-- The following builds the URL. -->
-	    <xsl:attribute name="href">
-	      <xsl:value-of select="$baseurlparams"/>
-	      <xsl:value-of select="$this-field"/>
-	      <xsl:text>=</xsl:text>
-	      <xsl:value-of select="$uri"/>
-	      <xsl:value-of select="$aloc"/>
-	    </xsl:attribute>
+    <xsl:if test="$uri">
+      <li>
+	<xsl:if test="position() &gt; $max-facets-more"> <!-- This number sets how many items should be shown untill the user clicks "more" -->
+	  <xsl:attribute name="class">collapse</xsl:attribute>
+	  <xsl:attribute name="style">display : none;</xsl:attribute>
+	</xsl:if>
+	
+	<xsl:choose>
+	  <xsl:when test="$count = $numberofhits">
 	    <xsl:value-of select="$this-label"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <a> <!-- The following builds the URL. -->
+	      <xsl:attribute name="href">
+		<xsl:value-of select="$baseurlparams"/>
+		<xsl:value-of select="$this-field"/>
+		<xsl:text>=</xsl:text>
+		<xsl:value-of select="$uri"/>
+		<xsl:value-of select="$aloc"/>
+	      </xsl:attribute>
+	      <xsl:value-of select="$this-label"/>
+	    </a>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<bdo dir="ltr">
+	  (<xsl:value-of select="$count"/>)
+	</bdo>
+	<xsl:if test="/c:page/c:facets/c:request/c:param[@key = $this-field]/c:value = $uri">
+	  <a>
+	    <xsl:attribute name="href">
+	      <xsl:call-template name="uri-for-facet-remove">
+		<xsl:with-param name="key" select="$this-field"/>
+		<xsl:with-param name="value" select="$uri"/>
+	      </xsl:call-template>
+	    </xsl:attribute>
+	    Fjern
 	  </a>
-	</xsl:otherwise>
-      </xsl:choose>
-      <bdo dir="ltr">
-	(<xsl:value-of select="$count"/>)
-      </bdo>
-      <xsl:if test="/c:page/c:facets/c:request/c:param[@key = $this-field]/c:value = $uri">
-	<a>
-	  <xsl:attribute name="href">
-	    <xsl:call-template name="uri-for-facet-remove">
-	      <xsl:with-param name="key" select="$this-field"/>
-	      <xsl:with-param name="value" select="$uri"/>
-	    </xsl:call-template>
-	  </xsl:attribute>
-	  Fjern
-	</a>
-      </xsl:if>
-    </li>
-  </xsl:template>
-
-
-
-  <xsl:template match="dct:language" mode="facets">
-    <xsl:param name="baseurlparams"/>
-    
-    <xsl:if test="./lingvoj:Lingvo"> <!-- This should iterate all unique languages -->
-      <li>
-	<xsl:variable name="this-label" select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
-	<xsl:variable name="uri" select="./lingvoj:Lingvo/@rdf:about"/>
-	<a> <!-- The following builds the URL. -->
-	  <xsl:attribute name="href">
-	    <xsl:value-of select="$baseurlparams"/>
-	    <xsl:text>dct:language=</xsl:text>
-	    <xsl:value-of select="$uri"/>
-	    <xsl:value-of select="$aloc"/>
-	  </xsl:attribute>
-	  <xsl:value-of select="$this-label"/>
-	</a>
-
-	  (<xsl:value-of select="count(//dct:language[@rdf:resource=$uri])+1"/>)
-	</bdo>  
+	</xsl:if>
       </li>
     </xsl:if>
-    
-    
-  </xsl:template>
-
-  <xsl:template match="dct:audience" mode="facets">
-    <xsl:param name="baseurlparams"/>
-    <xsl:if test="./dct:AgentClass"> 
-      <li>
-	<xsl:variable name="this-label" select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
-	<xsl:variable name="uri" select="./dct:AgentClass/@rdf:about"/>
-	<a> <!-- The following builds the URL. -->
-	  <xsl:attribute name="href">
-	    <xsl:value-of select="$baseurlparams"/>
-	    <xsl:text>dct:audience=</xsl:text>
-	    <xsl:value-of select="$uri"/>
-	    <xsl:value-of select="$aloc"/>
-	  </xsl:attribute>
-	  <xsl:value-of select="$this-label"/>
-	</a>
-
-	(<xsl:value-of select="count(//dct:audience[@rdf:resource=$uri])+1"/>)
-      </li>
-    </xsl:if>
-    
   </xsl:template>
   
   <xsl:template name="uri-for-facet-remove">
