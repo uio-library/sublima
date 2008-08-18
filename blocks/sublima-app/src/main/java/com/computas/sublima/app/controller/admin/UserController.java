@@ -407,11 +407,9 @@ public class UserController implements StatelessAppleController {
         StringBuffer insertString = new StringBuffer();
         insertString.append(completePrefixes);
         insertString.append("\nDELETE {\n");
-        insertString.append("<" + uri + "> a sioc:Role .\n");
-        insertString.append("<" + uri + "> rdfs:label ?name .\n}\n");
+        insertString.append("<" + uri + "> ?o ?p .\n}\n");
         insertString.append("WHERE {\n");
-        insertString.append("<" + uri + "> a sioc:Role .\n");
-        insertString.append("<" + uri + "> rdfs:label ?name .\n}\n");
+        insertString.append("<" + uri + "> ?o ?p .\n}\n");
         insertString.append("INSERT DATA {\n");
         insertString.append("<" + uri + "> a sioc:Role ;\n");
         insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n}");
