@@ -132,6 +132,20 @@
   </xsl:template>
 
 
+  <!-- This template can used to construct facets. See the above for examples.
+       it takes a number of parameters:
+
+         max-facets-more - This number sets how many items should be shown untill 
+	                   the user clicks "more". This is optional, defaults to 3.
+         baseurlparams   - Should be passed from other templates.
+	 this-field      - The machine field, e.g. dct:subject.
+	 this-label      - The human-readable label for this facet.
+         uri             - The URI for the resource that uses this-label
+	 count           - The number of resources that has this label.
+	  
+  -->
+
+
 
   <xsl:template name="facet-field">
     <xsl:param name="max-facets-more">3</xsl:param>
