@@ -56,13 +56,14 @@
     </xsl:if>
   </xsl:param>
   
+
+  <xsl:param name="numberofhits" select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
+
   <xsl:param name="res-view">
     <xsl:if test="/c:page/c:facets/c:request/c:param[@key='res-view'] !=''">
         <xsl:value-of select="/c:page/c:facets/c:request/c:param[@key='res-view']/c:value"/>
     </xsl:if>
   </xsl:param>
-
-    
   
   
   <!-- A debug template that dumps the source tree. Do not remove
@@ -198,13 +199,19 @@
     <xsl:call-template name="messages"/>
 
     <xsl:if test="c:page/c:mode = 'search-result'">
-		  <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
+		  <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/>
 		</xsl:if>
 		
 		<!-- Facets -->
 		<!-- Facets are shown if the c:/page/c:facets exists in the XML --> 
 		<xsl:if test="c:page/c:mode != 'resource' and c:page/c:mode != 'browse'">
 		  <xsl:if test="c:page/c:facets">
+
+		    <div>
+		      <h3>Fjern avgrensning         </h3>
+		      <xsl:call-template name="remove-facets"/>
+		    </div>
+
 		    <h3><i18n:text key="facets.heading">Velg avgrensning</i18n:text></h3>
 		    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
 		  </xsl:if>

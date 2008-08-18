@@ -100,17 +100,24 @@
       </xsl:if>
       <xsl:variable name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
       <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
-
-      <a> <!-- The following builds the URL. -->
-	<xsl:attribute name="href">
-	  <xsl:value-of select="$baseurlparams"/>
-	  <xsl:text>dct:subject=</xsl:text>
-	  <xsl:value-of select="$uri"/>
-	  <xsl:value-of select="$aloc"/>
-	</xsl:attribute>
-	<xsl:value-of select="$this-label"/>
-      </a>
-      (<xsl:value-of select="count(//dct:subject[@rdf:resource=$uri])+1"/>)
+      <xsl:variable name="count"  select="count(//dct:subject[@rdf:resource=$uri])+1"/>
+      <xsl:choose>
+	<xsl:when test="$count = $numberofhits">
+	  <xsl:value-of select="$this-label"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <a> <!-- The following builds the URL. -->
+	    <xsl:attribute name="href">
+	      <xsl:value-of select="$baseurlparams"/>
+	      <xsl:text>dct:subject=</xsl:text>
+	      <xsl:value-of select="$uri"/>
+	      <xsl:value-of select="$aloc"/>
+	    </xsl:attribute>
+	    <xsl:value-of select="$this-label"/>
+	  </a>
+	</xsl:otherwise>
+      </xsl:choose>
+      (<xsl:value-of select="$count"/>)
     </li>
   </xsl:template>
 
@@ -166,32 +173,23 @@
  
   <xsl:template name="remove-facets">
     <ul>
-      <xsl:call-template name="remove-facet-for-field">
-	<xsl:with-param name="key">dct:subject</xsl:with-param>
-	<xsl:with-param name="label">Subject</xsl:with-param>
-      </xsl:call-template>
+      <li>
+	Subject: 
+	<xsl:for-each select="/c:page/c:facets/c:request/c:param[@key = 'dct:subject']/c:value">
+	  <xsl:variable name="uri" select="."/>
+	  <a>
+	    <xsl:attribute name="href">
+	      <xsl:call-template name="uri-for-facet-remove">
+		<xsl:with-param name="key">dct:subject</xsl:with-param>
+		<xsl:with-param name="value" select="$uri"/>
+	      </xsl:call-template>
+	    </xsl:attribute>
+	    <xsl:value-of select="//skos:Concept[@rdf:about = $uri]/skos:prefLabel[@xml:lang = $interface-language]"/>
+	  </a>
+	  <xsl:text> | </xsl:text>   
+	</xsl:for-each>
+      </li>
     </ul>
-  </xsl:template>
-
-  <xsl:template name="remove-facet-for-field">
-    <xsl:param name="key"/>
-    <xsl:param name="label"/>
-    <li>
-      <xsl:value-of select="$label"/>:
-      <xsl:for-each select="/c:page/c:facets/c:request/c:param[@key = $key]/c:value">
-	<xsl:variable name="uri" select="."/>
-	<a>
-	  <xsl:attribute name="href">
-	    <xsl:call-template name="uri-for-facet-remove">
-	      <xsl:with-param name="key" select="$key"/>
-	      <xsl:with-param name="value" select="$uri"/>
-	    </xsl:call-template>
-	  </xsl:attribute>
-	  <xsl:value-of select="//skos:Concept[@rdf:about = $uri]"/>
-	</a>
-	<xsl:text> | </xsl:text>   
-      </xsl:for-each>
-    </li>
   </xsl:template>
 
   <xsl:template name="uri-for-facet-remove">
