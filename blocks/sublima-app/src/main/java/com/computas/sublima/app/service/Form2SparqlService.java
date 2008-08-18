@@ -375,8 +375,7 @@ public class Form2SparqlService {
 	 * the other contains a Lingvoj language URI. See the test class for examples.
 	 * 
 	 * Only triples can be inserted, it does not support the path-like notation of
-	 * the DESCRIBE methods. The subject resource must be sent as a key named
-	 * <tt>the-resource</tt> 
+	 * the DESCRIBE methods. 
 	 * 
 	 * @param parameterMap
 	 *            The data structure with the key-value-pairs.
