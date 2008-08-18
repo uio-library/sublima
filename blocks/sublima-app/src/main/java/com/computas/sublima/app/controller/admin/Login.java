@@ -36,45 +36,39 @@ public class Login extends AbstractSecurityHandler { //implements StatelessApple
       return null;//throw new AuthenticationException("Required user name property is missing for login.");
     } else {
 
-      if (name.equalsIgnoreCase("Computas") && password.equalsIgnoreCase("Computas")) {
-      } else {
+      String sql = "SELECT * FROM users WHERE username = '" + name + "'";
 
+      try {
+        statement = dbService.doSQLQuery(sql);
+        ResultSet rs = statement.getResultSet();
 
-        String sql = "SELECT * FROM users WHERE username = '" + name + "'";
-
-        try {
-          statement = dbService.doSQLQuery(sql);
-          ResultSet rs = statement.getResultSet();
-
-          if (!rs.next()) { //empty
-            return null;//throw new AuthenticationException("Username is wrong or does not exist.");
-          }
-
-          if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
-            return null;
-          }
-
-          statement.close();
-
-        } catch (SQLException e) {
-          e.printStackTrace();
-          throw new AuthenticationException("Required user name property is missing for login.");
-        } catch (NoSuchAlgorithmException e) {
-          e.printStackTrace();
-          throw new AuthenticationException("Required user name property is missing for login.");
-        } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();
-          throw new AuthenticationException("An error occured when trying to ");
+        if (!rs.next()) { //empty
+          return null;//throw new AuthenticationException("Username is wrong or does not exist.");
         }
 
+        if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
+          return null;
+        }
+
+        statement.close();
+
+      } catch (SQLException e) {
+        e.printStackTrace();
+        throw new AuthenticationException("Required user name property is missing for login.");
+      } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+        throw new AuthenticationException("Required user name property is missing for login.");
+      } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+        throw new AuthenticationException("An error occured when trying to ");
       }
     }
 
     user = new StandardUser(name);
 
     // Get the user role and set it as an attribute
-    if (name.equalsIgnoreCase("Computas")) {
-      String role = SettingsService.getProperty("sublima.base.url") + "role/Computas";
+    if (name.equalsIgnoreCase("Administrator")) {
+      String role = SettingsService.getProperty("sublima.base.url") + "role/Administrator";
       user.setAttribute("role", role);
     } else {
       user.setAttribute("role", adminService.getUserRole("<mailto:" + name + ">"));
