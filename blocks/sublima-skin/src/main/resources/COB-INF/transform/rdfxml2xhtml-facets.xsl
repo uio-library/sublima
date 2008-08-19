@@ -156,7 +156,7 @@
     <xsl:param name="count"/>
     <xsl:if test="$uri">
       <li>
-	<xsl:if test="position() &gt; $max-facets-more"> <!-- This number sets how many items should be shown untill the user clicks "more" -->
+	<xsl:if test="$this-field = 'dct:subject' and position() &gt; $max-facets-more"> <!-- This number sets how many items should be shown untill the user clicks "more" -->
 	  <xsl:attribute name="class">collapse</xsl:attribute>
 	  <xsl:attribute name="style">display : none;</xsl:attribute>
 	</xsl:if>
