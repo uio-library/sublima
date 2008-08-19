@@ -4,6 +4,7 @@
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
   <loggedin><jx:out value="#{loggedin}" xmlize="false"/></loggedin>
 
+  <statuses><jx:out value="#{statuses}" xmlize="true"/></statuses>
   <languages><jx:out value="#{languages}" xmlize="true"/></languages>
   <mediatypes><jx:out value="#{mediatypes}" xmlize="true"/></mediatypes>
   <audiences><jx:out value="#{audiences}" xmlize="true"/></audiences>

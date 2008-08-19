@@ -38,6 +38,13 @@ public class SearchController implements StatelessAppleController {
     if ("advancedsearch".equalsIgnoreCase(mode)) {
         Map<String, Object> bizData = new HashMap<String, Object>();
         com.computas.sublima.app.service.AdminService adminservice = new com.computas.sublima.app.service.AdminService();
+        bizData.put("loggedin", loggedIn);
+        if (loggedIn) {
+            bizData.put("statuses", adminservice.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
+                    "<http://www.w3.org/2007/05/powder#describedBy>"));
+        } else {
+            bizData.put("statuses", "<empty></empty>");
+        }
         bizData.put("languages", adminservice.getDistinctAndUsedLabels("<http://www.lingvoj.org/ontology#Lingvo>", "dct:language"));
         bizData.put("mediatypes", adminservice.getDistinctAndUsedLabels("dct:MediaType", "dct:format"));
         bizData.put("audiences", adminservice.getDistinctAndUsedLabels("dct:AgentClass", "dct:audience"));
