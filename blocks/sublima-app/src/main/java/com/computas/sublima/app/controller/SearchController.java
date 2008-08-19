@@ -208,9 +208,6 @@ public class SearchController implements StatelessAppleController {
         freetext = true;
         searchStringOverriden = freeTextSearchString(res, req);
         parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});
-        parameterMap.put("prefix", new String[]{"dct: <http://purl.org/dc/terms/>",
-                "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-                "pf: <http://jena.hpl.hp.com/ARQ/property#>", "skos: <http://www.w3.org/2004/02/skos/core#>"});
         parameterMap.remove("booleanoperator");
         parameterMap.remove("sort");
       }
