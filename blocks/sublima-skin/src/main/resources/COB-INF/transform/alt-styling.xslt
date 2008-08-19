@@ -203,20 +203,13 @@
 
     <xsl:call-template name="messages"/>
 
-    <xsl:if test="c:page/c:mode = 'search-result'">
-		  <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/>
+        <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
+		  <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>
 		</xsl:if>
 		
-		<!-- Facets -->
-		<!-- Facets are shown if the c:/page/c:facets exists in the XML --> 
-		<xsl:if test="c:page/c:mode != 'resource' and c:page/c:mode != 'browse'">
-		  <xsl:if test="c:page/c:facets">
-
-		    <h3><i18n:text key="facets.heading">Velg avgrensning</i18n:text></h3>
-		    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
-		  </xsl:if>
-		</xsl:if>
 		
+		
+			
 		
 		<!-- Advanced search -->        
 		<!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
@@ -244,22 +237,64 @@
 		</xsl:if>
 		
 
-		<!-- Link to RSS representation of search result -->
 		
+	
+		<!-- Search results -->
+		<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
+		
+		  <!-- Hvis ingen treff, generer et google søk -->     
+		  <xsl:if test="$numberofhits &lt; 1">
+		      <br/>
+		              <a>
+		                  <xsl:attribute name="href">
+		                      <xsl:text>http://www.google.com/search?hl=</xsl:text>
+		                      <xsl:value-of select="$interface-language"/>
+		                      <xsl:text>&amp;q=</xsl:text>
+		                      <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/>
+		                      <xsl:text>&amp;btnG=Google-søk</xsl:text>
+                          </xsl:attribute>
+		                  <i18n:text key="search.for">Søk etter</i18n:text><xsl:text> '</xsl:text> 
+		                  <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/> 
+		                  <xsl:text>' </xsl:text> 
+		                  <i18n:text key="in.google">in Google</i18n:text>
+		              </a>
+		              <br/>
+		           
+		      </xsl:if>
+		      
+	
+	
+	
+	        <!-- Hvis  treff, vis fasetter, RSS og resultater -->
+            <xsl:if test="$numberofhits &gt; 0">	
+		
+		
+		
+		
+		
+		<!-- Facets -->
+		<!-- Facets are shown if the c:/page/c:facets exists in the XML --> 
+		  <xsl:if test="c:page/c:facets">		    
+		    <h3><i18n:text key="facets.heading">Velg avgrensning</i18n:text></h3>
+		    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
+		  </xsl:if>
+	
+		
+		<!-- Søkeresultat -->
+		<h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
+		  
+		<!-- Link to RSS representation of search result -->
 		<xsl:if test="not($rss-url = '')">
 		  <a>
 		    <xsl:attribute name="href">
 		      <xsl:value-of select="$rss-url"/>
 		    </xsl:attribute> 
 		    RSS
-		  </a>
+		  </a><br/>
 		</xsl:if>
+ 		  
 		
-		<!-- Search results -->
-		<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-		  <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
-		  <!-- Søkeresultatene -->
-	       <xsl:choose>	  
+		  <xsl:choose>	  
     		 <xsl:when test="$res-view='full'">
     		 
     		  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results-full">
@@ -280,7 +315,14 @@
 	       	  </xsl:apply-templates>
 	        </xsl:otherwise>
 		  </xsl:choose>
+		  
+		  
+		  </xsl:if>
+		  
 		</xsl:if>
+
+	
+	
 		
 		<!-- Column 1 end -->
 	      </div>
