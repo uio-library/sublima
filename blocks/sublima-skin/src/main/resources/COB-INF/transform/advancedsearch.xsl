@@ -44,7 +44,7 @@
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
       <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>  
-      <input type="hidden" name="wdr:describedBy" value="http://sublima.computas.com/status/godkjent_av_administrator"/>
+
       <xsl:call-template name="hidden-locale-field"/>
       <table>
         <tr>
@@ -115,6 +115,17 @@
 	  <xsl:with-param name="label">Godkjent av</xsl:with-param>
 	</xsl:apply-templates>
 
+	<xsl:choose>
+	  <xsl:when test="/c:page/c:loggedin = 'true'">
+	    <xsl:apply-templates select="/c:page/c:statuses/sq:sparql">
+	      <xsl:with-param name="field">wdr:describedBy</xsl:with-param>
+	      <xsl:with-param name="label">Status</xsl:with-param>
+	    </xsl:apply-templates>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <input type="hidden" name="wdr:describedBy" value="http://sublima.computas.com/status/godkjent_av_administrator"/>
+	  </xsl:otherwise>
+	</xsl:choose>
         <tr>
           <td></td>
           <td>
