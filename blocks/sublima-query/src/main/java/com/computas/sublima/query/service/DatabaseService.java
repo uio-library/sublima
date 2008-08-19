@@ -13,7 +13,7 @@ import java.sql.*;
  * Date: 08.jan.2008
  */
 public class DatabaseService {
-  private String M_DB_URL = "jdbc:postgresql://localhost/smildata";// SettingsService.getProperty("sublima.database.url");
+  private String M_DB_URL = "jdbc:postgresql://localhost/subdata";// SettingsService.getProperty("sublima.database.url");
   private String M_DB_USER = "subuser";//SettingsService.getProperty("sublima.database.username");
   private String M_DB_PASSWD = "subpasswd";//SettingsService.getProperty("sublima.database.password");
   private String M_DB = "PostgreSQL";//SettingsService.getProperty("sublima.database.databasetype");
