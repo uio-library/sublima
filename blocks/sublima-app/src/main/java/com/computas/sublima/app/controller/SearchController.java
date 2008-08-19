@@ -277,8 +277,8 @@ public class SearchController implements StatelessAppleController {
           String[] values = req.getCocoonRequest().getParameterValues(key);
           for (String value : values) {
               value = value.replaceAll("&", "&amp;");
-              value = value.replaceAll("<", "&lt;");
-              value = value.replaceAll(">", "&gt;");
+              value = value.replaceAll("<", "%3C");
+              value = value.replaceAll(">", "%3E");
               value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
               params.append("\n      <value>" + value + "</value>");
           }
