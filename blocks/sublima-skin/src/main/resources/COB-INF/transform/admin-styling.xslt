@@ -227,11 +227,6 @@
 	  <xsl:with-param name="baseurl" select="$baseurl"/>
 	</xsl:call-template>
 
-	<!-- 
-	    <xsl:call-template name="debug"/>
-	-->
-
-
         <div class="colmask threecol">
           <div class="colmid">
             <div class="colleft">
@@ -240,8 +235,7 @@
 		<!--
                 <xsl:call-template name="debug"/>
 -->
-                Locale: <xsl:value-of select="$locale"/><br/>
-                <xsl:call-template name="contenttext"/>
+		<xsl:call-template name="contenttext"/>
 
                 <xsl:call-template name="messages"/>
 
