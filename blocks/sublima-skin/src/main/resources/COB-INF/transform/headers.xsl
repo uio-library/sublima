@@ -48,25 +48,15 @@
       <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
       
       <h2>Sublima 1.0 RC-1</h2>
-      <ul>
-	<li>
+      <div>
+
 	  <a href="{$baseurl}/{$qloc}" class="active">
-	  <i18n:text key="menu.search">Søk</i18n:text></a>
-	</li>
-	<li>
+	  <i18n:text key="menu.search">Søk</i18n:text></a> ,
+
 	  <a href="{$baseurl}/advancedsearch{$qloc}"><i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
-	  </a>
-	</li>
-	<li>
+	  </a> ,
 	  <a href="{$baseurl}/a-z{$qloc}"><i18n:text key="menu.az">A-Å</i18n:text></a>
-	</li>
-	<!--
-	    <li>
-              <a href="{$baseurl}/admin{$qloc}">Administrasjon
-	      </a>
-	      </li>
-	-->
-      </ul>
+      </div>
  
       <p id="layoutdims"> 
 	<xsl:call-template name="set-langs">
