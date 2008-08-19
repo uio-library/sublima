@@ -34,7 +34,7 @@ import com.hp.hpl.jena.sparql.util.StringUtils;
  * @version 1.0
  * @param: prefixes
  *         string array with prefixes for names used.
- * @param freetextFields
+ * @param freetextfields
  * 			  A List containing the fields that containing the fields 
  *            that needs to be treated as free-text-indexed fields.
 
@@ -496,8 +496,13 @@ public class Form2SparqlService {
 
     private StringBuffer OptimizeTripleOrder(ArrayList <String>n3List) {
         StringBuffer ordered = new StringBuffer();
+
         for (String triple : n3List) {
-            ordered.insert(0, triple);   
+            if (triple.contains("describedBy")) {
+                ordered.append(triple);
+            } else {
+                ordered.insert(0, triple);
+            }
         }
 
         return ordered;

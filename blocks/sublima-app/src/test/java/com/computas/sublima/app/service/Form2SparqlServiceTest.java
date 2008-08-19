@@ -274,6 +274,27 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "?resource ?p ?rest .\n}"}), resultString);
   }
 
+    public void testConvertForm2SparqlFreetextDescribedBy() {
+      // Single value test, with simple freetext search
+      SearchService searchService = new SearchService("AND");
+      testMap.put("ex:describedBy", new String[]{"http://example.org/status"});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine")});
+
+      myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
+      String resultString = myService.convertForm2Sparql(testMap);
+      assertEquals("Expected result and actual result not equal",
+		   StringUtils.join("\n", new String[]{
+		       "PREFIX dct: <http://purl.org/dc/terms/>",
+		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+               "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+               "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+		       "DESCRIBE ?resource ?rest WHERE {",
+		       "?lit pf:textMatch 'engine*' .",
+               "?resource sub:literals ?lit .",
+               "?resource ex:describedBy <http://example.org/status> .",
+		       "?resource ?p ?rest .\n}"}), resultString);
+  }
+
 
   public void testConvertForm2SparqlSingleValue() {
     // Single value test
