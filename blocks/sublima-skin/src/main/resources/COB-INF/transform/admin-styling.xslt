@@ -237,8 +237,9 @@
             <div class="colleft">
               <div class="col1">
                 <!-- Column 1 start -->
+		<!--
                 <xsl:call-template name="debug"/>
-
+-->
                 Locale: <xsl:value-of select="$locale"/><br/>
                 <xsl:call-template name="contenttext"/>
 
