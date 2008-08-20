@@ -163,8 +163,18 @@
 			</xsl:otherwise>
 		      </xsl:choose>
 		      <br/>
-		      
-		      <xsl:choose>
+          <xsl:choose>
+			<xsl:when test="c:page/c:searchparams/c:searchparams/c:exactmatch = 'exactmatch'">
+			  <input type="checkbox" name="exactmatch" value="exactmatch" checked="checked"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <input type="checkbox" name="exactmatch" value="exactmatch"/>
+			</xsl:otherwise>
+          </xsl:choose>
+          <i18n:text key="search.exactmatch">Eksakt ord</i18n:text>
+          <br/>
+
+          <xsl:choose>
 			<xsl:when test="c:page/c:searchparams/c:searchparams/c:deepsearch = 'deepsearch'">
 			  <input type="checkbox" name="deepsearch" value="deepsearch" checked="checked"/>
 			</xsl:when>

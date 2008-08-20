@@ -30,6 +30,7 @@
   <message key="search.sortby.date">Dato</message>
   <message key="search.numberofhits">Antall treff</message>
   <message key="search.submit">Søk</message>
+  <message key="search.exactmatch">Eksakt ord</message>
 
   <!-- facets -->
   <message key="facets.heading">Velg avgrensning</message>

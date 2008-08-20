@@ -157,6 +157,14 @@ public class SearchController implements StatelessAppleController {
     String defaultBooleanOperator = getProperty("sublima.default.boolean.operator");
     String chosenOperator = req.getCocoonRequest().getParameter("booleanoperator");
 
+    boolean truncate = true;
+
+    // Set right truncation or not, based on user choice
+    if (req.getCocoonRequest().getParameter("exactmatch") != null) {
+      truncate = false;
+    }
+
+
     SearchService searchService;
 
     //Use user chosen boolean operator when it doesn't equal the default
@@ -168,7 +176,7 @@ public class SearchController implements StatelessAppleController {
       logger.debug("SUBLIMA: Use " + defaultBooleanOperator + " as boolean operator for search");
     }
 
-    return searchService.buildSearchString(req.getCocoonRequest().getParameter("searchstring"));
+    return searchService.buildSearchString(req.getCocoonRequest().getParameter("searchstring"), truncate);
   }
 
 
@@ -196,6 +204,7 @@ public class SearchController implements StatelessAppleController {
     xmlSearchParametersBuffer.append("\t<c:operator>" + req.getCocoonRequest().getParameter("booleanoperator") + "</c:operator>\n");
     xmlSearchParametersBuffer.append("\t<c:deepsearch>" + req.getCocoonRequest().getParameter("deepsearch") + "</c:deepsearch>\n");
     xmlSearchParametersBuffer.append("\t<c:sortby>" + req.getCocoonRequest().getParameter("sort") + "</c:sortby>\n");
+    xmlSearchParametersBuffer.append("\t<c:exactmatch>" + req.getCocoonRequest().getParameter("exactmatch") + "</c:exactmatch>\n");
     xmlSearchParametersBuffer.append("</c:searchparams>\n");
 
 
@@ -217,6 +226,7 @@ public class SearchController implements StatelessAppleController {
         parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});
         parameterMap.remove("booleanoperator");
         parameterMap.remove("sort");
+        parameterMap.remove("exactmatch");
       }
     }
     // sending the result

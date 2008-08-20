@@ -30,6 +30,7 @@
   <message key="search.sortby.date">Date</message>
   <message key="search.numberofhits">Number of hits</message>
   <message key="search.submit">Search</message>
+  <message key="search.exactmatch">Exact word(s)</message>
 
   <!-- facets -->
   <message key="facets.heading">Filter by</message>

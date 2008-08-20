@@ -37,7 +37,7 @@ public class SearchService {
    * @return A transformed search string, using AND/OR based on the configuration
    */
   //todo More advanced check on search string. Ie. - + NOT OR AND if defined in the search term by the user
-  public String buildSearchString(String searchstring) {
+  public String buildSearchString(String searchstring, boolean truncate) {
 
     /*
     //If the default is set to OR, just return since OR is default with LARQ
@@ -74,7 +74,7 @@ public class SearchService {
           partOfPhrase = true;
         }
 
-        if (partOfPhrase) {
+        if (partOfPhrase || !truncate) {
           stringBuffer.append(partialSearchString[i] + " ");
         } else {
           stringBuffer.append(partialSearchString[i] + "* ");

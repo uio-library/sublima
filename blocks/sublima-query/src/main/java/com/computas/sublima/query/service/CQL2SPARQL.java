@@ -6,7 +6,7 @@ import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLTermNode;
-import org.apache.log4j.Logger;
+import org.apache.log4j.Logger;                              
 
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ public class CQL2SPARQL {
         }
         SearchService searchService = new SearchService("AND");
 
-        String searchString = searchService.buildSearchString(thisNode.getTerm()); // This is the freetext we will search for.
+        String searchString = searchService.buildSearchString(thisNode.getTerm(), true); // This is the freetext we will search for.
         logger.debug("CQL2SPARQL: Search String is: " + searchString);
         return  "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
                 "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
