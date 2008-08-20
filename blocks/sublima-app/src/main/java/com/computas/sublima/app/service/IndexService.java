@@ -93,10 +93,8 @@ public class IndexService {
       }
     }
 
-
-    list = null;
-
     logger.info("SUBLIMA: updateResourceSearchfield() --> List contains " + list.size() + " new triples to index");
+    list = null;
 
   }
 
