@@ -185,7 +185,7 @@ public class UserController implements StatelessAppleController {
           } catch (SQLException e) {
             e.printStackTrace();
             /*
-            logger.trace("TopicController.editUser --> NEW USER: INSERT USERNAME FAILED\n");
+            logger.trace("UserController.editUser --> NEW USER: INSERT USERNAME FAILED\n");
             messageBuffer.append("<c:message>Brukernavnet finnes fra fr</c:message>\n</c:messages>\n");
 
             bizData.put("userdetails", "<empty></empty>");
@@ -218,7 +218,7 @@ public class UserController implements StatelessAppleController {
               int insertedRows = dbService.doSQLUpdate(insertSql);
             } catch (SQLException e) {
               e.printStackTrace();
-              logger.trace("TopicController.editUser --> EXISTING USER: INSERT USERINFO FAILED\n");
+              logger.error("UserController.editUser --> EXISTING USER: INSERT USERINFO FAILED\n");
             }
 
           }
@@ -242,19 +242,19 @@ public class UserController implements StatelessAppleController {
           int insertedRows = 0;
           try {
             String password = adminService.generateSHA1(req.getCocoonRequest().getParameter("password1"));
-            logger.trace("TopicController.editUser --> GENERATE PASSWORD SHA1 " + password + "\n");
+            logger.trace("UserController.editUser --> GENERATE PASSWORD SHA1 " + password + "\n");
 
             String insertSql = "UPDATE users "
                     + "SET password = '" + password + "' "
                     + "WHERE username = '" + req.getCocoonRequest().getParameter("sioc:email") + "'";
 
-            logger.trace("TopicController.editUser --> INSERT USERINFO:\n" + insertSql);
+            logger.trace("UserController.editUser --> INSERT USERINFO:\n" + insertSql);
 
             try {
               insertedRows = dbService.doSQLUpdate(insertSql);
             } catch (SQLException e) {
               e.printStackTrace();
-              logger.trace("TopicController.editUser --> INSERT USERINFO FAILED\n");
+              logger.error("UserController.editUser --> INSERT USERINFO FAILED\n");
             }
 
 
@@ -304,9 +304,9 @@ public class UserController implements StatelessAppleController {
 
         boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
 
-        logger.trace("TopicController.editUser --> INSERT QUERY:\n" + sparqlQuery);
+        logger.trace("UserController.editUser --> INSERT QUERY:\n" + sparqlQuery);
 
-        logger.trace("TopicController.editUser --> INSERT QUERY RESULT: " + insertSuccess);
+        logger.debug("UserController.editUser --> INSERT QUERY RESULT: " + insertSuccess);
 
         if (insertSuccess) {
           messageBuffer.append("<c:message>Bruker oppdatert!</c:message>\n");
@@ -415,8 +415,8 @@ public class UserController implements StatelessAppleController {
         boolean insertSuccess = sparulDispatcher.query(insertString.toString());
 
 
-        logger.trace("TopicController.editRole --> INSERT QUERY:\n" + insertString.toString());
-        logger.trace("TopicController.editRole --> INSERT QUERY RESULT: " + insertSuccess);
+        logger.trace("UserController.editRole --> INSERT QUERY:\n" + insertString.toString());
+        logger.debug("UserController.editRole --> INSERT QUERY RESULT: " + insertSuccess);
 
         if (insertSuccess) {
 
