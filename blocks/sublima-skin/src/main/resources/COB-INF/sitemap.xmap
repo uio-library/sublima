@@ -48,7 +48,7 @@
           <map:transform type="i18n">
             <map:parameter name="locale" value="{language}"/>
           </map:transform>
-          <map:serialize type="xml"/>
+          <map:serialize type="xml" mime-type="application/rss+xml"/>
         </map:act>
       </map:match>
 
