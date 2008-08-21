@@ -45,7 +45,7 @@
 	  <xsl:call-template name="lang-text">
 	    <xsl:with-param name="url">
 	      <xsl:value-of select="$baseurl"/>
-	      <xsl:text>?locale=</xsl:text>
+	      <xsl:text>/?locale=</xsl:text>
 	    </xsl:with-param>
 	  </xsl:call-template>
 	</xsl:otherwise>
