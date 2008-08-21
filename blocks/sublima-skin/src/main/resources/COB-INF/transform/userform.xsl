@@ -78,7 +78,7 @@
 
         <tr>
           <td>
-            <label for="password2"><i18n:text key="repeat">Gjenta</i18n:text> <i18n:text key="password">passord</i18n:text></label>
+            <label for="password2"><i18n:text key="repeat">Gjenta</i18n:text><xsl:text> </xsl:text><i18n:text key="password">passord</i18n:text></label>
           </td>
           <td>
             <input id="password2" type="password"
