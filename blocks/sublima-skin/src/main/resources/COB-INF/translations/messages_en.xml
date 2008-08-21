@@ -62,6 +62,7 @@
 
   <!-- administration -->
   <message key="admin.login">Log in</message>
+  <message key="admin.loginout">Log out</message>
   <message key="admin.topic.usedby">Resources with topic associated</message>
   <message key="admin.publisher.resources">Resources from this publisher</message>
   <message key="admin.linkcheck.gone">Status GONE due to notice from provider.</message>
