@@ -154,6 +154,13 @@ public class Form2SparqlServiceTest extends TestCase {
             myService.convertFormField2N3("dct:dateAccepted", testString));
   }
 
+  public void testConvertFormField2N3SingleDateRange() {
+        String expectS = "\n?resource dct:dateAccepted ?date .\nFILTER ( ?date > \"2008-08-21T00:00:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> && ?date < \"2008-08-21T23:59:59\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ) .";
+        testString[0] = "2008-08-21";
+        assertEquals("Expected result and actual result not equal", expectS,
+            myService.convertFormField2N3("dct:dateAccepted", testString));
+  }
+
   public void testConvertFormField2N3SingleMailTo() {
     String expectS = "\n?resource foaf:mbox <mailto:test@example.org> .";
     testString[0] = "mailto:test@example.org";

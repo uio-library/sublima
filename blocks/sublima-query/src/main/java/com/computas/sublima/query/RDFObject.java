@@ -131,14 +131,24 @@ public class RDFObject implements Serializable {
       logger.trace("Found xsd:boolean " + getValue());
       n3Buffer.append("\"" + getValue() + "\"^^<http://www.w3.org/2001/XMLSchema#boolean>");
     }
-    // Very ad-hoc date detection, doesn't support negative years,
+        // Very ad-hoc date detection, doesn't support negative years,
 		// fractions of seconds or timezones
 		if (getValue().matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}")) {
 			logger.trace("Found xsd:dateTime " + getValue());
 			n3Buffer.append("\"" + getValue()
 					+ "\"^^<http://www.w3.org/2001/XMLSchema#dateTime>");
 		}
-		// To check if we have a URI, use regexp from RFC 2396, modified
+        // If we have just a date, then assume we want to filter on a range
+        else if (getValue().matches("\\d{4}-\\d{2}-\\d{2}")) {
+            logger.trace("Found a date " + getValue() + ", assume range.");
+            n3Buffer.append("?date .\nFILTER ( ?date > \"");
+            n3Buffer.append(getValue());
+            n3Buffer.append("T00:00:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> && ?date < \"");
+            n3Buffer.append(getValue());
+            n3Buffer.append("T23:59:59\"^^<http://www.w3.org/2001/XMLSchema#dateTime> )");
+
+        }
+        // To check if we have a URI, use regexp from RFC 2396, modified
 		else if (getValue().matches(
 				"^([^:/?#\\s]+):(//([^/?#\\s]*))?([^?#]*)(\\?([^#]*))?(#(.*))?")) {
 			logger.debug("Found URI " + getValue());
