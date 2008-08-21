@@ -92,7 +92,7 @@
        <xsl:with-param name="buttontext"><i18n:text key="button.saverelation">Lagre relasjonstype</i18n:text></xsl:with-param>
   </xsl:call-template>
 
-  <input type="reset" value="button.empty" i18n:attr="value"/>
+
 	
       </fieldset>
       

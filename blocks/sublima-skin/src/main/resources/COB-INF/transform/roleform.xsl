@@ -370,7 +370,7 @@
             </xsl:call-template>
           </td>
           <td>
-            <input type="reset" value="button.empty" i18n:attri="value"/>
+
           </td>
         </tr>
       </table>
@@ -686,7 +686,7 @@
             </xsl:call-template>
           </td>
           <td>
-            <input type="reset" value="button.empty" i18n:attr="value"/>
+
           </td>
         </tr>
       </table>
