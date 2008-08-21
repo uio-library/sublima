@@ -5,9 +5,9 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
         xmlns:dct="http://purl.org/dc/terms/"
-        xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sublima="http://xmlns.computas.com/sublima#"
         xmlns="http://purl.org/rss/1.0/" 
+	exclude-result-prefixes="c skos sublima"
         version="1.0">
  
   <xsl:import href="rdfxml2rss-deflist.xsl"/>
@@ -15,8 +15,8 @@
 
   <xsl:output encoding="UTF-8" method="xml" media-type="application/rss+xml"/>
 
-
-  <xsl:param name="baseurl"/>
+  <xsl:param name="servername"/>
+  <xsl:param name="serverport"/>
 
   <!-- A debug template that dumps the source tree. Do not remove
 this, just comment out the call-template -->
@@ -40,6 +40,15 @@ this, just comment out the call-template -->
 
 
       <xsl:call-template name="rss-channel">
+	<xsl:with-param name="url">
+	  <xsl:text>http://</xsl:text>
+	  <xsl:value-of select="$servername"/>
+	  <xsl:if test="$serverport != 80">
+	    <xsl:text>:</xsl:text>
+	    <xsl:value-of select="$serverport"/>
+	  </xsl:if>
+	  <xsl:value-of select="c:page/c:facets/c:request/@requesturl"/>
+	</xsl:with-param>
         <xsl:with-param name="title">
           <xsl:choose>
             <xsl:when test="c:page/c:mode = 'topic'">

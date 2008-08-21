@@ -38,17 +38,11 @@
     <map:match pattern="rss-styling">
         <map:act type="locale">
           <map:generate src="service-consumer:"/>
-          <map:transform type="i18n">
-            <map:parameter name="locale" value="{language}"/>
+	  <map:transform src="transform/rss-styling.xsl">
+	    <map:parameter name="servername" value="{request:serverName}"/>
+	    <map:parameter name="serverport" value="{request:serverPort}"/>
           </map:transform>
-          <map:transform src="transform/rss-styling.xsl">
-            <map:parameter name="baseurl" value="{request:contextPath}"/>
-            <map:parameter name="interface-language" value="{language}"/>
-          </map:transform>
-          <map:transform type="i18n">
-            <map:parameter name="locale" value="{language}"/>
-          </map:transform>
-          <map:serialize type="xml" mime-type="application/rss+xml"/>
+          <map:serialize type="xml" mime-type="application/rss+xml;charset=UTF-8"/>
         </map:act>
       </map:match>
 
