@@ -144,6 +144,7 @@
   <!-- buttons -->
   <message key="button.saveresource">Save resource</message>
   <message key="button.deleteresource">Delete resource</message>
+  <message key="button.copyasnew">Copy as new</message>
   <message key="button.savetopic">Save topic</message>
   <message key="button.savethemetopics">Save selection</message>
   <message key="button.join">Merge</message>

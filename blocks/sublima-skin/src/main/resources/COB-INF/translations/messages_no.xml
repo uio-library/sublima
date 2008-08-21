@@ -142,6 +142,7 @@
   <!-- buttons -->
   <message key="button.saveresource">Lagre ressurs</message>
   <message key="button.deleteresource">Slett ressurs</message>
+  <message key="button.copyasnew">Kopier til ny</message>
   <message key="button.savetopic">Lagre emne</message>
   <message key="button.savethemetopics">Lagre valgte tema</message>
   <message key="button.empty">Tøm skjema</message>
