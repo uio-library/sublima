@@ -58,10 +58,10 @@ public class FeedbackController implements StatelessAppleController {
 
       //todo Back to the resource details page
       if (success) {
-        res.redirectTo(req.getCocoonRequest().getParameter("resource"));
+        res.redirectTo(req.getCocoonRequest().getParameter("resource") + ".html");
         return;
       } else {
-        res.redirectTo(req.getCocoonRequest().getParameter("resource"));
+        res.redirectTo(req.getCocoonRequest().getParameter("resource") + ".html");
         return;
       }
     }
