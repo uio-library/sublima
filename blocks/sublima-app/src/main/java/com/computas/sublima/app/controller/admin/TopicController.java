@@ -165,7 +165,7 @@ public class TopicController implements StatelessAppleController {
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
       Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
-
+      parameterMap.remove("actionbutton");
       Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
       parameterMap.remove("prefix"); // The prefixes are magic variables
       if (parameterMap.get("subjecturi-prefix") != null) {
@@ -188,7 +188,8 @@ public class TopicController implements StatelessAppleController {
 
       if (insertSuccess) {
         messageBuffer.append("<c:message>Ny relasjonstype lagret</c:message>\n");
-        bizData.put("relationdetails", adminService.getRelationByURI(uri));
+
+        bizData.put("relationdetails", adminService.getRelationByURI(form2SparqlService.getURI()));
 
       } else {
         messageBuffer.append("<c:message>Feil ved lagring av ny relasjonstype</c:message>\n");
