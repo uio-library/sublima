@@ -36,9 +36,11 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 
       URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
       logger.debug("SPARQLdispatcher connected to Joseki.");
+      long connecttime = System.currentTimeMillis();
       con = (HttpURLConnection) u.openConnection();
       result = IOUtils.toString(con.getInputStream());
-      logger.info("SPARQLdispatcher got results from Joseki.");
+      long requesttime = System.currentTimeMillis() - connecttime;
+      logger.info("SPARQLdispatcher got results from Joseki. Query took " + requesttime + " ms." );
     } catch (Exception e) {
       con.disconnect();
       e.printStackTrace();
