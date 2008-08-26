@@ -568,7 +568,11 @@ public class ResourceController implements StatelessAppleController {
           (AppleResponse
                   res, AppleRequest
                   req) {
-    res.sendPage("xml2/ressurser", null);
+      Map<String, Object> bizData = new HashMap<String, Object>();
+      com.computas.sublima.app.service.AdminService adminservice = new com.computas.sublima.app.service.AdminService();
+      bizData.put("statuses", adminservice.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
+              "<http://www.w3.org/2007/05/powder#describedBy>"));
+      res.sendPage("xml2/ressurser", bizData);     
   }
 
   public void setSparqlDispatcher

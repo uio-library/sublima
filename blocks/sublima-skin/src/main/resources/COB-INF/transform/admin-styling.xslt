@@ -30,7 +30,7 @@
   <xsl:import href="importexport.xsl"/>
   <xsl:import href="set-lang.xsl"/>
   <xsl:import href="publisherform.xsl"/>
-
+  <xsl:import href="sparql-uri-label-pairs.xsl"/>
 
   <xsl:output method="xml"
               encoding="UTF-8"
@@ -236,6 +236,26 @@
 		<xsl:call-template name="contenttext"/>
 
                 <xsl:call-template name="messages"/>
+
+		<xsl:if test="c:page/c:statuses/sparql:sparql">
+		
+		  <form action="../../search-result.html" method="GET">
+		    <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>  
+		    <xsl:call-template name="hidden-locale-field"/>
+
+		    <table>
+		      <xsl:apply-templates select="c:page/c:statuses/sparql:sparql">
+			<xsl:with-param name="field">wdr:describedBy</xsl:with-param>
+			<xsl:with-param name="label">Status</xsl:with-param>
+		      </xsl:apply-templates>
+		    </table>
+
+		    <input type="submit" value="Search"/>
+		  </form>
+		  </xsl:if>
+
+
+
 
                 <xsl:apply-templates select="c:page/c:content/c:upload" mode="upload"/>
 

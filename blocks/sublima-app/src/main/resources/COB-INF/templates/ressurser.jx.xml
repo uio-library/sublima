@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c:page xmlns="http://www.w3.org/1999/xhtml"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-        xmlns:c="http://xmlns.computas.com/cocoon">
+	xmlns:c="http://xmlns.computas.com/cocoon"
+	xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
     <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
     <c:breadcrumbs>
@@ -31,4 +32,7 @@
             </p>
         </c:text>
     </c:content>
+
+    <c:statuses><jx:out value="#{statuses}" xmlize="true"/></c:statuses>    
+
 </c:page>
