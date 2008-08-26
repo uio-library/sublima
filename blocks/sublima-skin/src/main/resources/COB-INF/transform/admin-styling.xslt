@@ -217,9 +217,7 @@
     <html>
       
       <xsl:call-template name="head">
-	<xsl:with-param name="title">
-	  <xsl:copy-of select="c:page/c:title/*"/> <!-- Title is really a string, so is this any point? -->
-	</xsl:with-param>
+	<xsl:with-param name="title" select="c:page/c:title"/>
       </xsl:call-template>
       <body>
 
