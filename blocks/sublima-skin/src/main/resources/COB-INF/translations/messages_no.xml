@@ -30,7 +30,6 @@
   <message key="search.sortby.date">Dato</message>
   <message key="search.numberofhits">Antall treff</message>
   <message key="search.submit">Søk</message>
-  <message key="search.exactmatch">Eksakt ord</message>
 
   <!-- facets -->
   <message key="facets.heading">Velg avgrensning</message>
@@ -50,10 +49,6 @@
   <!-- validation -->
   <message key="validation.providedurlok">Angitt URL godkjent.</message>
   <message key="validation.topic.notitle">Emnet mangler tittel</message>
-  <message key="validation.urlexists">Oppgitt URL er allerede registrert på en ressurs.</message>
-
-  <!-- login validation -->
-  <message key="login.failed">Brukernavn/passord er ikke korrekt. Vennligst kontroller opplysningene og prøv på nytt, eller kontakt administrator.</message>
 
   <!-- resource form -->
   <message key="resource.sendcomment">Send inn en kommentar angående denne ressursen</message>
@@ -62,19 +57,18 @@
 
   <!-- administration -->
   <message key="admin.login">Logg inn</message>
-  <message key="admin.loginout">Logg ut</message>
   <message key="admin.topic.usedby">Ressurser tilknyttet emnet</message>
   <message key="admin.publisher.resources">Ressurser tilknyttet utgiveren</message>
   <message key="admin.linkcheck.gone">Ressursen er permanent borte</message>
   <message key="admin.linkcheck.inactive">Satt inaktiv pga varige problemer</message>
   <message key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</message>
-  <message key="admin.approvedby">Redaksjonelt godkjent av</message>
+  <message key="admin.approvedby">Godkjent av</message>
   <message key="admin.posteddate">Innsendt</message>
   <message key="admin.accepteddate">Godkjent</message>
   <message key="admin.intro">På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima du vil administrere fra linkene til venstre.</message>
 
   <!-- tips -->
-  <message key="tips.heading"><h2>Fant du ikke det du lette etter?</h2><br/><p>Tips oss gjerne dersom du finner sider som du tror vi kunne satt pris på!</p></message>
+  <message key="tips.heading"><h2>Fant du ikke det du lette etter?</h2><br/><p>Tips oss gjerne om ressurser du synes vi mangler!</p></message>
   <message key="tips.suggestedtopics">Forslag til emner på ressursen</message>
   <message key="tips.submit">Send inn</message>
   <message key="tips.thanks">Takk for tipset!</message>
@@ -137,12 +131,10 @@
   <message key="location">Fil</message>
   <message key="search">Søk</message>
   <message key="topconcept">Hovedemne</message>
-  <message key="repladeurlwithuri">Erstatt URL med URI</message>
 
   <!-- buttons -->
   <message key="button.saveresource">Lagre ressurs</message>
   <message key="button.deleteresource">Slett ressurs</message>
-  <message key="button.copyasnew">Kopier til ny</message>
   <message key="button.savetopic">Lagre emne</message>
   <message key="button.savethemetopics">Lagre valgte tema</message>
   <message key="button.empty">Tøm skjema</message>
@@ -152,6 +144,5 @@
   <message key="button.saverole">Lagre rolle</message>
   <message key="button.next">Neste</message>
   <message key="button.read">Les inn</message>
-  <message key="resourceasnew">Marker som ny</message>
 
 </catalogue>
