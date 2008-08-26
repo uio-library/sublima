@@ -75,9 +75,6 @@ public class ResourceController implements StatelessAppleController {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         showResourcesIndex(res, req);
         return;
-      } else if ("foreslaatte".equalsIgnoreCase(submode)) {
-        showSuggestedResources(res, req);
-        return;
       } else if ("ny".equalsIgnoreCase(submode)) {
         editResource(res, req, "ny", null);
         return;
@@ -521,41 +518,6 @@ public class ResourceController implements StatelessAppleController {
     xmlStructureBuffer.append("<wdr:describedBy>" + temp_status + "</wdr:describedBy>\n");
 
     return xmlStructureBuffer;
-  }
-
-  /**
-   * Method to displaty a list of all resources suggested by users
-   *
-   * @param res - AppleResponse
-   * @param req - AppleRequest
-   */
-  private void showSuggestedResources
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
-    String queryString = StringUtils.join("\n", new String[]{
-            completePrefixes,
-            "CONSTRUCT {",
-            "    ?resource dct:title ?title ;" +
-                    //"              dct:identifier ?identifier ;" +
-                    "              a sub:Resource . }",
-            "    WHERE {",
-            "        ?resource wdr:describedBy <" + getProperty("sublima.base.url") + "status/nytt_forslag> ;",
-            "                  dct:title ?title .",
-            //"                  dct:identifier ?identifier .",
-            "}"});
-
-    logger.trace("AdminController.showSuggestedResources() --> SPARQL query sent to dispatcher: \n" + queryString);
-    Object queryResult = sparqlDispatcher.query(queryString);
-
-    Map<String, Object> bizData = new HashMap<String, Object>();
-
-    if ("".equalsIgnoreCase((String) queryResult) || queryResult == null) {
-      bizData.put("suggestedresourceslist", "<empty></empty>");
-    } else {
-      bizData.put("suggestedresourceslist", queryResult);
-    }
-    res.sendPage("xml2/foreslaatte", bizData);
   }
 
   /**

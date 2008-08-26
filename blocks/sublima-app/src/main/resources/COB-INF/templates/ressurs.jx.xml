@@ -28,7 +28,6 @@
       <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
       <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title">
         <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/ressurser/ny"/>
-        <c:childmenuelement title="menu.suggested" i18n:attr="title" link="admin/ressurser/foreslaatte"/>
       </c:menuelement>
       <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
       <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
