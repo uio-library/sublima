@@ -14,24 +14,17 @@
         xmlns:sq="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
+
+  <xsl:import href="autocompletion.xsl"/>
+  <xsl:import href="sparql-uri-label-pairs.xsl"/>
+
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
 
+
   <xsl:template match="c:advancedsearch" mode="advancedsearch">
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-          $("#subject").autocomplete("autocomplete", {
-            minChars: 3,
-            extraParams : { action:"topic", locale:"<xsl:value-of select="$interface-language"/>" }
-            });
-
-          $("#publisher").autocomplete("autocomplete", {
-            minChars: 3,
-            extraParams : { action:"publisher", locale:"<xsl:value-of select="$interface-language"/>" }
-            });
-        });
-    </script>
+    <xsl:call-template name="autocompletion"/>
 
     <form action="search-result.html" method="GET">
       <input type="hidden" name="freetext-field" value="dct:title"/>
@@ -135,32 +128,5 @@
       </table>
     </form>
   </xsl:template>
-
-  <xsl:template match="sq:sparql">
-    <xsl:param name="field"/>
-    <xsl:param name="label"/>
-    <xsl:if test="./sq:results/sq:result">
-      <tr>
-	<th scope="row">
-	  <label for="{$field}">
-	    <xsl:value-of select="$label"/>
-	  </label>
-	</th>
-	<td>
-	  <select id="{$field}" name="{$field}">
-	    <option value=""></option>
-	    <xsl:for-each select="./sq:results/sq:result">
-	      <xsl:sort select="./sq:binding[@name = 'label']/sq:literal"/>
-	      <option value="{./sq:binding[@name = 'uri']/sq:uri}">
-		<xsl:value-of select="./sq:binding[@name = 'label']/sq:literal"/>
-	      </option>
-	    </xsl:for-each>
-	  </select>
-	</td>
-      </tr>
-      
-    </xsl:if>
-  </xsl:template>
-
 
 </xsl:stylesheet>
