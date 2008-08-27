@@ -377,7 +377,7 @@
 		    <xsl:for-each select="c:page/c:result-list/rdf:RDF//skos:Concept">
 		      <xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
 		      <li>
-			<a href="./@rdf:about"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
+			<a href="{./@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
 		      </li>
 		    </xsl:for-each>
 		  </ul>
