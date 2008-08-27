@@ -93,10 +93,20 @@
   <xsl:template match="dct:subject" mode="facets">
     <xsl:param name="baseurlparams"/>
     <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
+    
     <xsl:call-template name="facet-field">
       <xsl:with-param name="max-facets-more">4</xsl:with-param>
       <xsl:with-param name="this-field">dct:subject</xsl:with-param>
-      <xsl:with-param name="this-label" select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+      <xsl:with-param name="this-label">
+	<xsl:choose>
+	  <xsl:when test="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
+	    <xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:with-param>
       <xsl:with-param name="uri" select="$uri"/>
       <xsl:with-param name="count"  select="count(//dct:subject[@rdf:resource=$uri])+1"/>
       <xsl:with-param name="baseurlparams" select="$baseurlparams"/>

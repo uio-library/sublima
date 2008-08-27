@@ -76,13 +76,31 @@
    <xsl:choose>
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
-	<a href="{$uri}.html{$qloc}"><xsl:value-of select="//skos:Concept[@rdf:about=$uri]/skos:prefLabel[@xml:lang=$interface-language]"/></a>
+	<a href="{$uri}.html{$qloc}">
+	<xsl:choose>
+	  <xsl:when test="//skos:Concept[@rdf:about=$uri]/skos:prefLabel[@xml:lang=$interface-language]">
+	    <xsl:value-of select="//skos:Concept[@rdf:about=$uri]/skos:prefLabel[@xml:lang=$interface-language]"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+	  </xsl:otherwise>
+	</xsl:choose>
+	</a>
       </xsl:when>
       <xsl:when test="./skos:Concept/@rdf:about">
-	<a href="{./skos:Concept/@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/></a>
+	<a href="{./skos:Concept/@rdf:about}.html{$qloc}">
+	<xsl:choose>
+	  <xsl:when test="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
+	    <xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+	  </xsl:otherwise>
+	</xsl:choose>
+	</a>
       </xsl:when>
       <xsl:otherwise>
-	<span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel</i18n:text></span>
+	<span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:if test="position() != last()">
