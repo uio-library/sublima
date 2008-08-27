@@ -71,47 +71,40 @@
    <!-- sorted by preffered label -->
     <i18n:text key="topic">Emne</i18n:text> 
     <xsl:if test="sub:Resource/dct:subject">
-    <ul>
-      <xsl:apply-templates select="sub:Resource/dct:subject[skos:Concept]" mode="facets">
-       
+      <ul>
+	<xsl:for-each select="/c:page/c:result-list/rdf:RDF//skos:Concept">
+	  <xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
+	  <xsl:variable name="uri" select="./@rdf:about"/>
+	
+	  <xsl:call-template name="facet-field">
+	    <xsl:with-param name="max-facets-more">4</xsl:with-param>
+	    <xsl:with-param name="this-field">dct:subject</xsl:with-param>
+	    <xsl:with-param name="this-label">
+	      <xsl:choose>
+		<xsl:when test="./skos:prefLabel[@xml:lang=$interface-language]">
+		  <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:with-param>
+	    <xsl:with-param name="uri" select="$uri"/>
+	    <xsl:with-param name="count"  select="count(//dct:subject[@rdf:resource=$uri])+1"/>
 	    <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-       <xsl:sort select="skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
-      </xsl:apply-templates> 
-    </ul>
-    </xsl:if>
+	    
+	  </xsl:call-template>
 
-    <xsl:if test="sub:Resource/dct:subject[skos:Concept][position() &gt; 1]">
-      <span class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" ><i18n:text key="more">more</i18n:text> &#187;</a></span>
-    </xsl:if>
+	</xsl:for-each>
+	
 
-    
+	<div class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" ><i18n:text key="more">more</i18n:text> &#187;</a></div>
+
+	
+      </ul>
+    </xsl:if>
     </div>
     </div>
-    <br/>
-   </xsl:template>
-
-  <xsl:template match="dct:subject" mode="facets">
-    <xsl:param name="baseurlparams"/>
-    <xsl:variable name="uri" select="./skos:Concept/@rdf:about"/>
-    
-    <xsl:call-template name="facet-field">
-      <xsl:with-param name="max-facets-more">4</xsl:with-param>
-      <xsl:with-param name="this-field">dct:subject</xsl:with-param>
-      <xsl:with-param name="this-label">
-	<xsl:choose>
-	  <xsl:when test="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
-	    <xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:with-param>
-      <xsl:with-param name="uri" select="$uri"/>
-      <xsl:with-param name="count"  select="count(//dct:subject[@rdf:resource=$uri])+1"/>
-      <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
- 
-    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="dct:language" mode="facets">
