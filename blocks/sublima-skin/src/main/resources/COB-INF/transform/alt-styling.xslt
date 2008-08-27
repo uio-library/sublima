@@ -360,13 +360,27 @@
 		<!-- Column 3 start -->
         
 		<!-- Navigation -->
-		<!-- Navigation is only shown when one topic is in focus -->
-		<!-- Discussion is open on showing a different navigation scheme when more then one topic is in focus --> 
+
+
+		<!-- Navigation when one topic is in focus -->
 		<xsl:if test="c:page/c:mode = 'topic'">
 		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
 		  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
 		    <xsl:with-param name="role">this-param</xsl:with-param>
 		  </xsl:apply-templates>
+		</xsl:if>
+
+		<!-- Navigation when we have list of search results is in focus -->
+		<xsl:if test="c:page/c:mode = 'search-result'">
+		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
+		  <ul>
+		    <xsl:for-each select="c:page/c:result-list/rdf:RDF//skos:Concept">
+		      <xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
+		      <li>
+			<a href="./@rdf:about"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
+		      </li>
+		    </xsl:for-each>
+		  </ul>
 		</xsl:if>
 		
 		<!-- Column 3 end -->
