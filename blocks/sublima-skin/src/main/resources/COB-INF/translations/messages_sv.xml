@@ -47,8 +47,9 @@
  <message key="topic.navigation">Navigering</message> 
 
 <!--  validation  --> 
- <message key="validation.providedurlok">Angiven URL godkänd.</message> 
- <message key="validation.topic.notitle">Ämnet saknar titel</message> 
+ <message key="validation.providedurlok">Angiven URL godkänd</message>
+ <message key="validation.topic.notitle">Ämnet saknar titel</message>
+  <message key="validation.urlexists">Angiven URL redan registrerat</message>
 
 <!--  resource form  --> 
  <message key="resource.sendcomment">Kommentera denna resurs</message> 

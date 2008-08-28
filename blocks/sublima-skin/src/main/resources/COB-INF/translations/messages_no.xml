@@ -47,8 +47,9 @@
   <message key="topic.navigation">Navigasjon</message>
 
   <!-- validation -->
-  <message key="validation.providedurlok">Angitt URL godkjent.</message>
+  <message key="validation.providedurlok">Angitt URL godkjent</message>
   <message key="validation.topic.notitle">Emnet mangler tittel</message>
+  <message key="validation.urlexists">Angitt URL finnes allerede</message>
 
   <!-- resource form -->
   <message key="resource.sendcomment">Send inn en kommentar angående denne ressursen</message>
