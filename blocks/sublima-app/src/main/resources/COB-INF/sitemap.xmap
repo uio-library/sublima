@@ -9,13 +9,13 @@
   <map:components>
     <map:matchers>
       <map:action name="locale" src="org.apache.cocoon.acting.LocaleAction">
-	<locale-attribute>locale</locale-attribute>
-	<use-locale>true</use-locale>
-	<default-locale language="no" country="NO"/>
-	<store-in-request>true</store-in-request>
-	<create-session>false</create-session>
-	<store-in-session>false</store-in-session>
-	<store-in-cookie>false</store-in-cookie>
+	<map:locale-attribute>locale</map:locale-attribute>
+	<map:use-locale>false</map:use-locale>
+	<map:default-locale language="no" country="NO"/>
+	<map:store-in-request>true</map:store-in-request>
+	<map:create-session>false</map:create-session>
+	<map:store-in-session>false</map:store-in-session>
+	<map:store-in-cookie>false</map:store-in-cookie>
       </map:action>
       
     </map:matchers>
