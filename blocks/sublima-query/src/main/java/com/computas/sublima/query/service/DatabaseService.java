@@ -4,8 +4,10 @@ package com.computas.sublima.query.service;
 import com.hp.hpl.jena.db.DBConnection;
 import com.hp.hpl.jena.db.IDBConnection;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+//import java.io.BufferedWriter;
+//import java.io.FileWriter;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.sql.*;
 
 /**
@@ -87,14 +89,24 @@ public class DatabaseService {
 
     try {
       // Create file
-      FileWriter fstream = new FileWriter(filename);
-      BufferedWriter out = new BufferedWriter(fstream);
+      //FileWriter fstream = new FileWriter(filename);
+      //BufferedWriter out = new BufferedWriter(fstream);
+      FileOutputStream fstream = new FileOutputStream(filename);
+      BufferedOutputStream out = new BufferedOutputStream(fstream);
+      
       SettingsService.getModel().write(out, format);     
       //Close the output stream
       out.close();
     } catch (Exception e) {//Catch exception if any
-      System.err.println("Error: " + e.getMessage());
+      System.err.println("Error : " + e.getMessage());
+      e.printStackTrace(System.err);
     }
   }
+  
+  
+  
+  
+  
+  
   
 }

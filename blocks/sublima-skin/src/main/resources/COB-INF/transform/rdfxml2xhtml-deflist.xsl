@@ -8,9 +8,11 @@
   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
   xmlns:sub="http://xmlns.computas.com/sublima#"
   xmlns:sioc="http://rdfs.org/sioc/ns#"
-  xmlns:lingvoj="http://www.lingvoj.org/ontology#"
+  xmlns:lingvoj="http://www.lingvoj.org/ontology#"  
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:xalan="http://xml.apache.org/xalan"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <xsl:import href="rdfxml-res-templates.xsl"/>
@@ -67,9 +69,43 @@
     
     
     
+    <!-- testing if we can insert a relevance sorting attribute in the RESOURCE tree -->
+
+    <!-- we have either come to this by navigation or search. If first we have a URI
+         for the topic, if second we have a search string. --> 
+         
+   <xsl:variable name="topic-uri" select="/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about" />
+   <xsl:variable name="search-string" select="/c:page/c:searchparams/c:searchparams/c:searchstring"/>
+
+    <xsl:variable name="res-copy">
+        <xsl:for-each select="sub:Resource">
+          <sub:Resource rdf:about="{./@rdf:about}"> 
+           <xsl:if test="$topic-uri != ''"> 
+                <sub:relevance>
+                    <xsl:value-of select="count(./dct:subject)"/>
+                </sub:relevance>
+           </xsl:if> 
+           <xsl:if test="$search-string !='' and contains(./dct:subject/skos:prefLabel, $search-string)">
+                <sub:relevance>
+                    <xsl:value-of select="1"/>
+                </sub:relevance>
+           </xsl:if>  
+            <xsl:copy-of select="./*"/>
+           </sub:Resource>
+        </xsl:for-each> 
+    </xsl:variable>
+    
+
+    
+    
+    
     <dl>
-      <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-        <xsl:sort select="./*[name() = $sorting]"/>
+<!--      <xsl:for-each select="sub:Resource"> 
+        <xsl:sort select="./*[name() = $sorting]"/> -->
+<!-- The root node for each described resource -->
+       <xsl:for-each select="xalan:nodeset($res-copy)/sub:Resource">
+          <xsl:sort select="./sub:relevance"/> 
+        
 
   <dt>
 	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>

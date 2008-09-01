@@ -80,15 +80,15 @@ public class AdminController implements StatelessAppleController {
     }
   }
 
-  private void exportOntology(AppleResponse res, AppleRequest req) {
+  private void exportOntology(AppleResponse res, AppleRequest req) throws Exception {
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       res.sendPage("xml2/upload", null);
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
       DatabaseService databaseService = new DatabaseService();
 
       String type = req.getCocoonRequest().getParameter("type");
-      File file = new File(req.getCocoonRequest().getParameter("location"));
-
+      //File file = new File(req.getCocoonRequest().getParameter("location"));
+      File file = new File("tmp.xml");  
       String replaceResourceWith = null;
       if (req.getCocoonRequest().getParameterValues("replacement") != null) {
         replaceResourceWith = "uri";
@@ -96,13 +96,13 @@ public class AdminController implements StatelessAppleController {
       databaseService.writeModelToFile(file.toString(), type);
       try {
         ConvertSublimaResources.convert(file.toURL().toString(), type, file.getCanonicalPath(), type, replaceResourceWith);
+        
       } catch (IOException e) {
         logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
         e.printStackTrace();
       }
-
-
-      res.sendPage("xml2/upload", null);
+      logger.trace("AdminController.uploadForm -> Redirecting to " + file.toURL().toString());
+      res.sendPage(file.toURL().toString(), null);
     }
   }
 
