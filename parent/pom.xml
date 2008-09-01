@@ -140,8 +140,7 @@
       <dependency>
         <groupId>com.hp.hpl.jena</groupId>
         <artifactId>arq-extra</artifactId>
-        <!-- version>2.3-SVN3591</version -->
-        <version>290508-SNAPSHOT</version>
+        <version>2.4</version>
         <scope>compile</scope>
       </dependency>
 
@@ -173,14 +172,14 @@
       <dependency>
         <groupId>com.hp.hpl.jena</groupId>
         <artifactId>jenatest</artifactId>
-        <version>290508-SNAPSHOT</version>
+        <version>2.5.6</version>
         <scope>compile</scope>
       </dependency>
 
       <dependency>
         <groupId>com.hp.hpl.jena</groupId>
         <artifactId>iri</artifactId>
-        <version>290508-SNAPSHOT</version>
+        <version>0.5</version>
         <scope>compile</scope>
       </dependency>
 
@@ -238,7 +237,7 @@
       <dependency>
         <groupId>com.hp.hpl.jena</groupId>
         <artifactId>arq</artifactId>
-        <version>290508-SNAPSHOT</version>
+        <version>2.4</version>
         <scope>compile</scope>
       </dependency>
       <!-- Unicode -->
@@ -265,10 +264,10 @@
       <name>Computas external Maven repository</name>
       <url>http://maven.computas.com</url>
     </repository>
-    <!--repository>
+    <repository>
       <id>jena</id>
       <url>http://jena.hpl.hp.com/repo</url>
-    </repository-->
+    </repository>
   </repositories>
 
   <build>
