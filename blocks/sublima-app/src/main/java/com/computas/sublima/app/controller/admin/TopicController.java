@@ -483,6 +483,7 @@ public class TopicController implements StatelessAppleController {
         Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
         parameterMap.remove("prefix"); // The prefixes are magic variables
         parameterMap.remove("actionbutton"); // The name of the submit button
+        parameterMap.remove("warningSingleResource");
         if (parameterMap.get("subjecturi-prefix") != null) {
           parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
                   parameterMap.get("subjecturi-prefix")[0]});
