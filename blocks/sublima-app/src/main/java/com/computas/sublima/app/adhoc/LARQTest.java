@@ -39,6 +39,9 @@ public class LARQTest {
 
 
     private static Model model = null;
+    IndexBuilderNode larqBuilder = null;
+    
+    String newText =  "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
    
     private Model getModel(String inputfilename, String inFormat) throws FileNotFoundException, IOException {
@@ -103,15 +106,34 @@ public class LARQTest {
         larqBuilder.closeWriter() ;
         // -- Create the access index  
         IndexLARQ index = larqBuilder.getIndex() ;
+        larqBuilder.flushWriter();
         return index;
     }
 
 
 
+
+    // try to add new literals to index
+    private void addAndReindex(Model model) {
+        ResIterator iter = model.listSubjects();        
+        while (iter.hasNext()) {
+            Resource res = iter.nextResource();
+            larqBuilder.index(res, newText) ;
+        }    
+        IndexLARQ index = larqBuilder.getIndex() ;
+        larqBuilder.flushWriter();
+        LARQ.setDefaultIndex(index) ;
+       
+            
+      
+     }   
+
+
+
     
     private IndexLARQ buildExternalIndex(Model model) {
-        // ---- Create index builder
-        IndexBuilderNode larqBuilder = new IndexBuilderNode() ;
+        // ---- Create a new index builder
+         larqBuilder = new IndexBuilderNode("/tmp/larqtest/") ;
         
         ResIterator iter = model.listSubjects();        
         while (iter.hasNext()) {
@@ -128,7 +150,8 @@ public class LARQTest {
             System.out.println("Adding index on " + text.toString() + " to resource " + res.toString());
             larqBuilder.index(res, text.toString()) ;    
         }
-        larqBuilder.closeWriter(); 
+        //larqBuilder.closeWriter(); 
+        larqBuilder.flushWriter();
         IndexLARQ index = larqBuilder.getIndex() ;
         return index;
     }
@@ -174,13 +197,30 @@ public class LARQTest {
         try {
             LARQTest lt = new LARQTest();
             model = lt.getModel(inputfilename, inputformat);
-            lt.indexModel(model);
+ 
+ 
+ 
+            // 1. Query without index, show model
+            try {
             lt.executeSparql(model, sparql);     
-            
+            System.out.println("Initial MODEL:");
+            System.out.println(model.toString());
+            } catch (Exception e) {
+                e.toString();
+            }
+            // 2. Add index, query and show model
+            lt.indexModel(model);
+            lt.executeSparql(model, sparql);
             System.out.println("MODEL:");
             System.out.println(model.toString());
-               
-        } catch (Exception e) {
+           
+            // 3. Add to index, query and show model 
+            lt.addAndReindex(model);
+            lt.executeSparql(model, sparql);  
+            System.out.println("MODEL:");
+            System.out.println(model.toString()); 
+            
+         } catch (Exception e) {
             System.err.println(e.toString());
             e.printStackTrace(System.err);
         }

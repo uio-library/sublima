@@ -5,6 +5,7 @@ import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.query.larq.LARQ;
+import com.hp.hpl.jena.query.larq.IndexBuilderNode;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.shared.DoesNotExistException;
@@ -34,7 +35,9 @@ public class IndexService {
 
   /**
    * Method to update all resources with the concat of searchfields and external content
-   */
+   * @deprecated
+    */
+   
   public void updateResourceSearchfield(boolean indexExternalContent, String[] searchfields, String[] prefixes) {
 
     ArrayList<String> list = getFreetextToIndex(searchfields, prefixes, indexExternalContent);
@@ -98,31 +101,50 @@ public class IndexService {
 
   }
 
+
+
+
   /**
    * Method to create an index based on the internal content
+   
+   * Change Note 2008-09-05 (dn): Now creating an index based on generated content adding to each 
+   *                              resource (i.e. IndexBuilderNode) rather than statements 
+   *                              (i.e. IndexBuilderString).
+   * Change Note 2008-09-06 (dn): Also spilt
    */
-  public void createIndex(String indexDirectory, String indexType) {
+  public void createIndex(String indexDirectory, String indexType, String[] searchfields, String[] prefixes) {
     try {
 
       // -- Read and index all literal strings.
       File indexDir = new File(indexDirectory);
       logger.info("SUBLIMA: createIndex() --> Indexing - Read and index all literal strings");
       if ("memory".equals(indexType)) {
-        SettingsService.getIndexBuilderString(null);
+        SettingsService.getIndexBuilderNode(null);
       } else {
-        SettingsService.getIndexBuilderString(indexDir);
+        SettingsService.getIndexBuilderNode(indexDir);
       }
 
       // -- Create an index based on existing statements
-      SettingsService.getIndexBuilderString(indexDir).indexStatements(SettingsService.getModel().listStatements());
+      // SettingsService.getIndexBuilderString(indexDir).indexStatements(SettingsService.getModel().listStatements());
+      
+      // -- Create an index based on a generated string on each URL
+      ResultSet rs = getAllExternalResourcesURLs();
+      while (rs.hasNext()) {      
+        QuerySolution qs = rs.nextSolution();
+        Resource res = qs.getResource("url");
+        logger.info("SUBLIMA: createIndex() --> indexing " + res.getURI());
+        indexResource(res.getURI(), searchfields, prefixes);
+      }
+      
       //SettingsService.getModel();
-      SettingsService.getModel().register(SettingsService.getIndexBuilderString(indexDir));
+      //SettingsService.getModel().register(SettingsService.getIndexBuilderString(indexDir)); // not relevant. TBD manually 
+      
 
-      logger.info("SUBLIMA: createIndex() --> Indexing - Indexed all model statements");
+      logger.info("SUBLIMA: createIndex() --> Indexing - Indexed all model resources from concatenated literals");
       logger.info("SUBLIMA: createIndex() --> Indexing - Closed index for writing");
 
       // -- Make globally available // -- Create the access index
-      LARQ.setDefaultIndex(SettingsService.getIndexBuilderString(indexDir).getIndex());
+      LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(indexDir).getIndex());
       logger.info("SUBLIMA: createIndex() --> Indexing - Index now globally available");
     }
     catch (DoesNotExistException e) {
@@ -131,6 +153,14 @@ public class IndexService {
 
     logger.info("SUBLIMA: createIndex() --> Indexing - Created RDF model from database");
   }
+
+
+    public void setIndex(String indexDirectory) {
+        File indexDir = new File(indexDirectory);
+        LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(indexDir).getIndex());
+    }    
+
+
 
 
   /**
@@ -152,6 +182,11 @@ public class IndexService {
     logger.info("SUBLIMA: getAllExternalResourcesURLs() --> Indexing - Fetched all resource URLs from the model");
     return resultSet;
   }
+
+
+
+
+
 
   /**
    * A method to validate all urls on the resources. Adds the URL to the list along with
@@ -483,5 +518,27 @@ public class IndexService {
     return tripleString.toString();
 
   }
+
+
+  /**
+   * Method to reindex a given resource
+   *
+   * @param resourceString
+   * @param searchFileds
+   * @param prefixes
+   * @return void
+   *
+   * added 2008-09-05 (dn)
+   */
+  public void indexResource(String resourceString, String[] searchfields, String[] prefixes) {
+    Resource r = SettingsService.getModel().getResource(resourceString); 
+    String s = getResourceInternalLiteralsAsString(resourceString, searchfields, prefixes);
+    IndexBuilderNode larqBuilder = SettingsService.getIndexBuilderNode(null);
+    larqBuilder.index(r, s.toString()) ; 
+    larqBuilder.flushWriter();
+  }
+  
+  
+
 
 }

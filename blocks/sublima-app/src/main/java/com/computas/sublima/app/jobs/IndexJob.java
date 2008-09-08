@@ -5,6 +5,8 @@ import com.computas.sublima.app.service.IndexService;
 /**
  * @author: mha
  * Date: 10.aug.2008
+ *
+ * Change Note 05.09.2008 (dn): explicitly sending search fields and prefixes when adding the index. 
  */
 public class IndexJob {
 
@@ -28,7 +30,9 @@ public class IndexJob {
     String indexDir = "/tmp/june";
     String indexType = "file";
 
-    indexService.updateResourceSearchfield(indexOnStartup, searchfields, prefixes );
-    indexService.createIndex(indexDir, indexType);
+    //indexService.updateResourceSearchfield(indexOnStartup, searchfields, prefixes );
+    //indexService.createIndex(indexDir, indexType);
+    indexService.createIndex(indexDir, indexType, searchfields, prefixes );
+  
   }
 }

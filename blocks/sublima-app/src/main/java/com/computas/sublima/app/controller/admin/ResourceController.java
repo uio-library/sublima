@@ -357,6 +357,11 @@ public class ResourceController implements StatelessAppleController {
         if (insertSuccess) {
           messageBuffer.append("<c:message>Ny ressurs lagt til!</c:message>\n");
 
+
+
+          // old approach 
+          // fetch all literals about the given resource, removes old, and inserts new values  
+          /*
           String updateIndexContent = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                   "DELETE { <" + req.getCocoonRequest().getParameter("the-resource") + "> sub:literals ?o . \n" +
                   "<" + req.getCocoonRequest().getParameter("the-resource") + "> sub:externalliterals ?o . }\n" +
@@ -367,7 +372,13 @@ public class ResourceController implements StatelessAppleController {
 
           boolean externalUpdate = sparulDispatcher.query(updateIndexContent);
           logger.trace("AdminController.editResource --> INSERT RESOURCE INTERNAL AND EXTERNAL LITERALS: " + externalUpdate);
-
+          */  
+    
+          // new appraoach
+          // fetches all literals about the given resource and add to index...
+          //IndexBuilderNode larqBuilder = SettingsService.getIndexBuilderNode(SettingsService.getProperty("sublima.index.directory"));
+          indexService.indexResource(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          
         } else {
           messageBuffer.append("<c:message>Feil ved lagring av ny ressurs</c:message>\n");
         }
