@@ -50,6 +50,7 @@
   <!-- validation -->
   <message key="validation.providedurlok">Provided URL validated.</message>
   <message key="validation.topic.notitle">Topic has no title</message>
+  <message key="validation.topic.resourceempty">Deleting this topic will cause one or more resources to be without a topic. Please revide the resource list at the bottom of this page and assign additional topics to resources with only one topic attached, or delete the resource if it's no longer wanted.</message>
   <message key="validation.urlexists">The URL given is already registered as a resource.</message>
 
   <!-- login validation -->
@@ -145,6 +146,7 @@
   <message key="button.saveresource">Save resource</message>
   <message key="button.deleteresource">Delete resource</message>
   <message key="button.copyasnew">Copy as newvalidation.urlexists</message>
+  <message key="button.deletetopic">Delete topic</message>
   <message key="button.savetopic">Save topic</message>
   <message key="button.savethemetopics">Save selection</message>
   <message key="button.join">Merge</message>

@@ -220,12 +220,33 @@
 	      <xsl:with-param name="privilege">topic.edit</xsl:with-param>
 	      <xsl:with-param name="buttontext"><i18n:text key="button.savetopic">Lagre emne</i18n:text></xsl:with-param>
 	    </xsl:call-template>
+
+            <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">topic.delete</xsl:with-param>
+              <xsl:with-param name="buttontext">button.deletetopic</xsl:with-param>
+              <xsl:with-param name="buttonname">actionbuttondelete</xsl:with-param>
+            </xsl:call-template>
           </td>
           <td>
 
           </td>
         </tr>
       </table>
+
+      <br/>
+
+      <h4><i18n:text key="admin.topic.usedby">Ressurser tilknyttet emnet</i18n:text></h4>
+      <xsl:apply-templates select="/c:page/c:content/c:topic/c:topicresources/rdf:RDF" mode="results"/>
+
+      <!-- Check if one of the resources will have no topics attached to it if we delete this topic -->
+      <xsl:for-each select="/c:page/c:content/c:topic/c:topicresources/rdf:RDF/sub:Resource">
+          <xsl:if test="count(./skos:Concept) = 1">
+            <h1>RESSURS MED KUN 1 EMNE!</h1>
+            <input type="hidden" name="warningSingleResource" value="true"/>
+          </xsl:if>
+      </xsl:for-each>
+
+
     </form>
 
   </xsl:template>

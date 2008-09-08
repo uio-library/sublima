@@ -391,6 +391,26 @@ public class TopicController implements StatelessAppleController {
                   type, String
                   messages) {
 
+    boolean insertSuccess = false;
+    String tempPrefixes = "<c:tempvalues \n" +
+            "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
+            "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+            "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+            "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+            "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+            "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+            "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+            "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+            "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+            "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+            "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+            "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+            "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
+
+    StringBuffer tempValues = new StringBuffer();
+    String uri = "";
+
     StringBuffer messageBuffer = new StringBuffer();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
@@ -425,76 +445,88 @@ public class TopicController implements StatelessAppleController {
 
       // When POST try to save the resource. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-      Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
-      // 1. Mellomlagre alle verdier
-      // 2. Valider alle verdier
-      // 3. Forsk  lagre
 
-      StringBuffer tempValues = getTempValues(req);
-      String tempPrefixes = "<c:tempvalues \n" +
-              "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
-              "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
-              "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
-              "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
-              "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
-              "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-              "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
-              "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
-              "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-              "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
-              "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
-              "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-              "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-              "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
+      if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
-      Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
-      parameterMap.remove("prefix"); // The prefixes are magic variables
-      parameterMap.remove("actionbutton"); // The name of the submit button
-      if (parameterMap.get("subjecturi-prefix") != null) {
-        parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
-                parameterMap.get("subjecturi-prefix")[0]});
-      }
+        if (req.getCocoonRequest().getParameter("warningSingleResource") != null) {
 
-      String sparqlQuery = null;
-      try {
-        sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
-      }
-      catch (IOException e) {
-        messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
-      }
+          String deleteString = "DELETE {\n" +
+                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
+                  "} WHERE {\n" +
+                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o. }";
 
-      String uri = form2SparqlService.getURI();
+          boolean deleteTopicSuccess = sparulDispatcher.query(deleteString);
 
-      logger.trace("TopicController.editTopic --> SPARUL QUERY:\n" + sparqlQuery);
-      boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
+          logger.trace("ResourceController.editResource --> DELETE TOPIC QUERY:\n" + deleteString);
+          logger.trace("ResourceController.editResource --> DELETE TOPIC QUERY RESULT: " + deleteTopicSuccess);
 
-      logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
 
-      if (insertSuccess) {
-        messageBuffer.append("<c:message>Nytt emne lagt til!</c:message>\n");
+          if (deleteTopicSuccess) {
+            messageBuffer.append("<c:message>Emne slettet!</c:message>\n");
+          } else {
+            messageBuffer.append("<c:message>Feil ved sletting av emne</c:message>\n");
+          }
+        } else {
+          messageBuffer.append("<c:message><i18n:text key=\"validation.topic.resourceempty\">En eller flere ressurser vil bli stående uten tilknyttet emne dersom du sletter dette emnet. Vennligst kontroller disse ressursene fra listen nederst, og tildel de nye emner eller slett de.</i18n:text></c:message>\n");
+        }
 
       } else {
-        messageBuffer.append("<c:message>Feil ved lagring av nytt emne</c:message>\n");
-        bizData.put("topicdetails", "<empty></empty>");
+
+        Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
+        // 1. Mellomlagre alle verdier
+        // 2. Valider alle verdier
+        // 3. Forsk  lagre
+
+        tempValues = getTempValues(req);
+
+
+        Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+        parameterMap.remove("prefix"); // The prefixes are magic variables
+        parameterMap.remove("actionbutton"); // The name of the submit button
+        if (parameterMap.get("subjecturi-prefix") != null) {
+          parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
+                  parameterMap.get("subjecturi-prefix")[0]});
+        }
+
+        String sparqlQuery = null;
+        try {
+          sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+        }
+        catch (IOException e) {
+          messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
+        }
+
+        uri = form2SparqlService.getURI();
+
+        logger.trace("TopicController.editTopic --> SPARUL QUERY:\n" + sparqlQuery);
+        insertSuccess = sparulDispatcher.query(sparqlQuery);
+
+        logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
+
+        if (insertSuccess) {
+          messageBuffer.append("<c:message>Nytt emne lagt til!</c:message>\n");
+
+        } else {
+          messageBuffer.append("<c:message>Feil ved lagring av nytt emne</c:message>\n");
+          bizData.put("topicdetails", "<empty></empty>");
+        }
       }
 
       if (insertSuccess) {
         bizData.put("topicdetails", adminService.getTopicByURI(uri));
-        bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
-        bizData.put("status", adminService.getAllStatuses());
+        bizData.put("topicresources", adminService.getTopicResourcesByURI(uri));
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "topicedit");
-        bizData.put("alltopics", adminService.getAllTopics());
-        bizData.put("relationtypes", adminService.getAllRelationTypes());
       } else {
-        bizData.put("topicdetails", adminService.getTopicByURI(uri));
-        bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
-        bizData.put("status", adminService.getAllStatuses());
+        bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("the-resource")));
+        bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("the-resource")));
         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("mode", "topictemp");
-        bizData.put("alltopics", adminService.getAllTopics());
-        bizData.put("relationtypes", adminService.getAllRelationTypes());
       }
+
+      bizData.put("status", adminService.getAllStatuses());
+      bizData.put("alltopics", adminService.getAllTopics());
+      bizData.put("relationtypes", adminService.getAllRelationTypes());
       bizData.put("userprivileges", userPrivileges);
       messageBuffer.append("</c:messages>\n");
       bizData.put("facets", getRequestXML(req));
@@ -502,7 +534,6 @@ public class TopicController implements StatelessAppleController {
       bizData.put("messages", messageBuffer.toString());
 
       res.sendPage("xml2/emne", bizData);
-      //      }
     }
   }
 

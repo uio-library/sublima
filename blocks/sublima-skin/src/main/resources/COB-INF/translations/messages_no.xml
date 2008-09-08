@@ -49,6 +49,7 @@
   <!-- validation -->
   <message key="validation.providedurlok">Angitt URL godkjent</message>
   <message key="validation.topic.notitle">Emnet mangler tittel</message>
+  <message key="validation.topic.resourceempty">En eller flere ressurser vil bli stående uten tilknyttet emne dersom du sletter dette emnet. Vennligst kontroller disse ressursene fra listen nederst, og tildel de nye emner eller slett de.</message>
   <message key="validation.urlexists">Angitt URL finnes allerede</message>
 
   <!-- resource form -->
@@ -136,7 +137,9 @@
   <!-- buttons -->
   <message key="button.saveresource">Lagre ressurs</message>
   <message key="button.deleteresource">Slett ressurs</message>
+  <message key="button.copyasnew">Kopier til ny</message>
   <message key="button.savetopic">Lagre emne</message>
+  <message key="button.deletetopic">Slett emne</message>
   <message key="button.savethemetopics">Lagre valgte tema</message>
   <message key="button.empty">Tøm skjema</message>
   <message key="button.join">Slå sammen</message>
