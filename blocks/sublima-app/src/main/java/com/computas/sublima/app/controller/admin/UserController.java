@@ -299,7 +299,7 @@ public class UserController implements StatelessAppleController {
           sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
         }
         catch (IOException e) {
-          messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
+          messageBuffer.append("<c:message>Feil ved lagring av bruker</c:message>\n");
         }
 
         boolean insertSuccess = sparulDispatcher.query(sparqlQuery);

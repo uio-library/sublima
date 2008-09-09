@@ -403,6 +403,9 @@ public class AdminService {
   }
 
   public String getUserByURI(String uri) {
+    if (uri == null) {
+        return null;
+    }
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
             "DESCRIBE <" + uri + ">"});
