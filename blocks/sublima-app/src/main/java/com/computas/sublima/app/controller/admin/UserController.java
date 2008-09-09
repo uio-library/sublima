@@ -119,14 +119,17 @@ public class UserController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
 
-    // Check wether the logged in user requests his/hers own page. If so, allow editing.
-    if(adminService.getUserByURI(req.getCocoonRequest().getParameter("the-resource")).contains(user.getId())) {
+    // Check whether the logged in user requests his/hers own page. If so, allow editing.
+    if(adminService.getUserByURI(
+            req.getCocoonRequest().getParameter("the-resource")).contains(
+            user.getId())) {
       userPrivileges = userPrivileges.replace("</c:privileges>", "<c:privilege>user.edit</c:privilege></c:privileges>");
     }
 
     bizData.put("userprivileges", userPrivileges);
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+      logger.trace("UserController.editUser --> Serve GET requests\n");
       bizData.put("tempvalues", "<empty></empty>");
 
       if ("ny".equalsIgnoreCase(type)) {
@@ -141,7 +144,7 @@ public class UserController implements StatelessAppleController {
 
       // When POST try to save the user. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-
+      logger.trace("UserController.editUser --> Serve POST requests\n");
       // 1. Mellomlagre alle verdier
       // 2. Valider alle verdier
       // 3. Forsk  lagre
@@ -181,9 +184,10 @@ public class UserController implements StatelessAppleController {
             int deletedRows = dbService.doSQLUpdate(deleteSql);
             int insertedRows = dbService.doSQLUpdate(insertSql);
             newUser = true;
-            // Fails if username already exists. Give feedback to the user.
+            logger.debug("UserController.editUser --> We have a new user.\n");
+           // Fails if username already exists. Give feedback to the user.
           } catch (SQLException e) {
-            e.printStackTrace();
+
             /*
             logger.trace("UserController.editUser --> NEW USER: INSERT USERNAME FAILED\n");
             messageBuffer.append("<c:message>Brukernavnet finnes fra fr</c:message>\n</c:messages>\n");
@@ -193,10 +197,11 @@ public class UserController implements StatelessAppleController {
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
             res.sendPage("xml2/bruker", bizData);*/
-            return;
+           return;
           }
         }
         // HER HAR MAN BRUKERNAVN I USER-TABELLEN UANSETT
+        logger.debug("UserController.editUser --> Username exists in user table\n");
 
         if (!newUser) {
           // If the user has changed her e-mail address (username), we must update it in the USER-table
