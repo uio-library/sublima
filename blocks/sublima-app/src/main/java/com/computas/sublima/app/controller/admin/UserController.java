@@ -19,10 +19,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Enumeration;
 
 /**
  * @author: mha
@@ -120,7 +120,7 @@ public class UserController implements StatelessAppleController {
     bizData.put("allroles", adminService.getAllRoles());
 
     // Check whether the logged in user requests his/hers own page. If so, allow editing.
-    if(adminService.getUserByURI(
+    if (adminService.getUserByURI(
             req.getCocoonRequest().getParameter("the-resource")).contains(
             user.getId())) {
       userPrivileges = userPrivileges.replace("</c:privileges>", "<c:privilege>user.edit</c:privilege></c:privileges>");
@@ -173,51 +173,68 @@ public class UserController implements StatelessAppleController {
 
         boolean newUser = false;
 
+        // NEW USER
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("the-resource")) || req.getCocoonRequest().getParameter("the-resource") == null) {
-          String deleteSql = "DELETE FROM users WHERE username ='" + req.getCocoonRequest().getParameter("sioc:email") + "'";
 
-          String insertSql = "INSERT INTO users "
-                  + "(username) "
-                  + "VALUES "
-                  + "('" + req.getCocoonRequest().getParameter("sioc:email") + "')";
-          try {
-            int deletedRows = dbService.doSQLUpdate(deleteSql);
-            int insertedRows = dbService.doSQLUpdate(insertSql);
-            newUser = true;
-            logger.debug("UserController.editUser --> We have a new user.\n");
-           // Fails if username already exists. Give feedback to the user.
-          } catch (SQLException e) {
-
-            /*
-            logger.trace("UserController.editUser --> NEW USER: INSERT USERNAME FAILED\n");
-            messageBuffer.append("<c:message>Brukernavnet finnes fra fr</c:message>\n</c:messages>\n");
+          if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("password1")) || req.getCocoonRequest().getParameter("password1").equalsIgnoreCase("passwordplaceholder")) { // NO PASSWORD GIVEN
+            logger.trace("UserController.editUser --> NEW USER: Password not given\n");
+            messageBuffer.append("<c:message><i18n:text xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" key=\"validation.user.new.nopassword\">Et nytt passord må angis</i18n:text></c:message>\n</c:messages>\n");
 
             bizData.put("userdetails", "<empty></empty>");
             bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
-            res.sendPage("xml2/bruker", bizData);*/
-           return;
+            res.sendPage("xml2/bruker", bizData);
           }
-        }
-        // HER HAR MAN BRUKERNAVN I USER-TABELLEN UANSETT
-        logger.debug("UserController.editUser --> Username exists in user table\n");
 
-        if (!newUser) {
+          if (!req.getCocoonRequest().getParameter("password1").equals(req.getCocoonRequest().getParameter("password2"))) { // PASSWORDS DON'T MATCH
+            logger.trace("UserController.editUser --> NEW USER: Password not given\n");
+            messageBuffer.append("<c:message><i18n:text xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" key=\"validation.user.new.passworddontmatch\">Passordet må være likt i begge feltene.</i18n:text></c:message>\n</c:messages>\n");
+
+            bizData.put("userdetails", "<empty></empty>");
+            bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+            bizData.put("messages", messageBuffer.toString());
+            bizData.put("mode", "usertemp");
+            res.sendPage("xml2/bruker", bizData);
+          }
+
+          try {
+            String password = adminService.generateSHA1(req.getCocoonRequest().getParameter("password1"));
+            String insertSql = "INSERT INTO users "
+                    + "(username, password) "
+                    + "VALUES "
+                    + "('" + req.getCocoonRequest().getParameter("sioc:email") + "', '" + password + "')";
+
+            int insertedRows = dbService.doSQLUpdate(insertSql);
+            logger.debug("UserController.editUser --> We have a new user.\n");
+
+
+          } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+          } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+          } catch (SQLException e) { // Cause most probably that user already exists
+            logger.trace("UserController.editUser --> NEW USER: INSERT USERNAME FAILED\n" + e.toString() + "\n");
+            messageBuffer.append("<c:message><i18n:text xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" key=\"validation.user.new.existingusername\">En bruker med dette brukernavnet finnes allerede.</i18n:text></c:message>\n</c:messages>\n");
+
+            bizData.put("userdetails", "<empty></empty>");
+            bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+            bizData.put("messages", messageBuffer.toString());
+            bizData.put("mode", "usertemp");
+            res.sendPage("xml2/bruker", bizData);
+            return;
+          }
+        } else { // EXISTING USER
+
           // If the user has changed her e-mail address (username), we must update it in the USER-table
           if (!(req.getCocoonRequest().getParameter("sioc:email")).equalsIgnoreCase(req.getCocoonRequest().getParameter("oldusername"))) {
             //Strip away the sioc mailto
             String insertSql;
-            if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("oldusername"))) {
-              insertSql = "INSERT INTO users "
-                      + "(username) "
-                      + "VALUES('" + req.getCocoonRequest().getParameter("sioc:email") + "')";
-            } else {
-              String[] username = req.getCocoonRequest().getParameter("oldusername").split(":");
-              insertSql = "UPDATE users "
-                      + "SET username = '" + req.getCocoonRequest().getParameter("sioc:email") + "' "
-                      + "WHERE username = '" + username[1] + "'";
-            }
+
+            //String[] username = req.getCocoonRequest().getParameter("oldusername").split(":");
+            insertSql = "UPDATE users "
+                    + "SET username = '" + req.getCocoonRequest().getParameter("sioc:email") + "' "
+                    + "WHERE username = '" +req.getCocoonRequest().getParameter("oldusername") + "'";
 
             try {
               int insertedRows = dbService.doSQLUpdate(insertSql);
@@ -227,59 +244,47 @@ public class UserController implements StatelessAppleController {
             }
 
           }
-        }
 
-        // If it's a new user and the passowrd is "passwordplaceholder" give an errormessage (can't do this in validation because of existing user/unchanged password thingie
-        if (newUser && req.getCocoonRequest().getParameter("password1").equalsIgnoreCase("passwordplaceholder")) {
-          messageBuffer.append("<c:message>Passordet m angis p nytt</c:message>\n</c:messages>\n");
-
-          bizData.put("userdetails", "<empty></empty>");
-          bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
-          bizData.put("messages", messageBuffer.toString());
-          bizData.put("mode", "usertemp");
-
-          res.sendPage("xml2/bruker", bizData);
-        }
-
-        // If the given password is "passwordplaceholder", then the user hasn't changed her password and we leave it as it is
-        if (!req.getCocoonRequest().getParameter("password1").equalsIgnoreCase("passwordplaceholder")) {
-          // Encrypt the password and store it in a database table
-          int insertedRows = 0;
-          try {
-            String password = adminService.generateSHA1(req.getCocoonRequest().getParameter("password1"));
-            logger.trace("UserController.editUser --> GENERATE PASSWORD SHA1 " + password + "\n");
-
-            String insertSql = "UPDATE users "
-                    + "SET password = '" + password + "' "
-                    + "WHERE username = '" + req.getCocoonRequest().getParameter("sioc:email") + "'";
-
-            logger.trace("UserController.editUser --> INSERT USERINFO:\n" + insertSql);
-
+          // If the given password is "passwordplaceholder", then the user hasn't changed her password and we leave it as it is
+          if (!req.getCocoonRequest().getParameter("password1").equalsIgnoreCase("passwordplaceholder")) {
+            // Encrypt the password and store it in a database table
+            int insertedRows = 0;
             try {
-              insertedRows = dbService.doSQLUpdate(insertSql);
-            } catch (SQLException e) {
+              String password = adminService.generateSHA1(req.getCocoonRequest().getParameter("password1"));
+              logger.trace("UserController.editUser --> GENERATE PASSWORD SHA1 " + password + "\n");
+
+              String insertSql = "UPDATE users "
+                      + "SET password = '" + password + "' "
+                      + "WHERE username = '" + req.getCocoonRequest().getParameter("sioc:email") + "'";
+
+              logger.trace("UserController.editUser --> INSERT USERINFO:\n" + insertSql);
+
+              try {
+                insertedRows = dbService.doSQLUpdate(insertSql);
+              } catch (SQLException e) {
+                e.printStackTrace();
+                logger.error("UserController.editUser --> INSERT USERINFO FAILED\n");
+              }
+
+
+            } catch (NoSuchAlgorithmException e) {
               e.printStackTrace();
-              logger.error("UserController.editUser --> INSERT USERINFO FAILED\n");
+            } catch (UnsupportedEncodingException e) {
+              e.printStackTrace();
             }
 
+            // If insertedRows is 0, then the insert failed and we give the user a proper feedback
+            if (insertedRows == 0) {
+              messageBuffer.append("<c:message>En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prv igjen</c:message>" + "\n");
+              messageBuffer.append("</c:messages>\n");
+              bizData.put("userdetails", "<empty></empty>");
+              bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+              bizData.put("messages", messageBuffer.toString());
+              bizData.put("mode", "usertemp");
 
-          } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-          } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-          }
+              res.sendPage("xml2/bruker", bizData);
+            }
 
-          // If insertedRows is 0, then the insert failed and we give the user a proper feedback
-          if (insertedRows == 0) {
-            messageBuffer.append("<c:message>En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prv igjen</c:message>" + "\n");
-            messageBuffer.append("</c:messages>\n");
-            bizData.put("userdetails", "<empty></empty>");
-            bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
-            bizData.put("messages", messageBuffer.toString());
-            bizData.put("mode", "usertemp");
-
-            res.sendPage("xml2/bruker", bizData);
-            return;
           }
         }
 
@@ -331,7 +336,6 @@ public class UserController implements StatelessAppleController {
         res.sendPage("xml2/bruker", bizData);
       }
     }
-
   }
 
 
@@ -347,7 +351,7 @@ public class UserController implements StatelessAppleController {
     bizData.put("allroles", adminService.getAllRoles());
     bizData.put("allstatuses", adminService.getAllStatuses());
     bizData.put("userprivileges", userPrivileges);
-    //bizData.put("allanguages", adminService.getAllLanguages());
+//bizData.put("allanguages", adminService.getAllLanguages());
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       bizData.put("tempvalues", "<empty></empty>");
@@ -365,7 +369,7 @@ public class UserController implements StatelessAppleController {
       bizData.put("messages", "<empty></empty>");
       res.sendPage("xml2/rolle", bizData);
 
-      // When POST try to save the user. Return error messages upon failure, and success message upon great success
+    // When POST try to save the user. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
       // 1. Mellomlagre alle verdier
@@ -562,7 +566,7 @@ public class UserController implements StatelessAppleController {
     String uri = req.getCocoonRequest().getParameter("uri");
     String temp_name = req.getCocoonRequest().getParameter("rdfs:label");
 
-    //Create an XML structure for the selected values, to use in the JX template
+//Create an XML structure for the selected values, to use in the JX template
     tempValues.append("<rdf:about>" + uri + "</rdf:about>\n");
     tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
 
@@ -591,9 +595,7 @@ public class UserController implements StatelessAppleController {
   }
 
   //todo Move to a Service-class
-  private Map<String, String[]> createParametersMap
-          (Request
-                  request) {
+  private Map<String, String[]> createParametersMap (Request request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {
