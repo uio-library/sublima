@@ -64,6 +64,11 @@
       <artifactId>nekohtml</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>com.jivesoftware</groupId>
+      <artifactId>akismet-java</artifactId>
+    </dependency>
+      
   </dependencies>
 
 </project>

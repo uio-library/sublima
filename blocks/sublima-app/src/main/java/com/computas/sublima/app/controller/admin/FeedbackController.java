@@ -10,7 +10,7 @@ import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.log4j.Logger;
-
+import net.sf.akismet.Akismet;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -95,6 +95,41 @@ public class FeedbackController implements StatelessAppleController {
       String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
       String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(",");
       String status;
+
+      // If the user is not logged in, do a spam check if configured
+      if (! loggedIn && getProperty("sublima.akismet.key") != null) {
+          logger.info("FeedbackController.java --> Akismet key set");
+          Akismet akismet = new Akismet(getProperty("sublima.akismet.key"),
+                                        getProperty("sublima.base.url"));
+          if (akismet.verifyAPIKey()) {
+              boolean spam = akismet.commentCheck(
+                      req.getCocoonRequest().getRemoteAddr(),
+                      null,
+                      null,
+                      null,
+                      "comment",
+                      null,
+                      null,
+                      url,
+                      tittel + "\n" + beskrivelse,
+                      null
+              );
+              if (spam) {
+                  logger.debug("FeedbackController.java --> Akismet said " + url + " was spam.");
+                  messageBuffer.append("<c:message>Ressursen du sendte inn er markert i vår spam-database. Vennligst kontakt administrator!</c:message>");
+                  messageBuffer.append("</c:messages>\n");
+                  bizData.put("messages", messageBuffer.toString());
+                  bizData.put("mode", "form");
+                  bizData.put("loggedin", loggedIn);
+                  res.sendPage("xml/tips", bizData);
+                  return;
+              } else {
+                  logger.trace("FeedbackController.java --> Akismet said " + url + " is ham.");
+              }
+          } else {
+              logger.error("FeedbackController.java --> Akismet key not valid, disabling.");
+          }
+      }
 
       if (adminService.checkForDuplicatesByURI(url)) {
         messageBuffer.append("<c:message>Ressursen du tipset om finnes allerede, men takk for innsatsen!</c:message>");

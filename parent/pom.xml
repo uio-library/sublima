@@ -256,6 +256,15 @@
         <scope>compile</scope>
       </dependency>
 
+      <dependency>
+	<groupId>com.jivesoftware</groupId>
+	<artifactId>akismet-java</artifactId>
+	<version>1.0-J</version>
+        <scope>compile</scope>
+      </dependency>
+
+
+
     </dependencies>
   </dependencyManagement>
 
@@ -265,10 +274,10 @@
       <name>Computas external Maven repository</name>
       <url>http://maven.computas.com</url>
     </repository>
-    <!--repository>
-      <id>jena</id>
-      <url>http://jena.hpl.hp.com/repo</url>
-    </repository-->
+    <repository>
+      <id>jivesoftware</id>
+      <url>http://maven.jivesoftware.com/central</url>
+    </repository>
   </repositories>
 
   <build>
