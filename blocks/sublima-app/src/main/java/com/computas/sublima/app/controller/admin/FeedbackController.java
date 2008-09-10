@@ -104,12 +104,12 @@ public class FeedbackController implements StatelessAppleController {
           if (akismet.verifyAPIKey()) {
               boolean spam = akismet.commentCheck(
                       req.getCocoonRequest().getRemoteAddr(),
-                      null,
-                      null,
-                      null,
+                      "",
+                      "",
+                      "",
                       "comment",
-                      null,
-                      null,
+                      "",
+                      "",
                       url,
                       tittel + "\n" + beskrivelse,
                       null
