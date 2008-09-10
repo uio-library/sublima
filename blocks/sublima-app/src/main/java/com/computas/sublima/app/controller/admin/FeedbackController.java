@@ -38,7 +38,13 @@ public class FeedbackController implements StatelessAppleController {
       String generatedUserURI = getProperty("sublima.base.url") + "user/visitor/" + email.hashCode();
       String generatedCommentURI = getProperty("sublima.base.url") + "comment/resource/" + email.hashCode() + comment.hashCode();
 
-
+      if (isSpam(req, loggedIn, "", comment, email, uri)) {
+          logger.info("FeedbackController.java --> Akismet said comment from " + email + " was spam. Silently ignored.");
+          res.redirectTo(req.getCocoonRequest().getParameter("resource") + ".html");
+          return;
+      } else {
+          logger.trace("FeedbackController.java --> Akismet said comment from " + email + " is ham.");
+      }
 
       String commentString = StringUtils.join("\n", new String[]{
               "PREFIX dct: <http://purl.org/dc/terms/>",
@@ -98,7 +104,7 @@ public class FeedbackController implements StatelessAppleController {
       String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(",");
       String status;
 
-      if (isSpam(req, loggedIn, url, tittel + "\n" + beskrivelse, "")) {
+      if (isSpam(req, loggedIn, url, tittel + "\n" + beskrivelse, "", "")) {
           logger.debug("FeedbackController.java --> Akismet said " + url + " was spam.");
           messageBuffer.append("<c:message>Ressursen du sendte inn er markert i vår spam-database. Vennligst kontakt administrator!</c:message>");
           messageBuffer.append("</c:messages>\n");
@@ -192,7 +198,7 @@ public class FeedbackController implements StatelessAppleController {
     return;
   }
 
-    private boolean isSpam(AppleRequest req, boolean loggedIn, String url, String content, String email) {
+    private boolean isSpam(AppleRequest req, boolean loggedIn, String url, String content, String email, String resource) {
         // If the user is not logged in, do a spam check if configured
         boolean spam = false;
         if (! loggedIn && getProperty("sublima.akismet.key") != null) {
@@ -204,10 +210,10 @@ public class FeedbackController implements StatelessAppleController {
                         req.getCocoonRequest().getRemoteAddr(),
                         "",
                         "",
-                        "",
+                        resource,
                         "comment",
                         "",
-                        "",
+                        email,
                         url,
                         content,
                         null
