@@ -21,7 +21,6 @@ import java.util.HashMap;
 public class Autocomplete extends HttpServlet {
 
   private ServletContext context;
-  private HashMap employees = new HashMap();
   private AdminService adminService = new AdminService();
 
   public void init(ServletConfig config) throws ServletException {
