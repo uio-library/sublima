@@ -19,7 +19,7 @@
      <script type="text/javascript" src="styles/getMassEditResources.js"/>
      <script type="text/javascript">
        function createTable(data) {
-         alert(data);
+         alert("foo" + data.results.bindings[1].uri.value);
        }
      </script>
 
