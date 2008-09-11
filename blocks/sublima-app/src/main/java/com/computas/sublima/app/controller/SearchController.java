@@ -75,10 +75,12 @@ public class SearchController implements StatelessAppleController {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
                     "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
             "WHERE {",
             "        ?resource dct:language ?lang;",
+            "        wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
             "				 dct:publisher ?publisher ;",
             "                dct:subject " + subject + ", ?subjects ;",
             "                ?p ?rest .}"});
