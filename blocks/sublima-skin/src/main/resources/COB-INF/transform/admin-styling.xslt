@@ -16,6 +16,7 @@
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
   <xsl:import href="resourceform.xsl"/>
+  <xsl:import href="resourcemassedit.xsl"/>
   <xsl:import href="topicform.xsl"/>
   <xsl:import href="headers.xsl"/>
   <xsl:import href="themeselection.xsl"/>
@@ -274,6 +275,8 @@
 
                 <!-- Publisherdetails -->
                 <xsl:apply-templates select="c:page/c:content/c:publisherdetails"/>
+
+                <xsl:apply-templates select="c:page/c:massediting"/>		
 
                 <xsl:if test="c:page/c:content/c:resourcedetails">
                   <xsl:call-template name="resourcedetails"/>
