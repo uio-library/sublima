@@ -75,6 +75,9 @@ public class ResourceController implements StatelessAppleController {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         showResourcesIndex(res, req);
         return;
+      } else if ("masse".equalsIgnoreCase(submode)) {
+        massEditResource(res, req);
+        return;
       } else if ("ny".equalsIgnoreCase(submode)) {
         editResource(res, req, "ny", null);
         return;
@@ -572,5 +575,20 @@ public class ResourceController implements StatelessAppleController {
     }
     return result;
   }
-}
 
+  private void massEditResource (AppleResponse res, AppleRequest req) {
+
+    // When GET present a blank form with listvalues or prefilled with resource
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+
+    }
+
+
+
+
+        res.sendPage("xml2/massedit", null);
+
+       
+        return ;
+    }
+  }

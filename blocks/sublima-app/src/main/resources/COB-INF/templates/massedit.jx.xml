@@ -15,8 +15,9 @@
         xmlns="http://www.w3.org/1999/xhtml">
 
     <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
-    <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
-    <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>
+    <!-- c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges -->
+
+    <c:massediting/>
 
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
@@ -39,41 +40,15 @@
 
     <c:content>
 
-      <c:allanguages><jx:out value="#{languages}" xmlize="true"/></c:allanguages>
-
         <c:text>
             <h3><i18n:text key="resource">Ressurs</i18n:text></h3>
         </c:text>
-        <c:resourcedetails>
-
-            <c:resource>
-                <jx:out value="#{resource}" xmlize="true"/>
-            </c:resource>
-            <c:topics>
-                <jx:out value="#{topics}" xmlize="true"/>
-            </c:topics>
-            <c:publishers>
-                <jx:out value="#{publishers}" xmlize="true"/>
-            </c:publishers>
-            <c:mediatypes>
-                <jx:out value="#{mediatypes}" xmlize="true"/>
-            </c:mediatypes>
-            <c:audiences>
-                <jx:out value="#{audience}" xmlize="true"/>
-            </c:audiences>
-            <c:statuses>
-                <jx:out value="#{status}" xmlize="true"/>
-            </c:statuses>
-            <c:tempvalues>
-                <jx:out value="#{tempvalues}" xmlize="true"/>
-            </c:tempvalues>
-
-        </c:resourcedetails>
+        <!-- c:resourcedetails>
 
         <c:messages>
             <jx:out value="#{messages}" xmlize="true"/>
         </c:messages>
-        
+	</c:resourcedetails -->
     </c:content>
 
 </c:page>
