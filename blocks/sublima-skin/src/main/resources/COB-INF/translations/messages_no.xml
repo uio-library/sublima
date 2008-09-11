@@ -49,7 +49,7 @@
   <!-- validation -->
   <message key="validation.providedurlok">Angitt URL godkjent</message>
   <message key="validation.topic.notitle">Emnet mangler tittel</message>
-  <message key="validation.topic.resourceempty">En eller flere ressurser vil bli stående uten tilknyttet emne dersom du sletter dette emnet. Vennligst kontroller disse ressursene fra listen nederst, og tildel de nye emner eller slett de.</message>
+  <message key="validation.topic.resourceempty">En eller flere ressurser er tilknyttet dette emnet. Vennligst gå igjennom ressursene og fjern relasjonen til emnet, og forsøk igjen.</message>
   <message key="validation.urlexists">Angitt URL finnes allerede</message>
 
   <!-- resource form -->

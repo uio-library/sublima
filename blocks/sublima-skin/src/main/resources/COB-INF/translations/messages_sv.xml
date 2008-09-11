@@ -49,7 +49,7 @@
 <!--  validation  -->
  <message key="validation.providedurlok">Angiven URL godkänd</message>
  <message key="validation.topic.notitle">Ämnet saknar titel</message>
- <message key="validation.topic.resourceempty">En eller flera resurser vil bli ståande utan tilknyttade ämnen om ni raderar ämnet. Var vennlig kontrollera resurserna i listan nedantil, och tildela dom nya ämnen eller radera dom.</message>
+ <message key="validation.topic.resourceempty">En eller flera resurser har tilknytning til ämnet. Var vennlig kontrollera resurserna i listan nedantil, och ta vekk ämnet och forsök igjen.</message>
  <message key="validation.urlexists">Angiven URL redan registrerat</message>
 
 <!--  resource form  -->

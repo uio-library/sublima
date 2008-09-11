@@ -238,10 +238,9 @@
       <h4><i18n:text key="admin.topic.usedby">Ressurser tilknyttet emnet</i18n:text></h4>
       <xsl:apply-templates select="/c:page/c:content/c:topic/c:topicresources/rdf:RDF" mode="results"/>
 
-      <!-- Check if one of the resources will have no topics attached to it if we delete this topic -->
-      <xsl:for-each select="/c:page/c:content/c:topic/c:topicresources/rdf:RDF/sub:Resource">
-          <xsl:if test="count(./skos:Concept) = 1">
-            <h1>RESSURS MED KUN 1 EMNE!</h1>
+      <!-- Check that no resources have the topic attached to it -->
+      <xsl:for-each select="/c:page/c:content/c:topic/c:topicresources/rdf:RDF">
+          <xsl:if test="count(./sub:Resource) &gt; 0">
             <input type="hidden" name="warningSingleResource" value="true"/>
           </xsl:if>
       </xsl:for-each>
