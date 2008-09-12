@@ -5,9 +5,7 @@ import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.query.larq.LARQ;
-import com.hp.hpl.jena.query.larq.IndexBuilderNode;
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.shared.DoesNotExistException;
 import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -35,9 +33,10 @@ public class IndexService {
 
   /**
    * Method to update all resources with the concat of searchfields and external content
+   *
    * @deprecated
-    */
-   
+   */
+
   public void updateResourceSearchfield(boolean indexExternalContent, String[] searchfields, String[] prefixes) {
 
     ArrayList<String> list = getFreetextToIndex(searchfields, prefixes, indexExternalContent);
@@ -102,14 +101,12 @@ public class IndexService {
   }
 
 
-
-
   /**
    * Method to create an index based on the internal content
-   
-   * Change Note 2008-09-05 (dn): Now creating an index based on generated content adding to each 
-   *                              resource (i.e. IndexBuilderNode) rather than statements 
-   *                              (i.e. IndexBuilderString).
+   * <p/>
+   * Change Note 2008-09-05 (dn): Now creating an index based on generated content adding to each
+   * resource (i.e. IndexBuilderNode) rather than statements
+   * (i.e. IndexBuilderString).
    * Change Note 2008-09-06 (dn): Also spilt
    */
   public void createIndex(String indexDirectory, String indexType, String[] searchfields, String[] prefixes) {
@@ -126,19 +123,22 @@ public class IndexService {
 
       // -- Create an index based on existing statements
       // SettingsService.getIndexBuilderString(indexDir).indexStatements(SettingsService.getModel().listStatements());
-      
+
       // -- Create an index based on a generated string on each URL
       ResultSet rs = getAllExternalResourcesURLs();
-      while (rs.hasNext()) {      
+      int i = 0;
+      while (rs.hasNext()) {
+        rs.getRowNumber();
         QuerySolution qs = rs.nextSolution();
         Resource res = qs.getResource("url");
-        logger.info("SUBLIMA: createIndex() --> indexing " + res.getURI());
-        indexResource(res.getURI(), searchfields, prefixes);
+        logger.info("SUBLIMA: createIndex() --> indexing resource #" + i + ":" + res.getURI());
+        indexResourceAlt2(res.getURI(), searchfields, prefixes);
+        i++;
       }
-      
+
       //SettingsService.getModel();
       //SettingsService.getModel().register(SettingsService.getIndexBuilderString(indexDir)); // not relevant. TBD manually 
-      
+
 
       logger.info("SUBLIMA: createIndex() --> Indexing - Indexed all model resources from concatenated literals");
       logger.info("SUBLIMA: createIndex() --> Indexing - Closed index for writing");
@@ -155,37 +155,10 @@ public class IndexService {
   }
 
 
-    public void setIndex(String indexDirectory) {
-        File indexDir = new File(indexDirectory);
-        LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(indexDir).getIndex());
-    }    
-
-
-
-
-  /**
-   * Method to extract all URLs of the resources in the model
-   *
-   * @return ResultSet containing all resource URLS from the model
-   */
-  // todo Use SparqlDispatcher (needs to return ResultSet)
-  private ResultSet getAllExternalResourcesURLs() {
-    String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "SELECT ?url",
-            "WHERE {",
-            "        ?url dct:title ?title }"});
-
-    Query query = QueryFactory.create(queryString);
-    QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
-    ResultSet resultSet = qExec.execSelect();
-    logger.info("SUBLIMA: getAllExternalResourcesURLs() --> Indexing - Fetched all resource URLs from the model");
-    return resultSet;
+  public void setIndex(String indexDirectory) {
+    File indexDir = new File(indexDirectory);
+    LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(indexDir).getIndex());
   }
-
-
-
-
 
 
   /**
@@ -225,6 +198,26 @@ public class IndexService {
         e.printStackTrace();
       }
     }
+  }
+
+
+  /**
+   * Method to extract all URLs of the resources in the model
+   *
+   * @return ResultSet containing all resource URLS from the model
+   */
+  // todo Use SparqlDispatcher (needs to return ResultSet)
+  private ResultSet getAllExternalResourcesURLs() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "SELECT ?url",
+            "WHERE {",
+            "        ?url a <http://xmlns.computas.com/sublima#Resource> }"});
+
+    Query query = QueryFactory.create(queryString);
+    QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
+    ResultSet resultSet = qExec.execSelect();
+    logger.info("SUBLIMA: getAllExternalResourcesURLs() --> Indexing - Fetched all resource URLs from the model");
+    return resultSet;
   }
 
   public String getQueryForIndex(String[] fieldsToIndex, String[] prefixes) {
@@ -303,9 +296,11 @@ public class IndexService {
     Set<String> literals = new HashSet<String>();
 
     String resource = null;
-    while (resultSet.hasNext()) {
+    int i = 0;
+    while (resultSet.hasNext()) { // && i < 50) {
       QuerySolution soln = resultSet.nextSolution();
       Iterator<String> it = soln.varNames();
+
       while (it.hasNext()) {
         StringBuffer resultBuffer = new StringBuffer();
         String var = it.next();
@@ -317,11 +312,16 @@ public class IndexService {
 
               // Add the old one to the output buffer
               resultBuffer.append("<" + resource);
-              resultBuffer.append("> sub:literals \"\"\"");
+              resultBuffer.append("> sub:literals \"\"\"empty");
+
+              //resultBuffer.append("> sub:literals :_a .\n");
+
               for (String s : literals) {
                 resultBuffer.append(s.trim() + ". ");
               }
+              
               resultBuffer.append("\"\"\" .\n");
+              logger.trace("SUBLIMA: getFreetextToIndex --> Added \"empty\" as sub:literal for " + resource);
 
               list.add(resultBuffer.toString());
               if (indexExternalContent && (resource != null)) {
@@ -337,6 +337,7 @@ public class IndexService {
             Literal l = soln.getLiteral(var);
             String literal = l.getString().replace("\\", "\\\\");
             literals.add(literal);  // This should ensure uniqueness
+            logger.trace("SUBLIMA: getFreetextToIndex --> Added " + literal + " to the resource's sub:literal");
           } else {
             logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
           }
@@ -345,11 +346,14 @@ public class IndexService {
             StringBuffer endResultBuffer = new StringBuffer();
             endResultBuffer.append("<" + resource);
             endResultBuffer.append("> sub:literals \"\"\"");
+            //resultBuffer.append("> sub:literals :_a .\n");
+
             for (String s : literals) {
               endResultBuffer.append(s.trim() + ". ");
             }
             endResultBuffer.append("\"\"\" .\n");
             list.add(endResultBuffer.toString());
+            logger.trace("SUBLIMA: getFreetextToIndex --> Added \"empty\" as sub:literal for " + resource);
 
             if (indexExternalContent && (resource != null)) {
               list.add(getResourceExternalLiteralsAsTriple(resource, fieldsToIndex, prefixes));
@@ -357,6 +361,7 @@ public class IndexService {
 
           }
         }
+        i++;
       }
     }
     //return resultBuffer.toString();
@@ -372,7 +377,7 @@ public class IndexService {
     QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
     ResultSet resultSet = qExec.execSelect();
 
-    logger.info("SUBLIMA: getFreetextToIndex() --> Indexing - Fetched all literals that we need to index");
+    logger.info("SUBLIMA: getFreetextToIndexResultSet() --> Indexing - Fetched all literals that we need to index");
     return resultSet;
   }
 
@@ -391,7 +396,7 @@ public class IndexService {
     tripleString.append(getResourceInternalLiteralsAsString(resource, searchfields, prefixes) + ".\n");
 
     tripleString.append(getResourceExternalLiteralsAsString(resource) + ".\n");
-    
+
     tripleString.append("\"\"\" .\n");
 
     return tripleString.toString();
@@ -424,7 +429,7 @@ public class IndexService {
     logger.info("SUBLIMA: indexResourceExternalLiterals() --> Insert external literals for " + resource + " resulted in: " + insertSuccess);
   }
 
-/**
+  /**
    * Method to get the external content as an triple for a specific resource including the internal literals
    *
    * @param resource
@@ -468,7 +473,7 @@ public class IndexService {
    * @param resource
    * @return a String
    */
-  public String getResourceInternalLiteralsAsString(String resource, String[] searchfields, String[] prefixes ) {
+  public String getResourceInternalLiteralsAsString(String resource, String[] searchfields, String[] prefixes) {
     StringBuffer returnString = new StringBuffer();
 
     if (resource != null || "".equalsIgnoreCase(resource)) {
@@ -490,6 +495,7 @@ public class IndexService {
               Literal l = soln.getLiteral(var);
               String literal = l.getString().replace("\\", "\\\\");
               returnString.append(literal + ". ");
+              logger.trace("SUBLIMA: getResourceInternalLiteralsAsString --> Added " + literal + " to " + resource + "'s sub:literal");
             } else {
               logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that sublima.searchfields config is correct.");
             }
@@ -519,26 +525,212 @@ public class IndexService {
 
   }
 
-
   /**
-   * Method to reindex a given resource
+   * Method to reindex a given resource based on alternative 1; adding the internal content directly to the resource (the external content goes in a separate index)
    *
    * @param resourceString
-   * @param searchFileds
+   * @param searchfields
    * @param prefixes
    * @return void
-   *
-   * added 2008-09-05 (dn)
+   *         <p/>
+   *         added 2008-09-05 (dn)
    */
-  public void indexResource(String resourceString, String[] searchfields, String[] prefixes) {
-    Resource r = SettingsService.getModel().getResource(resourceString); 
+  public void indexResourceAlt1(String resourceString, String[] searchfields, String[] prefixes) {
+    Resource r = SettingsService.getModel().getResource(resourceString);
+
     String s = getResourceInternalLiteralsAsString(resourceString, searchfields, prefixes);
-    IndexBuilderNode larqBuilder = SettingsService.getIndexBuilderNode(null);
-    larqBuilder.index(r, s.toString()) ; 
-    larqBuilder.flushWriter();
+
+    SettingsService.getIndexBuilderNode(null).index(r, s);
+
+    Property propTitle = SettingsService.getModel().createProperty("http://purl.org/dc/terms/title");
+    Property propDescription = SettingsService.getModel().createProperty("http://purl.org/dc/terms/description");
+    Property propPublisher = SettingsService.getModel().createProperty("http://purl.org/dc/terms/publisher");
+    Property propFname = SettingsService.getModel().createProperty("http://xmlns.com/foaf/0.1/name");
+    Property propSubject = SettingsService.getModel().createProperty("http://purl.org/dc/terms/subject");
+    Property propPrefLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#prefLabel");
+    Property propAltLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#altLabel");
+    Property propHiddenLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#hiddenLabel");
+
+    // Title
+    NodeIterator nTitle = SettingsService.getModel().listObjectsOfProperty(r, propTitle);
+    while (nTitle.hasNext()) {
+      RDFNode node = nTitle.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+      }
+    }
+
+    // Description
+    NodeIterator nDescription = SettingsService.getModel().listObjectsOfProperty(r, propDescription);
+    while (nDescription.hasNext()) {
+      RDFNode node = nDescription.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+      }
+    }
+
+    // Publisher / Name
+    NodeIterator nPublisher = SettingsService.getModel().listObjectsOfProperty(r, propPublisher);
+    while (nPublisher.hasNext()) {
+      RDFNode node = nPublisher.nextNode();
+      if (node.isResource()) {
+        NodeIterator nFnamel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propFname);
+        while (nFnamel.hasNext()) {
+          RDFNode rdfNode = nFnamel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+      }
+    }
+
+    // Subject / PrefLabel | AltLabel | HiddenLabel
+    NodeIterator nSubject = SettingsService.getModel().listObjectsOfProperty(r, propSubject);
+    while (nSubject.hasNext()) {
+      RDFNode node = nSubject.nextNode();
+      if (node.isResource()) {
+        NodeIterator nPrefLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propPrefLabel);
+        NodeIterator nAltLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propAltLabel);
+        NodeIterator nHiddenLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propHiddenLabel);
+        while (nPrefLabel.hasNext()) { // prefLabel
+          RDFNode rdfNode = nPrefLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+        while (nAltLabel.hasNext()) { // altLabel
+          RDFNode rdfNode = nAltLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+        while (nHiddenLabel.hasNext()) { // hiddenLabel
+          RDFNode rdfNode = nHiddenLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+      }
+    }
+
+    SettingsService.getIndexBuilderNode(null).flushWriter();
   }
-  
-  
+
+
+
+
+  /**
+   * Method to reindex a given resource based on alternative 2; adding the internal content to dct:identifier and the combined internal and external content to sub:url
+   *
+   * @param resourceString
+   * @param searchfields
+   * @param prefixes
+   * @return void
+   *         <p/>
+   *         added 2008-09-05 (dn)
+   */
+  public void indexResourceAlt2(String resourceString, String[] searchfields, String[] prefixes) {
+    Resource r = SettingsService.getModel().getResource(resourceString);
+
+    String s = getResourceInternalLiteralsAsString(resourceString, searchfields, prefixes);
+
+    Property pUrl = SettingsService.getModel().createProperty("http://xmlns.computas.com/sublima#url");
+    Property pIdentifier = SettingsService.getModel().createProperty("http://purl.org/dc/terms/identifier");
+
+    // dct:identifier used for internal content
+    NodeIterator nIdentifier = SettingsService.getModel().listObjectsOfProperty(r, pIdentifier);
+    while (nIdentifier.hasNext()) {
+      RDFNode node = nIdentifier.nextNode();
+      if (node.isResource()) {
+        SettingsService.getIndexBuilderNode(null).index(node, s);
+      }
+    }
+
+    /*
+    // sub:url used for external content (including internal content)
+    NodeIterator nUrl = SettingsService.getModel().listObjectsOfProperty(r, pUrl);
+    while (nUrl.hasNext()) {
+      RDFNode node = nUrl.nextNode();
+      if (node.isResource()) {
+        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+      }
+    }*/
+
+
+    Property propTitle = SettingsService.getModel().createProperty("http://purl.org/dc/terms/title");
+    Property propDescription = SettingsService.getModel().createProperty("http://purl.org/dc/terms/description");
+    Property propPublisher = SettingsService.getModel().createProperty("http://purl.org/dc/terms/publisher");
+    Property propFname = SettingsService.getModel().createProperty("http://xmlns.com/foaf/0.1/name");
+    Property propSubject = SettingsService.getModel().createProperty("http://purl.org/dc/terms/subject");
+    Property propPrefLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#prefLabel");
+    Property propAltLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#altLabel");
+    Property propHiddenLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#hiddenLabel");
+
+    // Title
+    NodeIterator nTitle = SettingsService.getModel().listObjectsOfProperty(r, propTitle);
+    while (nTitle.hasNext()) {
+      RDFNode node = nTitle.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+      }
+    }
+
+    // Description
+    NodeIterator nDescription = SettingsService.getModel().listObjectsOfProperty(r, propDescription);
+    while (nDescription.hasNext()) {
+      RDFNode node = nDescription.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+      }
+    }
+
+    // Publisher / Name
+    NodeIterator nPublisher = SettingsService.getModel().listObjectsOfProperty(r, propPublisher);
+    while (nPublisher.hasNext()) {
+      RDFNode node = nPublisher.nextNode();
+      if (node.isResource()) {
+        NodeIterator nFnamel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propFname);
+        while (nFnamel.hasNext()) {
+          RDFNode rdfNode = nFnamel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+      }
+    }
+
+    // Subject / PrefLabel | AltLabel | HiddenLabel
+    NodeIterator nSubject = SettingsService.getModel().listObjectsOfProperty(r, propSubject);
+    while (nSubject.hasNext()) {
+      RDFNode node = nSubject.nextNode();
+      if (node.isResource()) {
+        NodeIterator nPrefLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propPrefLabel);
+        NodeIterator nAltLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propAltLabel);
+        NodeIterator nHiddenLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propHiddenLabel);
+        while (nPrefLabel.hasNext()) { // prefLabel
+          RDFNode rdfNode = nPrefLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+        while (nAltLabel.hasNext()) { // altLabel
+          RDFNode rdfNode = nAltLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+        while (nHiddenLabel.hasNext()) { // hiddenLabel
+          RDFNode rdfNode = nHiddenLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+      }
+    }
+
+    SettingsService.getIndexBuilderNode(null).flushWriter();
+  }
+
 
 
 }

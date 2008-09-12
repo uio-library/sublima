@@ -489,7 +489,8 @@ public class Form2SparqlService {
         if (deepsearch) {
             result = result + "\n?resource sub:externalliterals ?lit .";
         } else {
-            result = result + "\n?resource sub:literals ?lit .";
+            //result = result + "\n?resource sub:literals ?lit .";
+            result = result + "\n?resource dct:identifier ?lit ."; // for test
         }
         return result;
     }
