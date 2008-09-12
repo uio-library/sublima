@@ -525,6 +525,127 @@ public class IndexService {
 
   }
 
+
+  /**
+   * Method to reindex a given resource
+   *
+   * @param resourceString
+   * @param searchfields
+   * @param prefixes
+   * @return void
+   *         <p/>
+   *         added 2008-09-05 (dn)
+   */
+  public void indexResource(String resourceString, String[] searchfields, String[] prefixes) {
+    Resource r = SettingsService.getModel().getResource(resourceString);
+
+    //String s = getResourceInternalLiteralsAsString(resourceString, searchfields, prefixes);
+    //IndexBuilderNode larqBuilder = SettingsService.getIndexBuilderNode(null);
+
+    //todo We have to do the indexing of the separate fields here
+
+    //Property prop = SettingsService.getModel().createProperty("http://xmlns.computas.com/sublima#literals");
+    Property propTitle = SettingsService.getModel().createProperty("http://purl.org/dc/terms/title");
+    Property propDescription = SettingsService.getModel().createProperty("http://purl.org/dc/terms/description");
+    Property propPublisher = SettingsService.getModel().createProperty("http://purl.org/dc/terms/publisher");
+    Property propFname = SettingsService.getModel().createProperty("http://xmlns.com/foaf/0.1/name");
+    Property propSubject = SettingsService.getModel().createProperty("http://purl.org/dc/terms/subject");
+    Property propPrefLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#prefLabel");
+    Property propAltLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#altLabel");
+    Property propHiddenLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#hiddenLabel");
+
+    // Title
+    NodeIterator nTitle = SettingsService.getModel().listObjectsOfProperty(r, propTitle);
+    while (nTitle.hasNext()) {
+      RDFNode node = nTitle.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+      }
+    }
+
+    // Description
+    NodeIterator nDescription = SettingsService.getModel().listObjectsOfProperty(r, propDescription);
+    while (nDescription.hasNext()) {
+      RDFNode node = nDescription.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+      }
+    }
+
+    // Publisher / Name
+    NodeIterator nPublisher = SettingsService.getModel().listObjectsOfProperty(r, propPublisher);
+    while (nPublisher.hasNext()) {
+      RDFNode node = nPublisher.nextNode();
+      if (node.isResource()) {
+        NodeIterator nFnamel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propFname);
+        while (nFnamel.hasNext()) {
+          RDFNode rdfNode = nFnamel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+      }
+    }
+
+    // Subject / PrefLabel | AltLabel | HiddenLabel
+    NodeIterator nSubject = SettingsService.getModel().listObjectsOfProperty(r, propSubject);
+    while (nSubject.hasNext()) {
+      RDFNode node = nSubject.nextNode();
+      if (node.isResource()) {
+        NodeIterator nPrefLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propPrefLabel);
+        NodeIterator nAltLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propAltLabel);
+        NodeIterator nHiddenLabel = SettingsService.getModel().listObjectsOfProperty(((Resource) node), propHiddenLabel);
+        while (nPrefLabel.hasNext()) { // prefLabel
+          RDFNode rdfNode = nPrefLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+        while (nAltLabel.hasNext()) { // altLabel
+          RDFNode rdfNode = nAltLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+        while (nHiddenLabel.hasNext()) { // hiddenLabel
+          RDFNode rdfNode = nHiddenLabel.nextNode();
+          if (rdfNode.isLiteral()) {
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+          }
+        }
+      }
+    }
+
+    /*
+
+
+    // dct:subject/skos:altLabel;dct:subject/skos:hiddenLabel
+
+    NodeIterator ni2 = SettingsService.getModel().listObjectsOfProperty(r, propTitle);
+    while (ni2.hasNext()) {
+      RDFNode node = ni2.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+        //text.append(((Literal) node).getString() + " ");
+      }
+    }
+
+    NodeIterator ni = SettingsService.getModel().listObjectsOfProperty(r, prop);
+    StringBuffer text = new StringBuffer();
+    while (ni.hasNext()) {
+      RDFNode node = ni.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, s.toString());
+        //text.append(((Literal) node).getString() + " ");
+      }
+    }
+    */
+    //SettingsService.getIndexBuilderNode(null).index(r, s.toString());
+    SettingsService.getIndexBuilderNode(null).flushWriter();
+  }
+
+
+
   /**
    * Method to reindex a given resource based on alternative 1; adding the internal content directly to the resource (the external content goes in a separate index)
    *
