@@ -157,9 +157,9 @@ public class FeedbackController implements StatelessAppleController {
                         "INSERT\n" +
                         "{\n" +
                         "<" + url + "> a sub:Resource .\n" +
-                        "<" + url + "> dct:title " + "\"" + tittel + "\"@no . \n" +
+                        "<" + url + "> dct:title " + "\"\"\"" + tittel + "\"\"\"@no . \n" +
                         "<" + url + "> dct:description " + "\"\"\"" + beskrivelse + "\"\"\"@no . \n" +
-                        "<" + url + "> sub:keywords " + "\"" + stikkord.toString() + "\"@no . \n" +
+                        "<" + url + "> sub:keywords " + "\"\"\"" + stikkord.toString() + "\"\"\"@no . \n" +
                         "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
                         "<" + url + "> sub:url <" + url + "> . }\n";
 
