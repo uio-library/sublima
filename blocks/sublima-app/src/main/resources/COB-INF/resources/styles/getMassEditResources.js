@@ -16,8 +16,14 @@ function getResources() {
 function createTable(data) {
      //      alert("foo" + data.results.bindings[1].uri.value);
   
+  var regex = new RegExp(document.getElementById("selectregex").value);
+  patternout = document.getElementById("selectpattern").value;
+  
+  
 //  var j = data.results.bindings.length();
   for (var i = 0 ; i < data.results.bindings.length; i++) {
-  $("#my-table tbody").append("<tr><td>"+ (i+1) +"</td><td>"+data.results.bindings[i].title.value+"</td><td><input type=\"text\" name=\"old-"+i+"\" size=\"30\" value=\""+data.results.bindings[i].uri.value+"\" readonly=\"readonly\"/></td><td><input type=\"text\"  size=\"30\" name=\new-"+i+"\" value=\""+data.results.bindings[i].uri.value+"\"/></td></tr>");
-      }
+    oldurl = data.results.bindings[i].uri.value;
+    newurl = oldurl.replace(regex, patternout);
+    $("#my-table tbody").append("<tr><td>"+ (i+1) +"</td><td>"+data.results.bindings[i].title.value+"</td><td><input type=\"text\" name=\"old-"+i+"\" size=\"40\" value=\""+oldurl+"\" readonly=\"readonly\"/></td><td><input type=\"text\"  size=\"40\" name=\new-"+i+"\" value=\""+newurl+"\"/></td></tr>");
+  }
 }
