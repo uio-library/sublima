@@ -55,30 +55,22 @@
       </table>
       </fieldset>
     </form>
+    <hr/>
 
-    <form action="export" method="POST">
+    <h4>Export</h4>
+    <form action="export" method="GET">
       <table>
-        <tr>
+      <tr>
           <td align="right">
-            <label for="location">
-              <i18n:text key="location">Lokasjon</i18n:text>
-            </label>
-          </td>
-          <td>
-            <input id="location" type="file" name="location" size="40"/>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">
-            <label for="tittel">
+            <label for="type">
               <i18n:text key="type">Type</i18n:text>
             </label>
           </td>
           <td>
-            <select name="type">
-              <option value="RDF/XML">RDF/XML</option>
-              <option value="N3">N3</option>
-              <option value="Turtle" selected="selected">Turtle</option>
+            <select name="type" id="type">
+              <option value="RDF/XML" selected="selected">RDF/XML</option>
+              <option value="N3" disabled="disabled">N3</option>
+              <option value="Turtle" disabled="disabled">Turtle</option>
             </select>
           </td>
         </tr>
@@ -91,7 +83,7 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" value="button.read" i18n:attr="value"/>
+            <input type="submit" value="button.export" i18n:attr="value"/>
           </td>
         </tr>
       </table>

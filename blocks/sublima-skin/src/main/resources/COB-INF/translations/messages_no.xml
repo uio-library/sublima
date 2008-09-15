@@ -148,5 +148,6 @@
   <message key="button.saverole">Lagre rolle</message>
   <message key="button.next">Neste</message>
   <message key="button.read">Les inn</message>
+  <message key="button.export">Export</message>
 
 </catalogue>

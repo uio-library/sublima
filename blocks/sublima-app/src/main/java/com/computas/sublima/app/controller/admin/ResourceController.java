@@ -8,6 +8,7 @@ import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import com.hp.hpl.jena.query.larq.LARQ;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
@@ -380,7 +381,9 @@ public class ResourceController implements StatelessAppleController {
           // new appraoach
           // fetches all literals about the given resource and add to index...
           //IndexBuilderNode larqBuilder = SettingsService.getIndexBuilderNode(SettingsService.getProperty("sublima.index.directory"));
-          indexService.indexResource(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          indexService.indexResourceAlt2(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
+
           
         } else {
           messageBuffer.append("<c:message>Feil ved lagring av ny ressurs</c:message>\n");
@@ -402,6 +405,8 @@ public class ResourceController implements StatelessAppleController {
       bizData.put("messages", messageBuffer.toString());
       bizData.put("userprivileges", userPrivileges);
       bizData.put("publishers", adminService.getAllPublishers());
+
+
 
       res.sendPage("xml2/ressurs", bizData);
 

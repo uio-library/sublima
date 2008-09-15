@@ -6,16 +6,23 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
+import com.computas.sublima.query.service.SettingsService;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import com.hp.hpl.jena.db.ModelRDB;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: mha
@@ -72,7 +79,7 @@ public class AdminController implements StatelessAppleController {
       } else if ("upload".equalsIgnoreCase(submode)) {
         uploadForm(res, req);
       } else if ("export".equalsIgnoreCase(submode)) {
-        exportOntology(res, req);
+        exportOntologyToXML(res, req);
       }
     } else {
       res.sendStatus(404);
@@ -81,29 +88,57 @@ public class AdminController implements StatelessAppleController {
   }
 
   private void exportOntology(AppleResponse res, AppleRequest req) throws Exception {
-    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
-      res.sendPage("xml2/upload", null);
-    } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-      DatabaseService databaseService = new DatabaseService();
+    DatabaseService databaseService = new DatabaseService();
 
-      String type = req.getCocoonRequest().getParameter("type");
-      //File file = new File(req.getCocoonRequest().getParameter("location"));
-      File file = new File("tmp.xml");  
-      String replaceResourceWith = null;
-      if (req.getCocoonRequest().getParameterValues("replacement") != null) {
-        replaceResourceWith = "uri";
-      }
-      databaseService.writeModelToFile(file.toString(), type);
-      try {
-        ConvertSublimaResources.convert(file.toURL().toString(), type, file.getCanonicalPath(), type, replaceResourceWith);
-        
-      } catch (IOException e) {
-        logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
-        e.printStackTrace();
-      }
-      logger.trace("AdminController.uploadForm -> Redirecting to " + file.toURL().toString());
-      res.sendPage(file.toURL().toString(), null);
+    String type = req.getCocoonRequest().getParameter("type");
+    //File file = new File(req.getCocoonRequest().getParameter("location"));
+    File file = new File("tmp.xml");
+    String replaceResourceWith = null;
+    if (req.getCocoonRequest().getParameterValues("replacement") != null) {
+      replaceResourceWith = "uri";
     }
+    databaseService.writeModelToFile(file.toString(), type);
+    try {
+      ConvertSublimaResources.convert(file.toURL().toString(), type, file.getCanonicalPath(), type, replaceResourceWith);
+
+    } catch (IOException e) {
+      logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
+      e.printStackTrace();
+    }
+    logger.trace("AdminController.uploadForm -> Redirecting to " + file.toURL().toString());
+    res.sendPage(file.toURL().toString(), null);
+  }
+
+  private void exportOntologyToXML(AppleResponse res, AppleRequest req) throws Exception {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+
+    String type = req.getCocoonRequest().getParameter("type");
+
+    String replaceResourceWith = null;
+    if (req.getCocoonRequest().getParameterValues("replacement") != null) {
+      replaceResourceWith = "uri";
+    }
+
+    Model model = ModelFactory.createDefaultModel();
+    model.add(SettingsService.getModel());
+    model.setNsPrefixes(SettingsService.getModel().getNsPrefixMap());
+
+    try {
+      model = ConvertSublimaResources.convertModel(model, replaceResourceWith);
+
+    } catch (IOException e) {
+      logger.trace("AdminController.exportOntologyToXML --> Error during convertion of resource URIs to URLs.");
+      e.printStackTrace();
+    }
+
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    model.write(out, type);
+    bizData.put("ontology", out.toString());
+
+    model.close();
+
+    res.sendPage("nostyle/export", bizData);
+
   }
 
   private void uploadForm(AppleResponse res, AppleRequest req) {

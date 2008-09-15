@@ -156,5 +156,7 @@
  <message key="button.saverole">Spara roll</message>
  <message key="button.next">Nästa</message>
  <message key="button.read">Läs</message>
+  <message key="button.export">Export</message>
+
 </catalogue>
 

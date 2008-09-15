@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jx:out xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" value="#{ontology}" xmlize="true"/>

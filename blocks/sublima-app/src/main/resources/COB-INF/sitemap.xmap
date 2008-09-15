@@ -396,6 +396,11 @@
           <map:parameter name="service" value="servlet:skin:/rss-styling"/>
         </map:serialize>
       </map:match>
+
+      <map:match pattern="nostyle/*">
+        <map:generate src="templates/{1}.jx.xml" type="jx"/>
+        <map:serialize type="xml"/>
+      </map:match>
       
       
 
