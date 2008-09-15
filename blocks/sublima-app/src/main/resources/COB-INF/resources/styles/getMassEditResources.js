@@ -11,3 +11,13 @@ function getResources() {
     success: function(data) { createTable(data); }
   });
 }
+
+
+function createTable(data) {
+     //      alert("foo" + data.results.bindings[1].uri.value);
+  
+//  var j = data.results.bindings.length();
+  for (var i = 0 ; i < data.results.bindings.length; i++) {
+  $("#my-table tbody").append("<tr><td>"+ (i+1) +"</td><td>"+data.results.bindings[i].title.value+"</td><td><input type=\"text\" name=\"old-"+i+"\" size=\"30\" value=\""+data.results.bindings[i].uri.value+"\" readonly=\"readonly\"/></td><td><input type=\"text\"  size=\"30\" name=\new-"+i+"\" value=\""+data.results.bindings[i].uri.value+"\"/></td></tr>");
+      }
+}
