@@ -1,5 +1,6 @@
 function getResources() {
-  sparqlquery = 'PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX sub: <http://xmlns.computas.com/sublima#>\nPREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>\nSELECT ?uri ?title WHERE \n{ ?uri dct:title ?title ;\n   a sub:Resource  .\n   FILTER regex(xsd:string(?uri), ".*legen.*", "i")\n}';
+  sparqlquery = 'PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX sub: <http://xmlns.computas.com/sublima#>\nPREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>\nSELECT ?uri ?title WHERE \n{ ?uri dct:title ?title ;\n   a sub:Resource  .\n   FILTER regex(xsd:string(?uri), "'+document.getElementById("selectregex").value+'", "i")\n} ORDER BY sxd:string(?uri)';
+  
   $.ajax({
     type: "GET",
     url: "../../sparql",
@@ -14,13 +15,10 @@ function getResources() {
 
 
 function createTable(data) {
-     //      alert("foo" + data.results.bindings[1].uri.value);
-  
-  var regex = new RegExp(document.getElementById("selectregex").value);
+  var regex = new RegExp(document.getElementById("selectregex").value, 'i');
   patternout = document.getElementById("selectpattern").value;
   $("#my-table tbody tr").remove();
   
-//  var j = data.results.bindings.length();
   for (var i = 0 ; i < data.results.bindings.length; i++) {
     oldurl = data.results.bindings[i].uri.value;
     newurl = oldurl.replace(regex, patternout);

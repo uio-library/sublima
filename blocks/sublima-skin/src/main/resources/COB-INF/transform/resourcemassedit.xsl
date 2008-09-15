@@ -16,44 +16,33 @@
         version="1.0">
 
   <xsl:template match="c:massediting">
-    <script src="styles/jquery.tablelib.js" type="text/javascript" />
-    <script type="text/javascript">var dummy = null;</script>
-    <script src="styles/iterators.js" type="text/javascript" />
-    <script type="text/javascript">var dummy = null;</script>
     <script type="text/javascript" src="styles/getMassEditResources.js"/>
-    <script type="text/javascript">
-       function createTable(data) {
-//         alert("foo" + data.results.bindings[1].uri.value);
-
-           var j = data.results.bindings.length();
-           for (var i = 0 ; i &lt; j; i++) {
-	     $("#my-table tbody").append("<tr><td>"+data.results.bindings[i].uri.value+"</td><td>"+data.results.bindings[1].title.value+"</td></tr>");
-	   }
-     }
-     </script>
-
-     <form action="foo">
+ 
+     <form action="void">
        <fieldset>
-	 <input type="text" name="selectregex"/>
+	 <input id="selectregex" name="selectregex" type="text" />
+	 <input id="selectpattern" name="selectpattern" type="text" />
 	 <input type="button" name="query" value="Get resources" onClick="getResources()"/>
        </fieldset>
      </form>
 
-     <table id="my-table">
-       <thead>
-	 <tr>
-	   <th>Gammel URL</th>
-	   <th>Tittel</th>
-	   <th>Ny URL</th>
-	 </tr>
-       </thead>
-       <tbody>
-	 
-       </tbody>
-     </table>
+     <form action="reidentify" method="POST" id="resources-to-modify">
 
+       <table id="my-table">
+	 <thead>
+	   <tr>
+	     <th>Id</th>
+	     <th>Tittel</th>
+	     <th>Gammel URL</th>
+	     <th>Ny URL</th>
+	   </tr>
+	 </thead>
+	 <tbody>
+	   
+	 </tbody>
+       </table>
 
-     <form action="" method="POST" id="resources-to-modify">
+       <input type="submit" value="Change all URLs"/>
 
      </form>
 
