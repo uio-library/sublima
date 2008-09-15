@@ -27,13 +27,13 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
       //Try to execute the updateQuery (SPARQL/Update)
       UpdateRequest updateRequest = UpdateFactory.create(query);
       updateRequest.exec(graphStore);
-      LARQ.setDefaultIndex(SettingsService.getIndexBuilderString(null).getIndex());
+      LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
     } catch (ARQNotImplemented e) {
       logger.warn("DefaultSparulDispatcher.query --> ARQNotImplemented exception. Returning TRUE and flagging reindexing.");
       UpdateRequest updateRequest = UpdateFactory.create(query);
 
       updateRequest.exec(graphStore);
-      LARQ.setDefaultIndex(SettingsService.getIndexBuilderString(null).getIndex());
+      LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
       return true;
     } catch (UpdateException e) {
       logger.warn("DefaultSparulDispatcher.query --> UpdateException. Returning FALSE");

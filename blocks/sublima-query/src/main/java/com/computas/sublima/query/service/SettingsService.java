@@ -72,6 +72,7 @@ public class SettingsService {
       
         // check if exist, if not or corrupt - create a new
         try {
+            //todo Might fail here if it is a write.lock()
             IndexWriter iw = new IndexWriter(dir, new StandardAnalyzer());
             indexBuilderNode = new IndexBuilderNode(iw);
         } catch (org.apache.lucene.index.CorruptIndexException cie) {
