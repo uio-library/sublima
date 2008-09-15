@@ -18,7 +18,7 @@ function createTable(data) {
   
   var regex = new RegExp(document.getElementById("selectregex").value);
   patternout = document.getElementById("selectpattern").value;
-  
+  $("#my-table tbody tr").remove();
   
 //  var j = data.results.bindings.length();
   for (var i = 0 ; i < data.results.bindings.length; i++) {
