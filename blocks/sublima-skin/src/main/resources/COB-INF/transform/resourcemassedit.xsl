@@ -18,15 +18,30 @@
   <xsl:template match="c:massediting">
     <script type="text/javascript" src="styles/getMassEditResources.js"/>
  
-     <form action="void">
+     <form action="">
        <fieldset>
-	 <input id="selectregex" name="selectregex" type="text" />
-	 <input id="selectpattern" name="selectpattern" type="text" />
-	 <input type="button" name="query" value="Get resources" onClick="getResources()"/>
+	 <table>
+	   <tr>
+	     <th>Regular Expression</th>
+	     <th>Pattern</th>
+	     <th></th>
+	   </tr>
+	   <tr>
+	     <td>
+	       <input id="selectregex" name="selectregex" type="text" />
+	     </td>
+	     <td>
+	       <input id="selectpattern" name="selectpattern" type="text" />
+	     </td>
+	     <td>
+	       <input type="button" name="query" value="Get resources" onClick="getResources()"/>
+	     </td>
+	   </tr>
+	 </table>
        </fieldset>
      </form>
 
-     <form action="reidentify" method="POST" id="resources-to-modify">
+     <form action="" method="POST" id="resources-to-modify">
 
        <table id="my-table">
 	 <thead>

@@ -1,5 +1,5 @@
 function getResources() {
-  sparqlquery = 'PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX sub: <http://xmlns.computas.com/sublima#>\nPREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>\nSELECT ?uri ?title WHERE \n{ ?uri dct:title ?title ;\n   a sub:Resource  .\n   FILTER regex(xsd:string(?uri), "'+document.getElementById("selectregex").value+'", "i")\n} ORDER BY sxd:string(?uri)';
+  sparqlquery = 'PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX sub: <http://xmlns.computas.com/sublima#>\nPREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>\nSELECT ?uri ?title WHERE \n{ ?uri dct:title ?title ;\n   a sub:Resource  .\n   FILTER regex(xsd:string(?uri), "'+document.getElementById("selectregex").value+'", "i")\n} ORDER BY xsd:string(?uri)';
   
   $.ajax({
     type: "GET",
