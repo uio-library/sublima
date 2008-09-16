@@ -89,6 +89,62 @@ public class ConvertSublimaResources {
   }
 
   /**
+   * Converts a model from resources represented as URLs to resources represented as URIs and visa versa. Unlike convert() this handles the model in memory.
+   */
+  public static Model convertModel(Model model, String replaceResourceWith) throws IOException {
+    if (replaceResourceWith != null) {
+
+      Property p = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+      Resource o = model.getResource("http://xmlns.computas.com/sublima#Resource");
+      StmtIterator iter = model.listStatements(null, p, o);
+
+      List list = iter.toList();
+      for (int i = 0; i < list.size(); i++) {
+
+        Statement stmt = (Statement) list.get(i); // get next statement
+        Resource subject = stmt.getSubject();     // get the subject
+        Property predicate = stmt.getPredicate();   // get the predicate
+        RDFNode object = stmt.getObject();      // get the object
+        System.out.println(subject.toString());
+
+        String rep = null;
+        if (replaceResourceWith.equals("url")) {
+
+          // rename all statements about this resource to its sub:url
+          Property urlProp = model.getProperty("http://xmlns.computas.com/sublima#url");
+          NodeIterator nIter = model.listObjectsOfProperty(subject, urlProp);
+
+          try {
+            rep = nIter.nextNode().toString();
+          } catch (NoSuchElementException e) {
+            logger.warn("ConvertSublimaResources.convert() --> Resource " + subject.toString() + " has no property sublima:url");
+          }
+          renameSubject(subject, rep);
+        } else {
+
+          // rename all statements about this resource to its dct:identifier
+          Property identifierProp = model.getProperty("http://purl.org/dc/terms/identifier");
+          NodeIterator nIter = model.listObjectsOfProperty(subject, identifierProp);
+          try {
+            rep = nIter.nextNode().toString();
+          } catch (NoSuchElementException e) {
+            logger.warn("ConvertSublimaResources.convert() --> Resource " + subject.toString() + " has no property dct:identifier");
+          }
+          renameSubject(subject, rep);
+        }
+
+        System.out.println("Renamed " + subject.toString() + " to " + rep);
+      }
+    }
+
+    // Add skos inverse triples
+    Model outModel = addSkosInverse(model);
+    return outModel;
+
+  }
+
+
+  /**
    * Converts from resources represented as URLs to resources represented as URIs and visa versa.
    */
   public static void convert(String inputFileName, String inFormat, String outputFileName, String outFormat, String replaceResourceWith) throws FileNotFoundException, java.io.IOException {
@@ -109,7 +165,6 @@ public class ConvertSublimaResources {
     File f = new File(inputFileName);
     String base = f.toString(); //"file:///" + f.getCanonicalPath().replace('\\', '/');
     rdr.read(model, in, base);
-
 
     if (replaceResourceWith != null) {
 
