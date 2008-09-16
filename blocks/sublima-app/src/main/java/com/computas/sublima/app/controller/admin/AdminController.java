@@ -10,7 +10,6 @@ import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.sparql.util.StringUtils;
-import com.hp.hpl.jena.db.ModelRDB;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
@@ -33,8 +32,6 @@ public class AdminController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
-  private String mode;
-  private String submode;
   String[] completePrefixArray = {
           "PREFIX dct: <http://purl.org/dc/terms/>",
           "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
@@ -61,8 +58,8 @@ public class AdminController implements StatelessAppleController {
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
 
-    this.mode = req.getSitemapParameter("mode");
-    this.submode = req.getSitemapParameter("submode");
+    String mode = req.getSitemapParameter("mode");
+    String submode = req.getSitemapParameter("submode");
 
     if ("".equalsIgnoreCase(mode)) {
       res.sendPage("xml2/admin", null);
@@ -83,7 +80,6 @@ public class AdminController implements StatelessAppleController {
       }
     } else {
       res.sendStatus(404);
-      return;
     }
   }
 
