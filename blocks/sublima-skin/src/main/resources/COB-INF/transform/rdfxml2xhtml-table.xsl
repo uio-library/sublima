@@ -129,7 +129,7 @@
             <label for="comment"><i18n:text key="comment">Kommentar</i18n:text></label>
           </td>
           <td>
-            <textarea id="comment" name="comment" rows="6" cols="40">...</textarea>
+            <textarea id="comment" name="comment" rows="6" cols="40"><xsl:text> </xsl:text></textarea>
           </td>
         </tr>
         <tr>

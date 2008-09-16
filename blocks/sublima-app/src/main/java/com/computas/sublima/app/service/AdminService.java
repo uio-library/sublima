@@ -460,10 +460,11 @@ public class AdminService {
   }
 
 
-  public String getTopicsByLetter(String letter) {
+  public String getTopicsByLetter(String letter, String language) {
     if (letter.equalsIgnoreCase("0-9")) {
       letter = "[0-9]";
     }
+
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
@@ -473,6 +474,7 @@ public class AdminService {
             "    skos:prefLabel ?label .",
             "    ?topic wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
             "FILTER regex(str(?label), \"^" + letter + "\", \"i\")",
+            "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}"});
 
     logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
