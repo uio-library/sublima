@@ -5,6 +5,7 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
+import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
@@ -130,7 +131,13 @@ public class TopicController implements StatelessAppleController {
   private void getTopicsByLetter(AppleResponse res, AppleRequest req, String letter) {
     Map<String, Object> bizData = new HashMap<String, Object>();
 
-    bizData.put("themetopics", adminService.getTopicsByLetter(letter));
+    String locale = req.getCocoonRequest().getParameter("locale");
+
+    if (locale == null) {
+      locale = SettingsService.getProperty("sublima.default.locale");      
+    }
+
+    bizData.put("themetopics", adminService.getTopicsByLetter(letter, locale));
     bizData.put("mode", "browse");
     bizData.put("loggedin", "<empty></empty>");
     bizData.put("facets", getRequestXML(req));
