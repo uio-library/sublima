@@ -5,10 +5,10 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.computas.sublima.query.service.SettingsService;
-import com.hp.hpl.jena.sparql.util.StringUtils;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.query.larq.LARQ;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
@@ -74,7 +74,7 @@ public class ResourceController implements StatelessAppleController {
 
     if ("ressurser".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
-        showResourcesIndex(res, req);
+        showResourcesIndex(res);
         return;
       } else if ("masse".equalsIgnoreCase(submode)) {
         massEditResource(res, req);
@@ -361,9 +361,7 @@ public class ResourceController implements StatelessAppleController {
         if (insertSuccess) {
           messageBuffer.append("<c:message>Ny ressurs lagt til!</c:message>\n");
 
-
-
-          // old approach 
+          // old approach
           // fetch all literals about the given resource, removes old, and inserts new values  
           /*
           String updateIndexContent = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
@@ -376,15 +374,15 @@ public class ResourceController implements StatelessAppleController {
 
           boolean externalUpdate = sparulDispatcher.query(updateIndexContent);
           logger.trace("AdminController.editResource --> INSERT RESOURCE INTERNAL AND EXTERNAL LITERALS: " + externalUpdate);
-          */  
-    
+          */
+
           // new appraoach
           // fetches all literals about the given resource and add to index...
           //IndexBuilderNode larqBuilder = SettingsService.getIndexBuilderNode(SettingsService.getProperty("sublima.index.directory"));
           indexService.indexResourceAlt2(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
           LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
-          
+
         } else {
           messageBuffer.append("<c:message>Feil ved lagring av ny ressurs</c:message>\n");
         }
@@ -405,7 +403,6 @@ public class ResourceController implements StatelessAppleController {
       bizData.put("messages", messageBuffer.toString());
       bizData.put("userprivileges", userPrivileges);
       bizData.put("publishers", adminService.getAllPublishers());
-
 
 
       res.sendPage("xml2/ressurs", bizData);
@@ -543,22 +540,16 @@ public class ResourceController implements StatelessAppleController {
    * Method to display the initial page for administrating resources
    *
    * @param res - AppleResponse
-   * @param req - AppleRequest
    */
-  private void showResourcesIndex
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
-      Map<String, Object> bizData = new HashMap<String, Object>();
-      com.computas.sublima.app.service.AdminService adminservice = new com.computas.sublima.app.service.AdminService();
-      bizData.put("statuses", adminservice.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
-              "<http://www.w3.org/2007/05/powder#describedBy>"));
-      res.sendPage("xml2/ressurser", bizData);     
+  private void showResourcesIndex(AppleResponse res) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    AdminService adminservice = new AdminService();
+    bizData.put("statuses", adminservice.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
+            "<http://www.w3.org/2007/05/powder#describedBy>"));
+    res.sendPage("xml2/ressurser", bizData);
   }
 
-  public void setSparqlDispatcher
-          (SparqlDispatcher
-                  sparqlDispatcher) {
+  public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
   }
 
@@ -581,7 +572,7 @@ public class ResourceController implements StatelessAppleController {
     return result;
   }
 
-  private void massEditResource (AppleResponse res, AppleRequest req) {
+  private void massEditResource(AppleResponse res, AppleRequest req) {
 
     // When GET present a blank form with listvalues or prefilled with resource
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
@@ -601,13 +592,7 @@ public class ResourceController implements StatelessAppleController {
            i++;
         }
         logger.debug("Mass updated " + i + " records.");
-
     }
-
-
-
-
       res.sendPage("xml2/massedit", null);
-      return ;
-    }
   }
+}
