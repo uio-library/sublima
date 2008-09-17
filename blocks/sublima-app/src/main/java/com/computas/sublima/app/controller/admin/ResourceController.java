@@ -584,16 +584,28 @@ public class ResourceController implements StatelessAppleController {
   private void massEditResource (AppleResponse res, AppleRequest req) {
 
     // When GET present a blank form with listvalues or prefilled with resource
-    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+        int i = 0;
+        Enumeration fo = req.getCocoonRequest().getParameterNames();
+        logger.debug("FOO " + fo.nextElement().toString());
+        while (req.getCocoonRequest().getParameterValues("new-" + i) != null) {
+        logger.debug("BAR");
+            String newurl = req.getCocoonRequest().getParameterValues("new-" + i)[0];
+            String oldurl = req.getCocoonRequest().getParameterValues("old-" + i)[0];
+            String sparulQuery = "MODIFY\nDELETE { <"+ oldurl + "> ?p ?o }\nINSERT { <"+ newurl + "> ?p ?o }\nWHERE { <"+ oldurl + "> ?p ?o }\n";
+            logger.trace("Changing " + oldurl + " to "+ newurl);
+            boolean updateSuccess = sparulDispatcher.query(sparulQuery);
+            logger.debug("Edit status: " + updateSuccess);
+            i++;
+        }
+        logger.debug("Mass updated " + (i+1) + " records.");
 
     }
 
 
 
 
-        res.sendPage("xml2/massedit", null);
-
-       
-        return ;
+      res.sendPage("xml2/massedit", null);
+      return ;
     }
   }
