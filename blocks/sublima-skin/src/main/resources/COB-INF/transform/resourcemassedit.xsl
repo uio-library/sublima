@@ -41,7 +41,7 @@
        </fieldset>
      </form>
 
-     <form action="" method="POST" id="resources-to-modify">
+     <form style="display:none" action="" method="POST" id="resources-to-modify">
 
        <table id="my-table">
 	 <thead>
