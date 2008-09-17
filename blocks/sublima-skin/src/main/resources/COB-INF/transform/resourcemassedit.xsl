@@ -20,6 +20,15 @@
     <script type="text/javascript">var dummy = null;</script>
     <script src="styles/jquery.blockUI.js" type="text/javascript"/>
 
+    <p class="instructions">
+      <i18n:text key="instructions.regex">
+	Her kan man bruke regulære uttrykk slik det er definitert av
+	JavaScript. I det første feltet skriver man inn uttrykket man
+	ønsker skal matche URLen. I det andre feltet hvordan URLen
+	skal omformes.
+      </i18n:text>
+    </p>
+
      <form action="">
        <fieldset>
 	 <table>
