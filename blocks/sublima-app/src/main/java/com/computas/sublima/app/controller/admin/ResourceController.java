@@ -360,26 +360,8 @@ public class ResourceController implements StatelessAppleController {
 
         if (insertSuccess) {
           messageBuffer.append("<c:message>Ny ressurs lagt til!</c:message>\n");
-
-          // old approach
-          // fetch all literals about the given resource, removes old, and inserts new values  
-          /*
-          String updateIndexContent = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                  "DELETE { <" + req.getCocoonRequest().getParameter("the-resource") + "> sub:literals ?o . \n" +
-                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> sub:externalliterals ?o . }\n" +
-                  "WHERE { <" + req.getCocoonRequest().getParameter("the-resource") + "> sub:literals ?o . \n" +
-                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> sub:externalliterals ?o . }\n" +
-                  "INSERT DATA {\n" + indexService.getResourceInternalLiteralsAsTriple(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";")) +
-                  indexService.getResourceExternalLiteralsAsTriple(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";")) + "}";
-
-          boolean externalUpdate = sparulDispatcher.query(updateIndexContent);
-          logger.trace("AdminController.editResource --> INSERT RESOURCE INTERNAL AND EXTERNAL LITERALS: " + externalUpdate);
-          */
-
-          // new appraoach
-          // fetches all literals about the given resource and add to index...
-          //IndexBuilderNode larqBuilder = SettingsService.getIndexBuilderNode(SettingsService.getProperty("sublima.index.directory"));
-          indexService.indexResourceAlt2(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          indexService.indexResource(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          logger.trace("AdminController.editResource --> Added the resource to the index");
           LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
 

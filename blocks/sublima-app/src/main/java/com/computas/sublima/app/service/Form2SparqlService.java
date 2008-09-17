@@ -456,7 +456,7 @@ public class Form2SparqlService {
 							}
 						}
 					}
-					if (!"".equalsIgnoreCase(object)) {	
+					if (!"".equalsIgnoreCase(object)) {
 						RDFObject myRDFObject = new RDFObject(object, language);
 						sparqlQueryBuffer.append("<" + SparulSubjectURI + "> " + property	
 								+ " " + myRDFObject.toN3() + " .\n");	
@@ -487,7 +487,7 @@ public class Form2SparqlService {
         String result = "\n?lit pf:textMatch '" + searchstring + "' .";
 	
         if (deepsearch) {
-            result = result + "\n?resource sub:externalliterals ?lit .";
+            result = result + "\n?resource sub:url ?lit .";
         } else {
             //result = result + "\n?resource sub:literals ?lit .";
             result = result + "\n?resource dct:identifier ?lit ."; // for test
