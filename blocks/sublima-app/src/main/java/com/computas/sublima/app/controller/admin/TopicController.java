@@ -4,8 +4,8 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.computas.sublima.query.service.SettingsService;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
@@ -81,39 +81,28 @@ public class TopicController implements StatelessAppleController {
     if ("emner".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         res.sendPage("xml2/emner", null);
-        return;
       } else if ("nytt".equalsIgnoreCase(submode)) {
         editTopic(res, req, "nytt", null);
-        return;
       } else if ("alle".equalsIgnoreCase(submode)) {
         showTopics(res, req);
-        return;
       } else if ("emne".equalsIgnoreCase(submode)) {
         editTopic(res, req, "edit", null);
-        return;
       } else if ("koble".equalsIgnoreCase(submode)) {
         mergeTopics(res, req);
-        return;
       } else if ("tema".equalsIgnoreCase(submode)) {
         setThemeTopics(res, req);
-        return;
       } else {
         res.sendStatus(404);
-        return;
       }
     } else if ("browse".equalsIgnoreCase(mode)) {
       showTopicBrowsing(res, req);
-      return;
     } else if ("relasjoner".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         res.sendPage("xml2/relasjoner", null);
-        return;
       } else if ("relasjon".equalsIgnoreCase(submode)) {
         editRelation(res, req, null);
-        return;
       } else if ("alle".equalsIgnoreCase(submode)) {
         showRelations(res, req);
-        return;
       }
     } else if ("a-z".equalsIgnoreCase(mode)) {
       getTopicsByLetter(res, req, submode);
@@ -134,7 +123,7 @@ public class TopicController implements StatelessAppleController {
     String locale = req.getCocoonRequest().getParameter("locale");
 
     if (locale == null) {
-      locale = SettingsService.getProperty("sublima.default.locale");      
+      locale = SettingsService.getProperty("sublima.default.locale");
     }
 
     bizData.put("themetopics", adminService.getTopicsByLetter(letter, locale));
@@ -163,8 +152,6 @@ public class TopicController implements StatelessAppleController {
       }
 
       bizData.put("mode", "topicrelated");
-
-      bizData.put("userprivileges", userPrivileges);
 
       bizData.put("messages", "<empty></empty>");
       bizData.put("facets", getRequestXML(req));
@@ -276,7 +263,7 @@ public class TopicController implements StatelessAppleController {
 
       logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
 
-      boolean insertNewSuccess = sparulDispatcher.query(insertNewTopicString);
+      sparulDispatcher.query(insertNewTopicString);
 
       for (String s : req.getCocoonRequest().getParameterValues("skos:Concept")) {
         topicBuffer.append("?resource skos:Concept <" + s + "> .\n");
