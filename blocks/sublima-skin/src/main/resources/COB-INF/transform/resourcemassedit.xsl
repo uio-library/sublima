@@ -17,7 +17,9 @@
 
   <xsl:template match="c:massediting">
     <script type="text/javascript" src="styles/getMassEditResources.js"/>
- 
+    <script type="text/javascript">var dummy = null;</script>
+    <script src="styles/jquery.blockUI.js" type="text/javascript"/>
+
      <form action="">
        <fieldset>
 	 <table>
