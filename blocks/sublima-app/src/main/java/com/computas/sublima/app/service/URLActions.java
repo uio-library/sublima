@@ -7,14 +7,16 @@ import org.apache.log4j.Logger;
 import org.apache.xerces.xni.parser.XMLDocumentFilter;
 import org.apache.xerces.xni.parser.XMLInputSource;
 import org.apache.xerces.xni.parser.XMLParserConfiguration;
+import org.apache.jackrabbit.extractor.HTMLTextExtractor;
 import org.cyberneko.html.HTMLConfiguration;
 import org.cyberneko.html.filters.ElementRemover;
 import org.postgresql.util.PSQLException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.Document;
+import javax.swing.text.EditorKit;
+import javax.swing.text.BadLocationException;
+import java.io.*;
 import java.net.*;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -388,6 +390,8 @@ public class URLActions { // Should this class extend HttpUrlConnection?
   }
 
   public String strippedContent(String content) throws UnsupportedEncodingException {
+
+
     connect();
     if (con.getContentEncoding() != null) {
       encoding = con.getContentEncoding();
@@ -399,6 +403,26 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     } else {
       stream = IOUtils.toInputStream(content);
     }
+
+    HTMLTextExtractor textExtractor = new HTMLTextExtractor();
+
+    try {
+      connect();
+      String contentType = con.getContentType();
+      Reader reader = textExtractor.extractText(stream, contentType, "UTF-8");
+      int charValue = 0;
+      StringBuffer sb = new StringBuffer();
+      while ((charValue = reader.read()) != -1) {
+      sb.append((char)charValue);
+      }
+      return sb.toString();
+    } catch (IOException e) {
+      logger.warn("URLActions.strippedContent() gave IOException, returning \"\" ---> " + e.getMessage());  
+      return "";
+    }
+
+    /*
+
 
     ElementRemover remover = new ElementRemover();
 
@@ -432,8 +456,9 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     }
 
     byte[] outputbytes = output.toByteArray();
+
     return new String(outputbytes, "UTF-8");
+    */
+    
   }
-
-
 }
