@@ -236,9 +236,12 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-            "DESCRIBE " + uri + " ?comment",
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "DESCRIBE " + uri + " ?comment ?commentcreator",
             "WHERE {",
-            "  OPTIONAL { " + uri + " sub:comment ?comment . }",
+            "  OPTIONAL { " + uri + " sub:comment ?comment . ",
+            "  ?comment sioc:has_creator ?commentcreator .",
+            "}",
             "}"});
 
     logger.trace("AdminService.getResourceByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -455,6 +458,7 @@ public class AdminService {
     md = MessageDigest.getInstance("SHA-1");
     byte[] sha1hash = new byte[40];
     md.update(text.getBytes("UTF-8"), 0, text.length());
+    //todo simplify
     sha1hash = md.digest();
     return convertToHex(sha1hash);
   }
