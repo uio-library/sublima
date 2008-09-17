@@ -144,6 +144,7 @@ public class FeedbackController implements StatelessAppleController {
       }
 
       //todo We have to get the interface-language @no from somewhere
+      //todo Move the 30x check to a private static method 
       if ("302".equals(status) ||
             "303".equals(status) ||
             "304".equals(status) ||
