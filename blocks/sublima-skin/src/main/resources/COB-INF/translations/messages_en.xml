@@ -83,8 +83,8 @@
   <message key="admin.intro">On this page you can administer topics, resources, users and publishers. Choose which part of Sublima you would like to administer from the menu on the left.</message>
 
     <!-- tips -->
-  <message key="tips.heading"><h2>Don't find what you're looking for?</h2><br/><p>Please send us a tip if you find that information elsewhere, and we'll include it in our resources!</p></message>
-  <message key="tips.suggestedtopics">Suggestions to suitable topics</message>
+  <message key="tips.heading"><h2>Not finding what you are looking for?</h2><br/><p>Please send us a tip if you find that information elsewhere, and we'll include it in our resources!</p></message>
+  <message key="tips.suggestedtopics">Suggestions for suitable topics</message>
   <message key="tips.submit">Send</message>
   <message key="tips.thanks">Thanks for the tip!</message>
 
@@ -95,7 +95,7 @@
   <message key="linkcheck.run">Perform linkcheck (NB! Might take a while)</message>
 
   <!-- upload -->
-  <message key="upload.instructions">Name the file/URL and convertiontype in the fields below.<br/><br/>
+  <message key="upload.instructions">Name the file/URL and convertion type in the fields below.<br/><br/>
                 Format for files:<br/>
                 file:\path\to\file\information-model.n3<br/>
                 <br/>

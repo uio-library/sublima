@@ -38,8 +38,9 @@
   <message key="adv.publisher">Utgiver</message>
   <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD </message>
   <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD </message>
-
+  <message key="adv.mediaType">Mediatype</message>
   
+
   
   <!-- facets -->
   <message key="facets.heading">Velg avgrensning</message>
@@ -63,7 +64,7 @@
   <message key="validation.urlexists">Angitt URL finnes allerede</message>
 
   <!-- resource form -->
-  <message key="resource.sendcomment">Send inn en kommentar angående denne ressursen</message>
+  <message key="resource.sendcomment">Send inn en kommentar vedrørende denne ressursen</message>
   <message key="resource.choosepublisher">Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet under</message>
   <message key="resource.usercomments">Brukernes kommentarer</message>
 
@@ -72,7 +73,7 @@
   <message key="admin.topic.usedby">Ressurser tilknyttet emnet</message>
   <message key="admin.publisher.resources">Ressurser tilknyttet utgiveren</message>
   <message key="admin.linkcheck.gone">Ressursen er permanent borte</message>
-  <message key="admin.linkcheck.inactive">Satt inaktiv pga varige problemer</message>
+  <message key="admin.linkcheck.inactive">Satt inaktiv pga vedvarende problemer</message>
   <message key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</message>
   <message key="admin.approvedby">Godkjent av</message>
   <message key="admin.posteddate">Innsendt</message>
@@ -158,6 +159,6 @@
   <message key="button.saverole">Lagre rolle</message>
   <message key="button.next">Neste</message>
   <message key="button.read">Les inn</message>
-  <message key="button.export">Export</message>
+  <message key="button.export">Eksporter</message>
 
 </catalogue>
