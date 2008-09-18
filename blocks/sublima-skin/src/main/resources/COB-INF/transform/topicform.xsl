@@ -176,7 +176,6 @@
           </td>
           <td>
             <select id="wdr:describedBy" name="wdr:describedBy">
-              <option value=""/>
               <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
                 <xsl:sort select="./rdfs:label"/>
                 <xsl:choose>
@@ -187,9 +186,18 @@
                     </option>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./rdfs:label"/>
-                    </option>
+                    <xsl:choose>
+                      <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
+                       <option value="{./@rdf:about}" selected="selected">
+                          <xsl:value-of select="./rdfs:label"/>
+                        </option>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <option value="{./@rdf:about}">
+                          <xsl:value-of select="./rdfs:label"/>
+                        </option>
+                      </xsl:otherwise>
+                    </xsl:choose>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
