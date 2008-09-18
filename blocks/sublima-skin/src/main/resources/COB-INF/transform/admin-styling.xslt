@@ -244,7 +244,10 @@
 		      </xsl:apply-templates>
 		    </table>
 
-		    <input type="submit" value="Search"/>
+		    <input type="submit" i18n:attr="value" value="button.resource.search"/>
+		    
+		    
+		    
 		  </form>
 		  </xsl:if>
 

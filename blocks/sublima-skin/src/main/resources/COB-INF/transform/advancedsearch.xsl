@@ -122,7 +122,7 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" i18n:attr="value" value="adv.button.search"/>
+            <input type="submit" i18n:attr="value" value="button.adv.search"/>
             
           </td>
         </tr>

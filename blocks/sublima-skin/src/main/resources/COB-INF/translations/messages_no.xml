@@ -160,5 +160,11 @@
   <message key="button.next">Neste</message>
   <message key="button.read">Les inn</message>
   <message key="button.export">Eksporter</message>
+  <message key="button.adv.search">Søk</message>
+  <message key="button.resource.search">Søk</message>
+  <message key="button.copyasnew">Kopier felter til nytt skjema</message>
+  
+  
+  
 
 </catalogue>

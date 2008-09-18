@@ -39,6 +39,7 @@
   <message key="adv.publisher">Publisher</message>
   <message key="adv.dateAccepted">Date Accepted YYYY-MM-DD </message>
   <message key="adv.dateSubmitted">Date Submitted YYYY-MM-DD</message>
+  <message key="adv.mediaType">Media type</message>
 
   <!-- facets -->
   <message key="facets.heading">Filter by</message>
@@ -166,6 +167,11 @@
   <message key="button.read">Read</message>
   <message key="resourceasnew">Mark as new</message>
   <message key="button.export">Export</message>
+  <message key="button.adv.search">Search</message>
+  <message key="button.resource.search">Search</message>
+  <message key="button.copyasnew">Copy fields to new form</message>
+  
+  
 
 </catalogue>
 
