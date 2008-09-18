@@ -4,6 +4,7 @@ import com.computas.sublima.app.service.URLActions;
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
+import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -162,7 +163,9 @@ public class FeedbackController implements StatelessAppleController {
                         "<" + url + "> dct:description " + "\"\"\"" + beskrivelse.replace("\\", "\\\\") + "\"\"\"@no . \n" +
                         "<" + url + "> sub:keywords " + "\"\"\"" + stikkord.toString() + "\"\"\"@no . \n" +
                         "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
-                        "<" + url + "> sub:url <" + url + "> . }\n";
+                        "<" + url + "> sub:url <" + url + "> . \n" +
+                        "<" + url + "> dct:identifier <" + SettingsService.getProperty("sublima.base.url") + "resource/" + tittel.replace(" ", "_") + url.hashCode() + "> . }";
+
 
         success = sparulDispatcher.query(insertTipString);
         logger.trace("sendTips --> RESULT: " + success);
