@@ -122,7 +122,11 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" value="Search"/>
+            <input type="submit">
+            <xsl:attribute name="value"> 
+            	<i18n:text key="adv.button.search">Søk</i18n:text>
+            </xsl:attribute>
+            </input>
           </td>
         </tr>
       </table>
