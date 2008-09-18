@@ -86,6 +86,7 @@
         <map:read src="resources/styles/{2}.js" mime-type="text/javascript"/>
       </map:match>
 
+
     </map:pipeline>
 
   </map:pipelines>

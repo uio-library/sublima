@@ -350,6 +350,27 @@
         <map:serialize type="xml"/>
       </map:match>
 
+      <!-- Matchers for CSS and images -->
+      <map:match pattern="**/*.gif">
+        <map:read src="servlet:skin:/resources/images/{2}.gif" mime-type="image/gif"/>
+      </map:match>
+
+      <map:match pattern="**/*.jpg">
+        <map:read src="servlet:skin:/resources/images/{2}.jpg" mime-type="image/jpg"/>
+      </map:match>
+
+      <map:match pattern="**/*.png">
+        <map:read src="servlet:skin:/resources/images/{2}.png" mime-type="image/png"/>
+      </map:match>
+
+      <map:match pattern="**/*.css">
+        <map:read src="servlet:skin:/resources/styles/{2}.css" mime-type="text/css"/>
+      </map:match>
+
+      <map:match pattern="**/*.js">
+        <map:read src="servlet:skin:/resources/styles/{2}.js" mime-type="text/javascript"/>
+      </map:match>
+
     </map:pipeline>
 
 
