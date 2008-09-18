@@ -95,7 +95,7 @@
 
 	<xsl:apply-templates select="/c:page/c:languages/sq:sparql">
 	  <xsl:with-param name="field">dct:language</xsl:with-param>
-	  <xsl:with-param name="label">Språk</xsl:with-param>
+	  <xsl:with-param name="label"><i18n:text key="adv.language">Språk</i18n:text></xsl:with-param>
 	</xsl:apply-templates>
 
 	<xsl:apply-templates select="/c:page/c:audiences/sq:sparql">
@@ -122,11 +122,8 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit">
-            <xsl:attribute name="value"> 
-            	<i18n:text key="adv.button.search">Søk</i18n:text>
-            </xsl:attribute>
-            </input>
+            <input type="submit" i18n:attr="value" value="adv.button.search"/>
+            
           </td>
         </tr>
       </table>
