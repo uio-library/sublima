@@ -32,6 +32,14 @@
   <message key="search.submit">Search</message>
   <message key="search.exactmatch">Exact word(s)</message>
 
+  <!-- advanced search -->
+  <message key="adv.title">Title</message>
+  <message key="adv.subject">Subject</message>
+  <message key="adv.description">Description</message>
+  <message key="adv.publisher">Publisher</message>
+  <message key="adv.dateAccepted">Date Accepted YYYY-MM-DD </message>
+  <message key="adv.dateSubmitted">Date Submitted YYYY-MM-DD</message>
+
   <!-- facets -->
   <message key="facets.heading">Filter by</message>
 

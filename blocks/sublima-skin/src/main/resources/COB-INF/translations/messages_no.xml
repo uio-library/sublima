@@ -31,6 +31,16 @@
   <message key="search.numberofhits">Antall treff</message>
   <message key="search.submit">Søk</message>
 
+  <!-- advanced search -->
+  <message key="adv.title">Tittel</message>
+  <message key="adv.subject">Emne</message>
+  <message key="adv.description">Beskrivelse</message>
+  <message key="adv.publisher">Utgiver</message>
+  <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD </message>
+  <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD </message>
+
+  
+  
   <!-- facets -->
   <message key="facets.heading">Velg avgrensning</message>
 

@@ -42,15 +42,15 @@
       <table>
         <tr>
           <th scope="row">
-            <label for="title">Title</label>
+            <label for="title"><i18n:text key="adv.title">Tittel</i18n:text></label>
           </th>
           <td>
             <input id="title" type="text" name="dct:title" size="20"/>
-          </td>
+          </td> 
         </tr>
         <tr>
           <th scope="row">
-            <label for="subject">Subject</label>
+            <label for="subject"><i18n:text key="adv.subject">Emne</i18n:text></label>
           </th>
           <td>
             <input id="subject" type="text" name="dct:subject/all-labels" size="20"/>
@@ -58,7 +58,7 @@
         </tr>
         <tr>
           <th scope="row">
-            <label for="description">Description</label>
+            <label for="description"><i18n:text key="adv.description">Beskrivelse</i18n:text></label>
           </th>
           <td>
             <input id="description" type="text" name="dct:description" size="20"/>
@@ -66,7 +66,7 @@
         </tr>
         <tr>
           <th scope="row">
-            <label for="publisher">Publisher</label>
+            <label for="publisher"><i18n:text key="adv.publisher">Utgiver</i18n:text></label>
           </th>
           <td>
             <input id="publisher" type="text" name="dct:publisher/foaf:name" size="20"/>
@@ -74,7 +74,7 @@
         </tr>
         <tr>
           <th scope="row">
-            <label for="dateAccepted">DateAccepted</label>
+            <label for="dateAccepted"><i18n:text key="adv.dateAccepted">Godkjent Dato</i18n:text></label>
           </th>
           <td>
             <input id="dateAccepted" type="text" name="dct:dateAccepted" size="20"/>
@@ -82,7 +82,7 @@
         </tr>
         <tr>
           <th scope="row">
-            <label for="dateSubmitted">DateSubmitted</label>
+            <label for="dateSubmitted"><i18n:text key="adv.dateSubmitted">Innsendt Dato</i18n:text></label>
           </th>
           <td>
             <input id="dateSubmitted" type="text" name="dct:dateSubmitted" size="20"/>
