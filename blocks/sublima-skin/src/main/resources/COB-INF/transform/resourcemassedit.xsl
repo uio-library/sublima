@@ -22,7 +22,7 @@
 
     <p class="instructions">
       <i18n:text key="instructions.regex">
-	Her kan man bruke regulære uttrykk slik det er definitert av
+	Her kan man bruke regulære uttrykk slik det er definert av
 	JavaScript. I det første feltet skriver man inn uttrykket man
 	ønsker skal matche URLen. I det andre feltet hvordan URLen
 	skal omformes.
