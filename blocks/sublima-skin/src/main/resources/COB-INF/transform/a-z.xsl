@@ -17,8 +17,10 @@
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
 
-  <xsl:template match="c:a-z" mode="a-z">
+  <xsl:template match="c:page" mode="a-z">
+    <!--
     <i18n:text key="az.heading">Alfabetisk navigering av emner</i18n:text><br/>
+    -->
     <a href="{$baseurl}/emner/a{$qloc}">A</a><xsl:text> </xsl:text>
     <a href="{$baseurl}/emner/b{$qloc}">B</a><xsl:text> </xsl:text>
     <a href="{$baseurl}/emner/c{$qloc}">C</a><xsl:text> </xsl:text>

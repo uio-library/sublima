@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+This stylesheet is the main stylesheet that is called for all pages.
+
+-->
+
+
+
+
+
 <xsl:stylesheet
     xmlns:c="http://xmlns.computas.com/cocoon"
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -36,6 +47,7 @@
       <xsl:value-of select="$interface-language"/>
     </xsl:if>
   </xsl:param>
+  
   <xsl:param name="aloc">
     <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
       <xsl:text>&amp;locale=</xsl:text>
@@ -115,26 +127,42 @@
       </xsl:call-template>
    
       <body>
-    
+
 	<xsl:value-of select="$querystring"/>
 	<xsl:call-template name="headers">
 	  <xsl:with-param name="baseurl" select="$baseurl"/>
 	</xsl:call-template>
 	
-	<div class="colmask threecol">
-	  <div class="colmid">
-	    <div class="colleft">
-	      <div class="col1">
+	
+	<div class="colmask threecol" style="border:0px solid red;"  >
+	  <div class="colmid" style="border:0px solid green;">
+	    <div class="colleft" style="border:0px solid blue;">
+	      
+	      
+	      
+	      
+<!-- ######################################################################
+     CENTER COLUMN (col1)
+	 contains: search panel, topic description panel, resource hits 
+	 ###################################################################### -->       
+	 <div class="col1" style="border:0px dotted red;">
 		<!--
 		<xsl:call-template name="debug"/>
 		-->
-			<!-- Column 1 start -->
+	
+		
+		<!-- A-Z -->
+		<div name="panel-az" style="border:0px solid lightgray">
+		<xsl:apply-templates select="c:page" mode="a-z"/>                
+        </div>
+		
+		
 		
 		<!-- Search -->
 		<!-- Search is shown when advanced search is not -->	
 		<xsl:if test="not(c:page/c:advancedsearch)">
-		  
-		  <form action="{$baseurl}/search-result.html" method="get">
+		  <div name="panel-search" style="border:0px solid brown">
+		      <form action="{$baseurl}/search-result.html" method="get">  
 		    <fieldset>
 		      <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
 		      <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
@@ -184,6 +212,10 @@
 		      </xsl:choose>
 		      <i18n:text key="search.externalresources">Søk også i de eksterne ressursene</i18n:text>
 		      <br/>
+		      
+		      
+		      <!-- sorting panel -->
+		      <!-- updates and submits the search form -->
 		      <i18n:text key="search.sortby">Sorter etter</i18n:text>
 		      
 		      <select id="sort" name="sort">
@@ -208,53 +240,85 @@
 		      </select>
 		    </fieldset>
 		  </form>
-		  
+		  </div>
 		</xsl:if>
 
-    <xsl:call-template name="messages"/>
+        <xsl:call-template name="messages"/>
 
+
+        
+        <!-- 
+         Number of hits 
+            precondition:
+             page is topic, or search-result
+        -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
 		  <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>
 		</xsl:if>
 		
-		
-		
 			
 		
-		<!-- Advanced search -->        
-		<!-- Her kommer avansert søk dersom denne er angitt, og tipsboksen dersom brukeren har valgt den -->
-		<!--xsl:call-template name="advancedsearch"/-->
+		<!-- 
+		 Advanced search        
+		    Her kommer avansert søk dersom denne er angitt
+		-->
 		<xsl:apply-templates select="c:page/c:advancedsearch" mode="advancedsearch"/>
-		<!-- xsl:copy-of select="c:page/c:advancedsearch/*"/ -->
 		
-		<!-- Tips -->
+		
+		
+		<!-- 
+		 Tips
+		  precondition:
+		  vises dersom brukeren har valgt den
+		-->
 		<xsl:apply-templates select="c:page/c:tips" mode="form"/>
 		
-		<!-- Login -->
+		
+		<!-- 
+		 Login 
+		  precondition:
+		-->
 		<xsl:apply-templates select="c:page/c:login" mode="login"/>
 		
-		<!-- A-Z -->
-		<xsl:apply-templates select="c:page/c:a-z" mode="a-z"/>                
 		
-		<!-- Resource Description (details) -->
-		<xsl:if test="c:page/c:mode = 'resource'">
+		<!-- 
+		 Resource Description (details) 
+		     precondition: 
+		      page is 'resource'
+		-->
+		<div name="panel-resource-details" style="border:0px solid pink;">
+		<xsl:if test="c:page/c:mode = 'resource'">		
 		  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="resource"/>
 		</xsl:if>
+		<xsl:text> </xsl:text> <!-- avoid empty div --> 
+		</div>
 		
-		<!-- Browse (A-Z)? -->    
+		
+		<!-- 
+		 Topic description (details) 
+		     precondition: 
+		      page is 'browse' 
+		-->
+		<div name="panel-topic-details" style="border:0px solid purple;"> 
 		<xsl:if test="c:page/c:mode = 'browse'">
 		  <xsl:apply-templates select="c:page/c:browse" mode="browse"/>
 		</xsl:if>
+		<xsl:text> </xsl:text> <!-- avoid empty div --> 
+		</div>
 		
 
-		
-	
-		<!-- Search results -->
+		<!-- 
+	    No-hits 
+		 precondition:
+		   page is topic or search-result
+		   no hits  
+		-->
+		<div name="panel-zero-hits" style="1px solid brown;">
 		<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
 		
-		  <!-- Hvis ingen treff, generer et google søk -->     
 		  <xsl:if test="$numberofhits &lt; 1">
 		      <br/>
+		              <!-- Generer et google søk -->     
 		              <a>
 		                  <xsl:attribute name="href">
 		                      <xsl:text>http://www.google.com/search?hl=</xsl:text>
@@ -269,40 +333,26 @@
 		                  <i18n:text key="in.google">in Google</i18n:text>
 		              </a>
 		              <br/>
-		           
-		      </xsl:if>
-		      
+		   </xsl:if>
+		 </xsl:if>
+		 <xsl:text> </xsl:text> <!-- avoid empty div tags -->
+		</div> <!-- no hits -->     
 	
 	
+		
+		<!-- 
+		 Search results
+		  precondition:
+		   page-mode is topic or search-results
+		   hits is more than 0
+		-->		
+	  <div name="panel-results" style="border:0px solid orange;">	
+	   <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
+	    <xsl:if test="$numberofhits &gt; 0">	
 	
-	        <!-- Hvis  treff, vis fasetter, RSS og resultater -->
-            <xsl:if test="$numberofhits &gt; 0">	
-		
-		
-		
-		
-		
-		<!-- Facets -->
-		<!-- Facets are shown if the c:/page/c:facets exists in the XML --> 
-		  <xsl:if test="c:page/c:facets">		    
-		    <h3><i18n:text key="facets.heading">Velg avgrensning</i18n:text></h3>
-		    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
-		  </xsl:if>
-	
-		
-		<!-- Søkeresultat -->
-		<h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
+	     <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
 		  
-		<!-- Link to RSS representation of search result -->
-		<xsl:if test="not($rss-url = '')">
-		  <a>
-		    <xsl:attribute name="href">
-		      <xsl:value-of select="$rss-url"/>
-		    </xsl:attribute> 
-		    RSS
-		  </a><br/>
-		</xsl:if>
- 		  
+
 		
 		  <xsl:choose>	  
     		 <xsl:when test="$res-view='full'">
@@ -325,20 +375,107 @@
 	       	  </xsl:apply-templates>
 	        </xsl:otherwise>
 		  </xsl:choose>
-		  
-		  
 		  </xsl:if>
-		  
+		</xsl:if>
+		<xsl:text> </xsl:text> <!-- aviod empty results --> 
+		</div><!-- panel-results-->
+		
+		
+		
+        
+	  </div>
+	  <!-- Column 1 end -->  
+	      
+	      
+	      
+	      
+    <!-- ######################################################################
+	     LEFT COLUMN (col2)
+	     
+	     contains: facets
+	     ###################################################################### -->       
+    <div class="col2" style="border:0px dotted blue;">
+    
+    
+    
+    	<!-- Facets 
+    	  precondition: 
+	        page is topic or search-result 
+	        there is at least one hit
+		    facets exists in the results (c:/page/c:facets exists in the XML)
+		--> 
+		<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
+		 <xsl:if test="$numberofhits &gt; 0">  
+		  <xsl:if test="c:page/c:facets">
+		  <div name="panel-facets" style="border:0px solid yellow;">		    
+		   <!-- <h3><i18n:text key="facets.heading">Velg avgrensning</i18n:text></h3> -->
+		    <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="facets"/>
+		  </div>   
+		  </xsl:if>
+		 </xsl:if>  
+	    </xsl:if>
+	    <xsl:text> </xsl:text>
+	   </div>
+	   
+	   
+	   
+		<!-- Column 2 end -->      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+    <!-- ######################################################################
+	     RIGHT COLUMN (col3)
+	     
+	     contains: 
+	     ###################################################################### -->       
+        <div class="col3" style="border:0px dotted green;">
+
+
+		<!-- Navigation 
+		  precondition:
+		   page is either topic or search result
+		-->
+		
+		<!--when one topic is in focus-->
+		<div name="panel-nav" style="border:0px solid black">
+		<xsl:if test="c:page/c:mode = 'topic'">
+		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
+		  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
+		    <xsl:with-param name="role">this-param</xsl:with-param>
+		  </xsl:apply-templates>
 		</xsl:if>
 
-	
-	
+		<!--more than one topic-->
+		<xsl:if test="c:page/c:mode = 'search-result'">
+		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
+		  <ul>
+		    <xsl:for-each select="c:page/c:result-list/rdf:RDF//skos:Concept">
+		      <xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
+		      <li>
+			<a href="{./@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
+		      </li>
+		    </xsl:for-each>
+		  </ul>
+		</xsl:if>
+		<xsl:text> </xsl:text> <!-- avoid empty div -->
+		</div>
 		
-		<!-- Column 1 end -->
-	      </div>
-	      
-	      <div class="col2">
-		<!-- Column 2 (left) start -->
+		
+        <!-- 
+         Tasks
+          precondition:
+            none
+        -->
+		<div name="panel-tasks" style="border:0px solid darkgrey;">
 		<h2><i18n:text key="menu.heading">Mine aktiviteter</i18n:text></h2>
 		<a href="{$baseurl}/tips{$qloc}"><i18n:text key="menu.tips">Tips oss om en ny ressurs</i18n:text></a><br/>
 		
@@ -352,45 +489,43 @@
 		    <a href="{$baseurl}/admin/database/{$qloc}"><i18n:text key="menu.database">Database</i18n:text></a><br/>
 		  </xsl:when>
 		</xsl:choose>
-		
-		<!-- Column 2 end -->
-	      </div>
-	      
-	      <div class="col3">
-		<!-- Column 3 start -->
-        
-		<!-- Navigation -->
-
-
-		<!-- Navigation when one topic is in focus -->
-		<xsl:if test="c:page/c:mode = 'topic'">
-		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
-		  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
-		    <xsl:with-param name="role">this-param</xsl:with-param>
-		  </xsl:apply-templates>
+		</div>
+	
+	
+		<!-- 
+		  Link to RSS representation of search result 
+		  precondition:
+		    more than zero hits
+		    rss-url has been created
+		-->
+    
+		<div name="panel-rss" style="border:0px solid gray">
+	    <xsl:if test="$numberofhits &gt; 0">	
+		<xsl:if test="not($rss-url = '')">
+		  <a>
+		    <xsl:attribute name="href">
+		      <xsl:value-of select="$rss-url"/>
+		    </xsl:attribute> 
+		    RSS
+		  </a><br/>
 		</xsl:if>
-
-		<!-- Navigation when we have list of search results is in focus -->
-		<xsl:if test="c:page/c:mode = 'search-result'">
-		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
-		  <ul>
-		    <xsl:for-each select="c:page/c:result-list/rdf:RDF//skos:Concept">
-		      <xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
-		      <li>
-			<a href="{./@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
-		      </li>
-		    </xsl:for-each>
-		  </ul>
 		</xsl:if>
+		</div>
+ 		  
 		
-		<!-- Column 3 end -->
-	      </div>
+		
+		
+
+	      </div><!-- Column 3 end -->
+	    
+	    
 	    </div>
-
 	  </div>
-	</div>
+	</div> <!-- three column layout end -->
+	
+	
 	<div id="footer">
-	  <p><i18n:text key="sublima.footer">A Free Software Project supported by
+	  <p><i18n:text key="sublima.footer">A Open Source Software Project supported by
 	  <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
 	  and
 	  <a href="http://www.computas.com/">Computas AS</a>
@@ -398,7 +533,7 @@
 	  </p>
 	</div>
 	
-
+      
       </body>
     </html>
   </xsl:template>

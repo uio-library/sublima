@@ -1,6 +1,9 @@
 package com.computas.sublima.app.adhoc;
 // for alt som er ressurser, erstatt URIen med URLen.
 
+import com.computas.sublima.query.service.SettingsService;
+
+
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.rulesys.GenericRuleReasoner;
@@ -138,7 +141,7 @@ public class ConvertSublimaResources {
     }
 
     // Add skos inverse triples
-    Model outModel = addSkosInverse(model);
+    Model outModel = addByRules(model);
     return outModel;
 
   }
@@ -211,8 +214,8 @@ public class ConvertSublimaResources {
       }
     }
 
-    // Add skos inverse triples
-    Model outModel = addSkosInverse(model);
+    // Add skos inverse triples etc. Rules are specified in the property file.
+    Model outModel = addByRules(model);
 
     // write the RDF file
     OutputStream out = new FileOutputStream(outputFileName);
@@ -255,19 +258,25 @@ public class ConvertSublimaResources {
   /**
    * Add skos:broader and skos:narrower where appropriate using rules
    */
-  private static Model addSkosInverse(Model model) {
+  private static Model addByRules(Model model) {
 
     String skosNs = "http://www.w3.org/2004/02/skos/core#";
     String dctNs = "http://purl.org/dc/terms/";
     String subNs = "http://xmlns.computas.com/sublima#";
+    String rdfNs = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    String wdrNs = "http://www.w3.org/2007/05/powder#";
 
     PrintUtil.registerPrefix("skos", skosNs);
     PrintUtil.registerPrefix("dct", dctNs);
     PrintUtil.registerPrefix("sub", subNs);
+    PrintUtil.registerPrefix("rdf", rdfNs);
+    PrintUtil.registerPrefix("wdr", wdrNs);
 
-
-    String rules = "[inverseRule1: (?Y skos:broader ?X) -> (?X skos:narrower ?Y)]" +
-            "[inverseRule2: (?X skos:narrower ?Y) -> (?Y skos:broader ?X)]";
+    String rules = SettingsService.getProperty("sublima.import.rules");
+    logger.info("Applying rules " + rules);
+    /*String rules = "[inverseRule1: (?Y skos:broader ?X) -> (?X skos:narrower ?Y)]" +
+            "[inverseRule2: (?X skos:narrower ?Y) -> (?Y skos:broader ?X)]" +
+            "[statusRule: (?X a sub:Resource) -> (?X wdr:DescribedBy <http://sblima.computas.com/status/godkjent_av_administrator>)];*/
 
     Reasoner reasoner = new GenericRuleReasoner(Rule.parseRules(rules));
     InfModel inf = ModelFactory.createInfModel(reasoner, model);

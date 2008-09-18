@@ -36,6 +36,10 @@ img {
   margin: 10px 0 5px;
 }
 
+fieldset {
+  border:0px solid white;
+}
+
 /* Header styles */
 #header {
   clear: both;
@@ -121,7 +125,7 @@ img {
 
 /* common column settings */
 .colright,
-  .colmid,
+  .colmidleft,
   .colleft {
   float: left;
   width: 100%; /* width of page */
@@ -144,7 +148,7 @@ only padding top and bottom is included here, make it whatever value you need */
   background: #eee; /* right column background colour */
 }
 
-.threecol .colmid {
+.threecol .colmidleft {
   right: 25%; /* width of the right column */
   background: #fff; /* center column background colour */
 }
