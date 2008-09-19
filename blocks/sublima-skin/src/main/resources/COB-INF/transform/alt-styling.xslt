@@ -139,7 +139,7 @@ PVJ: Made the file UTF-8
 	
 	
 	<div class="colmask threecol" style="border:0px solid red;"  >
-	  <div class="colmid" style="border:0px solid green;">
+	  <div class="colmidleft" style="border:0px solid green;">
 	    <div class="colleft" style="border:0px solid blue;">
 	      
 	      
