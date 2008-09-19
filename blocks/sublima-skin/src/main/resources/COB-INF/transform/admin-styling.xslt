@@ -224,7 +224,7 @@
             <div class="colleft">
               <div class="col1">
                 <!-- Column 1 start -->
-                <xsl:call-template name="debug"/>
+                <!--xsl:call-template name="debug"/-->
 		<xsl:call-template name="contenttext"/>
 
                 <xsl:call-template name="messages"/>
