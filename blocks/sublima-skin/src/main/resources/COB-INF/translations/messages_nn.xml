@@ -42,6 +42,7 @@
   <!-- validation -->
   <message key="validation.providedurlok">URL godkjent</message>
   <message key="validation.topic.notitle">Emnet manglar tittel</message>
+  <message key="validation.resource.notopic">Minst ett emne må væra valgt</message>
   <message key="validation.urlexists">URL finst frå før</message>
   <!-- resource form -->
   <message key="resource.sendcomment">Send inn ein kommentar til denne ressursen</message>

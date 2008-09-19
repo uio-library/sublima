@@ -24,16 +24,12 @@
   <!-- search -->
   <message key="search.boolean.and">OG</message>
   <message key="search.boolean.or">ELLER</message>
-  <message key="search.sortby">Sorter etter </message>
-  <message key="search.externalresources">Inkluder søk i ressursinnhold</message>
+  <message key="search.sortby">Sorter etter</message>
+  <message key="search.externalresources">Inkluder eksterne ressurser</message>
   <message key="search.sortby.relevance">Relevans</message>
   <message key="search.sortby.date">Dato</message>
   <message key="search.numberofhits">Antall treff</message>
   <message key="search.submit">Søk</message>
-  <message key="search.exactmatch">Eksakt ord</message>
-  <message key="search.for">Søk etter</message>
-  <message key="in.google">i Google</message>
-  
 
   <!-- advanced search -->
   <message key="adv.title">Tittel</message>
@@ -43,9 +39,6 @@
   <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD </message>
   <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD </message>
   <message key="adv.mediaType">Mediatype</message>
-
-  
-  
   
 
   
@@ -67,6 +60,7 @@
   <!-- validation -->
   <message key="validation.providedurlok">Angitt URL godkjent</message>
   <message key="validation.topic.notitle">Emnet mangler tittel</message>
+  <message key="validation.resource.notopic">Minst ett emne må være valgt</message>
   <message key="validation.topic.resourceempty">En eller flere ressurser er tilknyttet dette emnet. Vennligst gå igjennom ressursene og fjern relasjonen til emnet, og forsøk igjen.</message>
   <message key="validation.urlexists">Angitt URL finnes allerede</message>
 
@@ -174,4 +168,4 @@
   
   
 
-</catalogue> 
+</catalogue>
