@@ -75,25 +75,17 @@ public class ResourceController implements StatelessAppleController {
     if ("ressurser".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         showResourcesIndex(res);
-        return;
       } else if ("masse".equalsIgnoreCase(submode)) {
         massEditResource(res, req);
-        return;
       } else if ("ny".equalsIgnoreCase(submode)) {
         editResource(res, req, "ny", null);
-        return;
       } else if ("edit".equalsIgnoreCase(submode)) {
         editResource(res, req, "edit", null);
-        return;
       } else if ("checkurl".equalsIgnoreCase(submode)) {
         registerNewResourceURL(req, res);
-        return;
-      } else {
-        return;
       }
     } else {
       res.sendStatus(404);
-      return;
     }
   }
 
@@ -251,7 +243,7 @@ public class ResourceController implements StatelessAppleController {
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
       //todo This is not very robust, have to find another way to differentiate the different actions.
-      if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {//"Slett ressurs".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton")) || "Delete resource".equalsIgnoreCase(req.getCocoonRequest().getParameter("actionbutton"))) {
+      if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
         String deleteString = "DELETE {\n" +
                 "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
@@ -273,37 +265,24 @@ public class ResourceController implements StatelessAppleController {
       } else {
         Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
-        //StringBuffer tempValues = getTempValues(req);
-        String tempPrefixes = "<c:tempvalues \n" +
-                "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
-                "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
-                "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
-                "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
-                "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
-                "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-                "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
-                "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
-                "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
-                "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
-                "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-                "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-                "xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"\n" +
-                "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
+        StringBuffer tempValues = getTempValues(req);
 
         // Check if all required fields are filled out, if not return error messages
-        /*
         String validationMessages = validateRequest(req);
         if (!"".equalsIgnoreCase(validationMessages)) {
           messageBuffer.append(validationMessages + "\n");
 
-          bizData.put("resource", "<empty></empty>");
-          bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
-          bizData.put("mode", "temp");
+          bizData.put("resource", tempValues.toString());
+          bizData.put("tempvalues", "<empty/>");
+          bizData.put("mode", "edit");
+          messageBuffer.append("</c:messages>\n");
+          bizData.put("messages", messageBuffer.toString());
+          bizData.put("userprivileges", userPrivileges);
+          bizData.put("publishers", adminService.getAllPublishers());
 
+          res.sendPage("xml2/ressurs", bizData);
+          return;
         }
-
-          */
 
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -409,45 +388,24 @@ public class ResourceController implements StatelessAppleController {
       validationMessages.append("<c:message><i18n:text key=\"validation.topic.notitle\">uoversatt</i18n:text></c:message>\n");
     }
 
-    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sub:url").trim()) || req.getCocoonRequest().getParameter("sub:url").trim() == null) {
+    if (req.getCocoonRequest().getParameter("the-resource") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("the-resource"))) {
       validationMessages.append("<c:message>URL kan ikke være blank</c:message>\n");
     }
 
-    if (req.getCocoonRequest().getParameter("uri") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("uri").trim())) {
+    if (req.getCocoonRequest().getParameter("dct:identifier") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier").trim())) {
       // if the uri is empty, then it's a new resource and we do a already-exists check
-      if (adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("sub:url"))) {
+      if (adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("the-resource"))) {
         validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");
       }
     }
 
-    if (!adminService.validateURL(req.getCocoonRequest().getParameter("sub:url").trim())) {
+    if (req.getCocoonRequest().getParameter("the-resource") == null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim())) {
       validationMessages.append("<c:message>Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</c:message>\n");
     }
 
-    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:description")) || req.getCocoonRequest().getParameter("dct:description") == null) {
-      validationMessages.append("<c:message>Beskrivelsen kan ikke være blank</c:message>\n");
-    }
-
-    if (("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher")) || req.getCocoonRequest().getParameter("dct:publisher") == null)
-            && ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name")) || req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name") == null)) {
-      validationMessages.append("<c:message>En utgiver må velges, eller et nytt utgivernavn angis</c:message>\n");
-    }
-
-    if (req.getCocoonRequest().getParameterValues("dct:language") == null) {
-      validationMessages.append("<c:message>Minst ett språk må være valgt</c:message>\n");
-    }
-
-    if (req.getCocoonRequest().getParameterValues("dct:format") == null) {
-      validationMessages.append("<c:message>Minst en mediatype må være valgt</c:message>\n");
-    }
-
-    /* Commented out due to the lack of dct:audience in SMIL test data
-    if (req.getCocoonRequest().getParameterValues("dct:audience") == null) {
-      validationMessages.append("<c:message>Minst en målgruppe må være valgt</c:message>\n");
-    }*/
-
-    if (req.getCocoonRequest().getParameterValues("dct:subject") == null) {
-      validationMessages.append("<c:message>Minst ett emne må være valgt</c:message>\n");
+    // Check if the user tries to save it with an approved status, but without a subject
+    if (req.getCocoonRequest().getParameterValues("dct:subject") == null && "http://sublima.computas.com/status/godkjent_av_administrator".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
+      validationMessages.append("<c:message><i18n:text key=\"validation.resource.notopic\">At least one subject must be chosen</i18n:text></c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) || req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
@@ -464,10 +422,10 @@ public class ResourceController implements StatelessAppleController {
                   req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:title");
-    String temp_uri = req.getCocoonRequest().getParameter("sub:url");
+    String temp_uri = req.getCocoonRequest().getParameter("the-resource");
+    String temp_identifier = req.getCocoonRequest().getParameter("dct:identifier");
     String temp_description = req.getCocoonRequest().getParameter("dct:description");
     String temp_publisher = req.getCocoonRequest().getParameter("dct:publisher");
-    String temp_added_publisher = req.getCocoonRequest().getParameter("dct:publisher/foaf:Agent/foaf:name");
     String[] temp_languages = req.getCocoonRequest().getParameterValues("dct:language");
     String[] temp_mediatypes = req.getCocoonRequest().getParameterValues("dct:format");
     String[] temp_audiences = req.getCocoonRequest().getParameterValues("dct:audience");
@@ -477,23 +435,39 @@ public class ResourceController implements StatelessAppleController {
 
 //Create an XML structure for the selected values, to use in the JX template
     StringBuffer xmlStructureBuffer = new StringBuffer();
+    xmlStructureBuffer.append("<rdf:RDF  xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
+                "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+                "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+                "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+                "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+                "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+                "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+                "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+                "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+                "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+                "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+                "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+                "xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"\n" +
+                "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n");
+    xmlStructureBuffer.append("<sub:Resource>\n");
     xmlStructureBuffer.append("<dct:title>" + temp_title + "</dct:title>\n");
-    xmlStructureBuffer.append("<sub:url>" + temp_uri + "</sub:url>\n");
+    xmlStructureBuffer.append("<sub:url rdf:resource=\"" + temp_uri + "\"/>\n");
+    xmlStructureBuffer.append("<dct:identifier rdf:resource=\"" + temp_uri + "\"/>\n");
     xmlStructureBuffer.append("<dct:description>" + temp_description + "</dct:description>\n");
-    xmlStructureBuffer.append("<dct:publisher>" + temp_publisher + "</dct:publisher>\n");
-    xmlStructureBuffer.append("<foaf:Agent>" + temp_added_publisher + "</foaf:Agent>\n");
+    xmlStructureBuffer.append("<dct:publisher rdf:resource=\"" + temp_publisher + "\"/>\n");
 
     if (temp_languages != null) {
       for (String s : temp_languages) {
         //xmlStructureBuffer.append("<language>" + s + "</language>\n");
-        xmlStructureBuffer.append("<dct:language rdf:description=\"" + s + "\"/>\n");
+        xmlStructureBuffer.append("<dct:language rdf:resource=\"" + s + "\"/>\n");
       }
     }
 
     if (temp_mediatypes != null) {
 
       for (String s : temp_mediatypes) {
-        xmlStructureBuffer.append("<dct:format rdf:description=\"" + s + "\"/>\n");
+        xmlStructureBuffer.append("<dct:format rdf:resource=\"" + s + "\"/>\n");
       }
 
     }
@@ -501,19 +475,20 @@ public class ResourceController implements StatelessAppleController {
     if (temp_audiences != null) {
 
       for (String s : temp_audiences) {
-        xmlStructureBuffer.append("<dct:audience rdf:description=\"" + s + "\"/>\n");
+        xmlStructureBuffer.append("<dct:audience rdf:resource=\"" + s + "\"/>\n");
       }
 
     }
 
     if (temp_subjects != null) {
       for (String s : temp_subjects) {
-        xmlStructureBuffer.append("<dct:subject rdf:description=\"" + s + "\"/>\n");
+        xmlStructureBuffer.append("<dct:subject rdf:resource=\"" + s + "\"/>\n");
       }
     }
 
     xmlStructureBuffer.append("<rdfs:comment>" + temp_comment + "</rdfs:comment>\n");
-    xmlStructureBuffer.append("<wdr:describedBy>" + temp_status + "</wdr:describedBy>\n");
+    xmlStructureBuffer.append("<wdr:describedBy rdf:resource=\"" + temp_status + "\"/>\n");
+    xmlStructureBuffer.append("</sub:Resource>\n</rdf:RDF>\n");
 
     return xmlStructureBuffer;
   }
@@ -558,23 +533,23 @@ public class ResourceController implements StatelessAppleController {
 
     // When GET present a blank form with listvalues or prefilled with resource
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-        int i = 0;
-        Enumeration fo = req.getCocoonRequest().getParameterNames();
-        while (req.getCocoonRequest().getParameterValues("new-" + i) != null) {
-            String newurl = req.getCocoonRequest().getParameterValues("new-" + i)[0];
-            String oldurl = req.getCocoonRequest().getParameterValues("old-" + i)[0];
-            String sparulQuery = "MODIFY\nDELETE { <"+ oldurl + "> ?p ?o }\nINSERT { <"+ newurl + "> ?p ?o }\nWHERE { <"+ oldurl + "> ?p ?o }\n";
-            logger.trace("Changing " + oldurl + " to "+ newurl +" in subjects.");
-            boolean updateSuccess = sparulDispatcher.query(sparulQuery);
-            logger.debug("Subject edit status: " + updateSuccess);
-            sparulQuery = "MODIFY\nDELETE { ?s ?p <"+ oldurl + "> }\nINSERT { ?s ?p <"+ newurl + "> }\nWHERE { ?s ?p <"+ oldurl + "> }\n";
-            logger.trace("Changing " + oldurl + " to "+ newurl +" in objects.");
-            updateSuccess = sparulDispatcher.query(sparulQuery);
-            logger.debug("Object edit status: " + updateSuccess);
-           i++;
-        }
-        logger.debug("Mass updated " + i + " records.");
+      int i = 0;
+      Enumeration fo = req.getCocoonRequest().getParameterNames();
+      while (req.getCocoonRequest().getParameterValues("new-" + i) != null) {
+        String newurl = req.getCocoonRequest().getParameterValues("new-" + i)[0];
+        String oldurl = req.getCocoonRequest().getParameterValues("old-" + i)[0];
+        String sparulQuery = "MODIFY\nDELETE { <" + oldurl + "> ?p ?o }\nINSERT { <" + newurl + "> ?p ?o }\nWHERE { <" + oldurl + "> ?p ?o }\n";
+        logger.trace("Changing " + oldurl + " to " + newurl + " in subjects.");
+        boolean updateSuccess = sparulDispatcher.query(sparulQuery);
+        logger.debug("Subject edit status: " + updateSuccess);
+        sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + newurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        logger.trace("Changing " + oldurl + " to " + newurl + " in objects.");
+        updateSuccess = sparulDispatcher.query(sparulQuery);
+        logger.debug("Object edit status: " + updateSuccess);
+        i++;
+      }
+      logger.debug("Mass updated " + i + " records.");
     }
-      res.sendPage("xml2/massedit", null);
+    res.sendPage("xml2/massedit", null);
   }
 }

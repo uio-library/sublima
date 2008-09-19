@@ -309,11 +309,6 @@
       <input type="hidden" id="dct:identifier" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
 
-      <!--input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/ -->
-      <!-- input type="hidden" name="uri" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}"/ -->
-      <!-- input type="hidden" name="dct:identifier"
-             value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/ -->
-
       <table>
         <tr>
         <td>
