@@ -121,8 +121,7 @@ public class IndexJob {
 
       IndexService indexService = new IndexService();
 
-      indexService.updateResourceSearchfield(indexExternal, searchfields, prefixes);
-      indexService.createIndex(indexDir, indexType);
+      indexService.createIndex(indexDir, indexType, searchfields, prefixes);
     }
   }
 }
