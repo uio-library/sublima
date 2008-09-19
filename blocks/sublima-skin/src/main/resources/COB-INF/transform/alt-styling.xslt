@@ -210,7 +210,7 @@ This stylesheet is the main stylesheet that is called for all pages.
 			  <input type="checkbox" name="deepsearch" value="deepsearch"/>
 			</xsl:otherwise>
 		      </xsl:choose>
-		      <i18n:text key="search.externalresources">Søk også i de eksterne ressursene</i18n:text>
+		      <i18n:text key="search.externalresources">Inkluder søk i ressursinnhold</i18n:text>
 		      <br/>
 		      
 		      
@@ -330,7 +330,7 @@ This stylesheet is the main stylesheet that is called for all pages.
 		                  <i18n:text key="search.for">Søk etter</i18n:text><xsl:text> '</xsl:text> 
 		                  <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/> 
 		                  <xsl:text>' </xsl:text> 
-		                  <i18n:text key="in.google">in Google</i18n:text>
+		                  <i18n:text key="in.google">i Google</i18n:text>
 		              </a>
 		              <br/>
 		   </xsl:if>
@@ -377,7 +377,7 @@ This stylesheet is the main stylesheet that is called for all pages.
 		  </xsl:choose>
 		  </xsl:if>
 		</xsl:if>
-		<xsl:text> </xsl:text> <!-- aviod empty results --> 
+		<xsl:text> </xsl:text> <!-- avoid empty results --> 
 		</div><!-- panel-results-->
 		
 		
@@ -476,7 +476,7 @@ This stylesheet is the main stylesheet that is called for all pages.
             none
         -->
 		<div name="panel-tasks" style="border:0px solid darkgrey;">
-		<h2><i18n:text key="menu.heading">Mine aktiviteter</i18n:text></h2>
+		<h2><i18n:text key="menu.heading">Aktiviteter</i18n:text></h2>
 		<a href="{$baseurl}/tips{$qloc}"><i18n:text key="menu.tips">Tips oss om en ny ressurs</i18n:text></a><br/>
 		
 		<xsl:choose>
@@ -525,7 +525,7 @@ This stylesheet is the main stylesheet that is called for all pages.
 	
 	
 	<div id="footer">
-	  <p><i18n:text key="sublima.footer">A Open Source Software Project supported by
+	  <p><i18n:text key="sublima.footer">An Open Source Software Project supported by
 	  <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
 	  and
 	  <a href="http://www.computas.com/">Computas AS</a>

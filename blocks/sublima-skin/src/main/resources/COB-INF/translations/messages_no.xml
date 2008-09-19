@@ -24,12 +24,16 @@
   <!-- search -->
   <message key="search.boolean.and">OG</message>
   <message key="search.boolean.or">ELLER</message>
-  <message key="search.sortby">Sorter etter</message>
-  <message key="search.externalresources">Inkluder eksterne ressurser</message>
+  <message key="search.sortby">Sorter etter </message>
+  <message key="search.externalresources">Inkluder søk i ressursinnhold</message>
   <message key="search.sortby.relevance">Relevans</message>
   <message key="search.sortby.date">Dato</message>
   <message key="search.numberofhits">Antall treff</message>
   <message key="search.submit">Søk</message>
+  <message key="search.exactmatch">Eksakt ord</message>
+  <message key="search.for">Søk etter</message>
+  <message key="in.google">i Google</message>
+  
 
   <!-- advanced search -->
   <message key="adv.title">Tittel</message>
@@ -39,6 +43,9 @@
   <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD </message>
   <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD </message>
   <message key="adv.mediaType">Mediatype</message>
+
+  
+  
   
 
   
@@ -167,4 +174,4 @@
   
   
 
-</catalogue>
+</catalogue> 

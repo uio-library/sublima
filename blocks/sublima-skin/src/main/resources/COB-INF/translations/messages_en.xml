@@ -24,13 +24,15 @@
   <!-- search -->
   <message key="search.boolean.and">AND</message>
   <message key="search.boolean.or">OR</message>
-  <message key="search.sortby">Sort by</message>
-  <message key="search.externalresources">Include external resources</message>
+  <message key="search.sortby">Sort by </message>
+  <message key="search.externalresources">Include search in resource content</message>
   <message key="search.sortby.relevance">Relevance</message>
   <message key="search.sortby.date">Date</message>
   <message key="search.numberofhits">Number of hits</message>
   <message key="search.submit">Search</message>
   <message key="search.exactmatch">Exact word(s)</message>
+  <message key="search.for">Søk etter</message>
+  <message key="in.google">i Google</message>
 
   <!-- advanced search -->
   <message key="adv.title">Title</message>
@@ -40,6 +42,7 @@
   <message key="adv.dateAccepted">Date Accepted YYYY-MM-DD </message>
   <message key="adv.dateSubmitted">Date Submitted YYYY-MM-DD</message>
   <message key="adv.mediaType">Media type</message>
+ 
 
   <!-- facets -->
   <message key="facets.heading">Filter by</message>
@@ -142,7 +145,6 @@
   <message key="resources">Resources</message>
   <message key="user">User</message>
   <message key="users">Users</message>
-  <message key="roles">Roles</message>
   <message key="administration">administration</message>
   <message key="suggested">Suggested</message>
   <message key="back">Back</message>
