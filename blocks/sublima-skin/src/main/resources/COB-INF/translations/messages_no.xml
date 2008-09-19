@@ -39,6 +39,9 @@
   <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD </message>
   <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD </message>
   <message key="adv.mediaType">Mediatype</message>
+  <message key="adv.language">Språk</message>
+  <message key="adv.approved">Godkjent av</message>
+  <message key="adv.audience">Målgruppe</message>
   
 
   
