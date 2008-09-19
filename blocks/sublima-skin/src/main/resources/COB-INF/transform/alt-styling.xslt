@@ -6,6 +6,10 @@ This stylesheet is the main stylesheet that is called for all pages.
 
 -->
 
+<!--
+PVJ: Made the file UTF-8
+-->
+
 
 
 
@@ -539,4 +543,4 @@ This stylesheet is the main stylesheet that is called for all pages.
   </xsl:template>
   
   
-</xsl:stylesheet>
+</xsl:stylesheet> 
