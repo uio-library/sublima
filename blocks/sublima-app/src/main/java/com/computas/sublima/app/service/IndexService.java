@@ -56,7 +56,7 @@ public class IndexService {
       // -- Create an index based on a generated string on each URL
       ResultSet rs = getAllExternalResourcesURLs();
       int i = 0;
-      while (rs.hasNext() && i < 50) {
+      while (rs.hasNext()) {
         QuerySolution qs = rs.nextSolution();
         Resource res = qs.getResource("url");
         logger.info("SUBLIMA: createIndex() --> indexing resource #" + i + ":" + res.getURI());
