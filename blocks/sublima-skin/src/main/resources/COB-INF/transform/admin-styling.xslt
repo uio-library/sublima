@@ -220,13 +220,11 @@
 	</xsl:call-template>
 
         <div class="colmask threecol">
-          <div class="colmid">
+          <div class="colmidleft">
             <div class="colleft">
               <div class="col1">
                 <!-- Column 1 start -->
-		<!--
                 <xsl:call-template name="debug"/>
--->
 		<xsl:call-template name="contenttext"/>
 
                 <xsl:call-template name="messages"/>
