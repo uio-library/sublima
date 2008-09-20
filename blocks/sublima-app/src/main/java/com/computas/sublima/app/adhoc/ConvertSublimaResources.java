@@ -272,12 +272,14 @@ public class ConvertSublimaResources {
     PrintUtil.registerPrefix("rdf", rdfNs);
     PrintUtil.registerPrefix("wdr", wdrNs);
 
-    String rules = SettingsService.getProperty("sublima.import.rules");
-    logger.info("Applying rules " + rules);
-    /*String rules = "[inverseRule1: (?Y skos:broader ?X) -> (?X skos:narrower ?Y)]" +
+    
+    //String rules = SettingsService.getProperty("sublima.import.rules");
+    String rules = "[inverseRule1: (?Y skos:broader ?X) -> (?X skos:narrower ?Y)]" +
             "[inverseRule2: (?X skos:narrower ?Y) -> (?Y skos:broader ?X)]" +
-            "[statusRule: (?X a sub:Resource) -> (?X wdr:DescribedBy <http://sblima.computas.com/status/godkjent_av_administrator>)];*/
+            "[statusRule: (?X a sub:Resource) -> (?X wdr:DescribedBy <http://sblima.computas.com/status/godkjent_av_administrator>)]";
 
+    
+    logger.info("Applying rules " + rules);
     Reasoner reasoner = new GenericRuleReasoner(Rule.parseRules(rules));
     InfModel inf = ModelFactory.createInfModel(reasoner, model);
 
