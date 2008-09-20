@@ -274,9 +274,10 @@ public class ConvertSublimaResources {
 
     
     //String rules = SettingsService.getProperty("sublima.import.rules");
-    String rules = "[inverseRule1: (?Y skos:broader ?X) -> (?X skos:narrower ?Y)]" +
+    String rules = "[inverseRule1: (?X skos:broader ?Y) -> (?Y skos:narrower ?X)]" +
             "[inverseRule2: (?X skos:narrower ?Y) -> (?Y skos:broader ?X)]" +
-            "[statusRule: (?X a sub:Resource) -> (?X wdr:DescribedBy <http://sblima.computas.com/status/godkjent_av_administrator>)]";
+            "[statusRule1: (?X rdf:type sub:Resource) noValue(?X wdr:describedBy) -> (?X wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator>)]"+
+            "[statusRule2: (?X rdf:type skos:Concept) noValue(?X wdr:describedBy) -> (?X wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator>)]";
 
     
     logger.info("Applying rules " + rules);
