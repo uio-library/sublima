@@ -132,7 +132,7 @@ skos:prefLabel a owl:AnnotationProperty ;
             rdfs:domain skos:Concept .
     
 # skos:definition
- sub:definition a owl:DatatypeProperty ;
+sub:definition a owl:DatatypeProperty ;
 			rdfs:domain	skos:Concept .		
     
 skos:altLabel a owl:DatatypeProperty ;
@@ -147,7 +147,7 @@ wdr:describedBy a owl:DatatypeProperty ;
 
 # skos:note is used for comments
 # this is imported from skos vocabulary	
- skos:note  a owl:DatatypeProperty ;
+skos:note  a owl:DatatypeProperty ;
 			rdfs:domain skos:Concept ;
 			rdfs:range	    rdf:XMLLiteral .
 
@@ -180,6 +180,12 @@ skos:narrower 	a 			owl:ObjectProperty ;
 skos:broader 	a 			owl:ObjectProperty ;
 		rdfs:label		"Bredere"@no ; 
 		rdfs:subPropertyOf	skos:semanticRelation . 
+
+skos:related  	a 			owl:ObjectProperty ;
+		a                   owl:SymmetricProperty ;
+		rdfs:label		    "Relatert"@no ; 
+		rdfs:subPropertyOf	skos:semanticRelation .
+
 
 
 
