@@ -1,3 +1,5 @@
+
+
 /* General styles */
 body {
   margin: 0;
@@ -177,6 +179,31 @@ only padding top and bottom is included here, make it whatever value you need */
 (100% - left column width) plus (center column left and right padding) plus (left column left and right
 padding) plus (right column left padding) */
 }
+
+
+/* 2 Column settings */
+
+.twocol {
+  background: #fff; /* right column background colour */
+}
+
+.twocol .colleft {
+  right: 75%; /* width of the middle column */
+  background: #f4f4f4; /* left column background colour */
+}
+
+.twocol .col1 {
+  width: 71%; /* width of left column content (column width minus padding on either side) */
+  left: 102%; /* 100% plus left padding of center column */
+}
+
+.twocol .col2 {
+  width: 21%; /* Width of left column content (column width minus padding on either side) */
+  left: 5%;
+  /* width of (right column) plus (center column left and right padding) plus (left column left
+ padding) */
+}
+
 
 /* Footer styles */
 #footer {

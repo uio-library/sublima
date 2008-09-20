@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xsl:stylesheet
         xmlns:lingvoj="http://www.lingvoj.org/ontology#"
         xmlns:wdr="http://www.w3.org/2007/05/powder#"
@@ -219,17 +220,35 @@
 	  <xsl:with-param name="baseurl" select="$baseurl"/>
 	</xsl:call-template>
 
-        <div class="colmask threecol">
-          <div class="colmidleft">
+        <div class="colmask twocol" style="border:0px solid green">
             <div class="colleft">
-              <div class="col1">
-                <!-- Column 1 start -->
-                <!--xsl:call-template name="debug"/-->
-		<xsl:call-template name="contenttext"/>
+            
+            
+            
+            
+<!-- ######################################################################
+     RIGHT (main) COLUMN (col1)
+     menues
+	 ###################################################################### -->       
+        <div class="col1" style="border:0px dotted black;">     <!-- Column 1 start -->
+               <!-- <xsl:call-template name="debug"/> -->
+		  
+		  <xsl:text> </xsl:text> <!-- avoid an empty div tag -->
+		
+		<div style="border:0px dotted orange;">
+		  <xsl:call-template name="contenttext"/>
+		  <xsl:text> </xsl:text> <!-- avoid an empty div tag -->
+        </div>
+        
+        
+        <div style="border:0px dotted purple;">  
+            <xsl:call-template name="messages"/>
+            <xsl:text> </xsl:text> <!-- avoid an empty div tag -->
+        </div>
 
-                <xsl:call-template name="messages"/>
 
-		<xsl:if test="c:page/c:statuses/sparql:sparql">
+        <div style="border:0px dotted pink;">
+		  <xsl:if test="c:page/c:statuses/sparql:sparql">
 		
 		  <form action="../../search-result.html" method="GET">
 		    <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>  
@@ -244,61 +263,122 @@
 
 		    <input type="submit" i18n:attr="value" value="button.resource.search"/>
 		    
-		    
-		    
-		  </form>
-		  </xsl:if>
+		    </form>
+		   </xsl:if>
+            <xsl:text> </xsl:text><!-- avoid a empty div tag -->
+          </div>
 
 
+          <div style="border:0px dotted blue;">  
+            <xsl:apply-templates select="c:page/c:content/c:upload" mode="upload"/>
+            <xsl:text> </xsl:text>
+          </div>
+          
+          
+          <div style="border:0px dotted lightblue;">  
+            <xsl:call-template name="theme"/>
+            <xsl:text> </xsl:text>
+          </div>              
 
 
-                <xsl:apply-templates select="c:page/c:content/c:upload" mode="upload"/>
+          <div style="border:0px dotted darkblue;">  
+            <xsl:call-template name="alltopics"/>
+            <xsl:text> </xsl:text>
+          </div>
+          
+          
+          <div style="border:0px dotted brown;">           
+            <xsl:call-template name="topicdetails"/>
+            <xsl:text> </xsl:text>
+          </div>
 
-                <xsl:call-template name="theme"/>
+          
+          <div style="border:0px dotted lightbrown;">           
+            <xsl:call-template name="userdetails"/>
+            <xsl:text> </xsl:text>
+          </div>
 
-                <xsl:call-template name="alltopics"/>
+    
+          <div style="border:0px dotted darkbrown;">           
+            <xsl:call-template name="roledetails"/>
+            <xsl:text> </xsl:text>
+          </div>
+          
 
-                <xsl:call-template name="topicdetails"/>
+          <div style="border:0px dotted red;">
+            <xsl:apply-templates select="c:page/c:content/c:related"/>
+            <xsl:text> </xsl:text>
+          </div>
 
-                <xsl:call-template name="userdetails"/>
+          <div style="border:0px dotted lightred;">
+            <xsl:apply-templates select="c:page/c:content/c:allusers" mode="list"/>
+            <xsl:text> </xsl:text>
+          </div>
 
-                <xsl:call-template name="roledetails"/>
+          <div style="border:0px dotted darkred;">
+            <xsl:apply-templates select="c:page/c:content/c:allroles" mode="listallroles"/>
+            <xsl:text> </xsl:text>
+          </div>
 
-                <xsl:apply-templates select="c:page/c:content/c:related"/>
+          <div style="border:0px dotted brown;">
+            <xsl:apply-templates select="c:page/c:content/c:relations" mode="listallrelationtypes"/>
+            <xsl:text> </xsl:text>
+          </div>
 
-                <xsl:apply-templates select="c:page/c:content/c:allusers" mode="list"/>
-                
-                <xsl:apply-templates select="c:page/c:content/c:allroles" mode="listallroles"/>
-
-                <xsl:apply-templates select="c:page/c:content/c:relations" mode="listallrelationtypes"/>
-
+          <div style="border:0px dotted lightbrown;">  
                 <xsl:apply-templates select="c:page/c:content/c:join" mode="topicjoin"/>
+            <xsl:text> </xsl:text>
+          </div>  
 
                 <!-- Publisherdetails -->
+          <div style="border:0px dotted gray;">  
                 <xsl:apply-templates select="c:page/c:content/c:publisherdetails"/>
-
+            <xsl:text> </xsl:text>
+          </div>  
+          
+          
+          <div style="border:0px dotted lightgray;">  
                 <xsl:apply-templates select="c:page/c:massediting"/>		
+            <xsl:text> </xsl:text>
+          </div>  
 
+          
+          <div style="border:0px dotted darkgrey;">  
                 <xsl:if test="c:page/c:content/c:resourcedetails">
                   <xsl:call-template name="resourcedetails"/>
                 </xsl:if>
+            <xsl:text> </xsl:text>
+          </div>  
 
+
+
+          <div style="border:0px dotted green;">  
                 <xsl:if test="c:page/c:content/c:resourceprereg">
                   <xsl:apply-templates select="c:page/c:content/c:resourceprereg" mode="resourceprereg"/>
                 </xsl:if>
+            <xsl:text> </xsl:text>
+           </div>
 
-                <!-- Publishers index -->
+
+          <!-- Publishers index -->
+          <div style="border:0px dotted lightgreen;">  
                 <xsl:if test="c:page/c:content/c:publisherlist">
                   <xsl:call-template name="publisherlist"/>
                 </xsl:if>
+            <xsl:text> </xsl:text>
+           </div>     
 
-                <!-- Linkcheck -->
+          <!-- Linkcheck -->
+          <div style="border:0px dotted darkgreen;">  
                 <xsl:if test="c:page/c:content/c:linkcheck">
                   <xsl:call-template name="linkcheck"/>
                 </xsl:if>
+                <xsl:text> </xsl:text>
+           </div>     
 
 
                 <!-- Suggested resources -->
+           <div style="border:0px dotted yellow;">  
                 <xsl:if test="c:page/c:content/c:suggestedresources/rdf:RDF">
                   <ul>
                     <xsl:for-each
@@ -309,8 +389,21 @@
                     </xsl:for-each>
                   </ul>
                 </xsl:if>
+                <xsl:text> </xsl:text>
+           </div>     
+
+ 
+ 
                 <!-- Column 1 end -->
               </div>
+              
+              
+                          
+<!-- ######################################################################
+     LEFT COLUMN (col2)
+     menues
+	 ###################################################################### -->       
+
               <div class="col2">
                 <!-- Column 2 start -->
                 <xsl:if test="c:page/c:menu/c:menuelement">
@@ -347,16 +440,12 @@
                 </xsl:if>
                 <!-- Column 2 end -->
               </div>
-              <div class="col3">
-                <!-- Column 3 start -->
-                <!-- Column 3 end -->
-              </div>
             </div>
 
-          </div>
+          
         </div>
         <div id="footer">
-          <p><i18n:text key="sublima.footer">A Free Software Project supported by
+          <p><i18n:text key="sublima.footer">An Open Source Project supported by
             <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
             and
             <a href="http://www.computas.com">Computas AS</a>
