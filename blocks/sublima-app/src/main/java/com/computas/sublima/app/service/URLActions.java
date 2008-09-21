@@ -3,20 +3,14 @@ package com.computas.sublima.app.service;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.apache.xerces.xni.parser.XMLDocumentFilter;
-import org.apache.xerces.xni.parser.XMLInputSource;
-import org.apache.xerces.xni.parser.XMLParserConfiguration;
 import org.apache.jackrabbit.extractor.HTMLTextExtractor;
-import org.cyberneko.html.HTMLConfiguration;
-import org.cyberneko.html.filters.ElementRemover;
+import org.apache.log4j.Logger;
 import org.postgresql.util.PSQLException;
 
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.Document;
-import javax.swing.text.EditorKit;
-import javax.swing.text.BadLocationException;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -129,56 +123,56 @@ public class URLActions { // Should this class extend HttpUrlConnection?
       logger.debug("getCode() has allready thrown exception ---> " + url.toString());
       return ourcode;
     }
-    
-      logger.info("getCode() ---> " + url.toString());
 
-      FutureTask<?> theTask = null;
-      try {
-        // create new task
-        theTask = new FutureTask<Object>(new Runnable() {
-          public void run() {
-            try {
-              connect();
-              con.setConnectTimeout(6000);
-              ourcode = String.valueOf(con.getResponseCode());
-            }
-            catch (MalformedURLException e) {
-              ourcode = "MALFORMED_URL";
-            }
-            catch (ClassCastException e) {
-              ourcode = "UNSUPPORTED_PROTOCOL";
-            }
-            catch (UnknownHostException e) {
-              ourcode = "UNKNOWN_HOST";
-            }
-            catch (ConnectException e) {
-              ourcode = "CONNECTION_TIMEOUT";
-            }
-            catch (SocketTimeoutException e) {
-              ourcode = "CONNECTION_TIMEOUT";
-            }
-            catch (IOException e) {
-              ourcode = "IOEXCEPTION";
-            }
+    logger.info("getCode() ---> " + url.toString());
+
+    FutureTask<?> theTask = null;
+    try {
+      // create new task
+      theTask = new FutureTask<Object>(new Runnable() {
+        public void run() {
+          try {
+            connect();
+            con.setConnectTimeout(6000);
+            ourcode = String.valueOf(con.getResponseCode());
           }
-        }, null);
+          catch (MalformedURLException e) {
+            ourcode = "MALFORMED_URL";
+          }
+          catch (ClassCastException e) {
+            ourcode = "UNSUPPORTED_PROTOCOL";
+          }
+          catch (UnknownHostException e) {
+            ourcode = "UNKNOWN_HOST";
+          }
+          catch (ConnectException e) {
+            ourcode = "CONNECTION_TIMEOUT";
+          }
+          catch (SocketTimeoutException e) {
+            ourcode = "CONNECTION_TIMEOUT";
+          }
+          catch (IOException e) {
+            ourcode = "IOEXCEPTION";
+          }
+        }
+      }, null);
 
-        // start task in a new thread
-        new Thread(theTask).start();
+      // start task in a new thread
+      new Thread(theTask).start();
 
-        // wait for the execution to finish, timeout after 10 secs
-        theTask.get(10L, TimeUnit.SECONDS);
-      }
-      catch (TimeoutException e) {
-        ourcode = "CONNECTION_TIMEOUT";
-      } catch (ExecutionException e) {
-        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-      } catch (InterruptedException e) {
-        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-      }
+      // wait for the execution to finish, timeout after 10 secs
+      theTask.get(10L, TimeUnit.SECONDS);
+    }
+    catch (TimeoutException e) {
+      ourcode = "CONNECTION_TIMEOUT";
+    } catch (ExecutionException e) {
+      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    } catch (InterruptedException e) {
+      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    }
 
-      logger.info("getCode() ---> " + url.toString() + " returned a " + ourcode);
-      con = null;
+    logger.info("getCode() ---> " + url.toString() + " returned a " + ourcode);
+    con = null;
 
     return ourcode;
   }
@@ -413,52 +407,12 @@ public class URLActions { // Should this class extend HttpUrlConnection?
       int charValue = 0;
       StringBuffer sb = new StringBuffer();
       while ((charValue = reader.read()) != -1) {
-      sb.append((char)charValue);
+        sb.append((char) charValue);
       }
       return sb.toString();
-    } catch (IOException e) {
-      logger.warn("URLActions.strippedContent() gave IOException, returning \"\" ---> " + e.getMessage());  
+    } catch (Exception e) {
+      logger.warn("URLActions.strippedContent() gave Exception, returning \"\" ---> " + e.getMessage());
       return "";
     }
-
-    /*
-
-
-    ElementRemover remover = new ElementRemover();
-
-    // completely remove script elements
-    remover.removeElement("script");
-
-    ByteArrayOutputStream output = new ByteArrayOutputStream();
-    // create writer filter
-    org.cyberneko.html.filters.Writer writer =
-            new org.cyberneko.html.filters.Writer(output, encoding);
-
-    // setup filter chain
-    XMLDocumentFilter[] filters = {
-            remover,
-            writer,
-    };
-
-    // create HTML parser
-    XMLParserConfiguration parser = new HTMLConfiguration();
-    parser.setProperty("http://cyberneko.org/html/properties/filters", filters);
-
-    XMLInputSource source = new XMLInputSource(null, null, null, stream, encoding);
-    try {
-      parser.parse(source);
-    }
-    catch (IOException e) {
-      ourcode = "IOEXCEPTION";
-    }
-    catch (ArrayIndexOutOfBoundsException e) {
-      logger.info("strippedContent() ---> " + source + " failed!");
-    }
-
-    byte[] outputbytes = output.toByteArray();
-
-    return new String(outputbytes, "UTF-8");
-    */
-    
   }
 }
