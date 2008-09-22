@@ -32,7 +32,7 @@
   <message key="search.numberofhits">Number of hits</message>
   <message key="search.submit">Search</message>
   <message key="search.exactmatch">Exact word(s)</message>
-  <message key="search.for">Søk etter</message>
+  <message key="search.for">Sï¿½k etter</message>
   <message key="in.google">i Google</message>
 
   <!-- advanced search -->
@@ -178,6 +178,11 @@
   <message key="button.adv.search">Search</message>
   <message key="button.resource.search">Search</message>
   <message key="button.copyasnew">Copy fields to new form</message>
+
+  <message key="menu.mass">Mass edit resource URLs</message>
+  <message key="menu.stats">Statistics</message>
+
+
   
   
 

@@ -178,8 +178,11 @@
  <message key="button.read">Läs</message>
  <message key="button.export">Export</message>
  <message key="button.adv.search">Sök</message>
-  <message key="button.resource.search">Sök</message>
-  <message key="button.copyasnew">Kopiera fälten till nytt schema</message>
+ <message key="button.resource.search">Sök</message>
+ <message key="button.copyasnew">Kopiera fälten till nytt schema</message>
+
+ <message key="menu.mass">Massredigere resursenas URL</message>
+ <message key="menu.stats">Statistik</message>
 
 </catalogue>
 

@@ -135,4 +135,7 @@
   <message key="button.next">Neste</message>
   <message key="button.read">Les inn</message>
   <message key="button.export">Export</message>
+
+  <message key="menu.mass">Massredigering av ressursanes URL</message>
+  <message key="menu.stats">Statistikk</message>
 </catalogue>
