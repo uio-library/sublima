@@ -414,7 +414,19 @@
 
                       <li>
                         <a>
-                          <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/></xsl:attribute><xsl:value-of select="@title"/></a>
+                          <xsl:attribute name="href">
+                            <xsl:choose>
+                              <xsl:when test="@link = ''">
+                                <xsl:value-of select="@extlink"/>
+                              </xsl:when>
+                              <xsl:otherwise>
+                                <xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/>
+                              </xsl:otherwise>
+                            </xsl:choose>
+                      </xsl:attribute>
+                      <xsl:value-of select="@title"/>
+                      </a> 
+
                       </li>
                       <xsl:if test="c:childmenuelement">
                         <ul>
