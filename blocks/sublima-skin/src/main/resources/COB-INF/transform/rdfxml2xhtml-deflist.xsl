@@ -107,11 +107,9 @@
           <xsl:sort select="./sub:relevance"/> 
         
 
-  <dt>
-	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
-	  <i18n:text key="search.result.hastopic">har emne</i18n:text><xsl:text> </xsl:text>
-    <xsl:apply-templates select="./dct:subject"/>
-	</dt>
+	  <dt>
+	    <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+	  </dt>
 	<dd>
 	  <div style="font-size:small"><i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
 	    <xsl:apply-templates select="dct:publisher"/>
