@@ -206,6 +206,11 @@
     </xsl:if>
 
   </xsl:template>
+  
+  
+  
+  
+  <!-- START of page -->
 
   <xsl:template match="/">
 
@@ -293,13 +298,13 @@
           </div>
 
           
-          <div style="border:0px dotted lightbrown;">           
+          <div style="border:0px dotted brown;">           
             <xsl:call-template name="userdetails"/>
             <xsl:text> </xsl:text>
           </div>
 
     
-          <div style="border:0px dotted darkbrown;">           
+          <div style="border:0px dotted brown;">           
             <xsl:call-template name="roledetails"/>
             <xsl:text> </xsl:text>
           </div>
@@ -325,19 +330,19 @@
             <xsl:text> </xsl:text>
           </div>
 
-          <div style="border:0px dotted lightbrown;">  
+          <div style="border:0px dotted brown;">  
                 <xsl:apply-templates select="c:page/c:content/c:join" mode="topicjoin"/>
             <xsl:text> </xsl:text>
           </div>  
 
-                <!-- Publisherdetails -->
+          <!-- Publisherdetails -->
           <div style="border:0px dotted gray;">  
                 <xsl:apply-templates select="c:page/c:content/c:publisherdetails"/>
-            <xsl:text> </xsl:text>
+                <xsl:text> </xsl:text>
           </div>  
           
-          
-          <div style="border:0px dotted lightgray;">  
+          <!-- Mass editing -->
+          <div name="mass-editing" style="border:0px dotted pink;">  
                 <xsl:apply-templates select="c:page/c:massediting"/>		
             <xsl:text> </xsl:text>
           </div>  
@@ -394,8 +399,10 @@
 
  
  
-                <!-- Column 1 end -->
-              </div>
+
+              </div>                <!-- Column 1 end -->
+
+              
               
               
                           
@@ -403,6 +410,7 @@
      LEFT COLUMN (col2)
      menues
 	 ###################################################################### -->       
+
 
               <div class="col2">
                 <!-- Column 2 start -->
@@ -451,6 +459,7 @@
                   </ul>
                 </xsl:if>
                 <!-- Column 2 end -->
+                <xsl:text>abc 123 </xsl:text>
               </div>
             </div>
 

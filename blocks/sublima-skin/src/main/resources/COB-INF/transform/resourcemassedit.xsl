@@ -16,9 +16,10 @@
         version="1.0">
 
   <xsl:template match="c:massediting">
-    <script type="text/javascript" src="styles/getMassEditResources.js"/>
-    <script type="text/javascript">var dummy = null;</script>
-    <script src="styles/jquery.blockUI.js" type="text/javascript"/>
+    <!-- problems with self-closing empty script tags in firefox --> 
+    <script src="styles/getMassEditResources.js" type="text/javascript">;</script>
+    <script type="text/javascript">var dummy = null;</script> 
+    <script src="styles/jquery.blockUI.js" type="text/javascript">;</script>
 
     <p class="instructions">
       <i18n:text key="instructions.regex">
