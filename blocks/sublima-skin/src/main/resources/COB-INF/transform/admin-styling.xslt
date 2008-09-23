@@ -459,7 +459,7 @@
                   </ul>
                 </xsl:if>
                 <!-- Column 2 end -->
-                <xsl:text>abc 123 </xsl:text>
+                <xsl:text> </xsl:text>
               </div>
             </div>
 
