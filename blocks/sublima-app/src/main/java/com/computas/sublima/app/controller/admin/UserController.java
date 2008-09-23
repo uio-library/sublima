@@ -185,6 +185,7 @@ public class UserController implements StatelessAppleController {
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
             res.sendPage("xml2/bruker", bizData);
+            return;
           }
 
           if (!req.getCocoonRequest().getParameter("password1").equals(req.getCocoonRequest().getParameter("password2"))) { // PASSWORDS DON'T MATCH
@@ -196,6 +197,7 @@ public class UserController implements StatelessAppleController {
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
             res.sendPage("xml2/bruker", bizData);
+            return;
           }
 
           try {
@@ -283,6 +285,7 @@ public class UserController implements StatelessAppleController {
               bizData.put("mode", "usertemp");
 
               res.sendPage("xml2/bruker", bizData);
+              return;
             }
 
           }
@@ -542,18 +545,18 @@ public class UserController implements StatelessAppleController {
                   req) {
     StringBuffer tempValues = new StringBuffer();
 
-    String uri = req.getCocoonRequest().getParameter("uri");
+    String uri = req.getCocoonRequest().getParameter("the-resource");
     String temp_email = req.getCocoonRequest().getParameter("sioc:email");
     String temp_name = req.getCocoonRequest().getParameter("rdfs:label");
     String temp_oldusername = req.getCocoonRequest().getParameter("oldusername");
-    String temp_role = req.getCocoonRequest().getParameter("sioc:role");
+    String temp_role = req.getCocoonRequest().getParameter("sioc:has_function");
 
     //Create an XML structure for the selected values, to use in the JX template
     tempValues.append("<rdf:about>" + uri + "</rdf:about>\n");
     tempValues.append("<sioc:email>" + temp_email + "</sioc:email>\n");
     tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
     tempValues.append("<c:oldusername>" + temp_oldusername + "</c:oldusername>");
-    tempValues.append("<sioc:role>" + temp_role + "</sioc:role>");
+    tempValues.append("<sioc:has_function rdf:resource=\"" + temp_role + "\"/>");
 
     return tempValues;
   }

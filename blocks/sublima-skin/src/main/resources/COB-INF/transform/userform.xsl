@@ -136,7 +136,23 @@
   <xsl:template match="c:user" mode="usertemp">
 
     <form action="{$baseurl}/admin/brukere/bruker" method="POST">
-      <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
+
+      <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+      <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
+      <input type="hidden" name="prefix" value="sioc: &lt;http://rdfs.org/sioc/ns#&gt;"/>
+      <input type="hidden" name="rdf:type" value="http://rdfs.org/sioc/ns#User"/>
+      <input type="hidden" name="interface-language" value="{$interface-language}"/>
+
+      <xsl:choose>
+        <xsl:when test="./c:tempvalues/c:tempvalues/rdf:about != 'null'">
+          <input type="hidden" name="the-resource" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <input type="hidden" name="title-field" value="sioc:email"/>
+          <input type="hidden" name="subjecturi-prefix" value="user/"/>
+        </xsl:otherwise>
+      </xsl:choose>
+
       <input type="hidden" name="oldusername" value="{./c:tempvalues/c:tempvalues/c:oldusername}"/>
       <table>
         <tr>
@@ -194,7 +210,7 @@
                   <xsl:sort select="./rdfs:label"/>
                   <xsl:choose>
                     <xsl:when
-                            test="./@rdf:about = /c:page/c:content/c:user/c:tempvalues/c:tempvalues/sioc:has_function">
+                            test="./@rdf:about = /c:page/c:content/c:user/c:tempvalues/c:tempvalues/sioc:has_function/@rdf:resource">
                       <option value="{./@rdf:about}" selected="selected">
                         <xsl:value-of select="./rdfs:label"/>
                       </option>
