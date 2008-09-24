@@ -160,12 +160,11 @@ PVJ: Made the file UTF-8
 		<xsl:apply-templates select="c:page" mode="a-z"/>                
         </div>
 		
-		
-		
 		<!-- Search -->
 		<!-- Search is shown when advanced search is not -->	
 		<xsl:if test="not(c:page/c:advancedsearch)">
-		  <div name="panel-search" style="border:0px solid brown">
+
+      <div name="panel-search" style="border:0px solid brown">
 		      <form action="{$baseurl}/search-result.html" method="get">  
 		    <fieldset>
 		      <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
@@ -183,8 +182,10 @@ PVJ: Made the file UTF-8
 			     name="searchstring" size="40" value="{c:page/c:searchparams/c:searchparams/c:searchstring}"/>
 		      <input type="submit" value="search.submit" i18n:attr="value"/>
 		      <br/>
-		      
-		      <xsl:choose>
+
+          <xsl:call-template name="autocompletion"/>
+
+          <xsl:choose>
 			<xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">
 			  <input type="radio" name="booleanoperator" value="AND"/><i18n:text key="search.boolean.and">OG</i18n:text>
 			  <input type="radio" name="booleanoperator" value="OR" checked="checked"/><i18n:text key="search_boolean_or">ELLER</i18n:text>

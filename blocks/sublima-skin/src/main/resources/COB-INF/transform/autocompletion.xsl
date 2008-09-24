@@ -16,7 +16,12 @@
             minChars: 3,
 	    extraParams : { action:"publisher", locale:"<xsl:value-of select="$interface-language"/>" }
 	    });
+
+       $("#keyword").autocomplete("autocomplete", {
+            minChars: 3,
+	    extraParams : { action:"topic", locale:"<xsl:value-of select="$interface-language"/>" }
 	    });
+      });
     </script>
   </xsl:template>
 </xsl:stylesheet>
