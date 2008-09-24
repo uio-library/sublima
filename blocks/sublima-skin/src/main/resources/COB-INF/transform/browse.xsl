@@ -14,7 +14,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:param name="baseurl"/>
-  <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="interface-language"/>
 
   <xsl:template match="c:browse" mode="browse">
     <xsl:if test="./rdf:RDF/skos:Concept">
@@ -23,7 +23,7 @@
           <xsl:sort select="./skos:prefLabel"/>
           <li>
             <a href="{./@rdf:about}.html{$qloc}">
-              <xsl:value-of select="./skos:prefLabel"/>
+              <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
             </a>
           </li>
         </xsl:for-each>
