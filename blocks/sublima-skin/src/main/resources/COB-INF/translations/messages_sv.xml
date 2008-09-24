@@ -5,184 +5,224 @@
   <message key="menu.heading">Aktiviteter</message>
   <message key="menu.tips">Skicka förslag på ny resurs</message>
   <message key="menu.topic">Ämnen</message>
- <message key="menu.resource">Resurser</message>
- <message key="menu.user">Användare</message>
- <message key="menu.publisher">Utgivare</message>
- <message key="menu.link">Länkkoll</message>
- <message key="menu.database">Databas</message>
- <message key="menu.search">Sökning</message>
- <message key="menu.advancedsearch">Avancerad sökning</message>
- <message key="menu.az">A-Ö</message>
- <message key="menu.new">Ny</message>
- <message key="menu.showall">Visa alla</message>
- <message key="menu.roles">Roller</message>
- <message key="menu.join">Koppla ihop</message>
- <message key="menu.theme">Tema</message>
- <message key="menu.relations">Relationer</message>
- <message key="menu.suggested">Föreslagna</message>
+  <message key="menu.resource">Resurser</message>
+  <message key="menu.user">Användare</message>
+  <message key="menu.publisher">Utgivare</message>
+  <message key="menu.link">Länkkoll</message>
+  <message key="menu.database">Databas</message>
+  <message key="menu.search">Sökning</message>
+  <message key="menu.advancedsearch">Avancerad sökning</message>
+  <message key="menu.az">A-Ö</message>
+  <message key="menu.new">Ny</message>
+  <message key="menu.showall">Visa alla</message>
+  <message key="menu.roles">Roller</message>
+  <message key="menu.join">Koppla ihop</message>
+  <message key="menu.theme">Tema</message>
+  <message key="menu.relations">Relationer</message>
+  <message key="menu.suggested">Föreslagna</message>
 
- <!-- search -->
- <message key="search.boolean.and">OCH</message>
- <message key="search.boolean.or">ELLER</message>
- <message key="search.sortby">Sortera efter </message>
- <message key="search.externalresources">Inkludera sök i resursinnehåll</message>
- <message key="search.sortby.relevance">Relevans</message>
- <message key="search.sortby.date">Datum</message>
- <message key="search.numberofhits">Antal träffar</message>
- <message key="search.submit">Sök</message>
- <message key="search.exactmatch">Exakt match</message>
- <message key="search.for">Sök efter</message>
- <message key="in.google">i Google</message>
- 
- <!-- advanced search -->
+  <!-- search -->
+  <message key="search.boolean.and">OCH</message>
+  <message key="search.boolean.or">ELLER</message>
+  <message key="search.sortby">Sortera efter</message>
+  <message key="search.externalresources">Inkludera sök i resursinnehåll</message>
+  <message key="search.sortby.relevance">Relevans</message>
+  <message key="search.sortby.date">Datum</message>
+  <message key="search.numberofhits">Antal träffar</message>
+  <message key="search.submit">Sök</message>
+  <message key="search.exactmatch">Exakt match</message>
+  <message key="search.for">Sök efter</message>
+  <message key="in.google">i Google</message>
+
+  <!-- advanced search -->
   <message key="adv.title">Tittel</message>
   <message key="adv.subject">Emne</message>
   <message key="adv.description">Beskrivelse</message>
   <message key="adv.publisher">Utgiver</message>
-  <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD </message>
-  <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD </message>
+  <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD</message>
+  <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD</message>
   <message key="adv.mediaType">Mediatype</message>
   <message key="adv.language">Språk</message>
   <message key="adv.approved">Godkjend av</message>
   <message key="adv.audience">Målgrupp</message>
- 
 
- <!-- facets -->
- <message key="facets.heading">Välj avgränsning</message>
 
- <!-- results -->
- <message key="resources.heading">Resurser</message>
- <message key="search.result.hastopic">har ämne</message>
- <message key="search.result.publishedby">Publicerat av</message>
+  <!-- facets -->
+  <message key="facets.heading">Välj avgränsning</message>
 
- <!--  topics  -->
- <message key="topic.related">Relaterade ämnen</message>
- <message key="topic.commonname">Gemensam benämning</message>
+  <!-- results -->
+  <message key="resources.heading">Resurser</message>
+  <message key="search.result.hastopic">har ämne</message>
+  <message key="search.result.publishedby">Publicerat av</message>
 
- <!--  navigation  -->
- <message key="topic.navigation">Navigering</message>
+  <!--  topics  -->
+  <message key="topic.related">Relaterade ämnen</message>
+  <message key="topic.commonname">Gemensam benämning</message>
 
-<!--  validation  -->
- <message key="validation.providedurlok">Angiven URL godkänd</message>
- <message key="validation.topic.notitle">Ämnet saknar titel</message>
+  <!--  navigation  -->
+  <message key="topic.navigation">Navigering</message>
+
+  <!--  validation  -->
+  <message key="validation.providedurlok">Angiven URL godkänd</message>
+  <message key="validation.topic.notitle">Ämnet saknar titel</message>
   <message key="validation.resource.notopic">Minst ett ämne måste väljas</message>
- <message key="validation.topic.resourceempty">En eller flera resurser har koppling til ämnet. Var vänlig att kontrollera resurserna i listan nedan, och ta bort ämnet och försök igen.</message>
- <message key="validation.urlexists">Angiven URL redan registrerat</message>
+  <message key="validation.topic.resourceempty">En eller flera resurser har koppling til ämnet. Var vänlig att
+    kontrollera resurserna i listan nedan, och ta bort ämnet och försök igen.
+  </message>
+  <message key="validation.urlexists">Angiven URL redan registrerat</message>
 
-<!--  resource form  -->
- <message key="resource.sendcomment">Kommentera denna resurs</message>
- <message key="resource.choosepublisher">Välj utgivare eller låt fältet vara tomt och skriv in namnet på den nya utgivaren i textfältet nedan</message>
- <message key="resource.usercomments">Användarkommentarer</message>
+  <!--  resource form  -->
+  <message key="resource.sendcomment">Kommentera denna resurs</message>
+  <message key="resource.choosepublisher">Välj utgivare eller låt fältet vara tomt och skriv in namnet på den nya
+    utgivaren i textfältet nedan
+  </message>
+  <message key="resource.usercomments">Användarkommentarer</message>
 
- <!--  administration  -->
- <message key="admin.login">Login</message>
- <message key="admin.topic.usedby">Resurser med anknytning till ämnet</message>
- <message key="admin.publisher.resources">Resurser med anknytning till denna utgivare</message>
- <message key="admin.linkcheck.gone">Resursen är borta för gott</message>
- <message key="admin.linkcheck.inactive">Inaktiv pga långvariga problem</message>
- <message key="admin.linkcheck.manual">Kollas manuellt pga tillfälligt uppkopplingsproblem</message>
- <message key="admin.approvedby">Godkänt av</message>
- <message key="admin.posteddate">Insänt</message>
- <message key="admin.accepteddate">Godkänt</message>
- <message key="admin.intro">På denna sida kan du administrera ämnen, resurser, användare och utgivare. Välj vilken del av Sublima du vill administrera från urvalet till vänster</message>
+  <!--  administration  -->
+  <message key="admin.login">Login</message>
+  <message key="admin.topic.usedby">Resurser med anknytning till ämnet</message>
+  <message key="admin.publisher.resources">Resurser med anknytning till denna utgivare</message>
+  <message key="admin.linkcheck.gone">Resursen är borta för gott</message>
+  <message key="admin.linkcheck.inactive">Inaktiv pga långvariga problem</message>
+  <message key="admin.linkcheck.manual">Kollas manuellt pga tillfälligt uppkopplingsproblem</message>
+  <message key="admin.approvedby">Godkänt av</message>
+  <message key="admin.posteddate">Insänt</message>
+  <message key="admin.accepteddate">Godkänt</message>
+  <message key="admin.intro">På denna sida kan du administrera ämnen, resurser, användare och utgivare. Välj vilken del
+    av Sublima du vill administrera från urvalet till vänster
+  </message>
 
- <!--  tips  -->
- <message key="tips.heading"><h2>Hittade du inte vad du sökte?</h2>
- <br /> <p>Skicka gärna förslag på sidor som du tycker vi saknar!</p>
- </message>
- <message key="tips.suggestedtopics">Föreslagna ämnen</message>
- <message key="tips.submit">skicka</message>
- <message key="tips.thanks">Tack för tipset!</message>
+  <!--  tips  -->
+  <message key="tips.heading">
+    <h2>Hittade du inte vad du sökte?</h2>
+    <br/>
+    <p>Skicka gärna förslag på sidor som du tycker vi saknar!</p>
+  </message>
+  <message key="tips.suggestedtopics">Föreslagna ämnen</message>
+  <message key="tips.submit">skicka</message>
+  <message key="tips.thanks">Tack för tipset!</message>
 
- <!--  a-z  -->
- <message key="az.heading">Alfabetisk navigering i ämnena</message>
- <!--  linkcheck  -->
- <message key="linkcheck.run">Länkkoll (OBS Kan ta lång tid)</message>
- <!--  upload  -->
+  <!--  a-z  -->
+  <message key="az.heading">Alfabetisk navigering i ämnena</message>
+  <!--  linkcheck  -->
+  <message key="linkcheck.run">Länkkoll (OBS Kan ta lång tid)</message>
+  <!--  upload  -->
   <message key="upload.instructions">Ange fil/konverteringsslag i fälten nedan
- <br />
- <br />
- Format for filer:
- <br />
- file:\Sti\til\fil\information-model.n3
- <br />
- <br />
- Format for URL:
- <br />
- http://www.urltilfil.com/information-model.n3
- <br />
- </message>
- 
-<!--  general  -->
-<message key="sublima.footer">Ett open-source project med stöd av
- <a href="http://www.abm-utvikling.no/">ABM utvikling</a>
- og  <a href="http://www.computas.com/">Computas AS</a>, 2008
- </message>
- <message key="language">Språk</message>
- <message key="name">Namn</message>
- <message key="description">Beskrivning</message>
- <message key="audience">Målgrupp</message>
- <message key="topic">Ämne</message>
- <message key="topics">Ämnen</message>
- <message key="more">mer</message>
- <message key="type">Slag</message>
- <message key="status">Status</message>
- <message key="email">E-post</message>
- <message key="comment">Kommentar</message>
- <message key="synonym">Synonym</message>
- <message key="url">URL</message>
- <message key="title">Titel</message>
- <message key="username">Användarnamn</message>
- <message key="password">Lösenord</message>
- <message key="publisher">Utgivare</message>
- <message key="publishers">Utgivare</message>
- <message key="mediatype">Mediaslag</message>
- <message key="text">Text</message>
- <message key="typo">Skrivfel</message>
- <message key="repeat">Upprepa</message>
- <message key="role">Roll</message>
- <message key="roles">Roller</message>
- <message key="rights">Rättigheter</message>
- <message key="addedit">Lägga till/redigera</message>
- <message key="approve">Godkänn</message>
- <message key="delete">Radera</message>
- <message key="setthemetopics">Bestämma teman</message>
- <message key="jointopics">Koppla ihop ämnen</message>
- <message key="relation">Relation</message>
- <message key="relations">Relationer</message>
- <message key="resource">Resurs</message>
- <message key="resources">Resurser</message>
- <message key="user">Användare</message>
- <message key="users">Användare</message>
- <message key="administration">administration</message>
- <message key="suggested">Föreslagna</message>
- <message key="back">Tillbaka</message>
- <message key="location">Fil</message>
- <message key="search">Sök</message>
- <message key="topconcept">Huvudämne</message>
- 
- 
- <!--  buttons  -->
- <message key="button.saveresource">Spara resurs</message>
- <message key="button.deleteresource">Radera resurs</message>
- <message key="button.copyasnew">Kopiera til ny</message>
- <message key="button.deletetopic">Radera ämne</message>
- <message key="button.savetopic">Spara ämne</message>
- <message key="button.savethemetopics">Spara valda teman</message>
- <message key="button.empty">Töm formuläret</message>
- <message key="button.join">Koppla ihop</message>
- <message key="button.saveuser">Spara användare</message>
- <message key="button.saverelation">Spara relation</message>
- <message key="button.saverole">Spara roll</message>
- <message key="button.next">Nästa</message>
- <message key="button.read">Läs</message>
- <message key="button.export">Export</message>
- <message key="button.adv.search">Sök</message>
- <message key="button.resource.search">Sök</message>
- <message key="button.copyasnew">Kopiera fälten till nytt schema</message>
+    <br/>
+    <br/>
+    Format for filer:
+    <br/>
+    file:\Sti\til\fil\information-model.n3
+    <br/>
+    <br/>
+    Format for URL:
+    <br/>
+    http://www.urltilfil.com/information-model.n3
+    <br/>
+  </message>
 
- <message key="menu.mass">Massredigere resursenas URL</message>
- <message key="menu.stats">Statistik</message>
+  <!--  general  -->
+  <message key="sublima.footer">Ett open-source project med stöd av
+    <a href="http://www.abm-utvikling.no/">ABM utvikling</a>
+    og<a href="http://www.computas.com/">Computas AS</a>, 2008
+  </message>
+  <message key="language">Språk</message>
+  <message key="name">Namn</message>
+  <message key="description">Beskrivning</message>
+  <message key="audience">Målgrupp</message>
+  <message key="topic">Ämne</message>
+  <message key="topics">Ämnen</message>
+  <message key="more">mer</message>
+  <message key="type">Slag</message>
+  <message key="status">Status</message>
+  <message key="email">E-post</message>
+  <message key="comment">Kommentar</message>
+  <message key="synonym">Synonym</message>
+  <message key="url">URL</message>
+  <message key="title">Titel</message>
+  <message key="username">Användarnamn</message>
+  <message key="password">Lösenord</message>
+  <message key="publisher">Utgivare</message>
+  <message key="publishers">Utgivare</message>
+  <message key="mediatype">Mediaslag</message>
+  <message key="text">Text</message>
+  <message key="typo">Skrivfel</message>
+  <message key="repeat">Upprepa</message>
+  <message key="role">Roll</message>
+  <message key="roles">Roller</message>
+  <message key="rights">Rättigheter</message>
+  <message key="addedit">Lägga till/redigera</message>
+  <message key="approve">Godkänn</message>
+  <message key="delete">Radera</message>
+  <message key="setthemetopics">Bestämma teman</message>
+  <message key="jointopics">Koppla ihop ämnen</message>
+  <message key="relation">Relation</message>
+  <message key="relations">Relationer</message>
+  <message key="resource">Resurs</message>
+  <message key="resources">Resurser</message>
+  <message key="user">Användare</message>
+  <message key="users">Användare</message>
+  <message key="administration">administration</message>
+  <message key="suggested">Föreslagna</message>
+  <message key="back">Tillbaka</message>
+  <message key="location">Fil</message>
+  <message key="search">Sök</message>
+  <message key="topconcept">Huvudämne</message>
+
+
+  <!--  buttons  -->
+  <message key="button.saveresource">Spara resurs</message>
+  <message key="button.deleteresource">Radera resurs</message>
+  <message key="button.copyasnew">Kopiera til ny</message>
+  <message key="button.deletetopic">Radera ämne</message>
+  <message key="button.savetopic">Spara ämne</message>
+  <message key="button.savethemetopics">Spara valda teman</message>
+  <message key="button.empty">Töm formuläret</message>
+  <message key="button.join">Koppla ihop</message>
+  <message key="button.saveuser">Spara användare</message>
+  <message key="button.saverelation">Spara relation</message>
+  <message key="button.saverole">Spara roll</message>
+  <message key="button.next">Nästa</message>
+  <message key="button.read">Läs</message>
+  <message key="button.export">Export</message>
+  <message key="button.adv.search">Sök</message>
+  <message key="button.resource.search">Sök</message>
+  <message key="button.copyasnew">Kopiera fälten till nytt schema</message>
+
+  <message key="menu.mass">Massredigere resursenas URL</message>
+  <message key="menu.stats">Statistik</message>
+
+  <!-- Alphabet -->
+  <message key="letter.a">A</message>
+  <message key="letter.b">B</message>
+  <message key="letter.c">C</message>
+  <message key="letter.d">D</message>
+  <message key="letter.e">E</message>
+  <message key="letter.f">F</message>
+  <message key="letter.g">G</message>
+  <message key="letter.h">H</message>
+  <message key="letter.i">I</message>
+  <message key="letter.j">J</message>
+  <message key="letter.k">K</message>
+  <message key="letter.l">L</message>
+  <message key="letter.m">M</message>
+  <message key="letter.n">N</message>
+  <message key="letter.o">O</message>
+  <message key="letter.p">P</message>
+  <message key="letter.q">Q</message>
+  <message key="letter.r">R</message>
+  <message key="letter.s">S</message>
+  <message key="letter.t">T</message>
+  <message key="letter.u">U</message>
+  <message key="letter.v">V</message>
+  <message key="letter.w">W</message>
+  <message key="letter.x">X</message>
+  <message key="letter.y">Y</message>
+  <message key="letter.z">Z</message>
+  <message key="letter.æ">Ä</message>
+  <message key="letter.ø">Ö</message>
+  <message key="letter.å">Å</message>
+  <message key="letter.0-9">0-9</message>
 
 </catalogue>
 

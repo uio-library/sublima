@@ -1,7 +1,6 @@
-
 <?xml version="1.0"?>
 <catalogue xml:lang="en">
-  
+
   <!-- menu -->
   <message key="menu.heading">Actions</message>
   <message key="menu.tips">Tips us about new resources</message>
@@ -25,7 +24,7 @@
   <!-- search -->
   <message key="search.boolean.and">AND</message>
   <message key="search.boolean.or">OR</message>
-  <message key="search.sortby">Sort by </message>
+  <message key="search.sortby">Sort by</message>
   <message key="search.externalresources">Include search in resource content</message>
   <message key="search.sortby.relevance">Relevance</message>
   <message key="search.sortby.date">Date</message>
@@ -40,15 +39,13 @@
   <message key="adv.subject">Subject</message>
   <message key="adv.description">Description</message>
   <message key="adv.publisher">Publisher</message>
-  <message key="adv.dateAccepted">Date Accepted YYYY-MM-DD </message>
+  <message key="adv.dateAccepted">Date Accepted YYYY-MM-DD</message>
   <message key="adv.dateSubmitted">Date Submitted YYYY-MM-DD</message>
   <message key="adv.mediaType">Media type</message>
   <message key="adv.language">Language</message>
   <message key="adv.approved">Approved by</message>
   <message key="adv.audience">Audience</message>
-  
- 
- 
+
 
   <!-- facets -->
   <message key="facets.heading">Filter by</message>
@@ -68,15 +65,20 @@
   <!-- validation -->
   <message key="validation.providedurlok">Provided URL validated.</message>
   <message key="validation.topic.notitle">Topic has no title</message>
-  <message key="validation.topic.resourceempty">One or more resources has a link to this subject. Please revide the list below and remove any links between resources and this subject, then try again.</message>
+  <message key="validation.topic.resourceempty">One or more resources has a link to this subject. Please revide the list
+    below and remove any links between resources and this subject, then try again.
+  </message>
   <message key="validation.urlexists">The URL given is already registered as a resource.</message>
 
   <!-- login validation -->
-  <message key="login.failed">Username/password is incorrect. Please check and try again, or contact administrator.</message>
+  <message key="login.failed">Username/password is incorrect. Please check and try again, or contact administrator.
+  </message>
 
   <!-- resource -->
   <message key="resource.sendcomment">Comment on this resource</message>
-  <message key="resource.choosepublisher">Choose a publisher from the dropdown list, or leave it empty and name a new publisher in the following field</message>
+  <message key="resource.choosepublisher">Choose a publisher from the dropdown list, or leave it empty and name a new
+    publisher in the following field
+  </message>
   <message key="resource.usercomments">Users comments</message>
 
   <!-- administration -->
@@ -90,10 +92,16 @@
   <message key="admin.approvedby">Approved by</message>
   <message key="admin.posteddate">Posted</message>
   <message key="admin.accepteddate">Accepted</message>
-  <message key="admin.intro">On this page you can administer topics, resources, users and publishers. Choose which part of Sublima you would like to administer from the menu on the left.</message>
+  <message key="admin.intro">On this page you can administer topics, resources, users and publishers. Choose which part
+    of Sublima you would like to administer from the menu on the left.
+  </message>
 
-    <!-- tips -->
-  <message key="tips.heading"><h2>Not finding what you are looking for?</h2><br/><p>Please send us a tip if you find that information elsewhere, and we'll include it in our resources!</p></message>
+  <!-- tips -->
+  <message key="tips.heading">
+    <h2>Not finding what you are looking for?</h2>
+    <br/>
+    <p>Please send us a tip if you find that information elsewhere, and we'll include it in our resources!</p>
+  </message>
   <message key="tips.suggestedtopics">Suggestions for suitable topics</message>
   <message key="tips.submit">Send</message>
   <message key="tips.thanks">Thanks for the tip!</message>
@@ -105,15 +113,25 @@
   <message key="linkcheck.run">Perform linkcheck (NB! Might take a while)</message>
 
   <!-- upload -->
-  <message key="upload.instructions">Name the file/URL and convertion type in the fields below.<br/><br/>
-                Format for files:<br/>
-                file:\path\to\file\information-model.n3<br/>
-                <br/>
-                Format for URL:<br/>
-                http://www.urltofile.com/information-model.n3<br/></message>
+  <message key="upload.instructions">Name the file/URL and convertion type in the fields below.
+    <br/>
+    <br/>
+    Format for files:
+    <br/>
+    file:\path\to\file\information-model.n3
+    <br/>
+    <br/>
+    Format for URL:
+    <br/>
+    http://www.urltofile.com/information-model.n3
+    <br/>
+  </message>
 
   <!-- general -->
-  <message key="sublima.footer">A Free Software Project supported by <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> and <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
+  <message key="sublima.footer">A Free Software Project supported by
+    <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
+    and<a href="http://www.computas.com/">Computas AS</a>, 2008
+  </message>
   <message key="language">Language</message>
   <message key="name">Name</message>
   <message key="description">Description</message>
@@ -182,9 +200,38 @@
   <message key="menu.mass">Mass edit resource URLs</message>
   <message key="menu.stats">Statistics</message>
 
+  <!-- Alphabet -->
+  <message key="letter.a">A</message>
+  <message key="letter.b">B</message>
+  <message key="letter.c">C</message>
+  <message key="letter.d">D</message>
+  <message key="letter.e">E</message>
+  <message key="letter.f">F</message>
+  <message key="letter.g">G</message>
+  <message key="letter.h">H</message>
+  <message key="letter.i">I</message>
+  <message key="letter.j">J</message>
+  <message key="letter.k">K</message>
+  <message key="letter.l">L</message>
+  <message key="letter.m">M</message>
+  <message key="letter.n">N</message>
+  <message key="letter.o">O</message>
+  <message key="letter.p">P</message>
+  <message key="letter.q">Q</message>
+  <message key="letter.r">R</message>
+  <message key="letter.s">S</message>
+  <message key="letter.t">T</message>
+  <message key="letter.u">U</message>
+  <message key="letter.v">V</message>
+  <message key="letter.w">W</message>
+  <message key="letter.x">X</message>
+  <message key="letter.y">Y</message>
+  <message key="letter.z">Z</message>
+  <message key="letter.æ"></message>
+  <message key="letter.ø"></message>
+  <message key="letter.å"></message>
+  <message key="letter.0-9">0-9</message>
 
-  
-  
 
 </catalogue>
 

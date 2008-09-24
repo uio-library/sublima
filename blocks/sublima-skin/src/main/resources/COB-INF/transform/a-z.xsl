@@ -21,35 +21,35 @@
     <!--
     <i18n:text key="az.heading">Alfabetisk navigering av emner</i18n:text><br/>
     -->
-    <a href="{$baseurl}/emner/a{$qloc}">A</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/b{$qloc}">B</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/c{$qloc}">C</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/d{$qloc}">D</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/e{$qloc}">E</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/f{$qloc}">F</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/g{$qloc}">G</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/h{$qloc}">H</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/i{$qloc}">I</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/j{$qloc}">J</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/k{$qloc}">K</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/l{$qloc}">L</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/m{$qloc}">M</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/n{$qloc}">N</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/o{$qloc}">O</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/p{$qloc}">P</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/q{$qloc}">Q</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/r{$qloc}">R</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/s{$qloc}">S</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/t{$qloc}">T</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/u{$qloc}">U</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/v{$qloc}">V</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/w{$qloc}">W</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/x{$qloc}">X</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/y{$qloc}">Y</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/z{$qloc}">Z</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/æ{$qloc}">Æ</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/ø{$qloc}">Ø</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/å{$qloc}">Å</a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/0-9{$qloc}">0-9</a>
+    <a href="{$baseurl}/emner/a{$qloc}"><i18n:text key="letter.a">A</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/b{$qloc}"><i18n:text key="letter.b">B</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/c{$qloc}"><i18n:text key="letter.c">C</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/d{$qloc}"><i18n:text key="letter.d">D</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/e{$qloc}"><i18n:text key="letter.e">E</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/f{$qloc}"><i18n:text key="letter.f">F</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/g{$qloc}"><i18n:text key="letter.g">G</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/h{$qloc}"><i18n:text key="letter.h">H</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/i{$qloc}"><i18n:text key="letter.i">I</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/j{$qloc}"><i18n:text key="letter.j">J</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/k{$qloc}"><i18n:text key="letter.k">K</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/l{$qloc}"><i18n:text key="letter.l">L</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/m{$qloc}"><i18n:text key="letter.m">M</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/n{$qloc}"><i18n:text key="letter.n">N</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/o{$qloc}"><i18n:text key="letter.o">O</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/p{$qloc}"><i18n:text key="letter.p">P</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/q{$qloc}"><i18n:text key="letter.q">Q</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/r{$qloc}"><i18n:text key="letter.r">R</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/s{$qloc}"><i18n:text key="letter.s">S</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/t{$qloc}"><i18n:text key="letter.t">T</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/u{$qloc}"><i18n:text key="letter.u">U</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/v{$qloc}"><i18n:text key="letter.v">V</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/w{$qloc}"><i18n:text key="letter.w">W</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/x{$qloc}"><i18n:text key="letter.x">X</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/y{$qloc}"><i18n:text key="letter.y">Y</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/z{$qloc}"><i18n:text key="letter.z">Z</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/æ{$qloc}"><i18n:text key="letter.æ">Æ</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/ø{$qloc}"><i18n:text key="letter.ø">Ø</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/å{$qloc}"><i18n:text key="letter.å">Å</i18n:text></a><xsl:text> </xsl:text>
+    <a href="{$baseurl}/emner/0-9{$qloc}"><i18n:text key="letter.0-9">0-9</i18n:text></a>
   </xsl:template>
 </xsl:stylesheet>

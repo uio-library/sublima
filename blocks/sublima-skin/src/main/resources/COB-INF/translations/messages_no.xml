@@ -36,15 +36,14 @@
   <message key="adv.subject">Emne</message>
   <message key="adv.description">Beskrivelse</message>
   <message key="adv.publisher">Utgiver</message>
-  <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD </message>
-  <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD </message>
+  <message key="adv.dateAccepted">Godkjent Dato ÅÅÅÅ-MM-DD</message>
+  <message key="adv.dateSubmitted">Innsendt Dato ÅÅÅÅ-MM-DD</message>
   <message key="adv.mediaType">Mediatype</message>
   <message key="adv.language">Språk</message>
   <message key="adv.approved">Godkjent av</message>
   <message key="adv.audience">Målgruppe</message>
-  
 
-  
+
   <!-- facets -->
   <message key="facets.heading">Velg avgrensning</message>
 
@@ -64,12 +63,16 @@
   <message key="validation.providedurlok">Angitt URL godkjent</message>
   <message key="validation.topic.notitle">Emnet mangler tittel</message>
   <message key="validation.resource.notopic">Minst ett emne må være valgt</message>
-  <message key="validation.topic.resourceempty">En eller flere ressurser er tilknyttet dette emnet. Vennligst gå igjennom ressursene og fjern relasjonen til emnet, og forsøk igjen.</message>
+  <message key="validation.topic.resourceempty">En eller flere ressurser er tilknyttet dette emnet. Vennligst gå
+    igjennom ressursene og fjern relasjonen til emnet, og forsøk igjen.
+  </message>
   <message key="validation.urlexists">Angitt URL finnes allerede</message>
 
   <!-- resource form -->
   <message key="resource.sendcomment">Send inn en kommentar vedrørende denne ressursen</message>
-  <message key="resource.choosepublisher">Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på den nye utgiveren i tekstfeltet under</message>
+  <message key="resource.choosepublisher">Velg utgiver fra nedtrekkslisten, eller la den stå tom og skriv inn navnet på
+    den nye utgiveren i tekstfeltet under
+  </message>
   <message key="resource.usercomments">Brukernes kommentarer</message>
 
   <!-- administration -->
@@ -78,14 +81,21 @@
   <message key="admin.publisher.resources">Ressurser tilknyttet utgiveren</message>
   <message key="admin.linkcheck.gone">Ressursen er permanent borte</message>
   <message key="admin.linkcheck.inactive">Satt inaktiv pga vedvarende problemer</message>
-  <message key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</message>
+  <message key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet
+  </message>
   <message key="admin.approvedby">Godkjent av</message>
   <message key="admin.posteddate">Innsendt</message>
   <message key="admin.accepteddate">Godkjent</message>
-  <message key="admin.intro">På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del av Sublima du vil administrere fra linkene til venstre.</message>
+  <message key="admin.intro">På denne siden kan du administrere emner, ressurser, brukere og utgivere. Velg hvilken del
+    av Sublima du vil administrere fra linkene til venstre.
+  </message>
 
   <!-- tips -->
-  <message key="tips.heading"><h2>Fant du ikke det du lette etter?</h2><br/><p>Tips oss gjerne om ressurser du synes vi mangler!</p></message>
+  <message key="tips.heading">
+    <h2>Fant du ikke det du lette etter?</h2>
+    <br/>
+    <p>Tips oss gjerne om ressurser du synes vi mangler!</p>
+  </message>
   <message key="tips.suggestedtopics">Forslag til emner på ressursen</message>
   <message key="tips.submit">Send inn</message>
   <message key="tips.thanks">Takk for tipset!</message>
@@ -97,15 +107,25 @@
   <message key="linkcheck.run">Kjør lenkesjekk (NB! Kan ta lang tid)</message>
 
   <!-- upload -->
-  <message key="upload.instructions">Angi fil/URL og konverteringstypen i feltene nedenfor.<br/><br/>
-                Format for filer:<br/>
-                file:\Sti\til\fil\information-model.n3<br/>
-                <br/>
-                Format for URL:<br/>
-                http://www.urltilfil.com/information-model.n3<br/></message>
+  <message key="upload.instructions">Angi fil/URL og konverteringstypen i feltene nedenfor.
+    <br/>
+    <br/>
+    Format for filer:
+    <br/>
+    file:\Sti\til\fil\information-model.n3
+    <br/>
+    <br/>
+    Format for URL:
+    <br/>
+    http://www.urltilfil.com/information-model.n3
+    <br/>
+  </message>
 
   <!-- general -->
-  <message key="sublima.footer">Et fri programvareprosjekt støttet av <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> og <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
+  <message key="sublima.footer">Et fri programvareprosjekt støttet av
+    <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
+    og<a href="http://www.computas.com/">Computas AS</a>, 2008
+  </message>
   <message key="language">Språk</message>
   <message key="name">Navn</message>
   <message key="description">Beskrivelse</message>
@@ -167,9 +187,42 @@
   <message key="button.adv.search">Søk</message>
   <message key="button.resource.search">Søk</message>
   <message key="button.copyasnew">Kopier felter til nytt skjema</message>
-  
+
   <message key="menu.mass">Masseredigering av ressursenes URL</message>
   <message key="menu.stats">Statistikk</message>
-  
+
+
+  <!-- Alphabet -->
+  <message key="letter.a">A</message>
+  <message key="letter.b">B</message>
+  <message key="letter.c">C</message>
+  <message key="letter.d">D</message>
+  <message key="letter.e">E</message>
+  <message key="letter.f">F</message>
+  <message key="letter.g">G</message>
+  <message key="letter.h">H</message>
+  <message key="letter.i">I</message>
+  <message key="letter.j">J</message>
+  <message key="letter.k">K</message>
+  <message key="letter.l">L</message>
+  <message key="letter.m">M</message>
+  <message key="letter.n">N</message>
+  <message key="letter.o">O</message>
+  <message key="letter.p">P</message>
+  <message key="letter.q">Q</message>
+  <message key="letter.r">R</message>
+  <message key="letter.s">S</message>
+  <message key="letter.t">T</message>
+  <message key="letter.u">U</message>
+  <message key="letter.v">V</message>
+  <message key="letter.w">W</message>
+  <message key="letter.x">X</message>
+  <message key="letter.y">Y</message>
+  <message key="letter.z">Z</message>
+  <message key="letter.æ">Æ</message>
+  <message key="letter.ø">Ø</message>
+  <message key="letter.å">Å</message>
+  <message key="letter.0-9">0-9</message>
+
 
 </catalogue>

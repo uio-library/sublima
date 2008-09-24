@@ -46,7 +46,9 @@
   <message key="validation.urlexists">URL finst frå før</message>
   <!-- resource form -->
   <message key="resource.sendcomment">Send inn ein kommentar til denne ressursen</message>
-  <message key="resource.choosepublisher">Velg utgjevar frå nedtrekkslista eller skriv inn namnet på den nye utgjevaren i tekstfeltet under</message>
+  <message key="resource.choosepublisher">Velg utgjevar frå nedtrekkslista eller skriv inn namnet på den nye utgjevaren
+    i tekstfeltet under
+  </message>
   <message key="resource.usercomments">Kommentarar frå brukarane</message>
   <!-- administration -->
   <message key="admin.login">Logg inn</message>
@@ -58,11 +60,13 @@
   <message key="admin.approvedby">Godkjent av</message>
   <message key="admin.posteddate">Innsendt</message>
   <message key="admin.accepteddate">Godkjent</message>
-  <message key="admin.intro">På denne sida kan du administrere emne, ressursar, brukarar og utgjevarar. Bruk menyen til venstre for å administrere dei ulike delane av Sublima.</message>
+  <message key="admin.intro">På denne sida kan du administrere emne, ressursar, brukarar og utgjevarar. Bruk menyen til
+    venstre for å administrere dei ulike delane av Sublima.
+  </message>
   <!-- tips -->
   <message key="tips.heading">
     <h2>Fann du ikkje det du leita etter?</h2>
-    <br />
+    <br/>
     <p>Tips oss gjerne om ressursar du synest vi manglar!</p>
   </message>
   <message key="tips.suggestedtopics">Forslag til emne på ressursen</message>
@@ -73,13 +77,24 @@
   <!-- linkcheck -->
   <message key="linkcheck.run">Køyr lenkesjekk (NB! Kan ta lang tid)</message>
   <!-- upload -->
-  <message key="upload.instructions">Oppgje fil/URL og konverteringstype i felta nedanfor.<br /><br />
-                Format for filer:<br />
-                file:\Sti\til\fil\information-model.n3<br /><br />
-                Format for URL:<br />
-                http://www.urltilfil.com/information-model.n3<br /></message>
+  <message key="upload.instructions">Oppgje fil/URL og konverteringstype i felta nedanfor.
+    <br/>
+    <br/>
+    Format for filer:
+    <br/>
+    file:\Sti\til\fil\information-model.n3
+    <br/>
+    <br/>
+    Format for URL:
+    <br/>
+    http://www.urltilfil.com/information-model.n3
+    <br/>
+  </message>
   <!-- general -->
-  <message key="sublima.footer">Eit fri programvareprosjekt støtta av <a href="http://www.abm-utvikling.no/">ABM-utvikling</a> og <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
+  <message key="sublima.footer">Eit fri programvareprosjekt støtta av
+    <a href="http://www.abm-utvikling.no/">ABM-utvikling</a>
+    og<a href="http://www.computas.com/">Computas AS</a>, 2008
+  </message>
   <message key="language">Språk</message>
   <message key="name">Namn</message>
   <message key="description">Forklaring</message>
@@ -138,4 +153,37 @@
 
   <message key="menu.mass">Massredigering av ressursanes URL</message>
   <message key="menu.stats">Statistikk</message>
+
+  <!-- Alphabet -->
+  <message key="letter.a">A</message>
+  <message key="letter.b">B</message>
+  <message key="letter.c">C</message>
+  <message key="letter.d">D</message>
+  <message key="letter.e">E</message>
+  <message key="letter.f">F</message>
+  <message key="letter.g">G</message>
+  <message key="letter.h">H</message>
+  <message key="letter.i">I</message>
+  <message key="letter.j">J</message>
+  <message key="letter.k">K</message>
+  <message key="letter.l">L</message>
+  <message key="letter.m">M</message>
+  <message key="letter.n">N</message>
+  <message key="letter.o">O</message>
+  <message key="letter.p">P</message>
+  <message key="letter.q">Q</message>
+  <message key="letter.r">R</message>
+  <message key="letter.s">S</message>
+  <message key="letter.t">T</message>
+  <message key="letter.u">U</message>
+  <message key="letter.v">V</message>
+  <message key="letter.w">W</message>
+  <message key="letter.x">X</message>
+  <message key="letter.y">Y</message>
+  <message key="letter.z">Z</message>
+  <message key="letter.æ">Æ</message>
+  <message key="letter.ø">Ø</message>
+  <message key="letter.å">Å</message>
+  <message key="letter.0-9">0-9</message>
+  
 </catalogue>
