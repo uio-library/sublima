@@ -203,41 +203,76 @@
             <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40"><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/><xsl:text> </xsl:text></textarea>
           </td>
         </tr>
+
         <tr>
           <td>
             <label for="wdr:describedBy"><i18n:text key="status">Status</i18n:text></label>
           </td>
           <td>
-            <select id="wdr:describedBy" name="wdr:describedBy">
-              <option value=""/>
-              <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                <xsl:sort select="./rdfs:label"/>
-                <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label"/>
-                    </option>
-                  </xsl:when>
-                  <xsl:otherwise>
+            <xsl:choose>
+
+              <xsl:when test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
+                <select id="wdr:describedBy" name="wdr:describedBy">
+
+                  <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
+                    <xsl:sort select="./rdfs:label"/>
+
                     <xsl:choose>
+
                       <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
                        <option value="{./@rdf:about}" selected="selected">
                           <xsl:value-of select="./rdfs:label"/>
                         </option>
                       </xsl:when>
+
                       <xsl:otherwise>
                         <option value="{./@rdf:about}">
                           <xsl:value-of select="./rdfs:label"/>
                         </option>
                       </xsl:otherwise>
+
                     </xsl:choose>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:for-each>
-            </select>
+
+                 </xsl:for-each>
+
+                </select>
+
+              </xsl:when>
+
+              <xsl:otherwise>
+
+                <select id="wdr:describedBy" name="wdr:describedBy">
+
+                  <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
+                    <xsl:sort select="./rdfs:label"/>
+
+                    <xsl:choose>
+
+                      <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
+                       <option value="{./@rdf:about}" selected="selected">
+                          <xsl:value-of select="./rdfs:label"/>
+                        </option>
+                      </xsl:when>
+
+                      <xsl:otherwise>
+                        <option value="{./@rdf:about}">
+                          <xsl:value-of select="./rdfs:label"/>
+                        </option>
+                      </xsl:otherwise>
+
+                    </xsl:choose>
+
+                 </xsl:for-each>
+
+                </select>
+
+              </xsl:otherwise>
+
+            </xsl:choose>
+
           </td>
         </tr>
+
         <tr>
           <td>
 
@@ -472,38 +507,72 @@
             <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40"><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/><xsl:text> </xsl:text></textarea>
           </td>
         </tr>
-        <tr>
+                <tr>
           <td>
             <label for="wdr:describedBy"><i18n:text key="status">Status</i18n:text></label>
           </td>
           <td>
-            <select id="wdr:describedBy" name="wdr:describedBy">
-              <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                <xsl:sort select="./rdfs:label"/>
-                <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label"/>
-                    </option>
-                  </xsl:when>
-                  <xsl:otherwise>
+            <xsl:choose>
+
+              <xsl:when test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
+                <select id="wdr:describedBy" name="wdr:describedBy">
+
+                  <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
+                    <xsl:sort select="./rdfs:label"/>
+
                     <xsl:choose>
+
                       <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
                        <option value="{./@rdf:about}" selected="selected">
                           <xsl:value-of select="./rdfs:label"/>
                         </option>
                       </xsl:when>
+
                       <xsl:otherwise>
                         <option value="{./@rdf:about}">
                           <xsl:value-of select="./rdfs:label"/>
-                        </option>    
+                        </option>
                       </xsl:otherwise>
+
                     </xsl:choose>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:for-each>
-            </select>
+
+                 </xsl:for-each>
+
+                </select>
+
+              </xsl:when>
+
+              <xsl:otherwise>
+
+                <select id="wdr:describedBy" name="wdr:describedBy">
+
+                  <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
+                    <xsl:sort select="./rdfs:label"/>
+
+                    <xsl:choose>
+
+                      <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
+                       <option value="{./@rdf:about}" selected="selected">
+                          <xsl:value-of select="./rdfs:label"/>
+                        </option>
+                      </xsl:when>
+
+                      <xsl:otherwise>
+                        <option value="{./@rdf:about}">
+                          <xsl:value-of select="./rdfs:label"/>
+                        </option>
+                      </xsl:otherwise>
+
+                    </xsl:choose>
+
+                 </xsl:for-each>
+
+                </select>
+
+              </xsl:otherwise>
+
+            </xsl:choose>
+
           </td>
         </tr>
         <tr>
