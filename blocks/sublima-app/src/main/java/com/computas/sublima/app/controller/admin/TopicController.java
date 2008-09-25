@@ -128,6 +128,7 @@ public class TopicController implements StatelessAppleController {
 
     bizData.put("themetopics", adminService.getTopicsByLetter(letter, locale));
     bizData.put("mode", "browse");
+    bizData.put("letter", letter);
     bizData.put("loggedin", "<empty></empty>");
     bizData.put("facets", getRequestXML(req));
     res.sendPage("xml/browse", bizData);
@@ -223,6 +224,7 @@ public class TopicController implements StatelessAppleController {
 
     bizData.put("mode", "browse");
     bizData.put("loggedin", loggedIn);
+    bizData.put("letter", "");
     bizData.put("facets", getRequestXML(req));
 
     res.sendPage("xml/browse", bizData);
