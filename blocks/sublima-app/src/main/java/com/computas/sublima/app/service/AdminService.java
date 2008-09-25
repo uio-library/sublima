@@ -323,16 +323,16 @@ public class AdminService {
 
   public String getTopicByPartialNameAsJSON(String name, String language) {
     String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
             "SELECT ?label",
             "WHERE {",
-            "?o a skos:Concept ; ",
-            "       wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
-            "       skos:prefLabel ?label .",
-            "FILTER regex(str(?label), \"^" + name + "\",\"i\")",
+            "    ?topic a skos:Concept .",
+            "   {?topic skos:prefLabel ?label .}",
+            "   UNION {",
+            "       ?topic skos:altLabel ?label . }",
+            "    ?topic wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
+            "FILTER regex(str(?label), \"^" + name + "\", \"i\")",
             "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}"});
 
