@@ -16,16 +16,45 @@
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language"/>
 
+  <xsl:variable name="lcletters">abcdefghijklmnopqrstuvwxyzæøåäö</xsl:variable>
+  <xsl:variable name="ucletters">ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅÄÖ</xsl:variable>
+
   <xsl:template match="c:browse" mode="browse">
     <xsl:if test="./rdf:RDF/skos:Concept">
       <ul>
         <xsl:for-each select="./rdf:RDF/skos:Concept">
           <xsl:sort select="./skos:prefLabel"/>
-          <li>
-            <a href="{./@rdf:about}.html{$qloc}">
-              <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-            </a>
-          </li>
+
+          <xsl:choose>
+            <xsl:when test="/c:page/c:letter = ''">
+              <li>
+              <a href="{./@rdf:about}.html{$qloc}">
+                <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+              </a>
+              </li>                
+            </xsl:when>
+
+            <xsl:otherwise>
+
+              <xsl:if test="starts-with(translate(./skos:prefLabel[@xml:lang=$interface-language], $ucletters, $lcletters), /c:page/c:letter)">
+                <li>
+                  <a href="{./@rdf:about}.html{$qloc}">
+                    <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                  </a>
+                </li>    
+              </xsl:if>
+
+              <xsl:if test="starts-with(translate(./skos:altLabel[@xml:lang=$interface-language], $ucletters, $lcletters), /c:page/c:letter)">
+                <li>
+                  <a href="{./@rdf:about}.html{$qloc}">
+                    <xsl:value-of select="./skos:altLabel[@xml:lang=$interface-language]"/>
+                  </a>
+                </li>
+              </xsl:if>
+
+            </xsl:otherwise>
+
+          </xsl:choose>
         </xsl:for-each>
       </ul>
     </xsl:if>
