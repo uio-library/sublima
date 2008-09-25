@@ -36,6 +36,7 @@ public class TopicController implements StatelessAppleController {
   private User user;
   private String mode;
   private String submode;
+  private String locale;
   private String userPrivileges = "<empty/>";
   private boolean loggedIn = false;
   String[] completePrefixArray = {"PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#>", "PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>", "PREFIX owl: 		<http://www.w3.org/2002/07/owl#>", "PREFIX foaf: 		<http://xmlns.com/foaf/0.1/>", "PREFIX lingvoj: 	<http://www.lingvoj.org/ontology#>", "PREFIX dcmitype: 	<http://purl.org/dc/dcmitype/>", "PREFIX dct: 		<http://purl.org/dc/terms/>", "PREFIX sub: 		<http://xmlns.computas.com/sublima#>", "PREFIX wdr: 		<http://www.w3.org/2007/05/powder#>", "PREFIX sioc: 		<http://rdfs.org/sioc/ns#>", "PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#>", "PREFIX topic: 		<topic/>", "PREFIX skos:		<http://www.w3.org/2004/02/skos/core#>"};
@@ -68,6 +69,12 @@ public class TopicController implements StatelessAppleController {
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
+
+    locale = req.getCocoonRequest().getParameter("locale");
+
+    if (locale == null) {
+      locale = SettingsService.getProperty("sublima.default.locale");
+    }
 
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
@@ -119,12 +126,6 @@ public class TopicController implements StatelessAppleController {
    */
   private void getTopicsByLetter(AppleResponse res, AppleRequest req, String letter) {
     Map<String, Object> bizData = new HashMap<String, Object>();
-
-    String locale = req.getCocoonRequest().getParameter("locale");
-
-    if (locale == null) {
-      locale = SettingsService.getProperty("sublima.default.locale");
-    }
 
     bizData.put("themetopics", adminService.getTopicsByLetter(letter, locale));
     bizData.put("mode", "browse");
@@ -240,7 +241,7 @@ public class TopicController implements StatelessAppleController {
 
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
       bizData.put("tempvalues", "<empty></empty>");
-      bizData.put("alltopics", adminService.getAllTopics());
+      bizData.put("alltopics", adminService.getAllTopics(locale));
       bizData.put("mode", "topicjoin");
 
       bizData.put("userprivileges", userPrivileges);
@@ -292,7 +293,7 @@ public class TopicController implements StatelessAppleController {
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
       bizData.put("themetopics", adminService.getThemeTopics());
       bizData.put("tempvalues", "<empty></empty>");
-      bizData.put("alltopics", adminService.getAllTopics());
+      bizData.put("alltopics", adminService.getAllTopics(locale));
       bizData.put("mode", "theme");
 
       bizData.put("userprivileges", userPrivileges);
@@ -351,12 +352,12 @@ public class TopicController implements StatelessAppleController {
         bizData.put("themetopics", adminService.getThemeTopics());
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "theme");
-        bizData.put("alltopics", adminService.getAllTopics());
+        bizData.put("alltopics", adminService.getAllTopics(locale));
       } else {
         bizData.put("themetopics", adminService.getThemeTopics());
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "theme");
-        bizData.put("alltopics", adminService.getAllTopics());
+        bizData.put("alltopics", adminService.getAllTopics(locale));
       }
 
       bizData.put("userprivileges", userPrivileges);
@@ -374,7 +375,7 @@ public class TopicController implements StatelessAppleController {
                   res, AppleRequest
                   req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
-    bizData.put("all_topics", adminService.getAllTopics());
+    bizData.put("all_topics", adminService.getAllTopics(locale));
     bizData.put("facets", getRequestXML(req));
 
     res.sendPage("xml2/emner_alle", bizData);
@@ -420,14 +421,14 @@ public class TopicController implements StatelessAppleController {
         bizData.put("topicdetails", "<empty></empty>");
         bizData.put("topicresources", "<empty></empty>");
         bizData.put("tempvalues", "<empty></empty>");
-        bizData.put("alltopics", adminService.getAllTopics());
+        bizData.put("alltopics", adminService.getAllTopics(locale));
         bizData.put("status", adminService.getAllStatuses());
         bizData.put("mode", "topicedit");
         bizData.put("relationtypes", adminService.getAllRelationTypes());
       } else {
         bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("uri")));
         bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
-        bizData.put("alltopics", adminService.getAllTopics());
+        bizData.put("alltopics", adminService.getAllTopics(locale));
         bizData.put("status", adminService.getAllStatuses());
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "topicedit");
@@ -522,7 +523,7 @@ public class TopicController implements StatelessAppleController {
       }
 
       bizData.put("status", adminService.getAllStatuses());
-      bizData.put("alltopics", adminService.getAllTopics());
+      bizData.put("alltopics", adminService.getAllTopics(locale));
       bizData.put("relationtypes", adminService.getAllRelationTypes());
       bizData.put("userprivileges", userPrivileges);
       messageBuffer.append("</c:messages>\n");

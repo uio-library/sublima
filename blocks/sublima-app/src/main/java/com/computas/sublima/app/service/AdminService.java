@@ -285,7 +285,7 @@ public class AdminService {
    *
    * @return A String RDF/XML containing all the topics
    */
-  public String getAllTopics() {
+  public String getAllTopics(String locale) {
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
@@ -296,7 +296,7 @@ public class AdminService {
             "WHERE {",
             "    ?topic a skos:Concept ;",
             "        skos:prefLabel ?label .",
-            "FILTER langMatches( lang(?label), \"no\" )",
+            "FILTER langMatches( lang(?label), \"" + locale +"\" )",
             "}"});
 
     logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
