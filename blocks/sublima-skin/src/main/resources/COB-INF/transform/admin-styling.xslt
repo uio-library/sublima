@@ -42,7 +42,7 @@
   <xsl:param name="serverport"/>
   <xsl:param name="rss-url"/>
   <xsl:param name="locale"/>
-  <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="interface-language"/>
 
   <xsl:param name="qloc">
       <xsl:text>?locale=</xsl:text>
@@ -135,7 +135,7 @@
       <xsl:for-each select="c:page/c:content/c:topics/rdf:RDF/skos:Concept">
         <xsl:sort select="./skos:prefLabel"/>
         <li>
-          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}{$aloc}"><xsl:value-of select="./skos:prefLabel"/></a>
+          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}{$aloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
         </li>
       </xsl:for-each>
     </ul>
@@ -236,7 +236,7 @@
      menues
 	 ###################################################################### -->       
         <div class="col1" style="border:0px dotted black;">     <!-- Column 1 start -->
-               <!-- <xsl:call-template name="debug"/> -->
+               <!--xsl:call-template name="debug"/-->
 		  
 		  <xsl:text> </xsl:text> <!-- avoid an empty div tag -->
 		
