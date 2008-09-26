@@ -232,6 +232,12 @@
   <message key="letter.å"></message>
   <message key="letter.0-9">0-9</message>
 
+  <message key="remove">Remove</message>
+  <message key="added">Added </message>
+  <message key="removed">Removed </message>
+
+  <message key="topic.theme">Theme topic</message>
+
 
 </catalogue>
 

@@ -185,5 +185,11 @@
   <message key="letter.ø">Ø</message>
   <message key="letter.å">Å</message>
   <message key="letter.0-9">0-9</message>
+
+  <message key="remove">Fjern</message>
+  <message key="added">La til </message>
+  <message key="removed">Fjerna </message>
+
+  <message key="topic.theme">Temaemne</message>
   
 </catalogue>

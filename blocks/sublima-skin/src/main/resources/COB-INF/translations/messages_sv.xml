@@ -224,5 +224,11 @@
   <message key="letter.å">Å</message>
   <message key="letter.0-9">0-9</message>
 
+  <message key="remove">Fjärn</message>
+  <message key="added">La til </message>
+  <message key="removed">Fjärnade </message>
+
+  <message key="topic.theme">Temaämne</message>
+
 </catalogue>
 
