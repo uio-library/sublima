@@ -79,7 +79,6 @@ public class AdminService {
             "WHERE {",
             "?publisher a foaf:Agent ;",
             "foaf:name ?name .",
-            "FILTER langMatches( lang(?name), \"no\" )",
             "}"});
 
     logger.trace("AdminService.getAllPublishers() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -104,7 +103,6 @@ public class AdminService {
             "WHERE {",
             "    ?status a wdr:DR ;",
             "    rdfs:label ?label .",
-            "    FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
 
@@ -155,7 +153,6 @@ public class AdminService {
             "?uri a " + rdfType + " ;",
             "          rdfs:label ?label .",
             "?res " + property + " ?uri",
-            "FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
     logger.trace("AdminService.getDistinctAndUsedLabels() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -183,7 +180,6 @@ public class AdminService {
             "WHERE {",
             "    ?mediatype a dct:MediaType ;",
             "             rdfs:label ?label .",
-            "    FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
     logger.trace("AdminService.getAllMediaTypes() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -209,7 +205,6 @@ public class AdminService {
             "WHERE {",
             "    ?audience a dct:AgentClass ;",
             "             rdfs:label ?label .",
-            "    FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
     logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -403,7 +398,6 @@ public class AdminService {
             "WHERE {",
             "    ?user a sioc:User ;",
             "        rdfs:label ?label .",
-            "FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
     logger.trace("AdminService.getAllUsers() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -521,7 +515,6 @@ public class AdminService {
             "WHERE {",
             "    ?role a sioc:Role ;",
             "        rdfs:label ?label .",
-            "FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
     logger.trace("AdminService.getAllRoles() --> SPARQL query sent to dispatcher: \n" + queryString);
