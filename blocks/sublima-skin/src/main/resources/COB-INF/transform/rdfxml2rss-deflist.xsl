@@ -16,7 +16,7 @@
     
     
       <xsl:for-each select="sublima:Resource"> <!-- The root node for each described resource -->
-        <xsl:sort select="./*[name() = $sorting]"/>
+        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
 
       <item rdf:about="{@rdf:about}"> 
         <title>

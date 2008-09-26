@@ -21,7 +21,7 @@
   <xsl:template match="c:relations" mode="listallrelationtypes">
     <ul>
       <xsl:for-each select="./rdf:RDF/owl:ObjectProperty | ./rdf:RDF/owl:SymmetricProperty">
-        <xsl:sort select="./rdfs:label"/>
+        <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
         <li>
           <a href="{$baseurl}/admin/emner/relasjoner/relasjon?the-resource={./@rdf:about}{$aloc}">
             <xsl:value-of select="./rdfs:label"/>

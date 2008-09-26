@@ -95,7 +95,7 @@
               <select id="sioc:has_function"
                       name="sioc:has_function">
                 <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/sioc:Role">
-                  <xsl:sort select="./rdfs:label"/>
+                  <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                   <xsl:choose>
                     <xsl:when
                             test="./@rdf:about = /c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/sioc:has_function/@rdf:resource">
@@ -207,7 +207,7 @@
               <select id="sioc:has_function"
                       name="sioc:has_function">
                 <xsl:for-each select="/c:page/c:content/c:user/c:allroles/rdf:RDF/sioc:Role">
-                  <xsl:sort select="./rdfs:label"/>
+                  <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                   <xsl:choose>
                     <xsl:when
                             test="./@rdf:about = /c:page/c:content/c:user/c:tempvalues/c:tempvalues/sioc:has_function/@rdf:resource">

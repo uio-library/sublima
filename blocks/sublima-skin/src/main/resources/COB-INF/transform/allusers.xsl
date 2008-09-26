@@ -20,7 +20,7 @@
   <xsl:template match="c:allusers" mode="list">
     <ul>
       <xsl:for-each select="./rdf:RDF/sioc:User">
-        <xsl:sort select="./rdfs:label"/>
+        <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
         <li>
           <a href="{$baseurl}/admin/brukere/bruker?the-resource={./@rdf:about}{$aloc}">
             <xsl:value-of select="./rdfs:label"/>

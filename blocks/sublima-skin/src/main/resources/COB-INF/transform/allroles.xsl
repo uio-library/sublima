@@ -20,7 +20,7 @@
   <xsl:template match="c:allroles" mode="listallroles">
     <ul>
       <xsl:for-each select="./rdf:RDF/sioc:Role">
-        <xsl:sort select="./rdfs:label"/>
+        <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
         <li>
           <a href="{$baseurl}/admin/brukere/roller/rolle?uri={./@rdf:about}{$aloc}">
             <xsl:value-of select="./rdfs:label"/>

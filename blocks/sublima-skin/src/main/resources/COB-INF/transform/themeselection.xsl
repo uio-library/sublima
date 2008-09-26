@@ -33,7 +33,7 @@
                         <select id="A" name="A" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'A')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -59,7 +59,7 @@
                         <select id="B" name="B" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'B')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -85,7 +85,7 @@
                         <select id="C" name="C" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'C')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -111,7 +111,7 @@
                         <select id="D" name="D" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'D')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -137,7 +137,7 @@
                         <select id="E" name="E" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'E')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -163,7 +163,7 @@
                         <select id="F" name="F" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'F')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -189,7 +189,7 @@
                         <select id="G" name="G" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'G')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -215,7 +215,7 @@
                         <select id="H" name="H" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'H')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -241,7 +241,7 @@
                         <select id="I" name="I" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'I')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -267,7 +267,7 @@
                         <select id="J" name="J" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'J')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -293,7 +293,7 @@
                         <select id="K" name="K" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'K')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -319,7 +319,7 @@
                         <select id="L" name="L" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'L')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -345,7 +345,7 @@
                         <select id="M" name="M" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'M')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -371,7 +371,7 @@
                         <select id="N" name="N" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'N')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -397,7 +397,7 @@
                         <select id="O" name="O" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'O')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -423,7 +423,7 @@
                         <select id="P" name="P" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'P')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -449,7 +449,7 @@
                         <select id="Q" name="Q" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'Q')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -475,7 +475,7 @@
                         <select id="R" name="R" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'R')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -501,7 +501,7 @@
                         <select id="S" name="S" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'S')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -527,7 +527,7 @@
                         <select id="T" name="T" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'T')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -553,7 +553,7 @@
                         <select id="U" name="U" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'U')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -579,7 +579,7 @@
                         <select id="V" name="V" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'V')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -605,7 +605,7 @@
                         <select id="W" name="W" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'W')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -631,7 +631,7 @@
                         <select id="X" name="X" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'X')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -657,7 +657,7 @@
                         <select id="Y" name="Y" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'Y')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -683,7 +683,7 @@
                         <select id="Z" name="Z" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'Z')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -709,7 +709,7 @@
                         <select id="Æ" name="Æ" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'Æ')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -735,7 +735,7 @@
                         <select id="Ø" name="Ø" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'Ø')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -761,7 +761,7 @@
                         <select id="Å" name="Å" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept[starts-with(translate(skos:prefLabel, $lcletters, $ucletters), 'Å')]">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
@@ -787,7 +787,7 @@
                         <select id="0-9" name="0-9" multiple="true">
                             <option value=""/>
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">

@@ -45,7 +45,7 @@
     <ul>
       <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
 	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
- 	   <xsl:sort select="lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
+ 	   <xsl:sort lang="{$interface-language}" select="lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
       </xsl:apply-templates> 
     </ul>
    </xsl:if>
@@ -57,7 +57,7 @@
        <ul>
 	 <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
 	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-	    <xsl:sort select="dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+	    <xsl:sort lang="{$interface-language}" select="dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
 	 </xsl:apply-templates> 
        </ul>
      </div>
@@ -73,7 +73,7 @@
     <xsl:if test="sub:Resource/dct:subject">
       <ul>
 	<xsl:for-each select="/c:page/c:result-list/rdf:RDF//skos:Concept">
-	  <xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
+	  <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
 	  <xsl:variable name="uri" select="./@rdf:about"/>
 
 	  <xsl:call-template name="facet-field">

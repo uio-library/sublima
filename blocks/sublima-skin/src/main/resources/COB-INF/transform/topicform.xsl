@@ -139,7 +139,7 @@
       <table>
 	<caption><i18n:text key="topic.related">Relaterte emner</i18n:text></caption>
         <xsl:for-each select="c:relationtypes/rdf:RDF/owl:ObjectProperty">
-          <xsl:sort select="./rdfs:label"/>
+          <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
 	  <xsl:variable name="relation-uri" select="./@rdf:about"/>
 	  <tr>
 	    <th scope="row">
@@ -181,7 +181,7 @@
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                    <xsl:sort select="./rdfs:label"/>
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
 
                     <xsl:choose>
 
@@ -210,7 +210,7 @@
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                    <xsl:sort select="./rdfs:label"/>
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
 
                     <xsl:choose>
 

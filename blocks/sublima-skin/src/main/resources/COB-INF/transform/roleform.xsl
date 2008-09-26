@@ -111,7 +111,7 @@
             <select id="topic.status" name="topic.status" multiple="true">
               <option value=""/>
               <xsl:for-each select="./c:allstatuses/rdf:RDF/wdr:DR">
-                  <xsl:sort select="./rdfs:label"/>
+                  <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                   <xsl:variable name="status">topic.status.<xsl:value-of select="./@rdf:about"/></xsl:variable>
                   <xsl:choose>
                       <xsl:when test="$status = /c:page/c:content/c:role/c:roleprivilegies/c:privileges/c:privilege">
@@ -224,7 +224,7 @@
             <select id="resource.status" name="resource.status" multiple="true">
               <option value=""/>
               <xsl:for-each select="./c:allstatuses/rdf:RDF/wdr:DR">
-                  <xsl:sort select="./rdfs:label"/>
+                  <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                   <xsl:variable name="status">resource.status.<xsl:value-of select="./@rdf:about"/></xsl:variable>
                   <xsl:choose>
                       <xsl:when test="$status = /c:page/c:content/c:role/c:roleprivilegies/c:privileges/c:privilege">

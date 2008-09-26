@@ -46,7 +46,7 @@
 	<select name="{$field}">
 	  <xsl:apply-templates select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo" mode="list-options">
 	    <xsl:with-param name="default-language" select="$default-language"/>
-	    <xsl:sort select="./rdfs:label[@xml:lang=$interface-language]"/>
+	    <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
 	  </xsl:apply-templates>
 	</select>
       </td>

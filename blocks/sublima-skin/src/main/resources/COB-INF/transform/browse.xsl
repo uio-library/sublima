@@ -23,7 +23,7 @@
     <xsl:if test="./rdf:RDF/skos:Concept">
       <ul>
         <xsl:for-each select="./rdf:RDF/skos:Concept">
-          <xsl:sort select="./skos:prefLabel" lang="{$interface-language}"/>
+          <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
 
           <xsl:choose>
             <xsl:when test="/c:page/c:letter = ''">

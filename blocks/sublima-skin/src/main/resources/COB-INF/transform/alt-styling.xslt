@@ -464,7 +464,7 @@ PVJ: Made the file UTF-8
 		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
 		  <ul>
 		    <xsl:for-each select="c:page/c:result-list/rdf:RDF//skos:Concept">
-		      <xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
+		      <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
 		      <li>
 			<a href="{./@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
 		      </li>

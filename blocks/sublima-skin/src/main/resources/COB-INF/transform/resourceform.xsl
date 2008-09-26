@@ -75,7 +75,7 @@
             <select id="dct:publisher" name="dct:publisher">
               <option value=""/>
               <xsl:for-each select="./c:publishers/rdf:RDF/foaf:Agent">
-                <xsl:sort select="./foaf:name"/>
+                <xsl:sort lang="{$interface-language}" select="./foaf:name"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource">
@@ -100,7 +100,7 @@
           <td>
             <select id="dct:language" name="dct:language" multiple="multiple" size="10">
               <xsl:for-each select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo">
-                <xsl:sort select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:language/@rdf:resource">
@@ -126,7 +126,7 @@
             <select id="dct:format" name="dct:format" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:mediatypes/rdf:RDF/dct:MediaType">
-                <xsl:sort select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource">
@@ -152,7 +152,7 @@
             <select id="dct:audience" name="dct:audience" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:audiences/rdf:RDF/dct:AgentClass">
-                <xsl:sort select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:audience/@rdf:resource">
@@ -177,7 +177,7 @@
           <td>
             <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
               <xsl:for-each select="./c:topics/rdf:RDF/skos:Concept">
-                <xsl:sort select="./skos:prefLabel"/>
+                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
@@ -215,7 +215,7 @@
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                    <xsl:sort select="./rdfs:label"/>
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
 
                     <xsl:choose>
 
@@ -244,7 +244,7 @@
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                    <xsl:sort select="./rdfs:label"/>
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
 
                     <xsl:choose>
 
@@ -379,7 +379,7 @@
             <select id="dct:publisher" name="dct:publisher">
               <option value=""/>
               <xsl:for-each select="./c:publishers/rdf:RDF/foaf:Agent">
-                <xsl:sort select="./foaf:name"/>
+                <xsl:sort lang="{$interface-language}" select="./foaf:name"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource">
@@ -404,7 +404,7 @@
           <td>
             <select id="dct:language" name="dct:language" multiple="multiple" size="10">
               <xsl:for-each select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo">
-                <xsl:sort select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:language/@rdf:resource">
@@ -430,7 +430,7 @@
             <select id="dct:format" name="dct:format" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:mediatypes/rdf:RDF/dct:MediaType">
-                <xsl:sort select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource">
@@ -456,7 +456,7 @@
             <select id="dct:audience" name="dct:audience" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:audiences/rdf:RDF/dct:AgentClass">
-                <xsl:sort select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:audience/@rdf:resource">
@@ -481,7 +481,7 @@
           <td>
             <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
               <xsl:for-each select="./c:topics/rdf:RDF/skos:Concept">
-                <xsl:sort select="./skos:prefLabel"/>
+                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                 <xsl:choose>
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
@@ -518,7 +518,7 @@
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                    <xsl:sort select="./rdfs:label"/>
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
 
                     <xsl:choose>
 
@@ -547,7 +547,7 @@
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                    <xsl:sort select="./rdfs:label"/>
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
 
                     <xsl:choose>
 

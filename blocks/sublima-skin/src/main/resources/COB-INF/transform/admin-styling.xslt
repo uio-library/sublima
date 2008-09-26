@@ -133,7 +133,7 @@
   <xsl:template name="alltopics">
     <ul>
       <xsl:for-each select="c:page/c:content/c:topics/rdf:RDF/skos:Concept">
-        <xsl:sort select="./skos:prefLabel"/>
+        <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
         <li>
           <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}{$aloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
         </li>

@@ -70,7 +70,7 @@
 
     
     <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-        <xsl:sort select="./*[name() = $sorting]"/>
+        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
 
     <br/>
     <table>

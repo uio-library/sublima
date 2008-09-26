@@ -29,7 +29,7 @@
                     <td>
                         <select id="skos:Concept" name="skos:Concept" multiple="multiple">
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                                <xsl:sort select="./skos:prefLabel"/>
+                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:join/c:tempvalues/c:tempvalues/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">

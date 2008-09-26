@@ -57,7 +57,7 @@
       -->   
       
       <xsl:apply-templates select="./*/skos:Concept">
-	<xsl:sort select="skos:prefLabel[@xml:lang=$interface-language]"/>
+	<xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
       </xsl:apply-templates> 
     </div>
     

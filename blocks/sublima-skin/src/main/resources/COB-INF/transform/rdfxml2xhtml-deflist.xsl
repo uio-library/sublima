@@ -101,10 +101,10 @@
     
     <dl>
 <!--      <xsl:for-each select="sub:Resource"> 
-        <xsl:sort select="./*[name() = $sorting]"/> -->
+        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/> -->
 <!-- The root node for each described resource -->
        <xsl:for-each select="xalan:nodeset($res-copy)/sub:Resource">
-          <xsl:sort select="./sub:relevance"/> 
+          <xsl:sort lang="{$interface-language}" select="./sub:relevance"/> 
         
 
 	  <dt>
