@@ -445,7 +445,7 @@ public class TopicController implements StatelessAppleController {
 
       if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
-        if (req.getCocoonRequest().getParameter("warningSingleResource") != null) {
+        if (req.getCocoonRequest().getParameter("warningSingleResource") == null) {
 
           String deleteString = "DELETE {\n" +
                   "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
