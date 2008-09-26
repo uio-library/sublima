@@ -409,7 +409,7 @@ public class TopicController implements StatelessAppleController {
     String uri = "";
 
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allanguages", adminService.getAllLanguages());
