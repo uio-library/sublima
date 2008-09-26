@@ -151,7 +151,8 @@
 	      <select id="the-relation-{position()}"
 		      name="&lt;{$relation-uri}&gt;" multiple="multiple">
 		<xsl:for-each select="/c:page/c:content/c:topic/c:alltopics/rdf:RDF/skos:Concept">
-		  <xsl:choose>
+      <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
+      <xsl:choose>
 		    <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*[concat(namespace-uri(), local-name()) = $relation-uri]/@rdf:resource">
 		      <option value="{./@rdf:about}" selected="selected">
 			<xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
