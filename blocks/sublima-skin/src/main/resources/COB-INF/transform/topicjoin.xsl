@@ -40,12 +40,12 @@
                                 <xsl:choose>
                                     <xsl:when test="./@rdf:about = /c:page/c:content/c:join/c:tempvalues/c:tempvalues/skos:Concept/@rdf:about">
                                         <option value="{./@rdf:about}" selected="selected">
-                                            <xsl:value-of select="./skos:prefLabel"/>
+                                            <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
                                         </option>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <option value="{./@rdf:about}">
-                                            <xsl:value-of select="./skos:prefLabel"/>
+                                            <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
                                         </option>
                                     </xsl:otherwise>
                                 </xsl:choose>
