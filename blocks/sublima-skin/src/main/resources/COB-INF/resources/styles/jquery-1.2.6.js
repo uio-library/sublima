@@ -6,8 +6,8 @@
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
- * $Date: 2008-05-27 21:17:26 +0200 (Di, 27 Mai 2008) $
- * $Rev: 5700 $
+ * $Date: 2008-05-24 14:22:17 -0400 (Sat, 24 May 2008) $
+ * $Rev: 5685 $
  */
 
 // Map over jQuery in case of overwrite
@@ -1245,8 +1245,7 @@ jQuery.extend({
 		styleFloat: styleFloat,
 		readonly: "readOnly",
 		maxlength: "maxLength",
-		cellspacing: "cellSpacing",
-		rowspan: "rowSpan"
+		cellspacing: "cellSpacing"
 	}
 });
 
@@ -2089,8 +2088,6 @@ jQuery.event = {
 		return val;
 	},
 
-	props: "altKey attrChange attrName bubbles button cancelable charCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode metaKey newValue originalTarget pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target timeStamp toElement type view wheelDelta which".split(" "),
-
 	fix: function(event) {
 		if ( event[expando] == true )
 			return event;
@@ -2099,11 +2096,9 @@ jQuery.event = {
 		// and "clone" to set read-only properties
 		var originalEvent = event;
 		event = { originalEvent: originalEvent };
-
-		for ( var i = this.props.length, prop; i; ){
-			prop = this.props[ --i ];
-			event[ prop ] = originalEvent[ prop ];
-		}
+		var props = "altKey attrChange attrName bubbles button cancelable charCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode metaKey newValue originalTarget pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target timeStamp toElement type view wheelDelta which".split(" ");
+		for ( var i=props.length; i; i-- )
+			event[ props[i] ] = originalEvent[ props[i] ];
 
 		// Mark it as fixed
 		event[expando] = true;
@@ -2446,7 +2441,7 @@ jQuery.fn.extend({
 				params = null;
 
 			// Otherwise, build a param string
-			} else if( typeof params == 'object' ) {
+			} else {
 				params = jQuery.param( params );
 				type = "POST";
 			}
@@ -2747,9 +2742,9 @@ jQuery.extend({
 					ival = null;
 				}
 
-				status = isTimeout == "timeout" ? "timeout" :
-					!jQuery.httpSuccess( xhr ) ? "error" :
-					s.ifModified && jQuery.httpNotModified( xhr, s.url ) ? "notmodified" :
+				status = isTimeout == "timeout" && "timeout" ||
+					!jQuery.httpSuccess( xhr ) && "error" ||
+					s.ifModified && jQuery.httpNotModified( xhr, s.url ) && "notmodified" ||
 					"success";
 
 				if ( status == "success" ) {
@@ -2906,18 +2901,14 @@ jQuery.extend({
 	// Serialize an array of form elements or a set of
 	// key/values into a query string
 	param: function( a ) {
-		var s = [ ];
-
-		function add( key, value ){
-			s[ s.length ] = encodeURIComponent(key) + '=' + encodeURIComponent(value);
-		};
+		var s = [];
 
 		// If an array was passed in, assume that it is an array
 		// of form elements
 		if ( a.constructor == Array || a.jquery )
 			// Serialize the form elements
 			jQuery.each( a, function(){
-				add( this.name, this.value );
+				s.push( encodeURIComponent(this.name) + "=" + encodeURIComponent( this.value ) );
 			});
 
 		// Otherwise, assume that it's an object of key/value pairs
@@ -2927,10 +2918,10 @@ jQuery.extend({
 				// If the value is an array then the key names need to be repeated
 				if ( a[j] && a[j].constructor == Array )
 					jQuery.each( a[j], function(){
-						add( j, this );
+						s.push( encodeURIComponent(j) + "=" + encodeURIComponent( this ) );
 					});
 				else
-					add( j, jQuery.isFunction(a[j]) ? a[j]() : a[j] );
+					s.push( encodeURIComponent(j) + "=" + encodeURIComponent( jQuery.isFunction(a[j]) ? a[j]() : a[j] ) );
 
 		// Return the resulting serialization
 		return s.join("&").replace(/%20/g, "+");
@@ -3380,7 +3371,7 @@ jQuery.fn.offset = function() {
 		    fixed        = css(elem, "position") == "fixed";
 
 		// Use getBoundingClientRect if available
-		if ( !(mozilla && elem == document.body) && elem.getBoundingClientRect ) {
+		if ( elem.getBoundingClientRect ) {
 			var box = elem.getBoundingClientRect();
 
 			// Add the document scroll offsets
