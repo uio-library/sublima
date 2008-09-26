@@ -7,6 +7,9 @@
     xmlns:lingvoj="http://www.lingvoj.org/ontology#"
     xmlns="http://www.w3.org/1999/xhtml"
     version="1.0">
+
+  <xsl:param name="interface-language">no</xsl:param>
+
   <xsl:template match="lingvoj:Lingvo" mode="list-options">
     <xsl:param name="default-language"/>
     <xsl:choose>
