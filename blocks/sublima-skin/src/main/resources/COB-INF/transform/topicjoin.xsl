@@ -16,18 +16,25 @@
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
   <xsl:import href="controlbutton.xsl"/>
+  <xsl:import href="selectmultiple.xsl"/>
+
   <xsl:param name="baseurl"/>
-    <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="interface-language">no</xsl:param>
 
     <xsl:template match="c:join" mode="topicjoin">
+
+      <xsl:call-template name="selectmultiple">
+        <xsl:with-param name="selectionid">#concept</xsl:with-param>
+      </xsl:call-template>
+
         <form action="{$baseurl}/admin/emner/koble" method="POST">
             <table>
                 <tr>
                     <td>
-                        <label for="skos:Concept"><i18n:text key="topics">Emner</i18n:text></label>
+                        <label for="concept"><i18n:text key="topics">Emner</i18n:text></label>
                     </td>
                     <td>
-                        <select id="skos:Concept" name="skos:Concept" multiple="multiple">
+                        <select id="concept" name="skos:Concept" multiple="multiple">
                             <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
                                 <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                                 <xsl:choose>

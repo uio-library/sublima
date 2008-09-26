@@ -18,10 +18,28 @@
 
   <xsl:import href="controlbutton.xsl"/>
   <xsl:import href="labels.xsl"/>
+  <xsl:import href="selectmultiple.xsl"/>
 
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
   <xsl:template match="c:resourcedetails" mode="resourceedit">
+
+    <xsl:call-template name="selectmultiple">
+      <xsl:with-param name="selectionid">#subject</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="selectmultiple">
+      <xsl:with-param name="selectionid">#language</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="selectmultiple">
+      <xsl:with-param name="selectionid">#format</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="selectmultiple">
+      <xsl:with-param name="selectionid">#audience</xsl:with-param>
+    </xsl:call-template>
+
 
     <form action="{$baseurl}/admin/ressurser/ny" method="POST">
       <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
@@ -32,18 +50,16 @@
       <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
-      <input type="hidden" id="dct:identifier" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
+      <input type="hidden" id="dct:identifier" name="dct:identifier"
+             value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
-      
-      <!--input type="hidden" name="a" value="http://xmlns.computas.com/sublima#Resource"/ -->
-      <!-- input type="hidden" name="uri" value="{./c:resource/rdf:RDF/sub:Resource/@rdf:about}"/ -->
-      <!-- input type="hidden" name="dct:identifier"
-             value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/ -->
 
       <table>
         <tr>
-        <td>
-            <label for="dct:title"><i18n:text key="title">Tittel</i18n:text></label>
+          <td>
+            <label for="dct:title">
+              <i18n:text key="title">Tittel</i18n:text>
+            </label>
           </td>
           <td>
             <input id="dct:title" type="text" name="dct:title" size="40"
@@ -52,24 +68,33 @@
         </tr>
         <tr>
           <td>
-            <label for="the-resource"><i18n:text key="url">URL</i18n:text></label>
+            <label for="the-resource">
+              <i18n:text key="url">URL</i18n:text>
+            </label>
           </td>
           <td>
             <input id="the-resource" type="text" name="the-resource" size="40"
                    value="{./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource}"/>
           </td>
         </tr>
-      <tr>
-        <td>
-          <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
-        </td>
-        <td>
-          <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/><xsl:text> </xsl:text></textarea>
-        </td>
+        <tr>
+          <td>
+            <label for="dct:description">
+              <i18n:text key="description">Beskrivelse</i18n:text>
+            </label>
+          </td>
+          <td>
+            <textarea id="dct:description" name="dct:description" rows="6" cols="40">
+              <xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/>
+              <xsl:text> </xsl:text>
+            </textarea>
+          </td>
         </tr>
         <tr>
           <td>
-            <label for="dct:publisher/foaf:Agent/@rdf:about"><i18n:text key="publisher">Utgiver</i18n:text></label>
+            <label for="dct:publisher/foaf:Agent/@rdf:about">
+              <i18n:text key="publisher">Utgiver</i18n:text>
+            </label>
           </td>
           <td>
             <select id="dct:publisher" name="dct:publisher">
@@ -95,10 +120,12 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:language"><i18n:text key="language">Språk</i18n:text></label>
+            <label for="language">
+              <i18n:text key="language">Språk</i18n:text>
+            </label>
           </td>
           <td>
-            <select id="dct:language" name="dct:language" multiple="multiple" size="10">
+            <select id="language" name="dct:language" multiple="multiple" size="10">
               <xsl:for-each select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo">
                 <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                 <xsl:choose>
@@ -120,10 +147,12 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:format"><i18n:text key="mediatype">Mediatype</i18n:text></label>
+            <label for="format">
+              <i18n:text key="mediatype">Mediatype</i18n:text>
+            </label>
           </td>
           <td>
-            <select id="dct:format" name="dct:format" multiple="multiple" size="10">
+            <select id="format" name="dct:format" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:mediatypes/rdf:RDF/dct:MediaType">
                 <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
@@ -146,10 +175,12 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:audience"><i18n:text key="audience">Målgruppe</i18n:text></label>
+            <label for="audience">
+              <i18n:text key="audience">Målgruppe</i18n:text>
+            </label>
           </td>
           <td>
-            <select id="dct:audience" name="dct:audience" multiple="multiple" size="10">
+            <select id="audience" name="dct:audience" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:audiences/rdf:RDF/dct:AgentClass">
                 <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
@@ -172,10 +203,12 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:subject"><i18n:text key="topics">Emner</i18n:text></label>
+            <label for="subject">
+              <i18n:text key="topics">Emner</i18n:text>
+            </label>
           </td>
           <td>
-            <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
+            <select id="subject" name="dct:subject" multiple="multiple" size="10">
               <xsl:for-each select="./c:topics/rdf:RDF/skos:Concept">
                 <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                 <xsl:choose>
@@ -197,21 +230,29 @@
         </tr>
         <tr>
           <td>
-            <label for="rdfs:comment"><i18n:text key="comment">Kommentar</i18n:text></label>
+            <label for="rdfs:comment">
+              <i18n:text key="comment">Kommentar</i18n:text>
+            </label>
           </td>
           <td>
-            <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40"><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/><xsl:text> </xsl:text></textarea>
+            <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40">
+              <xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/>
+              <xsl:text> </xsl:text>
+            </textarea>
           </td>
         </tr>
 
         <tr>
           <td>
-            <label for="wdr:describedBy"><i18n:text key="status">Status</i18n:text></label>
+            <label for="wdr:describedBy">
+              <i18n:text key="status">Status</i18n:text>
+            </label>
           </td>
           <td>
             <xsl:choose>
 
-              <xsl:when test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
+              <xsl:when
+                      test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
@@ -220,7 +261,7 @@
                     <xsl:choose>
 
                       <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
-                       <option value="{./@rdf:about}" selected="selected">
+                        <option value="{./@rdf:about}" selected="selected">
                           <xsl:value-of select="./rdfs:label"/>
                         </option>
                       </xsl:when>
@@ -233,7 +274,7 @@
 
                     </xsl:choose>
 
-                 </xsl:for-each>
+                  </xsl:for-each>
 
                 </select>
 
@@ -248,8 +289,9 @@
 
                     <xsl:choose>
 
-                      <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
-                       <option value="{./@rdf:about}" selected="selected">
+                      <xsl:when
+                              test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
+                        <option value="{./@rdf:about}" selected="selected">
                           <xsl:value-of select="./rdfs:label"/>
                         </option>
                       </xsl:when>
@@ -262,7 +304,7 @@
 
                     </xsl:choose>
 
-                 </xsl:for-each>
+                  </xsl:for-each>
 
                 </select>
 
@@ -279,20 +321,28 @@
           </td>
         </tr>
         <tr>
-          <td><i18n:text key="resource.usercomments">Brukernes kommentarer</i18n:text></td>
+          <td>
+            <i18n:text key="resource.usercomments">Brukernes kommentarer</i18n:text>
+          </td>
           <td>
             <ul>
               <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/sub:comment/sioc:Item">
                 <li>
-                  <xsl:value-of select="./sioc:content"/><xsl:text> - </xsl:text><a href="{./sioc:has_creator/sioc:User/sioc:email/@rdf:resource}"><xsl:value-of
-                        select="substring-after(./sioc:has_creator/sioc:User/sioc:email/@rdf:resource, 'mailto:')"/></a> 
+                  <xsl:value-of select="./sioc:content"/>
+                  <xsl:text> - </xsl:text>
+                  <a href="{./sioc:has_creator/sioc:User/sioc:email/@rdf:resource}">
+                    <xsl:value-of
+                            select="substring-after(./sioc:has_creator/sioc:User/sioc:email/@rdf:resource, 'mailto:')"/>
+                  </a>
                 </li>
               </xsl:for-each>
             </ul>
           </td>
         </tr>
         <tr>
-          <td><i18n:text key="resourceasnew">Marker som ny</i18n:text></td>
+          <td>
+            <i18n:text key="resourceasnew">Marker som ny</i18n:text>
+          </td>
           <td>
             <input type="checkbox" name="markasnew"/>
           </td>
@@ -313,13 +363,13 @@
 
             <script type="text/javascript">
               function copyAsNew() {
-                document.getElementById("the-resource").value = '';
-                document.getElementById("dct:identifier").value = '';
+              document.getElementById("the-resource").value = '';
+              document.getElementById("dct:identifier").value = '';
               }
             </script>
 
             <input type="button" value="button.copyasnew" i18n:attr="value" onclick="copyAsNew()"/>
-            
+
           </td>
           <td>
 
@@ -332,7 +382,23 @@
 
   <xsl:template match="c:resourcedetails" mode="temp">
 
-        <form action="{$baseurl}/admin/ressurser/ny" method="POST">
+    <xsl:call-template name="selectmultiple">
+      <xsl:with-param name="selectionid">#subject</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="selectmultiple">
+      <xsl:with-param name="selectionid">#language</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="selectmultiple">
+      <xsl:with-param name="selectionid">#format</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="selectmultiple">
+      <xsl:with-param name="selectionid">#audience</xsl:with-param>
+    </xsl:call-template>
+
+    <form action="{$baseurl}/admin/ressurser/ny" method="POST">
       <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
       <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
       <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
@@ -341,13 +407,16 @@
       <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
-      <input type="hidden" id="dct:identifier" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
+      <input type="hidden" id="dct:identifier" name="dct:identifier"
+             value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
 
       <table>
         <tr>
-        <td>
-            <label for="dct:title"><i18n:text key="title">Tittel</i18n:text></label>
+          <td>
+            <label for="dct:title">
+              <i18n:text key="title">Tittel</i18n:text>
+            </label>
           </td>
           <td>
             <input id="dct:title" type="text" name="dct:title" size="40"
@@ -356,24 +425,33 @@
         </tr>
         <tr>
           <td>
-            <label for="the-resource"><i18n:text key="url">URL</i18n:text></label>
+            <label for="the-resource">
+              <i18n:text key="url">URL</i18n:text>
+            </label>
           </td>
           <td>
             <input id="the-resource" type="text" name="the-resource" size="40"
                    value="{./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource}"/>
           </td>
         </tr>
-      <tr>
-        <td>
-          <label for="dct:description"><i18n:text key="description">Beskrivelse</i18n:text></label>
-        </td>
-        <td>
-          <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/><xsl:text> </xsl:text></textarea>
-        </td>
+        <tr>
+          <td>
+            <label for="dct:description">
+              <i18n:text key="description">Beskrivelse</i18n:text>
+            </label>
+          </td>
+          <td>
+            <textarea id="dct:description" name="dct:description" rows="6" cols="40">
+              <xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/>
+              <xsl:text> </xsl:text>
+            </textarea>
+          </td>
         </tr>
         <tr>
           <td>
-            <label for="dct:publisher/foaf:Agent/@rdf:about"><i18n:text key="publisher">Utgiver</i18n:text></label>
+            <label for="dct:publisher/foaf:Agent/@rdf:about">
+              <i18n:text key="publisher">Utgiver</i18n:text>
+            </label>
           </td>
           <td>
             <select id="dct:publisher" name="dct:publisher">
@@ -399,10 +477,12 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:language"><i18n:text key="language">Språk</i18n:text></label>
+            <label for="language">
+              <i18n:text key="language">Språk</i18n:text>
+            </label>
           </td>
           <td>
-            <select id="dct:language" name="dct:language" multiple="multiple" size="10">
+            <select id="language" name="dct:language" multiple="multiple" size="10">
               <xsl:for-each select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo">
                 <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
                 <xsl:choose>
@@ -424,10 +504,12 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:format"><i18n:text key="mediatype">Mediatype</i18n:text></label>
+            <label for="format">
+              <i18n:text key="mediatype">Mediatype</i18n:text>
+            </label>
           </td>
           <td>
-            <select id="dct:format" name="dct:format" multiple="multiple" size="10">
+            <select id="format" name="dct:format" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:mediatypes/rdf:RDF/dct:MediaType">
                 <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
@@ -450,10 +532,12 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:audience"><i18n:text key="audience">Målgruppe</i18n:text></label>
+            <label for="audience">
+              <i18n:text key="audience">Målgruppe</i18n:text>
+            </label>
           </td>
           <td>
-            <select id="dct:audience" name="dct:audience" multiple="multiple" size="10">
+            <select id="audience" name="dct:audience" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:audiences/rdf:RDF/dct:AgentClass">
                 <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
@@ -476,10 +560,12 @@
         </tr>
         <tr>
           <td>
-            <label for="dct:subject"><i18n:text key="topics">Emner</i18n:text></label>
+            <label for="subject">
+              <i18n:text key="topics">Emner</i18n:text>
+            </label>
           </td>
           <td>
-            <select id="dct:subject" name="dct:subject" multiple="multiple" size="10">
+            <select id="subject" name="dct:subject" multiple="multiple" size="10">
               <xsl:for-each select="./c:topics/rdf:RDF/skos:Concept">
                 <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
                 <xsl:choose>
@@ -501,20 +587,28 @@
         </tr>
         <tr>
           <td>
-            <label for="rdfs:comment"><i18n:text key="comment">Kommentar</i18n:text></label>
+            <label for="rdfs:comment">
+              <i18n:text key="comment">Kommentar</i18n:text>
+            </label>
           </td>
           <td>
-            <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40"><xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/><xsl:text> </xsl:text></textarea>
+            <textarea id="rdfs:comment" name="rdfs:comment" rows="6" cols="40">
+              <xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/rdfs:comment"/>
+              <xsl:text> </xsl:text>
+            </textarea>
           </td>
         </tr>
-                <tr>
+        <tr>
           <td>
-            <label for="wdr:describedBy"><i18n:text key="status">Status</i18n:text></label>
+            <label for="wdr:describedBy">
+              <i18n:text key="status">Status</i18n:text>
+            </label>
           </td>
           <td>
             <xsl:choose>
 
-              <xsl:when test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
+              <xsl:when
+                      test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
@@ -523,7 +617,7 @@
                     <xsl:choose>
 
                       <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
-                       <option value="{./@rdf:about}" selected="selected">
+                        <option value="{./@rdf:about}" selected="selected">
                           <xsl:value-of select="./rdfs:label"/>
                         </option>
                       </xsl:when>
@@ -536,7 +630,7 @@
 
                     </xsl:choose>
 
-                 </xsl:for-each>
+                  </xsl:for-each>
 
                 </select>
 
@@ -551,8 +645,9 @@
 
                     <xsl:choose>
 
-                      <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
-                       <option value="{./@rdf:about}" selected="selected">
+                      <xsl:when
+                              test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
+                        <option value="{./@rdf:about}" selected="selected">
                           <xsl:value-of select="./rdfs:label"/>
                         </option>
                       </xsl:when>
@@ -565,7 +660,7 @@
 
                     </xsl:choose>
 
-                 </xsl:for-each>
+                  </xsl:for-each>
 
                 </select>
 
@@ -581,7 +676,9 @@
           </td>
         </tr>
         <tr>
-          <td><i18n:text key="resource.usercomments">Brukernes kommentarer</i18n:text></td>
+          <td>
+            <i18n:text key="resource.usercomments">Brukernes kommentarer</i18n:text>
+          </td>
           <td>
             <ul>
               <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/sub:comment">
@@ -593,7 +690,9 @@
           </td>
         </tr>
         <tr>
-          <td><i18n:text key="resourceasnew">Marker som ny</i18n:text></td>
+          <td>
+            <i18n:text key="resourceasnew">Marker som ny</i18n:text>
+          </td>
           <td>
             <input type="checkbox" name="markasnew"/>
           </td>
@@ -614,8 +713,8 @@
 
             <script type="text/javascript">
               function copyAsNew() {
-                document.getElementById("the-resource").value = '';
-                document.getElementById("dct:identifier").value = '';
+              document.getElementById("the-resource").value = '';
+              document.getElementById("dct:identifier").value = '';
               }
             </script>
 

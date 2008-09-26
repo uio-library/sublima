@@ -18,6 +18,8 @@
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
   <xsl:import href="controlbutton.xsl"/>
   <xsl:import href="labels.xsl"/>
+  <xsl:import href="selectmultiple.xsl"/>
+  
   <xsl:param name="baseurl"/>
   <xsl:param name="servername"/>
   <xsl:param name="serverport"/>
@@ -148,7 +150,12 @@
 	      </label>
 	    </th>
 	    <td>
-	      <select id="the-relation-{position()}"
+
+        <xsl:call-template name="selectmultiple">
+          <xsl:with-param name="selectionid">#the-relation-<xsl:value-of select="position()"/></xsl:with-param>
+        </xsl:call-template>
+
+        <select id="the-relation-{position()}"
 		      name="&lt;{$relation-uri}&gt;" multiple="multiple">
 		<xsl:for-each select="/c:page/c:content/c:topic/c:alltopics/rdf:RDF/skos:Concept">
       <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
@@ -188,13 +195,13 @@
 
                       <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
                        <option value="{./@rdf:about}" selected="selected">
-                          <xsl:value-of select="./rdfs:label"/>
+                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
                         </option>
                       </xsl:when>
 
                       <xsl:otherwise>
                         <option value="{./@rdf:about}">
-                          <xsl:value-of select="./rdfs:label"/>
+                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
                         </option>
                       </xsl:otherwise>
                       
@@ -217,13 +224,13 @@
 
                       <xsl:when test="./@rdf:about = /c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/wdr:describedBy/@rdf:resource">
                        <option value="{./@rdf:about}" selected="selected">
-                          <xsl:value-of select="./rdfs:label"/>
+                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
                         </option>
                       </xsl:when>
 
                       <xsl:otherwise>
                         <option value="{./@rdf:about}">
-                          <xsl:value-of select="./rdfs:label"/>
+                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
                         </option>
                       </xsl:otherwise>
 
