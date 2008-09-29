@@ -348,7 +348,7 @@
           </td>
         </tr>
         <tr>
-          <td>
+          <td colspan="2">
 
             <xsl:call-template name="controlbutton">
               <xsl:with-param name="privilege">resource.edit</xsl:with-param>
@@ -698,7 +698,7 @@
           </td>
         </tr>
         <tr>
-          <td>
+          <td colspan="2">
 
             <xsl:call-template name="controlbutton">
               <xsl:with-param name="privilege">resource.edit</xsl:with-param>
