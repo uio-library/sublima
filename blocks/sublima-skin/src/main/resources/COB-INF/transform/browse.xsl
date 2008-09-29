@@ -22,7 +22,7 @@
   <xsl:template match="c:browse" mode="browse">
     <xsl:if test="./rdf:RDF/skos:Concept">
       <ul>
-        <xsl:for-each select="./rdf:RDF/skos:Concept">
+        <xsl:for-each select="./rdf:RDF//skos:Concept">
           <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
 
           <xsl:choose>
