@@ -26,6 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
 
 /**
  * A class to support the administration of Sublima
@@ -128,7 +129,6 @@ public class AdminService {
             "WHERE {",
             "?language a lingvoj:Lingvo ;",
             "          rdfs:label ?label .",
-            "FILTER langMatches( lang(?label), \"no\" )",
             "}"});
 
     logger.trace("AdminService.getAllLanguages() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -647,4 +647,69 @@ public class AdminService {
       return false;
     }
   }
+
+  public StringBuffer getMostOfTheRequestXML(AppleRequest req) {
+      // This is such a 1999 way of doing things. There should be a generic SAX events generator
+      // or something that would serialise this data structure automatically in a one-liner,
+      // but I couldn't find it. Arguably a TODO.
+      StringBuffer params = new StringBuffer();
+      String uri = req.getCocoonRequest().getRequestURI();
+      int paramcount = 0;
+      params.append("  <request justbaseurl=\""+ uri + "\" ");
+      if (req.getCocoonRequest().getQueryString() != null) {
+          uri += "?" + req.getCocoonRequest().getQueryString();
+          uri = uri.replaceAll("&", "&amp;");
+          paramcount = req.getCocoonRequest().getParameters().size();
+      }
+    params.append("paramcount=\""+ paramcount + "\" ");
+     params.append("requesturl=\""+ uri);
+      params.append("\">\n");
+      for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
+          String key = keys.nextElement().toString();
+          params.append("\n    <param key=\"" + key + "\">");
+          String[] values = req.getCocoonRequest().getParameterValues(key);
+          for (String value : values) {
+              value = value.replaceAll("&", "&amp;");
+              value = value.replaceAll("<", "%3C");
+              value = value.replaceAll(">", "%3E");
+              value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+              params.append("\n      <value>" + value + "</value>");
+          }
+          params.append("\n    </param>");
+      }
+      return params;
+  }
+
+  public StringBuffer getMostOfTheRequestXMLWithPrefix(AppleRequest req) {
+      // This is such a 1999 way of doing things. There should be a generic SAX events generator
+      // or something that would serialise this data structure automatically in a one-liner,
+      // but I couldn't find it. Arguably a TODO.
+      StringBuffer params = new StringBuffer();
+      String uri = req.getCocoonRequest().getRequestURI();
+      int paramcount = 0;
+      params.append("  <c:request xmlns:c=\"http://xmlns.computas.com/cocoon\" justbaseurl=\""+ uri + "\" ");
+      if (req.getCocoonRequest().getQueryString() != null) {
+          uri += "?" + req.getCocoonRequest().getQueryString();
+          uri = uri.replaceAll("&", "&amp;");
+          paramcount = req.getCocoonRequest().getParameters().size();
+      }
+    params.append("paramcount=\""+ paramcount + "\" ");
+     params.append("requesturl=\""+ uri);
+      params.append("\">\n");
+      for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
+          String key = keys.nextElement().toString();
+          params.append("\n    <c:param key=\"" + key + "\">");
+          String[] values = req.getCocoonRequest().getParameterValues(key);
+          for (String value : values) {
+              value = value.replaceAll("&", "&amp;");
+              value = value.replaceAll("<", "%3C");
+              value = value.replaceAll(">", "%3E");
+              value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+              params.append("\n      <c:value>" + value + "</c:value>");
+          }
+          params.append("\n    </c:param>");
+      }
+      return params;
+  }
+
 }

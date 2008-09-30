@@ -20,6 +20,7 @@
     <xsl:template match="c:login" mode="login">
 
        <form action="do-login2" method="post">
+         <xsl:call-template name="hidden-locale-field"/>
          <table>
            <tr>
              <td>

@@ -31,6 +31,8 @@
       </xsl:call-template>
 
         <form id="themeselection" action="{$baseurl}/admin/emner/tema" method="POST">
+          <xsl:call-template name="hidden-locale-field"/>
+          
             <table>
                 <tr>
                     <td>

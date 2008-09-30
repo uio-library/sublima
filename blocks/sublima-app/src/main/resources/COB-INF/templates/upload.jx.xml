@@ -2,7 +2,10 @@
 <c:page xmlns="http://www.w3.org/1999/xhtml"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-        xmlns:c="http://xmlns.computas.com/cocoon">
+        xmlns:c="http://xmlns.computas.com/cocoon"
+        xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  
+    <c:facets><jx:out value="#{facets}" xmlize="true"/></c:facets>
     <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
     <c:breadcrumbs>

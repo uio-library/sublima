@@ -20,6 +20,8 @@
 
   <xsl:template match="c:upload" mode="upload">
     <form action="upload" method="POST" enctype="multipart/form-data">
+      <xsl:call-template name="hidden-locale-field"/>
+
       <fieldset>
       <table>
         <tr>
@@ -59,6 +61,8 @@
 
     <h4>Export</h4>
     <form action="export" method="GET">
+      <xsl:call-template name="hidden-locale-field"/>
+      
       <table>
       <tr>
           <td align="right">

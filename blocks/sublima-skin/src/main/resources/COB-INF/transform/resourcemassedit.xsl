@@ -31,6 +31,7 @@
     </p>
 
      <form action="">
+       <xsl:call-template name="hidden-locale-field"/>
        <fieldset>
 	 <table>
 	   <tr>

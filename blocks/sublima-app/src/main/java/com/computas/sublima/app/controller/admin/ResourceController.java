@@ -74,7 +74,7 @@ public class ResourceController implements StatelessAppleController {
 
     if ("ressurser".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
-        showResourcesIndex(res);
+        showResourcesIndex(res, req);
       } else if ("masse".equalsIgnoreCase(submode)) {
         massEditResource(res, req);
       } else if ("ny".equalsIgnoreCase(submode)) {
@@ -123,11 +123,13 @@ public class ResourceController implements StatelessAppleController {
 
       bizData.put("messages", "<empty/>");
       bizData.put("tempvalues", "<empty/>");
+      bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
       res.sendPage("xml2/ressurs-prereg", bizData);
 
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
       String url = req.getCocoonRequest().getParameter("sub:url");
       bizData.put("tempvalues", tempPrefixes + "<sub:url>" + req.getCocoonRequest().getParameter("sub:url") + "</sub:url></c:tempvalues>\n");
+      bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
       if (!"".equalsIgnoreCase(url)) {
         if (adminService.validateURL(url)) {
@@ -236,6 +238,7 @@ public class ResourceController implements StatelessAppleController {
         bizData.put("publishers", adminService.getAllPublishers());
         bizData.put("mode", "edit");
         bizData.put("messages", "<empty></empty>");
+        bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
         res.sendPage("xml2/ressurs", bizData);
       }
 
@@ -279,6 +282,7 @@ public class ResourceController implements StatelessAppleController {
           bizData.put("messages", messageBuffer.toString());
           bizData.put("userprivileges", userPrivileges);
           bizData.put("publishers", adminService.getAllPublishers());
+          bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
           res.sendPage("xml2/ressurs", bizData);
           return;
@@ -360,7 +364,7 @@ public class ResourceController implements StatelessAppleController {
       }
 
       messageBuffer.append("</c:messages>\n");
-
+      bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
       bizData.put("messages", messageBuffer.toString());
       bizData.put("userprivileges", userPrivileges);
       bizData.put("publishers", adminService.getAllPublishers());
@@ -498,11 +502,12 @@ public class ResourceController implements StatelessAppleController {
    *
    * @param res - AppleResponse
    */
-  private void showResourcesIndex(AppleResponse res) {
+  private void showResourcesIndex(AppleResponse res, AppleRequest req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     AdminService adminservice = new AdminService();
     bizData.put("statuses", adminservice.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
             "<http://www.w3.org/2007/05/powder#describedBy>"));
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
     res.sendPage("xml2/ressurser", bizData);
   }
 
@@ -530,6 +535,7 @@ public class ResourceController implements StatelessAppleController {
   }
 
   private void massEditResource(AppleResponse res, AppleRequest req) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
 
     // When GET present a blank form with listvalues or prefilled with resource
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
@@ -550,6 +556,7 @@ public class ResourceController implements StatelessAppleController {
       }
       logger.debug("Mass updated " + i + " records.");
     }
-    res.sendPage("xml2/massedit", null);
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    res.sendPage("xml2/massedit", bizData);
   }
 }

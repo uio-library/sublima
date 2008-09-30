@@ -3,6 +3,7 @@
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:c="http://xmlns.computas.com/cocoon">
+    <c:facets><jx:out value="#{facets}" xmlize="true"/></c:facets>
     <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
     <c:breadcrumbs>
@@ -26,7 +27,7 @@
             <h3><i18n:text key="link">Lenkesjekk</i18n:text></h3>
             <br/>
             <br/>
-            <a href="{$baseurl}/admin/lenkesjekk/run"><i18n:text key="linkcheck.run">Kjør lenkesjekk (NB! Kan ta lang tid)</i18n:text></a>
+            <a href="run"><i18n:text key="linkcheck.run">Kjør lenkesjekk (NB! Kan ta lang tid)</i18n:text></a>
         </c:text>
         <c:linkcheck>
             <c:status_check>

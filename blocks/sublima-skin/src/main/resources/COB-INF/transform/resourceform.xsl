@@ -53,6 +53,7 @@
       <input type="hidden" id="dct:identifier" name="dct:identifier"
              value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
+      <xsl:call-template name="hidden-locale-field"/>
 
       <table>
         <tr>
@@ -105,12 +106,12 @@
                   <xsl:when
                           test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource">
                     <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./foaf:name[@xml:lang=$interface-language]"/>
+                      <xsl:value-of select="./foaf:name"/>
                     </option>
                   </xsl:when>
                   <xsl:otherwise>
                     <option value="{./@rdf:about}">
-                      <xsl:value-of select="./foaf:name[@xml:lang=$interface-language]"/>
+                      <xsl:value-of select="./foaf:name"/>
                     </option>
                   </xsl:otherwise>
                 </xsl:choose>
@@ -410,6 +411,7 @@
       <input type="hidden" id="dct:identifier" name="dct:identifier"
              value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
+      <xsl:call-template name="hidden-locale-field"/>
 
       <table>
         <tr>

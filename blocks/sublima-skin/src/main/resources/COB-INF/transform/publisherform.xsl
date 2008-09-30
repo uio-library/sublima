@@ -32,6 +32,7 @@
       <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.com/foaf/0.1/Agent"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
+      <xsl:call-template name="hidden-locale-field"/>
 
       <xsl:choose>
         <xsl:when test="//foaf:Agent/@rdf:about">
@@ -69,7 +70,7 @@
           </td>
           <td>
             <textarea id="dct:description" name="dct:description" rows="6" cols="40"><xsl:value-of
-                    select="//foaf:Agent/dct:description"/>...
+                    select="//foaf:Agent/dct:description"/><xsl:text> </xsl:text>
             </textarea>
           </td>
         </tr>

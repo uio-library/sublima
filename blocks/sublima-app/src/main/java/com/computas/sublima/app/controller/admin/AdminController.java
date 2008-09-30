@@ -62,7 +62,9 @@ public class AdminController implements StatelessAppleController {
     String submode = req.getSitemapParameter("submode");
 
     if ("".equalsIgnoreCase(mode)) {
-      res.sendPage("xml2/admin", null);
+      Map<String, Object> bizData = new HashMap<String, Object>();
+      bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+      res.sendPage("xml2/admin", bizData);
     } else if ("testsparql".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
         res.sendPage("xhtml/testsparql", null);
@@ -138,8 +140,11 @@ public class AdminController implements StatelessAppleController {
   }
 
   private void uploadForm(AppleResponse res, AppleRequest req) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+      bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
-      res.sendPage("xml2/upload", null);
+      res.sendPage("xml2/upload", bizData);
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
       String type = req.getCocoonRequest().getParameter("type");
@@ -156,7 +161,7 @@ public class AdminController implements StatelessAppleController {
         e.printStackTrace();
       }
 
-      res.sendPage("xml2/upload", null);
+      res.sendPage("xml2/upload", bizData);
     }
   }
 

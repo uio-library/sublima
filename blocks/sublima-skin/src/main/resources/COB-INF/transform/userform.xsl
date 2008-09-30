@@ -30,6 +30,8 @@
       <input type="hidden" name="prefix" value="sioc: &lt;http://rdfs.org/sioc/ns#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://rdfs.org/sioc/ns#User"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
+      <xsl:call-template name="hidden-locale-field"/>
+      
 
       <xsl:choose>
         <xsl:when test="./c:userdetails/rdf:RDF/sioc:User/@rdf:about">
@@ -142,6 +144,8 @@
       <input type="hidden" name="prefix" value="sioc: &lt;http://rdfs.org/sioc/ns#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://rdfs.org/sioc/ns#User"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
+      <xsl:call-template name="hidden-locale-field"/>
+      
 
       <xsl:choose>
         <xsl:when test="./c:tempvalues/c:tempvalues/rdf:about != 'null'">

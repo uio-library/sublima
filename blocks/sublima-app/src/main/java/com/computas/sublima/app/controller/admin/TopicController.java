@@ -79,7 +79,9 @@ public class TopicController implements StatelessAppleController {
 
     if ("emner".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
-        res.sendPage("xml2/emner", null);
+        Map<String, Object> bizData = new HashMap<String, Object>();
+        bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+        res.sendPage("xml2/emner", bizData);
       } else if ("nytt".equalsIgnoreCase(submode)) {
         editTopic(res, req, "nytt", null);
       } else if ("alle".equalsIgnoreCase(submode)) {
@@ -297,6 +299,7 @@ public class TopicController implements StatelessAppleController {
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
       Map<String, String[]> requestMap = createParametersMap(req.getCocoonRequest());
       requestMap.remove("actionbutton");
+      requestMap.remove("locale");
 
       StringBuffer deleteString = new StringBuffer();
       StringBuffer whereString = new StringBuffer();

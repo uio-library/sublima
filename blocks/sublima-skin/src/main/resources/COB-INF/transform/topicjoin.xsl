@@ -28,6 +28,8 @@
       </xsl:call-template>
 
         <form action="{$baseurl}/admin/emner/koble" method="POST">
+          <xsl:call-template name="hidden-locale-field"/>
+          
             <table>
                 <tr>
                     <td>

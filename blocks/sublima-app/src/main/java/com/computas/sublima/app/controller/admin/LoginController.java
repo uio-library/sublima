@@ -31,6 +31,7 @@ public class LoginController implements StatelessAppleController {
       messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
       messageBuffer.append("</c:messages>\n");
       bizData.put("messages", messageBuffer.toString());
+      bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(appleRequest) + "</c:request>");
       appleResponse.sendPage("xml/login", bizData);
     } else {
       boolean continueLogin = true;
@@ -82,6 +83,7 @@ public class LoginController implements StatelessAppleController {
         messageBuffer.append("<c:message><i18n:text key=\"login.failed\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>");
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
+        bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(appleRequest) + "</c:request>");
         appleResponse.sendPage("xml/login", bizData);
 
       } else {

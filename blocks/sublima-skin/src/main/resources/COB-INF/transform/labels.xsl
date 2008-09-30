@@ -37,7 +37,7 @@
              value="{$value}"/>
           </xsl:when>
           <xsl:when test="$type = 'textarea'">
-             <textarea id="{$field}" name="{$field}" rows="6" cols="40">...<xsl:value-of select="$value"/>
+             <textarea id="{$field}" name="{$field}" rows="6" cols="40"><xsl:value-of select="$value"/><xsl:text> </xsl:text>
             </textarea>
           </xsl:when>
         </xsl:choose>

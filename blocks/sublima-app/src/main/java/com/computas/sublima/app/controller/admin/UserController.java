@@ -77,7 +77,9 @@ public class UserController implements StatelessAppleController {
 
     if ("brukere".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
-        res.sendPage("xml2/brukere", null);
+        Map<String, Object> bizData = new HashMap<String, Object>();
+        bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+        res.sendPage("xml2/brukere", bizData);
         return;
       } else if ("ny".equalsIgnoreCase(submode)) {
         editUser(req, res, "ny", null);
@@ -94,7 +96,9 @@ public class UserController implements StatelessAppleController {
       }
     } else if ("roller".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
-        res.sendPage("xml2/roller", null);
+        Map<String, Object> bizData = new HashMap<String, Object>();
+        bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+        res.sendPage("xml2/roller", bizData);
         return;
       } else if ("rolle".equalsIgnoreCase(submode)) {
         editRole(req, res, null);
@@ -109,6 +113,8 @@ public class UserController implements StatelessAppleController {
   private void listRoles(AppleRequest req, AppleResponse res) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+
     res.sendPage("xml2/roller_alle", bizData);
   }
 
@@ -118,6 +124,8 @@ public class UserController implements StatelessAppleController {
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+
 
     // Check whether the logged in user requests his/hers own page. If so, allow editing.
     if (adminService.getUserByURI(
@@ -354,6 +362,8 @@ public class UserController implements StatelessAppleController {
     bizData.put("allroles", adminService.getAllRoles());
     bizData.put("allstatuses", adminService.getAllStatuses());
     bizData.put("userprivileges", userPrivileges);
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    
 //bizData.put("allanguages", adminService.getAllLanguages());
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
@@ -494,6 +504,8 @@ public class UserController implements StatelessAppleController {
                   res) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allusers", adminService.getAllUsers());
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    
     res.sendPage("xml2/brukere_alle", bizData);
   }
 

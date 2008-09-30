@@ -22,6 +22,7 @@
   <xsl:template match="c:resourceprereg" mode="resourceprereg">
 
     <form action="{$baseurl}/admin/ressurser/checkurl" method="POST">
+      <xsl:call-template name="hidden-locale-field"/>
       <table>
         <tr>
           <td>

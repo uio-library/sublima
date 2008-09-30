@@ -1,6 +1,7 @@
 package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
@@ -17,6 +18,7 @@ import java.util.*;
 public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private ApplicationManager appMan;
+  private AdminService adminService = new AdminService();
   private String mode;
   private String format;
 
@@ -49,7 +51,7 @@ public class SearchController implements StatelessAppleController {
         bizData.put("mediatypes", adminservice.getDistinctAndUsedLabels("dct:MediaType", "dct:format"));
         bizData.put("audiences", adminservice.getDistinctAndUsedLabels("dct:AgentClass", "dct:audience"));
         bizData.put("committers", adminservice.getDistinctAndUsedLabels("<http://rdfs.org/sioc/ns#User>", "<http://xmlns.computas.com/sublima#committer>"));
-        StringBuffer params = getMostOfTheRequestXML(req);
+        StringBuffer params = adminService.getMostOfTheRequestXML(req);
         params.append("\n  </request>\n");
         bizData.put("facets", params.toString()); 
         res.sendPage("xml/advancedsearch", bizData);
@@ -138,7 +140,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("navigation", queryResult);
     bizData.put("mode", mode);
 
-    StringBuffer params = getMostOfTheRequestXML(req);
+    StringBuffer params = adminService.getMostOfTheRequestXML(req);
 
     // These will not be brought along unless we add it as request parameters, which is hackish.
     params.append("\n    <param key=\"prefix\">");
@@ -263,7 +265,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("mode", mode);
 
     bizData.put("searchparams", xmlSearchParametersBuffer.toString());
-    StringBuffer params = getMostOfTheRequestXML(req);
+    StringBuffer params = adminService.getMostOfTheRequestXML(req);
     params.append("\n  </request>\n");
 
     bizData.put("request", params.toString());
@@ -271,37 +273,7 @@ public class SearchController implements StatelessAppleController {
     res.sendPage(format + "/sparql-result", bizData);
   }
 
-  private StringBuffer getMostOfTheRequestXML(AppleRequest req) {
-      // This is such a 1999 way of doing things. There should be a generic SAX events generator
-      // or something that would serialise this data structure automatically in a one-liner,
-      // but I couldn't find it. Arguably a TODO.
-      StringBuffer params = new StringBuffer();
-      String uri = req.getCocoonRequest().getRequestURI();
-      int paramcount = 0;
-      params.append("  <request justbaseurl=\""+ uri + "\" ");
-      if (req.getCocoonRequest().getQueryString() != null) {
-          uri += "?" + req.getCocoonRequest().getQueryString();
-          uri = uri.replaceAll("&", "&amp;");
-          paramcount = req.getCocoonRequest().getParameters().size();
-      }
-    params.append("paramcount=\""+ paramcount + "\" ");
-     params.append("requesturl=\""+ uri);
-      params.append("\">\n");
-      for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
-          String key = keys.nextElement().toString();
-          params.append("\n    <param key=\"" + key + "\">");
-          String[] values = req.getCocoonRequest().getParameterValues(key);
-          for (String value : values) {
-              value = value.replaceAll("&", "&amp;");
-              value = value.replaceAll("<", "%3C");
-              value = value.replaceAll(">", "%3E");
-              value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
-              params.append("\n      <value>" + value + "</value>");
-          }
-          params.append("\n    </param>");
-      }
-      return params;
-  }
+  
 
     private Map<String, String[]> createParametersMap(Request request) {
     Map<String, String[]> result = new HashMap<String, String[]>();

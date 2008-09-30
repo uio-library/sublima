@@ -5,6 +5,8 @@
 	xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
     <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
+  <c:facets><jx:out value="#{facets}" xmlize="true"/></c:facets>
+
     <c:breadcrumbs>
         <c:breadcrumb title="Sublima"></c:breadcrumb>
         <c:breadcrumb title="Admin">admin</c:breadcrumb>

@@ -59,7 +59,9 @@ public class PublisherController implements StatelessAppleController {
 
     if ("utgivere".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
-        res.sendPage("xml2/utgivere", null);
+        Map<String, Object> bizData = new HashMap<String, Object>();
+        bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+        res.sendPage("xml2/utgivere", bizData);
         return;
       } else if ("ny".equalsIgnoreCase(submode)) {
         editPublisher(res, req);
@@ -151,8 +153,7 @@ public class PublisherController implements StatelessAppleController {
                       "}";
 
       logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);
-      boolean success = false;
-      success = sparulDispatcher.query(insertPublisherByName);
+      boolean success = sparulDispatcher.query(insertPublisherByName);
       logger.info("updatePublisherByURI() ---> " + publisherURI + " -- INSERT NEW NAME --> " + success);
 
       if (success) {
@@ -260,6 +261,7 @@ public class PublisherController implements StatelessAppleController {
     bizData.put("messages", messageBuffer.toString());
     bizData.put("publisherdetails", queryResult);
     bizData.put("languages", adminService.getAllLanguages());
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
     res.sendPage("xml2/utgiver", bizData);
   }
 
@@ -296,6 +298,8 @@ public class PublisherController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("messages", messageBuffer.toString());
     bizData.put("publisherlist", queryResult);
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    
     res.sendPage("xml2/utgivere_alle", bizData);
   }
 

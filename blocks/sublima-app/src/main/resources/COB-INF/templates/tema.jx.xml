@@ -3,6 +3,7 @@
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:c="http://xmlns.computas.com/cocoon">
+  <c:facets><jx:out value="#{facets}" xmlize="true"/></c:facets>
   <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
   <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
   <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>

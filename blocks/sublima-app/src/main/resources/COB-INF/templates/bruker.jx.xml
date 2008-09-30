@@ -14,6 +14,7 @@
         xmlns:sioc= "http://rdfs.org/sioc/ns#"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml">
+  <c:facets><jx:out value="#{facets}" xmlize="true"/></c:facets>
   <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
   <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>

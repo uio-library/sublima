@@ -23,6 +23,8 @@
   <xsl:template match="c:role" mode="roleedit">
     <form action="{$baseurl}/admin/brukere/roller/rolle" method="POST">
       <input type="hidden" name="uri" value="{./c:roledetails/rdf:RDF/sioc:Role/@rdf:about}"/>
+      <xsl:call-template name="hidden-locale-field"/>
+      
 
       <table>
         <tr>
@@ -381,6 +383,8 @@
   <xsl:template match="c:role" mode="roletemp">
     <form action="{$baseurl}/admin/brukere/roller/rolle" method="POST">
       <input type="hidden" name="uri" value="{./c:tempvalues/c:tempvalues/rdf:about}"/>
+      <xsl:call-template name="hidden-locale-field"/>
+      
       <table>
         <tr>
           <td>

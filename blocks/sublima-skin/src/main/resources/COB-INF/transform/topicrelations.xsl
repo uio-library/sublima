@@ -22,7 +22,9 @@
   <xsl:template match="c:related">
     <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
       <fieldset>
-	<input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+
+  <xsl:call-template name="hidden-locale-field"/>
+  <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
 	<input type="hidden" name="interface-language" value="{$interface-language}"/>
 	<xsl:choose>
 	  <xsl:when test="./c:tempvalues/c:tempvalues">
