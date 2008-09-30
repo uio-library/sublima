@@ -280,7 +280,7 @@ public class AdminService {
    *
    * @return A String RDF/XML containing all the topics
    */
-  public String getAllTopics(String locale) {
+  public String getAllTopics() {
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
@@ -291,7 +291,6 @@ public class AdminService {
             "WHERE {",
             "    ?topic a skos:Concept ;",
             "        skos:prefLabel ?label .",
-            "FILTER langMatches( lang(?label), \"" + locale +"\" )",
             "}"});
 
     logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
@@ -458,7 +457,7 @@ public class AdminService {
   }
 
 
-  public String getTopicsByLetter(String letter, String language) {
+  public String getTopicsByLetter(String letter) {
     if (letter.equalsIgnoreCase("0-9")) {
       letter = "[0-9]";
     }
@@ -474,7 +473,6 @@ public class AdminService {
             "       ?topic skos:altLabel ?label . }",
             "    ?topic wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
             "FILTER regex(str(?label), \"^" + letter + "\", \"i\")",
-            "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}"});
 
     logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);

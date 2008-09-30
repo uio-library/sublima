@@ -38,7 +38,6 @@ public class ResourceController implements StatelessAppleController {
   private User user;
   private String mode;
   private String submode;
-  private String locale;
   String[] completePrefixArray = {
           "PREFIX dct: <http://purl.org/dc/terms/>",
           "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
@@ -64,12 +63,6 @@ public class ResourceController implements StatelessAppleController {
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
-
-    locale = req.getCocoonRequest().getParameter("locale");
-
-    if (locale == null) {
-      locale = SettingsService.getProperty("sublima.default.locale");
-    }
 
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
@@ -148,7 +141,7 @@ public class ResourceController implements StatelessAppleController {
             messageBuffer.append("<c:message><i18n:text key=\"validation.providedurlok\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>");
             messageBuffer.append("</c:messages>\n");
 
-            bizData.put("topics", adminService.getAllTopics(locale));
+            bizData.put("topics", adminService.getAllTopics());
             bizData.put("languages", adminService.getAllLanguages());
             bizData.put("mediatypes", adminService.getAllMediaTypes());
             bizData.put("audience", adminService.getAllAudiences());
@@ -213,7 +206,7 @@ public class ResourceController implements StatelessAppleController {
     String committer;
 
     // Get all list values
-    String allTopics = adminService.getAllTopics(locale);
+    String allTopics = adminService.getAllTopics();
     String allLanguages = adminService.getAllLanguages();
     String allMediatypes = adminService.getAllMediaTypes();
     String allAudiences = adminService.getAllAudiences();
