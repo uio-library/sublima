@@ -256,8 +256,8 @@
 		  <xsl:if test="c:page/c:statuses/sparql:sparql">
 		
 		  <form action="../../search-result.html" method="GET">
-		    <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>  
-		    <xsl:call-template name="hidden-locale-field"/>
+		    <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
+        <xsl:call-template name="hidden-locale-field"/>
 
 		    <table>
 		      <xsl:apply-templates select="c:page/c:statuses/sparql:sparql">
