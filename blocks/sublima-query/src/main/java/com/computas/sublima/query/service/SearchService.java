@@ -76,7 +76,7 @@ public class SearchService {
         }
 
       } else {
-        if (partOfPhrase || !truncate) {
+        if (partOfPhrase || !truncate || partialSearchString[i].length() <= 2) {
           stringBuffer.append(partialSearchString[i] + " ");
         } else {
           stringBuffer.append(partialSearchString[i] + "* ");
