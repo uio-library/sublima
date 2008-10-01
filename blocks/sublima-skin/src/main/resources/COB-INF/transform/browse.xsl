@@ -43,7 +43,7 @@
 	      </xsl:variable>
 	      <xsl:for-each select="./rdfs:label[@xml:lang=$interface-language]">
 		<li>
-		  <a href="$url">
+		  <a href="{$url}">
 		    <xsl:value-of select="."/>
 		  </a>
 		</li>    	      
