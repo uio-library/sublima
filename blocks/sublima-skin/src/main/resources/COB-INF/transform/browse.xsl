@@ -23,36 +23,31 @@
     <xsl:if test="./rdf:RDF/skos:Concept">
       <ul>
         <xsl:for-each select="./rdf:RDF//skos:Concept">
-          <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
+          <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
 
           <xsl:choose>
             <xsl:when test="/c:page/c:letter = ''">
               <li>
               <a href="{./@rdf:about}.html{$qloc}">
-                <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
               </a>
               </li>                
             </xsl:when>
 
-            <xsl:otherwise>
-
-              <xsl:if test="starts-with(translate(./skos:prefLabel[@xml:lang=$interface-language], $ucletters, $lcletters), /c:page/c:letter)">
-                <li>
-                  <a href="{./@rdf:about}.html{$qloc}">
-                    <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                  </a>
-                </li>    
-              </xsl:if>
-
-              <xsl:if test="starts-with(translate(./skos:altLabel[@xml:lang=$interface-language], $ucletters, $lcletters), /c:page/c:letter)">
-                <li>
-                  <a href="{./@rdf:about}.html{$qloc}">
-                    <xsl:value-of select="./skos:altLabel[@xml:lang=$interface-language]"/>
-                  </a>
-                </li>
-              </xsl:if>
-
-            </xsl:otherwise>
+	    <xsl:when test="starts-with(translate(./rdfs:label[@xml:lang=$interface-language], $ucletters, $lcletters), /c:page/c:letter)">
+	      <xsl:variable name="url">
+		<xsl:value-of select="./@rdf:about"/>
+		<xsl:text>.html</xsl:text>
+		<xsl:value-of select="$qloc"/>
+	      </xsl:variable>
+	      <xsl:for-each select="./rdfs:label[@xml:lang=$interface-language]">
+		<li>
+		  <a href="$url">
+		    <xsl:value-of select="."/>
+		  </a>
+		</li>    	      
+	      </xsl:for-each>
+	    </xsl:when>
 
           </xsl:choose>
         </xsl:for-each>
@@ -60,4 +55,5 @@
     </xsl:if>
 
   </xsl:template>
+
 </xsl:stylesheet>
