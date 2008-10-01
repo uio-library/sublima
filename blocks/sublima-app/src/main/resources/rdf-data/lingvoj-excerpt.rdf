@@ -19,16 +19,15 @@
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
     xmlns:sub="http://xmlns.computas.com/sublima#">
   <lingvoj:Lingvo rdf:about="http://www.lingvoj.org/lang/sv">
-    <rdfs:label xml:lang="nn">Svensk språk</rdfs:label>
+    <rdfs:label xml:lang="nn">Svensk</rdfs:label>
     <lingvoj:iso1>sv</lingvoj:iso1>
-    <rdfs:label xml:lang="lij">Lengua svedeise</rdfs:label>
     <owl:sameAs rdf:resource="http://psi.oasis-open.org/iso/639/#swe"/>
     <rdfs:label xml:lang="se">Ruoŧagiella</rdfs:label>
     <rdfs:label xml:lang="sv">Svenska</rdfs:label>
     <owl:sameAs rdf:resource="http://sw.cyc.com/2006/07/27/cyc/SwedishLanguage"/>
     <owl:sameAs rdf:resource="http://dbpedia.org/resource/Swedish_language"/>
     <foaf:depiction rdf:resource="http://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Sweden.svg"/>
-    <rdfs:label xml:lang="da">Svensk (sprog)</rdfs:label>
+    <rdfs:label xml:lang="da">Svensk</rdfs:label>
     <rdfs:label xml:lang="fi">Ruotsin kieli</rdfs:label>
     <lingvoj:iso3>swe</lingvoj:iso3>
     <rdfs:label xml:lang="no">Svensk</rdfs:label>
@@ -51,12 +50,12 @@
   </lingvoj:Lingvo>
   <lingvoj:Lingvo rdf:about="http://www.lingvoj.org/lang/en">
     <lingvoj:iso3>eng</lingvoj:iso3>
-    <rdfs:label xml:lang="nn">Engelsk språk</rdfs:label>
+    <rdfs:label xml:lang="nn">Engelsk</rdfs:label>
     <rdfs:label xml:lang="sv">Engelska</rdfs:label>
     <owl:sameAs rdf:resource="http://downlode.org/rdf/iso-639/languages#en"/>
     <lingvoj:iso1>en</lingvoj:iso1>
     <lingvoj:iso2t>eng</lingvoj:iso2t>
-    <rdfs:label xml:lang="da">Engelsk (sprog)</rdfs:label>
+    <rdfs:label xml:lang="da">Engelsk</rdfs:label>
     <owl:sameAs rdf:resource="http://dbpedia.org/resource/English_language"/>
     <rdfs:label xml:lang="fi">Englannin kieli</rdfs:label>
     <lingvoj:iso2b>eng</lingvoj:iso2b>
@@ -73,22 +72,22 @@
     <lingvoj:iso2t>fin</lingvoj:iso2t>
     <rdfs:label xml:lang="sv">Finska</rdfs:label>
     <owl:sameAs rdf:resource="http://dbpedia.org/resource/Finnish_language"/>
-    <rdfs:label xml:lang="da">Finsk (sprog)</rdfs:label>
+    <rdfs:label xml:lang="da">Finsk</rdfs:label>
     <owl:sameAs rdf:resource="http://downlode.org/rdf/iso-639/languages#fi"/>
     <owl:sameAs rdf:resource="http://psi.oasis-open.org/iso/639/#fin"/>
     <rdfs:label xml:lang="no">Finsk</rdfs:label>
     <foaf:depiction rdf:resource="http://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Finland.svg"/>
-    <rdfs:label xml:lang="nn">Finsk språk</rdfs:label>
+    <rdfs:label xml:lang="nn">Finsk</rdfs:label>
     <lingvoj:iso2b>fin</lingvoj:iso2b>
     <lingvoj:iso3>fin</lingvoj:iso3>
-    <rdfs:label xml:lang="en">Finnish language</rdfs:label>
+    <rdfs:label xml:lang="en">Finnish</rdfs:label>
     <rdfs:label xml:lang="se">Suomagiella</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="http://www.lingvoj.org/lingvo/fi.rdf"/>
     <lingvoj:iso1>fi</lingvoj:iso1>
   </lingvoj:Lingvo>
   <lingvoj:Lingvo rdf:about="http://www.lingvoj.org/lang/se">
     <rdfs:label xml:lang="sv">Nordsamiska</rdfs:label>
-    <rdfs:label xml:lang="nn">Nordsamisk språk</rdfs:label>
+    <rdfs:label xml:lang="nn">Nordsamisk</rdfs:label>
     <rdfs:label xml:lang="en">Northern Sami</rdfs:label>
     <owl:sameAs rdf:resource="http://dbpedia.org/resource/Northern_Sami_language"/>
     <rdfs:isDefinedBy rdf:resource="http://www.lingvoj.org/lingvo/se.rdf"/>
@@ -114,11 +113,10 @@
     <rdfs:isDefinedBy rdf:resource="http://www.lingvoj.org/lingvo/nb.rdf"/>
     <owl:sameAs rdf:resource="http://sw.cyc.com/2006/07/27/cyc/BokmalDialect"/>
     <lingvoj:iso2b>nob</lingvoj:iso2b>
-    <rdfs:label xml:lang="zh">書面挪威語</rdfs:label>
   </lingvoj:Lingvo>
   <lingvoj:Lingvo rdf:about="http://www.lingvoj.org/lang/no">
-    <rdfs:label xml:lang="nn">Norsk språk</rdfs:label>
-    <rdfs:label xml:lang="no">Norsk språk</rdfs:label>
+    <rdfs:label xml:lang="nn">Norsk</rdfs:label>
+    <rdfs:label xml:lang="no">Norsk</rdfs:label>
     <owl:sameAs rdf:resource="http://psi.oasis-open.org/iso/639/#nor"/>
     <owl:sameAs rdf:resource="http://dbpedia.org/resource/Norwegian_language"/>
     <owl:sameAs rdf:resource="http://downlode.org/rdf/iso-639/languages#no"/>
@@ -127,21 +125,19 @@
     <rdfs:label xml:lang="sv">Norska</rdfs:label>
     <lingvoj:iso1>no</lingvoj:iso1>
     <lingvoj:iso3>nor</lingvoj:iso3>
-    <rdfs:label xml:lang="da">Norsk (sprog)</rdfs:label>
+    <rdfs:label xml:lang="da">Norsk</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="http://www.lingvoj.org/lingvo/no.rdf"/>
     <rdfs:label xml:lang="fi">Norjan kieli</rdfs:label>
-    <rdfs:label xml:lang="en">Norwegian language</rdfs:label>
+    <rdfs:label xml:lang="en">Norwegian</rdfs:label>
     <rdfs:label xml:lang="se">Dárogiella</rdfs:label>
-    <rdfs:label xml:lang="lij">Lengua norvegeise</rdfs:label>
   </lingvoj:Lingvo>
   <lingvoj:Lingvo rdf:about="http://www.lingvoj.org/lang/da">
-    <rdfs:label xml:lang="nn">Dansk språk</rdfs:label>
+    <rdfs:label xml:lang="nn">Dansk</rdfs:label>
     <rdfs:label xml:lang="no">Dansk</rdfs:label>
     <owl:sameAs rdf:resource="http://downlode.org/rdf/iso-639/languages#da"/>
     <lingvoj:iso1>da</lingvoj:iso1>
-    <rdfs:label xml:lang="en">Danish language</rdfs:label>
+    <rdfs:label xml:lang="en">Danish</rdfs:label>
     <lingvoj:iso2t>dan</lingvoj:iso2t>
-    <rdfs:label xml:lang="ro">Limba daneză</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="http://www.lingvoj.org/lingvo/da.rdf"/>
     <owl:sameAs rdf:resource="http://dbpedia.org/resource/Danish_language"/>
     <lingvoj:iso2b>dan</lingvoj:iso2b>
@@ -150,7 +146,7 @@
     <rdfs:label xml:lang="sv">Danska</rdfs:label>
     <owl:sameAs rdf:resource="http://sw.cyc.com/2006/07/27/cyc/DanishLanguage"/>
     <lingvoj:iso3>dan</lingvoj:iso3>
-    <rdfs:label xml:lang="da">Dansk (sprog)</rdfs:label>
+    <rdfs:label xml:lang="da">Dansk</rdfs:label>
     <rdfs:label xml:lang="fi">Tanskan kieli</rdfs:label>
   </lingvoj:Lingvo>
 </rdf:RDF>
