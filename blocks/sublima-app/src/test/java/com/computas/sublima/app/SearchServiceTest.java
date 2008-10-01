@@ -57,6 +57,10 @@ public class SearchServiceTest extends TestCase {
         String testExpected6 = "\"Henrik Ibsen\" " + booleanOperator + " bosatt* " + booleanOperator + " \"i Skien\"";
         assertEquals(testExpected6, myService.buildSearchString(test6, true));
 
+        String test6b = "\"Henrik Ibsen i 1814\" bosatt \"i Skien\" 1814";
+        String testExpected6b = "\"Henrik Ibsen i 1814\" " + booleanOperator + " bosatt* " + booleanOperator + " \"i Skien\" " + booleanOperator + " 1814*";
+        assertEquals(testExpected6b, myService.buildSearchString(test6b, true));
+
         myService.setDefaultBooleanOperator("OR");
         booleanOperator = myService.getDefaultBooleanOperator();
 
