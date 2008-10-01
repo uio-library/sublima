@@ -22,18 +22,7 @@
 
     <i18n:text key="tips.heading"><h2>Fant du ikke det du lette etter?</h2><br/><p>Tips oss gjerne dersom du finner sider som du tror vi kunne satt pris på!</p></i18n:text>
     <br/>
-    <xsl:if test="../c:content/c:messages/c:messages/c:message">
-      <ul>
-        <xsl:for-each select="../c:content/c:messages/c:messages/c:message">
-          <li>
-            <xsl:value-of select="."/>
-            <br/>
-          </li>
-        </xsl:for-each>
-      </ul>
-      <br/>
-    </xsl:if>
-
+    
     <form action="sendtips" method="GET">
       <table>
         <tr>
@@ -57,7 +46,7 @@
             <label for="beskrivelse"><i18n:text key="description">Beskrivelse</i18n:text></label>
           </td>
           <td>
-            <textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40">...</textarea>
+            <textarea id="beskrivelse" name="beskrivelse" rows="6" cols="40"><xsl:text> </xsl:text></textarea>
           </td>
         </tr>
         <tr>

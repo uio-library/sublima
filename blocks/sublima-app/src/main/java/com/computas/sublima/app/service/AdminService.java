@@ -7,19 +7,17 @@ import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -137,10 +135,10 @@ public class AdminService {
     return queryResult.toString();
   }
 
-   /**
+  /**
    * Method to get distinct and used labels for different properties
    *
-   * @param rdfType The full URI (unless it is in the dct or rdfs namespaces) with pointy brackets for the type of subject that you want.
+   * @param rdfType  The full URI (unless it is in the dct or rdfs namespaces) with pointy brackets for the type of subject that you want.
    * @param property The full URI (unless it is in the dct or rdfs namespaces) with pointy brackets for the property that connects the resource to the subject
    * @return A String containing SPARQL Result Set XML with the languages
    */
@@ -161,7 +159,6 @@ public class AdminService {
     return queryResult.toString();
   }
 
-      
 
   /**
    * Method to get all media types
@@ -411,7 +408,7 @@ public class AdminService {
 
   public String getUserByURI(String uri) {
     if (uri == null) {
-        return "";
+      return "";
     }
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
@@ -627,6 +624,7 @@ public class AdminService {
 
   /**
    * Method to check if a given URL already exists as and URI in the data. Checks both with and without a trailing /.
+   *
    * @param url
    * @return
    */
@@ -634,87 +632,92 @@ public class AdminService {
     String resourceWithEndingSlash;
     String resourceWithoutEndingSlash;
 
-    // We have to check the url both with and without an ending /
-    if (url.endsWith("/")) {
-      resourceWithEndingSlash = (String) getResourceByURI(url);
-      url = url.substring(0, url.length() - 1);
-      resourceWithoutEndingSlash = (String) getResourceByURI(url);
+    try {
 
-    } else {
-      resourceWithoutEndingSlash = (String) getResourceByURI(url);
-      resourceWithEndingSlash = (String) getResourceByURI(url + "/");
-    }
+      // We have to check the url both with and without an ending /
+      if (url.endsWith("/")) {
+        resourceWithEndingSlash = (String) getResourceByURI(url);
+        url = url.substring(0, url.length() - 1);
+        resourceWithoutEndingSlash = (String) getResourceByURI(url);
 
-    if (resourceWithEndingSlash.contains(url)
-            || resourceWithoutEndingSlash.contains(url)) {
-      return true;
-    } else {
+      } else {
+        resourceWithoutEndingSlash = (String) getResourceByURI(url);
+        resourceWithEndingSlash = (String) getResourceByURI(url + "/");
+      }
+
+      if (resourceWithEndingSlash.contains(url)
+              || resourceWithoutEndingSlash.contains(url)) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (Exception e) {
       return false;
     }
   }
 
   public StringBuffer getMostOfTheRequestXML(AppleRequest req) {
-      // This is such a 1999 way of doing things. There should be a generic SAX events generator
-      // or something that would serialise this data structure automatically in a one-liner,
-      // but I couldn't find it. Arguably a TODO.
-      StringBuffer params = new StringBuffer();
-      String uri = req.getCocoonRequest().getRequestURI();
-      int paramcount = 0;
-      params.append("  <request justbaseurl=\""+ uri + "\" ");
-      if (req.getCocoonRequest().getQueryString() != null) {
-          uri += "?" + req.getCocoonRequest().getQueryString();
-          uri = uri.replaceAll("&", "&amp;");
-          paramcount = req.getCocoonRequest().getParameters().size();
+    // This is such a 1999 way of doing things. There should be a generic SAX events generator
+    // or something that would serialise this data structure automatically in a one-liner,
+    // but I couldn't find it. Arguably a TODO.
+    StringBuffer params = new StringBuffer();
+    String uri = req.getCocoonRequest().getRequestURI();
+    int paramcount = 0;
+    params.append("  <request justbaseurl=\"" + uri + "\" ");
+    if (req.getCocoonRequest().getQueryString() != null) {
+      uri += "?" + req.getCocoonRequest().getQueryString();
+      uri = uri.replaceAll("&", "&amp;");
+      paramcount = req.getCocoonRequest().getParameters().size();
+    }
+    params.append("paramcount=\"" + paramcount + "\" ");
+    params.append("requesturl=\"" + uri);
+    params.append("\">\n");
+    for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
+      String key = keys.nextElement().toString();
+      params.append("\n    <param key=\"" + key + "\">");
+      String[] values = req.getCocoonRequest().getParameterValues(key);
+      for (String value : values) {
+        value = value.replaceAll("&", "&amp;");
+        value = value.replaceAll("<", "%3C");
+        value = value.replaceAll(">", "%3E");
+        value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+        params.append("\n      <value>" + value + "</value>");
       }
-    params.append("paramcount=\""+ paramcount + "\" ");
-     params.append("requesturl=\""+ uri);
-      params.append("\">\n");
-      for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
-          String key = keys.nextElement().toString();
-          params.append("\n    <param key=\"" + key + "\">");
-          String[] values = req.getCocoonRequest().getParameterValues(key);
-          for (String value : values) {
-              value = value.replaceAll("&", "&amp;");
-              value = value.replaceAll("<", "%3C");
-              value = value.replaceAll(">", "%3E");
-              value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
-              params.append("\n      <value>" + value + "</value>");
-          }
-          params.append("\n    </param>");
-      }
-      return params;
+      params.append("\n    </param>");
+    }
+    return params;
   }
 
   public StringBuffer getMostOfTheRequestXMLWithPrefix(AppleRequest req) {
-      // This is such a 1999 way of doing things. There should be a generic SAX events generator
-      // or something that would serialise this data structure automatically in a one-liner,
-      // but I couldn't find it. Arguably a TODO.
-      StringBuffer params = new StringBuffer();
-      String uri = req.getCocoonRequest().getRequestURI();
-      int paramcount = 0;
-      params.append("  <c:request xmlns:c=\"http://xmlns.computas.com/cocoon\" justbaseurl=\""+ uri + "\" ");
-      if (req.getCocoonRequest().getQueryString() != null) {
-          uri += "?" + req.getCocoonRequest().getQueryString();
-          uri = uri.replaceAll("&", "&amp;");
-          paramcount = req.getCocoonRequest().getParameters().size();
+    // This is such a 1999 way of doing things. There should be a generic SAX events generator
+    // or something that would serialise this data structure automatically in a one-liner,
+    // but I couldn't find it. Arguably a TODO.
+    StringBuffer params = new StringBuffer();
+    String uri = req.getCocoonRequest().getRequestURI();
+    int paramcount = 0;
+    params.append("  <c:request xmlns:c=\"http://xmlns.computas.com/cocoon\" justbaseurl=\"" + uri + "\" ");
+    if (req.getCocoonRequest().getQueryString() != null) {
+      uri += "?" + req.getCocoonRequest().getQueryString();
+      uri = uri.replaceAll("&", "&amp;");
+      paramcount = req.getCocoonRequest().getParameters().size();
+    }
+    params.append("paramcount=\"" + paramcount + "\" ");
+    params.append("requesturl=\"" + uri);
+    params.append("\">\n");
+    for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
+      String key = keys.nextElement().toString();
+      params.append("\n    <c:param key=\"" + key + "\">");
+      String[] values = req.getCocoonRequest().getParameterValues(key);
+      for (String value : values) {
+        value = value.replaceAll("&", "&amp;");
+        value = value.replaceAll("<", "%3C");
+        value = value.replaceAll(">", "%3E");
+        value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+        params.append("\n      <c:value>" + value + "</c:value>");
       }
-    params.append("paramcount=\""+ paramcount + "\" ");
-     params.append("requesturl=\""+ uri);
-      params.append("\">\n");
-      for (Enumeration keys = req.getCocoonRequest().getParameterNames(); keys.hasMoreElements();) {
-          String key = keys.nextElement().toString();
-          params.append("\n    <c:param key=\"" + key + "\">");
-          String[] values = req.getCocoonRequest().getParameterValues(key);
-          for (String value : values) {
-              value = value.replaceAll("&", "&amp;");
-              value = value.replaceAll("<", "%3C");
-              value = value.replaceAll(">", "%3E");
-              value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
-              params.append("\n      <c:value>" + value + "</c:value>");
-          }
-          params.append("\n    </c:param>");
-      }
-      return params;
+      params.append("\n    </c:param>");
+    }
+    return params;
   }
 
 }
