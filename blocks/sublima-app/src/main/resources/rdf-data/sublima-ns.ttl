@@ -5,6 +5,8 @@
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .  
 @prefix http: <http://www.w3.org/2007/ont/http#> .
+@prefix wdr: <http://www.w3.org/2007/05/powder#> .
+@prefix status: <http://sublima.computas.com/status/> .
 
 #<>	rdfs:comment "An ontology containing some simple properties and classes for use in the Sublima project." .
 
@@ -47,3 +49,8 @@ sub:isMainConceptOf  a owl:ObjectProperty ;
     rdfs:range skos:ConceptScheme ;
     rdfs:domain skos:Concept ;
     owl:inverseOf skos:hasTopConcept . 
+
+
+wdr:DR a owl:Class .status:godkjent_av_administrator a wdr:DR .
+status:til_godkjenning a wdr:DR .
+status:inaktiv a wdr:DR .

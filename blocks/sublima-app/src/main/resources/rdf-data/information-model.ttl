@@ -7,7 +7,7 @@
 # As of 2008-01-14, the DCMI took upon itself to define the ranges and
 # domains of the properties, which simplifies the model somewhat.
 
-
+@base <http://xmlns.computas.com/sublima-information-model> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -19,7 +19,14 @@
 @prefix wdr: <http://www.w3.org/2007/05/powder#> .
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .  
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> . 
+@prefix http: <http://www.w3.org/2007/ont/http#> .
+@prefix : <http://xmlns.computas.com/sublima-information-model#> .
+
+<> a owl:Ontology ;
+   rdfs:comment "information model." . 
+
+
 
 ######################################################
 # RESOURCES CLASS
@@ -91,6 +98,10 @@ wdr:describedBy		rdfs:range 	wdr:DR ;
 			rdfs:domain 	sub:Resource .
 
 
+
+
+
+
 # free text keyword			
 # see sub:
 #sub:keywords     rdfs:domain sub:Resource ;
@@ -128,17 +139,25 @@ wdr:describedBy		rdfs:range 	wdr:DR ;
 # TOPICS
 ######################################################
 
-skos:prefLabel a owl:AnnotationProperty ;
+skos:Concept a owl:Class .
+
+skos:ConceptScheme a owl:Class .
+
+skos:prefLabel a owl:DatatypeProperty ;
+            rdfs:range 	xsd:string ;
             rdfs:domain skos:Concept .
     
 # skos:definition
 sub:definition a owl:DatatypeProperty ;
+			rdfs:range 	xsd:string ;
 			rdfs:domain	skos:Concept .		
     
 skos:altLabel a owl:DatatypeProperty ;
+            rdfs:range 	xsd:string ;
             rdfs:domain skos:Concept .
 
 skos:hiddenLabel a owl:DatatypeProperty ;
+            rdfs:range 	xsd:string;
             rdfs:domain skos:Concept .
 
 wdr:describedBy a owl:DatatypeProperty ;
@@ -157,7 +176,6 @@ sub:classification
 			a		 owl:DatatypeProperty ;
 			rdfs:domain     skos:Concept ;	
 			rdfs:range	    rdf:XMLLiteral .
-
 
 sub:theme a owl:DatatypeProperty ;
             rdfs:domain skos:Concept ;
@@ -192,7 +210,7 @@ skos:related  	a 			owl:ObjectProperty ;
 ########################
 # MediaType
 ########################
-# dct:MediaType a owl:Class .
+dct:MediaType a owl:Class .
 
 # instances of dct:MediaType
 
@@ -254,7 +272,7 @@ skos:related  	a 			owl:ObjectProperty ;
 
 sioc:User  a owl:Class .
 
-# rdfs:label a DatatypeProperty .
+rdfs:label a owl:DatatypeProperty .
 
 
 #########################
@@ -280,9 +298,11 @@ sioc:User  a owl:Class .
 # Publisher registry 
 #########################
 
-# foaf:Agent a owl:Class .
+foaf:Agent a owl:Class .
 
-# foaf:name rdfs:domain foaf:Agent .
+foaf:name a owl:DatatypeProperty ;
+          rdfs:domain foaf:Agent .
+
 # dct:description rdfs:domain foaf:Agent .          
 
 
@@ -290,7 +310,7 @@ sioc:User  a owl:Class .
 # Languages
 #########################
 
-# lingvoj:Lingvo a owl:Class . 
+lingvoj:Lingvo a owl:Class . 
 
 
 ########################
@@ -320,6 +340,6 @@ sioc:User  a owl:Class .
 ########################
 # Response Message
 ########################
-# <http://www.w3.org/2007/ont/http#ResponseMessage> a owl:Class .
+http:ResponseMessage a owl:Class .
 
 
