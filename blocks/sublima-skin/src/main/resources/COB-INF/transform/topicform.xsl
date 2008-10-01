@@ -142,7 +142,7 @@
    
       <table>
 	<caption><i18n:text key="topic.related">Relaterte emner</i18n:text></caption>
-        <xsl:for-each select="c:relationtypes/rdf:RDF/owl:ObjectProperty">
+        <xsl:for-each select="c:relationtypes/rdf:RDF/owl:ObjectProperty | c:relationtypes/rdf:RDF/owl:SymmetricProperty">
           <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
 	  <xsl:variable name="relation-uri" select="./@rdf:about"/>
 	  <tr>
