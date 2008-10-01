@@ -99,7 +99,7 @@ public class FeedbackController implements StatelessAppleController {
       StringBuffer messageBuffer = new StringBuffer();
       messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
 
-      String url = req.getCocoonRequest().getParameter("url").trim();
+      String url = req.getCocoonRequest().getParameter("url");
       String tittel = req.getCocoonRequest().getParameter("tittel");
       String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
       String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(",");
@@ -118,8 +118,8 @@ public class FeedbackController implements StatelessAppleController {
           logger.trace("FeedbackController.java --> Akismet said " + url + " is ham.");
       }
 
-        if (adminService.checkForDuplicatesByURI(url)) {
-        messageBuffer.append("<c:message>Ressursen du tipset om finnes allerede, men takk for innsatsen!</c:message>");
+        if ((!"".equals(url)) && adminService.checkForDuplicatesByURI(url)) {
+        messageBuffer.append("<c:message>Ressursen du tipset om finnes allerede.</c:message>");
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "form");
@@ -133,7 +133,7 @@ public class FeedbackController implements StatelessAppleController {
         URLActions urlAction = new URLActions(url);
         status = urlAction.getCode();
       }
-      catch (NullPointerException e) {
+      catch (Exception e) {
         e.printStackTrace();
         messageBuffer.append("<c:message>Feil ved angitt URL. Vennligst kontroller at linken du oppga fungerer.</c:message>");
         messageBuffer.append("</c:messages>\n");
@@ -177,15 +177,13 @@ public class FeedbackController implements StatelessAppleController {
           bizData.put("mode", "ok");
           bizData.put("loggedin", loggedIn);
           res.sendPage("xml/tips", bizData);
-          return;
         } else {
-          messageBuffer.append("<c:message>Det skjedde noe galt. Kontroller alle feltene og pr�v igjen</c:message>");
+          messageBuffer.append("<c:message>Det skjedde noe galt. Kontroller alle feltene og prøv igjen</c:message>");
           messageBuffer.append("</c:messages>\n");
           bizData.put("mode", "form");
           bizData.put("loggedin", loggedIn);
           bizData.put("messages", messageBuffer.toString());
           res.sendPage("xml/tips", bizData);
-          return;
         }
 
       } else {
@@ -195,11 +193,8 @@ public class FeedbackController implements StatelessAppleController {
         bizData.put("loggedin", loggedIn);
         bizData.put("messages", messageBuffer.toString());
         res.sendPage("xml/tips", bizData);
-        return;
       }
     }
-
-    return;
   }
 
     private boolean isSpam(AppleRequest req, boolean loggedIn, String url, String content, String email, String resource) {
