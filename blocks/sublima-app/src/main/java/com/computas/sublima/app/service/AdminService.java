@@ -328,7 +328,9 @@ public class AdminService {
             "    ?topic wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
             "FILTER regex(str(?label), \"^" + name + "\", \"i\")",
             "FILTER langMatches( lang(?label), \"" + language + "\" )",
-            "}"});
+            "}",
+            "ORDER BY ?label",
+            "LIMIT 20"});
 
     logger.trace("AdminService.getTopicByPartialName() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
@@ -347,7 +349,9 @@ public class AdminService {
             "       foaf:name ?label .",
             "FILTER regex(str(?label), \"^" + name + "\",\"i\")",
             "FILTER langMatches( lang(?label), \"" + language + "\" )",
-            "}"});
+            "}",
+            "ORDER BY ?label",
+            "LIMIT 20"});
 
     logger.trace("AdminService.getPublisherByPartialNameAsJSON() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);

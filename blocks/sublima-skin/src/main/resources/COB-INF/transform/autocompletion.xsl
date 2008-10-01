@@ -8,18 +8,21 @@
     <script type="text/javascript">
       $(document).ready(function(){
       $("#subject").autocomplete("autocomplete", {
-      minChars: 3,
-      extraParams : { action:"topic", locale:"<xsl:value-of select="$interface-language"/>" }
+        max: 20,
+        minChars: 3,
+        extraParams : { action:"topic", locale:"<xsl:value-of select="$interface-language"/>" }
       });
       
       $("#publisher").autocomplete("autocomplete", {
-            minChars: 3,
-	    extraParams : { action:"publisher", locale:"<xsl:value-of select="$interface-language"/>" }
+        max: 20,
+        minChars: 3,
+	      extraParams : { action:"publisher", locale:"<xsl:value-of select="$interface-language"/>" }
 	    });
 
        $("#keyword").autocomplete("autocomplete", {
-            minChars: 3,
-	    extraParams : { action:"topic", locale:"<xsl:value-of select="$interface-language"/>" }
+        max: 20,
+        minChars: 3,
+	      extraParams : { action:"topic", locale:"<xsl:value-of select="$interface-language"/>" }
 	    });
       });
     </script>
