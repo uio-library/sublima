@@ -24,12 +24,13 @@
       <ul>
         <xsl:for-each select="./rdf:RDF//skos:Concept">
           <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
+          <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
 
           <xsl:choose>
             <xsl:when test="/c:page/c:letter = ''">
               <li>
               <a href="{./@rdf:about}.html{$qloc}">
-                <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
               </a>
               </li>                
             </xsl:when>
