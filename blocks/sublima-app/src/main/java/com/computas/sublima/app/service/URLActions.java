@@ -322,36 +322,36 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     if (status.equalsIgnoreCase("<http://sublima.computas.com/status/ok>")) {
       deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
               "DELETE\n" +
-              "{ " +
-              "<" + url.toString() + "> sub:status ?oldstatus " +
+              "{\n" +
+              "<" + url.toString() + "> sub:status ?oldstatus .\n" +
               "}\n" +
               "WHERE {\n" +
-              "<" + url.toString() + "> sub:status ?oldstatus " +
+              "<" + url.toString() + "> sub:status ?oldstatus .\n" +
               "}";
 
       updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
               "INSERT\n" +
-              "{ " +
-              "<" + url.toString() + "> sub:status " + status + "\n" +
+              "{\n" +
+              "<" + url.toString() + "> sub:status " + status + ".\n" +
               "}";
     } else {
       deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
               "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
               "DELETE\n" +
-              "{ " +
-              "<" + url.toString() + "> sub:status ?oldstatus " +
-              "<" + url.toString() + "> wdr:describedBy ?oldstatus " +
+              "{\n" +
+              "<" + url.toString() + "> sub:status ?oldstatus .\n" +
+              "<" + url.toString() + "> wdr:describedBy ?oldstatus .\n" +
               "}\n" +
               "WHERE {\n" +
-              "<" + url.toString() + "> sub:status ?oldstatus " +
-              "<" + url.toString() + "> wdr:describedBy ?oldstatus " +
+              "<" + url.toString() + "> sub:status ?oldstatus .\n" +
+              "<" + url.toString() + "> wdr:describedBy ?oldstatus .\n" +
               "}";
 
       updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
               "INSERT\n" +
-              "{ " +
-              "<" + url.toString() + "> sub:status " + status + "\n" +
-              "<" + url.toString() + "> wdr:describedBy " + status + "\n" +
+              "{\n" +
+              "<" + url.toString() + "> sub:status " + status + ".\n" +
+              "<" + url.toString() + "> wdr:describedBy " + status + ".\n" +
               "}";
     }
 
