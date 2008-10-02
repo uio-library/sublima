@@ -280,7 +280,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
               "305".equals(ourcode) ||
               "307".equals(ourcode) ||
               ourcode.startsWith("2")) {
-        status = "<http://sublima.computas.com/status/OK>";
+        status = "<http://sublima.computas.com/status/ok>";
 
         // Update the external content of the resource
         //updateResourceExternalContent();
@@ -288,7 +288,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
       }
       // GONE
       else if ("410".equals(ourcode)) {
-        status = "<http://sublima.computas.com/status/GONE>";
+        status = "<http://sublima.computas.com/status/gone>";
       }
       // INACTIVE
       else if ("306".equals(ourcode) ||
@@ -297,11 +297,11 @@ public class URLActions { // Should this class extend HttpUrlConnection?
               "405".equals(ourcode) ||
               "MALFORMED_URL".equals(ourcode) ||
               "UNSUPPORTED_PROTOCOL".equals(ourcode)) {
-        status = "<http://sublima.computas.com/status/INACTIVE>";
+        status = "<http://sublima.computas.com/status/inaktiv>";
       }
       // CHECK
       else {
-        status = "<http://sublima.computas.com/status/CHECK>";
+        status = "<http://sublima.computas.com/status/check>";
       }
 
     }
@@ -316,27 +316,50 @@ public class URLActions { // Should this class extend HttpUrlConnection?
   }
 
   private void insertNewStatusForResource(String status) {
-    String deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-            "DELETE\n" +
-            "{ " +
-            "<" + url.toString() + "> sub:status ?oldstatus " +
-            "}\n" +
-            "WHERE {\n" +
-            "<" + url.toString() + "> sub:status ?oldstatus " +
-            "}";
+    String deleteString;
+    String updateString;
+
+    if (status.equalsIgnoreCase("<http://sublima.computas.com/status/ok>")) {
+      deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+              "DELETE\n" +
+              "{ " +
+              "<" + url.toString() + "> sub:status ?oldstatus " +
+              "}\n" +
+              "WHERE {\n" +
+              "<" + url.toString() + "> sub:status ?oldstatus " +
+              "}";
+
+      updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+              "INSERT\n" +
+              "{ " +
+              "<" + url.toString() + "> sub:status " + status + "\n" +
+              "}";
+    } else {
+      deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+              "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+              "DELETE\n" +
+              "{ " +
+              "<" + url.toString() + "> sub:status ?oldstatus " +
+              "<" + url.toString() + "> wdr:describedBy ?oldstatus " +
+              "}\n" +
+              "WHERE {\n" +
+              "<" + url.toString() + "> sub:status ?oldstatus " +
+              "<" + url.toString() + "> wdr:describedBy ?oldstatus " +
+              "}";
+
+      updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+              "INSERT\n" +
+              "{ " +
+              "<" + url.toString() + "> sub:status " + status + "\n" +
+              "<" + url.toString() + "> wdr:describedBy " + status + "\n" +
+              "}";
+    }
 
     logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- SPARUL DELETE  --> " + deleteString);
 
     boolean success;
     success = sparulDispatcher.query(deleteString);
     logger.info("updateResourceStatus() ---> " + url.toString() + " with code " + ourcode + " -- DELETE OLD STATUS --> " + success);
-
-    String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-            "INSERT\n" +
-            "{ " +
-            "<" + url.toString() + "> sub:status " + status + "\n" +
-            "}";
-
     logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- SPARUL UPDATE  --> " + updateString);
 
     success = false;

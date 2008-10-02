@@ -90,7 +90,7 @@ public class LinkcheckController implements StatelessAppleController {
                     "              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
-            "        ?resource sub:status <http://sublima.computas.com/status/CHECK> ;",
+            "        ?resource sub:status <http://sublima.computas.com/status/check> ;",
             "                  dct:title ?title ;",
             "                  dct:identifier ?identifier .",
             "}"});
@@ -106,7 +106,7 @@ public class LinkcheckController implements StatelessAppleController {
                     "              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
-            "        ?resource sub:status <http://sublima.computas.com/status/INACTIVE> ;",
+            "        ?resource sub:status <http://sublima.computas.com/status/inaktiv> ;",
             "                  dct:title ?title ;",
             "                  dct:identifier ?identifier .",
             "}"});
@@ -122,7 +122,7 @@ public class LinkcheckController implements StatelessAppleController {
                     "              dct:identifier ?identifier ;" +
                     "              a sub:Resource . }",
             "    WHERE {",
-            "        ?resource sub:status <http://sublima.computas.com/status/GONE> ;",
+            "        ?resource sub:status <http://sublima.computas.com/status/gone> ;",
             "                  dct:title ?title ;",
             "                  dct:identifier ?identifier .",
             "}"});

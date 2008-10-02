@@ -171,7 +171,8 @@
   <xsl:template name="linkcheck">
 
     <xsl:if test="c:page/c:content/c:linkcheck/c:status_check/rdf:RDF/sub:Resource">
-      <p><i18n:text key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling på det aktuelle tidspunktet</i18n:text></p>
+      <p><i18n:text key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling på det aktuelle tidspunktet</i18n:text><strong><xsl:text> (</xsl:text><xsl:value-of
+              select="count(c:page/c:content/c:linkcheck/c:status_check/rdf:RDF/sub:Resource)"/><xsl:text>)</xsl:text></strong></p>
       <ul>
         <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_check/rdf:RDF/sub:Resource">
           <li>
@@ -183,7 +184,8 @@
 
     <!-- Linkcheck status inactive -->
     <xsl:if test="c:page/c:content/c:linkcheck/c:status_inactive/rdf:RDF/sub:Resource">
-      <p><i18n:text key="admin.linkcheck.inactive">Satt inaktive pga varige problemer</i18n:text></p>
+      <p><i18n:text key="admin.linkcheck.inactive">Satt inaktive pga varige problemer</i18n:text><strong><xsl:text> (</xsl:text><xsl:value-of
+              select="count(c:page/c:content/c:linkcheck/c:status_inactive/rdf:RDF/sub:Resource)"/><xsl:text>)</xsl:text></strong></p>
       <ul>
         <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_inactive/rdf:RDF/sub:Resource">
           <li>
@@ -195,7 +197,8 @@
 
     <!-- Linkcheck status resource -->
     <xsl:if test="c:page/c:content/c:status_gone/rdf:RDF/sub:Resource">
-      <p><i18n:text key="admin.linkcheck.gone">Satt til borte grunnet entydig besked fra tilbyder</i18n:text></p>
+      <p><i18n:text key="admin.linkcheck.gone">Satt til borte grunnet entydig besked fra tilbyder</i18n:text><strong><xsl:text> (</xsl:text><xsl:value-of
+              select="count(c:page/c:content/c:linkcheck/c:status_gone/rdf:RDF/sub:Resource)"/><xsl:text>)</xsl:text></strong></p>
       <ul>
         <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_gone/rdf:RDF/sub:Resource">
           <li>
