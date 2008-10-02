@@ -103,16 +103,19 @@
               <xsl:for-each select="./c:publishers/rdf:RDF/foaf:Agent">
                 <xsl:sort lang="{$interface-language}" select="./foaf:name"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./foaf:name"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource">
+                    <xsl:if test="./foaf:name">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./foaf:name"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./foaf:name"/>
-                    </option>
+                    <xsl:if test="./foaf:name">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./foaf:name"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -128,18 +131,21 @@
           <td>
             <select id="language" name="dct:language" multiple="multiple" size="10">
               <xsl:for-each select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo">
-                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:language/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:language/@rdf:resource">
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -156,18 +162,21 @@
             <select id="format" name="dct:format" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:mediatypes/rdf:RDF/dct:MediaType">
-                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource">
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -184,18 +193,21 @@
             <select id="audience" name="dct:audience" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:audiences/rdf:RDF/dct:AgentClass">
-                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:audience/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:audience/@rdf:resource">
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -211,18 +223,21 @@
           <td>
             <select id="subject" name="dct:subject" multiple="multiple" size="10">
               <xsl:for-each select="./c:topics/rdf:RDF/skos:Concept">
-                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
+                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
+                    <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -252,25 +267,28 @@
           <td>
             <xsl:choose>
 
-              <xsl:when
-                      test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
+              <xsl:when test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
 
                     <xsl:choose>
 
                       <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
-                        <option value="{./@rdf:about}" selected="selected">
-                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                        </option>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}" selected="selected">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
                       </xsl:when>
 
                       <xsl:otherwise>
-                        <option value="{./@rdf:about}">
-                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                        </option>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
                       </xsl:otherwise>
 
                     </xsl:choose>
@@ -292,15 +310,19 @@
 
                       <xsl:when
                               test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
-                        <option value="{./@rdf:about}" selected="selected">
-                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                        </option>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}" selected="selected">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
                       </xsl:when>
 
                       <xsl:otherwise>
-                        <option value="{./@rdf:about}">
-                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                        </option>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
                       </xsl:otherwise>
 
                     </xsl:choose>
@@ -461,16 +483,19 @@
               <xsl:for-each select="./c:publishers/rdf:RDF/foaf:Agent">
                 <xsl:sort lang="{$interface-language}" select="./foaf:name"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./foaf:name[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource">
+                    <xsl:if test="./foaf:name">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./foaf:name"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./foaf:name[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./foaf:name">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./foaf:name"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -486,18 +511,21 @@
           <td>
             <select id="language" name="dct:language" multiple="multiple" size="10">
               <xsl:for-each select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo">
-                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:language/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:language/@rdf:resource">
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -514,18 +542,21 @@
             <select id="format" name="dct:format" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:mediatypes/rdf:RDF/dct:MediaType">
-                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource">
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -542,18 +573,21 @@
             <select id="audience" name="dct:audience" multiple="multiple" size="10">
               <xsl:for-each
                       select="./c:audiences/rdf:RDF/dct:AgentClass">
-                <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:audience/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:audience/@rdf:resource">
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -569,18 +603,21 @@
           <td>
             <select id="subject" name="dct:subject" multiple="multiple" size="10">
               <xsl:for-each select="./c:topics/rdf:RDF/skos:Concept">
-                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
+                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
                 <xsl:choose>
-                  <xsl:when
-                          test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
-                    <option value="{./@rdf:about}" selected="selected">
-                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                    </option>
+                  <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
+                    <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}" selected="selected">
+                        <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
-                    <option value="{./@rdf:about}">
-                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                    </option>
+                    <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
+                      <option value="{./@rdf:about}">
+                        <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                      </option>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
@@ -600,6 +637,7 @@
             </textarea>
           </td>
         </tr>
+
         <tr>
           <td>
             <label for="wdr:describedBy">
@@ -609,25 +647,28 @@
           <td>
             <xsl:choose>
 
-              <xsl:when
-                      test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
+              <xsl:when test="not(/c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource)">
                 <select id="wdr:describedBy" name="wdr:describedBy">
 
                   <xsl:for-each select="./c:statuses/rdf:RDF/wdr:DR">
-                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
 
                     <xsl:choose>
 
                       <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
-                        <option value="{./@rdf:about}" selected="selected">
-                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                        </option>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}" selected="selected">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
                       </xsl:when>
 
                       <xsl:otherwise>
-                        <option value="{./@rdf:about}">
-                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                        </option>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
                       </xsl:otherwise>
 
                     </xsl:choose>
@@ -649,15 +690,19 @@
 
                       <xsl:when
                               test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/wdr:describedBy/@rdf:resource">
-                        <option value="{./@rdf:about}" selected="selected">
-                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                        </option>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}" selected="selected">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
                       </xsl:when>
 
                       <xsl:otherwise>
-                        <option value="{./@rdf:about}">
-                          <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
-                        </option>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
                       </xsl:otherwise>
 
                     </xsl:choose>
