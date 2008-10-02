@@ -171,7 +171,7 @@
   <xsl:template name="linkcheck">
 
     <xsl:if test="c:page/c:content/c:linkcheck/c:status_check/rdf:RDF/sub:Resource">
-      <p><i18n:text key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling paa det aktuelle tidspunktet</i18n:text></p>
+      <p><i18n:text key="admin.linkcheck.manual">Sjekkes manuelt grunnet problemer med tilkobling på det aktuelle tidspunktet</i18n:text></p>
       <ul>
         <xsl:for-each select="c:page/c:content/c:linkcheck/c:status_check/rdf:RDF/sub:Resource">
           <li>
@@ -223,7 +223,7 @@
 
 	<xsl:call-template name="headers">
 	  <xsl:with-param name="baseurl" select="$baseurl"/>
-	</xsl:call-template>
+  </xsl:call-template>
 
         <div class="colmask twocol" style="border:0px solid green">
             <div class="colleft">

@@ -98,32 +98,16 @@ public class IndexService {
   public void validateURLs() {
     ResultSet resultSet;
     resultSet = getAllExternalResourcesURLs();
-    HashMap<String, HashMap<String, String>> urlCodeMap = new HashMap<String, HashMap<String, String>>();
 
     // For each URL, do a HTTP GET and check the HTTP code
-    URL u = null;
-    HashMap<String, String> result;
-
+    int i = 1;
     while (resultSet.hasNext()) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length() - 3).trim();
-
+      logger.info("SUBLIMA: validateURLs() --> Updating status for resource " + i + " " + url);
       URLActions urlAction = new URLActions(url);
-      try {
-        urlAction.updateResourceStatus();
-      } catch (UnsupportedEncodingException e) {
-        e.printStackTrace();
-      }
-      catch (PSQLException e) {
-        logger.warn("SUBLIMA: validateURLs() --> Indexing - Could not index " + url
-                + " due to database malfunction, probably caused by invalid characters in resource.");
-        e.printStackTrace();
-      }
-      catch (JenaException e) {
-        logger.warn("SUBLIMA: validateURLs() --> Indexing - Could not index " + url
-                + " due to backend storage malfunction, probably caused by invalid characters in resource.");
-        e.printStackTrace();
-      }
+      urlAction.getAndUpdateResourceStatus();
+      i++;
     }
   }
 

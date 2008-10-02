@@ -1,7 +1,7 @@
 package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
-import com.computas.sublima.app.controller.admin.AdminController;
+import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -10,7 +10,8 @@ import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: mha
@@ -52,16 +53,24 @@ public class LinkcheckController implements StatelessAppleController {
     this.submode = req.getSitemapParameter("submode");
 
     if ("lenkesjekk".equalsIgnoreCase(mode)) {
-      showLinkcheckResults(res, req);
+      if ("".equals(submode)) {
+        showLinkcheckResults(res, req);
+      }
 
-      return;
+      if ("run".equals(submode)) {
+        performLinktest(res, req);
+      }
     } else {
       res.sendStatus(404);
-      return;
     }
   }
 
- 
+  private void performLinktest(AppleResponse res, AppleRequest req) {
+    IndexService indexService = new IndexService();
+    indexService.validateURLs();
+    showLinkcheckResults(res, req );
+  }
+
   /**
    * Method that displays a list of all resources tagged to be checked
    *
@@ -127,7 +136,6 @@ public class LinkcheckController implements StatelessAppleController {
     bizData.put("lenkesjekklist_gone", queryResultGONE);
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
     res.sendPage("xml2/lenkesjekk", bizData);
-
   }
 
   public void setSparqlDispatcher

@@ -264,15 +264,16 @@ public class URLActions { // Should this class extend HttpUrlConnection?
    * <p/>
    * Others - CHECK
    */
-  public void updateResourceStatus() throws UnsupportedEncodingException, PSQLException {
+  public void getAndUpdateResourceStatus() {
     sparulDispatcher = new DefaultSparulDispatcher();
     String status = "";
 
-    if (ourcode == null) {
-      getCode();
-    }
-
     try {
+
+      if (ourcode == null) {
+        getCode();
+      }
+
       if ("302".equals(ourcode) ||
               "303".equals(ourcode) ||
               "304".equals(ourcode) ||
@@ -282,7 +283,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         status = "<http://sublima.computas.com/status/OK>";
 
         // Update the external content of the resource
-        updateResourceExternalContent();
+        //updateResourceExternalContent();
 
       }
       // GONE
@@ -304,12 +305,17 @@ public class URLActions { // Should this class extend HttpUrlConnection?
       }
 
     }
-    catch (NullPointerException e) {
-      logger.info("NullPointerException -- updateResourceStatus() ---> " + url.toString() + ":" + ourcode);
+    catch (Exception e) {
+      logger.info("Exception -- updateResourceStatus() ---> " + url.toString() + ":" + ourcode);
       e.printStackTrace();
+      insertNewStatusForResource("<http://sublima.computas.com/status/CHECK>");
     }
     // OK
 
+    insertNewStatusForResource(status);
+  }
+
+  private void insertNewStatusForResource(String status) {
     String deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
             "DELETE\n" +
             "{ " +
@@ -319,11 +325,11 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             "<" + url.toString() + "> sub:status ?oldstatus " +
             "}";
 
-    logger.info("updateResourceStatus() ---> " + url.toString() + ":" + ourcode + " -- SPARUL DELETE  --> " + deleteString);
+    logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- SPARUL DELETE  --> " + deleteString);
 
-    boolean success = false;
+    boolean success;
     success = sparulDispatcher.query(deleteString);
-    logger.info("updateResourceStatus() ---> " + url.toString() + ":" + ourcode + " -- DELETE OLD STATUS --> " + success);
+    logger.info("updateResourceStatus() ---> " + url.toString() + " with code " + ourcode + " -- DELETE OLD STATUS --> " + success);
 
     String updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
             "INSERT\n" +
@@ -331,23 +337,12 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             "<" + url.toString() + "> sub:status " + status + "\n" +
             "}";
 
-    logger.info("updateResourceStatus() ---> " + url.toString() + ":" + ourcode + " -- SPARUL UPDATE  --> " + updateString);
-
-    /*
-    String updateString = StringUtils.join("\n", new String[]{
-            "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-            "MODIFY",
-            "DELETE { <" + url.toString() + "> sub:status ?oldstatus }",
-            "INSERT { <" + url.toString() + "> sub:status " + status + " }",
-            "WHERE  { <" + url.toString() + "> sub:status ?oldstatus }"});
-
-    logger.info("updateResourceStatus() ---> " + url.toString() + ":" + ourcode + " -- SPARUL UPDATE  --> " + updateString);
-    */
+    logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- SPARUL UPDATE  --> " + updateString);
 
     success = false;
 
     success = sparulDispatcher.query(updateString);
-    logger.info("updateResourceStatus() ---> " + url.toString() + ":" + ourcode + " -- INSERT NEW STATUS --> " + success);
+    logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- INSERT NEW STATUS --> " + success);
   }
 
   public void updateResourceExternalContent() throws UnsupportedEncodingException, PSQLException {
