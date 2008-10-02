@@ -5,6 +5,7 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.SearchService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
@@ -250,20 +251,32 @@ public class TopicController implements StatelessAppleController {
       // Legge til URI i alle emner hvor gamle URI finnes
       // Slette alle gamle URIer
       StringBuffer topicBuffer = new StringBuffer();
+      SearchService searchService = new SearchService();
 
-      String uri = req.getCocoonRequest().getParameter("skos:Concept/skos:prefLabel").replace(" ", "_");
-      uri = uri.replace(",", "_");
-      uri = uri.replace(".", "_");
-      uri = getProperty("sublima.base.url") + "topic/" + uri + "_" + uri.hashCode();
+      String uri = searchService.sanitizeStringForURI(req.getCocoonRequest().getParameter("skos:prefLabel"));
+      uri = getProperty("sublima.base.url") + "topic/" + uri;
 
-      String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n" + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:Concept/skos:prefLabel") + "\"@no .\n" + "}";
+      String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n"
+              + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@no ;\n"
+              + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"
+              + "}";
 
       logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
 
       sparulDispatcher.query(insertNewTopicString);
 
-      for (String s : req.getCocoonRequest().getParameterValues("skos:Concept")) {
-        topicBuffer.append("?resource skos:Concept <" + s + "> .\n");
+      for (String oldurl : req.getCocoonRequest().getParameterValues("skos:Concept")) {
+        String sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        logger.trace("Changing " + oldurl + " to " + uri + " in objects.");
+        boolean updateSuccess = sparulDispatcher.query(sparulQuery);
+        logger.debug("Object edit status: " + updateSuccess);
+        sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
+                "MODIFY\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
+        logger.trace("Setting " + oldurl + " topics inactive.");
+        updateSuccess = sparulDispatcher.query(sparulQuery);
+        logger.debug("Topic inactive status: " + updateSuccess);
+
+
       }
 
       messageBuffer.append("</c:messages>\n");

@@ -58,7 +58,7 @@
 
                 <tr>
                     <td><label for="skos:Concept/skos:prefLabel"><i18n:text key="topic.commonname">Felles navn</i18n:text></label></td>
-                    <td><input id="skos:Concept/skos:prefLabel" type="text" name="skos:Concept/skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:Concept/skos:prefLabel}" /></td>
+                    <td><input id="skos:Concept/skos:prefLabel" type="text" name="skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:Concept/skos:prefLabel}" /></td>
                 </tr>
              
                 <tr>
