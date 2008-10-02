@@ -235,22 +235,14 @@ public class TopicController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
 
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
-      bizData.put("tempvalues", "<empty></empty>");
-      bizData.put("alltopics", adminService.getAllTopics());
-      bizData.put("mode", "topicjoin");
-
-      bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
-      bizData.put("facets", getRequestXML(req));
-
-      res.sendPage("xml2/koble", bizData);
-
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
 
-      // Lage ny URI for emne
-      // Legge til URI i alle emner hvor gamle URI finnes
-      // Slette alle gamle URIer
-      StringBuffer topicBuffer = new StringBuffer();
+      // Create new URI for new topic.
+      // Declare the new topic to be a union of the older
+      // Mark the old as inactive.
+
+
       SearchService searchService = new SearchService();
 
       String uri = searchService.sanitizeStringForURI(req.getCocoonRequest().getParameter("skos:prefLabel"));
@@ -258,17 +250,18 @@ public class TopicController implements StatelessAppleController {
 
       String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n"
               + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@no ;\n"
-              + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"
+              + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
+   /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
               + "}";
 
       logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
-
-      sparulDispatcher.query(insertNewTopicString);
+      boolean updateSuccess;
+      updateSuccess = sparulDispatcher.query(insertNewTopicString);
 
       for (String oldurl : req.getCocoonRequest().getParameterValues("skos:Concept")) {
         String sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
         logger.trace("Changing " + oldurl + " to " + uri + " in objects.");
-        boolean updateSuccess = sparulDispatcher.query(sparulQuery);
+        updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Object edit status: " + updateSuccess);
         sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
                 "MODIFY\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
@@ -279,14 +272,25 @@ public class TopicController implements StatelessAppleController {
 
       }
 
+      if (updateSuccess) {
+          messageBuffer.append("<c:message>Emnene er slått sammen</c:message>\n");
+      } else {
+          messageBuffer.append("<c:message>En feil oppsto ved sammenslåing</c:message>\n");
+      }
+
       messageBuffer.append("</c:messages>\n");
 
       bizData.put("messages", messageBuffer.toString());
-      bizData.put("userprivileges", userPrivileges);
-      bizData.put("facets", getRequestXML(req));
 
-      res.sendPage("xml2/koble", bizData);
     }
+    bizData.put("tempvalues", "<empty></empty>");
+    bizData.put("alltopics", adminService.getAllTopics());
+    bizData.put("mode", "topicjoin");
+    bizData.put("userprivileges", userPrivileges);
+    bizData.put("facets", getRequestXML(req));
+
+    res.sendPage("xml2/koble", bizData);
+
   }
 
   private void setThemeTopics
