@@ -18,7 +18,6 @@
 	  </label>
 	</th>
 	<td>
-    <xsl:text>Språk</xsl:text><xsl:value-of select="$interface-language"/>
     <select id="{$field}" name="{$field}">
 	    <option value=""></option>
 	    <xsl:for-each select="./sq:results/sq:result">
