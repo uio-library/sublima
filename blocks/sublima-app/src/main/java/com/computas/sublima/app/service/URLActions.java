@@ -319,57 +319,63 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     String deleteString;
     String updateString;
 
-    if (status.equalsIgnoreCase("<http://sublima.computas.com/status/ok>")) {
-      deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-              "DELETE\n" +
-              "{\n" +
-              "<" + url.toString() + "> sub:status ?oldstatus .\n" +
-              "}\n" +
-              "WHERE {\n" +
-              "<" + url.toString() + "> sub:status ?oldstatus .\n" +
-              "}";
+    try {
 
-      updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-              "INSERT\n" +
-              "{\n" +
-              "<" + url.toString() + "> sub:status " + status + ".\n" +
-              "}";
-    } else {
-      deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-              "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-              "DELETE\n" +
-              "{\n" +
-              "<" + url.toString() + "> sub:status ?oldstatus .\n" +
-              "<" + url.toString() + "> wdr:describedBy ?oldstatus .\n" +
-              "}\n" +
-              "WHERE {\n" +
-              "<" + url.toString() + "> sub:status ?oldstatus .\n" +
-              "<" + url.toString() + "> wdr:describedBy ?oldstatus .\n" +
-              "}";
+      if (status.equalsIgnoreCase("<http://sublima.computas.com/status/ok>")) {
+        deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "DELETE\n" +
+                "{\n" +
+                "<" + url.toString() + "> sub:status ?oldstatus .\n" +
+                "}\n" +
+                "WHERE {\n" +
+                "<" + url.toString() + "> sub:status ?oldstatus .\n" +
+                "}";
 
-      updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-              "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-              "INSERT\n" +
-              "{\n" +
-              "<" + url.toString() + "> sub:status " + status + ".\n" +
-              "<" + url.toString() + "> wdr:describedBy " + status + ".\n" +
-              "}";
+        updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "INSERT\n" +
+                "{\n" +
+                "<" + url.toString() + "> sub:status " + status + ".\n" +
+                "}";
+      } else {
+        deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                "DELETE\n" +
+                "{\n" +
+                "<" + url.toString() + "> sub:status ?oldstatus .\n" +
+                "<" + url.toString() + "> wdr:describedBy ?oldstatus .\n" +
+                "}\n" +
+                "WHERE {\n" +
+                "<" + url.toString() + "> sub:status ?oldstatus .\n" +
+                "<" + url.toString() + "> wdr:describedBy ?oldstatus .\n" +
+                "}";
+
+        updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                "INSERT\n" +
+                "{\n" +
+                "<" + url.toString() + "> sub:status " + status + ".\n" +
+                "<" + url.toString() + "> wdr:describedBy " + status + ".\n" +
+                "}";
+      }
+
+      logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- SPARUL DELETE  --> " + deleteString);
+
+      boolean success;
+      success = sparulDispatcher.query(deleteString);
+      logger.info("updateResourceStatus() ---> " + url.toString() + " with code " + ourcode + " -- DELETE OLD STATUS --> " + success);
+      logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- SPARUL UPDATE  --> " + updateString);
+
+      success = false;
+
+      success = sparulDispatcher.query(updateString);
+      logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- INSERT NEW STATUS --> " + success);
+    } catch (Exception e) {
+      logger.info("insertNewStatusForResource() ---> Gave an exception. Check if this URL is valid.");
     }
-
-    logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- SPARUL DELETE  --> " + deleteString);
-
-    boolean success;
-    success = sparulDispatcher.query(deleteString);
-    logger.info("updateResourceStatus() ---> " + url.toString() + " with code " + ourcode + " -- DELETE OLD STATUS --> " + success);
-    logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- SPARUL UPDATE  --> " + updateString);
-
-    success = false;
-
-    success = sparulDispatcher.query(updateString);
-    logger.info("insertNewStatusForResource() ---> " + url.toString() + ":" + ourcode + " -- INSERT NEW STATUS --> " + success);
   }
 
-  public void updateResourceExternalContent() throws UnsupportedEncodingException, PSQLException {
+  public void updateResourceExternalContent
+          () throws UnsupportedEncodingException, PSQLException {
     sparulDispatcher = new DefaultSparulDispatcher();
     String resourceExternalContent = readContent();
     SearchService searchService = new SearchService();
@@ -402,7 +408,9 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     logger.info("updateResourceExternalContent() ---> " + url.toString() + " -- INSERT NEW CONTENT --> " + success);
   }
 
-  public String strippedContent(String content) throws UnsupportedEncodingException {
+  public String strippedContent
+          (String
+                  content) throws UnsupportedEncodingException {
 
 
     connect();
