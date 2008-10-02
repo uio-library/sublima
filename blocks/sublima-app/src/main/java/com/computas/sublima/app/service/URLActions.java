@@ -348,6 +348,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
               "}";
 
       updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+              "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
               "INSERT\n" +
               "{\n" +
               "<" + url.toString() + "> sub:status " + status + ".\n" +
