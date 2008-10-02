@@ -121,13 +121,14 @@ public class AdminController implements StatelessAppleController {
     model.add(SettingsService.getModel());
     model.setNsPrefixes(SettingsService.getModel().getNsPrefixMap());
 
+    /*
     try {
       model = ConvertSublimaResources.convertModel(model, replaceResourceWith);
 
     } catch (IOException e) {
       logger.trace("AdminController.exportOntologyToXML --> Error during convertion of resource URIs to URLs.");
       e.printStackTrace();
-    }
+    } */
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     model.write(out, type);
@@ -151,13 +152,13 @@ public class AdminController implements StatelessAppleController {
       File file = new File(req.getCocoonRequest().getParameter("location"));
 
       try {
-        ConvertSublimaResources.convert(file.toURL().toString(), type, file.getCanonicalPath(), type, "url");
+        //ConvertSublimaResources.convert(file.toURL().toString(), type, file.getCanonicalPath(), type, "url");
         ImportData.load(file.toURL().toString(), type);
       } catch (MalformedURLException e) {
-        logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
+        logger.trace("AdminController.uploadForm --> Error during loading of resource");
         e.printStackTrace();
       } catch (IOException e) {
-        logger.trace("AdminController.uploadForm --> Error during convertion of resource URIs to URLs.");
+        logger.trace("AdminController.uploadForm --> Error during loading of resource");
         e.printStackTrace();
       }
 
