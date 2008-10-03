@@ -425,38 +425,59 @@ public class URLActions { // Should this class extend HttpUrlConnection?
   }
 
   public String strippedContent
-          (String
+          (final String
                   content) throws UnsupportedEncodingException {
 
-
-    connect();
-    if (con.getContentEncoding() != null) {
-      encoding = con.getContentEncoding();
-    }
-
-    InputStream stream = null;
-    if (content == null) {
-      stream = readContentStream();
-    } else {
-      stream = IOUtils.toInputStream(content);
-    }
-
-    HTMLTextExtractor textExtractor = new HTMLTextExtractor();
-
+    final StringBuffer sb = new StringBuffer();
+    logger.info("strippedContent() ---> Getting external content");
+    FutureTask<?> theTask = null;
     try {
-      connect();
-      String contentType = con.getContentType();
-      Reader reader = textExtractor.extractText(stream, contentType, "UTF-8");
-      int charValue = 0;
-      StringBuffer sb = new StringBuffer();
-      while ((charValue = reader.read()) != -1) {
-        sb.append((char) charValue);
-      }
-      logger.info("strippedContent() ---> TEXT:\n" + sb.toString() );
-      return sb.toString();
-    } catch (Exception e) {
-      logger.warn("URLActions.strippedContent() gave Exception, returning \"\" ---> " + e.getMessage());
-      return "";
+      // create new task
+      theTask = new FutureTask<Object>(new Runnable() {
+        public void run() {
+
+          connect();
+          if (con.getContentEncoding() != null) {
+            encoding = con.getContentEncoding();
+          }
+
+          InputStream stream = null;
+          if (content == null) {
+            stream = readContentStream();
+          } else {
+            stream = IOUtils.toInputStream(content);
+          }
+
+          HTMLTextExtractor textExtractor = new HTMLTextExtractor();
+
+          try {
+            connect();
+            String contentType = con.getContentType();
+            Reader reader = textExtractor.extractText(stream, contentType, "UTF-8");
+            int charValue = 0;
+
+            while ((charValue = reader.read()) != -1) {
+              sb.append((char) charValue);
+            }
+            logger.info("strippedContent() ---> TEXT:\n" + sb.toString());
+          } catch (Exception e) {
+            logger.warn("URLActions.strippedContent() gave Exception, returning \"\" ---> " + e.getMessage());
+            sb.append("");
+          }
+
+        }
+      }, null);
+
+      // start task in a new thread
+      new Thread(theTask).start();
+
+      // wait for the execution to finish, timeout after 10 secs
+      theTask.get(10L, TimeUnit.SECONDS);
     }
+    catch (Exception e) {
+      ourcode = "CONNECTION_TIMEOUT";
+    }
+    return sb.toString();
+
   }
 }
