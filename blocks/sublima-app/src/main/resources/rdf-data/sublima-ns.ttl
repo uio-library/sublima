@@ -52,5 +52,10 @@ sub:isMainConceptOf  a owl:ObjectProperty ;
 
 
 wdr:DR a owl:Class .status:godkjent_av_administrator a wdr:DR .
-status:til_godkjenning a wdr:DR .
+
+status:til_godkjenning a wdr:DR ;
+    rdfs:label "Til godkjenning"@no , "For approval"@en .
+
 status:inaktiv a wdr:DR .
+
+status:checked a wdr:DR .
