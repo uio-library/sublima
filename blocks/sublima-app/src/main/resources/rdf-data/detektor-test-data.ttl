@@ -209,7 +209,7 @@ topic:topic000944
       dct:language <http://www.lingvoj.org/lang/no> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "Norsk Epilepsiforbund"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00071 ;
       sub:url <http://www.epilepsi.no/> .
 
@@ -347,7 +347,7 @@ topic:topic000798
       dct:language <http://www.lingvoj.org/lang/no> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "Norges Volleyballforbund"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00036 ;
       sub:url <http://www.volleyball.no/t2.asp> .
 
@@ -1366,7 +1366,7 @@ agent:webgalleries_com
       dct:language <http://www.lingvoj.org/lang/en> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "2004 World Population Data Sheet"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00046 ;
       sub:url <http://www.prb.org/pdf04/04WorldDataSheet_Eng.pdf> .
 
@@ -1536,7 +1536,7 @@ topic:topic000793
       dct:publisher agent:webgalleries_com ;
       dct:title "80tallet"@no ;
       dct:type dcmitype:Text ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00079 ;
       sub:url <http://www.80tallet.no/> .
 
@@ -5297,7 +5297,7 @@ topic:topic0001596
       dct:language <http://www.lingvoj.org/lang/no> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "NAF ruteplanlegger"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00076 ;
       sub:url <http://www.geoweb.no/veibok/index.jsp> .
 
@@ -8705,7 +8705,7 @@ topic:topic000428
       dct:language <http://www.lingvoj.org/lang/no> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "90tallet.no"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00030 ;
       sub:url <http://www.90tallet.no/> .
 
@@ -16887,7 +16887,7 @@ topic:topic0001199
       dct:language <http://www.lingvoj.org/lang/en> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "Chocolate - The exhibition"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00046 ;
       sub:url <http://www.fieldmuseum.org/Chocolate/> .
 
@@ -26191,7 +26191,7 @@ topic:topic000948
       dct:language <http://www.lingvoj.org/lang/no> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "MS Norske tresorter til modellbygging"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00097 ;
       sub:url <http://www.maritim-modellklubb.no/Medlemsservice/MSNorsketresortertilmodel.html> .
 
@@ -27439,7 +27439,7 @@ topic:topic0002072
       dct:language <http://www.lingvoj.org/lang/en> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "Joseph Wu Origami"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr000100 .
 
 topic:topic0001747
@@ -29899,7 +29899,7 @@ topic:topic0001638
       dct:language <http://www.lingvoj.org/lang/en> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "USNO Astronomical Applications Department"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00076 ;
       sub:url <http://aa.usno.navy.mil/> .
 
@@ -33710,7 +33710,7 @@ topic:topic000358
       dct:language <http://www.lingvoj.org/lang/no> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "Stamceller og kloning"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00090 ;
       sub:url <http://www.bion.no/publikasjoner/Stamceller_og_kloning.pdf> .
 
@@ -37463,7 +37463,7 @@ topic:topic0001000
       dct:language <http://www.lingvoj.org/lang/no> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "Drivhuseffekten"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00091 ;
       sub:url <http://www.uio.no/miljoforum/stral/t1/drivhus.shtml> .
 
@@ -41697,7 +41697,7 @@ topic:topic000203
       dct:language <http://www.lingvoj.org/lang/no> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "Årsmelding"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00096 ;
       sub:url <http://www.vg.no/> .
 
@@ -54022,7 +54022,7 @@ topic:topic0001909
       dct:language <http://www.lingvoj.org/lang/en> ;
       dct:publisher agent:webgalleries_com ;
       dct:title "George Orwell"@no ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00068 ;
       sub:url <http://www.k-1.com/Orwell/> .
 
@@ -56289,7 +56289,7 @@ topic:topic0003
       dct:publisher agent:webgalleries_com ;
       dct:title "70tallet"@no ;
       dct:type dcmitype:Text ;
-      wdr:describedBy status:ny_forslag ;
+      wdr:describedBy status:nytt_forslag ;
       sub:committer user:det_usr00079 ;
       sub:url <http://www.70tallet.no/> .
 
