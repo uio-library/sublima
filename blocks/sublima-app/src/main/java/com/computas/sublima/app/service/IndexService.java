@@ -360,17 +360,18 @@ public class IndexService {
             code.startsWith("2")) {
       try {
 
+        /*
         HashMap<String, String> headers = urlAction.getHTTPmap();
-        String contentType = headers.get("httph:content-type");
+        String contentType = urlAction.getContentType();//headers.get("httph:content-type");
 
         if (contentType != null && (contentType.startsWith("application/xhtml+xml") ||
                 contentType.startsWith("text/html") ||
                 contentType.startsWith("text/plain") ||
                 contentType.startsWith("text/xml"))) {
-
+         */
           externalContent.append(urlAction.strippedContent(null).replace("\\", "\\\\"));
 
-        }
+        //}
       } catch (Exception e) {
         logger.warn("SUBLIMA: Indexing external content gave UnsupportedEncodingException for resource " + resource);
       }

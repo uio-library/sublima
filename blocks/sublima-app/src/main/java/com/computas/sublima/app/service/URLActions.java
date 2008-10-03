@@ -452,6 +452,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
       while ((charValue = reader.read()) != -1) {
         sb.append((char) charValue);
       }
+      logger.info("strippedContent() ---> TEXT:\n" + sb.toString() );
       return sb.toString();
     } catch (Exception e) {
       logger.warn("URLActions.strippedContent() gave Exception, returning \"\" ---> " + e.getMessage());
