@@ -308,7 +308,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     catch (Exception e) {
       logger.info("Exception -- updateResourceStatus() ---> " + url.toString() + ":" + ourcode);
       e.printStackTrace();
-      insertNewStatusForResource("<http://sublima.computas.com/status/CHECK>");
+      insertNewStatusForResource("<http://sublima.computas.com/status/check>");
     }
     // OK
 
