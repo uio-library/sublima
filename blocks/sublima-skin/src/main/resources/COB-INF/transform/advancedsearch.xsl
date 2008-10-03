@@ -123,7 +123,7 @@
           <td></td>
           <td>
             <input type="submit" i18n:attr="value" value="button.adv.search"/>
-            
+            <input type="reset" value="button.empty" i18n:attr="value"/>
           </td>
         </tr>
       </table>
