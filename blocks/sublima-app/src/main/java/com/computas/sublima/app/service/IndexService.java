@@ -371,7 +371,7 @@ public class IndexService {
           externalContent.append(urlAction.strippedContent(null).replace("\\", "\\\\"));
 
         }
-      } catch (UnsupportedEncodingException e) {
+      } catch (Exception e) {
         logger.warn("SUBLIMA: Indexing external content gave UnsupportedEncodingException for resource " + resource);
       }
     }

@@ -189,42 +189,58 @@ public class URLActions { // Should this class extend HttpUrlConnection?
    *         representation of the exception is used.
    */
   public HashMap<String, String> getHTTPmap() {
-    HashMap<String, String> result = new HashMap<String, String>();
+    final HashMap<String, String> result = new HashMap<String, String>();
 
+    FutureTask<?> theTask = null;
     try {
-      logger.info("getHTTPmap() ---> " + url.toString());
-      connect();
-      con.setConnectTimeout(6000);
-      for (String key : con.getHeaderFields().keySet()) {
-        if (key != null) {
-          result.put("httph:" + key.toLowerCase(), con.getHeaderField(key));
+      // create new task
+      theTask = new FutureTask<Object>(new Runnable() {
+        public void run() {
+          try {
+            logger.info("getHTTPmap() ---> " + url.toString());
+            connect();
+            con.setConnectTimeout(6000);
+            for (String key : con.getHeaderFields().keySet()) {
+              if (key != null) {
+                result.put("httph:" + key.toLowerCase(), con.getHeaderField(key));
+              }
+
+            }
+
+            ourcode = String.valueOf(con.getResponseCode());
+            con = null;
+          }
+          catch (MalformedURLException e) {
+            ourcode = "MALFORMED_URL";
+          }
+          catch (ClassCastException e) {
+            ourcode = "UNSUPPORTED_PROTOCOL";
+          }
+          catch (UnknownHostException e) {
+            ourcode = "UNKNOWN_HOST";
+          }
+          catch (ConnectException e) {
+            ourcode = "CONNECTION_TIMEOUT";
+          }
+          catch (SocketTimeoutException e) {
+            ourcode = "CONNECTION_TIMEOUT";
+          }
+          catch (IOException e) {
+            ourcode = "IOEXCEPTION";
+          }
+          result.put("http:status", ourcode);
         }
+      }, null);
 
-      }
+      // start task in a new thread
+      new Thread(theTask).start();
 
-      ourcode = String.valueOf(con.getResponseCode());
-      con = null;
+      // wait for the execution to finish, timeout after 10 secs
+      theTask.get(10L, TimeUnit.SECONDS);
     }
-    catch (MalformedURLException e) {
-      ourcode = "MALFORMED_URL";
-    }
-    catch (ClassCastException e) {
-      ourcode = "UNSUPPORTED_PROTOCOL";
-    }
-    catch (UnknownHostException e) {
-      ourcode = "UNKNOWN_HOST";
-    }
-    catch (ConnectException e) {
+    catch (Exception e) {
       ourcode = "CONNECTION_TIMEOUT";
     }
-    catch (SocketTimeoutException e) {
-      ourcode = "CONNECTION_TIMEOUT";
-    }
-    catch (IOException e) {
-      ourcode = "IOEXCEPTION";
-    }
-    result.put("http:status", ourcode);
-
     return result;
   }
 
