@@ -112,23 +112,9 @@ public class AdminController implements StatelessAppleController {
 
     String type = req.getCocoonRequest().getParameter("type");
 
-    String replaceResourceWith = null;
-    if (req.getCocoonRequest().getParameterValues("replacement") != null) {
-      replaceResourceWith = "uri";
-    }
-
     Model model = ModelFactory.createDefaultModel();
     model.add(SettingsService.getModel());
     model.setNsPrefixes(SettingsService.getModel().getNsPrefixMap());
-
-    /*
-    try {
-      model = ConvertSublimaResources.convertModel(model, replaceResourceWith);
-
-    } catch (IOException e) {
-      logger.trace("AdminController.exportOntologyToXML --> Error during convertion of resource URIs to URLs.");
-      e.printStackTrace();
-    } */
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     model.write(out, type);
@@ -137,7 +123,6 @@ public class AdminController implements StatelessAppleController {
     model.close();
 
     res.sendPage("nostyle/export", bizData);
-
   }
 
   private void uploadForm(AppleResponse res, AppleRequest req) {
@@ -152,12 +137,9 @@ public class AdminController implements StatelessAppleController {
       File file = new File(req.getCocoonRequest().getParameter("location"));
 
       try {
-        //ConvertSublimaResources.convert(file.toURL().toString(), type, file.getCanonicalPath(), type, "url");
+        ConvertSublimaResources.applyRules(file.toURL().toString(), type, file.getCanonicalPath(), type);
         ImportData.load(file.toURL().toString(), type);
-      } catch (MalformedURLException e) {
-        logger.trace("AdminController.uploadForm --> Error during loading of resource");
-        e.printStackTrace();
-      } catch (IOException e) {
+      } catch (Exception e) {
         logger.trace("AdminController.uploadForm --> Error during loading of resource");
         e.printStackTrace();
       }

@@ -288,4 +288,29 @@ public class ConvertSublimaResources {
   }
 
 
-}  
+  public static void applyRules(String inputFileName, String inFormat, String outputFileName, String outFormat) throws Exception {
+    // create an empty model
+    Model model = ModelFactory.createDefaultModel();
+
+    // use the FileManager to find the input file
+    InputStream in = FileManager.get().open(inputFileName);
+    if (in == null) {
+      throw new FileNotFoundException("File: " + inputFileName + " not found");
+    }
+
+    // read the RDF file
+    RDFReader rdr = model.getReader(inFormat);
+    File f = new File(inputFileName);
+    String base = f.toString(); //"file:///" + f.getCanonicalPath().replace('\\', '/');
+    rdr.read(model, in, base);
+
+    // Add skos inverse triples etc. Rules are specified in the property file.
+    Model outModel = addByRules(model);
+
+    // write the RDF file
+    OutputStream out = new FileOutputStream(outputFileName);
+    outModel.write(out, outFormat, base);
+
+    outModel.close();
+  }
+}
