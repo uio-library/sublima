@@ -51,11 +51,30 @@ sub:isMainConceptOf  a owl:ObjectProperty ;
     owl:inverseOf skos:hasTopConcept . 
 
 
-wdr:DR a owl:Class .status:godkjent_av_administrator a wdr:DR .
-
+wdr:DR a owl:Class .
 status:til_godkjenning a wdr:DR ;
-    rdfs:label "Til godkjenning"@no , "For approval"@en .
+    rdfs:label "Til godkjenning"@no , "Til godkänning"@sv, "Til godkjenning"@da, "For approval"@en .
 
-status:inaktiv a wdr:DR .
+status:inaktiv a wdr:DR ;
+    rdfs:label "Inaktiv"@no, "Inaktiv"@sv, "Inaktiv"@da, "Inactive"@en .
 
-status:checked a wdr:DR .
+status:godkjent_av_administrator a wdr:DR ;
+    rdfs:label "Godkjent av administrator"@no, "Godkänt av administrator"@sv, "Godkjent av administrator"@da, "Approved by administrator"@en .
+
+status:ikke_godkjent_av_administrator a wdr:DR ;
+    rdfs:label "Ikke godkjent av administrator"@no, "Inte godkänt av administrator"@sv, "Ikke godkjent av administraotr"@da, "Not approved by administrator"@en .
+
+status:nytt_forslag a wdr:DR ;
+    rdfs:label "Nytt forslag"@no, "Nytt förslag"@sv, "Nytt forslag"@da, "New suggestion"@en .
+
+status:under_behandling a wdr:DR ;
+    rdfs:label "Under behandling"@no, "Under behandling"@sv, "Under behandling"@da, "Being dealt with"@en .
+
+status:check a wdr:DR ;
+    rdfs:label "Sjekkes manuelt"@no, "Kontrolleras manuellt"@sv, "Sjekkes manuelt"@da, "Check manually"@en .
+
+status:gone a wdr:DR ;
+    rdfs:label "Permanent borte"@no, "Permanent borta"@sv, "Permanent borte"@da, "Permanently gone"@en .
+
+status:ok a wdr:DR ;
+    rdfs:label "Ok"@no, "Ok"@sv, "Ok"@da, "Ok"@en .

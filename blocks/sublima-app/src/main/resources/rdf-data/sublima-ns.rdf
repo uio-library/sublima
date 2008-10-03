@@ -1,71 +1,122 @@
-<?xml version="1.0"?>
 <rdf:RDF
-    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-    xmlns:owl="http://www.w3.org/2002/07/owl#"
-    xmlns:status="http://sublima.computas.com/status/"
-    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
-    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
-    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-    xmlns:wdr="http://www.w3.org/2007/05/powder#"
-    xmlns:http="http://www.w3.org/2007/ont/http#"
-    xmlns:sioc="http://rdfs.org/sioc/ns#"
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-    xmlns="http://xmlns.computas.com/sublima#"
-  xml:base="http://xmlns.computas.com/sublima">
-  <owl:Ontology rdf:about=""/>
-  <rdfs:Class rdf:ID="Resource">
-    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
-    <owl:equivalentClass>
-      <owl:Class>
-        <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
-      </owl:Class>
-    </owl:equivalentClass>
-    <owl:equivalentClass>
-      <owl:Class>
-        <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Site"/>
-      </owl:Class>
-    </owl:equivalentClass>
-  </rdfs:Class>
-  <owl:Class rdf:about="http://www.w3.org/2007/05/powder#DR"/>
-  <owl:ObjectProperty rdf:ID="isMainConceptOf">
+    xmlns:http="http://www.w3.org/2007/ont/http#"
+    xmlns:wdr="http://www.w3.org/2007/05/powder#"
+    xmlns:status="http://sublima.computas.com/status/"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sioc="http://rdfs.org/sioc/ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sub="http://xmlns.computas.com/sublima#" > 
+  <rdf:Description rdf:about="http://sublima.computas.com/status/gone">
+    <rdfs:label xml:lang="en">Permanently gone</rdfs:label>
+    <rdfs:label xml:lang="da">Permanent borte</rdfs:label>
+    <rdfs:label xml:lang="sv">Permanent borta</rdfs:label>
+    <rdfs:label xml:lang="no">Permanent borte</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/godkjent_av_administrator">
+    <rdfs:label xml:lang="en">Approved by administrator</rdfs:label>
+    <rdfs:label xml:lang="da">Godkjent av administrator</rdfs:label>
+    <rdfs:label xml:lang="sv">Godkänt av administrator</rdfs:label>
+    <rdfs:label xml:lang="no">Godkjent av administrator</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
+    <owl:inverseOf rdf:resource="http://www.w3.org/2004/02/skos/core#hasTopConcept"/>
     <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
     <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
-    <owl:inverseOf rdf:resource="http://www.w3.org/2004/02/skos/core#hasTopConcept"/>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="url">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
-    <rdfs:range rdf:resource="#Resource"/>
-    <rdfs:domain rdf:resource="#Resource"/>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="committer">
-    <rdfs:domain rdf:resource="#Resource"/>
-    <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#User"/>
-  </owl:ObjectProperty>
-  <wdr:DR rdf:about="http://sublima.computas.com/status/inaktiv"/>
-  <owl:AnnotationProperty rdf:ID="stripped">
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-    <rdfs:domain rdf:resource="http://www.w3.org/2007/ont/http#ResponseMessage"/>
-  </owl:AnnotationProperty>
-  <wdr:DR rdf:about="http://sublima.computas.com/status/til_godkjenning"/>
-  <owl:AnnotationProperty rdf:ID="keywords">
-    <rdfs:domain rdf:resource="#Resource"/>
-  </owl:AnnotationProperty>
-  <rdf:Description rdf:ID="LocalURI">
-    <rdfs:subClassOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
-    <rdfs:comment xml:lang="en">The local URI assigned to a URI</rdfs:comment>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </rdf:Description>
-  <owl:AnnotationProperty rdf:ID="status">
-    <rdfs:domain rdf:resource="#Resource"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-  </owl:AnnotationProperty>
-  <wdr:DR rdf:about="http://sublima.computas.com/status/godkjent_av_administrator"/>
-  <rdf:Description rdf:ID="comment">
-    <rdfs:domain rdf:resource="#Resource"/>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/under_behandling">
+    <rdfs:label xml:lang="en">Being dealt with</rdfs:label>
+    <rdfs:label xml:lang="da">Under behandling</rdfs:label>
+    <rdfs:label xml:lang="sv">Under behandling</rdfs:label>
+    <rdfs:label xml:lang="no">Under behandling</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#comment">
     <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/nytt_forslag">
+    <rdfs:label xml:lang="en">New suggestion</rdfs:label>
+    <rdfs:label xml:lang="da">Nytt forslag</rdfs:label>
+    <rdfs:label xml:lang="sv">Nytt förslag</rdfs:label>
+    <rdfs:label xml:lang="no">Nytt forslag</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#status">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ok">
+    <rdfs:label xml:lang="en">Ok</rdfs:label>
+    <rdfs:label xml:lang="da">Ok</rdfs:label>
+    <rdfs:label xml:lang="sv">Ok</rdfs:label>
+    <rdfs:label xml:lang="no">Ok</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#Resource">
+    <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Site"/>
+    <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/inaktiv">
+    <rdfs:label xml:lang="en">Inactive</rdfs:label>
+    <rdfs:label xml:lang="da">Inaktiv</rdfs:label>
+    <rdfs:label xml:lang="sv">Inaktiv</rdfs:label>
+    <rdfs:label xml:lang="no">Inaktiv</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ikke_godkjent_av_administrator">
+    <rdfs:label xml:lang="en">Not approved by administrator</rdfs:label>
+    <rdfs:label xml:lang="da">Ikke godkjent av administraotr</rdfs:label>
+    <rdfs:label xml:lang="sv">Inte godkänt av administrator</rdfs:label>
+    <rdfs:label xml:lang="no">Ikke godkjent av administrator</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/til_godkjenning">
+    <rdfs:label xml:lang="en">For approval</rdfs:label>
+    <rdfs:label xml:lang="da">Til godkjenning</rdfs:label>
+    <rdfs:label xml:lang="sv">Til godkänning</rdfs:label>
+    <rdfs:label xml:lang="no">Til godkjenning</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#DR">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#url">
+    <rdfs:range rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#committer">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#User"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#keywords">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#stripped">
+    <rdfs:domain rdf:resource="http://www.w3.org/2007/ont/http#ResponseMessage"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/check">
+    <rdfs:label xml:lang="en">Check manually</rdfs:label>
+    <rdfs:label xml:lang="da">Sjekkes manuelt</rdfs:label>
+    <rdfs:label xml:lang="sv">Kontrolleras manuellt</rdfs:label>
+    <rdfs:label xml:lang="no">Sjekkes manuelt</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#LocalURI">
+    <rdfs:comment xml:lang="en">The local URI assigned to a URI</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
   </rdf:Description>
 </rdf:RDF>
-
-<!-- Created with Protege (with OWL Plugin 3.4, Build 506)  http://protege.stanford.edu -->
