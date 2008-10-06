@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:c="http://xmlns.computas.com/cocoon"
+        xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+  <form action="query" method="GET">
+      <textarea style="background-color: #F0F0F0;" name="query" cols="70" rows="20"> </textarea>
+      <input type="submit" value="Kjør spørring"/>
+    </form>
+</c:page>

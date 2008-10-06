@@ -5,7 +5,6 @@ import com.computas.sublima.app.adhoc.ImportData;
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -17,8 +16,6 @@ import org.apache.log4j.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +39,7 @@ public class AdminController implements StatelessAppleController {
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
- 
+
   private static Logger logger = Logger.getLogger(AdminController.class);
   ConvertSublimaResources convert = new ConvertSublimaResources();
 
@@ -63,6 +60,17 @@ public class AdminController implements StatelessAppleController {
         String query = req.getCocoonRequest().getParameter("query");
         res.redirectTo(req.getCocoonRequest().getContextPath() + "/sparql?query=" + URLEncoder.encode(query, "UTF-8"));
       }
+    } else if ("testsparul".equalsIgnoreCase(mode)) {
+      if ("".equalsIgnoreCase(submode)) {
+        res.sendPage("xhtml/testsparul", null);
+      } else {
+        String query = req.getCocoonRequest().getParameter("query");
+        boolean deleteResourceSuccess = sparulDispatcher.query(query);
+
+        logger.trace("TestSparul:\n" + query);
+        logger.trace("TestSparul result: " + deleteResourceSuccess);
+        res.sendPage("xhtml/testsparul", null);        
+      }
     } else if ("database".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
         uploadForm(res, req);
@@ -76,7 +84,10 @@ public class AdminController implements StatelessAppleController {
     }
   }
 
-  private void exportOntologyToXML(AppleResponse res, AppleRequest req) throws Exception {
+  private void exportOntologyToXML
+          (AppleResponse
+                  res, AppleRequest
+                  req) throws Exception {
     Map<String, Object> bizData = new HashMap<String, Object>();
 
     String type = req.getCocoonRequest().getParameter("type");
@@ -94,9 +105,12 @@ public class AdminController implements StatelessAppleController {
     res.sendPage("nostyle/export", bizData);
   }
 
-  private void uploadForm(AppleResponse res, AppleRequest req) {
+  private void uploadForm
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
-      bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       res.sendPage("xml2/upload", bizData);
