@@ -18,16 +18,16 @@
 	  </label>
 	</th>
 	<td>
-    <select id="{$field}" name="{$field}">
+	  <select id="{$field}" name="{$field}">
 	    <option value=""></option>
 	    <xsl:for-each select="./sq:results/sq:result">
 	      <xsl:sort lang="{$interface-language}" select="./sq:binding[@name = 'label']/sq:literal[@xml:lang=$interface-language]"/>
-        <xsl:if test="./sq:binding[@name = 'label']/sq:literal[@xml:lang=$interface-language]">
-          <option value="{./sq:binding[@name = 'uri']/sq:uri}">
-		        <xsl:value-of select="./sq:binding[@name = 'label']/sq:literal[@xml:lang=$interface-language]"/>
-	        </option>
-        </xsl:if>
-      </xsl:for-each>
+	      <xsl:if test="./sq:binding[@name = 'label']/sq:literal[@xml:lang=$interface-language]">
+		<option value="{./sq:binding[@name = 'uri']/sq:uri}">
+		  <xsl:value-of select="./sq:binding[@name = 'label']/sq:literal[@xml:lang=$interface-language]"/>
+		</option>
+	      </xsl:if>
+	    </xsl:for-each>
 	  </select>
 	</td>
       </tr>
