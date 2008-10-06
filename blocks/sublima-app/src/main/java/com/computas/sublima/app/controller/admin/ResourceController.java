@@ -48,7 +48,7 @@ public class ResourceController implements StatelessAppleController {
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
-  
+
   private String userPrivileges = "<empty/>";
 
   private static Logger logger = Logger.getLogger(AdminController.class);
@@ -237,7 +237,6 @@ public class ResourceController implements StatelessAppleController {
       // When POST try to save the resource. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
-      //todo This is not very robust, have to find another way to differentiate the different actions.
       if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
         String deleteString = "DELETE {\n" +
@@ -432,20 +431,20 @@ public class ResourceController implements StatelessAppleController {
 //Create an XML structure for the selected values, to use in the JX template
     StringBuffer xmlStructureBuffer = new StringBuffer();
     xmlStructureBuffer.append("<rdf:RDF  xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
-                "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
-                "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
-                "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
-                "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
-                "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-                "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
-                "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
-                "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
-                "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
-                "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-                "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-                "xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"\n" +
-                "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n");
+            "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+            "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+            "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+            "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+            "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+            "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+            "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+            "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+            "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+            "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+            "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+            "xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"\n" +
+            "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n");
     xmlStructureBuffer.append("<sub:Resource>\n");
     xmlStructureBuffer.append("<dct:title>" + temp_title + "</dct:title>\n");
     xmlStructureBuffer.append("<sub:url rdf:resource=\"" + temp_uri + "\"/>\n");
