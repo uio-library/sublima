@@ -102,15 +102,17 @@ public class AdminController implements StatelessAppleController {
       res.sendPage("xml2/upload", bizData);
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
-      String type = req.getCocoonRequest().getParameter("type");
-      File file = new File(req.getCocoonRequest().getParameter("location"));
+      if (req.getCocoonRequest().getParameter("location") != null) {
+        String type = req.getCocoonRequest().getParameter("type");
+        File file = new File(req.getCocoonRequest().getParameter("location"));
 
-      try {
-        ConvertSublimaResources.applyRules(file.toURL().toString(), type, file.getCanonicalPath(), type);
-        ImportData.load(file.toURL().toString(), type);
-      } catch (Exception e) {
-        logger.trace("AdminController.uploadForm --> Error during loading of resource");
-        e.printStackTrace();
+        try {
+          ConvertSublimaResources.applyRules(file.toURL().toString(), type, file.getCanonicalPath(), type);
+          ImportData.load(file.toURL().toString(), type);
+        } catch (Exception e) {
+          logger.trace("AdminController.uploadForm --> Error during loading of resource");
+          e.printStackTrace();
+        }
       }
 
       res.sendPage("xml2/upload", bizData);

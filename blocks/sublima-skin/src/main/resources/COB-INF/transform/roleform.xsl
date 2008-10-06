@@ -182,7 +182,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.edit'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'resource.edit'">
                 <input type="checkbox" name="privileges" value="resource.edit" checked="checked"/><i18n:text key="addedit">Legge til/Redigere</i18n:text>
               </xsl:when>
               <xsl:otherwise>
@@ -196,7 +196,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.approve'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'resource.approve'">
                 <input type="checkbox" name="privileges" value="resource.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
@@ -210,7 +210,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'relation.delete'">
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'resource.delete'">
                 <input type="checkbox" name="privileges" value="resource.delete" checked="checked"/><i18n:text key="delete">Slette</i18n:text>
               </xsl:when>
               <xsl:otherwise>
@@ -524,7 +524,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.edit'">
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'resource.edit'">
                 <input type="checkbox" name="privileges" value="resource.edit" checked="checked"/><i18n:text key="addedit">Legge til/Redigere</i18n:text>
               </xsl:when>
               <xsl:otherwise>
@@ -538,7 +538,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.approve'">
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'resource.approve'">
                 <input type="checkbox" name="privileges" value="resource.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
               </xsl:when>
               <xsl:otherwise>
@@ -552,7 +552,7 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'relation.delete'">
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'resource.delete'">
                 <input type="checkbox" name="privileges" value="resource.delete" checked="checked"/><i18n:text key="delete">Slette</i18n:text>
               </xsl:when>
               <xsl:otherwise>
