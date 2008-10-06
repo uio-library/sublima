@@ -37,7 +37,7 @@
           <td>
 
             <xsl:call-template name="controlbutton">
-              <xsl:with-param name="privilege">topic.edit</xsl:with-param>
+              <xsl:with-param name="privilege">resource.edit</xsl:with-param>
               <xsl:with-param name="buttontext"><i18n:text key="button.next">Neste</i18n:text></xsl:with-param>
             </xsl:call-template>
 
