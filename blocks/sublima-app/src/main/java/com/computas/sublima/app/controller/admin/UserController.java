@@ -51,17 +51,7 @@ public class UserController implements StatelessAppleController {
           "PREFIX sioc: <http://rdfs.org/sioc/ns#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
-  String[] prefixArray = {
-          "dct: <http://purl.org/dc/terms/>",
-          "foaf: <http://xmlns.com/foaf/0.1/>",
-          "sub: <http://xmlns.computas.com/sublima#>",
-          "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-          "wdr: <http://www.w3.org/2007/05/powder#>",
-          "skos: <http://www.w3.org/2004/02/skos/core#>",
-          "lingvoj: <http://www.lingvoj.org/ontology#>",
-          "sioc: <http://rdfs.org/sioc/ns#>"};
-  String prefixes = StringUtils.join("\n", prefixArray);
-
+  
   private static Logger logger = Logger.getLogger(AdminController.class);
 
   @SuppressWarnings("unchecked")

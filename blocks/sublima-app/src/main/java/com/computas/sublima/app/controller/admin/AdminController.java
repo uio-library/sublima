@@ -42,16 +42,7 @@ public class AdminController implements StatelessAppleController {
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
-  String[] prefixArray = {
-          "dct: <http://purl.org/dc/terms/>",
-          "foaf: <http://xmlns.com/foaf/0.1/>",
-          "sub: <http://xmlns.computas.com/sublima#>",
-          "rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-          "wdr: <http://www.w3.org/2007/05/powder#>",
-          "skos: <http://www.w3.org/2004/02/skos/core#>",
-          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
-  String prefixes = StringUtils.join("\n", prefixArray);
-
+ 
   private static Logger logger = Logger.getLogger(AdminController.class);
   ConvertSublimaResources convert = new ConvertSublimaResources();
 

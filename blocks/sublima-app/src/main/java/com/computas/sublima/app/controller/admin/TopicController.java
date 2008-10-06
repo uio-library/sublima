@@ -42,9 +42,7 @@ public class TopicController implements StatelessAppleController {
   String[] completePrefixArray = {"PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#>", "PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>", "PREFIX owl: 		<http://www.w3.org/2002/07/owl#>", "PREFIX foaf: 		<http://xmlns.com/foaf/0.1/>", "PREFIX lingvoj: 	<http://www.lingvoj.org/ontology#>", "PREFIX dcmitype: 	<http://purl.org/dc/dcmitype/>", "PREFIX dct: 		<http://purl.org/dc/terms/>", "PREFIX sub: 		<http://xmlns.computas.com/sublima#>", "PREFIX wdr: 		<http://www.w3.org/2007/05/powder#>", "PREFIX sioc: 		<http://rdfs.org/sioc/ns#>", "PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#>", "PREFIX topic: 		<topic/>", "PREFIX skos:		<http://www.w3.org/2004/02/skos/core#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
-  String[] prefixArray = {"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>", "sub: <http://xmlns.computas.com/sublima#>", "rdfs: <http://www.w3.org/2000/01/rdf-schema#>", "wdr: <http://www.w3.org/2007/05/powder#>", "skos: <http://www.w3.org/2004/02/skos/core#>", "lingvoj: <http://www.lingvoj.org/ontology#>"};
-  String prefixes = StringUtils.join("\n", prefixArray);
-
+  
   private static Logger logger = Logger.getLogger(AdminController.class);
 
   private String getRequestXML(AppleRequest req) {
