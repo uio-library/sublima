@@ -196,6 +196,7 @@
   <message key="button.adv.search">Search</message>
   <message key="button.resource.search">Search</message>
   <message key="button.copyasnew">Copy fields to new form</message>
+  <message key="button.savepublisher">Save publisher</message>
 
   <message key="menu.mass">Mass edit resource URLs</message>
   <message key="menu.stats">Statistics</message>

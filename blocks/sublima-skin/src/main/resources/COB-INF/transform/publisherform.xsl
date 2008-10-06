@@ -77,7 +77,10 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" value="Lagre navneendring"/>
+            <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">publisher.edit</xsl:with-param>
+              <xsl:with-param name="buttontext"><i18n:text key="button.savepublisher">Lagre utgiver</i18n:text></xsl:with-param>
+            </xsl:call-template>
           </td>
         </tr>
       </table>

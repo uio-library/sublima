@@ -189,6 +189,7 @@
   <message key="button.adv.search">Sök</message>
   <message key="button.resource.search">Sök</message>
   <message key="button.copyasnew">Kopiera fälten till nytt schema</message>
+  <message key="button.savepublisher">Spara utgivare</message>
 
   <message key="menu.mass">Massredigere resursenas URL</message>
   <message key="menu.stats">Statistik</message>

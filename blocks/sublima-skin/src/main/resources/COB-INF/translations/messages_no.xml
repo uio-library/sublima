@@ -188,6 +188,7 @@
   <message key="button.adv.search">Søk</message>
   <message key="button.resource.search">Søk</message>
   <message key="button.copyasnew">Kopier felter til nytt skjema</message>
+  <message key="button.savepublisher">Lagre utgiver</message>
 
   <message key="menu.mass">Masseredigering av ressursenes URL</message>
   <message key="menu.stats">Statistikk</message>
