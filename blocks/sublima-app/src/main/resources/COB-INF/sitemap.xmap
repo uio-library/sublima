@@ -9,44 +9,44 @@
   <map:components>
     <map:matchers>
       <map:action name="locale" src="org.apache.cocoon.acting.LocaleAction">
-	<map:locale-attribute>locale</map:locale-attribute>
-	<map:use-locale>false</map:use-locale>
-	<map:default-locale language="no" country="NO"/>
-	<map:store-in-request>true</map:store-in-request>
-	<map:create-session>false</map:create-session>
-	<map:store-in-session>false</map:store-in-session>
-	<map:store-in-cookie>false</map:store-in-cookie>
+        <map:locale-attribute>locale</map:locale-attribute>
+        <map:use-locale>false</map:use-locale>
+        <map:default-locale language="no" country="NO"/>
+        <map:store-in-request>true</map:store-in-request>
+        <map:create-session>false</map:create-session>
+        <map:store-in-session>false</map:store-in-session>
+        <map:store-in-cookie>false</map:store-in-cookie>
       </map:action>
-      
+
     </map:matchers>
 
     <map:serializers>
       <map:serializer name="xml" mime-type="text/xml"
-		      src="org.apache.cocoon.serialization.XMLSerializer">
-	<map:encoding>UTF-8</map:encoding>
+                      src="org.apache.cocoon.serialization.XMLSerializer">
+        <map:encoding>UTF-8</map:encoding>
       </map:serializer>
-      
+
       <map:serializer name="xhtml"
-		      src="org.apache.cocoon.serialization.XMLSerializer"
-		      mime-type="text/html; charset=UTF-8" 
-		      >
-	<map:doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</map:doctype-public>
-	<map:doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</map:doctype-system>
-	<map:encoding>UTF-8</map:encoding>
+                      src="org.apache.cocoon.serialization.XMLSerializer"
+                      mime-type="text/html; charset=UTF-8"
+              >
+        <map:doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</map:doctype-public>
+        <map:doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</map:doctype-system>
+        <map:encoding>UTF-8</map:encoding>
       </map:serializer>
 
       <map:serializer name="html" mime-type="text/html; charset=UTF-8"
-		      src="org.apache.cocoon.serialization.HTMLSerializer">
-	<map:encoding>UTF-8</map:encoding>
-	
-	<!-- the following common doctype is only included for completeness, it has no impact on encoding>
-	     <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
-	     <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system -->
+                      src="org.apache.cocoon.serialization.HTMLSerializer">
+        <map:encoding>UTF-8</map:encoding>
+
+        <!-- the following common doctype is only included for completeness, it has no impact on encoding>
+           <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
+           <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system -->
       </map:serializer>
     </map:serializers>
-   
+
   </map:components>
-      
+
   <map:pipelines>
 
     <!-- Pipeline for the admin part -->
@@ -61,8 +61,8 @@
           <map:parameter name="application" value="Sublima"/>
 
           <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-              <map:parameter name="mode" value=""/>
-            </map:call>
+            <map:parameter name="mode" value=""/>
+          </map:call>
         </map:act>
         <map:call function="com.computas.sublima.app.controller.admin.LoginController">
           <map:parameter name="mode" value="showform"/>
@@ -76,16 +76,16 @@
         <!--map:call function="com.computas.sublima.app.controller.admin.LoginController"-->
         <!-- try to login -->
         <!--map:act type="locale"-->
-          <map:act type="cauth-login">
-            <!--map:parameter name="locale" value="{language}"/-->
-            <map:parameter name="application" value="Sublima"/>
-            <map:parameter name="name" value="{request-param:username}"/>
-            <map:parameter name="password" value="{request-param:password}"/>
-            <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-              <map:parameter name="mode" value=""/>
-            </map:call>
-          </map:act>
-          <map:redirect-to uri="{request:contextPath}/login"/>
+        <map:act type="cauth-login">
+          <!--map:parameter name="locale" value="{language}"/-->
+          <map:parameter name="application" value="Sublima"/>
+          <map:parameter name="name" value="{request-param:username}"/>
+          <map:parameter name="password" value="{request-param:password}"/>
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+            <map:parameter name="mode" value=""/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="{request:contextPath}/login"/>
         <!--/map:call-->
         <!--/map:act-->
       </map:match>
@@ -112,6 +112,18 @@
           <map:parameter name="mode" value="testsparql"/>
           <map:parameter name="submode" value="{1}"/>
         </map:call>
+      </map:match>
+
+      <!-- To test SPARUL queries -->
+      <map:match pattern="testsparul/*">
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+            <map:parameter name="mode" value="testsparul"/>
+            <map:parameter name="submode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
       <!-- Initial admin page -->
@@ -203,7 +215,7 @@
         <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
-       <map:match pattern="admin/brukere/roller/*">
+      <map:match pattern="admin/brukere/roller/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
           <map:call function="com.computas.sublima.app.controller.admin.UserController">
@@ -315,42 +327,42 @@
         <map:serialize type="xml"/>
       </map:match>
 
-     <map:match pattern="search-result.*">
-       <map:act type="locale">
-         <map:call function="com.computas.sublima.app.controller.SearchController">
+      <map:match pattern="search-result.*">
+        <map:act type="locale">
+          <map:call function="com.computas.sublima.app.controller.SearchController">
             <map:parameter name="mode" value="search-result"/>
             <map:parameter name="interface-language" value="{language}"/>
-	    <map:parameter name="format" value="{../1}"/>
-	 </map:call>
+            <map:parameter name="format" value="{../1}"/>
+          </map:call>
         </map:act>
       </map:match>
 
       <map:match pattern="topic/*.*">
-   	<map:act type="locale">
-	  <map:call function="com.computas.sublima.app.controller.SearchController">
-	    <map:parameter name="mode" value="topic"/>
-	    <map:parameter name="topic" value="{../1}"/>
-	    <map:parameter name="format" value="{../2}"/>
-	    <map:parameter name="interface-language" value="{language}"/>
-	  </map:call>
-	</map:act>
+        <map:act type="locale">
+          <map:call function="com.computas.sublima.app.controller.SearchController">
+            <map:parameter name="mode" value="topic"/>
+            <map:parameter name="topic" value="{../1}"/>
+            <map:parameter name="format" value="{../2}"/>
+            <map:parameter name="interface-language" value="{language}"/>
+          </map:call>
+        </map:act>
       </map:match>
-      
+
       <map:match pattern="topic/*">
-	<map:redirect-to uri="{request:contextPath}/sparql?query=DESCRIBE"/>
-	<map:serialize status-code="303"/>
+        <map:redirect-to uri="{request:contextPath}/sparql?query=DESCRIBE"/>
+        <map:serialize status-code="303"/>
       </map:match>
-  
+
 
       <map:match pattern="resource/*.*">
-	<map:act type="locale">
-	  <map:call function="com.computas.sublima.app.controller.SearchController">
-	    <map:parameter name="mode" value="resource"/>
-	    <map:parameter name="name" value="{../1}"/>
-	    <map:parameter name="format" value="{../2}"/>
-	    <map:parameter name="interface-language" value="{language}"/>
-	  </map:call>
-	</map:act>
+        <map:act type="locale">
+          <map:call function="com.computas.sublima.app.controller.SearchController">
+            <map:parameter name="mode" value="resource"/>
+            <map:parameter name="name" value="{../1}"/>
+            <map:parameter name="format" value="{../2}"/>
+            <map:parameter name="interface-language" value="{language}"/>
+          </map:call>
+        </map:act>
       </map:match>
 
       <map:match pattern="navigation-and-facets">
@@ -396,7 +408,7 @@
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
         </map:serialize>
       </map:match>
-      
+
       <map:match pattern="rss/*">
         <map:generate src="templates/{1}.jx.xml" type="jx"/>
         <!-- apply styling -->
@@ -409,8 +421,7 @@
         <map:generate src="templates/{1}.jx.xml" type="jx"/>
         <map:serialize type="xml"/>
       </map:match>
-      
-      
+
 
       <map:match pattern="xml2/*">
         <map:generate src="templates/{1}.jx.xml" type="jx"/>
@@ -421,32 +432,31 @@
       </map:match>
 
 
-
-
     </map:pipeline>
-    
+
     <map:pipeline>
       <map:match pattern="sruserver">
-	<map:call function="com.computas.sublima.query.controller.SRUServer"/>
+        <map:call function="com.computas.sublima.query.controller.SRUServer"/>
       </map:match>
     </map:pipeline>
-    
-    
+
+
     <map:pipeline internal-only="true">
       <map:match pattern="sru/sru-results">
-	<map:generate src="templates/sru-results.jx.xml" type="jx"/>
-	<map:transform src="file:///home/kkj/dev/sublima/blocks/sublima-app/src/main/resources/COB-INF/transform/rdfxml2sru.xsl"/>
-	<map:serialize type="xml"/>
-      </map:match>      
+        <map:generate src="templates/sru-results.jx.xml" type="jx"/>
+        <map:transform
+                src="file:///home/kkj/dev/sublima/blocks/sublima-app/src/main/resources/COB-INF/transform/rdfxml2sru.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
     </map:pipeline>
 
     <map:pipeline internal-only="true">
       <map:match pattern="sru/*">
-	<map:generate src="templates/{1}.jx.xml" type="jx"/>
-	<map:serialize type="xml"/>
-      </map:match>      
+        <map:generate src="templates/{1}.jx.xml" type="jx"/>
+        <map:serialize type="xml"/>
+      </map:match>
     </map:pipeline>
-    
+
   </map:pipelines>
-  
+
 </map:sitemap>
