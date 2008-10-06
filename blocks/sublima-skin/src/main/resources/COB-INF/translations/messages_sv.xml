@@ -80,6 +80,7 @@
 
   <!--  administration  -->
   <message key="admin.login">Login</message>
+  <message key="admin.logout">Logg ut</message>
   <message key="admin.topic.usedby">Resurser med anknytning till ämnet</message>
   <message key="admin.publisher.resources">Resurser med anknytning till denna utgivare</message>
   <message key="admin.linkcheck.gone">Resursen är borta för gott</message>

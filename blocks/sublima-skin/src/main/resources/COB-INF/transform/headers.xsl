@@ -13,6 +13,7 @@
 
   <xsl:template name="head">
     <xsl:param name="title"/>
+
     <head>
       <title>
 	<xsl:value-of select="$title"/>
@@ -72,7 +73,7 @@
       </p>
 
       <p id="layoutdims">
-	<a href="{$baseurl}/login{$qloc}">Admin</a>
+	<a href="{$baseurl}/login{$qloc}">Admin</a><xsl:text> | </xsl:text><a href="{$baseurl}/do-logout{$qloc}"><i18n:text key="admin.logout">Logg ut</i18n:text>/a>          
       </p>
     </div>
   </xsl:template>

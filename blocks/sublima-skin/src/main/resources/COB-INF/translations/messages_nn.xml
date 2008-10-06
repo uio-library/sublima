@@ -52,6 +52,7 @@
   <message key="resource.usercomments">Kommentarar frå brukarane</message>
   <!-- administration -->
   <message key="admin.login">Logg inn</message>
+  <message key="admin.logout">Logg ut</message>
   <message key="admin.topic.usedby">Ressursar kopla til emnet</message>
   <message key="admin.publisher.resources">Ressursar kopla til utgjevaren</message>
   <message key="admin.linkcheck.gone">Ressursen er permanent borte</message>
