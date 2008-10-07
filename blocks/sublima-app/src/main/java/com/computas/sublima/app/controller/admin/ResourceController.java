@@ -6,6 +6,7 @@ import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.SearchService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -35,6 +36,7 @@ public class ResourceController implements StatelessAppleController {
   private ApplicationManager appMan;
   private ApplicationUtil appUtil = new ApplicationUtil();
   private IndexService indexService = new IndexService();
+  private SearchService searchService = new SearchService();
   private User user;
   private String mode;
   private String submode;
@@ -293,9 +295,7 @@ public class ResourceController implements StatelessAppleController {
         // Generate a dct:identifier if it's a new resource, and set the time and date for approval
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier")) || req.getCocoonRequest().getParameter("dct:identifier") == null) {
           updateDate = true;
-          dctIdentifier = req.getCocoonRequest().getParameter("dct:title").replace(" ", "_");
-          dctIdentifier = dctIdentifier.replace(",", "_");
-          dctIdentifier = dctIdentifier.replace(".", "_");
+          dctIdentifier = searchService.sanitizeStringForURI(req.getCocoonRequest().getParameter("dct:title")); 
           dctIdentifier = getProperty("sublima.base.url") + "resource/" + dctIdentifier + parameterMap.get("the-resource").hashCode();
         } else {
           dctIdentifier = req.getCocoonRequest().getParameter("dct:identifier");

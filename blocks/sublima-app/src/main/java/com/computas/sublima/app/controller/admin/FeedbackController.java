@@ -5,6 +5,7 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.SearchService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -23,6 +24,7 @@ public class FeedbackController implements StatelessAppleController {
   boolean success = false;
   private ApplicationManager appMan;
   private AdminService adminService = new AdminService();
+  private SearchService searchService = new SearchService();
 
   //todo Check how to send error messages with Cocoon (like Struts 2's s:actionmessage)
   @SuppressWarnings("unchecked")
@@ -102,7 +104,7 @@ public class FeedbackController implements StatelessAppleController {
       String url = req.getCocoonRequest().getParameter("url");
       String tittel = req.getCocoonRequest().getParameter("tittel");
       String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
-      String[] stikkord = req.getCocoonRequest().getParameter("stikkord").split(",");
+      String stikkord = req.getCocoonRequest().getParameter("stikkord");
       String status;
 
       if (isSpam(req, loggedIn, url, tittel + "\n" + beskrivelse, "", "")) {
@@ -152,6 +154,8 @@ public class FeedbackController implements StatelessAppleController {
             "305".equals(status) ||
             "307".equals(status) ||
             status.startsWith("2")) {
+
+        String dctidentifier = searchService.sanitizeStringForURI(tittel);
         String insertTipString =
                 "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                         "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
@@ -161,10 +165,10 @@ public class FeedbackController implements StatelessAppleController {
                         "<" + url + "> a sub:Resource .\n" +
                         "<" + url + "> dct:title " + "\"\"\"" + tittel + "\"\"\"@no . \n" +
                         "<" + url + "> dct:description " + "\"\"\"" + beskrivelse.replace("\\", "\\\\") + "\"\"\"@no . \n" +
-                        "<" + url + "> sub:keywords " + "\"\"\"" + stikkord.toString() + "\"\"\"@no . \n" +
+                        "<" + url + "> sub:keywords " + "\"\"\"" + stikkord + "\"\"\"@no . \n" +
                         "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
                         "<" + url + "> sub:url <" + url + "> . \n" +
-                        "<" + url + "> dct:identifier <" + SettingsService.getProperty("sublima.base.url") + "resource/" + tittel.replace(" ", "_") + url.hashCode() + "> . }";
+                        "<" + url + "> dct:identifier <" + SettingsService.getProperty("sublima.base.url") + "resource/" + dctidentifier + url.hashCode() + "> . }";
 
 
         success = sparulDispatcher.query(insertTipString);

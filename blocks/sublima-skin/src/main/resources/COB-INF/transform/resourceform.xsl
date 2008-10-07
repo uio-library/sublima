@@ -214,6 +214,19 @@
             </select>
           </td>
         </tr>
+        <xsl:if test="./c:resource/rdf:RDF/sub:Resource/sub:keywords">
+          <tr>
+            <td>
+              <label for="sub:keywords">
+                <i18n:text key="tips.suggestedtopics">Emner</i18n:text>
+              </label>
+            </td>
+            <td>
+              <input id="sub:keywords" type="text" name="sub:keywords" size="40"
+                   value="{./c:resource/rdf:RDF/sub:Resource/sub:keywords}" disabled="disabled"/>  
+            </td>
+          </tr>
+        </xsl:if>
         <tr>
           <td>
             <label for="subject">
