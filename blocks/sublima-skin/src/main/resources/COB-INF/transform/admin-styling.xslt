@@ -148,11 +148,11 @@
     </form>
 
     <ul>
-      <xsl:for-each select="c:page/c:content/c:topics/rdf:RDF/skos:Concept">
-        <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
+      <xsl:for-each select="c:page/c:content/c:topics/rdf:RDF//skos:Concept/rdfs:label[@xml:lang=$interface-language]|c:page/c:content/c:topics/rdf:RDF//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
+        <xsl:sort lang="{$interface-language}" select="."/>
         <li>
-          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}{$aloc}">
-            <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+          <a href="{$baseurl}/admin/emner/emne?uri={../@rdf:about}{$aloc}">
+            <xsl:value-of select="."/>
           </a>
         </li>
       </xsl:for-each>
@@ -258,7 +258,7 @@
      menues
 	 ###################################################################### -->       
         <div class="col1" style="border:0px dotted black;">     <!-- Column 1 start -->
-               <!--xsl:call-template name="debug"/-->
+               <xsl:call-template name="debug"/>
 		  
 		  <xsl:text> </xsl:text> <!-- avoid an empty div tag -->
 		

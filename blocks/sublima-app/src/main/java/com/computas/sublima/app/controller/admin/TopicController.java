@@ -388,7 +388,7 @@ public class TopicController implements StatelessAppleController {
     if (req.getCocoonRequest().getParameter("wdr:describedBy") != null && !"".equals(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
       bizData.put("all_topics", adminService.getAllTopicsByStatus(req.getCocoonRequest().getParameter("wdr:describedBy")));
     } else {
-      bizData.put("all_topics", adminService.getAllTopics());
+      bizData.put("all_topics", adminService.getAllTopicsWithPrefAndAltLabel());
     }
 
     bizData.put("facets", getRequestXML(req));

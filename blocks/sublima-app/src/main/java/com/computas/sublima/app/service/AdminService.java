@@ -724,19 +724,45 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
-            "CONSTRUCT {",
-            "    ?topic a skos:Concept ;",
-            "        skos:prefLabel ?label .",
-            "}",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT { ?topic a skos:Concept ; rdfs:label ?label . }",
             "WHERE {",
-            "    ?topic a skos:Concept ;",
-            "        skos:prefLabel ?label ;",
-            "        wdr:describedBy <" + status + "> .",
+            "    ?topic a skos:Concept .",
+            "   {?topic skos:prefLabel ?label .}",
+            "   UNION {",
+            "       ?topic skos:altLabel ?label . }",
+            "    ?topic wdr:describedBy <" + status + "> .",
             "}"});
 
     logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();  
+  }
+
+  /**
+   * Method to get all topics
+   *
+   * @return A String RDF/XML containing all the topics
+   */
+  public String getAllTopicsWithPrefAndAltLabel() {
+
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+                        "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+                        "CONSTRUCT { ?topic a skos:Concept ; rdfs:label ?label . }",
+                        "WHERE {",
+                        "    ?topic a skos:Concept .",
+                        "   {?topic skos:prefLabel ?label .}",
+                        "   UNION {",
+                        "       ?topic skos:altLabel ?label . }",
+                        "}"});
+
+
+    logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
   }
 }
