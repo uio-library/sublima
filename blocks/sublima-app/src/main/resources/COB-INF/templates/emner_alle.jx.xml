@@ -39,5 +39,8 @@
     <c:topics>
       <jx:out value="#{all_topics}" xmlize="true"/>
     </c:topics>
+    <c:statuses>
+      <jx:out value="#{statuses}" xmlize="true"/>      
+    </c:statuses>
   </c:content>
 </c:page>

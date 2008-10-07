@@ -131,14 +131,33 @@
 
 
   <xsl:template name="alltopics">
+
+    <xsl:if test="c:page/c:content/c:topics">
+    <form action="" method="GET">
+      <xsl:call-template name="hidden-locale-field"/>
+
+      <table>
+        <xsl:apply-templates select="c:page/c:content/c:statuses/sparql:sparql">
+          <xsl:with-param name="field">wdr:describedBy</xsl:with-param>
+          <xsl:with-param name="label">Status</xsl:with-param>
+        </xsl:apply-templates>
+      </table>
+
+      <input type="submit" i18n:attr="value" value="button.resource.search"/>
+
+    </form>
+
     <ul>
       <xsl:for-each select="c:page/c:content/c:topics/rdf:RDF/skos:Concept">
         <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
         <li>
-          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}{$aloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
+          <a href="{$baseurl}/admin/emner/emne?uri={./@rdf:about}{$aloc}">
+            <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+          </a>
         </li>
       </xsl:for-each>
     </ul>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="resourcedetails">

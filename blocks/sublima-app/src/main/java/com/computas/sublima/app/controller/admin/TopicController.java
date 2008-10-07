@@ -385,9 +385,16 @@ public class TopicController implements StatelessAppleController {
                   res, AppleRequest
                   req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
-    bizData.put("all_topics", adminService.getAllTopics());
-    bizData.put("facets", getRequestXML(req));
 
+    if (req.getCocoonRequest().getParameter("wdr:describedBy") != null) {
+      bizData.put("all_topics", adminService.getAllTopicsByStatus(req.getCocoonRequest().getParameter("wdr:describedBy")));
+    } else {
+      bizData.put("all_topics", adminService.getAllTopics());
+    }
+    
+    bizData.put("facets", getRequestXML(req));
+    bizData.put("statuses", adminService.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
+                    "<http://www.w3.org/2007/05/powder#describedBy>"));
     res.sendPage("xml2/emner_alle", bizData);
   }
 
