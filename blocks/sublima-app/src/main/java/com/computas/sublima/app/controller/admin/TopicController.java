@@ -511,23 +511,27 @@ public class TopicController implements StatelessAppleController {
         }
 
         uri = form2SparqlService.getURI();
-
-        logger.trace("TopicController.editTopic --> SPARUL QUERY:\n" + sparqlQuery);
-        insertSuccess = sparulDispatcher.query(sparqlQuery);
-
-        logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
-
-        if (insertSuccess) {
-          if (req.getCocoonRequest().getParameter("the-resource") == null) {
-            messageBuffer.append("<c:message>Nytt emne lagt til</c:message>\n");
-          } else {
-            messageBuffer.append("<c:message>Emne oppdatert</c:message>\n");
-          }
-
-
+        // Check if a topic with the same uri already exists
+        if (adminService.getTopicByURI(uri).contains("skos:Concept")) {
+          messageBuffer.append("<c:message>Et emne med denne tittelen og URI finnes allerede</c:message>\n");
         } else {
-          messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
-          bizData.put("topicdetails", "<empty></empty>");
+          logger.trace("TopicController.editTopic --> SPARUL QUERY:\n" + sparqlQuery);
+          insertSuccess = sparulDispatcher.query(sparqlQuery);
+
+          logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
+
+          if (insertSuccess) {
+            if (req.getCocoonRequest().getParameter("the-resource") == null) {
+              messageBuffer.append("<c:message>Nytt emne lagt til</c:message>\n");
+            } else {
+              messageBuffer.append("<c:message>Emne oppdatert</c:message>\n");
+            }
+
+
+          } else {
+            messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
+            bizData.put("topicdetails", "<empty></empty>");
+          }
         }
       }
 
