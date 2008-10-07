@@ -68,30 +68,15 @@ public class Login extends AbstractSecurityHandler { //implements StatelessApple
       }
     }
 
-
     user = new StandardUser(name);
 
     // Get the user role and set it as an attribute
-    if (name.equalsIgnoreCase("Administrator") || "Computas".equalsIgnoreCase(name)) {
+    if (name.equalsIgnoreCase("Administrator")) {
       String role = SettingsService.getProperty("sublima.base.url") + "role/Administrator";
       user.setAttribute("role", role);
     } else {
       user.setAttribute("role", adminService.getUserRole("<mailto:" + name + ">"));
     }
-
-    //todo Set additional user attributes. Such as role etc.
-    /*
-    // check for additional attributes
-    final String prefix = name + '.';
-    final Iterator i = this.userProperties.entrySet().iterator();
-
-    while (i.hasNext()) {
-      final Map.Entry current = (Map.Entry) i.next();
-      if (current.getKey().toString().startsWith(prefix)) {
-        final String key = current.getKey().toString().substring(prefix.length());
-        user.setAttribute(key, current.getValue());
-      }
-    }*/
 
     return user;
   }

@@ -39,48 +39,49 @@ public class LoginController implements StatelessAppleController {
       String name = appleRequest.getCocoonRequest().getParameter("username");
       String password = appleRequest.getCocoonRequest().getParameter("password");
 
+      /*
       if ("Computas".equalsIgnoreCase(name) && "Computas".equalsIgnoreCase(password)) {
         // do nothing
+      } else {*/
+
+      if (name == null) {
+        continueLogin = false;
       } else {
+        String sql = "SELECT * FROM users WHERE username = '" + name + "'";
+        Statement statement = null;
 
-        if (name == null) {
-          continueLogin = false;
-        } else {
-          String sql = "SELECT * FROM users WHERE username = '" + name + "'";
-          Statement statement = null;
+        try {
+          statement = dbService.doSQLQuery(sql);
+          ResultSet rs = statement.getResultSet();
 
-          try {
-            statement = dbService.doSQLQuery(sql);
-            ResultSet rs = statement.getResultSet();
-
-            if (!rs.next()) { //empty
-              continueLogin = false;
-            }
-
-            if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
-              continueLogin = false;
-            }
-
-            statement.close();
-
-          } catch (SQLException e) {
-            e.printStackTrace();
-            continueLogin = false;
-          } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            continueLogin = false;
-          } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+          if (!rs.next()) { //empty
             continueLogin = false;
           }
+
+          if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
+            continueLogin = false;
+          }
+
+          statement.close();
+
+        } catch (SQLException e) {
+          e.printStackTrace();
+          continueLogin = false;
+        } catch (NoSuchAlgorithmException e) {
+          e.printStackTrace();
+          continueLogin = false;
+        } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+          continueLogin = false;
         }
       }
+      //}
 
       if (!continueLogin) {
         Map<String, Object> bizData = new HashMap<String, Object>();
         StringBuffer messageBuffer = new StringBuffer();
         messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
-        messageBuffer.append("<c:message><i18n:text key=\"login.failed\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>");
+        messageBuffer.append("<c:message><i18n:text key=\"admin.login.failed\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>");
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(appleRequest) + "</c:request>");
