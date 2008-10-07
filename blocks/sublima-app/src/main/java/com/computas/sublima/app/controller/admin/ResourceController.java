@@ -224,7 +224,6 @@ public class ResourceController implements StatelessAppleController {
 
       if ("ny".equalsIgnoreCase(type)) {
         registerNewResourceURL(req, res);
-        return;
       } else {
         bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("uri")));
         bizData.put("publishers", adminService.getAllPublishers());
@@ -322,7 +321,7 @@ public class ResourceController implements StatelessAppleController {
           sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
         }
         catch (IOException e) {
-          messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
+          messageBuffer.append("<c:message>Feil ved lagring av ressurs</c:message>\n");
         }
 
         //String uri = form2SparqlService.getURI();
@@ -333,11 +332,16 @@ public class ResourceController implements StatelessAppleController {
         logger.trace("AdminController.editResource --> INSERT QUERY RESULT: " + insertSuccess);
 
         if (insertSuccess) {
-          messageBuffer.append("<c:message>Ny ressurs lagt til!</c:message>\n");
+          if (updateDate) {
+            messageBuffer.append("<c:message>Ny ressurs lagt til</c:message>\n");
+          }
+          else {
+            messageBuffer.append("<c:message>Ressurs oppdatert</c:message>\n");            
+          }
+
           indexService.indexResource(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
           logger.trace("AdminController.editResource --> Added the resource to the index");
           LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
-
 
         } else {
           messageBuffer.append("<c:message>Feil ved lagring av ny ressurs</c:message>\n");

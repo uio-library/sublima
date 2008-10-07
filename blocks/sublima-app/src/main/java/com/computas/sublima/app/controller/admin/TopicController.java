@@ -4,7 +4,6 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.query.service.SettingsService;
 import com.computas.sublima.query.service.SearchService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -42,7 +41,7 @@ public class TopicController implements StatelessAppleController {
   String[] completePrefixArray = {"PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#>", "PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>", "PREFIX owl: 		<http://www.w3.org/2002/07/owl#>", "PREFIX foaf: 		<http://xmlns.com/foaf/0.1/>", "PREFIX lingvoj: 	<http://www.lingvoj.org/ontology#>", "PREFIX dcmitype: 	<http://purl.org/dc/dcmitype/>", "PREFIX dct: 		<http://purl.org/dc/terms/>", "PREFIX sub: 		<http://xmlns.computas.com/sublima#>", "PREFIX wdr: 		<http://www.w3.org/2007/05/powder#>", "PREFIX sioc: 		<http://rdfs.org/sioc/ns#>", "PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#>", "PREFIX topic: 		<topic/>", "PREFIX skos:		<http://www.w3.org/2004/02/skos/core#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
-  
+
   private static Logger logger = Logger.getLogger(AdminController.class);
 
   private String getRequestXML(AppleRequest req) {
@@ -249,7 +248,7 @@ public class TopicController implements StatelessAppleController {
       String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n"
               + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@no ;\n"
               + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
-   /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
+              /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
               + "}";
 
       logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
@@ -271,9 +270,9 @@ public class TopicController implements StatelessAppleController {
       }
 
       if (updateSuccess) {
-          messageBuffer.append("<c:message>Emnene er slått sammen</c:message>\n");
+        messageBuffer.append("<c:message>Emnene er slått sammen</c:message>\n");
       } else {
-          messageBuffer.append("<c:message>En feil oppsto ved sammenslåing</c:message>\n");
+        messageBuffer.append("<c:message>En feil oppsto ved sammenslåing</c:message>\n");
       }
 
       messageBuffer.append("</c:messages>\n");
@@ -391,10 +390,10 @@ public class TopicController implements StatelessAppleController {
     } else {
       bizData.put("all_topics", adminService.getAllTopics());
     }
-    
+
     bizData.put("facets", getRequestXML(req));
     bizData.put("statuses", adminService.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
-                    "<http://www.w3.org/2007/05/powder#describedBy>"));
+            "<http://www.w3.org/2007/05/powder#describedBy>"));
     res.sendPage("xml2/emner_alle", bizData);
   }
 
@@ -519,10 +518,15 @@ public class TopicController implements StatelessAppleController {
         logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
 
         if (insertSuccess) {
-          messageBuffer.append("<c:message>Nytt emne lagt til!</c:message>\n");
+          if (req.getCocoonRequest().getParameter("the-resource") == null) {
+            messageBuffer.append("<c:message>Nytt emne lagt til</c:message>\n");
+          } else {
+            messageBuffer.append("<c:message>Emne oppdatert</c:message>\n");
+          }
+
 
         } else {
-          messageBuffer.append("<c:message>Feil ved lagring av nytt emne</c:message>\n");
+          messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
           bizData.put("topicdetails", "<empty></empty>");
         }
       }
