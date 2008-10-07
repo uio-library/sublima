@@ -57,7 +57,6 @@ public class SearchService {
       actual += ("".equals(actual) ? "" : " " + defaultBooleanOperator + " ") + term;
     }
 
-    //todo Can this also be done with the regex?
     // Split the search string, and add * after each word that isn't a part of a phrase
     boolean partOfPhrase = false;
     StringBuffer stringBuffer = new StringBuffer();
