@@ -10,6 +10,9 @@ import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.auth.ApplicationManager;
+import org.apache.cocoon.auth.ApplicationUtil;
+import org.apache.cocoon.auth.User;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -27,8 +30,11 @@ public class PublisherController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
+  private ApplicationManager appMan;
+  private ApplicationUtil appUtil = new ApplicationUtil();
   private String mode;
   private String submode;
+  private User user;
   String[] completePrefixArray = {
           "PREFIX dct: <http://purl.org/dc/terms/>",
           "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
@@ -39,11 +45,17 @@ public class PublisherController implements StatelessAppleController {
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
+  private String userPrivileges = "<empty/>";
 
   private static Logger logger = Logger.getLogger(AdminController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
+
+    if (appUtil.getUser() != null) {
+      user = appUtil.getUser();
+      userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
+    }
 
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
@@ -253,6 +265,7 @@ public class PublisherController implements StatelessAppleController {
     bizData.put("publisherdetails", queryResult);
     bizData.put("languages", adminService.getAllLanguages());
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    bizData.put("userprivileges", userPrivileges);
     res.sendPage("xml2/utgiver", bizData);
   }
 
