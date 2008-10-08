@@ -480,7 +480,11 @@ public class AdminService {
     logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
-    return queryResult.toString();
+    if (queryResult == null) {
+      return "<rdf:RDF></rdf:RDF>";
+    } else {
+      return queryResult.toString();
+    }
   }
 
   public boolean validateURL(String url) {
