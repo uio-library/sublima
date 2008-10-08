@@ -39,13 +39,8 @@ public class SearchService {
   //todo More advanced check on search string. Ie. - + NOT OR AND if defined in the search term by the user
   public String buildSearchString(String searchstring, boolean truncate) {
 
-    /*
-    //If the default is set to OR, just return since OR is default with LARQ
-    if (defaultBooleanOperator.equalsIgnoreCase("OR")) {
-        return searchstring;
-    }
-    */
-
+    // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
+    searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^]" , "");
     Pattern p = Pattern.compile("(\\S+)|(\\\"[^\\\"]+\\\")");
     Matcher m = p.matcher(searchstring);
     List<String> terms = new ArrayList<String>();
