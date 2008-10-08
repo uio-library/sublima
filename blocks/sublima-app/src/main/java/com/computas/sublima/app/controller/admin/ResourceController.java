@@ -452,7 +452,7 @@ public class ResourceController implements StatelessAppleController {
     xmlStructureBuffer.append("<sub:Resource>\n");
     xmlStructureBuffer.append("<dct:title>" + temp_title + "</dct:title>\n");
     xmlStructureBuffer.append("<sub:url rdf:resource=\"" + temp_uri + "\"/>\n");
-    xmlStructureBuffer.append("<dct:identifier rdf:resource=\"" + temp_uri + "\"/>\n");
+    xmlStructureBuffer.append("<dct:identifier rdf:resource=\"" + temp_identifier + "\"/>\n");
     xmlStructureBuffer.append("<dct:description>" + temp_description + "</dct:description>\n");
     xmlStructureBuffer.append("<dct:publisher rdf:resource=\"" + temp_publisher + "\"/>\n");
 
