@@ -670,7 +670,10 @@ public class AdminService {
     params.append("  <request justbaseurl=\"" + uri + "\" ");
     if (req.getCocoonRequest().getQueryString() != null) {
       uri += "?" + req.getCocoonRequest().getQueryString();
-      uri = uri.replaceAll("&", "&amp;");
+      uri = uri.replace("&", "&amp;");
+      uri = uri.replace("<", "%3C");
+      uri = uri.replace(">", "%3E");
+      uri = uri.replace("#", "%23"); // A hack to get the hash alive through a clickable URL
       paramcount = req.getCocoonRequest().getParameters().size();
     }
     params.append("paramcount=\"" + paramcount + "\" ");
@@ -681,10 +684,10 @@ public class AdminService {
       params.append("\n    <param key=\"" + key + "\">");
       String[] values = req.getCocoonRequest().getParameterValues(key);
       for (String value : values) {
-        value = value.replaceAll("&", "&amp;");
-        value = value.replaceAll("<", "%3C");
-        value = value.replaceAll(">", "%3E");
-        value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+        value = value.replace("&", "&amp;");
+        value = value.replace("<", "%3C");
+        value = value.replace(">", "%3E");
+        value = value.replace("#", "%23"); // A hack to get the hash alive through a clickable URL
         params.append("\n      <value>" + value + "</value>");
       }
       params.append("\n    </param>");
@@ -702,7 +705,11 @@ public class AdminService {
     params.append("  <c:request xmlns:c=\"http://xmlns.computas.com/cocoon\" justbaseurl=\"" + uri + "\" ");
     if (req.getCocoonRequest().getQueryString() != null) {
       uri += "?" + req.getCocoonRequest().getQueryString();
-      uri = uri.replaceAll("&", "&amp;");
+      uri = uri.replace("&", "&amp;");
+      uri = uri.replace("&", "&amp;");
+      uri = uri.replace("<", "%3C");
+      uri = uri.replace(">", "%3E");
+      uri = uri.replace("#", "%23"); // A hack to get the hash alive through a clickable URL
       paramcount = req.getCocoonRequest().getParameters().size();
     }
     params.append("paramcount=\"" + paramcount + "\" ");
@@ -713,10 +720,10 @@ public class AdminService {
       params.append("\n    <c:param key=\"" + key + "\">");
       String[] values = req.getCocoonRequest().getParameterValues(key);
       for (String value : values) {
-        value = value.replaceAll("&", "&amp;");
-        value = value.replaceAll("<", "%3C");
-        value = value.replaceAll(">", "%3E");
-        value = value.replaceAll("#", "%23"); // A hack to get the hash alive through a clickable URL
+        value = value.replace("&", "&amp;");
+        value = value.replace("<", "%3C");
+        value = value.replace(">", "%3E");
+        value = value.replace("#", "%23"); // A hack to get the hash alive through a clickable URL
         params.append("\n      <c:value>" + value + "</c:value>");
       }
       params.append("\n    </c:param>");

@@ -55,7 +55,7 @@ public class TopicController implements StatelessAppleController {
     params.append("  <c:request xmlns:c=\"http://xmlns.computas.com/cocoon\" justbaseurl=\"" + uri + "\" ");
     if (req.getCocoonRequest().getQueryString() != null) {
       uri += "?" + req.getCocoonRequest().getQueryString();
-      uri = uri.replaceAll("&", "&amp;");
+      uri = uri.replace("&", "&amp;");
       paramcount = req.getCocoonRequest().getParameters().size();
     }
     params.append("paramcount=\"" + paramcount + "\" ");

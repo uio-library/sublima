@@ -66,7 +66,6 @@ public class SearchController implements StatelessAppleController {
 
     if ("topic".equalsIgnoreCase(mode)) {
       doGetTopic(res, req, loggedIn);
-      return;
     }
   }
 
