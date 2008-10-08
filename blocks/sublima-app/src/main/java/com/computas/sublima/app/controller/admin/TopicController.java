@@ -56,6 +56,9 @@ public class TopicController implements StatelessAppleController {
     if (req.getCocoonRequest().getQueryString() != null) {
       uri += "?" + req.getCocoonRequest().getQueryString();
       uri = uri.replace("&", "&amp;");
+      uri = uri.replace("<", "%3C");
+      uri = uri.replace(">", "%3E");
+      uri = uri.replace("#", "%23");
       paramcount = req.getCocoonRequest().getParameters().size();
     }
     params.append("paramcount=\"" + paramcount + "\" ");
