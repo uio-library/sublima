@@ -40,7 +40,8 @@ public class SearchService {
   public String buildSearchString(String searchstring, boolean truncate) {
 
     // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
-    searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^]" , "");
+    searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]" , "");
+    searchstring = searchstring.replace("&&", "");
     Pattern p = Pattern.compile("(\\S+)|(\\\"[^\\\"]+\\\")");
     Matcher m = p.matcher(searchstring);
     List<String> terms = new ArrayList<String>();
@@ -82,8 +83,12 @@ public class SearchService {
       }
     }
 
-    actual = stringBuffer.toString();
-    return actual.trim();
+    actual = stringBuffer.toString().trim();
+    if (actual.endsWith("\"")) { // since it would cause four double quotes
+       actual = actual + " ";
+    }
+
+    return actual;
   }
 
   /**
