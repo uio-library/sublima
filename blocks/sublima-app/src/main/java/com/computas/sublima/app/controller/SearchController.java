@@ -201,7 +201,11 @@ public class SearchController implements StatelessAppleController {
     if (req.getCocoonRequest().getParameter("searchstring") == null) {
       xmlSearchParametersBuffer.append("\t<c:searchstring></c:searchstring>\n");      
     } else {
-      xmlSearchParametersBuffer.append("\t<c:searchstring>" + req.getCocoonRequest().getParameter("searchstring") + "</c:searchstring>\n");
+      String searchstring = req.getCocoonRequest().getParameter("searchstring");
+      searchstring = searchstring.replace("&", "&amp;");
+      searchstring = searchstring.replace("<", "&lt;");
+      searchstring = searchstring.replace(">", "&gt;");
+      xmlSearchParametersBuffer.append("\t<c:searchstring>" + searchstring + "</c:searchstring>\n");
     }
     
     xmlSearchParametersBuffer.append("\t<c:operator>" + req.getCocoonRequest().getParameter("booleanoperator") + "</c:operator>\n");
