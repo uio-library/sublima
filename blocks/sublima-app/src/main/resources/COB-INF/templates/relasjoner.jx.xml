@@ -40,6 +40,7 @@
     <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
     <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
     <c:menuelement title="menu.stats" link="" extlink="/stats/" i18n:attr="title"/>
+    <c:menuelement title="admin.logout" link="do-logout" i18n:attr="title"/>
 
   </c:menu>
 

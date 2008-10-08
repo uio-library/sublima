@@ -493,7 +493,9 @@ PVJ: Made the file UTF-8
 		    <a href="{$baseurl}/admin/lenkesjekk/{$qloc}"><i18n:text key="menu.link">Lenkesjekk</i18n:text></a><br/>
 		    <a href="{$baseurl}/admin/database/{$qloc}"><i18n:text key="menu.database">Database</i18n:text></a><br/>
         <a href="/stats/"><i18n:text key="menu.stats">Statistikk</i18n:text></a><br/>
-      </xsl:when>
+        <br/>
+        <a href="{$baseurl}/do-logout{$qloc}"><i18n:text key="admin.logout">Logg ut</i18n:text></a><br/>
+    </xsl:when>
 		</xsl:choose>
 		</div>
 	
