@@ -203,7 +203,7 @@ public class Form2SparqlService {
                     String thisObjectString = null;
                     if (freetextFields != null && freetextFields.contains("dct:subject/all-labels"))  {
                     	int freetextNo = freetextFields.indexOf(key)+1;
-                    	n3Buffer.append("\n?free" + freetextNo + " pf:textMatch '");
+                    	n3Buffer.append("\n?free" + freetextNo + " pf:textMatch \"\"\"");
                         String[] words = value.split(" ");
                         if (words.length == 1) {
                             n3Buffer.append("+" + value.trim() + "*");
@@ -214,7 +214,7 @@ public class Form2SparqlService {
                         } else {
                             logger.info("Form2SPARQL freetext: " + value + "was not used.");
                         }
-                        n3Buffer.append("' .");
+                        n3Buffer.append("\"\"\" .");
                         thisObjectString = "?free" + freetextNo + " .";
 					} else if (value == null) {
 						thisObjectString = "?object" + values.length + " .";
@@ -484,7 +484,7 @@ public class Form2SparqlService {
         if (!subjectVarList.contains(resourceSubject)) {
             subjectVarList.add(resourceSubject);
         }
-        String result = "\n?lit pf:textMatch '" + searchstring + "' .";
+        String result = "\n?lit pf:textMatch \"\"\"" + searchstring + "\"\"\" .";
 	
         if (deepsearch) {
             result = result + "\n?resource sub:url ?lit .";

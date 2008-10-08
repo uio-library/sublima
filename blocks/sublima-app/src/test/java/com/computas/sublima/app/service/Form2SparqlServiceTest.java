@@ -96,7 +96,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFormField2N3AllSubjectLabelsFree() {
-    String expectS = "\n?free1 pf:textMatch '+Jet*' .\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:prefLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:altLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel ?free1 . }\nFILTER ( bound( ?var1 ) )\n";
+    String expectS = "\n?free1 pf:textMatch \"\"\"+Jet*\"\"\" .\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:prefLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:altLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel ?free1 . }\nFILTER ( bound( ?var1 ) )\n";
     testString[0] = "Jet";
     myService.addFreetextField("dct:subject/all-labels");
     assertEquals("Expected result and actual result not equal", expectS,
@@ -104,14 +104,14 @@ public class Form2SparqlServiceTest extends TestCase {
   }
     
   public void testConvertFormField2N3SingleFree() {
-	  String expectS = "\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus +Personal +Jet ' .";
+	  String expectS = "\n?resource dct:title ?free1 .\n?free1 pf:textMatch \"\"\"+Cirrus +Personal +Jet \"\"\" .";
       myService.addFreetextField("dct:title");
       assertEquals("Expected result and actual result not equal", expectS,
 			  myService.convertFormField2N3("dct:title", testString));
   }	
 
   public void testConvertFormField2N3DualFree() {
-	  String expectS = "\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet*' .";
+	  String expectS = "\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?free1 .\n?free1 pf:textMatch \"\"\"+Jet*\"\"\" .";
 	  testString[0] = "Jet";
       myService.addFreetextField("dct:subject/rdfs:label");
       assertEquals("Expected result and actual result not equal", expectS,
@@ -186,7 +186,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
   
   public void testConvertFormField2N3DoubleDualOneFree() {
-	    String expectS = "\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dct:subject ?var2 .\n?var2 rdfs:label ?free1 .\n?free1 pf:textMatch '+Jet*' .";
+	    String expectS = "\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource dct:subject ?var2 .\n?var2 rdfs:label ?free1 .\n?free1 pf:textMatch \"\"\"+Jet*\"\"\" .";
 	    testString[0] = "http://www.cirrusdesign.com/";
 	    String actual = myService.convertFormField2N3("dct:publisher/foaf:homepage", testString);
 	    testString[0] = "Jet";
@@ -197,7 +197,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
     public void testConvertFormField2N3DoubleDualBothFree() {
-        String expectS = "\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus +Personal +Jet ' .\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?free2 .\n?free2 pf:textMatch '+Jet*' .";
+        String expectS = "\n?resource dct:title ?free1 .\n?free1 pf:textMatch \"\"\"+Cirrus +Personal +Jet \"\"\" .\n?resource dct:subject ?var1 .\n?var1 rdfs:label ?free2 .\n?free2 pf:textMatch \"\"\"+Jet*\"\"\" .";
         testString[0] = "Cirrus Personal Jet";
        myService.addFreetextField("dct:title");
         myService.addFreetextField("dct:subject/rdfs:label");
@@ -238,7 +238,7 @@ public class Form2SparqlServiceTest extends TestCase {
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                "DESCRIBE ?resource ?rest WHERE {",
 		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
-		       "?lit pf:textMatch 'engine*' .",
+		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
                "?resource dct:identifier ?lit .",
                "?resource ?p ?rest .\n}"}), resultString);
   }
@@ -258,7 +258,7 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                "DESCRIBE ?resource ?rest WHERE {",
-		       "?lit pf:textMatch 'engine*' .",
+		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
                "?resource sub:url ?lit .",
                "?resource ?p ?rest .\n}"}), resultString);
   }
@@ -276,7 +276,7 @@ public class Form2SparqlServiceTest extends TestCase {
                "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
 		       "DESCRIBE ?resource ?rest WHERE {",
-		       "?lit pf:textMatch 'engine*' .",
+		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
                "?resource dct:identifier ?lit .",
 		       "?resource ?p ?rest .\n}"}), resultString);
   }
@@ -296,7 +296,7 @@ public class Form2SparqlServiceTest extends TestCase {
                "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
 		       "DESCRIBE ?resource ?rest WHERE {",
-		       "?lit pf:textMatch 'engine*' .",
+		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
                "?resource dct:identifier ?lit .",
                "?resource ex:describedBy <http://example.org/status> .",
 		       "?resource ?p ?rest .\n}"}), resultString);
@@ -327,7 +327,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("dct:description", new String[]{"A Very Light Jet Aircraft under construction."});
 	    testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
 	    String resultString = myServicefree.convertForm2Sparql(testMap);
-	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +"DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus +Personal +Jet ' .\n?resource dct:description \"\"\"A Very Light Jet Aircraft under construction.\"\"\"@en .\n?resource ?p ?rest .\n}", resultString);
+	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +"DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch \"\"\"+Cirrus +Personal +Jet \"\"\" .\n?resource dct:description \"\"\"A Very Light Jet Aircraft under construction.\"\"\"@en .\n?resource ?p ?rest .\n}", resultString);
 	  }
 
   public void testConvertForm2SparqlTwoValuesSubjectFree() {
@@ -338,7 +338,7 @@ public class Form2SparqlServiceTest extends TestCase {
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                 "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {",
-                "?free2 pf:textMatch '+Dansk*' .",
+                "?free2 pf:textMatch \"\"\"+Dansk*\"\"\" .",
                 "OPTIONAL {\n?resource dct:subject ?var2 .",
                 "?var2 skos:prefLabel ?free2 . }",
                 "OPTIONAL {\n?resource dct:subject ?var2 .",
@@ -369,7 +369,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	    testMap.put("dct:description", new String[]{"A Very Light Jet Aircraft under construction."});
         myServicefree.addFreetextField("dct:description"); 
 	    String resultString = myServicefree.convertForm2Sparql(testMap);
-	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +  "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch '+Cirrus +Personal +Jet ' .\n?resource dct:description ?free2 .\n?free2 pf:textMatch '+A +Very +Light +Jet +Aircraft +under +construction. ' .\n?resource ?p ?rest .\n}", resultString);
+	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +  "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch \"\"\"+Cirrus +Personal +Jet \"\"\" .\n?resource dct:description ?free2 .\n?free2 pf:textMatch \"\"\"+A +Very +Light +Jet +Aircraft +under +construction. \"\"\" .\n?resource ?p ?rest .\n}", resultString);
 	  }
 
   public void testConvertFor2SPARQLDoubleDual() {
