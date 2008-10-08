@@ -122,7 +122,7 @@ fieldset {
   clear: both;
   float: left;
   width: 100%; /* width of whole page */
-  overflow: hidden; /* This chops off any overhanging divs */
+  overflow: hidden; /*hidden; /* This chops off any overhanging divs */
 }
 
 /* common column settings */
@@ -142,7 +142,7 @@ fieldset {
   padding: 0 0 1em 0;
   /* no left and right padding on columns, we just make them narrower instead
 only padding top and bottom is included here, make it whatever value you need */
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* 3 Column settings */
