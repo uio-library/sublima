@@ -100,7 +100,9 @@ public class TopicController implements StatelessAppleController {
       showTopicBrowsing(res, req);
     } else if ("relasjoner".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
-        res.sendPage("xml2/relasjoner", null);
+        Map<String, Object> bizData = new HashMap<String, Object>();
+        bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+        res.sendPage("xml2/relasjoner", bizData);
       } else if ("relasjon".equalsIgnoreCase(submode)) {
         editRelation(res, req, null);
       } else if ("alle".equalsIgnoreCase(submode)) {
