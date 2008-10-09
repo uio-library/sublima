@@ -517,7 +517,7 @@ public class TopicController implements StatelessAppleController {
 
         uri = form2SparqlService.getURI();
         // Check if a topic with the same uri already exists
-        if (adminService.getTopicByURI(uri).contains("skos:Concept")) {
+        if ((req.getCocoonRequest().getParameter("the-resource") == null) && adminService.getTopicByURI(uri).contains("skos:Concept")) {
           messageBuffer.append("<c:message>Et emne med denne tittelen og URI finnes allerede</c:message>\n");
         } else {
           logger.trace("TopicController.editTopic --> SPARUL QUERY:\n" + sparqlQuery);
