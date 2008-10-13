@@ -13,6 +13,7 @@
 
   <xsl:template name="head">
     <xsl:param name="title"/>
+    <xsl:param name="baseurl"/>
 
     <head>
       <title>
@@ -28,22 +29,22 @@
 	      href="{$rss-url}" />
       </xsl:if>
 
-      <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
-      <link rel="stylesheet" href="styles/jquery.autocomplete.css" type="text/css" />
-      <link rel="stylesheet" href="styles/jquery.asmselect.css" type="text/css" />
-      <script src="styles/jquery-1.2.6.js" type="text/javascript" />
+      <link rel="stylesheet" type="text/css" href="{$baseurl}/styles/alt-css.css"/>
+      <link rel="stylesheet" href="{$baseurl}/styles/jquery.autocomplete.css" type="text/css" />
+      <link rel="stylesheet" href="{$baseurl}/styles/jquery.asmselect.css" type="text/css" />
+      <script src="{$baseurl}/styles/jquery-1.2.6.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>      
-      <script src="styles/jquery.bgiframe.min.js" type="text/javascript"/>
+      <script src="{$baseurl}/styles/jquery.bgiframe.min.js" type="text/javascript"/>
       <script type="text/javascript">var dummy = null;</script>
-      <script src="styles/jquery.autocomplete.js" type="text/javascript" />
+      <script src="{$baseurl}/styles/jquery.autocomplete.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
-      <script src="styles/expand.js" type="text/javascript" />
+      <script src="{$baseurl}/styles/expand.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
-      <script src="styles/expand.js" type="text/javascript" />
+      <script src="{$baseurl}/styles/expand.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
-      <script src="styles/jquery.asmselect.js" type="text/javascript" />
+      <script src="{$baseurl}/styles/jquery.asmselect.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
-      <script src="styles/jquery.ui.js" type="text/javascript" />
+      <script src="{$baseurl}/styles/jquery.ui.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
 
           

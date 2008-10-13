@@ -239,7 +239,8 @@
     <html>
       
       <xsl:call-template name="head">
-	<xsl:with-param name="title" select="c:page/c:title"/>
+	      <xsl:with-param name="title" select="c:page/c:title"/>
+        <xsl:with-param name="baseurl" select="$baseurl"/>
       </xsl:call-template>
       <body>
 

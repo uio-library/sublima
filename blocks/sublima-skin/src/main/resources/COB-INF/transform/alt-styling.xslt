@@ -128,6 +128,7 @@ PVJ: Made the file UTF-8
 	    </xsl:when>
 	  </xsl:choose>
 	</xsl:with-param>
+     <xsl:with-param name="baseurl" select="$baseurl"/>
       </xsl:call-template>
    
       <body>
