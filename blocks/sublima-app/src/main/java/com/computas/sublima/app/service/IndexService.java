@@ -39,7 +39,7 @@ public class IndexService {
    * Change Note 2008-09-06 (dn): Also spilt
    * Change Note 2008-09-17 (mha): Added external indexing to sub:url if the property for external index is true
    */
-  public void createIndex(String indexDirectory, String indexType, String[] searchfields, String[] prefixes) {
+  public void createIndex(String indexDirectory, String indexType, String[] searchfields, String[] prefixes, boolean indexExternal) {
     try {
 
       // -- Read and index all literal strings.
@@ -50,9 +50,7 @@ public class IndexService {
       } else {
         SettingsService.getIndexBuilderNode(indexDir);
       }
-
-      boolean indexExternal = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
-
+      
       // -- Create an index based on a generated string on each URL
       ResultSet rs = getAllExternalResourcesURLs();
       int i = 0;
