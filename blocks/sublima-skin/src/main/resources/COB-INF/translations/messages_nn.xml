@@ -79,17 +79,7 @@
   <!-- linkcheck -->
   <message key="linkcheck.run">Køyr lenkesjekk (NB! Kan ta lang tid)</message>
   <!-- upload -->
-  <message key="upload.instructions">Oppgje fil/URL og konverteringstype i felta nedanfor.
-    <br/>
-    <br/>
-    Format for filer:
-    <br/>
-    file:\Sti\til\fil\information-model.n3
-    <br/>
-    <br/>
-    Format for URL:
-    <br/>
-    http://www.urltilfil.com/information-model.n3
+  <message key="upload.instructions">Her kan du velge hvilke filer som skal lastes inn i databasen. Velg filen ved å trykke Browse... og angi riktig formattype.
     <br/>
   </message>
   <!-- general -->

@@ -109,17 +109,7 @@
   <!--  linkcheck  -->
   <message key="linkcheck.run">Länkkoll (OBS Kan ta lång tid)</message>
   <!--  upload  -->
-  <message key="upload.instructions">Ange fil/konverteringsslag i fälten nedan
-    <br/>
-    <br/>
-    Format for filer:
-    <br/>
-    file:\Sti\til\fil\information-model.n3
-    <br/>
-    <br/>
-    Format for URL:
-    <br/>
-    http://www.urltilfil.com/information-model.n3
+  <message key="upload.instructions">Her kan ni välja hvilka filer som ska lastas inn i databasen. Browsa fram til önskad fil och ange filtyp.
     <br/>
   </message>
 

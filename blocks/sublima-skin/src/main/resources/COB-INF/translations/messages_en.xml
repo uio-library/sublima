@@ -114,17 +114,7 @@
   <message key="linkcheck.run">Perform linkcheck (NB! Might take a while)</message>
 
   <!-- upload -->
-  <message key="upload.instructions">Name the file/URL and convertion type in the fields below.
-    <br/>
-    <br/>
-    Format for files:
-    <br/>
-    file:\path\to\file\information-model.n3
-    <br/>
-    <br/>
-    Format for URL:
-    <br/>
-    http://www.urltofile.com/information-model.n3
+ <message key="upload.instructions">Here you can choose which data to upload to the database. Choose the file below and give the correct data format type.
     <br/>
   </message>
 
