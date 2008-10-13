@@ -109,7 +109,8 @@
   <!--  linkcheck  -->
   <message key="linkcheck.run">Länkkoll (OBS Kan ta lång tid)</message>
   <!--  upload  -->
-  <message key="upload.instructions">Her kan ni välja hvilka filer som ska lastas inn i databasen. Browsa fram til önskad fil och ange filtyp.
+  <message key="upload.instructions">Her kan ni välja hvilka filer som ska lastas inn i databasen. Browsa fram til
+    önskad fil och ange filtyp.
     <br/>
   </message>
 
@@ -218,10 +219,68 @@
   <message key="letter.0-9">0-9</message>
 
   <message key="remove">Fjärn</message>
-  <message key="added">La til </message>
-  <message key="removed">Fjärnade </message>
+  <message key="added">La til</message>
+  <message key="removed">Fjärnade</message>
 
   <message key="topic.theme">Temaämne</message>
+
+
+  <!-- MÅ OVERSETTES -->
+  <message key="feedback.spam">Ressursen du sendte inn er markert i vår spam-database. Vennligst kontakt administrator.</message>
+  <message key="tips.resourceexists">Ressursen du tipset om finnes allerede.</message>
+  <message key="tips.invalidurl">Feil ved angitt URL. Vennligst kontroller at linken du oppga fungerer.</message>
+  <message key="tips.received">Ditt tips er mottatt.</message>
+  <message key="tips.error">Det skjedde noe galt. Kontroller alle feltene og prøv igjen.</message>
+  <message key="tips.linkerror">Feil ved angitt URL. Vennligst kontroller at linken du oppga fungerer.</message>
+  <message key="publisher.noname">Utgivernavn må angis.</message>
+  <message key="publisher.exists">En utgiver med det navnet finnes allerede registrert.</message>
+  <message key="publisher.saveok">Lagring av ny utgiver vellykket.</message>
+  <message key="publisher.saveerror">Feil ved lagring av ny utgiver.</message>
+  <message key="publisher.updated">Utgiveren oppdatert.</message>
+  <message key="publisher.updatefailed">Feil ved oppdatering av utgiver.</message>
+  <message key="resource.url.invalid">Oppgitt URL gir en ugyldig statuskode. Vennligst kontroller URL i en nettleser.</message>
+  <message key="resource.url.blank">URL kan ikke være blank.</message>
+  <message key="resource.deletedok">Ressursen slettet.</message>
+  <message key="resource.deletefailed">Feil ved sletting av ressurs.</message>
+  <message key="resource.saveerror">Feil ved lagring av ressurs.</message>
+  <message key="resource.resourceadded">Ny ressurs lagt til.</message>
+  <message key="resource.updated">Ressurs oppdatert.</message>
+  <message key="resource.saveerror">Feil ved lagring av ressurs.</message>
+  <message key="validation.url.novalue">URL kan ikke være blank.</message>
+  <message key="validation.resource.exists">En ressurs med denne URI finnes fra før.</message>
+  <message key="validation.url.errorcode">Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</message>
+  <message key="validation.nostatus">En status må velges.</message>
+  <message key="validation.role.statusnotallowed">Rollen du har tillater ikke å lagre et emne med den valgte statusen.</message>
+  <message key="topic.relation.saveerror">Feil ved lagring av ny relasjonstype.</message>
+  <message key="topic.relation.saved">Ny relasjonstype lagret.</message>
+  <message key="topic.relation.saveerror">Feil ved lagring av ny relasjonstype.</message>
+  <message key="topic.merged.ok">Emnene er slått sammen.</message>
+  <message key="topic.merged.failed">En feil oppsto ved sammenslåing.</message>
+  <message key="topic.theme.ok">Emnene satt som temaemner.</message>
+  <message key="topic.theme.error">Feil ved merking av temaemner.</message>
+  <message key="topic.deleted.ok">Emne slettet.</message>
+  <message key="topic.deleted.error">Feil ved sletting av emne.</message>
+  <message key="topic.save.error">Feil ved lagring av emne.</message>
+  <message key="topic.exists">Et emne med denne tittelen og URI finnes allerede.</message>
+  <message key="topic.save.ok">Nytt emne lagt til.</message>
+  <message key="topic.updated">Emne oppdatert.</message>
+  <message key="topic.save.error">Feil ved lagring av emne.</message>
+  <message key="topic.validation.titleblank">Emnets tittel kan ikke være blank.</message>
+  <message key="validation.statuschoice">En status må velges.</message>
+  <message key="topic.validation.rolestatus">Rollen du har tillater ikke å lagre et emne med den valgte statusen.</message>
+  <message key="user.login.failed">En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prøv igjen.</message>
+  <message key="user.save.error">Feil ved lagring av bruker.</message>
+  <message key="user.updated">Bruker oppdatert.</message>
+  <message key="user.update.failed">Feil ved oppdatering av bruker.</message>
+  <message key="role.updated">Rolle oppdatert.</message>
+  <message key="role.update.failed">Feil ved oppdatering av rolle.</message>
+  <message key="user.username.blank">E-post (brukernavn) kan ikke være blank.</message>
+  <message key="user.name.blank">Navn kan ikke være blank.</message>
+  <message key="user.password.blank">Passordfeltene kan ikke være blanke, og må være like.</message>
+  <message key="user.password.equal">Passordfeltene må være like.</message>
+  <message key="user.norole">En rolle må være valgt.</message>
+  <message key="user.name.blank">Navn kan ikke være blank.</message>
+  <message key="validation.resource.notitle">Ressursen mangler tittel.</message>
 
 </catalogue>
 

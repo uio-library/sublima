@@ -137,7 +137,7 @@ public class TopicController implements StatelessAppleController {
 
   private void editRelation(AppleResponse res, AppleRequest req, Object o) {
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
     String uri = req.getCocoonRequest().getParameter("the-resource");
 
@@ -174,7 +174,7 @@ public class TopicController implements StatelessAppleController {
         sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
       }
       catch (IOException e) {
-        messageBuffer.append("<c:message>Feil ved lagring av ny relasjonstype</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"topic.relation.saveerror\">Feil ved lagring av ny relasjonstype</i18n:text></c:message>\n");
       }
 
       logger.trace("TopicController.editRelation --> QUERY:\n" + sparqlQuery);
@@ -184,12 +184,12 @@ public class TopicController implements StatelessAppleController {
       logger.trace("TopicController.editRelation --> QUERY RESULT: " + insertSuccess);
 
       if (insertSuccess) {
-        messageBuffer.append("<c:message>Ny relasjonstype lagret</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"topic.relation.saved\">Ny relasjonstype lagret</i18n:text></c:message>\n");
 
         bizData.put("relationdetails", adminService.getRelationByURI(form2SparqlService.getURI()));
 
       } else {
-        messageBuffer.append("<c:message>Feil ved lagring av ny relasjonstype</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"topic.relation.saveerror\">Feil ved lagring av ny relasjonstype</i18n:text></c:message>\n");
         bizData.put("relationdetails", "<empty></empty>");
       }
 
@@ -237,7 +237,7 @@ public class TopicController implements StatelessAppleController {
                   res, AppleRequest
                   req) {
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
 
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
@@ -279,9 +279,9 @@ public class TopicController implements StatelessAppleController {
       }
 
       if (updateSuccess) {
-        messageBuffer.append("<c:message>Emnene er slått sammen</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"topic.merged.ok\">Emnene er slått sammen</i18n:text></c:message>\n");
       } else {
-        messageBuffer.append("<c:message>En feil oppsto ved sammenslåing</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"topic.merged.failed\">En feil oppsto ved sammenslåing</i18n:text></c:message>\n");
       }
 
       messageBuffer.append("</c:messages>\n");
@@ -304,7 +304,7 @@ public class TopicController implements StatelessAppleController {
                   res, AppleRequest
                   req) {
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
 
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
@@ -359,10 +359,10 @@ public class TopicController implements StatelessAppleController {
       logger.trace("TopicController.setThemeTopics --> INSERT QUERY RESULT: " + insertSuccess);
 
       if (deleteSuccess && insertSuccess) {
-        messageBuffer.append("<c:message>Emnene satt som temaemner</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"topic.theme.ok\">Emnene satt som temaemner</i18n:text></c:message>\n");
 
       } else {
-        messageBuffer.append("<c:message>Feil ved merking av temaemner</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"topic.theme.error\">Feil ved merking av temaemner</i18n:text></c:message>\n");
         bizData.put("themetopics", "<empty></empty>");
       }
 
@@ -485,12 +485,12 @@ public class TopicController implements StatelessAppleController {
 
 
           if (deleteTopicSuccess) {
-            messageBuffer.append("<c:message>Emne slettet!</c:message>\n");
+            messageBuffer.append("<c:message><i18n:text key=\"topic.deleted.ok\">Emne slettet!</i18n:text></c:message>\n");
           } else {
-            messageBuffer.append("<c:message>Feil ved sletting av emne</c:message>\n");
+            messageBuffer.append("<c:message><i18n:text key=\"topic.deleted.error\">Feil ved sletting av emne</i18n:text></c:message>\n");
           }
         } else {
-          messageBuffer.append("<c:message><i18n:text key=\"validation.topic.resourceempty\">En eller flere ressurser vil bli stående uten tilknyttet emne dersom du sletter dette emnet. Vennligst kontroller disse ressursene fra listen nederst, og tildel de nye emner eller slett de.</i18n:text></c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"validation.topic.resourceempty\">En eller flere ressurser vil bli stående uten tilknyttet emne dersom du sletter dette emnet. Vennligst kontroller disse ressursene fra listen nederst, og tildel de nye emner eller slett de.</i18n:text></i18n:text></c:message>\n");
         }
 
       } else {
@@ -517,13 +517,13 @@ public class TopicController implements StatelessAppleController {
           sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
         }
         catch (IOException e) {
-          messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"topic.save.error\">Feil ved lagring av emne</i18n:text></c:message>\n");
         }
 
         uri = form2SparqlService.getURI();
         // Check if a topic with the same uri already exists
-        if ((req.getCocoonRequest().getParameter("the-resource") == null) && adminService.getTopicByURI(uri).contains("skos:Concept")) {
-          messageBuffer.append("<c:message>Et emne med denne tittelen og URI finnes allerede</c:message>\n");
+        if ((req.getCocoonRequest().getParameter("the-resource") == null) && adminService.getTopicByURI(uri).contains("skos:Concept ")) {
+          messageBuffer.append("<c:message><i18n:text key=\"topic.exists\">Et emne med denne tittelen og URI finnes allerede</i18n:text></c:message>\n");
         } else {
           logger.trace("TopicController.editTopic --> SPARUL QUERY:\n" + sparqlQuery);
           insertSuccess = sparulDispatcher.query(sparqlQuery);
@@ -532,14 +532,14 @@ public class TopicController implements StatelessAppleController {
 
           if (insertSuccess) {
             if (req.getCocoonRequest().getParameter("the-resource") == null) {
-              messageBuffer.append("<c:message>Nytt emne lagt til</c:message>\n");
+              messageBuffer.append("<c:message><i18n:text key=\"topic.save.ok\">Nytt emne lagt til</i18n:text></c:message>\n");
             } else {
-              messageBuffer.append("<c:message>Emne oppdatert</c:message>\n");
+              messageBuffer.append("<c:message><i18n:text key=\"topic.updated\">Emne oppdatert</i18n:text></c:message>\n");
             }
 
 
           } else {
-            messageBuffer.append("<c:message>Feil ved lagring av emne</c:message>\n");
+            messageBuffer.append("<c:message><i18n:text key=\"topic.save.error\">Feil ved lagring av emne</i18n:text></c:message>\n");
             bizData.put("topicdetails", "<empty></empty>");
           }
         }
@@ -613,13 +613,13 @@ public class TopicController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
-      validationMessages.append("<c:message>Emnets tittel kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"topic.validation.titleblank\">Emnets tittel kan ikke være blank</i18n:text></c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) || req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
-      validationMessages.append("<c:message>En status må velges</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"validation.statuschoice\">En status må velges</i18n:text></c:message>\n");
     } else if (!userPrivileges.contains(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
-      validationMessages.append("<c:message>Rollen du har tillater ikke å lagre et emne med den valgte statusen.</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"topic.validation.rolestatus\">Rollen du har tillater ikke å lagre et emne med den valgte statusen.</i18n:text></c:message>\n");
     }
 
     return validationMessages.toString();

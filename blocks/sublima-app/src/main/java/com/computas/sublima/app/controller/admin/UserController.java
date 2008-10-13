@@ -112,7 +112,7 @@ public class UserController implements StatelessAppleController {
 
   public void editUser(AppleRequest req, AppleResponse res, String type, String messages) {
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
@@ -281,7 +281,7 @@ public class UserController implements StatelessAppleController {
 
             // If insertedRows is 0, then the insert failed and we give the user a proper feedback
             if (insertedRows == 0) {
-              messageBuffer.append("<c:message>En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prv igjen</c:message>" + "\n");
+              messageBuffer.append("<c:message><i18n:text key=\"user.login.failed\">En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prv igjen</i18n:text></c:message>" + "\n");
               messageBuffer.append("</c:messages>\n");
               bizData.put("userdetails", "<empty></empty>");
               bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
@@ -316,7 +316,7 @@ public class UserController implements StatelessAppleController {
           sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
         }
         catch (IOException e) {
-          messageBuffer.append("<c:message>Feil ved lagring av bruker</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"user.save.error\">Feil ved lagring av bruker</i18n:text></c:message>\n");
         }
 
         boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
@@ -326,13 +326,13 @@ public class UserController implements StatelessAppleController {
         logger.debug("UserController.editUser --> INSERT QUERY RESULT: " + insertSuccess);
 
         if (insertSuccess) {
-          messageBuffer.append("<c:message>Bruker oppdatert!</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"user.updated\">Bruker oppdatert!</i18n:text></c:message>\n");
           bizData.put("userdetails", adminService.getUserByURI(form2SparqlService.getURI()));
           bizData.put("tempvalues", "<empty></empty>");
           bizData.put("mode", "useredit");
 
         } else {
-          messageBuffer.append("<c:message>Feil ved oppdatering av bruker</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"user.update.failed\">Feil ved oppdatering av bruker</i18n:text></c:message>\n");
           bizData.put("userdetails", "<empty></empty>");
           bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
           bizData.put("mode", "usertemp");
@@ -353,7 +353,7 @@ public class UserController implements StatelessAppleController {
                   res, String
                   messages) {
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
@@ -474,14 +474,14 @@ public class UserController implements StatelessAppleController {
             e.printStackTrace();
           }
 
-          messageBuffer.append("<c:message>Rolle oppdatert!</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"role.updated\">Rolle oppdatert!</i18n:text></c:message>\n");
           bizData.put("roledetails", adminService.getRoleByURI(uri));
           bizData.put("roleprivileges", adminService.getRolePrivilegesAsXML(uri));
           bizData.put("tempvalues", "<empty></empty>");
           bizData.put("mode", "roleedit");
 
         } else {
-          messageBuffer.append("<c:message>Feil ved oppdatering av rolle</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"role.update.failed\">Feil ved oppdatering av rolle</i18n:text></c:message>\n");
           bizData.put("roledetails", "<empty></empty>");
           bizData.put("roleprivileges", "<empty></empty>");
           bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
@@ -514,26 +514,26 @@ public class UserController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:email")) || req.getCocoonRequest().getParameter("sioc:email") == null) {
-      validationMessages.append("<c:message>E-post (brukernavn) kan ikke vre blank</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"user.username.blank\">E-post (brukernavn) kan ikke være blank</i18n:text></c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
-      validationMessages.append("<c:message>Navn kan ikke vre blank</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"user.name.blank\">Navn kan ikke være blank</i18n:text></c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("password1")) ||
             req.getCocoonRequest().getParameter("password1") == null ||
             "".equalsIgnoreCase(req.getCocoonRequest().getParameter("password2")) ||
             req.getCocoonRequest().getParameter("password2") == null) {
-      validationMessages.append("<c:message>Passordfeltene kan ikke vre blanke, og m vre like</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"user.password.blank\">Passordfeltene kan ikke være blanke, og må være like</i18n:text></c:message>\n");
     }
 
     if (!req.getCocoonRequest().getParameter("password1").equals(req.getCocoonRequest().getParameter("password2"))) {
-      validationMessages.append("<c:message>Passordfeltene m vre like</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"user.password.equal\">Passordfeltene m vre like</i18n:text></c:message>\n");
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:has_function")) || req.getCocoonRequest().getParameter("sioc:has_function") == null) {
-      validationMessages.append("<c:message>En rolle m vre valgt</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"user.norole\">En rolle m vre valgt</i18n:text></c:message>\n");
     }
 
     return validationMessages.toString();
@@ -545,7 +545,7 @@ public class UserController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
-      validationMessages.append("<c:message>Navn kan ikke vre blank</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"user.name.blank\">Navn kan ikke vre blank</i18n:text></c:message>\n");
     }
 
     return validationMessages.toString();

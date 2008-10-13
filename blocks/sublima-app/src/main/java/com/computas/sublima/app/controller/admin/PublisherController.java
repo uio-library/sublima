@@ -113,7 +113,7 @@ public class PublisherController implements StatelessAppleController {
     String description = req.getCocoonRequest().getParameter("dct:description");
 
     if ("".equalsIgnoreCase(publishername) || publishername == null) {
-      messageBuffer.append("<c:message>Utgivernavn m� angis</c:message>\n");
+      messageBuffer.append("<c:message><i18n:text key=\"publisher.noname\">Utgivernavn må angis</i18n:text></c:message>\n");
     } else {
 
       // Check if a publisher by that name already exists
@@ -132,7 +132,7 @@ public class PublisherController implements StatelessAppleController {
       Object queryResult = sparqlDispatcher.query(findPublisherByNameQuery);
 
       if (queryResult.toString().contains(publishername)) {
-        messageBuffer.append("<c:message>En utgiver med det navnet finnes allerede registrert</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"publisher.exists\">En utgiver med det navnet finnes allerede registrert</i18n:text></c:message>\n");
         showPublishersIndex(res, req, messageBuffer.toString());
         return;
       }
@@ -161,9 +161,9 @@ public class PublisherController implements StatelessAppleController {
       logger.info("updatePublisherByURI() ---> " + publisherURI + " -- INSERT NEW NAME --> " + success);
 
       if (success) {
-        messageBuffer.append("<c:message>Lagring av ny utgiver vellykket</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"publisher.saveok\">Lagring av ny utgiver vellykket</i18n:text></c:message>\n");
       } else {
-        messageBuffer.append("<c:message>Feil ved lagring av ny utgiver</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"publisher.saveerror\">Feil ved lagring av utgiver</i18n:text></c:message>\n");
       }
     }
 
@@ -205,16 +205,16 @@ public class PublisherController implements StatelessAppleController {
         logger.info("editPublisher() ---> SPARUL INSERT  --> " + sparqlQuery);
       }
       catch (IOException e) {
-        messageBuffer.append("<c:message>Feil ved lagring av utgiver</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"publisher.saveerror\">Feil ved lagring av utgiver</i18n:text></c:message>\n");
       }
 
       boolean success = sparulDispatcher.query(sparqlQuery);
       logger.info("editPublisher() ---> INSERT --> " + success);
 
       if (success) {
-        messageBuffer.append("<c:message>Utgiveren oppdatert</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"publisher.updated\">Utgiveren oppdatert</i18n:text></c:message>\n");
       } else {
-        messageBuffer.append("<c:message>Feil ved oppdatering</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"publisher.updatefailed\">Feil ved oppdatering</i18n:text></c:message>\n");
       }
 
       showPublisherByURI(res, req, messageBuffer.toString(), form2SparqlService.getURI());  
@@ -241,7 +241,7 @@ public class PublisherController implements StatelessAppleController {
     //String publisheruri = this.submode;
 
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
 
     if ("".equalsIgnoreCase(publisherURI) || publisherURI == null) {
@@ -284,7 +284,7 @@ public class PublisherController implements StatelessAppleController {
                   messages) {
 
     StringBuffer messageBuffer = new StringBuffer();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
 
     String queryString = StringUtils.join("\n", new String[]{

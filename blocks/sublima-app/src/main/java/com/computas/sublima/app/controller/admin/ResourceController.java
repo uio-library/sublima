@@ -159,7 +159,7 @@ public class ResourceController implements StatelessAppleController {
             res.sendPage("xml2/ressurs", bizData);
           }
         } else {
-          messageBuffer.append("<c:message>Oppgitt URL gir en ugyldig statuskode. Vennligst kontroller URL i en nettleser.</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"resource.url.invalid\">Oppgitt URL gir en ugyldig statuskode. Vennligst kontroller URL i en nettleser.</i18n:text></c:message>\n");
           messageBuffer.append("</c:messages>\n");
           bizData.put("messages", messageBuffer.toString());
           System.gc();
@@ -167,7 +167,7 @@ public class ResourceController implements StatelessAppleController {
         }
 
       } else {
-        messageBuffer.append("<c:message>URL kan ikke være blank.</c:message>\n");
+        messageBuffer.append("<c:message><i18n:text key=\"resource.url.blank\">URL kan ikke være blank.</i18n:text></c:message>\n");
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
         System.gc();
@@ -258,9 +258,9 @@ public class ResourceController implements StatelessAppleController {
 
 
         if (deleteResourceSuccess) {
-          messageBuffer.append("<c:message>Ressursen slettet!</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"resource.deletedok\">Ressursen slettet!</i18n:text></c:message>\n");
         } else {
-          messageBuffer.append("<c:message>Feil ved sletting av ressurs</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"resource.deletefailed\">Feil ved sletting av ressurs</i18n:text></c:message>\n");
         }
 
       } else {
@@ -327,7 +327,7 @@ public class ResourceController implements StatelessAppleController {
           sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
         }
         catch (IOException e) {
-          messageBuffer.append("<c:message>Feil ved lagring av ressurs</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"resource.saveerror\">Feil ved lagring av ressurs</i18n:text></c:message>\n");
         }
 
         //String uri = form2SparqlService.getURI();
@@ -339,10 +339,10 @@ public class ResourceController implements StatelessAppleController {
 
         if (insertSuccess) {
           if (updateDate) {
-            messageBuffer.append("<c:message>Ny ressurs lagt til</c:message>\n");
+            messageBuffer.append("<c:message><i18n:text key=\"resource.resourceadded\">Ny ressurs lagt til</i18n:text></c:message>\n");
           }
           else {
-            messageBuffer.append("<c:message>Ressurs oppdatert</c:message>\n");            
+            messageBuffer.append("<c:message><i18n:text key=\"resource.updated\">Ressurs oppdatert</i18n:text></c:message>\n");
           }
 
           indexService.indexResource(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
@@ -350,7 +350,7 @@ public class ResourceController implements StatelessAppleController {
           LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
         } else {
-          messageBuffer.append("<c:message>Feil ved lagring av ny ressurs</c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"resource.saveerror\">Feil ved lagring av ressurs</i18n:text></c:message>\n");
         }
       }
 
@@ -390,22 +390,22 @@ public class ResourceController implements StatelessAppleController {
     StringBuffer validationMessages = new StringBuffer();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:title")) || req.getCocoonRequest().getParameter("dct:title") == null) {
-      validationMessages.append("<c:message><i18n:text key=\"validation.topic.notitle\">uoversatt</i18n:text></c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"validation.resource.notitle\">uoversatt</i18n:text></c:message>\n");
     }
 
     if (req.getCocoonRequest().getParameter("the-resource") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("the-resource"))) {
-      validationMessages.append("<c:message>URL kan ikke være blank</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"validation.url.novalue\">URL kan ikke være blank</i18n:text></c:message>\n");
     }
 
     if (req.getCocoonRequest().getParameter("dct:identifier") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier").trim())) {
       // if the uri is empty, then it's a new resource and we do a already-exists check
       if (adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("the-resource"))) {
-        validationMessages.append("<c:message>En ressurs med denne URI finnes fra før</c:message>\n");
+        validationMessages.append("<c:message><i18n:text key=\"validation.resource.exists\">En ressurs med denne URI finnes fra før</i18n:text></c:message>\n");
       }
     }
 
     if (req.getCocoonRequest().getParameter("the-resource") == null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim())) {
-      validationMessages.append("<c:message>Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"validation.url.errorcode\">Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</i18n:text></c:message>\n");
     }
 
     // Check if the user tries to save it with an approved status, but without a subject
@@ -414,9 +414,9 @@ public class ResourceController implements StatelessAppleController {
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) || req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
-      validationMessages.append("<c:message>En status må velges</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"validation.nostatus\">En status må velges</i18n:text></c:message>\n");
     } else if (!userPrivileges.contains(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
-      validationMessages.append("<c:message>Rollen du har tillater ikke å lagre et emne med den valgte statusen.</c:message>\n");
+      validationMessages.append("<c:message><i18n:text key=\"validation.role.statusnotallowed\">Rollen du har tillater ikke å lagre et emne med den valgte statusen.</i18n:text></c:message>\n");
     }
 
     return validationMessages.toString();
