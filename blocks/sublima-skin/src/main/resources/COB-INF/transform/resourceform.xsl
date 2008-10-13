@@ -240,16 +240,20 @@
                 <xsl:choose>
                   <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
                     <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
-                      <option value="{./@rdf:about}" selected="selected">
-                        <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                      </option>
+                      <xsl:if test="./wdr:describedBy/@rdf:resource = 'http://sublima.computas.com/status/godkjent_av_administrator'">
+                        <option value="{./@rdf:about}" selected="selected">
+                          <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                        </option>
+                      </xsl:if>
                     </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
                     <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
-                      <option value="{./@rdf:about}">
-                        <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                      </option>
+                      <xsl:if test="./wdr:describedBy/@rdf:resource = 'http://sublima.computas.com/status/godkjent_av_administrator'">
+                        <option value="{./@rdf:about}">
+                          <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                        </option>
+                      </xsl:if>
                     </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
@@ -620,16 +624,20 @@
                 <xsl:choose>
                   <xsl:when test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:subject/@rdf:resource">
                     <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
-                      <option value="{./@rdf:about}" selected="selected">
-                        <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                      </option>
+                      <xsl:if test="./wdr:describedBy/@rdf:resource = 'http://sublima.computas.com/status/godkjent_av_administrator'">
+                        <option value="{./@rdf:about}" selected="selected">
+                          <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                        </option>
+                      </xsl:if>
                     </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
                     <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
-                      <option value="{./@rdf:about}">
-                        <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                      </option>
+                      <xsl:if test="./wdr:describedBy/@rdf:resource = 'http://sublima.computas.com/status/godkjent_av_administrator'">
+                        <option value="{./@rdf:about}">
+                          <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                        </option>
+                      </xsl:if>
                     </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>

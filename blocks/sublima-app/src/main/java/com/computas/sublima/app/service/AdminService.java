@@ -281,13 +281,16 @@ public class AdminService {
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
             "CONSTRUCT {",
             "    ?topic a skos:Concept ;",
-            "        skos:prefLabel ?label .",
+            "        skos:prefLabel ?label ;",
+            "        wdr:describedBy ?status .",
             "}",
             "WHERE {",
             "    ?topic a skos:Concept ;",
-            "        skos:prefLabel ?label .",
+            "        skos:prefLabel ?label ;",
+            "        wdr:describedBy ?status .",
             "}"});
 
     logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
