@@ -490,7 +490,7 @@ public class TopicController implements StatelessAppleController {
             messageBuffer.append("<c:message><i18n:text key=\"topic.deleted.error\">Feil ved sletting av emne</i18n:text></c:message>\n");
           }
         } else {
-          messageBuffer.append("<c:message><i18n:text key=\"validation.topic.resourceempty\">En eller flere ressurser vil bli stående uten tilknyttet emne dersom du sletter dette emnet. Vennligst kontroller disse ressursene fra listen nederst, og tildel de nye emner eller slett de.</i18n:text></i18n:text></c:message>\n");
+          messageBuffer.append("<c:message><i18n:text key=\"validation.topic.resourceempty\">En eller flere ressurser vil bli stående uten tilknyttet emne dersom du sletter dette emnet. Vennligst kontroller disse ressursene fra listen nederst, og tildel de nye emner eller slett de.</i18n:text></c:message>\n");
         }
 
       } else {
