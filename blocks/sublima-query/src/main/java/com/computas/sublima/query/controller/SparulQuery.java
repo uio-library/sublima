@@ -22,7 +22,8 @@ public class SparulQuery implements StatelessAppleController {
 		Object queryResult = sparulDispatcher.query(sparqlQuery);
 		Map<String, Object> bizData = new HashMap<String, Object>();
 		bizData.put("result", queryResult);
-		res.sendPage("rdf/result-list", bizData);
+		System.gc();
+    res.sendPage("rdf/result-list", bizData);
 	}
 
 	public void setSparqlDispatcher(SparulDispatcher sparulDispatcher) {
