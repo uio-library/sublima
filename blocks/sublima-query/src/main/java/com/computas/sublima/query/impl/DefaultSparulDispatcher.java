@@ -48,6 +48,7 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
       e.printStackTrace();
       return false;
     }
+    System.gc();
     // Return true if update success
     return true;
   }

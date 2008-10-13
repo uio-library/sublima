@@ -152,6 +152,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("request", params.toString());
     bizData.put("loggedin", loggedIn);
     bizData.put("searchparams", "<empty/>");
+    System.gc();
     res.sendPage(format + "/sparql-result", bizData);
   }
 
@@ -273,6 +274,7 @@ public class SearchController implements StatelessAppleController {
 
     bizData.put("request", params.toString());
     bizData.put("loggedin", loggedIn);
+    System.gc();
     res.sendPage(format + "/sparql-result", bizData);
   }
 

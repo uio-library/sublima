@@ -118,6 +118,7 @@ public class ResourceController implements StatelessAppleController {
       bizData.put("messages", "<empty/>");
       bizData.put("tempvalues", "<empty/>");
       bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+      System.gc();
       res.sendPage("xml2/ressurs-prereg", bizData);
 
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
@@ -131,6 +132,7 @@ public class ResourceController implements StatelessAppleController {
             messageBuffer.append("<c:message><i18n:text key=\"validation.urlexists\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n");
             messageBuffer.append("</c:messages>\n");
             bizData.put("messages", messageBuffer.toString());
+            System.gc();
             res.sendPage("xml2/ressurs-prereg", bizData);
 
           } else { // The URL is okay
@@ -153,12 +155,14 @@ public class ResourceController implements StatelessAppleController {
                     "    <sub:url rdf:resource=\"" + url + "\"/>\n" +
                     "  </sub:Resource>\n" +
                     "</rdf:RDF>");
+            System.gc();
             res.sendPage("xml2/ressurs", bizData);
           }
         } else {
           messageBuffer.append("<c:message>Oppgitt URL gir en ugyldig statuskode. Vennligst kontroller URL i en nettleser.</c:message>\n");
           messageBuffer.append("</c:messages>\n");
           bizData.put("messages", messageBuffer.toString());
+          System.gc();
           res.sendPage("xml2/ressurs-prereg", bizData);
         }
 
@@ -166,6 +170,7 @@ public class ResourceController implements StatelessAppleController {
         messageBuffer.append("<c:message>URL kan ikke være blank.</c:message>\n");
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
+        System.gc();
         res.sendPage("xml2/ressurs-prereg", bizData);
       }
     }
@@ -232,6 +237,7 @@ public class ResourceController implements StatelessAppleController {
         bizData.put("mode", "edit");
         bizData.put("messages", "<empty></empty>");
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+        System.gc();
         res.sendPage("xml2/ressurs", bizData);
       }
 
@@ -275,7 +281,7 @@ public class ResourceController implements StatelessAppleController {
           bizData.put("userprivileges", userPrivileges);
           bizData.put("publishers", adminService.getAllPublishers());
           bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-
+          System.gc();
           res.sendPage("xml2/ressurs", bizData);
           return;
         }
@@ -364,7 +370,7 @@ public class ResourceController implements StatelessAppleController {
       bizData.put("userprivileges", userPrivileges);
       bizData.put("publishers", adminService.getAllPublishers());
 
-
+      System.gc();
       res.sendPage("xml2/ressurs", bizData);
 
     }
@@ -503,6 +509,7 @@ public class ResourceController implements StatelessAppleController {
     bizData.put("statuses", adminservice.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
             "<http://www.w3.org/2007/05/powder#describedBy>"));
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    System.gc();
     res.sendPage("xml2/ressurser", bizData);
   }
 
@@ -552,6 +559,7 @@ public class ResourceController implements StatelessAppleController {
       logger.debug("Mass updated " + i + " records.");
     }
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    System.gc();
     res.sendPage("xml2/massedit", bizData);
   }
 }

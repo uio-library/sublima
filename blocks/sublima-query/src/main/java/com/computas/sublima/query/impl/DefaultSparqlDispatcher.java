@@ -46,6 +46,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
       e.printStackTrace();
     }
     con.disconnect();
+    System.gc();
     return result;
   }
 
@@ -56,10 +57,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     ResultSetFormatter.outputAsJSON(out, qExec.execSelect());
     qExec.close();
-    String results = out.toString();
-
-    return results;
+    System.gc();
+    return out.toString();
   }
-
-
 }

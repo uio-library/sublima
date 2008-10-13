@@ -52,9 +52,11 @@ public class AdminController implements StatelessAppleController {
     if ("".equalsIgnoreCase(mode)) {
       Map<String, Object> bizData = new HashMap<String, Object>();
       bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+      System.gc();
       res.sendPage("xml2/admin", bizData);
     } else if ("testsparql".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
+        System.gc();
         res.sendPage("xhtml/testsparql", null);
       } else {
         String query = req.getCocoonRequest().getParameter("query");
@@ -62,6 +64,7 @@ public class AdminController implements StatelessAppleController {
       }
     } else if ("testsparul".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
+        System.gc();
         res.sendPage("xhtml/testsparul", null);
       } else {
         String query = req.getCocoonRequest().getParameter("query");
@@ -69,7 +72,8 @@ public class AdminController implements StatelessAppleController {
 
         logger.trace("TestSparul:\n" + query);
         logger.trace("TestSparul result: " + deleteResourceSuccess);
-        res.sendPage("xhtml/testsparul", null);        
+        System.gc();
+        res.sendPage("xhtml/testsparul", null);
       }
     } else if ("database".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
@@ -101,7 +105,7 @@ public class AdminController implements StatelessAppleController {
     bizData.put("ontology", out.toString());
 
     model.close();
-
+    System.gc();
     res.sendPage("nostyle/export", bizData);
   }
 
@@ -113,6 +117,7 @@ public class AdminController implements StatelessAppleController {
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+      System.gc();
       res.sendPage("xml2/upload", bizData);
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
@@ -128,7 +133,7 @@ public class AdminController implements StatelessAppleController {
           e.printStackTrace();
         }
       }
-
+      System.gc();
       res.sendPage("xml2/upload", bizData);
     }
   }

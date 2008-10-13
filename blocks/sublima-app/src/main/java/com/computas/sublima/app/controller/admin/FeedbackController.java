@@ -1,20 +1,21 @@
 package com.computas.sublima.app.controller.admin;
 
-import com.computas.sublima.app.service.URLActions;
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.service.URLActions;
 import com.computas.sublima.query.SparulDispatcher;
-import static com.computas.sublima.query.service.SettingsService.getProperty;
-import com.computas.sublima.query.service.SettingsService;
 import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.query.service.SettingsService;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import net.sf.akismet.Akismet;
+import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.log4j.Logger;
-import net.sf.akismet.Akismet;
-import java.util.Map;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class FeedbackController implements StatelessAppleController {
 
@@ -42,11 +43,11 @@ public class FeedbackController implements StatelessAppleController {
       String generatedCommentURI = getProperty("sublima.base.url") + "comment/resource/" + email.hashCode() + comment.hashCode();
 
       if (isSpam(req, loggedIn, "", comment, email, uri)) {
-          logger.info("FeedbackController.java --> Akismet said comment from " + email + " was spam. Silently ignored.");
-          res.redirectTo(req.getCocoonRequest().getParameter("resource") + ".html");
-          return;
+        logger.info("FeedbackController.java --> Akismet said comment from " + email + " was spam. Silently ignored.");
+        res.redirectTo(req.getCocoonRequest().getParameter("resource") + ".html");
+        return;
       } else {
-          logger.trace("FeedbackController.java --> Akismet said comment from " + email + " is ham.");
+        logger.trace("FeedbackController.java --> Akismet said comment from " + email + " is ham.");
       }
 
       String commentString = StringUtils.join("\n", new String[]{
@@ -78,6 +79,7 @@ public class FeedbackController implements StatelessAppleController {
     }
 
     if ("visTipsForm".equalsIgnoreCase(mode)) {
+      System.gc();
       res.sendPage("xhtml/tips", null);
       return;
     }
@@ -90,6 +92,7 @@ public class FeedbackController implements StatelessAppleController {
       bizData.put("messages", messageBuffer.toString());
       bizData.put("mode", "form");
       bizData.put("loggedin", loggedIn);
+      System.gc();
       res.sendPage("xml/tips", bizData);
       return;
     }
@@ -108,24 +111,26 @@ public class FeedbackController implements StatelessAppleController {
       String status;
 
       if (isSpam(req, loggedIn, url, tittel + "\n" + beskrivelse, "", "")) {
-          logger.debug("FeedbackController.java --> Akismet said " + url + " was spam.");
-          messageBuffer.append("<c:message>Ressursen du sendte inn er markert i vår spam-database. Vennligst kontakt administrator!</c:message>");
-          messageBuffer.append("</c:messages>\n");
-          bizData.put("messages", messageBuffer.toString());
-          bizData.put("mode", "form");
-          bizData.put("loggedin", loggedIn);
-          res.sendPage("xml/tips", bizData);
-          return;
+        logger.debug("FeedbackController.java --> Akismet said " + url + " was spam.");
+        messageBuffer.append("<c:message>Ressursen du sendte inn er markert i vår spam-database. Vennligst kontakt administrator!</c:message>");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("messages", messageBuffer.toString());
+        bizData.put("mode", "form");
+        bizData.put("loggedin", loggedIn);
+        System.gc();
+        res.sendPage("xml/tips", bizData);
+        return;
       } else {
-          logger.trace("FeedbackController.java --> Akismet said " + url + " is ham.");
+        logger.trace("FeedbackController.java --> Akismet said " + url + " is ham.");
       }
 
-        if ((!"".equals(url)) && adminService.checkForDuplicatesByURI(url)) {
+      if ((!"".equals(url)) && adminService.checkForDuplicatesByURI(url)) {
         messageBuffer.append("<c:message>Ressursen du tipset om finnes allerede.</c:message>");
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "form");
         bizData.put("loggedin", loggedIn);
+        System.gc();
         res.sendPage("xml/tips", bizData);
         return;
       }
@@ -142,18 +147,19 @@ public class FeedbackController implements StatelessAppleController {
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "form");
         bizData.put("loggedin", loggedIn);
+        System.gc();
         res.sendPage("xml/tips", bizData);
-        return;  
+        return;
       }
 
       //todo We have to get the interface-language @no from somewhere
       //todo Move the 30x check to a private static method 
       if ("302".equals(status) ||
-            "303".equals(status) ||
-            "304".equals(status) ||
-            "305".equals(status) ||
-            "307".equals(status) ||
-            status.startsWith("2")) {
+              "303".equals(status) ||
+              "304".equals(status) ||
+              "305".equals(status) ||
+              "307".equals(status) ||
+              status.startsWith("2")) {
 
         String dctidentifier = searchService.sanitizeStringForURI(tittel);
         String insertTipString =
@@ -180,6 +186,7 @@ public class FeedbackController implements StatelessAppleController {
           bizData.put("messages", messageBuffer.toString());
           bizData.put("mode", "ok");
           bizData.put("loggedin", loggedIn);
+          System.gc();
           res.sendPage("xml/tips", bizData);
         } else {
           messageBuffer.append("<c:message>Det skjedde noe galt. Kontroller alle feltene og prøv igjen</c:message>");
@@ -187,6 +194,7 @@ public class FeedbackController implements StatelessAppleController {
           bizData.put("mode", "form");
           bizData.put("loggedin", loggedIn);
           bizData.put("messages", messageBuffer.toString());
+          System.gc();
           res.sendPage("xml/tips", bizData);
         }
 
@@ -196,41 +204,42 @@ public class FeedbackController implements StatelessAppleController {
         bizData.put("mode", "form");
         bizData.put("loggedin", loggedIn);
         bizData.put("messages", messageBuffer.toString());
+        System.gc();
         res.sendPage("xml/tips", bizData);
       }
     }
   }
 
-    private boolean isSpam(AppleRequest req, boolean loggedIn, String url, String content, String email, String resource) {
-        // If the user is not logged in, do a spam check if configured
-        boolean spam = false;
-        if (! loggedIn && getProperty("sublima.akismet.key") != null) {
-            logger.info("FeedbackController.java --> Akismet key set");
-            Akismet akismet = new Akismet(getProperty("sublima.akismet.key"),
-                                          getProperty("sublima.base.url"));
-            if (akismet.verifyAPIKey()) {
-                spam = akismet.commentCheck(
-                        req.getCocoonRequest().getRemoteAddr(),
-                        "",
-                        "",
-                        resource,
-                        "comment",
-                        "",
-                        email,
-                        url,
-                        content,
-                        null
-                );
+  private boolean isSpam(AppleRequest req, boolean loggedIn, String url, String content, String email, String resource) {
+    // If the user is not logged in, do a spam check if configured
+    boolean spam = false;
+    if (!loggedIn && getProperty("sublima.akismet.key") != null) {
+      logger.info("FeedbackController.java --> Akismet key set");
+      Akismet akismet = new Akismet(getProperty("sublima.akismet.key"),
+              getProperty("sublima.base.url"));
+      if (akismet.verifyAPIKey()) {
+        spam = akismet.commentCheck(
+                req.getCocoonRequest().getRemoteAddr(),
+                "",
+                "",
+                resource,
+                "comment",
+                "",
+                email,
+                url,
+                content,
+                null
+        );
 
-            } else {
-                logger.error("FeedbackController.java --> Akismet key not valid, disabling.");
-            }
-        }
-        return spam;
+      } else {
+        logger.error("FeedbackController.java --> Akismet key not valid, disabling.");
+      }
     }
+    return spam;
+  }
 
 
-    public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
+  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 

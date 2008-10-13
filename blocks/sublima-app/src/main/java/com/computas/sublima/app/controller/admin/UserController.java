@@ -69,6 +69,7 @@ public class UserController implements StatelessAppleController {
       if ("".equalsIgnoreCase(submode)) {
         Map<String, Object> bizData = new HashMap<String, Object>();
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+        System.gc();
         res.sendPage("xml2/brukere", bizData);
         return;
       } else if ("ny".equalsIgnoreCase(submode)) {
@@ -88,6 +89,7 @@ public class UserController implements StatelessAppleController {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         Map<String, Object> bizData = new HashMap<String, Object>();
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+        System.gc();
         res.sendPage("xml2/roller", bizData);
         return;
       } else if ("rolle".equalsIgnoreCase(submode)) {
@@ -104,7 +106,7 @@ public class UserController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-
+    System.gc();
     res.sendPage("xml2/roller_alle", bizData);
   }
 
@@ -138,6 +140,7 @@ public class UserController implements StatelessAppleController {
 
       bizData.put("mode", "useredit");
       bizData.put("messages", "<empty></empty>");
+      System.gc();
       res.sendPage("xml2/bruker", bizData);
 
       // When POST try to save the user. Return error messages upon failure, and success message upon great success
@@ -164,7 +167,7 @@ public class UserController implements StatelessAppleController {
         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "usertemp");
-
+        System.gc();
         res.sendPage("xml2/bruker", bizData);
 
       } else {
@@ -182,6 +185,7 @@ public class UserController implements StatelessAppleController {
             bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
+            System.gc();
             res.sendPage("xml2/bruker", bizData);
             return;
           }
@@ -194,6 +198,7 @@ public class UserController implements StatelessAppleController {
             bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
+            System.gc();
             res.sendPage("xml2/bruker", bizData);
             return;
           }
@@ -221,6 +226,7 @@ public class UserController implements StatelessAppleController {
             bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
             bizData.put("messages", messageBuffer.toString());
             bizData.put("mode", "usertemp");
+            System.gc();
             res.sendPage("xml2/bruker", bizData);
             return;
           }
@@ -281,7 +287,7 @@ public class UserController implements StatelessAppleController {
               bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
               bizData.put("messages", messageBuffer.toString());
               bizData.put("mode", "usertemp");
-
+              System.gc();
               res.sendPage("xml2/bruker", bizData);
               return;
             }
@@ -334,6 +340,7 @@ public class UserController implements StatelessAppleController {
 
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
+        System.gc();
         res.sendPage("xml2/bruker", bizData);
       }
     }
@@ -370,6 +377,7 @@ public class UserController implements StatelessAppleController {
 
       bizData.put("mode", "roleedit");
       bizData.put("messages", "<empty></empty>");
+      System.gc();
       res.sendPage("xml2/rolle", bizData);
 
     // When POST try to save the user. Return error messages upon failure, and success message upon great success
@@ -398,7 +406,7 @@ public class UserController implements StatelessAppleController {
         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "roletemp");
-
+        System.gc();
         res.sendPage("xml2/rolle", bizData);
 
       } else {
@@ -483,6 +491,7 @@ public class UserController implements StatelessAppleController {
         bizData.put("allstatuses", adminService.getAllStatuses());
         messageBuffer.append("</c:messages>\n");
         bizData.put("messages", messageBuffer.toString());
+        System.gc();
         res.sendPage("xml2/rolle", bizData);
       }
     }
@@ -495,7 +504,7 @@ public class UserController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allusers", adminService.getAllUsers());
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-    
+    System.gc();
     res.sendPage("xml2/brukere_alle", bizData);
   }
 
