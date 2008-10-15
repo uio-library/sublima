@@ -298,6 +298,10 @@ public class Form2SparqlService {
 		sparqlQueryBuffer.append("DESCRIBE ");
 
         coreSparqlWhereClause(parameterMap, sparqlQueryBuffer, n3List);
+        // Add the variables to the query
+        for (Object element : subjectVarList) {
+            sparqlQueryBuffer.append((String) element);
+        }
         sparqlQueryBuffer.append("?rest WHERE {");
         sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
         sparqlQueryBuffer.append("\n" + resourceSubject + "?p ?rest .");
@@ -328,8 +332,7 @@ public class Form2SparqlService {
 		// with large datasets
 		StringBuffer sparqlQueryBuffer = new StringBuffer();
 		ArrayList n3List = new ArrayList();
-		sparqlQueryBuffer.append("SELECT count( ");
-
+		sparqlQueryBuffer.append("SELECT count( ?resource ");
         coreSparqlWhereClause(parameterMap, sparqlQueryBuffer, n3List);
         sparqlQueryBuffer.append(") WHERE {");
         sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
@@ -393,10 +396,6 @@ addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
             n3List.add(convertFormField2N3(e.getKey(), e.getValue()));
         }
 
-        // Add the variables to the query
-        for (Object element : subjectVarList) {
-            sparqlQueryBuffer.append((String) element);
-        }
     }
 
     /**
