@@ -26,7 +26,7 @@ public final class ContextListener implements ServletContextListener {
       logger.info("SUBLIMA: Property sublima.index.internal.onstartup set to TRUE --> Indexing - Internal content");
       try {
         boolean indexExternal = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
-        indexService.createIndex(SettingsService.getProperty("sublima.index.directory"), SettingsService.getProperty("sublima.index.type"), SettingsService.getProperty("sublima.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"), indexExternal);
+        indexService.createIndex(SettingsService.getProperty("sublima.index.directory"), SettingsService.getProperty("sublima.index.type"), SettingsService.getProperty("sublima.resource.searchfields").split(";"), SettingsService.getProperty("sublima.topic.searchfields").split(";"),  SettingsService.getProperty("sublima.prefixes").split(";"), indexExternal);
         logger.info("SUBLIMA: Indexing - Internal content finished");
       } catch (com.hp.hpl.jena.shared.DoesNotExistException e) {
         logger.warn("SUBLIMA: getFreetextToIndex() --> Database didn't exist. This iads OK on startup, but fatal otherwise");

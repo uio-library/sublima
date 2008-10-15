@@ -7,15 +7,14 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.shared.DoesNotExistException;
-import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
-import org.postgresql.util.PSQLException;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -39,7 +38,7 @@ public class IndexService {
    * Change Note 2008-09-06 (dn): Also spilt
    * Change Note 2008-09-17 (mha): Added external indexing to sub:url if the property for external index is true
    */
-  public void createIndex(String indexDirectory, String indexType, String[] searchfields, String[] prefixes, boolean indexExternal) {
+  public void createIndex(String indexDirectory, String indexType, String[] resourceSearchfields, String[] topicSearchfields, String[] prefixes, boolean indexExternal) {
     try {
 
       // -- Read and index all literal strings.
@@ -50,7 +49,8 @@ public class IndexService {
       } else {
         SettingsService.getIndexBuilderNode(indexDir);
       }
-      
+
+      // RESOURCE INDEXING
       // -- Create an index based on a generated string on each URL
       ResultSet rs = getAllExternalResourcesURLs();
       int i = 0;
@@ -58,16 +58,30 @@ public class IndexService {
         QuerySolution qs = rs.nextSolution();
         Resource res = qs.getResource("url");
         logger.info("SUBLIMA: createIndex() --> indexing resource #" + i + ":" + res.getURI());
-        indexResourceInternal(res.getURI(), searchfields, prefixes);
+        indexResourceInternal(res.getURI(), resourceSearchfields, prefixes);
 
-        if(indexExternal) {
-          indexResourceExternal(res.getURI(), searchfields, prefixes);
+        if (indexExternal) {
+          indexResourceExternal(res.getURI(), resourceSearchfields, prefixes);
         }
 
         i++;
       }
 
       logger.info("SUBLIMA: createIndex() --> Indexing - Indexed all model resources from concatenated literals");
+
+      // TOPIC INDEXING
+      ResultSet rsTopics = getAllTopicURIs();
+      int j = 0;
+      while (rsTopics.hasNext()) {
+        QuerySolution qs = rsTopics.nextSolution();
+        Resource res = qs.getResource("uri");
+        logger.info("SUBLIMA: createIndex() --> indexing topic #" + j + ":" + res.getURI());
+        indexTopic(res.getURI(), topicSearchfields, prefixes);
+
+        j++;
+      }
+
+
       logger.info("SUBLIMA: createIndex() --> Indexing - Closed index for writing");
 
       // -- Make globally available // -- Create the access index
@@ -81,6 +95,71 @@ public class IndexService {
     logger.info("SUBLIMA: createIndex() --> Indexing - Created RDF model from database");
   }
 
+  public void indexTopic(String uri, String[] topicSearchfields, String[] prefixes) {
+    Resource r = SettingsService.getModel().getResource(uri);
+
+    String s = getTopicLiteralsAsString(uri, topicSearchfields, prefixes);
+
+    Property pPrefLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#prefLabel");
+
+    // skos:prefLabel used for internal content
+    NodeIterator nPrefLabel = SettingsService.getModel().listObjectsOfProperty(r, pPrefLabel);
+    while (nPrefLabel.hasNext()) {
+      RDFNode node = nPrefLabel.nextNode();
+      if (node.isLiteral()) {
+        SettingsService.getIndexBuilderNode(null).index(node, s);
+      }
+    }
+
+    SettingsService.getIndexBuilderNode(null).flushWriter();
+  }
+
+  private String getTopicLiteralsAsString(String uri, String[] topicSearchfields, String[] prefixes) {
+    StringBuffer returnString = new StringBuffer();
+
+    if (uri != null || "".equalsIgnoreCase(uri)) {
+
+      if (!uri.startsWith("<")) {
+        uri = "<" + uri + ">";
+      }
+
+      String queryString = getQueryForIndex(topicSearchfields, prefixes, uri);
+      ResultSet resultSet = getFreetextToIndexResultSet(queryString);
+
+      while (resultSet.hasNext()) {
+        QuerySolution soln = resultSet.nextSolution();
+        Iterator<String> it = soln.varNames();
+        while (it.hasNext()) {
+          String var = it.next();
+          if (soln.get(var) != null) {
+            if (soln.get(var).isLiteral()) {
+              Literal l = soln.getLiteral(var);
+              String literal = l.getString().replace("\\", "\\\\");
+              returnString.append(literal + ". ");
+              logger.trace("SUBLIMA: getTopicLiteralsAsString --> Added " + literal + " to " + uri + "'s indexed text");
+            } else {
+              logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that sublima.topic.searchfields config is correct.");
+            }
+          }
+        }
+      }
+    }
+
+    return returnString.toString();
+  }
+
+  private ResultSet getAllTopicURIs() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "SELECT ?uri",
+            "WHERE {",
+            "        ?uri a <http://www.w3.org/2004/02/skos/core#Concept> }"});
+
+    Query query = QueryFactory.create(queryString);
+    QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
+    ResultSet resultSet = qExec.execSelect();
+    logger.info("SUBLIMA: getAllTopicURIs() --> Indexing - Fetched all index URIs from the model");
+    return resultSet;
+  }
 
   public void setIndex(String indexDirectory) {
     File indexDir = new File(indexDirectory);
@@ -91,7 +170,6 @@ public class IndexService {
   /**
    * A method to validate all urls on the resources. Adds the URL to the list along with
    * the http code.
-   *
    */
   public void validateURLs() {
     ResultSet resultSet;
@@ -184,7 +262,7 @@ public class IndexService {
           String literal = l.getString().replace("\\", "\\\\");
           literals.add(literal);  // This should ensure uniqueness
         } else {
-          logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that sublima.searchfields config is correct.");
+          logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that sublima.resource.searchfields config is correct.");
         }
       }
     }
@@ -248,7 +326,7 @@ public class IndexService {
             literals.add(literal);  // This should ensure uniqueness
             logger.trace("SUBLIMA: getFreetextToIndex --> Added " + literal + " to the resource's sub:literal");
           } else {
-            logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that sublima.searchfields config is correct.");
+            logger.warn("SUBLIMA: Indexing - variable " + var + " contained neither the resource name or a literal. Verify that searchfields config is correct.");
           }
 
           if (!resultSet.hasNext()) {
@@ -367,7 +445,7 @@ public class IndexService {
                 contentType.startsWith("text/plain") ||
                 contentType.startsWith("text/xml"))) {
          */
-          externalContent.append(urlAction.strippedContent(null).replace("\\", "\\\\"));
+        externalContent.append(urlAction.strippedContent(null).replace("\\", "\\\\"));
 
         //}
       } catch (Exception e) {
@@ -407,7 +485,7 @@ public class IndexService {
               returnString.append(literal + ". ");
               logger.trace("SUBLIMA: getResourceInternalLiteralsAsString --> Added " + literal + " to " + resource + "'s indexed text");
             } else {
-              logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that sublima.searchfields config is correct.");
+              logger.warn("SUBLIMA: Indexing - variable " + var + " contained no literal. Verify that searchfields config is correct.");
             }
           }
         }
@@ -437,6 +515,7 @@ public class IndexService {
 
   /**
    * Utility method to do both the internal and external indexing of a resource with one method call
+   *
    * @param resourceString
    * @param searchfields
    * @param prefixes

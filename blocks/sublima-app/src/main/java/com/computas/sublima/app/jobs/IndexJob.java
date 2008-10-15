@@ -10,9 +10,10 @@ public class IndexJob {
 
   public static void main(String[] args) {
 
-    String usageString = "usage: IndexJob -searchfields dct:title;dct:description -prefixes dct:<http://purl.org/dc/terms/;foaf:<http://xmlns.com/foaf/0.1/> -indexdir /usr/local/index/ -indexexternal true|false";
+    String usageString = "usage: IndexJob -resourcesearchfields dct:title;dct:description -topicsearchfields skos:prefLabel;skos:altLabel -prefixes dct:<http://purl.org/dc/terms/;foaf:<http://xmlns.com/foaf/0.1/> -indexdir /usr/local/index/ -indexexternal true|false";
 
-    String[] searchfields = null;
+    String[] resourcesearchfields = null;
+    String[] topicsearchfields = null;
     String[] prefixes = null;
     String indexDir = ""; //"/tmp/june";
     String indexType = "file"; //"file";
@@ -23,11 +24,21 @@ public class IndexJob {
     for (int i = 0; i < args.length; i++) {
       argument = args[i];
 
-      if (argument.equals("-searchfields")) {
+      if (argument.equals("-resourcesearchfields")) {
         if (i < args.length + 1) {
-          searchfields = args[i + 1].split(";");
+          resourcesearchfields = args[i + 1].split(";");
         } else {
-          System.err.println("-searchfields requires a semicolon separated string of searchfields");
+          System.err.println("-resourcesearchfields requires a semicolon separated string of searchfields");
+          System.err.println(usageString);
+          return;
+        }
+      }
+
+      if (argument.equals("-topicsearchfields")) {
+        if (i < args.length + 1) {
+          topicsearchfields = args[i + 1].split(";");
+        } else {
+          System.err.println("-topicsearchfields requires a semicolon separated string of searchfields");
           System.err.println(usageString);
           return;
         }
@@ -71,13 +82,13 @@ public class IndexJob {
       }
     }
 
-    if (searchfields == null || prefixes == null || indexDir == null) {
+    if (resourcesearchfields == null || topicsearchfields == null || prefixes == null || indexDir == null ) {
       System.err.println(usageString);
       return;
     }
 
     IndexService indexService = new IndexService();
 
-    indexService.createIndex(indexDir, indexType, searchfields, prefixes, indexexternal);
+    indexService.createIndex(indexDir, indexType, resourcesearchfields, topicsearchfields, prefixes, indexexternal);
   }
 }

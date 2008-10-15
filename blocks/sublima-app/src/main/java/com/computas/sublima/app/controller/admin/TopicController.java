@@ -2,11 +2,14 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import com.hp.hpl.jena.query.larq.LARQ;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
@@ -30,7 +33,8 @@ public class TopicController implements StatelessAppleController {
 
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
-  AdminService adminService = new AdminService();
+  private IndexService indexService = new IndexService();
+  private AdminService adminService = new AdminService();
   private ApplicationManager appMan;
   private ApplicationUtil appUtil = new ApplicationUtil();
   private User user;
@@ -82,7 +86,7 @@ public class TopicController implements StatelessAppleController {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         Map<String, Object> bizData = new HashMap<String, Object>();
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-        System.gc();
+
         res.sendPage("xml2/emner", bizData);
       } else if ("nytt".equalsIgnoreCase(submode)) {
         editTopic(res, req, "nytt", null);
@@ -103,7 +107,7 @@ public class TopicController implements StatelessAppleController {
       if ("".equalsIgnoreCase(submode) || submode == null) {
         Map<String, Object> bizData = new HashMap<String, Object>();
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-        System.gc();
+
         res.sendPage("xml2/relasjoner", bizData);
       } else if ("relasjon".equalsIgnoreCase(submode)) {
         editRelation(res, req, null);
@@ -131,7 +135,7 @@ public class TopicController implements StatelessAppleController {
     bizData.put("letter", letter);
     bizData.put("loggedin", "<empty></empty>");
     bizData.put("facets", getRequestXML(req));
-    System.gc();
+
     res.sendPage("xml/browse", bizData);
   }
 
@@ -157,7 +161,7 @@ public class TopicController implements StatelessAppleController {
 
       bizData.put("messages", "<empty></empty>");
       bizData.put("facets", getRequestXML(req));
-      System.gc();
+
       res.sendPage("xml2/relasjon", bizData);
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
@@ -206,7 +210,7 @@ public class TopicController implements StatelessAppleController {
 
       bizData.put("messages", messageBuffer.toString());
       bizData.put("facets", getRequestXML(req));
-      System.gc();
+
       res.sendPage("xml2/relasjon", bizData);
     }
   }
@@ -228,7 +232,7 @@ public class TopicController implements StatelessAppleController {
     bizData.put("loggedin", loggedIn);
     bizData.put("letter", "");
     bizData.put("facets", getRequestXML(req));
-    System.gc();
+
     res.sendPage("xml/browse", bizData);
   }
 
@@ -294,7 +298,7 @@ public class TopicController implements StatelessAppleController {
     bizData.put("mode", "topicjoin");
     bizData.put("userprivileges", userPrivileges);
     bizData.put("facets", getRequestXML(req));
-    System.gc();
+
     res.sendPage("xml2/koble", bizData);
 
   }
@@ -316,7 +320,7 @@ public class TopicController implements StatelessAppleController {
       bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
       bizData.put("facets", getRequestXML(req));
-      System.gc();
+
       res.sendPage("xml2/tema", bizData);
 
     } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
@@ -383,7 +387,7 @@ public class TopicController implements StatelessAppleController {
 
       bizData.put("messages", messageBuffer.toString());
       bizData.put("facets", getRequestXML(req));
-      System.gc();
+
       res.sendPage("xml2/tema", bizData);
     }
   }
@@ -403,7 +407,7 @@ public class TopicController implements StatelessAppleController {
     bizData.put("facets", getRequestXML(req));
     bizData.put("statuses", adminService.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
             "<http://www.w3.org/2007/05/powder#describedBy>"));
-    System.gc();
+
     res.sendPage("xml2/emner_alle", bizData);
   }
 
@@ -463,7 +467,7 @@ public class TopicController implements StatelessAppleController {
       bizData.put("userprivileges", userPrivileges);
       bizData.put("messages", "<empty></empty>");
       bizData.put("facets", getRequestXML(req));
-      System.gc();
+
       res.sendPage("xml2/emne", bizData);
 
       // When POST try to save the resource. Return error messages upon failure, and success message upon great success
@@ -537,6 +541,10 @@ public class TopicController implements StatelessAppleController {
               messageBuffer.append("<c:message><i18n:text key=\"topic.updated\">Emne oppdatert</i18n:text></c:message>\n");
             }
 
+            indexService.indexTopic(uri, SettingsService.getProperty("sublima.topic.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          logger.trace("AdminController.editResource --> Added the resource to the index");
+          LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
+
 
           } else {
             messageBuffer.append("<c:message><i18n:text key=\"topic.save.error\">Feil ved lagring av emne</i18n:text></c:message>\n");
@@ -565,7 +573,7 @@ public class TopicController implements StatelessAppleController {
       bizData.put("facets", getRequestXML(req));
 
       bizData.put("messages", messageBuffer.toString());
-      System.gc();
+
       res.sendPage("xml2/emne", bizData);
     }
   }
@@ -661,7 +669,7 @@ public class TopicController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("all_relations", adminService.getAllRelationTypes());
     bizData.put("facets", getRequestXML(req));
-    System.gc();
+
     res.sendPage("xml2/relasjoner_alle", bizData);
   }
 }
