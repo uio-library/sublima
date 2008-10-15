@@ -79,7 +79,7 @@ public class FeedbackController implements StatelessAppleController {
     }
 
     if ("visTipsForm".equalsIgnoreCase(mode)) {
-      System.gc();
+
       res.sendPage("xhtml/tips", null);
       return;
     }
@@ -92,7 +92,7 @@ public class FeedbackController implements StatelessAppleController {
       bizData.put("messages", messageBuffer.toString());
       bizData.put("mode", "form");
       bizData.put("loggedin", loggedIn);
-      System.gc();
+
       res.sendPage("xml/tips", bizData);
       return;
     }
@@ -117,7 +117,7 @@ public class FeedbackController implements StatelessAppleController {
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "form");
         bizData.put("loggedin", loggedIn);
-        System.gc();
+
         res.sendPage("xml/tips", bizData);
         return;
       } else {
@@ -130,7 +130,7 @@ public class FeedbackController implements StatelessAppleController {
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "form");
         bizData.put("loggedin", loggedIn);
-        System.gc();
+
         res.sendPage("xml/tips", bizData);
         return;
       }
@@ -147,19 +147,19 @@ public class FeedbackController implements StatelessAppleController {
         bizData.put("messages", messageBuffer.toString());
         bizData.put("mode", "form");
         bizData.put("loggedin", loggedIn);
-        System.gc();
+
         res.sendPage("xml/tips", bizData);
         return;
       }
 
       //todo We have to get the interface-language @no from somewhere
       //todo Move the 30x check to a private static method 
-      if ("302".equals(status) ||
+      if (status != null && ("302".equals(status) ||
               "303".equals(status) ||
               "304".equals(status) ||
               "305".equals(status) ||
               "307".equals(status) ||
-              status.startsWith("2")) {
+              status.startsWith("2"))) {
 
         String dctidentifier = searchService.sanitizeStringForURI(tittel);
         String insertTipString =
@@ -186,7 +186,7 @@ public class FeedbackController implements StatelessAppleController {
           bizData.put("messages", messageBuffer.toString());
           bizData.put("mode", "ok");
           bizData.put("loggedin", loggedIn);
-          System.gc();
+
           res.sendPage("xml/tips", bizData);
         } else {
           messageBuffer.append("<c:message><i18n:text key=\"tips.error\">Det skjedde noe galt. Kontroller alle feltene og prøv igjen</i18n:text></c:message>");
@@ -194,17 +194,18 @@ public class FeedbackController implements StatelessAppleController {
           bizData.put("mode", "form");
           bizData.put("loggedin", loggedIn);
           bizData.put("messages", messageBuffer.toString());
-          System.gc();
+
           res.sendPage("xml/tips", bizData);
         }
 
-      } else {
+      }
+      else {
         messageBuffer.append("<c:message><i18n:text key=\"tips.linkerror\">Feil ved angitt URL. Vennligst kontroller at linken du oppga fungerer.</i18n:text></c:message>");
         messageBuffer.append("</c:messages>\n");
         bizData.put("mode", "form");
         bizData.put("loggedin", loggedIn);
         bizData.put("messages", messageBuffer.toString());
-        System.gc();
+
         res.sendPage("xml/tips", bizData);
       }
     }
