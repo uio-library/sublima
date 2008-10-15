@@ -243,6 +243,26 @@ public class Form2SparqlServiceTest extends TestCase {
                "?resource ?p ?rest .\n}"}), resultString);
   }
 
+    public void testConvertForm2SparqlCountSingleValueFreetext() {
+      // Single value test, with simple freetext search
+      testMap.put("dct:title", testString);
+      SearchService searchService = new SearchService("AND");
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true)});
+      myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
+      String resultString = myService.convertForm2SparqlCount(testMap);
+      assertEquals("Expected result and actual result not equal",
+		   StringUtils.join("\n", new String[]{
+		       "PREFIX dct: <http://purl.org/dc/terms/>",
+		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+               "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+               "SELECT count( ?resource ) WHERE {",
+		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
+		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
+               "?resource dct:identifier ?lit .\n}"}), resultString);
+  }
+
+
     public void testConvertForm2SparqlNoValueFreetextDeep() {
       // Single value test, with simple freetext search
       SearchService searchService = new SearchService("AND");
@@ -319,7 +339,17 @@ public class Form2SparqlServiceTest extends TestCase {
     String resultString = myService.convertForm2Sparql(testMap);
     assertEquals("Expected result and actual result not equal", expectedPrefix + "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title \"\"\"Cirrus Personal Jet\"\"\"@en .\n?resource dct:description \"\"\"A Very Light Jet Aircraft under construction.\"\"\"@en .\n?resource ?p ?rest .\n}", resultString);
   }
-  
+
+  public void testConvertForm2SparqlCountTwoValues() {
+    // Single value test
+    testMap.put("dct:title", testString);
+    testMap.put("dct:description", new String[]{"A Very Light Jet Aircraft under construction."});
+    testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
+    String resultString = myService.convertForm2SparqlCount(testMap);
+    assertEquals("Expected result and actual result not equal", expectedPrefix + "SELECT count( ?resource ) WHERE {\n?resource dct:title \"\"\"Cirrus Personal Jet\"\"\"@en .\n?resource dct:description \"\"\"A Very Light Jet Aircraft under construction.\"\"\"@en .\n}", resultString);
+  }
+
+
   public void testConvertForm2SparqlTwoValuesOneFree() {
 	    // Single value test
         Form2SparqlService myServicefree = new Form2SparqlService(new String[]{"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>"}, new String[]{"dct:title"});
@@ -371,6 +401,14 @@ public class Form2SparqlServiceTest extends TestCase {
 	    String resultString = myServicefree.convertForm2Sparql(testMap);
 	    assertEquals("Expected result and actual result not equal", expectedPrefix + "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +  "DESCRIBE ?resource ?rest WHERE {\n?resource dct:title ?free1 .\n?free1 pf:textMatch \"\"\"+Cirrus +Personal +Jet \"\"\" .\n?resource dct:description ?free2 .\n?free2 pf:textMatch \"\"\"+A +Very +Light +Jet +Aircraft +under +construction. \"\"\" .\n?resource ?p ?rest .\n}", resultString);
 	  }
+
+  public void testConvertForm2SPARQLCountDoubleDual() {
+    String expectS = "SELECT count( ?resource ) WHERE {\n?resource dct:subject ?var2 .\n?var2 rdfs:label \"\"\"Jet\"\"\" .\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n}";
+    testMap.put("dct:subject/rdfs:label", new String[]{"Jet"});
+    testMap.put("dct:publisher/foaf:homepage", new String[]{"http://www.cirrusdesign.com/"});
+    String actual = myService.convertForm2SparqlCount(testMap);
+    assertEquals("Expected result and actual result not equal", expectedPrefix + expectS, actual);
+  }
 
   public void testConvertFor2SPARQLDoubleDual() {
     String expectS = "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {\n?resource dct:subject ?var2 .\n?var2 rdfs:label \"\"\"Jet\"\"\" .\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n?resource ?p ?rest .\n}";

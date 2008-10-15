@@ -297,25 +297,76 @@ public class Form2SparqlService {
 		ArrayList n3List = new ArrayList();
 		sparqlQueryBuffer.append("DESCRIBE ");
 
-		if (parameterMap.get("interface-language") != null) {
-			setLanguage(parameterMap.get("interface-language")[0]);
-			parameterMap.remove("interface-language");
-		}	
-	
-		// locale is a parameter used by Cocoon's
-		// LocaleAction. It must also be removed from the
-		// parametermap if present.  
+        coreSparqlWhereClause(parameterMap, sparqlQueryBuffer, n3List);
+        sparqlQueryBuffer.append("?rest WHERE {");
+        sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
+        sparqlQueryBuffer.append("\n" + resourceSubject + "?p ?rest .");
+		sparqlQueryBuffer.append("\n}");
+		sparqlQueryBuffer.insert(0, getPrefixString());
+		String returnString = sparqlQueryBuffer.toString();
+		System.out.println(returnString);
+		logger.trace("Constructed SPARQL query: \n" + returnString);
+		return returnString;
+	}
 
-		// If the interface-language from the locale is used,
-		// it is set elsewhere.
-		if (parameterMap.get("locale") != null) {
-		    parameterMap.remove("locale");
-		}	
+
+    /**
+	 * Returns a SPARQL count query based on a key-value Map. See above
+	 * for an explanation of the structure of each key-value. In addition to the
+	 * above described key-value-pairs, it may have a key
+	 * <tt>interface-language</tt> that holds the language of any literal.
+	 *
+     * When running this query, one will get the number of resources that would be
+     * returned using this WHERE clause.
+	 * @param parameterMap
+	 *            The data structure with the key-value-pairs.
+	 * @return A SPARQL count query.
+	 */
+	public String convertForm2SparqlCount(Map<String, String[]> parameterMap) {
+
+		// Using StringBuffer, since regular String can cause performance issues
+		// with large datasets
+		StringBuffer sparqlQueryBuffer = new StringBuffer();
+		ArrayList n3List = new ArrayList();
+		sparqlQueryBuffer.append("SELECT count( ");
+
+        coreSparqlWhereClause(parameterMap, sparqlQueryBuffer, n3List);
+        sparqlQueryBuffer.append(") WHERE {");
+        sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
+		sparqlQueryBuffer.append("\n}");
+		sparqlQueryBuffer.insert(0, getPrefixString());
+		String returnString = sparqlQueryBuffer.toString();
+		System.out.println(returnString);
+		logger.trace("Constructed SPARQL query: \n" + returnString);
+		return returnString;
+	}
+
+    /**
+     * Appends most of the core SPARQL WHERE clause and a bit more to the querybuffer
+     *
+     * @param parameterMap
+     * @param sparqlQueryBuffer
+     * @param n3List
+     */
+    private void coreSparqlWhereClause(Map<String, String[]> parameterMap, StringBuffer sparqlQueryBuffer, ArrayList n3List) {
+        if (parameterMap.get("interface-language") != null) {
+            setLanguage(parameterMap.get("interface-language")[0]);
+            parameterMap.remove("interface-language");
+        }
+
+        // locale is a parameter used by Cocoon's
+        // LocaleAction. It must also be removed from the
+        // parametermap if present.
+
+        // If the interface-language from the locale is used,
+        // it is set elsewhere.
+        if (parameterMap.get("locale") != null) {
+            parameterMap.remove("locale");
+        }
 
         if (parameterMap.get("dct:subject/all-labels") != null) { // Then there are SKOS labels
            addPrefix("skos: <http://www.w3.org/2004/02/skos/core#>");
         }
-
 
 
         if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
@@ -333,32 +384,22 @@ public class Form2SparqlService {
 		}
 
 
-		if (freetextFields != null) {
-            addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
-		}
-	
-		
-		for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
-			n3List.add(convertFormField2N3(e.getKey(), e.getValue()));
-		}
+        if (freetextFields != null) {
+addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
+        }
 
-		// Add the variables to the query
-		for (Object element : subjectVarList) {
-			sparqlQueryBuffer.append((String) element);
-		}
-			
-		sparqlQueryBuffer.append("?rest WHERE {");
-		sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
-		sparqlQueryBuffer.append("\n" + resourceSubject + "?p ?rest .");
-		sparqlQueryBuffer.append("\n}");
-		sparqlQueryBuffer.insert(0, getPrefixString());
-		String returnString = sparqlQueryBuffer.toString();
-		System.out.println(returnString);
-		logger.trace("Constructed SPARQL query: \n" + returnString);
-		return returnString;
-	}
 
-	/**
+        for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
+            n3List.add(convertFormField2N3(e.getKey(), e.getValue()));
+        }
+
+        // Add the variables to the query
+        for (Object element : subjectVarList) {
+            sparqlQueryBuffer.append((String) element);
+        }
+    }
+
+    /**
 	 * Returns two SPARQL Update queries where the first deletes all statements 
 	 * with the given subject. It works based on a key-value Map, and the usual 
 	 * usage is to pass the query parameters from a HTTP request.
