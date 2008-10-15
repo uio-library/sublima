@@ -136,10 +136,11 @@ public class AdminService {
   }
 
   /**
-   * Method to get distinct and used labels for different properties
+   * Method to get distinct labels for different properties
+   * NOTE: This doesn't anymore check what is actually used. It became such a performance liability that we had to skip it.
    *
    * @param rdfType  The full URI (unless it is in the dct or rdfs namespaces) with pointy brackets for the type of subject that you want.
-   * @param property The full URI (unless it is in the dct or rdfs namespaces) with pointy brackets for the property that connects the resource to the subject
+   * @param property The full URI (unless it is in the dct or rdfs namespaces) with pointy brackets for the property that connects the resource to the subject. Not used at the moment.
    * @return A String containing SPARQL Result Set XML with the languages
    */
   public String getDistinctAndUsedLabels(String rdfType, String property) {
@@ -150,7 +151,6 @@ public class AdminService {
             "WHERE {",
             "?uri a " + rdfType + " ;",
             "          rdfs:label ?label .",
-            "?res " + property + " ?uri",
             "}"});
 
     logger.trace("AdminService.getDistinctAndUsedLabels() --> SPARQL query sent to dispatcher: \n" + queryString);
