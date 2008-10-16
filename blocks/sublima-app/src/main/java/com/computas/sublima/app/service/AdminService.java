@@ -795,9 +795,12 @@ public class AdminService {
       Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
       XPathExpression expr = XPathFactory.newInstance().newXPath().compile("/sparql/results/result/binding/literal");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-      return Integer.valueOf(nodes.item(0).getTextContent());
+      int count = Integer.valueOf(nodes.item(0).getTextContent());
+      logger.debug("AdminService.countNumberOfExpectedHits() --> Query returned " + count + " hits.");
+      return count;
 
     } catch (Exception e) {
+      logger.warn("AdminService.countNumberOfExpectedHits() returned an error: " + e.getMessage());
       e.printStackTrace();
       return 0;
     }
