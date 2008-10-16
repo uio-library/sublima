@@ -262,6 +262,26 @@ public class Form2SparqlServiceTest extends TestCase {
                "?resource dct:identifier ?lit .\n}"}), resultString);
   }
 
+  public void testConvertForm2SparqlCountSingleValueFreetextWithRegeularFreetextSparql() {
+      // Single value test, with simple freetext search
+      testMap.put("dct:title", testString);
+      SearchService searchService = new SearchService("AND");
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true)});
+      myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
+      String results = myService.convertForm2Sparql(testMap);
+      String resultString = myService.convertForm2SparqlCount(testMap);
+      assertEquals("Expected result and actual result not equal",
+		   StringUtils.join("\n", new String[]{
+		       "PREFIX dct: <http://purl.org/dc/terms/>",
+		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+               "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+               "SELECT count( ?resource ) WHERE {",
+		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
+		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
+               "?resource dct:identifier ?lit .\n}"}), resultString);
+  }
+
 
     public void testConvertForm2SparqlNoValueFreetextDeep() {
       // Single value test, with simple freetext search
