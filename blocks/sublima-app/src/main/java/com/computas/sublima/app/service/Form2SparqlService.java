@@ -531,7 +531,10 @@ public class Form2SparqlService {
     StringBuffer ordered = new StringBuffer();
 
     for (String triple : n3List) {
-      if (triple.contains("describedBy")) {
+      if (triple.contains("dct:language")) {
+          ordered.append(triple);
+      } else 
+        if (triple.contains("describedBy")) {
         ordered.append(triple);
       } else {
         ordered.insert(0, triple);
