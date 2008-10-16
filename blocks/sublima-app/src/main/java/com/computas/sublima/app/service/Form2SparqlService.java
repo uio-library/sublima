@@ -321,7 +321,7 @@ public class Form2SparqlService {
     // Using StringBuffer, since regular String can cause performance issues
     // with large datasets
     StringBuffer sparqlQueryBuffer = new StringBuffer();
-    sparqlQueryBuffer.append("SELECT count( ?resource ");
+    sparqlQueryBuffer.append("SELECT count( DISTINCT ?resource ");
     ArrayList n3List = getN3List(parameterMap);
     sparqlQueryBuffer.append(") WHERE {");
     sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));

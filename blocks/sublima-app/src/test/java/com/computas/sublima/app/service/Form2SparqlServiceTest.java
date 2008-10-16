@@ -256,7 +256,7 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-               "SELECT count( ?resource ) WHERE {",
+               "SELECT count( DISTINCT ?resource ) WHERE {",
 		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
 		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
                "?resource dct:identifier ?lit .\n}"}), resultString);
@@ -276,7 +276,7 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-               "SELECT count( ?resource ) WHERE {",
+               "SELECT count( DISTINCT ?resource ) WHERE {",
 		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
 		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
                "?resource dct:identifier ?lit .\n}"}), resultString);
@@ -366,7 +366,7 @@ public class Form2SparqlServiceTest extends TestCase {
     testMap.put("dct:description", new String[]{"A Very Light Jet Aircraft under construction."});
     testMap.put("interface-language", new String[]{"en"}); // this parameter is a magic string
     String resultString = myService.convertForm2SparqlCount(testMap);
-    assertEquals("Expected result and actual result not equal", expectedPrefix + "SELECT count( ?resource ) WHERE {\n?resource dct:title \"\"\"Cirrus Personal Jet\"\"\"@en .\n?resource dct:description \"\"\"A Very Light Jet Aircraft under construction.\"\"\"@en .\n}", resultString);
+    assertEquals("Expected result and actual result not equal", expectedPrefix + "SELECT count( DISTINCT ?resource ) WHERE {\n?resource dct:title \"\"\"Cirrus Personal Jet\"\"\"@en .\n?resource dct:description \"\"\"A Very Light Jet Aircraft under construction.\"\"\"@en .\n}", resultString);
   }
 
 
@@ -423,7 +423,7 @@ public class Form2SparqlServiceTest extends TestCase {
 	  }
 
   public void testConvertForm2SPARQLCountDoubleDual() {
-    String expectS = "SELECT count( ?resource ) WHERE {\n?resource dct:subject ?var2 .\n?var2 rdfs:label \"\"\"Jet\"\"\" .\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n}";
+    String expectS = "SELECT count( DISTINCT ?resource ) WHERE {\n?resource dct:subject ?var2 .\n?var2 rdfs:label \"\"\"Jet\"\"\" .\n?resource dct:publisher ?var1 .\n?var1 foaf:homepage <http://www.cirrusdesign.com/> .\n}";
     testMap.put("dct:subject/rdfs:label", new String[]{"Jet"});
     testMap.put("dct:publisher/foaf:homepage", new String[]{"http://www.cirrusdesign.com/"});
     String actual = myService.convertForm2SparqlCount(testMap);
