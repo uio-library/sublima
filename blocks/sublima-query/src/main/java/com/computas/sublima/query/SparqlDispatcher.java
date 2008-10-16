@@ -1,5 +1,7 @@
 package com.computas.sublima.query;
 
+import com.hp.hpl.jena.query.ResultSet;
+
 public interface SparqlDispatcher {
 	
 	// FIXME In order to increase the peformance, the 
@@ -7,5 +9,7 @@ public interface SparqlDispatcher {
 	Object query(String sparqlQuery);
 
   String getResultsAsJSON(String sparqlQuery);
+
+  ResultSet getResultsAsResultSet(String sparqlQuery);
 
 }

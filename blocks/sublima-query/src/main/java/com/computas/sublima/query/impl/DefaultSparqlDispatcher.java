@@ -60,4 +60,10 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     System.gc();
     return out.toString();
   }
+
+  public ResultSet getResultsAsResultSet(String queryString) {
+    Query query = QueryFactory.create(queryString);
+    QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
+    return qExec.execSelect();
+  }
 }

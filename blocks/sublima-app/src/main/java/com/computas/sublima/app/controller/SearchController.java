@@ -4,6 +4,7 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
@@ -239,6 +240,7 @@ public class SearchController implements StatelessAppleController {
     }
     // sending the result
     String sparqlQuery = null;
+    String countNumberOfHitsQuery = null;
     // Check for magic prefixes
     if (parameterMap.get("prefix") != null) {
       // Calls the Form2SPARQL service with the parameterMap which returns
@@ -248,6 +250,7 @@ public class SearchController implements StatelessAppleController {
       parameterMap.remove("freetext-field"); // The freetext-fields are magic variables too
       parameterMap.remove("res-view"); //  As is this
       sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
+      countNumberOfHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMap);
     } else {
       res.sendStatus(400);
     }
@@ -255,7 +258,8 @@ public class SearchController implements StatelessAppleController {
     logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
 
     Object queryResult;
-    if (doSearch) {
+    if (doSearch && (adminService.countNumberOfExpectedHits(countNumberOfHitsQuery) > Integer.parseInt(SettingsService.getProperty("sublima.search.maxhitsbeforestop"))
+            || adminService.countNumberOfExpectedHits(countNumberOfHitsQuery) == 0)) {
       queryResult = sparqlDispatcher.query(sparqlQuery);
     }
     else {

@@ -9,6 +9,9 @@ import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -751,7 +754,7 @@ public class AdminService {
     logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
-    return queryResult.toString();  
+    return queryResult.toString();
   }
 
   /**
@@ -763,20 +766,43 @@ public class AdminService {
 
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-                        "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
-                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-                        "CONSTRUCT { ?topic a skos:Concept ; rdfs:label ?label . }",
-                        "WHERE {",
-                        "    ?topic a skos:Concept .",
-                        "   {?topic skos:prefLabel ?label .}",
-                        "   UNION {",
-                        "       ?topic skos:altLabel ?label . }",
-                        "}"});
+            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "CONSTRUCT { ?topic a skos:Concept ; rdfs:label ?label . }",
+            "WHERE {",
+            "    ?topic a skos:Concept .",
+            "   {?topic skos:prefLabel ?label .}",
+            "   UNION {",
+            "       ?topic skos:altLabel ?label . }",
+            "}"});
 
 
     logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
+  }
+
+  /**
+   * Method to return an int representing the expected number of hits for the given query
+   *
+   * @param query A query counting the number of hits
+   * @return
+   */
+  public int countNumberOfExpectedHits(String query) {
+    logger.trace("AdminService.countNumberOfExpectedHits() --> SPARQL query sent to dispatcher: \n" + query);
+
+    try {
+      Object queryResult = sparqlDispatcher.query(query);
+      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("/sparql/results/result/binding/literal");
+      NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+      return Integer.valueOf(nodes.item(0).getTextContent());
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return 0;
+    }
   }
 }
