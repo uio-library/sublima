@@ -116,7 +116,7 @@
   <!-- general -->
   <message key="sublima.footer">Et fri programvareprosjekt støttet av
     <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
-    og<a href="http://www.computas.com/">Computas AS</a>, 2008
+    og <a href="http://www.computas.com/">Computas AS</a>, 2008
   </message>
   <message key="language">Språk</message>
   <message key="name">Navn</message>
