@@ -260,7 +260,7 @@ public class SearchController implements StatelessAppleController {
     Object queryResult;
     int numberOfHits = adminService.countNumberOfExpectedHits(countNumberOfHitsQuery);
     if (doSearch && (numberOfHits < Integer.parseInt(SettingsService.getProperty("sublima.search.maxhitsbeforestop"))
-            || numberOfHits != 0)) {
+            && numberOfHits != 0)) {
       queryResult = sparqlDispatcher.query(sparqlQuery);
     }
     else {
