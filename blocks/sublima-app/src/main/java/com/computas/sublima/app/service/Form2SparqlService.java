@@ -294,10 +294,9 @@ public class Form2SparqlService {
 		// Using StringBuffer, since regular String can cause performance issues
 		// with large datasets
 		StringBuffer sparqlQueryBuffer = new StringBuffer();
-		ArrayList n3List = new ArrayList();
 		sparqlQueryBuffer.append("DESCRIBE ");
 
-        coreSparqlWhereClause(parameterMap, sparqlQueryBuffer, n3List);
+        ArrayList n3List =  getN3List(parameterMap);
         // Add the variables to the query
         for (Object element : subjectVarList) {
             sparqlQueryBuffer.append((String) element);
@@ -331,9 +330,8 @@ public class Form2SparqlService {
 		// Using StringBuffer, since regular String can cause performance issues
 		// with large datasets
 		StringBuffer sparqlQueryBuffer = new StringBuffer();
-		ArrayList n3List = new ArrayList();
 		sparqlQueryBuffer.append("SELECT count( ?resource ");
-        coreSparqlWhereClause(parameterMap, sparqlQueryBuffer, n3List);
+        ArrayList n3List = getN3List(parameterMap);
         sparqlQueryBuffer.append(") WHERE {");
         sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
 		sparqlQueryBuffer.append("\n}");
@@ -348,10 +346,9 @@ public class Form2SparqlService {
      * Appends most of the core SPARQL WHERE clause and a bit more to the querybuffer
      *
      * @param parameterMap
-     * @param sparqlQueryBuffer
-     * @param n3List
      */
-    private void coreSparqlWhereClause(Map<String, String[]> parameterMap, StringBuffer sparqlQueryBuffer, ArrayList n3List) {
+    private ArrayList getN3List(Map<String, String[]> parameterMap) {
+        ArrayList n3List = new ArrayList();
         if (parameterMap.get("interface-language") != null) {
             setLanguage(parameterMap.get("interface-language")[0]);
             parameterMap.remove("interface-language");
@@ -396,6 +393,7 @@ addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
             n3List.add(convertFormField2N3(e.getKey(), e.getValue()));
         }
 
+        return n3List;
     }
 
     /**
