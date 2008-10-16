@@ -1,5 +1,6 @@
 package com.computas.sublima.app.service;
 
+import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
@@ -27,6 +28,7 @@ public class IndexService {
 
   private static Logger logger = Logger.getLogger(IndexService.class);
   private DefaultSparulDispatcher sparulDispatcher = new DefaultSparulDispatcher();
+  private DefaultSparqlDispatcher sparqlDispatcher = new DefaultSparqlDispatcher();
   private SearchService searchService = new SearchService();
 
   /**
@@ -200,9 +202,7 @@ public class IndexService {
             "WHERE {",
             "        ?url a <http://xmlns.computas.com/sublima#Resource> }"});
 
-    Query query = QueryFactory.create(queryString);
-    QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
-    ResultSet resultSet = qExec.execSelect();
+    ResultSet resultSet = sparqlDispatcher.getResultsAsResultSet(queryString);
     logger.info("SUBLIMA: getAllExternalResourcesURLs() --> Indexing - Fetched all resource URLs from the model");
     return resultSet;
   }
@@ -360,9 +360,7 @@ public class IndexService {
   }
 
   private ResultSet getFreetextToIndexResultSet(String queryString) {
-    Query query = QueryFactory.create(queryString);
-    QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
-    ResultSet resultSet = qExec.execSelect();
+    ResultSet resultSet = sparqlDispatcher.getResultsAsResultSet(queryString);
 
     logger.info("SUBLIMA: getFreetextToIndexResultSet() --> Indexing - Fetched all literals that we need to index");
     return resultSet;
