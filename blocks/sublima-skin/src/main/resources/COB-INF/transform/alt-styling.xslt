@@ -151,9 +151,9 @@ PVJ: Made the file UTF-8
 	 contains: search panel, topic description panel, resource hits 
 	 ###################################################################### -->       
 	 <div class="col1" style="border:0px dotted red;">
-		<!--
-		<xsl:call-template name="debug"/>
-		-->
+
+		<!-- xsl:call-template name="debug"/ -->
+
 	
 		
 		<!-- A-Z -->
@@ -464,7 +464,7 @@ PVJ: Made the file UTF-8
 		<xsl:if test="c:page/c:mode = 'search-result'">
 		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
 		  <ul>
-		    <xsl:for-each select="c:page/c:result-list/rdf:RDF//skos:Concept">
+		    <xsl:for-each select="c:page/c:navigation/rdf:RDF//skos:Concept">
 		      <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
 		      <li>
 			<a href="{./@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a>
