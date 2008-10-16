@@ -90,7 +90,7 @@
 	      </xsl:choose>
 	    </xsl:with-param>
 	    <xsl:with-param name="uri" select="$uri"/>
-	    <xsl:with-param name="count"  select="count(//dct:subject[@rdf:resource=$uri])+1"/>
+	    <xsl:with-param name="count"  select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])+1"/>
 	    <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
 
 	  </xsl:call-template>
@@ -115,7 +115,7 @@
       <xsl:with-param name="this-field">dct:language</xsl:with-param>
       <xsl:with-param name="this-label" select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
       <xsl:with-param name="uri" select="$uri"/>
-      <xsl:with-param name="count"  select="count(//dct:language[@rdf:resource=$uri])+1"/>
+      <xsl:with-param name="count"  select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:language[@rdf:resource=$uri])+1"/>
       <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
  
     </xsl:call-template>
@@ -129,7 +129,7 @@
       <xsl:with-param name="this-field">dct:audience</xsl:with-param>
       <xsl:with-param name="this-label" select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
       <xsl:with-param name="uri" select="$uri"/>
-      <xsl:with-param name="count" select="count(//dct:audience[@rdf:resource=$uri])+1"/>
+      <xsl:with-param name="count" select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:audience[@rdf:resource=$uri])+1"/>
       <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
     </xsl:call-template>  
   </xsl:template>
