@@ -72,22 +72,7 @@
             <input id="publisher" type="text" name="dct:publisher/foaf:name" size="20"/>
           </td>
         </tr>
-        <tr>
-          <th scope="row">
-            <label for="dateAccepted"><i18n:text key="adv.dateAccepted">Godkjent Dato</i18n:text></label>
-          </th>
-          <td>
-            <input id="dateAccepted" type="text" name="dct:dateAccepted" size="20"/>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">
-            <label for="dateSubmitted"><i18n:text key="adv.dateSubmitted">Innsendt Dato</i18n:text></label>
-          </th>
-          <td>
-            <input id="dateSubmitted" type="text" name="dct:dateSubmitted" size="20"/>
-          </td>
-	</tr>
+
 	<xsl:apply-templates select="/c:page/c:mediatypes/sq:sparql">
 	  <xsl:with-param name="field">dct:format</xsl:with-param>
 	  <xsl:with-param name="label"><i18n:text key="adv.mediaType">Mediatype</i18n:text></xsl:with-param>
@@ -103,13 +88,30 @@
 	  <xsl:with-param name="label"><i18n:text key="adv.audience">Målgruppe</i18n:text></xsl:with-param>
 	</xsl:apply-templates>
 
-	<xsl:apply-templates select="/c:page/c:committers/sq:sparql">
-	  <xsl:with-param name="field">sub:committer</xsl:with-param>
-	  <xsl:with-param name="label"><i18n:text key="adv.approved">Godkjent av</i18n:text></xsl:with-param>
-	</xsl:apply-templates>
-
 	<xsl:choose>
 	  <xsl:when test="/c:page/c:loggedin = 'true'">
+
+	    <tr>
+	      <th scope="row">
+		<label for="dateAccepted"><i18n:text key="adv.dateAccepted">Godkjent Dato</i18n:text></label>
+	      </th>
+	      <td>
+		<input id="dateAccepted" type="text" name="dct:dateAccepted" size="20"/>
+	      </td>
+	    </tr>
+	    <tr>
+	      <th scope="row">
+		<label for="dateSubmitted"><i18n:text key="adv.dateSubmitted">Innsendt Dato</i18n:text></label>
+	      </th>
+	      <td>
+		<input id="dateSubmitted" type="text" name="dct:dateSubmitted" size="20"/>
+	      </td>
+	    </tr>	    
+	    <xsl:apply-templates select="/c:page/c:committers/sq:sparql">
+	      <xsl:with-param name="field">sub:committer</xsl:with-param>
+	      <xsl:with-param name="label"><i18n:text key="adv.approved">Godkjent av</i18n:text></xsl:with-param>
+	    </xsl:apply-templates>
+	    
 	    <xsl:apply-templates select="/c:page/c:statuses/sq:sparql">
 	      <xsl:with-param name="field">wdr:describedBy</xsl:with-param>
 	      <xsl:with-param name="label">Status</xsl:with-param>
