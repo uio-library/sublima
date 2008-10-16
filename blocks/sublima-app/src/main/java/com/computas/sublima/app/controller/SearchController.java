@@ -232,7 +232,7 @@ public class SearchController implements StatelessAppleController {
         // When true, we override the searchstring later in the code
         freetext = true;
         searchStringOverriden = freeTextSearchString(res, req);
-        parameterMap.put("searchstring", new String[]{freeTextSearchString(res, req)});
+        parameterMap.put("searchstring", new String[]{searchStringOverriden});
         parameterMap.remove("booleanoperator");
         parameterMap.remove("sort");
         parameterMap.remove("exactmatch");
@@ -268,9 +268,33 @@ public class SearchController implements StatelessAppleController {
     }
 
 
+    if (searchStringOverriden == null) {
+        searchStringOverriden = req.getCocoonRequest().getParameter("dct:subject/all-labels");
+    }
+
+    if (searchStringOverriden == null) {
+        searchStringOverriden = req.getCocoonRequest().getParameter("dct:subject/skos:prefLabel");
+    }
+
+    Object navigationResults = "<empty></empty>";
+    if (searchStringOverriden != null) {
+        // Now get the matching topics
+        String sparqlTopicsQuery =
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"+
+                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n"+
+                "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"+
+                "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#> \n" +
+                "DESCRIBE ?subject WHERE {\n"+
+                "  ?lit pf:textMatch \"\"\"" + searchStringOverriden + "\"\"\" . " +
+                "  ?subject skos:prefLabel ?lit .\n" +
+                "\n}\n";
+        
+        logger.trace("doAdvanced: SPARQL query to get topics sent to dispatcher:\n" + sparqlTopicsQuery);
+        navigationResults = sparqlDispatcher.query(sparqlTopicsQuery);
+    }
 
     bizData.put("result-list", queryResult);
-    bizData.put("navigation", "<empty></empty>");
+    bizData.put("navigation", navigationResults);
     bizData.put("mode", mode);
 
     bizData.put("searchparams", xmlSearchParametersBuffer.toString());
