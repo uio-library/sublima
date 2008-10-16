@@ -23,6 +23,9 @@ import java.util.*;
  * This class has become rather complex, as it has to account for a very high number of
  * different situations
  *
+ * It is important to note that the list of WHERE clause statements is built only once.
+ * This means that if the query changes, one will have to create a new instance of this class.
+ *
  * @author kkj
  * @version 1.0
  * @param: prefixes * string array with prefixes for names used.
