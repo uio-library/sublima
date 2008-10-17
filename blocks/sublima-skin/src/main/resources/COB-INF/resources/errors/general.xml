@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<c:page xmlns="http://www.w3.org/1999/xhtml"
+<c:page xmlns="http://www.w3.org/1999/xhtml" xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:c="http://xmlns.computas.com/cocoon" type="errorpage">
   <c:content>
     <c:messages>
       <c:messages>
-	<c:message>Something went wrong.</c:message>
+	<c:message><i18n:text key="error.generic.message">Something went wrong.</i18n:text></c:message>
       </c:messages>
     </c:messages>
   </c:content>
