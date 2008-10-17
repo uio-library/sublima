@@ -73,6 +73,7 @@ PVJ: Made the file UTF-8
   </xsl:param>
   
 
+  
   <xsl:param name="numberofhits" select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
 
   <xsl:param name="res-view">
@@ -257,9 +258,12 @@ PVJ: Made the file UTF-8
          Number of hits 
             precondition:
              page is topic, or search-result
+             and
+             
         -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-		  <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>
+
+      <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>
 		</xsl:if>
 		
 			
@@ -322,7 +326,7 @@ PVJ: Made the file UTF-8
 		<div name="panel-zero-hits" style="1px solid brown;">
 		<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
 		
-		  <xsl:if test="$numberofhits &lt; 1">
+		  <xsl:if test="$numberofhits &lt; 1 and not(c:page/c:navigation/rdf:RDF//skos:Concept)">
 		      <br/>
 		              <!-- Generer et google søk -->     
 		              <a>
@@ -333,7 +337,7 @@ PVJ: Made the file UTF-8
 		                      <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/>
 		                      <xsl:text>&amp;btnG=Google-søk</xsl:text>
                           </xsl:attribute>
-		                  <i18n:text key="search.for">Søk etter</i18n:text><xsl:text> '</xsl:text> 
+		                  <i18n:text key="search.for">Søk etter</i18n:text><xsl:text> '</xsl:text>
 		                  <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/> 
 		                  <xsl:text>' </xsl:text> 
 		                  <i18n:text key="in.google">i Google</i18n:text>
@@ -352,16 +356,28 @@ PVJ: Made the file UTF-8
 		   page-mode is topic or search-results
 		   hits is more than 0
 		-->		
-	  <div name="panel-results" style="border:0px solid orange;">	
+	  <div id="panel-results" style="border:0px solid orange;">	
 	   <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-	    <xsl:if test="$numberofhits &gt; 0">	
-	
-	     <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
-		  
+	    <xsl:if test="$numberofhits &gt; 0">
 
-		
-		  <xsl:choose>	  
-    		 <xsl:when test="$res-view='full'">
+        <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about">
+          <div id="topicdescription">
+            <h3><i18n:text key="topic.heading">Emne</i18n:text></h3>
+            <dl>
+              <dt>
+                <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+              </dt>
+              <dd>
+                <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:definition"/>
+              </dd>
+            </dl>
+          </div>
+        </xsl:if>
+
+       <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
+		  
+		  <xsl:choose>
+         <xsl:when test="$res-view='full'">
     		 
     		  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results-full">
 		          <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
@@ -385,10 +401,20 @@ PVJ: Made the file UTF-8
 		</xsl:if>
 		<xsl:text> </xsl:text> <!-- avoid empty results --> 
 		</div><!-- panel-results-->
-		
-		
-		
-        
+
+     <!--
+        If there are 0 hits in resources, but we have hits in the topics
+     -->
+    <xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept">
+      <h3><i18n:text key="topics.heading">Emner</i18n:text></h3>
+        <xsl:for-each select="c:page/c:navigation/rdf:RDF//skos:Concept">
+		      <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
+			      <a href="{./@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a><br/>
+            <xsl:value-of select="./skos:definition"/><br/>
+            <br/>
+        </xsl:for-each>
+    </xsl:if>
+
 	  </div>
 	  <!-- Column 1 end -->  
 	      
