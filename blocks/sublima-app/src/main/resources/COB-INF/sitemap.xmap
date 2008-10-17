@@ -45,6 +45,12 @@
       </map:serializer>
     </map:serializers>
 
+    <map:selectors>
+      <map:selector name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
+	<map:exception name="processing" class="java.lang.Exception"/>
+      </map:selector>
+    </map:selectors>
+
   </map:components>
 
   <map:pipelines>
@@ -390,6 +396,17 @@
       <map:match pattern="**/*.js">
         <map:read src="servlet:skin:/resources/styles/{2}.js" mime-type="text/javascript"/>
       </map:match>
+
+      <map:handle-errors>
+	<map:generate src="servlet:skin:/resources/errors/general.xml"/>
+	<map:serialize type="servletService">
+          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+	</map:serialize>
+	
+        <map:serialize type="html"/>
+
+      </map:handle-errors>
+      
 
     </map:pipeline>
 
