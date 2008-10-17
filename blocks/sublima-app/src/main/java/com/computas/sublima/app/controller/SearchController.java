@@ -82,9 +82,9 @@ public class SearchController implements StatelessAppleController {
                     "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
             "WHERE {",
             "        ?resource dct:language ?lang;",
-            "        wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
             "				 dct:publisher ?publisher ;",
             "                dct:subject " + subject + ", ?subjects ;",
+            "        wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
             "                ?p ?rest .}"});
 
     logger.trace("doGetTopic: SPARQL query sent to dispatcher: " + queryString);
