@@ -13,6 +13,10 @@
     <property name="appMan" ref="org.apache.cocoon.auth.ApplicationManager"/>
   </bean>
 
+  <bean name="com.computas.sublima.app.controller.RedirectController"
+        class="com.computas.sublima.app.controller.RedirectController"/>
+
+
   <bean name="com.computas.sublima.app.controller.admin.FeedbackController"
         class="com.computas.sublima.app.controller.admin.FeedbackController">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>

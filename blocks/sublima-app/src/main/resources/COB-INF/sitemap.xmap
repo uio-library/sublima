@@ -355,8 +355,7 @@
       </map:match>
 
       <map:match pattern="topic/*">
-        <map:redirect-to uri="{request:contextPath}/sparql?query=DESCRIBE"/>
-        <map:serialize status-code="303"/>
+	<map:call function="com.computas.sublima.app.controller.RedirectController"/>
       </map:match>
 
 

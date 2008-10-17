@@ -3,6 +3,7 @@ package com.computas.sublima.app.controller;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
+import org.apache.cocoon.environment.Request;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 
 
@@ -15,9 +16,12 @@ import static com.computas.sublima.query.service.SettingsService.getProperty;
 public class RedirectController implements StatelessAppleController {
 
      public void process(AppleRequest req, AppleResponse res) throws Exception {
+         Request r = req.getCocoonRequest();
          String uri = getProperty("sublima.base.url") + "sparql?query=" +
-                 "DESCRIBE <" + req.getCocoonRequest().getRequestURI() + ">";
-         
+                 "DESCRIBE <" + r.getScheme() + "://" + r.getServerName() + ":"
+                 + r.getServerPort() + r.getRequestURI() + ">";
+         res.getCocoonResponse().addHeader("Location", uri);
+         res.sendStatus(303);
      }
 
 }
