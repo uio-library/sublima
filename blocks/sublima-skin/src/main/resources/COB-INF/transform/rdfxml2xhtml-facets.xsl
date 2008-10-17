@@ -68,13 +68,23 @@
 
     <div class="facet">    
    
-   <!-- sorted by preffered label -->
+   <!-- sorted by preferred label -->
     <i18n:text key="topic">Emne</i18n:text> 
     <xsl:if test="sub:Resource/dct:subject">
       <ul>
 	<xsl:for-each select="/c:page/c:result-list/rdf:RDF//skos:Concept">
 	  <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
 	  <xsl:variable name="uri" select="./@rdf:about"/>
+	  <xsl:variable name="count">
+	    <xsl:choose>
+	      <xsl:when test="/c:page/c:result-list/rdf:RDF/skos:Concept[@rdf:about=$uri]">
+		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])+1"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
 
 	  <xsl:call-template name="facet-field">
 	    <xsl:with-param name="max-facets-more">4</xsl:with-param>
@@ -90,7 +100,7 @@
 	      </xsl:choose>
 	    </xsl:with-param>
 	    <xsl:with-param name="uri" select="$uri"/>
-	    <xsl:with-param name="count"  select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])+1"/>
+	    <xsl:with-param name="count"  select="$count"/>
 	    <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
 
 	  </xsl:call-template>
