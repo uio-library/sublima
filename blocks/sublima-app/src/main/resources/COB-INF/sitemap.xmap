@@ -403,7 +403,7 @@
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
 	</map:serialize>
 	
-        <map:serialize type="html"/>
+        <map:serialize type="html"  status-code="500"/>
 
       </map:handle-errors>
       
