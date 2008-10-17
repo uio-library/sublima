@@ -286,6 +286,8 @@
   <message key="user.norole">En rolle må være valgt.</message>
   <message key="user.name.blank">Navn kan ikke være blank.</message>
   <message key="validation.resource.notitle">Ressursen mangler tittel.</message>
+  <message key="topics.heading">Topics</message>
+  <message key="topic.heading">Topic</message>
 
 
 </catalogue>
