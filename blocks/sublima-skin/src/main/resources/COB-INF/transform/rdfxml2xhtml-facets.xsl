@@ -63,7 +63,33 @@
      </div>
    </xsl:if>
    
-   
+   <!-- Getting the right counts for the facets turned out to be
+        somewhat tricky.  Three situations can occur: 
+	
+	1) The dct:subject element has the skos:Concept as child
+	element.  
+
+        2) The dct:subject element only has an rdf:resource attribute
+        that reference the skos:Concept which is a child element of a
+        dct:subject.
+
+        3) The skos:Concept is a child element of rdf:RDF element.
+
+        Furthermore, we assume that each skos:Concept only occur once
+        in the c:result-list.
+
+        If point 3) was absent, counting would be easy, just count the
+        number of dct:subject as in point 2) and add one, since all
+        but one dct:subject would reference a skos:Concept.
+
+        Point 3) violates this assumption, so the count has to check
+        if the skos:Concept is a direct child of rdf:RDF.
+
+        As far as we can see, this assumption is only violated for
+        skos:Concept, the simple count works for the other facets. If
+        other facets are seen with wrong counts, this is a point that
+        should be investigated.
+   -->
    
 
     <div class="facet">    
