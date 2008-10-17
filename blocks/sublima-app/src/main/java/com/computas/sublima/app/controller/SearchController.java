@@ -104,7 +104,8 @@ public class SearchController implements StatelessAppleController {
          subject + "\n" +
         "   a skos:Concept ;\n"+
         "   skos:prefLabel ?preflabel ; \n"+
-        "   skos:altLabel ?altlabel ;  \n"+     
+        "   skos:altLabel ?altlabel ;  \n"+
+        "   skos:definition ?definition ; \n" +
         "   ?semrelation ?object . \n"+
         "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n"+
         "   rdfs:label ?semrellabel ;\n"+
@@ -119,6 +120,10 @@ public class SearchController implements StatelessAppleController {
          "OPTIONAL {\n"+
          subject + "\n" + 
          "   skos:altLabel ?altlabel .\n" +
+         "}\n"+
+         "OPTIONAL {\n"+
+         subject + "\n" +
+         "   skos:definition ?definition ;\n" +
          "}\n"+
          "OPTIONAL {\n" +
          subject + "\n" + 
