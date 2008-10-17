@@ -282,7 +282,7 @@ public class SearchController implements StatelessAppleController {
     }
 
     Object navigationResults = "<empty></empty>";
-    if (searchStringOverriden != null) {
+    if (searchStringOverriden != null && searchStringOverriden.length() > 0) {
         // Now get the matching topics
         String sparqlTopicsQuery =
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"+
