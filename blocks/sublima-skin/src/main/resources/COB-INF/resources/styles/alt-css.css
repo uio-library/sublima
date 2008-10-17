@@ -258,8 +258,6 @@ p.validationmessage {
   
 }
 
-
-
 .facet ul  {
     padding-left:1em;
 }
@@ -274,6 +272,10 @@ p.validationmessage {
 
 .resources dd {
   padding-bottom: .2em;
+}
+
+#topicdescription {
+  background:#F7F7F7;
 }
 
 
