@@ -281,7 +281,7 @@
   <message key="validation.resource.notitle">Ressursen mangler tittel.</message>
   <message key="topics.heading">Emner</message>
   <message key="topic.heading">Emne</message>
-
   <message key="error.generic.message">En feil oppsto. Årsaken er høyst sannsynlig tegn i søket som ikke kunne håndteres.</message>
+  <message key="intopics"> i emner</message>
 
 </catalogue>
