@@ -255,7 +255,8 @@ public class SearchController implements StatelessAppleController {
       parameterMap.remove("freetext-field"); // The freetext-fields are magic variables too
       parameterMap.remove("res-view"); //  As is this
       sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
-      countNumberOfHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMap);
+      countNumberOfHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMap,
+              Integer.parseInt(SettingsService.getProperty("sublima.search.maxhitsbeforestop")));
     } else {
       res.sendStatus(400);
     }
@@ -263,9 +264,8 @@ public class SearchController implements StatelessAppleController {
     logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
 
     Object queryResult;
-    int numberOfHits = adminService.countNumberOfExpectedHits(countNumberOfHitsQuery);
-    if (doSearch && (numberOfHits < Integer.parseInt(SettingsService.getProperty("sublima.search.maxhitsbeforestop"))
-            && numberOfHits != 0)) {
+    boolean numberOfHitsOK = adminService.countNumberOfExpectedHits(countNumberOfHitsQuery);
+    if (doSearch && numberOfHitsOK) {
       queryResult = sparqlDispatcher.query(sparqlQuery);
     }
     else {

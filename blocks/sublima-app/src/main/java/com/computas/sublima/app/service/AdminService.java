@@ -330,7 +330,7 @@ public class AdminService {
             "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}",
             "ORDER BY ?label",
-            "LIMIT 50"});
+            "LIMIT 20"});
 
     logger.trace("AdminService.getTopicByPartialName() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
@@ -351,7 +351,7 @@ public class AdminService {
             "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}",
             "ORDER BY ?label",
-            "LIMIT 50"});
+            "LIMIT 20"});
 
     logger.trace("AdminService.getPublisherByPartialNameAsJSON() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
@@ -781,21 +781,30 @@ public class AdminService {
   }
 
   /**
-   * Method to return a boolean true if the number of hits exceeds the configured max number of hits
+   * Method to return a boolean if the expected number of hits for the given query exceeds a threshold
    *
    * @param query A query counting the number of hits
-   * @return
+   * @return boolean if above the given treshold.
    */
-  public boolean isAboveMaxNumberOfHits(String query) {
-    logger.trace("AdminService.isAboveMaxNumberOfHits() --> SPARQL query sent to dispatcher: \n" + query);
+  public boolean countNumberOfExpectedHits(String query) {
+    logger.trace("AdminService.countNumberOfExpectedHits() --> SPARQL query sent to dispatcher: \n" + query);
 
     try {
-      return sparqlDispatcher.query(query).toString().contains("uri");
-
+      Object queryResult = sparqlDispatcher.query(query);
+      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("/sparql/results/result/binding/uri");
+      NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+      if (nodes.item(0).getTextContent() != null) {
+          logger.debug("AdminService.countNumberOfExpectedHits() --> Query returned too many hits.");
+          return false;
+      } else {
+          return true;
+      }
     } catch (Exception e) {
-      logger.warn("AdminService.isAboveMaxNumberOfHits() returned an error: " + e.getMessage() + "\n returning TRUE");
+      logger.warn("AdminService.countNumberOfExpectedHits() returned an error: " + e.getMessage());
       e.printStackTrace();
-      return true;
+      return false;
     }
   }
 }
