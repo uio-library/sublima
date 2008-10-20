@@ -35,6 +35,7 @@ public class SettingsService {
 
     if (model == null) {
       model = ModelRDB.open(myDbService.getConnection());
+      myDbService.closeConnection();
     }
     return model;
   }

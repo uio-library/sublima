@@ -21,6 +21,9 @@ public class DatabaseService {
   private String M_DB = "PostgreSQL";//SettingsService.getProperty("sublima.database.databasetype");
   private String M_DBDRIVER_CLASS = "org.postgresql.Driver";//SettingsService.getProperty("sublima.database.class");
 
+  private IDBConnection connection = null;
+  private Connection jConnection = null;
+
   public IDBConnection getConnection() {
 
     try {
@@ -29,9 +32,17 @@ public class DatabaseService {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    IDBConnection connection = new DBConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD, M_DB);
+    connection = new DBConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD, M_DB);
 
     return connection;
+  }
+
+  public void closeConnection() {
+    try {
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    }
   }
 
   public Connection getJavaSQLConnection() {
@@ -41,26 +52,33 @@ public class DatabaseService {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    Connection connection = null;
+
     try {
-      connection = DriverManager.getConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD);
+      jConnection = DriverManager.getConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD);
     } catch (SQLException e) {
       e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
     }
 
-    return connection;
+    return jConnection;
+  }
+
+  public void closeJavaSQLConnection() {
+    try {
+      jConnection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    }
   }
 
   public int doSQLUpdate(String sql) throws SQLException {
     Statement stmt;
     int rows;
-    Connection con = getJavaSQLConnection();
 
-    stmt = con.createStatement();
+    stmt = getJavaSQLConnection().createStatement();
     rows = stmt.executeUpdate(sql);
-    con.commit();
+    jConnection.commit();
     stmt.close();
-    con.close();
+    closeJavaSQLConnection();
 
     return rows;
   }
@@ -76,11 +94,11 @@ public class DatabaseService {
   public Statement doSQLQuery(String sql) throws SQLException {
     Statement stmt;
     ResultSet rs;
-    Connection con = getJavaSQLConnection();
 
-    stmt = con.createStatement();
+
+    stmt = getJavaSQLConnection().createStatement();
     rs = stmt.executeQuery(sql);
-    con.close();
+    closeJavaSQLConnection();
 
     return stmt;
   }
@@ -102,11 +120,4 @@ public class DatabaseService {
       e.printStackTrace(System.err);
     }
   }
-  
-  
-  
-  
-  
-  
-  
 }
