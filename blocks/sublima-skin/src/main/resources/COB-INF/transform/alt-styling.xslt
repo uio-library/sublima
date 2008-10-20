@@ -75,6 +75,7 @@ PVJ: Made the file UTF-8
 
   
   <xsl:param name="numberofhits" select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
+  <xsl:param name="numberoftopics" select="count(c:page/c:navigation/rdf:RDF//skos:Concept)"/>
 
   <xsl:param name="res-view">
     <xsl:if test="/c:page/c:facets/c:request/c:param[@key='res-view'] !=''">
@@ -258,13 +259,18 @@ PVJ: Made the file UTF-8
          Number of hits 
             precondition:
              page is topic, or search-result
-             and
              
         -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-
-      <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>
-		</xsl:if>
+          <xsl:choose>
+            <xsl:when test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept">
+              <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberoftopics"/> <i18n:text key="intopics">i emner</i18n:text><br/>              
+            </xsl:when>
+            <xsl:otherwise>
+              <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>  
+            </xsl:otherwise>
+          </xsl:choose>
+    </xsl:if>
 		
 			
 		
