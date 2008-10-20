@@ -786,23 +786,14 @@ public class AdminService {
    * @param query A query counting the number of hits
    * @return boolean if above the given treshold.
    */
-  public boolean countNumberOfExpectedHits(String query) {
-    logger.trace("AdminService.countNumberOfExpectedHits() --> SPARQL query sent to dispatcher: \n" + query);
+  public boolean isAboveMaxNumberOfHits(String query) {
+    logger.trace("AdminService.isAboveMaxNumberOfHits() --> SPARQL query sent to dispatcher: \n" + query);
 
     try {
-      Object queryResult = sparqlDispatcher.query(query);
-      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("/sparql/results/result/binding/uri");
-      NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-      if (nodes.item(0).getTextContent() != null) {
-          logger.debug("AdminService.countNumberOfExpectedHits() --> Query returned too many hits.");
-          return false;
-      } else {
-          return true;
-      }
+      return sparqlDispatcher.query(query).toString().contains("<uri>");
+
     } catch (Exception e) {
-      logger.warn("AdminService.countNumberOfExpectedHits() returned an error: " + e.getMessage());
+      logger.warn("AdminService.isAboveMaxNumberOfHits() returned an error: " + e.getMessage());
       e.printStackTrace();
       return false;
     }

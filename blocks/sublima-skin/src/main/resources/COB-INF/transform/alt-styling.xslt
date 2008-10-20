@@ -366,7 +366,7 @@ PVJ: Made the file UTF-8
 	   <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
 	    <xsl:if test="$numberofhits &gt; 0">
 
-        <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about">
+        <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about and c:page/c:mode = 'topic'">
           <div id="topicdescription">
             <h3><i18n:text key="topic.heading">Emne</i18n:text></h3>
             <dl>
