@@ -36,7 +36,7 @@ public class RDFObject implements Serializable {
 	/**
 	 * Constructor where a variable with an index number can be returned.
 	 * 
-	 * @param value
+	 * @param index
 	 *            The value of the object.
 	 */
 	public RDFObject(Integer index) {

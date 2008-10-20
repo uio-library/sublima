@@ -2,6 +2,7 @@ package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.RDFObject;
 import com.computas.sublima.query.service.SearchService;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -533,6 +534,13 @@ public class Form2SparqlService {
     StringBuffer ordered = new StringBuffer();
 
     for (String triple : n3List) {
+      if (triple.contains("pf:textMatch") && ! triple.contains("OPTIONAL") && ! triple.contains("?lit ")) {
+         // In this case, it isn't actually a triple, and the freetext thing needs to go first
+          List<String> tmplist = Arrays.asList(triple.split("\n"));
+          Collections.reverse(tmplist);
+          ordered.insert(0, StringUtils.join("\n", tmplist));
+          ordered.insert(0, "\n");
+      } else
       if (triple.contains("dct:language")) {
           ordered.append(triple);
       } else 
