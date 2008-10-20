@@ -305,18 +305,20 @@ public class Form2SparqlService {
 
 
   /**
-   * Returns a SPARQL count query based on a key-value Map. See above
-   * for an explanation of the structure of each key-value. In addition to the
-   * above described key-value-pairs, it may have a key
+   * Returns a SPARQL query which can be used to determine if there is a certain number of hits to a query.
+   * More concretely, the query will return the URI of the cutoff-ths resource.
+   * This is based on a key-value Map. See above for an explanation of the structure of each
+   * key-value. In addition to the above described key-value-pairs, it may have a key
    * <tt>interface-language</tt> that holds the language of any literal.
    * <p/>
    * When running this query, one will get the number of resources that would be
    * returned using this WHERE clause.
    *
    * @param parameterMap The data structure with the key-value-pairs.
+   * @cutoff int the number of hits
    * @return A SPARQL count query.
    */
-  public String convertForm2SparqlCount(Map<String, String[]> parameterMap) {
+  public String convertForm2SparqlCount(Map<String, String[]> parameterMap, int cutoff) {
 
     // Using StringBuffer, since regular String can cause performance issues
     // with large datasets
@@ -325,7 +327,7 @@ public class Form2SparqlService {
     ArrayList n3List = getN3List(parameterMap);
     sparqlQueryBuffer.append("WHERE {");
     sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
-    sparqlQueryBuffer.append("\n}\nOFFSET 99 LIMIT 1");
+    sparqlQueryBuffer.append("\n}\nOFFSET " + (cutoff - 1) + " LIMIT 1");
     sparqlQueryBuffer.insert(0, getPrefixString());
     String returnString = sparqlQueryBuffer.toString();
     System.out.println(returnString);
