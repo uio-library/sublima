@@ -325,8 +325,15 @@ public class Form2SparqlService {
     // with large datasets
     StringBuffer sparqlQueryBuffer = new StringBuffer();
     sparqlQueryBuffer.append("SELECT DISTINCT ?resource ");
-    ArrayList n3List = getN3List(parameterMap);
+    ArrayList<String> n3Listtmp = getN3List(parameterMap);
+    ArrayList<String> n3List = new ArrayList();
     sparqlQueryBuffer.append("WHERE {");
+    for (String triple : n3Listtmp) {
+        // This is a hack to optimize the count a bit by leaving out the check for approved resources.
+        if (! triple.contains("status/godkjent_av_administrator")) {
+            n3List.add(triple);
+        }
+    }
     sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
     sparqlQueryBuffer.append("\n}\nOFFSET " + (cutoff - 1) + " LIMIT 1");
     sparqlQueryBuffer.insert(0, getPrefixString());
