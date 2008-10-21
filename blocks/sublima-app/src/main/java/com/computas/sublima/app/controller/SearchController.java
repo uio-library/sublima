@@ -289,7 +289,7 @@ public class SearchController implements StatelessAppleController {
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
                 "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#> \n" +
                 "DESCRIBE ?subject WHERE {\n"+
-                "  ?lit pf:textMatch \"\"\"" + searchStringOverriden.replace("AND", "OR") + "\"\"\" . " +
+                "  ?lit pf:textMatch \"\"\"" + searchStringOverriden + "\"\"\" . " +
                 "  ?subject skos:prefLabel ?lit .\n" +
                 "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +                        
                 "\n}\n";
