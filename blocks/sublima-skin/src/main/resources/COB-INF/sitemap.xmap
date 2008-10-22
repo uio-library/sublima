@@ -45,6 +45,12 @@
           <map:serialize type="xml" mime-type="application/rss+xml;charset=UTF-8"/>
         </map:act>
       </map:match>
+  
+      <map:match pattern="rdfxml2sru-transform">
+	<map:generate src="service-consumer:"/>
+	<map:transform src="transform/rdfxml2sru.xsl"/>
+	<map:serialize type="xml"/>
+      </map:match>
 
       <map:match pattern="admin-styling">
         <map:act type="locale">
