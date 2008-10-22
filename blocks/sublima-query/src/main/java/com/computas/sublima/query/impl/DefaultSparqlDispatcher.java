@@ -33,6 +33,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     HttpURLConnection con = null;
     try {
       String url = SettingsService.getProperty("sublima.joseki.endpoint");
+      logger.info("SPARQLdispatcher executing.\n" + query + "\n");
 
       URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
       logger.debug("SPARQLdispatcher connected to Joseki.");
@@ -52,6 +53,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 
   public String getResultsAsJSON(String queryString) {
 
+    logger.info("SPARQLdispatcher executing.\n" + queryString + "\n");
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
     ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -62,6 +64,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
   }
 
   public ResultSet getResultsAsResultSet(String queryString) {
+    logger.info("SPARQLdispatcher executing.\n" + queryString + "\n");
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
     return qExec.execSelect();

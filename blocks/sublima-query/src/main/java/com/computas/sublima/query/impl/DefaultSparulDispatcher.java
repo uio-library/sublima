@@ -25,11 +25,13 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
 
     try {
       //Try to execute the updateQuery (SPARQL/Update)
+      logger.info("SPARULdispatcher executing.\n" + query + "\n");
       UpdateRequest updateRequest = UpdateFactory.create(query);
       updateRequest.exec(graphStore);
       LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
     } catch (ARQNotImplemented e) {
       logger.warn("DefaultSparulDispatcher.query --> ARQNotImplemented exception. Returning TRUE and flagging reindexing.");
+      logger.info("SPARULdispatcher executing again because of exception.\n" + query + "\n");
       UpdateRequest updateRequest = UpdateFactory.create(query);
 
       updateRequest.exec(graphStore);

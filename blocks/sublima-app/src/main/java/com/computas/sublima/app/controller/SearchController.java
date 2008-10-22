@@ -87,7 +87,7 @@ public class SearchController implements StatelessAppleController {
             "        wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
             "                ?p ?rest .}"});
 
-    logger.trace("doGetTopic: SPARQL query sent to dispatcher: " + queryString);
+    //logger.trace("doGetTopic: SPARQL query sent to dispatcher: " + queryString);
     Object queryResult = sparqlDispatcher.query(queryString);
 
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -139,7 +139,7 @@ public class SearchController implements StatelessAppleController {
 
 
 
-    logger.trace("doGetTopic: SPARQL CONSTRUCT query sent to dispatcher:\n" + sparqlConstructQuery);
+    //logger.trace("doGetTopic: SPARQL CONSTRUCT query sent to dispatcher:\n" + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);
 
     bizData.put("navigation", queryResult);
@@ -260,7 +260,7 @@ public class SearchController implements StatelessAppleController {
       res.sendStatus(400);
     }
 
-    logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
+    //logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
 
     Object queryResult;
     if (doSearch && (!adminService.isAboveMaxNumberOfHits(countNumberOfHitsQuery))) {
@@ -294,7 +294,7 @@ public class SearchController implements StatelessAppleController {
                 "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +                        
                 "\n}\n";
         
-        logger.trace("doAdvanced: SPARQL query to get topics sent to dispatcher:\n" + sparqlTopicsQuery);
+        //logger.trace("doAdvanced: SPARQL query to get topics sent to dispatcher:\n" + sparqlTopicsQuery);
         navigationResults = sparqlDispatcher.query(sparqlTopicsQuery);
     }
 
