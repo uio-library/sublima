@@ -64,7 +64,7 @@
    </xsl:if>
    
    <!-- Getting the right counts for the facets turned out to be
-        somewhat tricky.  Three situations can occur: 
+        somewhat tricky.  Four situations can occur: 
 	
 	1) The dct:subject element has the skos:Concept as child
 	element.  
@@ -75,15 +75,19 @@
 
         3) The skos:Concept is a child element of rdf:RDF element.
 
+        4) The skos:Concept is a child element of a skos:broader or
+        skos:narrower, at some level
+
         Furthermore, we assume that each skos:Concept only occur once
         in the c:result-list.
 
-        If point 3) was absent, counting would be easy, just count the
-        number of dct:subject as in point 2) and add one, since all
-        but one dct:subject would reference a skos:Concept.
+        If point 3) and 4) was absent, counting would be easy, just
+        count the number of dct:subject as in point 2) and add one,
+        since all but one dct:subject would reference a skos:Concept.
 
-        Point 3) violates this assumption, so the count has to check
-        if the skos:Concept is a direct child of rdf:RDF.
+        Point 3) and 4) violates this assumption, so the count has to
+        check if the skos:Concept is a direct child of rdf:RDF and if
+        it is a child element of some skos:narrower or skos:broader.
 
         As far as we can see, this assumption is only violated for
         skos:Concept, the simple count works for the other facets. If
