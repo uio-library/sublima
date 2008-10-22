@@ -106,6 +106,14 @@
 	      <xsl:when test="/c:page/c:result-list/rdf:RDF/skos:Concept[@rdf:about=$uri]">
 		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
 	      </xsl:when>
+	      <xsl:when
+test="/c:page/c:result-list/rdf:RDF/skos:Concept/skos:broader//skos:Concept[@rdf:about=$uri]">
+		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
+	      </xsl:when>
+	      <xsl:when
+test="/c:page/c:result-list/rdf:RDF/skos:Concept/skos:narrower//skos:Concept[@rdf:about=$uri]">
+		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
+	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])+1"/>
 	      </xsl:otherwise>
