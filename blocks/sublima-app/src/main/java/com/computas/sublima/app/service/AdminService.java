@@ -5,6 +5,7 @@ import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
+import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -330,7 +331,7 @@ public class AdminService {
             "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}",
             "ORDER BY ?label",
-            "LIMIT 20"});
+            "LIMIT " + SettingsService.getProperty("sublima.autocompletion.size") });
 
     logger.trace("AdminService.getTopicByPartialName() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
@@ -351,7 +352,7 @@ public class AdminService {
             "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}",
             "ORDER BY ?label",
-            "LIMIT 20"});
+            "LIMIT " + SettingsService.getProperty("sublima.autocompletion.size") });
 
     logger.trace("AdminService.getPublisherByPartialNameAsJSON() --> SPARQL query sent to dispatcher: \n" + queryString);
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
