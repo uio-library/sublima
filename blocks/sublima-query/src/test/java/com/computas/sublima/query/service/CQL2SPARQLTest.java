@@ -27,10 +27,10 @@ public class CQL2SPARQLTest extends TestCase {
 
     public void setUp() throws Exception {
         expectedPrefix = "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
-                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                 "DESCRIBE ?resource ?rest WHERE {\n" +
                 "?lit pf:textMatch '";
-        expectedSuffix = "' .\n?resource sub:literals ?lit .\n" +
+        expectedSuffix = "' .\n?resource dct:identifier ?lit .\n" +
                 "?resource ?p ?rest .\n" +
                 "}";
         super.setUp();
@@ -51,11 +51,11 @@ public class CQL2SPARQLTest extends TestCase {
 
     public void testTermThreeWords() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
          CQL2SPARQL translator = new CQL2SPARQL("\"vondt i magen\"");
-         assertEquals("Query not as expected:", expectedPrefix + "vondt* AND i* AND magen*" + expectedSuffix, translator.Level0());
+         assertEquals("Query not as expected:", expectedPrefix + "vondt* AND i AND magen*" + expectedSuffix, translator.Level0());
      }
     public void testTermThreeWordsQuoted() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
           CQL2SPARQL translator = new CQL2SPARQL("\"vondt \\\"i magen\\\"\"");
-          assertEquals("Query not as expected:", expectedPrefix + "vondt* AND \"i magen\"" + expectedSuffix, translator.Level0());
+          assertEquals("Query not as expected:", expectedPrefix + "vondt* AND \"i magen\" " + expectedSuffix, translator.Level0());
       }
 
      public void testLevel0IndexAndTerm() throws CQLParseException, IOException {
