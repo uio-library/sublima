@@ -53,6 +53,8 @@ public class SRUServer implements StatelessAppleController {
         errorcode = 7;
         errordetail = "version";
         errormsg = e.getMessage();
+        logger.warn("CQL2SPARQL threw NullPointerException: \n" + e.getMessage());
+
       }
       if (req.getCocoonRequest().getParameter("recordSchema") != null) {
         errorcode = 66;
@@ -76,7 +78,7 @@ public class SRUServer implements StatelessAppleController {
         errorcode = 1;
         errordetail = e.getMessage();
         errormsg = e.getMessage();
-        logger.warn("CQL2SPARQL threw IOException: " + e.getMessage());
+        logger.warn("CQL2SPARQL threw IOException: \n" + e.getStackTrace().toString());
       }
       catch (CQLParseException e) {
         errorcode = 10;
