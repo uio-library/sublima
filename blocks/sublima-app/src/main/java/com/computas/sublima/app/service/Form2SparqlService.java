@@ -299,8 +299,8 @@ public class Form2SparqlService {
     sparqlQueryBuffer.append("\n}");
     sparqlQueryBuffer.insert(0, getPrefixString());
     String returnString = sparqlQueryBuffer.toString();
-    System.out.println(returnString);
-    logger.trace("Constructed SPARQL query: \n" + returnString);
+    //System.out.println(returnString);
+    //logger.trace("Constructed SPARQL query: \n" + returnString);
     return returnString;
   }
 
@@ -339,7 +339,7 @@ public class Form2SparqlService {
     sparqlQueryBuffer.insert(0, getPrefixString());
     String returnString = sparqlQueryBuffer.toString();
     System.out.println(returnString);
-    logger.trace("Constructed SPARQL query: \n" + returnString);
+    //logger.trace("Constructed SPARQL query: \n" + returnString);
     return returnString;
   }
 
@@ -509,7 +509,7 @@ public class Form2SparqlService {
     sparqlQueryBuffer.append("}\n");
 
     String returnString = sparqlQueryBuffer.toString();
-    logger.trace("Constructed SPARUL query: " + returnString);
+    //logger.trace("Constructed SPARUL query: " + returnString);
     return returnString;
   }
 
