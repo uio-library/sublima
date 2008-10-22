@@ -55,7 +55,7 @@ public class AdminService {
             "?relation rdfs:subPropertyOf skos:semanticRelation .",
             "}"});
 
-    logger.trace("AdminService.getAllRelationTypes() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllRelationTypes() executing");
     queryResult = sparqlDispatcher.query(queryString).toString();
 
     return queryResult;
@@ -81,7 +81,7 @@ public class AdminService {
             "foaf:name ?name .",
             "}"});
 
-    logger.trace("AdminService.getAllPublishers() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllPublishers() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -106,7 +106,7 @@ public class AdminService {
             "}"});
 
 
-    logger.trace("AdminService.getAllStatuses() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllStatuses() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -130,7 +130,7 @@ public class AdminService {
             "          rdfs:label ?label .",
             "}"});
 
-    logger.trace("AdminService.getAllLanguages() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllLanguages() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -154,7 +154,7 @@ public class AdminService {
             "          rdfs:label ?label .",
             "}"});
 
-    logger.trace("AdminService.getDistinctAndUsedLabels() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getDistinctAndUsedLabels() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -180,7 +180,7 @@ public class AdminService {
             "             rdfs:label ?label .",
             "}"});
 
-    logger.trace("AdminService.getAllMediaTypes() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllMediaTypes() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -205,7 +205,7 @@ public class AdminService {
             "             rdfs:label ?label .",
             "}"});
 
-    logger.trace("AdminService.getAllAudiences() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllAudiences() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -237,7 +237,7 @@ public class AdminService {
             "}",
             "}"});
 
-    logger.trace("AdminService.getResourceByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getResourceByURI() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -262,7 +262,7 @@ public class AdminService {
                     "foaf:name \"" + publishername + "\"@no .\n" +
                     "}";
 
-    logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);
+    logger.info("updatePublisherByURI() executing");
     boolean success = false;
     success = sparulDispatcher.query(insertPublisherByName);
     logger.info("updatePublisherByURI() ---> " + publisherURI + " -- INSERT NEW NAME --> " + success);
@@ -294,7 +294,7 @@ public class AdminService {
             "        wdr:describedBy ?status .",
             "}"});
 
-    logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllTopics() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -310,7 +310,7 @@ public class AdminService {
             "WHERE {",
             "<" + uri + "> a skos:Concept . }"});
 
-    logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getTopicByURI() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -333,7 +333,7 @@ public class AdminService {
             "ORDER BY ?label",
             "LIMIT " + SettingsService.getProperty("sublima.autocompletion.size") });
 
-    logger.trace("AdminService.getTopicByPartialName() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getTopicByPartialName() executing");
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
 
     return queryResult.toString();
@@ -354,7 +354,7 @@ public class AdminService {
             "ORDER BY ?label",
             "LIMIT " + SettingsService.getProperty("sublima.autocompletion.size") });
 
-    logger.trace("AdminService.getPublisherByPartialNameAsJSON() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getPublisherByPartialNameAsJSON() executing");
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
 
     return queryResult.toString();
@@ -369,7 +369,7 @@ public class AdminService {
             "    ?resource dct:subject <" + uri + "> . ",
             "}"});
 
-    logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getTopicResourcesByURI() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -388,7 +388,7 @@ public class AdminService {
             "    ?theme wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
             "}"});
 
-    logger.trace("AdminService.getTopicByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getTopicByURI() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -404,7 +404,7 @@ public class AdminService {
             "        rdfs:label ?label .",
             "}"});
 
-    logger.trace("AdminService.getAllUsers() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllUsers() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -418,7 +418,7 @@ public class AdminService {
             "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
             "DESCRIBE <" + uri + ">"});
 
-    logger.trace("AdminService.getUserbyURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getUserbyURI() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -428,7 +428,7 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "DESCRIBE <" + uri + ">"});
 
-    logger.trace("AdminService.getRelationByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getRelationByURI() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -481,7 +481,7 @@ public class AdminService {
             "FILTER regex(str(?label), \"^" + letter + "\", \"i\")",
             "}"});
 
-    logger.trace("AdminService.getTopicResourcesByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getTopicResourcesByURI() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     if (queryResult == null) {
@@ -525,7 +525,7 @@ public class AdminService {
             "        rdfs:label ?label .",
             "}"});
 
-    logger.trace("AdminService.getAllRoles() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllRoles() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -535,7 +535,7 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "DESCRIBE <" + uri + ">"});
 
-    logger.trace("AdminService.getRoleByURI() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getRoleByURI() --> executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -596,7 +596,7 @@ public class AdminService {
             "    sioc:has_function ?role .",
             "?role a sioc:Role . }"});
 
-    logger.trace("AdminService.getUserRole() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getUserRole() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
     try {
 
@@ -626,7 +626,7 @@ public class AdminService {
             "?user a sioc:User ;",
             "    sioc:email " + email + " . }"});
 
-    logger.trace("AdminService.getUserByName() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getUserByName() executing");
     return (String) sparqlDispatcher.query(queryString);
   }
 
@@ -749,7 +749,7 @@ public class AdminService {
             "    ?topic wdr:describedBy <" + status + "> .",
             "}"});
 
-    logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllTopics() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -775,7 +775,7 @@ public class AdminService {
             "}"});
 
 
-    logger.trace("AdminService.getAllTopics() --> SPARQL query sent to dispatcher: \n" + queryString);
+    logger.trace("AdminService.getAllTopics() executing");
     Object queryResult = sparqlDispatcher.query(queryString);
 
     return queryResult.toString();
@@ -788,7 +788,7 @@ public class AdminService {
    * @return boolean if above the given treshold.
    */
   public boolean isAboveMaxNumberOfHits(String query) {
-    logger.trace("AdminService.isAboveMaxNumberOfHits() --> SPARQL query sent to dispatcher: \n" + query);
+    logger.trace("AdminService.isAboveMaxNumberOfHits() executing");
 
     try {
       return sparqlDispatcher.query(query).toString().contains("<uri>");
