@@ -1,4 +1,4 @@
-@base <http://localhost:8180/sublima-webapp-1.0-SNAPSHOT/>
+@base <http://localhost:8180/sublima-webapp-1.0-SNAPSHOT/> .
 @prefix topic:   <topic/> .
 @prefix sub:     <http://xmlns.computas.com/sublima#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
