@@ -2,6 +2,7 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.app.service.AutocompleteCache;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
@@ -91,7 +92,7 @@ public class PublisherController implements StatelessAppleController {
    * @return
    */
   private String validateRequest(AppleRequest req) {
-    StringBuffer validationMessages = new StringBuffer();
+    StringBuilder validationMessages = new StringBuilder();
 
 
     return validationMessages.toString();
@@ -108,7 +109,7 @@ public class PublisherController implements StatelessAppleController {
                   res, AppleRequest
                   req) {
 
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     String publishername = req.getCocoonRequest().getParameter("new_publisher");
     String description = req.getCocoonRequest().getParameter("dct:description");
 
@@ -185,7 +186,7 @@ public class PublisherController implements StatelessAppleController {
       showPublisherByURI(res, req, null, req.getCocoonRequest().getParameter("the-resource"));  
 
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-      StringBuffer messageBuffer = new StringBuffer();
+      StringBuilder messageBuffer = new StringBuilder();
 
       Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
@@ -217,10 +218,10 @@ public class PublisherController implements StatelessAppleController {
         messageBuffer.append("<c:message><i18n:text key=\"publisher.updatefailed\">Feil ved oppdatering</i18n:text></c:message>\n");
       }
 
+      //Invalidate the Topic cache for autocompletion
+      AutocompleteCache.invalidatePublisherCache();             
       showPublisherByURI(res, req, messageBuffer.toString(), form2SparqlService.getURI());  
     }
-
-
   }
 
   /**
@@ -240,7 +241,7 @@ public class PublisherController implements StatelessAppleController {
                   publisherURI) {
     //String publisheruri = this.submode;
 
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
 
@@ -283,7 +284,7 @@ public class PublisherController implements StatelessAppleController {
                   req, String
                   messages) {
 
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
 

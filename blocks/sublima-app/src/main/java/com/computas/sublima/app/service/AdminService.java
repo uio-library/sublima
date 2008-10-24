@@ -12,6 +12,9 @@ import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,6 +29,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
+import java.util.LinkedHashSet;
+import java.util.ArrayList;
 
 /**
  * A class to support the administration of Sublima
@@ -316,7 +321,7 @@ public class AdminService {
     return queryResult.toString();
   }
 
-  public String getTopicByPartialNameAsJSON(String name, String language) {
+  public String getTopicsAsJSON() {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
@@ -327,11 +332,8 @@ public class AdminService {
             "   UNION {",
             "       ?topic skos:altLabel ?label . }",
             "    ?topic wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
-            "FILTER regex(str(?label), \"^" + name + "\", \"i\")",
-            "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}",
-            "ORDER BY ?label",
-            "LIMIT " + SettingsService.getProperty("sublima.autocompletion.size") });
+            "ORDER BY ?label" });
 
     logger.trace("AdminService.getTopicByPartialName() executing");
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
@@ -339,7 +341,7 @@ public class AdminService {
     return queryResult.toString();
   }
 
-  public String getPublisherByPartialNameAsJSON(String name, String language) {
+  public String getPublishersAsJSON() {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
@@ -348,13 +350,10 @@ public class AdminService {
             "WHERE {",
             "?o a foaf:Agent ; ",
             "       foaf:name ?label .",
-            "FILTER regex(str(?label), \"^" + name + "\",\"i\")",
-            "FILTER langMatches( lang(?label), \"" + language + "\" )",
             "}",
-            "ORDER BY ?label",
-            "LIMIT " + SettingsService.getProperty("sublima.autocompletion.size") });
+            "ORDER BY ?label"});
 
-    logger.trace("AdminService.getPublisherByPartialNameAsJSON() executing");
+    logger.trace("AdminService.getPublishersAsJSON() executing");
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
 
     return queryResult.toString();
@@ -435,7 +434,7 @@ public class AdminService {
   }
 
   private static String convertToHex(byte[] data) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int i = 0; i < data.length; i++) {
       int halfbyte = (data[i] >>> 4) & 0x0F;
       int two_halfs = 0;
@@ -552,7 +551,7 @@ public class AdminService {
     DatabaseService dbService = new DatabaseService();
     Statement statement;
     ResultSet resultSet;
-    StringBuffer xmlBuffer = new StringBuffer();
+    StringBuilder xmlBuffer = new StringBuilder();
 
     String getRolePrivilegesString = "SELECT privilege FROM roleprivilege WHERE role = '" + roleuri + "';";
 
@@ -664,11 +663,11 @@ public class AdminService {
     }
   }
 
-  public StringBuffer getMostOfTheRequestXML(AppleRequest req) {
+  public StringBuilder getMostOfTheRequestXML(AppleRequest req) {
     // This is such a 1999 way of doing things. There should be a generic SAX events generator
     // or something that would serialise this data structure automatically in a one-liner,
     // but I couldn't find it. Arguably a TODO.
-    StringBuffer params = new StringBuffer();
+    StringBuilder params = new StringBuilder();
     String uri = req.getCocoonRequest().getRequestURI();
     int paramcount = 0;
     params.append("  <request justbaseurl=\"" + uri + "\" ");
@@ -699,11 +698,11 @@ public class AdminService {
     return params;
   }
 
-  public StringBuffer getMostOfTheRequestXMLWithPrefix(AppleRequest req) {
+  public StringBuilder getMostOfTheRequestXMLWithPrefix(AppleRequest req) {
     // This is such a 1999 way of doing things. There should be a generic SAX events generator
     // or something that would serialise this data structure automatically in a one-liner,
     // but I couldn't find it. Arguably a TODO.
-    StringBuffer params = new StringBuffer();
+    StringBuilder params = new StringBuilder();
     String uri = req.getCocoonRequest().getRequestURI();
     int paramcount = 0;
     params.append("  <c:request xmlns:c=\"http://xmlns.computas.com/cocoon\" justbaseurl=\"" + uri + "\" ");
@@ -798,5 +797,69 @@ public class AdminService {
       e.printStackTrace();
       return false;
     }
+  }
+
+  public LinkedHashSet<String> createArrayOfTopics() {
+    String result = getTopicsAsJSON();
+    LinkedHashSet<String> topicSet = new LinkedHashSet<String>();
+
+    try {
+        JSONObject json = new JSONObject(result);
+        json = json.getJSONObject("results");
+        JSONArray jsonArray = json.getJSONArray("bindings");
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+          JSONObject obj2 = (JSONObject) jsonArray.get(i);
+          obj2 = (JSONObject) obj2.get("label");
+          topicSet.add(obj2.get("value").toString());
+        }
+
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+    return topicSet;
+  }
+
+  public LinkedHashSet<String> createArrayOfPublishers() {
+    String result = getPublishersAsJSON();
+    LinkedHashSet<String> publisherSet = new LinkedHashSet<String>();
+
+    try {
+        JSONObject json = new JSONObject(result);
+        json = json.getJSONObject("results");
+        JSONArray jsonArray = json.getJSONArray("bindings");
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+          JSONObject obj2 = (JSONObject) jsonArray.get(i);
+          obj2 = (JSONObject) obj2.get("label");
+          publisherSet.add(obj2.get("value").toString());
+        }
+
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+    return publisherSet;
+  }
+
+  public ArrayList<String> getTopicsByPartialName(String name) {
+    ArrayList<String> results = new ArrayList<String>();
+
+    for (String s : AutocompleteCache.getTopicSet()) {
+      if (s != null && s.toLowerCase().startsWith(name.toLowerCase())) {
+        results.add(s);
+      }
+    }
+    return results;
+  }
+
+  public ArrayList<String> getPublishersByPartialName(String name) {
+    ArrayList<String> results = new ArrayList<String>();
+
+    for (String s : AutocompleteCache.getPublisherSet()) {
+      if (s != null && s.toLowerCase().startsWith(name.toLowerCase())) {
+        results.add(s);
+      }
+    }
+    return results;
   }
 }

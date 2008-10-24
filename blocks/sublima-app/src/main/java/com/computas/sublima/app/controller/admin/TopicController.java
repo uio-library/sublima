@@ -3,6 +3,7 @@ package com.computas.sublima.app.controller.admin;
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.IndexService;
+import com.computas.sublima.app.service.AutocompleteCache;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
@@ -53,7 +54,7 @@ public class TopicController implements StatelessAppleController {
     // or something that would serialise this data structure automatically in a one-liner,
     // but I couldn't find it. Also, the code should not be in each and every controller.
     // Arguably a TODO.
-    StringBuffer params = new StringBuffer();
+    StringBuilder params = new StringBuilder();
     String uri = req.getCocoonRequest().getRequestURI();
     int paramcount = 0;
     params.append("  <c:request xmlns:c=\"http://xmlns.computas.com/cocoon\" justbaseurl=\"" + uri + "\" ");
@@ -140,7 +141,7 @@ public class TopicController implements StatelessAppleController {
   }
 
   private void editRelation(AppleResponse res, AppleRequest req, Object o) {
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
     String uri = req.getCocoonRequest().getParameter("the-resource");
@@ -240,7 +241,7 @@ public class TopicController implements StatelessAppleController {
           (AppleResponse
                   res, AppleRequest
                   req) {
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
 
@@ -307,7 +308,7 @@ public class TopicController implements StatelessAppleController {
           (AppleResponse
                   res, AppleRequest
                   req) {
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
 
@@ -328,9 +329,9 @@ public class TopicController implements StatelessAppleController {
       requestMap.remove("actionbutton");
       requestMap.remove("locale");
 
-      StringBuffer deleteString = new StringBuffer();
-      StringBuffer whereString = new StringBuffer();
-      StringBuffer insertString = new StringBuffer();
+      StringBuilder deleteString = new StringBuilder();
+      StringBuilder whereString = new StringBuilder();
+      StringBuilder insertString = new StringBuilder();
 
       deleteString.append(completePrefixes);
       deleteString.append("\nDELETE\n{\n");
@@ -435,10 +436,10 @@ public class TopicController implements StatelessAppleController {
             "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
             "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
-    StringBuffer tempValues = new StringBuffer();
+    StringBuilder tempValues = new StringBuilder();
     String uri = "";
 
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -574,12 +575,15 @@ public class TopicController implements StatelessAppleController {
 
       bizData.put("messages", messageBuffer.toString());
 
+      //Invalidate the Topic cache for autocompletion
+      AutocompleteCache.invalidateTopicCache();
+
       res.sendPage("xml2/emne", bizData);
     }
   }
 
 
-  private StringBuffer getTempValues
+  private StringBuilder getTempValues
           (AppleRequest
                   req) {
     //Keep all selected values in case of validation error
@@ -591,7 +595,7 @@ public class TopicController implements StatelessAppleController {
     String temp_synonyms = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:altLabel");
 
     //Create an XML structure for the selected values, to use in the JX template
-    StringBuffer xmlStructureBuffer = new StringBuffer();
+    StringBuilder xmlStructureBuffer = new StringBuilder();
     xmlStructureBuffer.append("<skos:prefLabel>" + temp_title + "</skos:prefLabel>\n");
 
     if (temp_broader != null) {
@@ -618,7 +622,7 @@ public class TopicController implements StatelessAppleController {
    * @return
    */
   private String validateRequest(AppleRequest req) {
-    StringBuffer validationMessages = new StringBuffer();
+    StringBuilder validationMessages = new StringBuilder();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
       validationMessages.append("<c:message><i18n:text key=\"topic.validation.titleblank\">Emnets tittel kan ikke være blank</i18n:text></c:message>\n");

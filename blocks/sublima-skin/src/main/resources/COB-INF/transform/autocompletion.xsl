@@ -8,21 +8,21 @@
     <script type="text/javascript">
       $(document).ready(function(){
       $("#subject").autocomplete("autocomplete", {
-        max: 20,
+        max: 50,
         minChars: 3,
-        extraParams : { action:"topic", locale:"<xsl:value-of select="$interface-language"/>" }
+        extraParams : { action:"topic"}
       });
       
       $("#publisher").autocomplete("autocomplete", {
-        max: 20,
+        max: 50,
         minChars: 3,
-	      extraParams : { action:"publisher", locale:"<xsl:value-of select="$interface-language"/>" }
+	      extraParams : { action:"publisher"}
 	    });
 
        $("#keyword").autocomplete("autocomplete", {
-        max: 20,
+        max: 50,
         minChars: 3,
-	      extraParams : { action:"topic", locale:"<xsl:value-of select="$interface-language"/>" }
+	      extraParams : { action:"topic"}
 	    });
       });
     </script>
