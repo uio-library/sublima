@@ -342,6 +342,32 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "?resource ?p ?rest .\n}"}), resultString);
   }
 
+  public void testConvertForm2SparqlFacets() {
+      SearchService searchService = new SearchService("AND");
+      testMap.put("wdr:describedBy", new String[]{"http://sublima.computas.com/status/godkjent_av_administrator"});
+      testMap.put("dct:subject", new String[]{"http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000511"});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("epidemica", true)});
+      myService.addPrefix("wdr: <http://www.w3.org/2007/05/powder#>");
+      myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
+      String resultString = myService.convertForm2Sparql(testMap);
+      assertEquals("Expected result and actual result not equal",
+              StringUtils.join("\n", new String[]{
+                      "PREFIX dct: <http://purl.org/dc/terms/>",
+                      "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+                      "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+                      "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
+                      "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+                      "DESCRIBE ?resource ?rest WHERE {",
+                      "?lit pf:textMatch \"\"\"epidemica*\"\"\" .",
+                      "?resource dct:identifier ?lit .",
+                      "?resource dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000511> .",
+                      "?resource wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
+                      "?resource ?p ?rest .",
+                      "}"}), resultString);
+
+
+  }
+
 
   public void testConvertForm2SparqlSingleValue() {
     // Single value test
