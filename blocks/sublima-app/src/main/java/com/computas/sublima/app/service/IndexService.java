@@ -117,7 +117,7 @@ public class IndexService {
   }
 
   private String getTopicLiteralsAsString(String uri, String[] topicSearchfields, String[] prefixes) {
-    StringBuffer returnString = new StringBuffer();
+    StringBuilder returnString = new StringBuilder();
 
     if (uri != null || "".equalsIgnoreCase(uri)) {
 
@@ -219,7 +219,7 @@ public class IndexService {
   }
 
   private String getTheIndexQuery(String[] fieldsToIndex, Form2SparqlService form2SparqlService) {
-    StringBuffer queryBuffer = new StringBuffer();
+    StringBuilder queryBuffer = new StringBuilder();
     queryBuffer.append(form2SparqlService.getPrefixString());
     queryBuffer.append("SELECT");
     if (form2SparqlService.getResourceSubject().equals("?resource")) {
@@ -249,7 +249,7 @@ public class IndexService {
   public String getFreetextToIndex(String[] fieldsToIndex, String[] prefixes, String resource) {
     String queryString = getQueryForIndex(fieldsToIndex, prefixes, resource);
     ResultSet resultSet = getFreetextToIndexResultSet(queryString);
-    StringBuffer resultBuffer = new StringBuffer();
+    StringBuilder resultBuffer = new StringBuilder();
     Set literals = new HashSet<String>();
 
     while (resultSet.hasNext()) {
@@ -289,7 +289,7 @@ public class IndexService {
       Iterator<String> it = soln.varNames();
 
       while (it.hasNext()) {
-        StringBuffer resultBuffer = new StringBuffer();
+        StringBuilder resultBuffer = new StringBuilder();
         String var = it.next();
 
         if (soln.get(var) != null) {
@@ -330,7 +330,7 @@ public class IndexService {
           }
 
           if (!resultSet.hasNext()) {
-            StringBuffer endResultBuffer = new StringBuffer();
+            StringBuilder endResultBuffer = new StringBuilder();
             endResultBuffer.append("<" + resource);
             endResultBuffer.append("> sub:literals \"\"\"");
             //resultBuffer.append("> sub:literals :_a .\n");
@@ -373,7 +373,7 @@ public class IndexService {
    * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content including internal content""""
    */
   public String getResourceExternalLiteralsAsTriple(String resource, String[] searchfields, String[] prefixes) {
-    StringBuffer tripleString = new StringBuffer();
+    StringBuilder tripleString = new StringBuilder();
 
     tripleString.append("<" + resource + "> sub:externalliterals \"\"\"");
 
@@ -394,7 +394,7 @@ public class IndexService {
    * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content including internal content""""
    */
   public void indexResourceExternalLiterals(String resource, String[] searchfields, String[] prefixes) {
-    StringBuffer tripleString = new StringBuffer();
+    StringBuilder tripleString = new StringBuilder();
 
     tripleString.append("PREFIX sub: <http://xmlns.computas.com/sublima#>\n");
     tripleString.append("PREFIX dct: <http://purl.org/dc/terms/>\n");
@@ -421,7 +421,7 @@ public class IndexService {
    * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content including internal content""""
    */
   public String getResourceExternalLiteralsAsString(String resource) {
-    StringBuffer externalContent = new StringBuffer();
+    StringBuilder externalContent = new StringBuilder();
 
     URLActions urlAction = new URLActions(resource);
     String code = urlAction.getCode();
@@ -460,7 +460,7 @@ public class IndexService {
    * @return a String
    */
   public String getResourceInternalLiteralsAsString(String resource, String[] searchfields, String[] prefixes) {
-    StringBuffer returnString = new StringBuffer();
+    StringBuilder returnString = new StringBuilder();
 
     if (resource != null || "".equalsIgnoreCase(resource)) {
 
@@ -501,7 +501,7 @@ public class IndexService {
    * @return a String
    */
   public String getResourceInternalLiteralsAsTriple(String resource, String[] searchfields, String[] prefixes) {
-    StringBuffer tripleString = new StringBuffer();
+    StringBuilder tripleString = new StringBuilder();
 
     tripleString.append("<" + resource + "> sub:literals \"\"\"");
     tripleString.append(getResourceInternalLiteralsAsString(resource, searchfields, prefixes));

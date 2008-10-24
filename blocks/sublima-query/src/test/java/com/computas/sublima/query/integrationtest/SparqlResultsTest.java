@@ -1,17 +1,15 @@
 package com.computas.sublima.query.integrationtest;
 
 import junit.framework.Test;
-import junit.framework.TestSuite;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.net.HttpURLConnection;
-import java.io.InputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import org.apache.cocoon.configuration.Settings;
 
 /**
  * JosekiTest. This class tests the connection to the Joseki standalone servlet,
@@ -28,11 +26,11 @@ public class SparqlResultsTest extends TestCase {
   private static final String JOSEKI_URL = "http://localhost:8180/sublima-webapp-1.0-SNAPSHOT/";
   private static final String JOSEKI_ACTION = "sparql?query=";
   private static final String SPARQL_QUERY = "PREFIX  dct: <http://purl.org/dc/terms/>\n" +
-                                              "\n" +
-                                              "CONSTRUCT \n" +
-                                              "{ <http://the-jet.com/> dct:title ?var } \n" +
-                                              "WHERE { <http://the-jet.com/> dct:title ?var }";
- 
+          "\n" +
+          "CONSTRUCT \n" +
+          "{ <http://the-jet.com/> dct:title ?var } \n" +
+          "WHERE { <http://the-jet.com/> dct:title ?var }";
+
   private static final String EXPECTED_SPARQL_RESULT = "<?xml version=\"1.0\"?>" +
           "<rdf:RDF    xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"    " +
           "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"    " +
@@ -72,7 +70,7 @@ public class SparqlResultsTest extends TestCase {
     return new TestSuite(SparqlResultsTest.class);
   }
 
-    /**
+  /**
    * Tests that a connection to the webapp exists.
    * Uses /search since / gives a failure with Cocoon.
    * todo: Fix the URL so that / works
@@ -92,7 +90,7 @@ public class SparqlResultsTest extends TestCase {
     InputStream bodyInputStream = huc.getInputStream();
     BufferedReader rdr = new BufferedReader(new InputStreamReader(bodyInputStream));
     String line;
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     while ((line = rdr.readLine()) != null) {
       sb.append(line);
     }

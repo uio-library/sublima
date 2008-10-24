@@ -51,7 +51,7 @@ public class SearchController implements StatelessAppleController {
         bizData.put("mediatypes", adminService.getDistinctAndUsedLabels("dct:MediaType", "dct:format"));
         bizData.put("audiences", adminService.getDistinctAndUsedLabels("dct:AgentClass", "dct:audience"));
         bizData.put("committers", adminService.getDistinctAndUsedLabels("<http://rdfs.org/sioc/ns#User>", "<http://xmlns.computas.com/sublima#committer>"));
-        StringBuffer params = adminService.getMostOfTheRequestXML(req);
+        StringBuilder params = adminService.getMostOfTheRequestXML(req);
         params.append("\n  </request>\n");
         bizData.put("facets", params.toString());
         System.gc();
@@ -145,7 +145,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("navigation", queryResult);
     bizData.put("mode", mode);
 
-    StringBuffer params = adminService.getMostOfTheRequestXML(req);
+    StringBuilder params = adminService.getMostOfTheRequestXML(req);
 
     // These will not be brought along unless we add it as request parameters, which is hackish.
     params.append("\n    <param key=\"prefix\">");
@@ -203,7 +203,7 @@ public class SearchController implements StatelessAppleController {
     String searchStringOverriden = null;
 
     // Create an XML structure of the search criterias. This could probably be nore generic.
-    StringBuffer xmlSearchParametersBuffer = new StringBuffer();
+    StringBuilder xmlSearchParametersBuffer = new StringBuilder();
     xmlSearchParametersBuffer.append("<c:searchparams xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     if (req.getCocoonRequest().getParameter("searchstring") == null) {
       xmlSearchParametersBuffer.append("\t<c:searchstring></c:searchstring>\n");      
@@ -303,7 +303,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("mode", mode);
 
     bizData.put("searchparams", xmlSearchParametersBuffer.toString());
-    StringBuffer params = adminService.getMostOfTheRequestXML(req);
+    StringBuilder params = adminService.getMostOfTheRequestXML(req);
     params.append("\n  </request>\n");
 
     bizData.put("request", params.toString());

@@ -111,7 +111,7 @@ public class UserController implements StatelessAppleController {
   }
 
   public void editUser(AppleRequest req, AppleResponse res, String type, String messages) {
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -150,7 +150,7 @@ public class UserController implements StatelessAppleController {
       // 2. Valider alle verdier
       // 3. Forsk  lagre
 
-      StringBuffer tempValues = getUserTempValues(req);
+      StringBuilder tempValues = getUserTempValues(req);
       String tempPrefixes = "<c:tempvalues \n" +
               "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
               "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
@@ -352,7 +352,7 @@ public class UserController implements StatelessAppleController {
                   req, AppleResponse
                   res, String
                   messages) {
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -387,7 +387,7 @@ public class UserController implements StatelessAppleController {
       // 2. Valider alle verdier
       // 3. Forsk  lagre
 
-      StringBuffer tempValues = getRoleTempValues(req);
+      StringBuilder tempValues = getRoleTempValues(req);
       String tempPrefixes = "<c:tempvalues \n" +
               "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
               "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
@@ -422,7 +422,7 @@ public class UserController implements StatelessAppleController {
           uri = req.getCocoonRequest().getParameter("uri");
         }
 
-        StringBuffer insertString = new StringBuffer();
+        StringBuilder insertString = new StringBuilder();
         insertString.append(completePrefixes);
         insertString.append("\nDELETE {\n");
         insertString.append("<" + uri + "> ?o ?p .\n}\n");
@@ -511,7 +511,7 @@ public class UserController implements StatelessAppleController {
   private String validateUserRequest
           (AppleRequest
                   req) {
-    StringBuffer validationMessages = new StringBuffer();
+    StringBuilder validationMessages = new StringBuilder();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:email")) || req.getCocoonRequest().getParameter("sioc:email") == null) {
       validationMessages.append("<c:message><i18n:text key=\"user.username.blank\">E-post (brukernavn) kan ikke være blank</i18n:text></c:message>\n");
@@ -542,7 +542,7 @@ public class UserController implements StatelessAppleController {
   private String validateRoleRequest
           (AppleRequest
                   req) {
-    StringBuffer validationMessages = new StringBuffer();
+    StringBuilder validationMessages = new StringBuilder();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
       validationMessages.append("<c:message><i18n:text key=\"user.name.blank\">Navn kan ikke vre blank</i18n:text></c:message>\n");
@@ -551,10 +551,10 @@ public class UserController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private StringBuffer getUserTempValues
+  private StringBuilder getUserTempValues
           (AppleRequest
                   req) {
-    StringBuffer tempValues = new StringBuffer();
+    StringBuilder tempValues = new StringBuilder();
 
     String uri = req.getCocoonRequest().getParameter("the-resource");
     String temp_email = req.getCocoonRequest().getParameter("sioc:email");
@@ -572,10 +572,10 @@ public class UserController implements StatelessAppleController {
     return tempValues;
   }
 
-  private StringBuffer getRoleTempValues
+  private StringBuilder getRoleTempValues
           (AppleRequest
                   req) {
-    StringBuffer tempValues = new StringBuffer();
+    StringBuilder tempValues = new StringBuilder();
 
     String uri = req.getCocoonRequest().getParameter("uri");
     String temp_name = req.getCocoonRequest().getParameter("rdfs:label");

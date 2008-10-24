@@ -123,7 +123,7 @@ public class Form2SparqlService {
    * @return a string of prefixes as used in N3.
    */
   public String getPrefixString() {
-    StringBuffer res = new StringBuffer();
+    StringBuilder res = new StringBuilder();
     for (String prefix : prefixes) {
       res.append("PREFIX " + prefix + "\n");
     }
@@ -183,7 +183,7 @@ public class Form2SparqlService {
    * @return N3 with the result.
    */
   public String convertFormField2N3(String key, String[] values) {
-    StringBuffer n3Buffer = new StringBuffer();
+    StringBuilder n3Buffer = new StringBuilder();
     String[] keys = key.split("/");
     String var = resourceSubject; // The first SPARQL variable will always be resource
     int j = 0;
@@ -283,9 +283,9 @@ public class Form2SparqlService {
    */
   public String convertForm2Sparql(Map<String, String[]> parameterMap) {
 
-    // Using StringBuffer, since regular String can cause performance issues
+    // Using StringBuilder, since regular String can cause performance issues
     // with large datasets
-    StringBuffer sparqlQueryBuffer = new StringBuffer();
+    StringBuilder sparqlQueryBuffer = new StringBuilder();
     sparqlQueryBuffer.append("DESCRIBE ");
 
     ArrayList n3List = getN3List(parameterMap);
@@ -321,9 +321,9 @@ public class Form2SparqlService {
    */
   public String convertForm2SparqlCount(Map<String, String[]> parameterMap, int cutoff) {
 
-    // Using StringBuffer, since regular String can cause performance issues
+    // Using StringBuilder, since regular String can cause performance issues
     // with large datasets
-    StringBuffer sparqlQueryBuffer = new StringBuffer();
+    StringBuilder sparqlQueryBuffer = new StringBuilder();
     sparqlQueryBuffer.append("SELECT DISTINCT ?resource ");
     ArrayList<String> n3Listtmp = getN3List(parameterMap);
     ArrayList<String> n3List = new ArrayList();
@@ -468,7 +468,7 @@ public class Form2SparqlService {
                       "parameter or of a title-field and subjecturi-prefix combination.");
     }
 
-    StringBuffer sparqlQueryBuffer = new StringBuffer();
+    StringBuilder sparqlQueryBuffer = new StringBuilder();
     sparqlQueryBuffer.append(getPrefixString());
     sparqlQueryBuffer.append("DELETE { <" + SparulSubjectURI + "> ?p ?o . ");
     sparqlQueryBuffer.append("}\nWHERE { <" + SparulSubjectURI + "> ?p ?o . }\n");
@@ -537,8 +537,8 @@ public class Form2SparqlService {
     return result;
   }
 
-  private StringBuffer OptimizeTripleOrder(ArrayList<String> n3List) {
-    StringBuffer ordered = new StringBuffer();
+  private StringBuilder OptimizeTripleOrder(ArrayList<String> n3List) {
+    StringBuilder ordered = new StringBuilder();
 
     for (String triple : n3List) {
       if (triple.contains("pf:textMatch") && ! triple.contains("OPTIONAL") && ! triple.contains("?lit ")) {

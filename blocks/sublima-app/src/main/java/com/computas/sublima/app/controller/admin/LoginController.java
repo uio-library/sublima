@@ -27,7 +27,7 @@ public class LoginController implements StatelessAppleController {
 
     if ("showform".equalsIgnoreCase(appleRequest.getSitemapParameter("mode"))) {
       Map<String, Object> bizData = new HashMap<String, Object>();
-      StringBuffer messageBuffer = new StringBuffer();
+      StringBuilder messageBuffer = new StringBuilder();
       messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
       messageBuffer.append("</c:messages>\n");
       bizData.put("messages", messageBuffer.toString());
@@ -79,7 +79,7 @@ public class LoginController implements StatelessAppleController {
 
       if (!continueLogin) {
         Map<String, Object> bizData = new HashMap<String, Object>();
-        StringBuffer messageBuffer = new StringBuffer();
+        StringBuilder messageBuffer = new StringBuilder();
         messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
         messageBuffer.append("<c:message><i18n:text key=\"admin.login.failed\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>");
         messageBuffer.append("</c:messages>\n");

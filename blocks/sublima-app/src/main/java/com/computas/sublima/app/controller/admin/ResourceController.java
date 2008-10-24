@@ -93,7 +93,7 @@ public class ResourceController implements StatelessAppleController {
    */
   private void registerNewResourceURL(AppleRequest req, AppleResponse res) {
     Map<String, Object> bizData = new HashMap<String, Object>();
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
     bizData.put("userprivileges", userPrivileges);
 
@@ -213,7 +213,7 @@ public class ResourceController implements StatelessAppleController {
     String allAudiences = adminService.getAllAudiences();
     String allStatuses = adminService.getAllStatuses();
 
-    StringBuffer messageBuffer = new StringBuffer();
+    StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
     messageBuffer.append(messages);
 
@@ -266,7 +266,7 @@ public class ResourceController implements StatelessAppleController {
       } else {
         Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
-        StringBuffer tempValues = getTempValues(req);
+        StringBuilder tempValues = getTempValues(req);
 
         // Check if all required fields are filled out, if not return error messages
         String validationMessages = validateRequest(req);
@@ -387,7 +387,7 @@ public class ResourceController implements StatelessAppleController {
   private String validateRequest
           (AppleRequest
                   req) {
-    StringBuffer validationMessages = new StringBuffer();
+    StringBuilder validationMessages = new StringBuilder();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:title")) || req.getCocoonRequest().getParameter("dct:title") == null) {
       validationMessages.append("<c:message><i18n:text key=\"validation.resource.notitle\">uoversatt</i18n:text></c:message>\n");
@@ -422,7 +422,7 @@ public class ResourceController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private StringBuffer getTempValues
+  private StringBuilder getTempValues
           (AppleRequest
                   req) {
     //Keep all selected values in case of validation error
@@ -439,7 +439,7 @@ public class ResourceController implements StatelessAppleController {
     String temp_status = req.getCocoonRequest().getParameter("wdr:describedBy");
 
 //Create an XML structure for the selected values, to use in the JX template
-    StringBuffer xmlStructureBuffer = new StringBuffer();
+    StringBuilder xmlStructureBuffer = new StringBuilder();
     xmlStructureBuffer.append("<rdf:RDF  xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
             "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
             "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +

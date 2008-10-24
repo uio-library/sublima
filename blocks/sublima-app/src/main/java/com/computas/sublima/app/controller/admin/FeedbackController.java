@@ -87,7 +87,7 @@ public class FeedbackController implements StatelessAppleController {
     if ("tips".equalsIgnoreCase(mode)) {
       Map<String, Object> bizData = new HashMap<String, Object>();
 
-      StringBuffer messageBuffer = new StringBuffer();
+      StringBuilder messageBuffer = new StringBuilder();
       messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\"></c:messages>");
       bizData.put("messages", messageBuffer.toString());
       bizData.put("mode", "form");
@@ -101,7 +101,7 @@ public class FeedbackController implements StatelessAppleController {
 
       Map<String, Object> bizData = new HashMap<String, Object>();
 
-      StringBuffer messageBuffer = new StringBuffer();
+      StringBuilder messageBuffer = new StringBuilder();
       messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
 
       String url = req.getCocoonRequest().getParameter("url");

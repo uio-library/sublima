@@ -40,7 +40,7 @@ public class SearchService {
   public String buildSearchString(String searchstring, boolean truncate) {
 
     // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
-    searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]" , "");
+    searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]", "");
     searchstring = searchstring.replace("&&", "");
     Pattern p = Pattern.compile("(\\S+)|(\\\"[^\\\"]+\\\")");
     Matcher m = p.matcher(searchstring);
@@ -55,7 +55,7 @@ public class SearchService {
 
     // Split the search string, and add * after each word that isn't a part of a phrase
     boolean partOfPhrase = false;
-    StringBuffer stringBuffer = new StringBuffer();
+    StringBuilder StringBuilder = new StringBuilder();
     String[] partialSearchString = actual.split(" ");
 
     for (int i = 0; i < partialSearchString.length; i++) {
@@ -67,14 +67,14 @@ public class SearchService {
               "OR".equalsIgnoreCase(partialSearchString[i])) {
 
         if (!partOfPhrase) {
-          stringBuffer.append(partialSearchString[i] + " ");
+          StringBuilder.append(partialSearchString[i] + " ");
         }
 
       } else {
         if (partOfPhrase || !truncate || partialSearchString[i].length() <= 2) {
-          stringBuffer.append(partialSearchString[i] + " ");
+          StringBuilder.append(partialSearchString[i] + " ");
         } else {
-          stringBuffer.append(partialSearchString[i] + "* ");
+          StringBuilder.append(partialSearchString[i] + "* ");
         }
 
         if (partialSearchString[i].endsWith("\"")) {
@@ -83,9 +83,9 @@ public class SearchService {
       }
     }
 
-    actual = stringBuffer.toString().trim();
+    actual = StringBuilder.toString().trim();
     if (actual.endsWith("\"")) { // since it would cause four double quotes
-       actual = actual + " ";
+      actual = actual + " ";
     }
 
     return actual;

@@ -14,7 +14,7 @@ public class GenerateSHA1 {
   AdminService adminService = new AdminService();
 
   private static String convertToHex(byte[] data) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int i = 0; i < data.length; i++) {
       int halfbyte = (data[i] >>> 4) & 0x0F;
       int two_halfs = 0;

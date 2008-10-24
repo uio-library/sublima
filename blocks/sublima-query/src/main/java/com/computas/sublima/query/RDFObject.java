@@ -124,7 +124,7 @@ public class RDFObject implements Serializable {
 		if (index > 0) {
 			return "?object" + index;
 		}
-		StringBuffer n3Buffer = new StringBuffer();
+		StringBuilder n3Buffer = new StringBuilder();
 
     // Detect if its a xsd boolean
     if (getValue().equalsIgnoreCase("true") || getValue().equalsIgnoreCase("false")) {

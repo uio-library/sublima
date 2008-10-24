@@ -404,7 +404,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     logger.info("updateResourceExternalContent() ---> " + url.toString() + " -- DELETE OLD CONTENT --> " + success);
 
     String requesturl = "<http://sublima.computas.com/latest-get/" + url.toString().hashCode() + "> ";
-    StringBuffer updateString = new StringBuffer();
+    StringBuilder updateString = new StringBuilder();
     updateString.append("PREFIX link: <http://www.w3.org/2007/ont/link#>\n" +
             "PREFIX http: <http://www.w3.org/2007/ont/http#>\n" +
             "PREFIX httph: <http://www.w3.org/2007/ont/httph#>\n" +
@@ -428,7 +428,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
           (final String
                   content) throws UnsupportedEncodingException {
 
-    final StringBuffer sb = new StringBuffer();
+    final StringBuilder sb = new StringBuilder();
     logger.info("strippedContent() ---> Getting external content");
     FutureTask<?> theTask = null;
     try {
