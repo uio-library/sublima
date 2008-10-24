@@ -220,7 +220,8 @@ public class PublisherController implements StatelessAppleController {
 
       //Invalidate the Topic cache for autocompletion
       AutocompleteCache.invalidatePublisherCache();             
-      showPublisherByURI(res, req, messageBuffer.toString(), form2SparqlService.getURI());  
+      showPublisherByURI(res, req, messageBuffer.toString(), form2SparqlService.getURI());
+      AutocompleteCache.getPublisherSet();
     }
   }
 
