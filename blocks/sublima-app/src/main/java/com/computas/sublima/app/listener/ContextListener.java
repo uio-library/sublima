@@ -18,8 +18,8 @@ public final class ContextListener implements ServletContextListener {
 
   public void contextInitialized(ServletContextEvent servletContextEvent) {
     IndexService indexService = new IndexService();
-    AdminService adminService = new AdminService();
     AutocompleteCache.getPublisherSet();
+    AutocompleteCache.getTopicSet();
 
     if ("true".equalsIgnoreCase(SettingsService.getProperty("sublima.checkurl.onstartup"))) {
       logger.info("SUBLIMA: Property sublima.checkurl.onstartup set to TRUE --> URL Check - Performing a url check");
