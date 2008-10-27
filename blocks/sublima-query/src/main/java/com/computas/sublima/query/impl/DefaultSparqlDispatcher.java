@@ -13,6 +13,7 @@ import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
 import net.spy.memcached.MemcachedClient;
+import net.spy.memcached.OperationTimeoutException;
 import net.spy.memcached.AddrUtil;
 
 /**
@@ -35,13 +36,16 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 
     // Configure memcached if available.
     MemcachedClient memcached = null;
+    boolean useMemcached = false;
     try {
         memcached = new MemcachedClient(
                 AddrUtil.getAddresses(
                         SettingsService.getProperty("sublima.memcached.servers")
                 )
         );
+        useMemcached = true;
     } catch (Exception e) {
+        useMemcached = false;
         logger.info("SPARQLdispatcher couldn't find the memcached server and said " + e.getMessage()
         + ". Have you set sublima.memcached.servers?");
     }
@@ -50,7 +54,16 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     logger.info("SPARQLdispatcher executing.\n" + query + "\n");
     String cacheKey = String.valueOf(query.trim().hashCode()); // We could parse the query first to get a better key
 
-    Object fromCache = memcached.get(cacheKey);
+    Object fromCache = null;
+    if (useMemcached) {
+        try {
+            fromCache = memcached.get(cacheKey);
+        } catch (OperationTimeoutException e) {
+            useMemcached = false;
+            logger.warn("SPARQLdispatcher timed out when contacting memcached: "  + e.getMessage()
+                    + ". Have you set sublima.memcached.servers?");
+        }
+    }
     if (fromCache == null) {
         logger.debug("SPARQLdispatcher found nothing in the cache.");
         try {
@@ -61,7 +74,9 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
             result = IOUtils.toString(con.getInputStream());
             long requesttime = System.currentTimeMillis() - connecttime;
             logger.info("SPARQLdispatcher got results from Joseki. Query took " + requesttime + " ms." );
-            memcached.set(cacheKey, 60 * 60 * 24 * 30, result);
+            if (useMemcached) {
+                memcached.set(cacheKey, 60 * 60 * 24 * 30, result);
+            }
         } catch (Exception e) {
             logger.error("SPARQLdispatcher got " + e.toString() + " while talking to the endpoint, with message: " + e.getMessage());
             con.disconnect();
