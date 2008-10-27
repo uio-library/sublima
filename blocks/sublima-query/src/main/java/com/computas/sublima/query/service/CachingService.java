@@ -5,10 +5,8 @@ import net.spy.memcached.AddrUtil;
 import net.spy.memcached.OperationTimeoutException;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-
 /**
- * A service to invalidate the memcached
+ * A service to do stuff with the memcached client
  * User: kkj
  * Date: Oct 27, 2008
  * Time: 2:37:58 PM
@@ -22,6 +20,9 @@ public class CachingService {
         // This should really have inherited and extended MencachedClient, but that can't be done in Java.
     }
 
+    /**
+     * Connect to the memcached
+     **/
     public MemcachedClient connect() {
         MemcachedClient memcached = null;
         try {
@@ -39,10 +40,21 @@ public class CachingService {
         return memcached;
     }
 
+    /**
+     * If we are using memcached
+     * @return boolean
+     */
     public boolean useMemcached() {
         return useMemcached;
     }
 
+    /**
+     * Get whatever from the memcached with a given key
+     *
+     * @param mc the Memcached Client
+     * @param key the String key of the cache entry
+     * @return an Object with the cached entry or null if it wasn't found.
+     */
     public Object get(MemcachedClient mc, String key) {
         Object fromCache = null;
         if (useMemcached) {
