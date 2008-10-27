@@ -40,9 +40,11 @@
     <record>
       <recordPacking>XML</recordPacking>
       <recordData>
-	<xsl:apply-templates select="./sub:committer"/>
-	<xsl:apply-templates select="./dct:*"/>
-	<xsl:copy-of select="./wdr:describedBy"/>
+	<sub:Resource rdf:about="{./@rdf:about}">
+	  <xsl:apply-templates select="./sub:committer"/>
+	  <xsl:apply-templates select="./dct:*"/>
+	  <xsl:copy-of select="./wdr:describedBy"/>
+	</sub:Resource>
       </recordData>
     </record>
   </xsl:template>
