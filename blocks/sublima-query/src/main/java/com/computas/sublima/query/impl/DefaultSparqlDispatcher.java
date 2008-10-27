@@ -12,7 +12,8 @@ import java.net.URLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
-
+import net.spy.memcached.MemcachedClient;
+import net.spy.memcached.AddrUtil;
 
 /**
  * This component queries RDF triple stores using Sparql. It is threadsafe.
@@ -31,23 +32,46 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 
     String result = null;
     HttpURLConnection con = null;
-    try {
-      String url = SettingsService.getProperty("sublima.joseki.endpoint");
-      logger.info("SPARQLdispatcher executing.\n" + query + "\n");
 
-      URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
-      logger.debug("SPARQLdispatcher connected to Joseki.");
-      long connecttime = System.currentTimeMillis();
-      con = (HttpURLConnection) u.openConnection();
-      result = IOUtils.toString(con.getInputStream());
-      long requesttime = System.currentTimeMillis() - connecttime;
-      logger.info("SPARQLdispatcher got results from Joseki. Query took " + requesttime + " ms." );
+    // Configure memcached if available.
+    MemcachedClient memcached = null;
+    try {
+        memcached = new MemcachedClient(
+                AddrUtil.getAddresses(
+                        SettingsService.getProperty("sublima.memcached.servers")
+                )
+        );
     } catch (Exception e) {
-      logger.error("SPARQLdispatcher got " + e.toString() + " while talking to the endpoint, with message: " + e.getMessage());
-      con.disconnect();
-      e.printStackTrace();
+        logger.info("SPARQLdispatcher couldn't find the memcached server and said " + e.getMessage()
+        + ". Have you set sublima.memcached.servers?");
     }
-    con.disconnect();
+
+    String url = SettingsService.getProperty("sublima.joseki.endpoint");
+    logger.info("SPARQLdispatcher executing.\n" + query + "\n");
+    String cacheKey = String.valueOf(query.trim().hashCode()); // We could parse the query first to get a better key
+
+    Object fromCache = memcached.get(cacheKey);
+    if (fromCache == null) {
+        logger.debug("SPARQLdispatcher found nothing in the cache.");
+        try {
+            URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
+            logger.debug("SPARQLdispatcher connected to Joseki.");
+            long connecttime = System.currentTimeMillis();
+            con = (HttpURLConnection) u.openConnection();
+            result = IOUtils.toString(con.getInputStream());
+            long requesttime = System.currentTimeMillis() - connecttime;
+            logger.info("SPARQLdispatcher got results from Joseki. Query took " + requesttime + " ms." );
+            memcached.set(cacheKey, 60 * 60 * 24 * 30, result);
+        } catch (Exception e) {
+            logger.error("SPARQLdispatcher got " + e.toString() + " while talking to the endpoint, with message: " + e.getMessage());
+            con.disconnect();
+            e.printStackTrace();
+        }
+        con.disconnect();
+    } else {
+        logger.debug("SPARQLdispatcher using cache.");
+        result = fromCache.toString();
+    }
     System.gc();
     return result;
   }

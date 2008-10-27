@@ -136,6 +136,15 @@
       <artifactId>postgresql</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>spy</groupId>
+      <artifactId>memcached</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>spy</groupId>
+      <artifactId>spy</artifactId>
+    </dependency>
+		
   </dependencies>
 
 </project>
