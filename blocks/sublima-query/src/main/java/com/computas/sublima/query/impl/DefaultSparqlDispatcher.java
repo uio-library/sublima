@@ -2,6 +2,7 @@ package com.computas.sublima.query.impl;
 
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.CachingService;
 import com.hp.hpl.jena.query.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -13,8 +14,7 @@ import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
 import net.spy.memcached.MemcachedClient;
-import net.spy.memcached.OperationTimeoutException;
-import net.spy.memcached.AddrUtil;
+
 
 /**
  * This component queries RDF triple stores using Sparql. It is threadsafe.
@@ -35,35 +35,15 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     HttpURLConnection con = null;
 
     // Configure memcached if available.
-    MemcachedClient memcached = null;
-    boolean useMemcached = false;
-    try {
-        memcached = new MemcachedClient(
-                AddrUtil.getAddresses(
-                        SettingsService.getProperty("sublima.memcached.servers")
-                )
-        );
-        useMemcached = true;
-    } catch (Exception e) {
-        useMemcached = false;
-        logger.info("SPARQLdispatcher couldn't find the memcached server and said " + e.getMessage()
-        + ". Have you set sublima.memcached.servers?");
-    }
+    CachingService cache = new CachingService();
+    MemcachedClient memcached = cache.connect();
 
     String url = SettingsService.getProperty("sublima.joseki.endpoint");
     logger.info("SPARQLdispatcher executing.\n" + query + "\n");
     String cacheKey = String.valueOf(query.replaceAll("\\s+", " ").hashCode()); // We could parse the query first to get a better key
   //  logger.trace("SPARQLdispatcher hashing for use as key.\n" + query.replaceAll("\\s+", " ") + "\n");
-    Object fromCache = null;
-    if (useMemcached) {
-        try {
-            fromCache = memcached.get(cacheKey);
-        } catch (OperationTimeoutException e) {
-            useMemcached = false;
-            logger.warn("SPARQLdispatcher timed out when contacting memcached: "  + e.getMessage()
-                    + ". Have you set sublima.memcached.servers?");
-        }
-    }
+    Object fromCache = cache.get(memcached, cacheKey);
+
     if (fromCache == null) {
         logger.debug("SPARQLdispatcher found nothing in the cache.");
         try {
@@ -74,7 +54,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
             result = IOUtils.toString(con.getInputStream());
             long requesttime = System.currentTimeMillis() - connecttime;
             logger.info("SPARQLdispatcher got results from Joseki. Query took " + requesttime + " ms." );
-            if (useMemcached) {
+            if (cache.useMemcached()) {
                 memcached.set(cacheKey, 60 * 60 * 24 * 30, result);
             }
         } catch (Exception e) {
