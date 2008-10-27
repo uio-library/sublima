@@ -43,6 +43,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
       long requesttime = System.currentTimeMillis() - connecttime;
       logger.info("SPARQLdispatcher got results from Joseki. Query took " + requesttime + " ms." );
     } catch (Exception e) {
+      logger.error("SPARQLdispatcher got " + e.toString() + " while talking to the endpoint, with message: " + e.getMessage());
       con.disconnect();
       e.printStackTrace();
     }
