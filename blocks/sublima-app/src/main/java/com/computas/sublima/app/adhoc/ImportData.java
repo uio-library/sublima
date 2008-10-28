@@ -30,18 +30,19 @@ public class ImportData {
     try {
       ModelRDB model = ModelRDB.createModel(connection);
       model.read(url, lang);
-      logger.trace("ImportData.load() --> Created new model with data");
+      logger.debug("ImportData.load() --> Created new model with data");
     }
     catch (AlreadyExistsException e) {
       ModelRDB model = ModelRDB.open(connection);
       model.read(url, lang);
-      logger.trace("ImportData.load() --> Updated existing model with new data");
+      logger.debug("ImportData.load() --> Updated existing model with new data");
     }
     finally {
       try {
         connection.close();
 
       } catch (SQLException e) {
+        logger.error("ImportData.load() --> SQL problem detected: " + e.getMessage());
         e.printStackTrace();
       }
     }
