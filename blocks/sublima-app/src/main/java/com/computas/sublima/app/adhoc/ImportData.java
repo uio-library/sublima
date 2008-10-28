@@ -1,6 +1,7 @@
 package com.computas.sublima.app.adhoc;
 
 import com.computas.sublima.query.service.DatabaseService;
+import com.computas.sublima.query.service.CachingService;
 import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.shared.AlreadyExistsException;
@@ -8,6 +9,7 @@ import com.hp.hpl.jena.shared.AlreadyExistsException;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+import net.spy.memcached.MemcachedClient;
 
 public class ImportData {
 
@@ -30,11 +32,13 @@ public class ImportData {
     try {
       ModelRDB model = ModelRDB.createModel(connection);
       model.read(url, lang);
+      modelChanged();
       logger.debug("ImportData.load() --> Created new model with data");
     }
     catch (AlreadyExistsException e) {
       ModelRDB model = ModelRDB.open(connection);
       model.read(url, lang);
+      modelChanged();
       logger.debug("ImportData.load() --> Updated existing model with new data");
     }
     finally {
@@ -46,6 +50,13 @@ public class ImportData {
         e.printStackTrace();
       }
     }
+  }
+
+  private static void modelChanged() {
+      logger.debug("ImportData invalidates the cache.");
+      CachingService cache = new CachingService();
+      MemcachedClient memcached = cache.connect();
+      cache.modelChanged(memcached);
   }
 
   public static void main(String[] args) {

@@ -22,6 +22,7 @@ public class CachingService {
 
     /**
      * Connect to the memcached
+     * @return an instance of the MemcachedClient
      **/
     public MemcachedClient connect() {
         MemcachedClient memcached = null;
@@ -72,9 +73,12 @@ public class CachingService {
 
     /**
      * Will invalidate the cache when called
+     * @param mc The MemcachedClient object
      */
 
     public void modelChanged(MemcachedClient mc) {
-        mc.flush();
+        if (useMemcached) {
+            mc.flush();
+        }
     }
 }
