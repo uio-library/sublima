@@ -299,7 +299,6 @@ public class Form2SparqlService {
     sparqlQueryBuffer.append("\n}");
     sparqlQueryBuffer.insert(0, getPrefixString());
     String returnString = sparqlQueryBuffer.toString();
-    //System.out.println(returnString);
     //logger.trace("Constructed SPARQL query: \n" + returnString);
     return returnString;
   }
@@ -338,7 +337,6 @@ public class Form2SparqlService {
     sparqlQueryBuffer.append("\n}\nOFFSET " + (cutoff - 1) + " LIMIT 1");
     sparqlQueryBuffer.insert(0, getPrefixString());
     String returnString = sparqlQueryBuffer.toString();
-    System.out.println(returnString);
     //logger.trace("Constructed SPARQL query: \n" + returnString);
     return returnString;
   }
@@ -538,26 +536,33 @@ public class Form2SparqlService {
   }
 
   private StringBuilder OptimizeTripleOrder(ArrayList<String> n3List) {
-    StringBuilder ordered = new StringBuilder();
+    StringBuilder ordered = new StringBuilder(); // Stuff that isn't ordered any special way goes here
+    StringBuilder start = new StringBuilder(); // Stuff that should be in the start of the query goes here
+    StringBuilder end = new StringBuilder(); // Stuff that should end the query goes here.
 
     for (String triple : n3List) {
-      if (triple.contains("pf:textMatch") && ! triple.contains("OPTIONAL") && ! triple.contains("?lit ")) {
-         // In this case, it isn't actually a triple, and the freetext thing needs to go first
-          List<String> tmplist = Arrays.asList(triple.split("\n"));
-          Collections.reverse(tmplist);
-          ordered.insert(0, StringUtils.join("\n", tmplist));
-          ordered.insert(0, "\n");
+      if (triple.contains("pf:textMatch") && ! triple.contains("OPTIONAL")) {
+          if (triple.contains("?lit ")) {
+              start.insert(0, triple);
+          } else {
+              // In this case, it isn't actually a triple, and the freetext thing needs to go first
+              List<String> tmplist = Arrays.asList(triple.split("\n"));
+              Collections.reverse(tmplist);
+              start.insert(0, StringUtils.join("\n", tmplist));
+              start.insert(0, "\n");
+          }
       } else
       if (triple.contains("dct:language")) {
-          ordered.append(triple);
+          end.append(triple);
       } else 
         if (triple.contains("describedBy")) {
-        ordered.append(triple);
+        end.append(triple);
       } else {
         ordered.insert(0, triple);
       }
     }
-
+    ordered.insert(0, start);
+    ordered.append(end);
     return ordered;
   }
 

@@ -237,9 +237,9 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>", 
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                "DESCRIBE ?resource ?rest WHERE {",
-               "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
 		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
                "?resource dct:identifier ?lit .",
+               "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
                "?resource ?p ?rest .\n}"}), resultString);
   }
 
@@ -257,9 +257,10 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                "SELECT DISTINCT ?resource WHERE {",
-		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
 		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
-               "?resource dct:identifier ?lit .\n}\nOFFSET 99 LIMIT 1"}), resultString);
+               "?resource dct:identifier ?lit .",
+               "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
+               "}\nOFFSET 99 LIMIT 1"}), resultString);
   }
 
   public void testConvertForm2SparqlCountSingleValueFreetextWithRegeularFreetextSparql() {
@@ -277,9 +278,10 @@ public class Form2SparqlServiceTest extends TestCase {
 		       "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                "SELECT DISTINCT ?resource WHERE {",
-		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
 		       "?lit pf:textMatch \"\"\"engine*\"\"\" .",
-               "?resource dct:identifier ?lit .\n}\nOFFSET 99 LIMIT 1"}), resultString);
+               "?resource dct:identifier ?lit .",
+		       "?resource dct:title \"\"\"Cirrus Personal Jet\"\"\" .",
+               "}\nOFFSET 99 LIMIT 1"}), resultString);
   }
 
 
