@@ -4,6 +4,7 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.ProcessingException;
+import org.apache.log4j.Logger;
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
 import com.computas.sublima.query.service.SettingsService;
@@ -20,6 +21,9 @@ import java.util.Map;
  */
 public class SRUClient implements StatelessAppleController {
 
+//  private SparqlDispatcher sparqlDispatcher;
+//  static Logger logger = Logger.getLogger(SRUClient.class);
+
   public void process(AppleRequest req, AppleResponse res) throws Exception {
       String endpoint = SettingsService.getProperty("sublima.sruserver.endpoint");
       if (endpoint == null) {
@@ -34,17 +38,26 @@ public class SRUClient implements StatelessAppleController {
       String operation = req.getCocoonRequest().getParameter("operation");
       if ("explain".equalsIgnoreCase(operation) || req.getCocoonRequest().getParameters().size() == 0) {
           // We only need to retrieve the explain record, which is best done by a redirect to the server
-          res.redirectTo(query);
+          res.getCocoonResponse().sendRedirect(query);
+          res.getCocoonResponse().flushBuffer();
+          return;
       }
 
       DOMParser parser = new DOMParser();
 
-      parser.parse(query);
+     try {
+          parser.parse(query);
+     } catch (Exception e) {
+          res.getCocoonResponse().sendError(502, "SRUClient received an invalid response from the server.");
+          e.printStackTrace();
+         return;
+      }
 
       Document document = parser.getDocument();
       if (document.getElementsByTagName("diagnostics") != null) {
           // Then we have an error, redirect to the server's description of the problem
-          res.redirectTo(query);
+          res.getCocoonResponse().sendRedirect(query);
+          return;
       }
 
       Map<String, Object> bizData = new HashMap<String, Object>();
