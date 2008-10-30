@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<c:page xmlns:c="http://xmlns.computas.com/cocoon" 
+	xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+
+  <jx:out value="#{result}" xmlize="true" />
+
+</c:page>

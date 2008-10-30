@@ -315,7 +315,7 @@ public class Form2SparqlService {
    * returned using this WHERE clause.
    *
    * @param parameterMap The data structure with the key-value-pairs.
-   * @cutoff int the number of hits
+   * @param cutoff int the number of hits
    * @return A SPARQL count query.
    */
   public String convertForm2SparqlCount(Map<String, String[]> parameterMap, int cutoff) {
