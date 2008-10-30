@@ -470,11 +470,11 @@
       </map:match>
     </map:pipeline>
 
-    <map:pipeline>
+    <!-- map:pipeline>
       <map:match pattern="sruclient">
         <map:call function="com.computas.sublima.query.controller.SRUClient"/>
       </map:match>
-    </map:pipeline>
+    </map:pipeline -->
 
 
     <map:pipeline internal-only="true">
