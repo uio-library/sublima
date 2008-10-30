@@ -4,7 +4,6 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.ProcessingException;
-import org.apache.log4j.Logger;
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
 import com.computas.sublima.query.service.SettingsService;
@@ -20,9 +19,6 @@ import java.util.Map;
  * Time: 10:08:51 AM
  */
 public class SRUClient implements StatelessAppleController {
-
-//  private SparqlDispatcher sparqlDispatcher;
-//  static Logger logger = Logger.getLogger(SRUClient.class);
 
   public void process(AppleRequest req, AppleResponse res) throws Exception {
       String endpoint = SettingsService.getProperty("sublima.sruserver.endpoint");
@@ -43,13 +39,7 @@ public class SRUClient implements StatelessAppleController {
 
       DOMParser parser = new DOMParser();
 
-  //    try {
-          parser.parse(query);
-  /*    } catch (Exception e) {
-  //        logger.fatal("SRUClient received an invalid response from the server.");
-          res.sendStatus(502);
-          e.printStackTrace();
-      }             */
+      parser.parse(query);
 
       Document document = parser.getDocument();
       if (document.getElementsByTagName("diagnostics") != null) {
