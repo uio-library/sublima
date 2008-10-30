@@ -44,16 +44,16 @@ public class SRUClient extends HttpServlet {
           query = endpoint + "?" + req.getQueryString();
       }
 
-  /*
+
       String operation = req.getParameter("operation");
-      if ("explain".equalsIgnoreCase(operation)) { // || req.getQueryString() == null) {
+      if ("explain".equalsIgnoreCase(operation) || req.getQueryString() == null) {
           // We only need to retrieve the explain record, which is best done by a redirect to the server
           res.sendRedirect(query);
           res.flushBuffer();
           return;
       }
 
-   */   DOMParser parser = new DOMParser();
+      DOMParser parser = new DOMParser();
 
      try {
           parser.parse(query);
@@ -63,13 +63,14 @@ public class SRUClient extends HttpServlet {
          return;
       }
                                    
-      Document document = parser.getDocument();  /*
-      if (document.getElementsByTagName("diagnostics") != null) {
+      Document document = parser.getDocument();
+/*      if (document.getElementsByTagName("diagnostics") != null) {
           // Then we have an error, redirect to the server's description of the problem
           res.sendRedirect(query);
           return;
       }
-                */
+  */
+      
 
       OutputFormat format    = new OutputFormat(document);
       StringWriter stringOut = new StringWriter();
