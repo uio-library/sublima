@@ -7,6 +7,8 @@ import org.apache.cocoon.ProcessingException;                  */
 import org.apache.log4j.Logger;
 import org.apache.xerces.parsers.DOMParser;
 import org.apache.cocoon.ProcessingException;
+import org.apache.xml.serialize.XMLSerializer;
+import org.apache.xml.serialize.OutputFormat;
 import org.w3c.dom.Document;
 import com.computas.sublima.query.service.SettingsService;
 
@@ -18,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * This is a client for SRU that uses the Sublima SRU Server responses to
@@ -41,16 +44,16 @@ public class SRUClient extends HttpServlet {
           query = endpoint + "?" + req.getQueryString();
       }
 
-
+  /*
       String operation = req.getParameter("operation");
-      if ("explain".equalsIgnoreCase(operation) || req.getQueryString() == null) {
+      if ("explain".equalsIgnoreCase(operation)) { // || req.getQueryString() == null) {
           // We only need to retrieve the explain record, which is best done by a redirect to the server
           res.sendRedirect(query);
           res.flushBuffer();
           return;
       }
 
-      DOMParser parser = new DOMParser();
+   */   DOMParser parser = new DOMParser();
 
      try {
           parser.parse(query);
@@ -59,17 +62,22 @@ public class SRUClient extends HttpServlet {
           e.printStackTrace();
          return;
       }
-
-      Document document = parser.getDocument();
+                                   
+      Document document = parser.getDocument();  /*
       if (document.getElementsByTagName("diagnostics") != null) {
           // Then we have an error, redirect to the server's description of the problem
           res.sendRedirect(query);
           return;
       }
+                */
 
+      OutputFormat format    = new OutputFormat(document);
+      StringWriter stringOut = new StringWriter();
+      XMLSerializer serial   = new XMLSerializer(stringOut, format);
+      serial.serialize(document);
       res.setContentType("text/xml");
       PrintWriter out = res.getWriter();
-      out.println(document.toString());
+      out.println(stringOut.toString());
 
       out.close();
   }
