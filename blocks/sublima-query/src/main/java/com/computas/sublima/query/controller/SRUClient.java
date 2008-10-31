@@ -1,15 +1,8 @@
 package com.computas.sublima.query.controller;
 
-/* import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.components.flow.apples.AppleResponse;
-import org.apache.cocoon.components.flow.apples.AppleRequest;
-import org.apache.cocoon.ProcessingException;                  */
-import org.apache.log4j.Logger;
 import org.apache.xerces.parsers.DOMParser;
-import org.apache.cocoon.ProcessingException;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.utils.DOMBuilder;
 import org.w3c.dom.*;
 import com.computas.sublima.query.service.SettingsService;
 
@@ -20,8 +13,6 @@ import javax.servlet.ServletException;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
-import java.util.HashMap;
-import java.util.Map;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
