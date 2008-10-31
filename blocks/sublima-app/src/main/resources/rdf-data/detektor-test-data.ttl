@@ -884,6 +884,12 @@ topic:topic0001805
 
 <http://home.online.no/~k-dahle/modellbygging/index.html>
       dct:subject topic:topic000736 .
+      rdf:type sub:Resource ;
+      dct:title "Modellbygging"@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer user:konvertert .
+      dct:identifier resource:modellbygging ;
+      dct:language <http://www.lingvoj.org/lang/no> .
 
 <http://www.velkommenoslo.no/>
       rdf:type sub:Resource ;
@@ -1174,9 +1180,6 @@ topic:topic0001436
       skos:inScheme topic: ;
       skos:prefLabel "Brahe, Tycho, d., 1546-1601"@no ;
       wdr:describedBy status:godkjent_av_administrator .
-
-<http://detektor.deichman.no/index.php?columns=3&action=subject&letter=J&subject=99&clickCount=1>
-      dct:subject topic:topic0007 .
 
 <http://www.nho.no/>
       rdf:type sub:Resource ;
@@ -2469,6 +2472,12 @@ topic:topic000730
 
 <http://lissies.gotdns.com/prosjekt/menyer/scapbooking.htm>
       dct:subject topic:topic0002002 .
+      rdf:type sub:Resource ;
+      dct:title "Scrapbooking"@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer user:konvertert .
+      dct:identifier resource:scrapbooking ;
+      dct:language <http://www.lingvoj.org/lang/no> .
 
 <http://www.trafikanten.no/>
       rdf:type sub:Resource ;
@@ -21333,6 +21342,13 @@ topic:topic000591
 <http://arkeologi.blogspot.com/>
       dct:subject topic:topic0001481 ;
       dct:type dcmitype:Image , dcmitype:Text .
+      rdf:type sub:Resource ;
+      dct:title "Arkeologi"@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer user:konvertert .
+      dct:identifier resource:arkeologiblogg ;
+      dct:language <http://www.lingvoj.org/lang/no> . 
+
 
 <http://decentius.hit.uib.no/lexin.html?ui-lang=nbo>
       rdf:type sub:Resource ;
@@ -22197,8 +22213,6 @@ topic:topic0001500
       skos:prefLabel "Bokhandlere, utenlandske"@no ;
       wdr:describedBy status:godkjent_av_administrator .
 
-<http://www.kb.se/ts/tsonline.htm>
-      dct:subject topic:topic00072 , topic:topic000355 .
 
 <http://www.grida.no/geo2000/ov-no/index.htm>
       rdf:type sub:Resource ;
@@ -25815,8 +25829,17 @@ topic:topic0001392
       sub:url <http://www.music.iastate.edu/antiqua/instrumt.html> .
 
 <http://www.fornybar.no/>
+      rdf:type sub:Resource ;
+      dct:title "Fornybar energi"@no;
+      dct:description "En informasjonsressurs for fremtidens energiformer."@no
       dct:subject topic:topic00012 , topic:topic0001366 , topic:topic000175 ;
       dct:type dcmitype:MovingImage , dcmitype:Image , dcmitype:Text .
+      dct:dateAccepted "2003-03-31T12:50:27"^^xsd:dateTime ;
+      dct:identifier resource:fornybar ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer user:konvertert ;
+      sub:url <http://www.fornybar.no/> .
 
 topic:topic0001225
       rdf:type skos:Concept ;
@@ -49238,6 +49261,15 @@ topic:topic0001856
 <http://www.studenttorget.no/index.php?show=3378&expand=37953378&artikkelid=5937>
       dct:subject topic:topic0002186 ;
       dct:type dcmitype:Text .
+      rdf:type sub:Resource ;
+      dct:title "Eksamenstips"@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer user:konvertert .
+      dct:identifier resource:eksamenstips ;
+      dct:language <http://www.lingvoj.org/lang/no> . 
+
+
+
 
 <http://detektor.deichman.no/index.php?columns=3&action=subject&letter=H&subject=98&clickCount=1>
       dct:subject topic:topic0007 .
