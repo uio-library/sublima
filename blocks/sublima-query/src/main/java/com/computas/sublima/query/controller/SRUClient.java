@@ -9,13 +9,17 @@ import org.apache.xerces.parsers.DOMParser;
 import org.apache.cocoon.ProcessingException;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xml.serialize.OutputFormat;
-import org.w3c.dom.Document;
+import org.apache.xml.utils.DOMBuilder;
+import org.w3c.dom.*;
 import com.computas.sublima.query.service.SettingsService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.IOException;
@@ -71,11 +75,33 @@ public class SRUClient extends HttpServlet {
       }
   */
       
+      DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
+      DocumentBuilder builder;
+      try {
+          builder = fact.newDocumentBuilder();
+      } catch (ParserConfigurationException e) {
+          throw new ServletException(e.getMessage());
+      }
+      Document outdoc = builder.newDocument();
+                     
+      Element root = outdoc.createElementNS("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:RDF");
+      outdoc.appendChild(root);
+      // Inherit the root elements xmlns-declaration
+      NamedNodeMap nsattr = document.getFirstChild().getAttributes();
+      for (int i=0; i < nsattr.getLength(); i++) { // Why can't I just iterate over nsattr?
+          Attr tmpNode = (Attr) outdoc.importNode(nsattr.item(i), false);
+          root.setAttributeNode(tmpNode);
+      }
+      NodeList resources = document.getElementsByTagNameNS("http://xmlns.computas.com/sublima#", "Resource");
+      for (int i=0; i < resources.getLength(); i++) { // Why can't I just iterate over resources?
+          Node tmpNode = outdoc.importNode(resources.item(i), true);
+          root.appendChild(tmpNode);
+      }
 
-      OutputFormat format    = new OutputFormat(document);
+      OutputFormat format    = new OutputFormat(outdoc);
       StringWriter stringOut = new StringWriter();
       XMLSerializer serial   = new XMLSerializer(stringOut, format);
-      serial.serialize(document);
+      serial.serialize(outdoc);
       res.setContentType("text/xml");
       PrintWriter out = res.getWriter();
       out.println(stringOut.toString());
