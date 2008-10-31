@@ -39,10 +39,10 @@ public class SRUClient extends HttpServlet {
 //  static Logger logger = Logger.getLogger(SRUClient.class);
 
   public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-      String endpoint = "http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/sruserver"; // SettingsService.getProperty("sublima.sruserver.endpoint");
-     /* if (endpoint == null) {
-          throw new ProcessingException("The sublima.sruserver.endpoint has not been configured, exiting.");
-      }  */
+      String endpoint = SettingsService.getProperty("sublima.sruserver.endpoint");
+      if (endpoint == null) {
+          throw new ServletException("The sublima.sruserver.endpoint has not been configured, exiting.");
+      }
       String query = endpoint;
       if (req.getQueryString() != null) {
           query = endpoint + "?" + req.getQueryString();
