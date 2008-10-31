@@ -176,4 +176,16 @@
 
   <!-- END COPIED FROM THE XPATCH -->
 
+  <servlet>
+    <description>A client for the SRU Server of Sublima</description>
+    <servlet-name> SRUClient </servlet-name>
+    <servlet-class>com.computas.sublima.query.controller.SRUClient</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SRUClient</servlet-name>
+    <url-pattern>/sruclient</url-pattern>
+  </servlet-mapping>
+
+
+
 </web-app>
