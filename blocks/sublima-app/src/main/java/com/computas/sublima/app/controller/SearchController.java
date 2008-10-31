@@ -5,6 +5,7 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.CachingService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
@@ -15,6 +16,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.util.*;
+
+import net.spy.memcached.MemcachedClient;
 
 public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
@@ -202,6 +205,9 @@ public class SearchController implements StatelessAppleController {
     boolean freetext = false;
     String searchStringOverriden = null;
 
+    boolean doBigSearchAnyway = (parameterMap.get("dobigsearchanyway") != null);
+    parameterMap.remove("dobigsearchanyway");
+
     // Create an XML structure of the search criterias. This could probably be nore generic.
     StringBuilder xmlSearchParametersBuffer = new StringBuilder();
     xmlSearchParametersBuffer.append("<c:searchparams xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
@@ -263,8 +269,31 @@ public class SearchController implements StatelessAppleController {
     //logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
 
     Object queryResult;
-    if (doSearch && (!adminService.isAboveMaxNumberOfHits(countNumberOfHitsQuery))) {
-      queryResult = sparqlDispatcher.query(sparqlQuery);
+    if (doBigSearchAnyway) {
+        // This will do the search despite it being large, thus populating the cache
+        queryResult = sparqlDispatcher.query(sparqlQuery);
+        doSearch = false; // We've done what we came for allready
+    }
+
+    if (doSearch) {
+        if (adminService.isAboveMaxNumberOfHits(countNumberOfHitsQuery)) {
+            // We are above the threshold, lets see if we have it cached
+            CachingService cache = new CachingService();
+            MemcachedClient memcached = cache.connect();
+
+            String cacheString = sparqlQuery.replaceAll("\\s+", " ") + SettingsService.getProperty("sublima.base.url");
+            String cacheKey = String.valueOf(cacheString.hashCode()); // We could parse the query first to get a better key
+            //  logger.trace("SPARQLdispatcher hashing for use as key.\n" + cacheString + "\n");
+            if (cache.ask(memcached, cacheKey)) {
+                logger.debug("SearchController found the query in the cache.");
+                queryResult = sparqlDispatcher.query(sparqlQuery); // Cache will be used in here.
+            } else {
+                queryResult = "<empty/>";
+            }
+        } else {
+            // We are below the threshold, do the search. Cache will be checked
+            queryResult = sparqlDispatcher.query(sparqlQuery);
+        }
     }
     else {
       queryResult = "<empty/>";

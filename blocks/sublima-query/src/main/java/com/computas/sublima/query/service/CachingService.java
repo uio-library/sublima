@@ -70,6 +70,16 @@ public class CachingService {
         return fromCache;
     }
 
+    /**
+     * Ask if something with the given key is allready memcached
+     *
+     * @param mc the Memcached Client
+     * @param key the String key of the cache entry
+     * @return boolean returns true if the key was found.
+     */
+    public boolean ask(MemcachedClient mc, String key) {
+      return (mc.get(key) != null);
+    }
 
     /**
      * Will invalidate the cache when called
