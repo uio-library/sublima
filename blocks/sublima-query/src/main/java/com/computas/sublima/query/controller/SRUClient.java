@@ -68,12 +68,12 @@ public class SRUClient extends HttpServlet {
       }
                                    
       Document document = parser.getDocument();
-/*      if (document.getElementsByTagName("diagnostics") != null) {
+      if ("diagnostics".equals(document.getFirstChild().getLocalName())) {
           // Then we have an error, redirect to the server's description of the problem
           res.sendRedirect(query);
           return;
       }
-  */
+
       
       DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
       DocumentBuilder builder;
