@@ -52,12 +52,6 @@
 	<map:serialize type="xml"/>
       </map:match>
 
-      <map:match pattern="sru2rdfxml-transform">
-	<map:generate src="service-consumer:"/>
-	<map:transform src="transform/sru2rdfxml.xsl"/>
-	<map:serialize type="xml"/>
-      </map:match>
-
       <map:match pattern="admin-styling">
         <map:act type="locale">
           <map:generate src="service-consumer:"/>

@@ -37,12 +37,5 @@
     class="com.computas.sublima.query.controller.SRUServer">
      <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
   </bean>   
-
-  <bean name="com.computas.sublima.query.controller.SRUClient"
-    class="com.computas.sublima.query.controller.SRUClient">
-
-  </bean>
-   
- 
   
 </beans>

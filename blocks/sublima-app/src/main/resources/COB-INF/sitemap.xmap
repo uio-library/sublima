@@ -470,23 +470,6 @@
       </map:match>
     </map:pipeline>
 
-    <!-- map:pipeline>
-      <map:match pattern="sruclient">
-        <map:call function="com.computas.sublima.query.controller.SRUClient"/>
-      </map:match>
-    </map:pipeline -->
-
-
-    <map:pipeline internal-only="true">
-      <map:match pattern="sru/sru-client">
-        <map:generate src="templates/sru-client.jx.xml" type="jx"/>
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sru2rdfxml-transform"/>
-        </map:serialize>
-
-      </map:match>
-    </map:pipeline>
-
     <map:pipeline internal-only="true">
       <map:match pattern="sru/*">
         <map:generate src="templates/{1}.jx.xml" type="jx"/>
