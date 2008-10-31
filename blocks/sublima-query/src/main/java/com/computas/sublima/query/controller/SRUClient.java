@@ -92,6 +92,7 @@ public class SRUClient extends HttpServlet {
           Attr tmpNode = (Attr) outdoc.importNode(nsattr.item(i), false);
           root.setAttributeNode(tmpNode);
       }
+      // Append the sub:Resources
       NodeList resources = document.getElementsByTagNameNS("http://xmlns.computas.com/sublima#", "Resource");
       for (int i=0; i < resources.getLength(); i++) { // Why can't I just iterate over resources?
           Node tmpNode = outdoc.importNode(resources.item(i), true);
@@ -102,7 +103,7 @@ public class SRUClient extends HttpServlet {
       StringWriter stringOut = new StringWriter();
       XMLSerializer serial   = new XMLSerializer(stringOut, format);
       serial.serialize(outdoc);
-      res.setContentType("text/xml");
+      res.setContentType("application/rdf+xml");
       PrintWriter out = res.getWriter();
       out.println(stringOut.toString());
 
