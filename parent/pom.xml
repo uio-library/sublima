@@ -146,7 +146,7 @@
       <dependency>
         <groupId>com.hp.hpl.jena</groupId>
         <artifactId>arq-extra</artifactId>
-        <version>2.4</version>
+        <version>2.5.0</version>
         <scope>compile</scope>
       </dependency>
 
@@ -216,23 +216,23 @@
       <dependency>
         <groupId>org.joseki</groupId>
         <artifactId>joseki</artifactId>
-	<version>290508-SNAPSHOT</version>
+        <version>3.2.0</version>
       </dependency>
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-core</artifactId>
-	<version>2.2.0</version>
+        <version>2.3.1</version>
       </dependency>
       <dependency>
-	<groupId>org.z3950.zing</groupId>
-	<artifactId>cql</artifactId>
-	<version>1.3</version>
+        <groupId>org.z3950.zing</groupId>
+        <artifactId>cql</artifactId>
+        <version>1.3</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <version>1.4.3</version>
-        <scope>comile</scope>
+        <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>com.hp.hpl.jena</groupId>
@@ -243,7 +243,7 @@
       <dependency>
         <groupId>com.hp.hpl.jena</groupId>
         <artifactId>arq</artifactId>
-        <version>2.4</version>
+        <version>2.5.0</version>
         <scope>compile</scope>
       </dependency>
       <!-- Unicode -->
@@ -262,22 +262,22 @@
       </dependency>
 
       <dependency>
-	<groupId>com.jivesoftware</groupId>
-	<artifactId>akismet-java</artifactId>
-	<version>1.0-J</version>
+        <groupId>com.jivesoftware</groupId>
+        <artifactId>akismet-java</artifactId>
+        <version>1.0-J</version>
         <scope>compile</scope>
       </dependency>
 
       <dependency>
-	<groupId>spy</groupId>
-	<artifactId>memcached</artifactId>
-	<version>2.1</version>
+        <groupId>spy</groupId>
+        <artifactId>memcached</artifactId>
+        <version>2.1</version>
       </dependency>
-      		
+
       <dependency>
-	<groupId>spy</groupId>
-	<artifactId>spy</artifactId>
-	<version>2.4</version>
+        <groupId>spy</groupId>
+        <artifactId>spy</artifactId>
+        <version>2.4</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -299,8 +299,6 @@
       <layout>legacy</layout>
     </repository>
   </repositories>
-
-
 
 
   <build>
