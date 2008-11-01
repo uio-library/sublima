@@ -1,3 +1,16 @@
+
+# UNDER NO CIRCUMSTANCES REMOVE THE FOLLOWING STATEMENT
+# IT WILL BREAK PROTEGE INTEGRATION
+@base <http://xmlns.computas.com/sublima> .
+
+# IF YOU CONVERT THIS TO RDF/XML WITH REDLAND (RDFPROC) REMEMBER TO SET
+# BASE MANUALLY 
+#  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#         xml:base="http://xmlns.computas.com/sublima">
+#
+
+
+
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -8,8 +21,11 @@
 @prefix wdr: <http://www.w3.org/2007/05/powder#> .
 @prefix status: <http://sublima.computas.com/status/> .
 
-#<>	rdfs:comment "An ontology containing some simple properties and classes for use in the Sublima project." .
 
+# UNDER NO CIRCUMSTANCES REMOVE THE FOLLOWING STATEMENT
+# IT WILL BREAK PROTEGE INTEGRATION
+<> a owl:Ontology ;
+rdfs:comment "An ontology containing some simple properties and classes for use in the Sublima project." .
 
 sub:LocalURI		rdfs:subClassOf	sioc:Item ;
 			rdfs:comment	"The local URI assigned to a URI"@en.

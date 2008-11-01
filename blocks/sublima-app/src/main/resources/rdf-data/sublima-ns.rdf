@@ -1,122 +1,229 @@
-<rdf:RDF
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-    xmlns:http="http://www.w3.org/2007/ont/http#"
-    xmlns:wdr="http://www.w3.org/2007/05/powder#"
-    xmlns:status="http://sublima.computas.com/status/"
-    xmlns:owl="http://www.w3.org/2002/07/owl#"
-    xmlns:sioc="http://rdfs.org/sioc/ns#"
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-    xmlns:sub="http://xmlns.computas.com/sublima#" > 
-  <rdf:Description rdf:about="http://sublima.computas.com/status/gone">
-    <rdfs:label xml:lang="en">Permanently gone</rdfs:label>
-    <rdfs:label xml:lang="da">Permanent borte</rdfs:label>
-    <rdfs:label xml:lang="sv">Permanent borta</rdfs:label>
-    <rdfs:label xml:lang="no">Permanent borte</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xml:base="http://xmlns.computas.com/sublima">
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima">
+    <ns0:comment xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#">An ontology containing some simple properties and classes for use in the Sublima project.</ns0:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="http://sublima.computas.com/status/godkjent_av_administrator">
-    <rdfs:label xml:lang="en">Approved by administrator</rdfs:label>
-    <rdfs:label xml:lang="da">Godkjent av administrator</rdfs:label>
-    <rdfs:label xml:lang="sv">Godkänt av administrator</rdfs:label>
-    <rdfs:label xml:lang="no">Godkjent av administrator</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
-    <owl:inverseOf rdf:resource="http://www.w3.org/2004/02/skos/core#hasTopConcept"/>
-    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://sublima.computas.com/status/under_behandling">
-    <rdfs:label xml:lang="en">Being dealt with</rdfs:label>
-    <rdfs:label xml:lang="da">Under behandling</rdfs:label>
-    <rdfs:label xml:lang="sv">Under behandling</rdfs:label>
-    <rdfs:label xml:lang="no">Under behandling</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#comment">
-    <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#Item"/>
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://sublima.computas.com/status/nytt_forslag">
-    <rdfs:label xml:lang="en">New suggestion</rdfs:label>
-    <rdfs:label xml:lang="da">Nytt forslag</rdfs:label>
-    <rdfs:label xml:lang="sv">Nytt förslag</rdfs:label>
-    <rdfs:label xml:lang="no">Nytt forslag</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#status">
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://sublima.computas.com/status/ok">
-    <rdfs:label xml:lang="en">Ok</rdfs:label>
-    <rdfs:label xml:lang="da">Ok</rdfs:label>
-    <rdfs:label xml:lang="sv">Ok</rdfs:label>
-    <rdfs:label xml:lang="no">Ok</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#Resource">
-    <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Site"/>
-    <owl:unionOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
-    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
-    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://sublima.computas.com/status/inaktiv">
-    <rdfs:label xml:lang="en">Inactive</rdfs:label>
-    <rdfs:label xml:lang="da">Inaktiv</rdfs:label>
-    <rdfs:label xml:lang="sv">Inaktiv</rdfs:label>
-    <rdfs:label xml:lang="no">Inaktiv</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://sublima.computas.com/status/ikke_godkjent_av_administrator">
-    <rdfs:label xml:lang="en">Not approved by administrator</rdfs:label>
-    <rdfs:label xml:lang="da">Ikke godkjent av administraotr</rdfs:label>
-    <rdfs:label xml:lang="sv">Inte godkänt av administrator</rdfs:label>
-    <rdfs:label xml:lang="no">Ikke godkjent av administrator</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://sublima.computas.com/status/til_godkjenning">
-    <rdfs:label xml:lang="en">For approval</rdfs:label>
-    <rdfs:label xml:lang="da">Til godkjenning</rdfs:label>
-    <rdfs:label xml:lang="sv">Til godkänning</rdfs:label>
-    <rdfs:label xml:lang="no">Til godkjenning</rdfs:label>
-    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#DR">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ok">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Ok</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ok">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Ok</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ok">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Ok</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ok">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Ok</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ok">
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
   <rdf:Description rdf:about="http://xmlns.computas.com/sublima#url">
-    <rdfs:range rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#url">
+    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#url">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#committer">
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:range rdf:resource="http://rdfs.org/sioc/ns#User"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#keywords">
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#url">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
-    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#stripped">
-    <rdfs:domain rdf:resource="http://www.w3.org/2007/ont/http#ResponseMessage"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/gone">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Permanent borte</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/gone">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Permanent borta</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/gone">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Permanent borte</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/gone">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Permanently gone</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/gone">
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://sublima.computas.com/status/check">
-    <rdfs:label xml:lang="en">Check manually</rdfs:label>
-    <rdfs:label xml:lang="da">Sjekkes manuelt</rdfs:label>
-    <rdfs:label xml:lang="sv">Kontrolleras manuellt</rdfs:label>
-    <rdfs:label xml:lang="no">Sjekkes manuelt</rdfs:label>
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Sjekkes manuelt</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/check">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Kontrolleras manuellt</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/check">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Sjekkes manuelt</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/check">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Check manually</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/check">
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#status">
+    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#status">
+    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#status">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#comment">
+    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#comment">
+    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/inaktiv">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Inaktiv</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/inaktiv">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Inaktiv</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/inaktiv">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Inaktiv</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/inaktiv">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Inactive</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/inaktiv">
     <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://xmlns.computas.com/sublima#LocalURI">
-    <rdfs:comment xml:lang="en">The local URI assigned to a URI</rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+    <ns0:comment xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">The local URI assigned to a URI</ns0:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#LocalURI">
+    <ns0:subClassOf xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#Resource">
+    <ns0:unionOf xmlns:ns0="http://www.w3.org/2002/07/owl#" rdf:resource="http://rdfs.org/sioc/ns#Item"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#Resource">
+    <ns0:unionOf xmlns:ns0="http://www.w3.org/2002/07/owl#" rdf:resource="http://rdfs.org/sioc/ns#Site"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#Resource">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#Resource">
+    <ns0:subClassOf xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#keywords">
+    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#keywords">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#stripped">
+    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#stripped">
+    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2007/ont/http#ResponseMessage"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#stripped">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#committer">
+    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://rdfs.org/sioc/ns#User"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#committer">
+    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#committer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/nytt_forslag">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Nytt forslag</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/nytt_forslag">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Nytt förslag</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/nytt_forslag">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Nytt forslag</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/nytt_forslag">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">New suggestion</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/nytt_forslag">
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
+    <ns0:inverseOf xmlns:ns0="http://www.w3.org/2002/07/owl#" rdf:resource="http://www.w3.org/2004/02/skos/core#hasTopConcept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
+    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
+    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/til_godkjenning">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Til godkjenning</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/til_godkjenning">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Til godkänning</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/til_godkjenning">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Til godkjenning</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/til_godkjenning">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">For approval</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/til_godkjenning">
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/under_behandling">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Under behandling</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/under_behandling">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Under behandling</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/under_behandling">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Under behandling</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/under_behandling">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Being dealt with</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/under_behandling">
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/godkjent_av_administrator">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Godkjent av administrator</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/godkjent_av_administrator">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Godkänt av administrator</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/godkjent_av_administrator">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Godkjent av administrator</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/godkjent_av_administrator">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Approved by administrator</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/godkjent_av_administrator">
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ikke_godkjent_av_administrator">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Ikke godkjent av administrator</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ikke_godkjent_av_administrator">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="sv">Inte godkänt av administrator</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ikke_godkjent_av_administrator">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="da">Ikke godkjent av administraotr</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ikke_godkjent_av_administrator">
+    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Not approved by administrator</ns0:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://sublima.computas.com/status/ikke_godkjent_av_administrator">
+    <rdf:type rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
   </rdf:Description>
 </rdf:RDF>

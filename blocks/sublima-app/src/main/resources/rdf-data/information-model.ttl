@@ -7,7 +7,19 @@
 # As of 2008-01-14, the DCMI took upon itself to define the ranges and
 # domains of the properties, which simplifies the model somewhat.
 
+
+# UNDER NO CIRCUMSTANCES REMOVE THE FOLLOWING STATEMENT
+# IT WILL BREAK PROTEGE INTEGRATION
 @base <http://xmlns.computas.com/sublima-information-model> .
+
+# IF YOU CONVERT THIS TO RDF/XML WITH REDLAND (RDFPROC) REMEMBER TO SET
+# BASE MANUALLY 
+#  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#         xml:base="http://xmlns.computas.com/sublima-information-model">
+#
+
+
+
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -23,6 +35,9 @@
 @prefix http: <http://www.w3.org/2007/ont/http#> .
 @prefix : <http://xmlns.computas.com/sublima-information-model#> .
 
+
+# UNDER NO CIRCUMSTANCES REMOVE THE FOLLOWING STATEMENT
+# IT WILL BREAK PROTEGE INTEGRATION
 <> a owl:Ontology ;
    rdfs:comment "information model." . 
 
@@ -192,14 +207,20 @@ sub:isSubjectOf a owl:ObjectProperty ;
             owl:inverseOf dct:subject .                   
 
 skos:narrower 	a 			owl:ObjectProperty ;
+		rdfs:domain skos:Concept;
+		rdfs:range  skos:Concept;
 		rdfs:label		"Smalere"@no ; 
 		rdfs:subPropertyOf	skos:semanticRelation . 
  
 skos:broader 	a 			owl:ObjectProperty ;
+		rdfs:domain skos:Concept;
+		rdfs:range  skos:Concept;
 		rdfs:label		"Bredere"@no ; 
 		rdfs:subPropertyOf	skos:semanticRelation . 
 
 skos:related  	a 			owl:ObjectProperty ;
+        rdfs:domain skos:Concept;
+        rdfs:range  skos:Concept;
 		a                   owl:SymmetricProperty ;
 		rdfs:label		    "Relatert"@no ; 
 		rdfs:subPropertyOf	skos:semanticRelation .
