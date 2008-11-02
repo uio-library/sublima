@@ -272,10 +272,7 @@ public class SearchController implements StatelessAppleController {
     if (doBigSearchAnyway) {
         // This will do the search despite it being large, thus populating the cache
         queryResult = sparqlDispatcher.query(sparqlQuery);
-        doSearch = false; // We've done what we came for allready
-    }
-
-    if (doSearch) {
+    } else if (doSearch) {
         if (adminService.isAboveMaxNumberOfHits(countNumberOfHitsQuery)) {
             // We are above the threshold, lets see if we have it cached
             CachingService cache = new CachingService();
@@ -296,7 +293,7 @@ public class SearchController implements StatelessAppleController {
         }
     }
     else {
-      queryResult = "<empty/>";
+        queryResult = "<empty/>";
     }
 
 
