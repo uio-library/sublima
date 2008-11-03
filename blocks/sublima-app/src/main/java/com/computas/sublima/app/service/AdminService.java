@@ -788,7 +788,9 @@ public class AdminService {
    */
   public boolean isAboveMaxNumberOfHits(String query) {
     logger.trace("AdminService.isAboveMaxNumberOfHits() executing");
-
+    if (query == null) {
+        return true;
+    }
     try {
       return sparqlDispatcher.query(query).toString().contains("<uri>");
 

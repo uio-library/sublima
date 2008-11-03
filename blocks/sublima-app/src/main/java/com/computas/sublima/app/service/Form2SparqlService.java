@@ -325,6 +325,10 @@ public class Form2SparqlService {
     StringBuilder sparqlQueryBuffer = new StringBuilder();
     sparqlQueryBuffer.append("SELECT DISTINCT ?resource ");
     ArrayList<String> n3Listtmp = getN3List(parameterMap);
+    if (n3Listtmp.size() < 1) {
+        logger.info("convertForm2SparqlCount had no triples in the WHERE clause, avoiding getting the whole database.");
+        return null;
+    }
     ArrayList<String> n3List = new ArrayList();
     sparqlQueryBuffer.append("WHERE {");
     for (String triple : n3Listtmp) {
