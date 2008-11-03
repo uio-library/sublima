@@ -45,6 +45,7 @@
 
 ######################################################
 # RESOURCES CLASS
+# sub:Resource  
 ######################################################
 
 # see also sub:
@@ -57,14 +58,23 @@ dct:subject 		rdfs:range 	owl:Class ;
             rdfs:range skos:Concept .  
             
 	
-#	
-dct:title		rdfs:range 	rdfs:Literal ;		
-			a 		owl:AnnotationProperty ;
+#	2008-11-03 dn: redefining dct:title to be a datatype property with range xsd:string
+#                  relevant to show the title properly in Protégé
+dct:title		
+#           rdfs:range 	rdfs:Literal ;		
+#			a 		owl:AnnotationProperty ;
+            rdfs:range 	xsd:string ;  
+			a       owl:DatatypeProperty ;
 			rdfs:domain	sub:Resource .
 
-#
-dct:description		rdfs:range	rdf:XMLLiteral ;
-			a 		owl:AnnotationProperty ;
+#	2008-11-03 dn: redefining dct:title to be a datatype property with range xsd:string
+#                  relevant to show the title properly in Protégé
+#                  XMLLiteral is no longer required as the XSLT now disable output escaping 
+dct:description		
+#           rdfs:range	rdf:XMLLiteral ;
+#			a 		owl:AnnotationProperty ;
+            rdfs:range 	xsd:string ;  
+			a       owl:DatatypeProperty ;
 			rdfs:domain 	sub:Resource .
 
 #
@@ -162,8 +172,10 @@ skos:prefLabel a owl:DatatypeProperty ;
             rdfs:range 	xsd:string ;
             rdfs:domain skos:Concept .
     
-# skos:definition
-sub:definition a owl:DatatypeProperty ;
+# 2008-11-03 dn : endret sub:definition til skos:definition.    
+skos:definition
+# sub:definition 
+            a owl:DatatypeProperty ;
 			rdfs:range 	xsd:string ;
 			rdfs:domain	skos:Concept .		
     

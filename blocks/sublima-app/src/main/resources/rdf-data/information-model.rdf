@@ -4,15 +4,24 @@
   <rdf:Description rdf:about="http://rdfs.org/sioc/ns#User">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
+  <!--
   <rdf:Description rdf:about="http://purl.org/dc/terms/title">
     <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-  </rdf:Description>
+  </rdf:Description> -->
+  
   <rdf:Description rdf:about="http://purl.org/dc/terms/title">
     <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </rdf:Description>
+<!--
   <rdf:Description rdf:about="http://purl.org/dc/terms/title">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
   </rdf:Description>
+-->
+  <rdf:Description rdf:about="http://purl.org/dc/terms/title">
+   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+   <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>  
+  
   <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/name">
     <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
   </rdf:Description>
@@ -145,15 +154,27 @@
   <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Software">
     <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
   </rdf:Description>
+  
+  <!--
   <rdf:Description rdf:about="http://purl.org/dc/terms/description">
     <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
   </rdf:Description>
+  -->
   <rdf:Description rdf:about="http://purl.org/dc/terms/description">
     <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
   </rdf:Description>
+  <!--
   <rdf:Description rdf:about="http://purl.org/dc/terms/description">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
   </rdf:Description>
+  -->
+  
+   <rdf:Description rdf:about="http://purl.org/dc/terms/description">
+   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+   <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>  
+  
+  
   <rdf:Description rdf:about="http://purl.org/dc/terms/dateAccepted">
     <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
   </rdf:Description>
@@ -307,6 +328,17 @@
   <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#describedBy">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
   </rdf:Description>
+<!--
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
+    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
+    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+-->
   <rdf:Description rdf:about="http://xmlns.computas.com/sublima#definition">
     <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
   </rdf:Description>
@@ -316,6 +348,8 @@
   <rdf:Description rdf:about="http://xmlns.computas.com/sublima#definition">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
   </rdf:Description>
+
+
   <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel">
     <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
   </rdf:Description>
