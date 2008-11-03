@@ -75,8 +75,8 @@
 
         3) The skos:Concept is a child element of rdf:RDF element.
 
-        4) The skos:Concept is a child element of a skos:broader or
-        skos:narrower, at some level
+        4) The skos:Concept is a child element of a subproperty of
+        skos:semanticRelation at some level
 
         Furthermore, we assume that each skos:Concept only occur once
         in the c:result-list.
@@ -111,11 +111,7 @@
 		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
 	      </xsl:when>
 	      <xsl:when
-test="/c:page/c:result-list/rdf:RDF/skos:Concept/skos:broader//skos:Concept[@rdf:about=$uri]">
-		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
-	      </xsl:when>
-	      <xsl:when
-test="/c:page/c:result-list/rdf:RDF/skos:Concept/skos:narrower//skos:Concept[@rdf:about=$uri]">
+test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]">
 		<xsl:value-of select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
 	      </xsl:when>
 	      <xsl:otherwise>
