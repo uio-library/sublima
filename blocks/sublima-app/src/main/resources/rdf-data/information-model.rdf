@@ -325,9 +325,11 @@
   <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#describedBy">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </rdf:Description>
+  <!--
   <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#describedBy">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
   </rdf:Description>
+  -->
 <!--
   <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
     <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
