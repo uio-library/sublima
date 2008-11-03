@@ -1,0 +1,3 @@
+#!/bin/sh
+
+wget --timeout=0 --wait=5m --delete-after --no-verbose --input-file=example-urls
