@@ -48,7 +48,14 @@
 
     <a>
        <xsl:attribute name="href">
-          <xsl:value-of select="concat($gen-req, '&amp;res-view=short')"/>
+         <xsl:choose>
+           <xsl:when test="not(contains(/c:page/c:facets/c:request/@requesturl, '?'))">
+            <xsl:value-of select="concat($gen-req, '?res-view=short')"/>
+           </xsl:when>
+           <xsl:otherwise>
+            <xsl:value-of select="concat($gen-req, '&amp;res-view=short')"/>
+           </xsl:otherwise>
+         </xsl:choose>
        </xsl:attribute>
        short description</a>
     <xsl:text>  </xsl:text>    
@@ -63,7 +70,14 @@
 -->
       <a>
        <xsl:attribute name="href">
-        <xsl:value-of select="concat($gen-req, '&amp;res-view=full')"/>
+         <xsl:choose>
+           <xsl:when test="not(contains(/c:page/c:facets/c:request/@requesturl, '?'))">
+            <xsl:value-of select="concat($gen-req, '?res-view=full')"/>
+           </xsl:when>
+           <xsl:otherwise>
+            <xsl:value-of select="concat($gen-req, '&amp;res-view=full')"/>
+           </xsl:otherwise>
+         </xsl:choose>
        </xsl:attribute>
        full description</a>
     
