@@ -380,7 +380,7 @@ PVJ: Made the file UTF-8
                 <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
               </dt>
               <dd>
-                <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:definition"/>
+                <xsl:value-of disable-output-escaping="yes" select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:definition"/>
               </dd>
             </dl>
           </div>
