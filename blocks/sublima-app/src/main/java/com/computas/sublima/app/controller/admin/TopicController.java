@@ -1,16 +1,16 @@
 package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.service.AutocompleteCache;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.IndexService;
-import com.computas.sublima.app.service.AutocompleteCache;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import com.hp.hpl.jena.query.larq.LARQ;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
@@ -526,6 +526,9 @@ public class TopicController implements StatelessAppleController {
         }
 
         uri = form2SparqlService.getURI();
+
+        String insertInverseTriples = createInverseInsert(uri, parameterMap);
+
         // Check if a topic with the same uri already exists
         if ((req.getCocoonRequest().getParameter("the-resource") == null) && adminService.getTopicByURI(uri).contains("skos:Concept ")) {
           messageBuffer.append("<c:message><i18n:text key=\"topic.exists\">Et emne med denne tittelen og URI finnes allerede</i18n:text></c:message>\n");
@@ -536,6 +539,9 @@ public class TopicController implements StatelessAppleController {
           logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
 
           if (insertSuccess) {
+            if (!"".equals(insertInverseTriples)) {
+              sparulDispatcher.query(insertInverseTriples);
+            }
             if (req.getCocoonRequest().getParameter("the-resource") == null) {
               messageBuffer.append("<c:message><i18n:text key=\"topic.save.ok\">Nytt emne lagt til</i18n:text></c:message>\n");
             } else {
@@ -543,8 +549,8 @@ public class TopicController implements StatelessAppleController {
             }
 
             indexService.indexTopic(uri, SettingsService.getProperty("sublima.topic.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
-          logger.trace("AdminController.editResource --> Added the resource to the index");
-          LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
+            logger.trace("AdminController.editResource --> Added the resource to the index");
+            LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
 
           } else {
@@ -559,6 +565,7 @@ public class TopicController implements StatelessAppleController {
         bizData.put("topicresources", adminService.getTopicResourcesByURI(uri));
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "topicedit");
+        addBroaderNarrowerInverse();
       } else {
         bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("the-resource")));
         bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("the-resource")));
@@ -583,6 +590,36 @@ public class TopicController implements StatelessAppleController {
     }
   }
 
+  private String createInverseInsert(String uri, Map<String, String[]> parameterMap) {
+    StringBuilder relationsInsert = new StringBuilder();
+    relationsInsert.append("INSERT\n{\n");
+    boolean containsTriples = false;
+
+    // Add the broader/narrower inverse relation if broader | narrower is chosen
+    if (parameterMap.get("<http://www.w3.org/2004/02/skos/core#broader>") != null) {
+      String[] broader = parameterMap.get("<http://www.w3.org/2004/02/skos/core#broader>");
+      for (String s : broader) {
+        relationsInsert.append("<" + s + "> " + "<http://www.w3.org/2004/02/skos/core#narrower> <" + uri + "> .\n");
+      }
+      containsTriples = true;
+
+    }
+
+    if (parameterMap.get("<http://www.w3.org/2004/02/skos/core#narrower>") != null) {
+      String[] broader = parameterMap.get("<http://www.w3.org/2004/02/skos/core#narrower>");
+      for (String s : broader) {
+        relationsInsert.append("<" + s + "> " + "<http://www.w3.org/2004/02/skos/core#broader> <" + uri + "> .\n");
+      }
+      containsTriples = true;
+    }
+
+    relationsInsert.append("}");
+
+    if (containsTriples)
+      return relationsInsert.toString();
+    else
+      return "";
+  }
 
   private StringBuilder getTempValues
           (AppleRequest
