@@ -565,7 +565,6 @@ public class TopicController implements StatelessAppleController {
         bizData.put("topicresources", adminService.getTopicResourcesByURI(uri));
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "topicedit");
-        addBroaderNarrowerInverse();
       } else {
         bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("the-resource")));
         bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("the-resource")));
