@@ -168,8 +168,14 @@ PVJ: Made the file UTF-8
 		<xsl:if test="not(c:page/c:advancedsearch)">
 
       <div name="panel-search" style="border:0px solid brown">
-		      <form action="{$baseurl}/search-result.html" method="get">  
-		    <fieldset>
+
+        <xsl:call-template name="autocompletion">
+          <xsl:with-param name="baseurl"><xsl:value-of select="$baseurl"/></xsl:with-param>
+        </xsl:call-template>
+
+        <form action="{$baseurl}/search-result.html" method="get">
+            
+        <fieldset>
 		      <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
 		      <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
 		      <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
@@ -186,7 +192,7 @@ PVJ: Made the file UTF-8
 		      <input type="submit" value="search.submit" i18n:attr="value"/>
 		      <br/>
 
-          <xsl:call-template name="autocompletion"/>
+
 
           <xsl:choose>
 			<xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">

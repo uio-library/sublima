@@ -24,7 +24,9 @@
 
   <xsl:template match="c:advancedsearch" mode="advancedsearch">
 
-    <xsl:call-template name="autocompletion"/>
+    <xsl:call-template name="autocompletion">
+      <xsl:with-param name="baseurl"><xsl:value-of select="$baseurl"/></xsl:with-param>
+    </xsl:call-template>
 
     <form action="search-result.html" method="GET">
       <input type="hidden" name="freetext-field" value="dct:title"/>
