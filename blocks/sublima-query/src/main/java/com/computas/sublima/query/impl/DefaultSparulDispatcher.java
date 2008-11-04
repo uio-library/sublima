@@ -57,7 +57,7 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
     CachingService cache = new CachingService();
     MemcachedClient memcached = cache.connect();
     cache.modelChanged(memcached);
-
+    cache.close(memcached);
     System.gc();
     // Return true if update success
     return true;

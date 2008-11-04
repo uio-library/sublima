@@ -68,6 +68,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
         logger.debug("SPARQLdispatcher using cache.");
         result = fromCache.toString();
     }
+    cache.close(memcached);
     System.gc();
     return result;
   }

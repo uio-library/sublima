@@ -91,4 +91,10 @@ public class CachingService {
             mc.flush();
         }
     }
+
+    public void close(MemcachedClient mc) {
+        if (useMemcached) {
+            mc.shutdown();
+        }
+    }
 }

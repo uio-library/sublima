@@ -57,6 +57,7 @@ public class ImportData {
       CachingService cache = new CachingService();
       MemcachedClient memcached = cache.connect();
       cache.modelChanged(memcached);
+      cache.close(memcached);
   }
 
   public static void main(String[] args) {
