@@ -585,7 +585,7 @@ public class TopicController implements StatelessAppleController {
       AutocompleteCache.invalidateTopicCache();
 
       res.sendPage("xml2/emne", bizData);
-      AutocompleteCache.getTopicSet();
+      AutocompleteCache.getTopicList();
     }
   }
 
