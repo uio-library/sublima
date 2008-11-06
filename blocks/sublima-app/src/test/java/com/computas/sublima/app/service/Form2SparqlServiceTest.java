@@ -96,7 +96,7 @@ public class Form2SparqlServiceTest extends TestCase {
   }
 
   public void testConvertFormField2N3AllSubjectLabelsFree() {
-    String expectS = "\n?free1 pf:textMatch \"\"\"+Jet*\"\"\" .\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:prefLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:altLabel ?free1 . }\nOPTIONAL {\n?resource dct:subject ?var1 .\n?var1 skos:hiddenLabel ?free1 . }\nFILTER ( bound( ?var1 ) )\n";
+    String expectS = "\n?free1 pf:textMatch \"\"\"+Jet*\"\"\" .\n?var1 skos:prefLabel ?free1 .\n?resource dct:subject ?var1 .\n";
     testString[0] = "Jet";
     myService.addFreetextField("dct:subject/all-labels");
     assertEquals("Expected result and actual result not equal", expectS,
@@ -417,13 +417,8 @@ public class Form2SparqlServiceTest extends TestCase {
                 "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>",
                 "DESCRIBE ?resource ?var1 ?var2 ?rest WHERE {",
                 "?free2 pf:textMatch \"\"\"+Dansk*\"\"\" .",
-                "OPTIONAL {\n?resource dct:subject ?var2 .",
-                "?var2 skos:prefLabel ?free2 . }",
-                "OPTIONAL {\n?resource dct:subject ?var2 .",
-                "?var2 skos:altLabel ?free2 . }",
-                "OPTIONAL {\n?resource dct:subject ?var2 .",
-                "?var2 skos:hiddenLabel ?free2 . }",
-                "FILTER ( bound( ?var2 ) )",
+                "?var2 skos:prefLabel ?free2 .",
+                "?resource dct:subject ?var2 .",
                 "",
                 "?resource dct:audience ?var1 .",
                 "?var1 rdfs:label \"\"\"Detektor\"\"\"@no .",

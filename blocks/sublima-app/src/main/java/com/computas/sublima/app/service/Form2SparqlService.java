@@ -214,13 +214,21 @@ public class Form2SparqlService {
           } else {
             thisObjectString = myRDFObject.toN3() + " .";
           }
-          n3Buffer.append("\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:prefLabel ");
-          n3Buffer.append(thisObjectString);
-          n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:altLabel ");
-          n3Buffer.append(thisObjectString);
-          n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:hiddenLabel ");
-          n3Buffer.append(thisObjectString);
-          n3Buffer.append(" }\nFILTER ( bound( " + var + ") )\n");
+          if  (freetextFields == null)
+          {
+              n3Buffer.append("\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:prefLabel ");
+              n3Buffer.append(thisObjectString);
+              n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:altLabel ");
+              n3Buffer.append(thisObjectString);
+              n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:hiddenLabel ");
+              n3Buffer.append(thisObjectString);
+              n3Buffer.append(" }\nFILTER ( bound( " + var + ") )\n");
+          } else {
+              n3Buffer.append("\n" +var +"skos:prefLabel ");
+              n3Buffer.append(thisObjectString);
+              n3Buffer.append("\n" +resourceSubject + "dct:subject " + var + ".\n");
+          }
+
         }
       } else if (!("dct:subject".equals(qname) && "dct:subject/all-labels".equals(key))) {
         n3Buffer.append("\n" + var + qname + " ");
@@ -545,7 +553,7 @@ public class Form2SparqlService {
     StringBuilder end = new StringBuilder(); // Stuff that should end the query goes here.
 
     for (String triple : n3List) {
-      if (triple.contains("pf:textMatch") && ! triple.contains("OPTIONAL")) {
+      if (triple.contains("pf:textMatch") && ! triple.contains("skos:prefLabel")) {
           if (triple.contains("?lit ")) {
               start.insert(0, triple);
           } else {
