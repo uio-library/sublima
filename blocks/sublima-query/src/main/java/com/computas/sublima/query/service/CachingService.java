@@ -5,6 +5,8 @@ import net.spy.memcached.AddrUtil;
 import net.spy.memcached.OperationTimeoutException;
 import org.apache.log4j.Logger;
 
+import java.util.concurrent.TimeoutException;
+
 /**
  * A service to do stuff with the memcached client
  * User: kkj
@@ -78,7 +80,7 @@ public class CachingService {
      * @return boolean returns true if the key was found.
      */
     public boolean ask(MemcachedClient mc, String key) {
-      return (mc.get(key) != null);
+      return (this.get(mc, key) != null);
     }
 
     /**
