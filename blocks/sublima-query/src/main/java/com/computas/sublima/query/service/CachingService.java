@@ -59,6 +59,7 @@ public class CachingService {
      * @return an Object with the cached entry or null if it wasn't found.
      */
     public Object get(MemcachedClient mc, String key) {
+        long connecttime = System.currentTimeMillis();
         Object fromCache = null;
         if (useMemcached) {
             try {
@@ -69,6 +70,8 @@ public class CachingService {
                         + ". Have you set sublima.memcached.servers?");
             }
         }
+        long requesttime = System.currentTimeMillis() - connecttime;
+        logger.trace("Memcached returned within " + requesttime + " ms.");
         return fromCache;
     }
 
