@@ -3,6 +3,7 @@ package com.computas.sublima.app.service;
 import org.apache.log4j.Logger;
 
 import java.util.LinkedHashSet;
+import java.util.ArrayList;
 
 /**
  * @author: mha
@@ -12,14 +13,14 @@ public class AutocompleteCache {
 
   private static Logger logger = Logger.getLogger(AutocompleteCache.class);
   private static AdminService adminService = new AdminService();
-  private static LinkedHashSet<String> topicSet = new LinkedHashSet<String>();
+  private static ArrayList<String[]> topicList = new ArrayList<String[]>();
   private static LinkedHashSet<String> publisherSet = new LinkedHashSet<String>();
 
-  public synchronized static LinkedHashSet<String> getTopicSet() {
-    if(topicSet.isEmpty()) {
-      topicSet = adminService.createArrayOfTopics();
+  public synchronized static ArrayList<String[]> getTopicList() {
+    if(topicList.isEmpty()) {
+      topicList = adminService.createArrayOfTopics();
     }
-    return topicSet;
+    return topicList;
   }
 
   public synchronized static LinkedHashSet<String> getPublisherSet() {
@@ -30,7 +31,7 @@ public class AutocompleteCache {
   }
 
   public static void invalidateTopicCache() {
-    topicSet.clear();
+    topicList.clear();
   }
 
   public static void invalidatePublisherCache() {

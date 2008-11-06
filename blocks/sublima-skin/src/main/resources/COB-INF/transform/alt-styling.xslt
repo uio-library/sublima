@@ -171,6 +171,7 @@ PVJ: Made the file UTF-8
 
         <xsl:call-template name="autocompletion">
           <xsl:with-param name="baseurl"><xsl:value-of select="$baseurl"/></xsl:with-param>
+          <xsl:with-param name="interface-language"><xsl:value-of select="$interface-language"/></xsl:with-param>
         </xsl:call-template>
 
         <form action="{$baseurl}/search-result.html" method="get">

@@ -29,12 +29,13 @@ public class Autocomplete extends HttpServlet {
 
     String action = request.getParameter("action");
     String partialname = request.getParameter("q");
+    String language = request.getParameter("language");
     if (partialname != null) partialname = partialname.trim().toLowerCase();
 
     ArrayList<String> results = new ArrayList<String>();
 
     if ("topic".equals(action)) {
-      results = adminService.getTopicsByPartialName(partialname);
+      results = adminService.getTopicsByPartialName(partialname, language);
     } else if ("publisher".equals(action)) {
       results = adminService.getPublishersByPartialName(partialname);    
     }

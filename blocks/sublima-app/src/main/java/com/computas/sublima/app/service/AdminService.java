@@ -5,7 +5,6 @@ import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
-import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -801,9 +800,9 @@ public class AdminService {
     }
   }
 
-  public LinkedHashSet<String> createArrayOfTopics() {
+  public ArrayList<String[]> createArrayOfTopics() {
     String result = getTopicsAsJSON();
-    LinkedHashSet<String> topicSet = new LinkedHashSet<String>();
+    ArrayList<String[]> topicList = new  ArrayList<String[]>();
 
     try {
         JSONObject json = new JSONObject(result);
@@ -813,13 +812,20 @@ public class AdminService {
         for (int i = 0; i < jsonArray.length(); i++) {
           JSONObject obj2 = (JSONObject) jsonArray.get(i);
           obj2 = (JSONObject) obj2.get("label");
-          topicSet.add(obj2.get("value").toString());
+          String language;
+          try {
+            language = obj2.get("xml:lang").toString();
+          } catch (Exception e) {
+            language = "";            
+          }
+          topicList.add(new String[] {obj2.get("value").toString(), language});
         }
 
       } catch (JSONException e) {
+
         e.printStackTrace();
       }
-    return topicSet;
+    return topicList;
   }
 
   public LinkedHashSet<String> createArrayOfPublishers() {
@@ -843,12 +849,12 @@ public class AdminService {
     return publisherSet;
   }
 
-  public ArrayList<String> getTopicsByPartialName(String name) {
+  public ArrayList<String> getTopicsByPartialName(String name, String language) {
     ArrayList<String> results = new ArrayList<String>();
 
-    for (String s : AutocompleteCache.getTopicSet()) {
-      if (s != null && s.toLowerCase().startsWith(name.toLowerCase())) {
-        results.add(s);
+    for (String[] s : AutocompleteCache.getTopicList()) {
+      if (s[0].toLowerCase().startsWith(name.toLowerCase()) && (language.equalsIgnoreCase(s[1]) || language.equals(""))) {
+        results.add(s[0]);        
       }
     }
     return results;
