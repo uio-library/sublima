@@ -151,7 +151,11 @@ public class SearchController implements StatelessAppleController {
     StringBuilder params = adminService.getMostOfTheRequestXML(req);
 
     // These will not be brought along unless we add it as request parameters, which is hackish.
+    params.append("\n    <param key=\"wdr:describedBy\">");
+    params.append("\n      <value>http://sublima.computas.com/status/godkjent_av_administrator</value>");
+    params.append("\n    </param>");
     params.append("\n    <param key=\"prefix\">");
+    params.append("\n      <value>wdr: &lt;http://www.w3.org/2007/05/powder%23&gt;</value>");
     params.append("\n      <value>dct: &lt;http://purl.org/dc/terms/&gt;</value>");
     params.append("\n      <value>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema%23&gt;</value>");
     params.append("\n      <value>skos: &lt;http://www.w3.org/2004/02/skos/core%23&gt;</value>");
