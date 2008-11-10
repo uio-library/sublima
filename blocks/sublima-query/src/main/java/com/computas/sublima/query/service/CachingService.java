@@ -6,6 +6,7 @@ import net.spy.memcached.OperationTimeoutException;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A service to do stuff with the memcached client
@@ -93,13 +94,14 @@ public class CachingService {
 
     public void modelChanged(MemcachedClient mc) {
         if (useMemcached) {
-            mc.flush();
+          mc.waitForQueues(2, TimeUnit.SECONDS);
+          mc.flush();
         }
     }
 
     public void close(MemcachedClient mc) {
         if (useMemcached) {
-            mc.shutdown();
+            mc.shutdown(2, TimeUnit.SECONDS);
         }
     }
 }
