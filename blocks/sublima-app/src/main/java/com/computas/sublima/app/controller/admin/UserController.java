@@ -71,19 +71,14 @@ public class UserController implements StatelessAppleController {
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
         System.gc();
         res.sendPage("xml2/brukere", bizData);
-        return;
       } else if ("ny".equalsIgnoreCase(submode)) {
         editUser(req, res, "ny", null);
-        return;
       } else if ("bruker".equalsIgnoreCase(submode)) {
         editUser(req, res, "edit", null);
-        return;
       } else if ("alle".equalsIgnoreCase(submode)) {
         listUsers(req, res);
-        return;
       } else {
         res.sendStatus(404);
-        return;
       }
     } else if ("roller".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
@@ -91,13 +86,10 @@ public class UserController implements StatelessAppleController {
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
         System.gc();
         res.sendPage("xml2/roller", bizData);
-        return;
       } else if ("rolle".equalsIgnoreCase(submode)) {
         editRole(req, res, null);
-        return;
       } else if ("alle".equalsIgnoreCase(submode)) {
         listRoles(req, res);
-        return;
       }
     }
   }
