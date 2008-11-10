@@ -790,6 +790,9 @@ public class AdminService {
     if (query == null) {
         return true;
     }
+    if (! query.contains("pf:textMatch")) {
+        return false;
+    }
     try {
       return sparqlDispatcher.query(query).toString().contains("<uri>");
 
