@@ -31,7 +31,6 @@ public class PublisherController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
-  private ApplicationManager appMan;
   private ApplicationUtil appUtil = new ApplicationUtil();
   private String mode;
   private String submode;

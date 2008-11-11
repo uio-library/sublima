@@ -19,10 +19,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Enumeration;
 
 /**
  * @author: mha
@@ -30,7 +30,6 @@ import java.util.Enumeration;
  */
 public class UserController implements StatelessAppleController {
 
-  private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
   DatabaseService dbService = new DatabaseService();
@@ -51,7 +50,7 @@ public class UserController implements StatelessAppleController {
           "PREFIX sioc: <http://rdfs.org/sioc/ns#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
-  
+
   private static Logger logger = Logger.getLogger(AdminController.class);
 
   @SuppressWarnings("unchecked")
@@ -109,7 +108,6 @@ public class UserController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-
 
     // Check whether the logged in user requests his/hers own page. If so, allow editing.
     if (adminService.getUserByURI(
@@ -232,7 +230,7 @@ public class UserController implements StatelessAppleController {
             //String[] username = req.getCocoonRequest().getParameter("oldusername").split(":");
             insertSql = "UPDATE users "
                     + "SET username = '" + req.getCocoonRequest().getParameter("sioc:email") + "' "
-                    + "WHERE username = '" +req.getCocoonRequest().getParameter("oldusername") + "'";
+                    + "WHERE username = '" + req.getCocoonRequest().getParameter("oldusername") + "'";
 
             try {
               int insertedRows = dbService.doSQLUpdate(insertSql);
@@ -352,7 +350,7 @@ public class UserController implements StatelessAppleController {
     bizData.put("allstatuses", adminService.getAllStatuses());
     bizData.put("userprivileges", userPrivileges);
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-    
+
 //bizData.put("allanguages", adminService.getAllLanguages());
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
@@ -372,7 +370,7 @@ public class UserController implements StatelessAppleController {
       System.gc();
       res.sendPage("xml2/rolle", bizData);
 
-    // When POST try to save the user. Return error messages upon failure, and success message upon great success
+      // When POST try to save the user. Return error messages upon failure, and success message upon great success
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
       // 1. Mellomlagre alle verdier
@@ -588,12 +586,6 @@ public class UserController implements StatelessAppleController {
     return tempValues;
   }
 
-  public void setSparqlDispatcher
-          (SparqlDispatcher
-                  sparqlDispatcher) {
-    this.sparqlDispatcher = sparqlDispatcher;
-  }
-
   public void setSparulDispatcher
           (SparulDispatcher
                   sparulDispatcher) {
@@ -601,7 +593,7 @@ public class UserController implements StatelessAppleController {
   }
 
   //todo Move to a Service-class
-  private Map<String, String[]> createParametersMap (Request request) {
+  private Map<String, String[]> createParametersMap(Request request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {

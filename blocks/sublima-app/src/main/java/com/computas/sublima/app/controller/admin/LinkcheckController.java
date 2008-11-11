@@ -20,7 +20,6 @@ import java.util.Map;
 public class LinkcheckController implements StatelessAppleController {
 
   private SparqlDispatcher sparqlDispatcher;
-  private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
   private String mode;
   private String submode;
@@ -135,12 +134,5 @@ public class LinkcheckController implements StatelessAppleController {
                   sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
   }
-
-  public void setSparulDispatcher
-          (SparulDispatcher
-                  sparulDispatcher) {
-    this.sparulDispatcher = sparulDispatcher;
-  }
-
 }
 

@@ -24,9 +24,8 @@ import java.util.Map;
  * @author: mha
  * Date: 31.mar.2008
  */
-public class AdminController implements StatelessAppleController {
+public class AdminController {
 
-  private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
   String[] completePrefixArray = {
@@ -136,12 +135,6 @@ public class AdminController implements StatelessAppleController {
       System.gc();
       res.sendPage("xml2/upload", bizData);
     }
-  }
-
-  public void setSparqlDispatcher
-          (SparqlDispatcher
-                  sparqlDispatcher) {
-    this.sparqlDispatcher = sparqlDispatcher;
   }
 
   public void setSparulDispatcher

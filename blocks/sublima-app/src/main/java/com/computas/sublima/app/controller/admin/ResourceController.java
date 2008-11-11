@@ -3,14 +3,12 @@ package com.computas.sublima.app.controller.admin;
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.IndexService;
-import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import com.computas.sublima.query.service.SettingsService;
 import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.sparql.util.StringUtils;
-import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -30,10 +28,8 @@ import java.util.*;
  */
 public class ResourceController implements StatelessAppleController {
 
-  private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
-  private ApplicationManager appMan;
   private ApplicationUtil appUtil = new ApplicationUtil();
   private IndexService indexService = new IndexService();
   private SearchService searchService = new SearchService();
@@ -122,8 +118,8 @@ public class ResourceController implements StatelessAppleController {
       res.sendPage("xml2/ressurs-prereg", bizData);
 
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-      String url = req.getCocoonRequest().getParameter("sub:url");
-      bizData.put("tempvalues", tempPrefixes + "<sub:url>" + req.getCocoonRequest().getParameter("sub:url") + "</sub:url></c:tempvalues>\n");
+      String url = req.getCocoonRequest().getParameter("sub:url").trim();
+      bizData.put("tempvalues", tempPrefixes + "<sub:url>" + req.getCocoonRequest().getParameter("sub:url").trim() + "</sub:url></c:tempvalues>\n");
       bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
       if (!"".equalsIgnoreCase(url)) {
@@ -247,9 +243,9 @@ public class ResourceController implements StatelessAppleController {
       if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
         String deleteString = "DELETE {\n" +
-                "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
+                "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o.\n" +
                 "} WHERE {\n" +
-                "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o. }";
+                "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o. }";
 
         boolean deleteResourceSuccess = sparulDispatcher.query(deleteString);
 
@@ -301,7 +297,7 @@ public class ResourceController implements StatelessAppleController {
         // Generate a dct:identifier if it's a new resource, and set the time and date for approval
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier")) || req.getCocoonRequest().getParameter("dct:identifier") == null) {
           updateDate = true;
-          dctIdentifier = searchService.sanitizeStringForURI(req.getCocoonRequest().getParameter("dct:title")); 
+          dctIdentifier = searchService.sanitizeStringForURI(req.getCocoonRequest().getParameter("dct:title"));
           dctIdentifier = getProperty("sublima.base.url") + "resource/" + dctIdentifier + parameterMap.get("the-resource").hashCode();
         } else {
           dctIdentifier = req.getCocoonRequest().getParameter("dct:identifier");
@@ -340,12 +336,11 @@ public class ResourceController implements StatelessAppleController {
         if (insertSuccess) {
           if (updateDate) {
             messageBuffer.append("<c:message><i18n:text key=\"resource.resourceadded\">Ny ressurs lagt til</i18n:text></c:message>\n");
-          }
-          else {
+          } else {
             messageBuffer.append("<c:message><i18n:text key=\"resource.updated\">Ressurs oppdatert</i18n:text></c:message>\n");
           }
 
-          indexService.indexResource(req.getCocoonRequest().getParameter("the-resource"), SettingsService.getProperty("sublima.resource.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          indexService.indexResource(req.getCocoonRequest().getParameter("the-resource").trim(), SettingsService.getProperty("sublima.resource.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
           logger.trace("AdminController.editResource --> Added the resource to the index");
           LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
@@ -355,11 +350,11 @@ public class ResourceController implements StatelessAppleController {
       }
 
       if (insertSuccess) {
-        bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource")));
+        bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource").trim()));
         bizData.put("tempvalues", "<empty></empty>");
         bizData.put("mode", "edit");
       } else {
-        bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource")));
+        bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource").trim()));
         bizData.put("tempvalues", "<empty/>");//tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("mode", "edit");
       }
@@ -393,13 +388,13 @@ public class ResourceController implements StatelessAppleController {
       validationMessages.append("<c:message><i18n:text key=\"validation.resource.notitle\">uoversatt</i18n:text></c:message>\n");
     }
 
-    if (req.getCocoonRequest().getParameter("the-resource") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("the-resource"))) {
+    if (req.getCocoonRequest().getParameter("the-resource") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("the-resource").trim())) {
       validationMessages.append("<c:message><i18n:text key=\"validation.url.novalue\">URL kan ikke være blank</i18n:text></c:message>\n");
     }
 
     if (req.getCocoonRequest().getParameter("dct:identifier") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier").trim())) {
       // if the uri is empty, then it's a new resource and we do a already-exists check
-      if (adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("the-resource"))) {
+      if (adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("the-resource").trim())) {
         validationMessages.append("<c:message><i18n:text key=\"validation.resource.exists\">En ressurs med denne URI finnes fra før</i18n:text></c:message>\n");
       }
     }
@@ -427,7 +422,7 @@ public class ResourceController implements StatelessAppleController {
                   req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:title");
-    String temp_uri = req.getCocoonRequest().getParameter("the-resource");
+    String temp_uri = req.getCocoonRequest().getParameter("the-resource").trim();
     String temp_identifier = req.getCocoonRequest().getParameter("dct:identifier");
     String temp_description = req.getCocoonRequest().getParameter("dct:description");
     String temp_publisher = req.getCocoonRequest().getParameter("dct:publisher");
@@ -511,10 +506,6 @@ public class ResourceController implements StatelessAppleController {
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
     res.sendPage("xml2/ressurser", bizData);
-  }
-
-  public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
-    this.sparqlDispatcher = sparqlDispatcher;
   }
 
   public void setSparulDispatcher

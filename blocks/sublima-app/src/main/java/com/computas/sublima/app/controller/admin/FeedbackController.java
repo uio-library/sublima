@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FeedbackController implements StatelessAppleController {
+public class FeedbackController {
 
   private static Logger logger = Logger.getLogger(FeedbackController.class);
   private String mode;

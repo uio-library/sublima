@@ -30,9 +30,8 @@ import java.util.TreeMap;
  * @author: mha
  * Date: 31.mar.2008
  */
-public class TopicController implements StatelessAppleController {
+public class TopicController {
 
-  private SparqlDispatcher sparqlDispatcher;
   private SparulDispatcher sparulDispatcher;
   private IndexService indexService = new IndexService();
   private AdminService adminService = new AdminService();
@@ -672,13 +671,6 @@ public class TopicController implements StatelessAppleController {
     }
 
     return validationMessages.toString();
-  }
-
-
-  public void setSparqlDispatcher
-          (SparqlDispatcher
-                  sparqlDispatcher) {
-    this.sparqlDispatcher = sparqlDispatcher;
   }
 
   public void setSparulDispatcher
