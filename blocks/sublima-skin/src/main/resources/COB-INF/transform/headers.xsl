@@ -54,9 +54,9 @@
   <xsl:template name="headers">
     <xsl:param name="baseurl"/>
     <div id="header">
-      <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
+      <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
       
-      <h2>Sublima 1.0.0 RC-16</h2>
+      <h2>Sublima 1.0.0 RC-17</h2>
       <div>
 
 	  <a href="{$baseurl}/{$qloc}" class="active">
