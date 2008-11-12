@@ -468,6 +468,7 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+            "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "CONSTRUCT { ?topic a skos:Concept ; rdfs:label ?label . }",
             "WHERE {",
@@ -476,6 +477,7 @@ public class AdminService {
             "   UNION {",
             "       ?topic skos:altLabel ?label . }",
             "    ?topic wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
+            "    ?resource dct:subject ?topic .",
             "FILTER regex(str(?label), \"^" + letter + "\", \"i\")",
             "}"});
 
