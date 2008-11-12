@@ -17,8 +17,13 @@ public final class ContextListener implements ServletContextListener {
 
   public void contextInitialized(ServletContextEvent servletContextEvent) {
     IndexService indexService = new IndexService();
-    AutocompleteCache.getPublisherSet();
-    AutocompleteCache.getTopicList();
+    try {
+      AutocompleteCache.getPublisherSet();
+      AutocompleteCache.getTopicList();  
+    } catch (Exception e) {
+      logger.warn("SUBLIMA: Initializing cache lists failed. Probably because of an error with the database.");  
+    }
+
 
     if ("true".equalsIgnoreCase(SettingsService.getProperty("sublima.checkurl.onstartup"))) {
       logger.info("SUBLIMA: Property sublima.checkurl.onstartup set to TRUE --> URL Check - Performing a url check");
