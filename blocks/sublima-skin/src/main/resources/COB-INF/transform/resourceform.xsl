@@ -379,14 +379,16 @@
             </ul>
           </td>
         </tr>
-        <tr>
-          <td>
-            <i18n:text key="resourceasnew">Marker som ny</i18n:text>
-          </td>
-          <td>
-            <input type="checkbox" name="markasnew"/>
-          </td>
-        </tr>
+        <xsl:if test="./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource">
+          <tr>
+            <td>
+              <i18n:text key="resourceasnew">Marker som ny</i18n:text>
+            </td>
+            <td>
+              <input type="checkbox" name="markasnew"/>
+            </td>
+          </tr>
+        </xsl:if>
         <tr>
           <td colspan="2">
 
@@ -757,14 +759,16 @@
             </ul>
           </td>
         </tr>
-        <tr>
-          <td>
-            <i18n:text key="resourceasnew">Marker som ny</i18n:text>
-          </td>
-          <td>
-            <input type="checkbox" name="markasnew"/>
-          </td>
-        </tr>
+        <xsl:if test="not(./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource)">
+          <tr>
+            <td>
+              <i18n:text key="resourceasnew">Marker som ny</i18n:text>
+            </td>
+            <td>
+              <input type="checkbox" name="markasnew"/>
+            </td>
+          </tr>
+        </xsl:if>
         <tr>
           <td colspan="2">
 
