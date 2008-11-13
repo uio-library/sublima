@@ -232,27 +232,32 @@ PVJ: Made the file UTF-8
 		      <!-- sorting panel -->
 		      <!-- updates and submits the search form -->
 		      <i18n:text key="search.sortby">Sorter etter</i18n:text>
-		      
-		      <select id="sort" name="sort">
-			<option value="">
-			  <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = ''">
-			    <xsl:attribute name="selected">selected</xsl:attribute>
-			  </xsl:if>
-			  <i18n:text key="search.sortby.relevance">Relevans</i18n:text>
-			</option>
-			<option value="dct:dateAccepted">
-			  <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:dateAccepted'">
-			    <xsl:attribute name="selected">selected</xsl:attribute>
-			  </xsl:if>
-			  <i18n:text key="search.sortby.date">Dato</i18n:text>
-			</option>
-			<option value="dct:title">
-			  <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:title'">
-			    <xsl:attribute name="selected">selected</xsl:attribute>
-			  </xsl:if>
-			  <i18n:text key="title">Tittel</i18n:text>
-			</option>
-		      </select>
+
+          <select id="sort" name="sort">
+            <option value="">
+            <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = ''">
+              <xsl:attribute name="selected">selected</xsl:attribute>
+            </xsl:if>
+            </option>
+            <option value="sub:relevance">
+              <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'sub:relevance'">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+              </xsl:if>
+              <i18n:text key="search.sortby.relevance">Relevans</i18n:text>
+            </option>
+            <option value="dct:dateAccepted">
+              <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:dateAccepted'">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+              </xsl:if>
+              <i18n:text key="search.sortby.date">Dato</i18n:text>
+            </option>
+            <option value="dct:title">
+              <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:title'">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+              </xsl:if>
+              <i18n:text key="title">Tittel</i18n:text>
+            </option>
+          </select>
 		    </fieldset>
 		  </form>
 		  </div>
@@ -393,20 +398,20 @@ PVJ: Made the file UTF-8
          <xsl:when test="$res-view='full'">
     		 
     		  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results-full">
-		          <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
+		          <xsl:with-param name="sorting"><xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
 	       	  </xsl:apply-templates>
              </xsl:when>  
 
     		 <xsl:when test="$res-view='short'">
     		 
     		  <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results-short">
-		          <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
+		          <xsl:with-param name="sorting"><xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
 	       	  </xsl:apply-templates>
              </xsl:when>  
 		     
 		     <xsl:otherwise>
 		      <xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results">
-		          <xsl:with-param name="sorting"><xsl:value-of select="c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
+		          <xsl:with-param name="sorting"><xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/></xsl:with-param>
 	       	  </xsl:apply-templates>
 	        </xsl:otherwise>
 		  </xsl:choose>
