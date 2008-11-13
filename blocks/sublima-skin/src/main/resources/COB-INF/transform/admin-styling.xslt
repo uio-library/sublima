@@ -176,6 +176,7 @@
   <xsl:template name="publisherlist">
     <ul>
       <xsl:for-each select="c:page/c:content/c:publisherlist/sparql:sparql/sparql:results/sparql:result">
+         <xsl:sort lang="{$interface-language}" select="./sparql:binding[@name='name']/sparql:literal"/>
         <li>
           <a>
             <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:uri"/><xsl:value-of
