@@ -234,11 +234,6 @@ PVJ: Made the file UTF-8
 		      <i18n:text key="search.sortby">Sorter etter</i18n:text>
 
           <select id="sort" name="sort">
-            <option value="">
-            <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = ''">
-              <xsl:attribute name="selected">selected</xsl:attribute>
-            </xsl:if>
-            </option>
             <option value="sub:relevance">
               <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'sub:relevance'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
@@ -383,7 +378,7 @@ PVJ: Made the file UTF-8
             <h3><i18n:text key="topic.heading">Emne</i18n:text></h3>
             <dl>
               <dt>
-                <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+                <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/> <xsl:if test="/c:page/c:loggedin = 'true'"> - <a href="{$baseurl}/admin/emner/emne?uri={/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about}{$aloc}">[Edit]</a> </xsl:if>
               </dt>
               <dd>
                 <xsl:value-of disable-output-escaping="yes" select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:definition"/>
