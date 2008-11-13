@@ -290,7 +290,6 @@
   <message key="validation.comment.nocomment">Kommentarfeltet må være utfylt.</message>
   <message key="validation.comment.isspam">E-postadressen angitt er registrert som kilde for spam.</message>
   <message key="comment.received">Kommentaren sendt.</message>
-
-  comment.received
+  <message key="search.refine">Søket ditt gir for mange treff i ressurser. Velg heller et emne fra listen til høyre eller forsøk å søke på flere eller mer spesifikke ord.</message>
 
 </catalogue>

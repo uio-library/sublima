@@ -419,6 +419,11 @@ PVJ: Made the file UTF-8
         If there are 0 hits in resources, but we have hits in the topics
      -->
     <xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept">
+      <ul>
+        <li><i18n:text key="search.refine">Søket ditt gir for mange treff i ressurser. Velg heller et emne fra listen til høyre eller forsøk å søke på mer enn ett ord.</i18n:text></li>
+      </ul>
+
+      <!--
       <h3><i18n:text key="topics.heading">Emner</i18n:text></h3>
         <xsl:for-each select="c:page/c:navigation/rdf:RDF//skos:Concept">
 		      <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
@@ -426,6 +431,7 @@ PVJ: Made the file UTF-8
             <xsl:value-of select="./skos:definition"/><br/>
             <br/>
         </xsl:for-each>
+       -->
     </xsl:if>
 
 	  </div>
