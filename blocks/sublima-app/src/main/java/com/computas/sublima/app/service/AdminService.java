@@ -875,4 +875,13 @@ public class AdminService {
     }
     return results;
   }
+
+  public String describeResource(String identifier) {
+    String query = "DESCRIBE <" + identifier + "> ?rest WHERE {\n" +
+            "<" + identifier + "> ?p ?rest . \n}";
+
+    Object result = sparqlDispatcher.query(query);
+    return result.toString();
+
+  }
 }

@@ -286,10 +286,11 @@
   <message key="validation.user.new.passworddontmatch">Passordet må være likt i begge feltene.</message>
   <message key="validation.user.new.existingusername">En bruker med dette brukernavnet finnes allerede.</message>
   <message key="intopics"> i emner</message>
+  <message key="validation.comment.noemail">E-postadresse må angis.</message>
+  <message key="validation.comment.nocomment">Kommentarfeltet må være utfylt.</message>
+  <message key="validation.comment.isspam">E-postadressen angitt er registrert som kilde for spam.</message>
+  <message key="comment.received">Kommentaren sendt.</message>
 
-
-
-
-
+  comment.received
 
 </catalogue>

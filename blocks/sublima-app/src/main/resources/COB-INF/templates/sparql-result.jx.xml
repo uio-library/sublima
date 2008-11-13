@@ -4,7 +4,11 @@
   <loggedin><jx:out value="#{loggedin}" xmlize="false"/></loggedin>
   <searchparams><jx:out value="#{searchparams}" xmlize="true"/></searchparams>
   <result-list><jx:out value="#{result-list}" xmlize="true"/></result-list>
-
+  <content>
+    <messages>
+      <jx:out value="#{messages}" xmlize="true"/>
+    </messages>
+  </content>
   <navigation><jx:out value="#{navigation}" xmlize="true"/></navigation>
 
   <facets>

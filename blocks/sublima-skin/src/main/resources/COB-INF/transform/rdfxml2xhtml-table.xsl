@@ -112,6 +112,18 @@
     </table>
     <br/>
     <p><i18n:text key="resource.sendcomment">Send inn en kommentar angående denne ressursen</i18n:text></p>
+
+    <xsl:if test="/c:page/c:content/c:messages/c:messages/c:message">
+      <ul>
+        <xsl:for-each select="/c:page/c:content/c:messages/c:messages/c:message">
+          <li>
+            <xsl:value-of select="."/>
+            <br/>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </xsl:if>
+    
     <form action="{$baseurl}/resourcecomment" method="GET">
         <input type="hidden" name="uri" value="{sub:Resource/@rdf:about}"/>
         <input type="hidden" name="resource" value="{sub:Resource/dct:identifier/@rdf:resource}"/>

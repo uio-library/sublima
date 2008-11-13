@@ -258,7 +258,7 @@ PVJ: Made the file UTF-8
 		  </div>
 		</xsl:if>
 
-        <xsl:call-template name="messages"/>
+        <!-- xsl:call-template name="messages"/ -->
 
 
         
