@@ -25,12 +25,13 @@ public class SearchController implements StatelessAppleController {
   private AdminService adminService = new AdminService();
   private String mode;
   private String format;
+  boolean loggedIn;
 
   private static Logger logger = Logger.getLogger(SearchController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
-    boolean loggedIn = appMan.isLoggedIn("Sublima");
+    loggedIn = appMan.isLoggedIn("Sublima");
 
     this.mode = req.getSitemapParameter("mode");
     this.format = req.getSitemapParameter("format");
@@ -64,16 +65,16 @@ public class SearchController implements StatelessAppleController {
 
     // If it's search-results for advanced search, topic instance or resource
     if ("resource".equalsIgnoreCase(mode) || "search-result".equalsIgnoreCase(mode)) {
-      doAdvancedSearch(res, req, loggedIn);
+      doAdvancedSearch(res, req);
       return;
     }
 
     if ("topic".equalsIgnoreCase(mode)) {
-      doGetTopic(res, req, loggedIn);
+      doGetTopic(res, req);
     }
   }
 
-  private void doGetTopic(AppleResponse res, AppleRequest req, boolean loggedIn) {
+  private void doGetTopic(AppleResponse res, AppleRequest req) {
 
     String subject = "<" + getProperty("sublima.base.url")
             + "topic/" + req.getSitemapParameter("topic") + ">";
@@ -139,9 +140,6 @@ public class SearchController implements StatelessAppleController {
          "}\n"+ 
          "}";
 
-
-
-
     //logger.trace("doGetTopic: SPARQL CONSTRUCT query sent to dispatcher:\n" + sparqlConstructQuery);
     queryResult = sparqlDispatcher.query(sparqlConstructQuery);
 
@@ -165,6 +163,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("request", params.toString());
     bizData.put("loggedin", loggedIn);
     bizData.put("searchparams", "<empty/>");
+    bizData.put("messages", "<empty/>");
     System.gc();
     res.sendPage(format + "/sparql-result", bizData);
   }
@@ -197,7 +196,7 @@ public class SearchController implements StatelessAppleController {
   }
 
 
-  public void doAdvancedSearch(AppleResponse res, AppleRequest req, boolean loggedIn) {
+  public void doAdvancedSearch(AppleResponse res, AppleRequest req) {
     // Get all parameteres from the HTML form as Map
     Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -338,6 +337,7 @@ public class SearchController implements StatelessAppleController {
 
     bizData.put("request", params.toString());
     bizData.put("loggedin", loggedIn);
+    bizData.put("messages", "<empty/>");
     System.gc();
     res.sendPage(format + "/sparql-result", bizData);
   }
