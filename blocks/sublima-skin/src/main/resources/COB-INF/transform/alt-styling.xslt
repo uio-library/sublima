@@ -269,14 +269,9 @@ PVJ: Made the file UTF-8
              
         -->
         <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-          <xsl:choose>
-            <xsl:when test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept">
-              <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberoftopics"/> <i18n:text key="intopics">i emner</i18n:text><br/>              
-            </xsl:when>
-            <xsl:otherwise>
-              <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>  
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:if test="not($numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept)">
+              <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>
+            </xsl:if>
     </xsl:if>
 		
 			
@@ -418,23 +413,22 @@ PVJ: Made the file UTF-8
      <!--
         If there are 0 hits in resources, but we have hits in the topics
      -->
-    <xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept">
+    <xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept and c:page/c:mode = 'search-result'">
       <ul>
-        <li><i18n:text key="search.refine">Søket ditt gir for mange treff i ressurser. Velg heller et emne fra listen til høyre eller forsøk å søke på mer enn ett ord.</i18n:text></li>
+        <li><i18n:text key="search.refine">Søket ditt gir for mange treff i ressurser, eller det finnes ingen ressurser som matcher søket. Velg heller et emne fra listen til høyre eller forsøk å søke på mer enn ett ord.</i18n:text></li>
       </ul>
-
-      <!--
-      <h3><i18n:text key="topics.heading">Emner</i18n:text></h3>
-        <xsl:for-each select="c:page/c:navigation/rdf:RDF//skos:Concept">
-		      <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
-			      <a href="{./@rdf:about}.html{$qloc}"><xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/></a><br/>
-            <xsl:value-of select="./skos:definition"/><br/>
-            <br/>
-        </xsl:for-each>
-       -->
     </xsl:if>
 
-	  </div>
+     <!--
+      If we came here from clicking a specific topic
+      -->
+     <xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept and c:page/c:mode = 'topic'">
+      <ul>
+        <li><i18n:text key="search.noresources">Vi har ikke registrert noen ressurser med dette emnet, men relaterte emner finnes eventuelt i listen til høyre.</i18n:text></li>
+      </ul>
+    </xsl:if>
+
+    </div>
 	  <!-- Column 1 end -->  
 	      
 	      
