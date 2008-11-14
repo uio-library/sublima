@@ -476,7 +476,6 @@ public class AdminService {
             "   {?topic skos:prefLabel ?label .}",
             "   UNION {",
             "       ?topic skos:altLabel ?label . }",
-            "    ?resource dct:subject ?topic .",
             "    ?topic wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
             "FILTER regex(str(?label), \"^" + letter + "\", \"i\")",
             "}"});
