@@ -235,6 +235,7 @@ public class FeedbackController {
     bizData.put("searchparams", "<empty/>");
     bizData.put("request", "<empty/>");
     bizData.put("loggedin", loggedIn);
+    bizData.put("abovemaxnumberofhits", "false");
     res.sendPage("xml/sparql-result", bizData);
   }
 

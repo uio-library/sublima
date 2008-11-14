@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" xmlns="http://xmlns.computas.com/cocoon">
   <mode><jx:out value="#{mode}"/></mode>
+  <abovemaxnumberofhits><jx:out value="#{abovemaxnumberofhits}" xmlize="false"/></abovemaxnumberofhits>
   <loggedin><jx:out value="#{loggedin}" xmlize="false"/></loggedin>
   <searchparams><jx:out value="#{searchparams}" xmlize="true"/></searchparams>
   <result-list><jx:out value="#{result-list}" xmlize="true"/></result-list>

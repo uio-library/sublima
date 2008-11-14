@@ -413,9 +413,15 @@ PVJ: Made the file UTF-8
      <!--
         If there are 0 hits in resources, but we have hits in the topics
      -->
-    <xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept and c:page/c:mode = 'search-result'">
+    <xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept and c:page/c:mode = 'search-result' and c:page/c:abovemaxnumberofhits = 'true'">
       <ul>
-        <li><i18n:text key="search.refine">Søket ditt gir for mange treff i ressurser, eller det finnes ingen ressurser som matcher søket. Velg heller et emne fra listen til høyre eller forsøk å søke på mer enn ett ord.</i18n:text></li>
+        <li><i18n:text key="search.refine">Søket ditt gir for mange treff i ressurser. Velg eventuelt heller et emne fra navigasjonslisten til høyre eller forsøk å søke på mer enn ett ord.</i18n:text></li>
+      </ul>
+    </xsl:if>
+
+     <xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept and c:page/c:mode = 'search-result' and c:page/c:abovemaxnumberofhits = 'false'">
+      <ul>
+        <li><i18n:text key="search.nohits">Dette søket ga ingen treff i ressurser. Treff i emner vises eventuelt i navigasjonslisten til høyre.</i18n:text></li>
       </ul>
     </xsl:if>
 
