@@ -87,11 +87,9 @@
           <map:parameter name="application" value="Sublima"/>
           <map:parameter name="name" value="{request-param:username}"/>
           <map:parameter name="password" value="{request-param:password}"/>
-          <map:call function="com.computas.sublima.app.fascade.AdminFascade">
-            <map:parameter name="mode" value=""/>
-          </map:call>
+          <map:redirect-to uri="{request:contextPath}/admin/?{request:queryString}"/>
         </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
+        <map:redirect-to uri="{request:contextPath}/login?{request:queryString}"/>
         <!--/map:call-->
         <!--/map:act-->
       </map:match>
