@@ -50,6 +50,7 @@
       <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
+      <input type="hidden" name="dct:dateAccepted" value="{./c:resource/rdf:RDF/sub:Resource/dct:dateAccepted}"/>
       <input type="hidden" id="dct:identifier" name="dct:identifier"
              value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
@@ -449,6 +450,7 @@
       <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
+      <input type="hidden" name="dct:dateAccepted" value="{./c:resource/rdf:RDF/sub:Resource/dct:dateAccepted}"/>
       <input type="hidden" id="dct:identifier" name="dct:identifier"
              value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>

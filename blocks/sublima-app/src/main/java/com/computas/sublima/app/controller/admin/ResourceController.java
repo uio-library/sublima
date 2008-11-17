@@ -292,7 +292,7 @@ public class ResourceController implements StatelessAppleController {
           parameterMap.remove("markasnew");
         }
 
-        parameterMap.put("sub:committer", new String[]{user.getId()});
+        parameterMap.put("sub:committer", new String[]{user.getAttribute("uri").toString()});
 
         // Generate a dct:identifier if it's a new resource, and set the time and date for approval
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier")) || req.getCocoonRequest().getParameter("dct:identifier") == null) {
@@ -304,6 +304,7 @@ public class ResourceController implements StatelessAppleController {
         }
 
         if (updateDate) {
+          parameterMap.remove("dct:dateAccepted");
           parameterMap.put("dct:dateAccepted", new String[]{dateAccepted});
         }
 
@@ -432,6 +433,7 @@ public class ResourceController implements StatelessAppleController {
     String[] temp_subjects = req.getCocoonRequest().getParameterValues("dct:subject");
     String temp_comment = req.getCocoonRequest().getParameter("rdfs:comment");
     String temp_status = req.getCocoonRequest().getParameter("wdr:describedBy");
+    String temp_date = req.getCocoonRequest().getParameter("dct:dateAccepted");
 
 //Create an XML structure for the selected values, to use in the JX template
     StringBuilder xmlStructureBuffer = new StringBuilder();
@@ -462,6 +464,8 @@ public class ResourceController implements StatelessAppleController {
 
     xmlStructureBuffer.append("<dct:description>" + temp_description + "</dct:description>\n");
     xmlStructureBuffer.append("<dct:publisher rdf:resource=\"" + temp_publisher + "\"/>\n");
+    xmlStructureBuffer.append("<dct:dateAccepted rdf:datatype=\"http://www.w3.org/2001/XMLSchema#dateTime\">" + temp_date + "</dct:dateAccepted>\n");
+
 
     if (temp_languages != null) {
       for (String s : temp_languages) {
