@@ -176,12 +176,12 @@
   <xsl:template name="publisherlist">
     <ul>
       <xsl:for-each select="c:page/c:content/c:publisherlist/sparql:sparql/sparql:results/sparql:result">
-         <xsl:sort lang="{$interface-language}" select="./sparql:binding[@name='name']/sparql:literal"/>
+         <xsl:sort lang="{$interface-language}" select="./sparql:binding[@name='name']/sparql:literal[@xml:lang=$interface-language]"/>
         <li>
           <a>
             <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:uri"/><xsl:value-of
                     select="$aloc"/></xsl:attribute>
-            <xsl:value-of select="./sparql:binding[@name='name']/sparql:literal"/>
+            <xsl:value-of select="./sparql:binding[@name='name']/sparql:literal[@xml:lang=$interface-language]"/>
           </a>
         </li>
       </xsl:for-each>
@@ -260,9 +260,7 @@
      menues
 	 ###################################################################### -->       
         <div class="col1" style="border:0px dotted black;">     <!-- Column 1 start -->
-          <!--      
-	  <xsl:call-template name="debug"/>
-	  -->
+	  <!-- xsl:call-template name="debug"/ -->
 		  <xsl:text> </xsl:text> <!-- avoid an empty div tag -->
 		
 		<div style="border:0px dotted orange;">
