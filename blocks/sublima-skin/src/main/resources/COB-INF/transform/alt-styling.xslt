@@ -366,9 +366,8 @@ PVJ: Made the file UTF-8
 		-->		
 	  <div id="panel-results" style="border:0px solid orange;">	
 	   <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-	    <xsl:if test="$numberofhits &gt; 0">
 
-        <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about and c:page/c:mode = 'topic'">
+       <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about and c:page/c:mode = 'topic'">
           <div id="topicdescription">
             <h3><i18n:text key="topic.heading">Emne</i18n:text></h3>
             <dl>
@@ -381,6 +380,8 @@ PVJ: Made the file UTF-8
             </dl>
           </div>
         </xsl:if>
+
+      <xsl:if test="$numberofhits &gt; 0">
 
        <h3><i18n:text key="resources.heading">Ressurser</i18n:text></h3>
 		  
