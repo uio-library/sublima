@@ -16,23 +16,18 @@
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language"/>
 
-  <xsl:variable name="lcletters">abcdefghijklmnopqrstuvwxyzæøåäö</xsl:variable>
-  <xsl:variable name="ucletters">ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅÄÖ</xsl:variable>
-
   <xsl:template match="c:browse" mode="browse">
     <xsl:if test="./rdf:RDF/skos:Concept">
       <ul>
         <xsl:for-each select="./rdf:RDF//skos:Concept/rdfs:label[@xml:lang=$interface-language]|./rdf:RDF//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
           <xsl:sort lang="{$interface-language}" select="."/>
 
-            <xsl:if test="/c:page/c:letter = '' or starts-with(translate(., $ucletters, $lcletters), /c:page/c:letter)">
-	      <li>
-              <a href="{../@rdf:about}.html{$qloc}">
-                <xsl:value-of select="."/>
-              </a>
-              </li>                
-	     
-	    </xsl:if>
+          <li>
+            <a href="{../@rdf:about}.html{$qloc}">
+              <xsl:value-of select="."/>
+            </a>
+          </li>
+
         </xsl:for-each>
       </ul>
     </xsl:if>
