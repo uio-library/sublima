@@ -13,6 +13,9 @@ import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.log4j.Logger;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -205,8 +208,11 @@ public class FeedbackController {
     } else {
       logger.trace("FeedbackController.java --> Akismet said comment from " + email + " is ham.");
 
-      String generatedUserURI = getProperty("sublima.base.url") + "user/visitor/" + email.hashCode();
       String generatedCommentURI = getProperty("sublima.base.url") + "comment/resource/" + email.hashCode() + comment.hashCode();
+
+      Date date = new Date();
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+      String dateCommented = dateFormat.format(date); //"2008-18-09T13:39:38";
 
       String commentString = StringUtils.join("\n", new String[]{
               "PREFIX dct: <http://purl.org/dc/terms/>",
@@ -216,18 +222,18 @@ public class FeedbackController {
               "INSERT",
               "{",
               "    <" + uri + ">" + " sub:comment <" + generatedCommentURI + "> .",
-              "        <" + generatedCommentURI + "> a sioc:Item ;",
-              "            sioc:content \"\"\"" + comment + "\"\"\" ;",
-              "        sioc:has_creator <" + generatedUserURI + "> .",
-              "        <" + generatedUserURI + "> a sioc:User ;",
-              "            sioc:email <mailto:" + email + "> .",
+              "    <" + generatedCommentURI + "> a sioc:Item ;",
+              "        sioc:content \"\"\"" + comment + "\"\"\" ;",
+              "        dct:dateAccepted \"" + dateCommented + "\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;",
+              "        sioc:has_creator \"\"\"" + email + "\"\"\" ;",
+              "        sioc:has_owner <" + uri + "> .",
               "}"});
 
       success = sparulDispatcher.query(commentString);
       logger.trace("FeedbackController.java --> Comment on resource: " + commentString + "\nResult: " + success);
       messageBuffer.append("<c:message><i18n:text key=\"comment.received\">uoversatt</i18n:text></c:message>\n");
     }
-    messageBuffer.append("</c:messages>\n");    
+    messageBuffer.append("</c:messages>\n");
     bizData.put("messages", messageBuffer.toString());
     bizData.put("result-list", adminService.describeResource(req.getCocoonRequest().getParameter("uri")));
     bizData.put("navigation", "<empty/>");
