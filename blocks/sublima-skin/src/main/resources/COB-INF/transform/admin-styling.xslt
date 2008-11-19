@@ -33,6 +33,7 @@
   <xsl:import href="set-lang.xsl"/>
   <xsl:import href="publisherform.xsl"/>
   <xsl:import href="sparql-uri-label-pairs.xsl"/>
+  <xsl:import href="kommentarer.xsl"/>
 
   <xsl:output method="xml"
               encoding="UTF-8"
@@ -335,6 +336,11 @@
 
           <div style="border:0px dotted red;">
             <xsl:apply-templates select="c:page/c:content/c:related"/>
+            <xsl:text> </xsl:text>
+          </div>
+
+          <div style="border:0px dotted red;">
+            <xsl:apply-templates select="c:page/c:content/c:comments"/>
             <xsl:text> </xsl:text>
           </div>
 
