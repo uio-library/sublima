@@ -752,9 +752,13 @@
           </td>
           <td>
             <ul>
-              <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/sub:comment">
+              <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/sub:comment/sioc:Item">
                 <li>
-                  <xsl:value-of select="."/>
+                  <xsl:value-of select="./sioc:content"/>
+                  <xsl:text> - </xsl:text>
+                  <a href="mailto:{./sioc:has_creator}">
+                    <xsl:value-of select="./sioc:has_creator"/>
+                  </a>
                 </li>
               </xsl:for-each>
             </ul>
