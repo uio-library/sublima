@@ -293,5 +293,10 @@
   <message key="search.refine">Søket ditt gir for mange treff. Velg heller et emne fra listen til høyre eller forsøk å søke på mer enn ett ord.</message>
   <message key="search.noresources">Vi har dessverre ingen nettsider om dette emnet, men relaterte emner finnes i listen til høyre.</message>
   <message key="search.nohits">Vi fant dessverre ingen nettsider om dette, men aktuelle emner finnes i listen til høyre.</message>
+  <message key="menu.comments">Kommentarer</message>
+  <message key="date">Dato</message>
+  <message key="comments">Kommentarer</message>
+  <message key="comment">Kommentar</message>
+  <message key="sender">Avsender</message>
 
 </catalogue>
