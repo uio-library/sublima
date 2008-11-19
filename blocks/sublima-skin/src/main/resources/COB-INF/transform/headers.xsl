@@ -46,7 +46,8 @@
       <script type="text/javascript">var dummy = null;</script>
       <script src="{$baseurl}/styles/jquery.ui.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
-
+      <script src="{$baseurl}/styles/jquery.tablesorter.min.js" type="text/javascript" />
+      <script type="text/javascript">var dummy = null;</script>
           
     </head>
   </xsl:template>
