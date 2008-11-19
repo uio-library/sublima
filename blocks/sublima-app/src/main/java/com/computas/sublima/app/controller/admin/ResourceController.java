@@ -73,10 +73,29 @@ public class ResourceController implements StatelessAppleController {
         editResource(res, req, "edit", null);
       } else if ("checkurl".equalsIgnoreCase(submode)) {
         registerNewResourceURL(req, res);
+      } else if ("kommentarer".equalsIgnoreCase(submode)) {
+        showComments(res, req);
       }
+
     } else {
       res.sendStatus(404);
     }
+  }
+
+  /**
+   * Method to show all comments on resources.
+   * @param res
+   * @param req
+   */
+  private void showComments(AppleResponse res, AppleRequest req) {
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    StringBuilder messageBuffer = new StringBuilder();
+    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
+    bizData.put("userprivileges", userPrivileges);
+    bizData.put("messages", "<empty/>");
+    bizData.put("comments", adminService.getAllComments());
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    res.sendPage("xml2/kommentarer", bizData);
   }
 
   /**
