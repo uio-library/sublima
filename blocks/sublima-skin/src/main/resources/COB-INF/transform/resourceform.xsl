@@ -68,7 +68,7 @@
                    value="{./c:resource/rdf:RDF/sub:Resource/dct:title}"/>
           </td>
         </tr>
-        <tr>
+        <tr>                                                                  
           <td>
             <label for="the-resource">
               <i18n:text key="url">URL</i18n:text>
@@ -371,9 +371,8 @@
                 <li>
                   <xsl:value-of select="./sioc:content"/>
                   <xsl:text> - </xsl:text>
-                  <a href="{./sioc:has_creator/sioc:User/sioc:email/@rdf:resource}">
-                    <xsl:value-of
-                            select="substring-after(./sioc:has_creator/sioc:User/sioc:email/@rdf:resource, 'mailto:')"/>
+                  <a href="mailto:{./sioc:has_creator}">
+                    <xsl:value-of select="./sioc:has_creator"/>
                   </a>
                 </li>
               </xsl:for-each>
