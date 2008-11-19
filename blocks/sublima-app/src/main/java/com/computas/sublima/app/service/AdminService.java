@@ -9,11 +9,11 @@ import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,9 +27,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
-import java.util.ArrayList;
 
 /**
  * A class to support the administration of Sublima
@@ -332,7 +332,7 @@ public class AdminService {
             "       ?topic skos:altLabel ?label . }",
             "    ?topic wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
             "}",
-            "ORDER BY ?label" });
+            "ORDER BY ?label"});
 
     logger.trace("AdminService.getTopicByPartialName() executing");
     Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
@@ -789,10 +789,10 @@ public class AdminService {
   public boolean isAboveMaxNumberOfHits(String query) {
     logger.trace("AdminService.isAboveMaxNumberOfHits() executing");
     if (query == null) {
-        return true;
+      return true;
     }
-    if (! query.contains("pf:textMatch")) {
-        return false;
+    if (!query.contains("pf:textMatch")) {
+      return false;
     }
     try {
       return sparqlDispatcher.query(query).toString().contains("<uri>");
@@ -806,29 +806,29 @@ public class AdminService {
 
   public ArrayList<String[]> createArrayOfTopics() {
     String result = getTopicsAsJSON();
-    ArrayList<String[]> topicList = new  ArrayList<String[]>();
+    ArrayList<String[]> topicList = new ArrayList<String[]>();
 
     try {
-        JSONObject json = new JSONObject(result);
-        json = json.getJSONObject("results");
-        JSONArray jsonArray = json.getJSONArray("bindings");
+      JSONObject json = new JSONObject(result);
+      json = json.getJSONObject("results");
+      JSONArray jsonArray = json.getJSONArray("bindings");
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-          JSONObject obj2 = (JSONObject) jsonArray.get(i);
-          obj2 = (JSONObject) obj2.get("label");
-          String language;
-          try {
-            language = obj2.get("xml:lang").toString();
-          } catch (Exception e) {
-            language = "";            
-          }
-          topicList.add(new String[] {obj2.get("value").toString(), language});
+      for (int i = 0; i < jsonArray.length(); i++) {
+        JSONObject obj2 = (JSONObject) jsonArray.get(i);
+        obj2 = (JSONObject) obj2.get("label");
+        String language;
+        try {
+          language = obj2.get("xml:lang").toString();
+        } catch (Exception e) {
+          language = "";
         }
-
-      } catch (JSONException e) {
-
-        e.printStackTrace();
+        topicList.add(new String[]{obj2.get("value").toString(), language});
       }
+
+    } catch (JSONException e) {
+
+      e.printStackTrace();
+    }
     return topicList;
   }
 
@@ -837,19 +837,19 @@ public class AdminService {
     LinkedHashSet<String> publisherSet = new LinkedHashSet<String>();
 
     try {
-        JSONObject json = new JSONObject(result);
-        json = json.getJSONObject("results");
-        JSONArray jsonArray = json.getJSONArray("bindings");
+      JSONObject json = new JSONObject(result);
+      json = json.getJSONObject("results");
+      JSONArray jsonArray = json.getJSONArray("bindings");
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-          JSONObject obj2 = (JSONObject) jsonArray.get(i);
-          obj2 = (JSONObject) obj2.get("label");
-          publisherSet.add(obj2.get("value").toString());
-        }
-
-      } catch (JSONException e) {
-        e.printStackTrace();
+      for (int i = 0; i < jsonArray.length(); i++) {
+        JSONObject obj2 = (JSONObject) jsonArray.get(i);
+        obj2 = (JSONObject) obj2.get("label");
+        publisherSet.add(obj2.get("value").toString());
       }
+
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
     return publisherSet;
   }
 
@@ -858,7 +858,7 @@ public class AdminService {
 
     for (String[] s : AutocompleteCache.getTopicList()) {
       if (s[0].toLowerCase().startsWith(name.toLowerCase()) && (language.equalsIgnoreCase(s[1]) || language.equals(""))) {
-        results.add(s[0]);        
+        results.add(s[0]);
       }
     }
     return results;
@@ -882,5 +882,38 @@ public class AdminService {
     Object result = sparqlDispatcher.query(query);
     return result.toString();
 
+  }
+
+  public String getAllComments() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>\n" +
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+            "\n" +
+            "CONSTRUCT {\n" +
+            "    ?comment a sioc:Item ;\n" +
+            "             sioc:content ?content ;\n" +
+            "             dct:dateAccepted ?date ;\n" +
+            "             sioc:has_creator ?creator ;\n" +
+            "             sioc:has_owner ?owner .\n" +
+            "    ?owner a sub:Resource ;\n" +
+            "           dct:title ?title ; \n" +
+            "           dct:identifier ?identifier .\n" +
+            "}\n" +
+            "WHERE {\n" +
+            "    ?comment a sioc:Item ;\n" +
+            "             sioc:content ?content ;\n" +
+            "             dct:dateAccepted ?date ;\n" +
+            "             sioc:has_creator ?creator ;\n" +
+            "             sioc:has_owner ?owner .\n" +
+            "    ?owner a sub:Resource ;\n" +
+            "           dct:title ?title ; \n" +
+            "           dct:identifier ?identifier .\n" +
+            "}"});
+
+    logger.trace("AdminService.getAllUsers() executing");
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
   }
 }
