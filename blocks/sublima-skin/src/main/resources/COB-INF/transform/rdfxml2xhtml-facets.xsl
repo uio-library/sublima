@@ -144,7 +144,7 @@ test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]"
 	</xsl:for-each>
 	</ul>
 
-    <xsl:if test="count(/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept) > $max_facets">
+    <xsl:if test="count(/c:page/c:result-list/rdf:RDF//skos:Concept) > $max_facets">
       <div class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" ><i18n:text key="more">more</i18n:text> &#187;</a></div>
     </xsl:if>
 
