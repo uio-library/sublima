@@ -21,6 +21,7 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
 
   public boolean query(String query) {
 
+    long connecttime = System.currentTimeMillis();
     //Get a GraphStore and load the graph from the Model
     GraphStore graphStore = GraphStoreFactory.create();
     graphStore.setDefaultGraph(SettingsService.getModel().getGraph());
@@ -59,6 +60,10 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
     cache.modelChanged(memcached);
     cache.close(memcached);
     System.gc();
+
+    long requesttime = System.currentTimeMillis() - connecttime;
+    logger.info("SPARULdispatcher executed. SPARUL took " + requesttime + " ms." );
+
     // Return true if update success
     return true;
   }
