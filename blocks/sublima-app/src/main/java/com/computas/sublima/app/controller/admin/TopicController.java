@@ -532,7 +532,7 @@ public class TopicController {
         if ((req.getCocoonRequest().getParameter("the-resource") == null) && adminService.getTopicByURI(uri).contains("skos:Concept ")) {
           messageBuffer.append("<c:message><i18n:text key=\"topic.exists\">Et emne med denne tittelen og URI finnes allerede</i18n:text></c:message>\n");
         } else {
-          logger.trace("TopicController.editTopic --> SPARUL QUERY:\n" + sparqlQuery);
+          logger.trace("TopicController.editTopic executing");
           insertSuccess = sparulDispatcher.query(sparqlQuery);
 
           logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
