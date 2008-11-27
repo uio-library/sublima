@@ -1,5 +1,3 @@
-
-
 /* General styles */
 body {
   margin: 0;
@@ -39,7 +37,7 @@ img {
 }
 
 fieldset {
-  border:0px solid white;
+  border: 0px solid white;
 }
 
 /* Header styles */
@@ -60,7 +58,7 @@ fieldset {
   margin: 0;
 }
 
-#header ul {   
+#header ul {
   clear: left;
   float: left;
   width: 100%;
@@ -180,7 +178,6 @@ only padding top and bottom is included here, make it whatever value you need */
 padding) plus (right column left padding) */
 }
 
-
 /* 2 Column settings */
 
 .twocol {
@@ -203,7 +200,6 @@ padding) plus (right column left padding) */
   /* width of (right column) plus (center column left and right padding) plus (left column left
  padding) */
 }
-
 
 /* Footer styles */
 #footer {
@@ -232,34 +228,35 @@ p.validationmessage {
 .facets {
   width: 100%;
   overflow: hidden;
-   background:#F7F7F7;
- 
- }
+  background: #F7F7F7;
+
+}
+
 /*
 .facets ul {
      max-height:3em; 
 }
 */
-  
+
 /*  
 .facets ul:hover {
   background: red;
   max-height:100%;
 } 
 */
-  
+
 .facets a:active {
-    background:red;
+  background: red;
 }
 
 .facet {
-  float: left;  
-   padding:1em;
-  
+  float: left;
+  padding: 1em;
+
 }
 
-.facet ul  {
-    padding-left:1em;
+.facet ul {
+  padding-left: 1em;
 }
 
 .activities {
@@ -275,7 +272,22 @@ p.validationmessage {
 }
 
 #topicdescription {
-  background:#F7F7F7;
+  background: #F7F7F7;
+}
+
+.selectmultiplebutton {
+  display: block;
+  border: 1px solid #aaa;
+  text-decoration: none;
+  background-color: #fafafa;
+  color: #123456;
+  margin: 2px;
+  clear: both;
+}
+
+.selectmultiple {
+  width: 400px;
+  height: 200px;
 }
 
 
