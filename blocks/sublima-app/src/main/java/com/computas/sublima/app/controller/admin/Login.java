@@ -74,7 +74,7 @@ public class Login extends AbstractSecurityHandler { //implements StatelessApple
     if (name.equalsIgnoreCase("Administrator")) {
       String role = SettingsService.getProperty("sublima.base.url") + "role/Administrator";
       user.setAttribute("role", role);
-      user.setAttribute("uri", "<" + SettingsService.getProperty("sublima.base.url") + "user/Administrator>");      
+      user.setAttribute("uri", SettingsService.getProperty("sublima.base.url") + "user/Administrator");
     } else {
       user.setAttribute("uri", SettingsService.getProperty("sublima.base.url") + "user/mailto" + name.replace("@", "").replace(".", ""));
       user.setAttribute("role", adminService.getUserRole("<mailto:" + name + ">"));
