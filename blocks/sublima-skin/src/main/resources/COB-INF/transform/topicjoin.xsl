@@ -21,63 +21,90 @@
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
 
-    <xsl:template match="c:join" mode="topicjoin">
+  <xsl:template match="c:join" mode="topicjoin">
 
-      <xsl:call-template name="selectmultiple">
-        <xsl:with-param name="selectionid">#concept</xsl:with-param>
-      </xsl:call-template>
 
-        <form action="{$baseurl}/admin/emner/koble" method="POST">
-          <xsl:call-template name="hidden-locale-field"/>
-          
-            <table>
-                <tr>
-                    <td>
-                        <label for="concept"><i18n:text key="topics">Emner</i18n:text></label>
-                    </td>
-                    <td>
-                        <select id="concept" name="skos:Concept" multiple="multiple">
-                            <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
-                                <xsl:choose>
-                                    <xsl:when test="./@rdf:about = /c:page/c:content/c:join/c:tempvalues/c:tempvalues/skos:Concept/@rdf:about">
-                                        <option value="{./@rdf:about}" selected="selected">
-                                            <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                                        </option>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <option value="{./@rdf:about}">
-                                            <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                                        </option>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:for-each>
-                        </select>
-                    </td>
-                </tr>
+    <form action="{$baseurl}/admin/emner/koble" method="POST">
+      <xsl:call-template name="hidden-locale-field"/>
 
-                <tr>
-                    <td><label for="skos:Concept/skos:prefLabel"><i18n:text key="topic.commonname">Felles navn</i18n:text></label></td>
-                    <td><input id="skos:Concept/skos:prefLabel" type="text" name="skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:Concept/skos:prefLabel}" /></td>
-                </tr>
-             
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                       <xsl:call-template name="controlbutton">
-                        <xsl:with-param name="privilege">topic.join</xsl:with-param>
-                        <xsl:with-param name="buttontext"><i18n:text key="button.join">Slå sammen</i18n:text></xsl:with-param>
-                      </xsl:call-template>
-                    </td>
-                    <td>
+      <table>
+        <tr>
+          <td>
+            <label for="skosconcept">
+              <i18n:text key="topics">Emner</i18n:text>
+            </label>
+          </td>
+          <td>
 
-                    </td>
-                </tr>
-            </table>
-        </form>
+            <xsl:call-template name="selectmultiple">
+              <xsl:with-param name="selectionid">#skosconcept</xsl:with-param>
+              <xsl:with-param name="tempid">#tempconcept</xsl:with-param>
+              <xsl:with-param name="position">concept</xsl:with-param>
+            </xsl:call-template>
 
-    </xsl:template>
+            <select class="selectmultiple" id="tempconcept" multiple="multiple">
+              <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
+                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                <xsl:if test="not(./@rdf:about = /c:page/c:content/c:join/c:tempvalues/c:tempvalues/skos:Concept/@rdf:about)">
+                  <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
+                    <option value="{./@rdf:about}">
+                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                    </option>
+                  </xsl:if>
+                </xsl:if>
+              </xsl:for-each>
+            </select>
+            <a href="#" id="addconcept" class="selectmultiplebutton">add &gt;&gt;</a>
+          </td>
+          <td>
+            <select name="skos:Concept" class="selectmultiple" multiple="multiple" id="skosconcept">
+              <option/>
+              <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
+                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                <xsl:if test="./@rdf:about = /c:page/c:content/c:join/c:tempvalues/c:tempvalues/skos:Concept/@rdf:about">
+                  <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
+                    <option value="{./@rdf:about}" selected="selected">
+                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                    </option>
+                  </xsl:if>
+                </xsl:if>
+              </xsl:for-each>
+            </select>
+            <a href="#" id="removeconcept" class="selectmultiplebutton">&lt;&lt; remove</a>
+          </td>
+
+        </tr>
+
+        <tr>
+          <td>
+            <label for="skos:Concept/skos:prefLabel">
+              <i18n:text key="topic.commonname">Felles navn</i18n:text>
+            </label>
+          </td>
+          <td>
+            <input id="skos:Concept/skos:prefLabel" type="text" name="skos:prefLabel" size="40" value="{./c:tempvalues/c:tempvalues/skos:Concept/skos:prefLabel}"/>
+          </td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">topic.join</xsl:with-param>
+              <xsl:with-param name="buttontext">
+                <i18n:text key="button.join">Slå sammen</i18n:text>
+              </xsl:with-param>
+            </xsl:call-template>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+      </table>
+    </form>
+
+  </xsl:template>
 </xsl:stylesheet>

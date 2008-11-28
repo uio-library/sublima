@@ -21,14 +21,7 @@
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
 
-  <xsl:variable name="lcletters">abcdefghijklmnopqrstuvwxyzæøå</xsl:variable>
-  <xsl:variable name="ucletters">ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ</xsl:variable>
-
     <xsl:template match="c:theme" mode="theme">
-
-      <xsl:call-template name="selectmultiple">
-        <xsl:with-param name="selectionid">#subject</xsl:with-param>
-      </xsl:call-template>
 
         <form id="themeselection" action="{$baseurl}/admin/emner/tema" method="POST">
           <xsl:call-template name="hidden-locale-field"/>
@@ -36,28 +29,48 @@
             <table>
                 <tr>
                     <td>
-                        <label for="subject"><i18n:text key="topics.theme">Temaemner</i18n:text></label>
+                        <label for="dctsubject"><i18n:text key="topics.theme">Temaemner</i18n:text></label>
                     </td>
-                    <td>
-                        <select id="subject" name="dct:subject" multiple="true">
-                          <option value=""/>
-                          <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
-                              <xsl:sort lang="{$interface-language}" select="./skos:prefLabel"/>
-                              <xsl:choose>
-                                  <xsl:when test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
-                                      <option value="{./@rdf:about}" selected="selected">
-                                          <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                                      </option>
-                                  </xsl:when>
-                                  <xsl:otherwise>
-                                      <option value="{./@rdf:about}">
-                                          <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                                      </option>
-                                  </xsl:otherwise>
-                              </xsl:choose>
-                          </xsl:for-each>
-                        </select>
-                    </td>
+
+
+            <td>
+
+            <xsl:call-template name="selectmultiple">
+              <xsl:with-param name="selectionid">#dctsubject</xsl:with-param>
+              <xsl:with-param name="tempid">#tempsubject</xsl:with-param>
+              <xsl:with-param name="position">subject</xsl:with-param>
+            </xsl:call-template>
+
+            <select class="selectmultiple" id="tempsubject" multiple="multiple">
+              <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
+                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                <xsl:if test="not(./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about)">
+                  <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
+                    <option value="{./@rdf:about}">
+                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                    </option>
+                  </xsl:if>
+                </xsl:if>
+              </xsl:for-each>
+            </select>
+            <a href="#" id="addsubject" class="selectmultiplebutton">add &gt;&gt;</a>
+          </td>
+          <td>
+            <select name="dct:subject" class="selectmultiple" multiple="multiple" id="dctsubject">
+              <option/>
+              <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
+                <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                <xsl:if test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
+                  <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
+                    <option value="{./@rdf:about}" selected="selected">
+                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+                    </option>
+                  </xsl:if>
+                </xsl:if>
+              </xsl:for-each>
+            </select>
+            <a href="#" id="removesubject" class="selectmultiplebutton">&lt;&lt; remove</a>
+          </td>
                 </tr>
 
                 <tr>
