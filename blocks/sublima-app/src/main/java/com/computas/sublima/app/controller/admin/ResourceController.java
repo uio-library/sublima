@@ -445,7 +445,7 @@ public class ResourceController implements StatelessAppleController {
     String temp_uri = req.getCocoonRequest().getParameter("the-resource").trim();
     String temp_identifier = req.getCocoonRequest().getParameter("dct:identifier");
     String temp_description = req.getCocoonRequest().getParameter("dct:description");
-    String temp_publisher = req.getCocoonRequest().getParameter("dct:publisher");
+    String[] temp_publisher = req.getCocoonRequest().getParameterValues("dct:publisher");
     String[] temp_languages = req.getCocoonRequest().getParameterValues("dct:language");
     String[] temp_mediatypes = req.getCocoonRequest().getParameterValues("dct:format");
     String[] temp_audiences = req.getCocoonRequest().getParameterValues("dct:audience");
@@ -482,14 +482,19 @@ public class ResourceController implements StatelessAppleController {
     }
 
     xmlStructureBuffer.append("<dct:description>" + temp_description + "</dct:description>\n");
-    xmlStructureBuffer.append("<dct:publisher rdf:resource=\"" + temp_publisher + "\"/>\n");
+
     xmlStructureBuffer.append("<dct:dateAccepted rdf:datatype=\"http://www.w3.org/2001/XMLSchema#dateTime\">" + temp_date + "</dct:dateAccepted>\n");
 
 
     if (temp_languages != null) {
       for (String s : temp_languages) {
-        //xmlStructureBuffer.append("<language>" + s + "</language>\n");
         xmlStructureBuffer.append("<dct:language rdf:resource=\"" + s + "\"/>\n");
+      }
+    }
+
+    if (temp_publisher != null) {
+      for (String s : temp_publisher) {
+        xmlStructureBuffer.append("<dct:publisher rdf:resource=\"" + s + "\"/>\n");
       }
     }
 
