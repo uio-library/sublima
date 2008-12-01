@@ -48,6 +48,8 @@
       <script type="text/javascript">var dummy = null;</script>
       <script src="{$baseurl}/styles/jquery.tablesorter.min.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
+      <script src="{$baseurl}/styles/jquery.template.js" type="text/javascript" />
+      <script type="text/javascript">var dummy = null;</script>
           
     </head>
   </xsl:template>
@@ -57,7 +59,7 @@
     <div id="header">
       <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
       
-      <h2>Sublima 1.0.0 RC-17</h2>
+      <h2>Sublima 1.0.0 RC-18</h2>
       <div>
 
 	  <a href="{$baseurl}/{$qloc}" class="active">
