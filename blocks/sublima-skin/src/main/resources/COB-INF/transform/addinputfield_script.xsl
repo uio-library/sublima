@@ -11,56 +11,47 @@
   <xsl:import href="rdfxml2html-lang-dropdown.xsl"/>
 
   <xsl:template name="addinputfieldscript">
+    <xsl:param name="uid"/>
     <xsl:param name="values"/>
     <xsl:param name="template"/>
     <xsl:param name="count"/>
     <xsl:param name="linkid"/>
     <xsl:param name="appendto"/>
 
+    // Get a reference to the values text area.
+    var jValues<xsl:value-of select="$uid"/> = $( "#<xsl:value-of select="$values"/>" );
 
-   <script type="text/javascript">
+    // Get a refernece to the template text area.
+    var jTemplate<xsl:value-of select="$uid"/> = $( "#<xsl:value-of select="$template"/>" );
 
-      // Hook up the add button handler.
-      $(
-      function(){
-        // Get a reference to the values text area.
-        var jValues = $( "#<xsl:value-of select="$values"/>" );
+    // Keep track of the templates created.
+    var intCount<xsl:value-of select="$uid"/> = <xsl:value-of select="$count"/>;
 
-        // Get a refernece to the template text area.
-        var jTemplate = $( "#<xsl:value-of select="$template"/>" );
+    // Get the add new upload link.
+    var jAddNewUpload<xsl:value-of select="$uid"/> = $( "#<xsl:value-of select="$linkid"/>" );
 
-        // Keep track of the templates created.
-        var intCount = <xsl:value-of select="$count"/>;
+    // Hook up the click event.
+    jAddNewUpload<xsl:value-of select="$uid"/>
+      .attr( "href", "javascript:void( 0 )" )
+      // Bind the click event.
+      .click(
+        function(){
+        // Get the new element from our jQuery
+        // template. When we do this, we are going
+        // to pass in some values that can be
+        // leveraged.
+        jElement<xsl:value-of select="$uid"/> = jTemplate<xsl:value-of select="$uid"/>.template(
+        eval( "(" + jValues<xsl:value-of select="$uid"/>.val() + ")" )
+        );
 
-        // Get the add new upload link.
-        var jAddNewUpload = $( "#<xsl:value-of select="$linkid"/>" );
+        // Increment the count.
+        intCount<xsl:value-of select="$uid"/>++;
 
-        // Hook up the click event.
-        jAddNewUpload
-          .attr( "href", "javascript:void( 0 )" )
-          // Bind the click event.
-          .click(
-            function(){
-            // Get the new element from our jQuery
-            // template. When we do this, we are going
-            // to pass in some values that can be
-            // leveraged.
-            jElement = jTemplate.template(
-            eval( "(" + jValues.val() + ")" )
-            );
-
-            // Increment the count.
-            intCount++;
-
-            // Add the element to the page.
-            $( "#<xsl:value-of select="$appendto"/>" ).before( jElement );
-            }
-          );
+        // Add the element to the page.
+        $( "#<xsl:value-of select="$appendto"/>" ).before( jElement<xsl:value-of select="$uid"/> );
         }
       );
-
-    </script>
-
+   
   </xsl:template>
 </xsl:stylesheet>
 

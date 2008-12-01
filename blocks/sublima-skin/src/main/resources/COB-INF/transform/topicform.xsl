@@ -19,6 +19,8 @@
   <xsl:import href="controlbutton.xsl"/>
   <xsl:import href="labels.xsl"/>
   <xsl:import href="selectmultiple.xsl"/>
+  <xsl:import href="addinputfield_templates.xsl"/>
+  <xsl:import href="addinputfield_script.xsl"/>
 
   <xsl:param name="baseurl"/>
   <xsl:param name="servername"/>
@@ -38,6 +40,71 @@
       </xsl:choose>
     </xsl:variable>
 
+     <xsl:call-template name="addinputfieldtemplates">
+      <xsl:with-param name="uid">title</xsl:with-param>
+      <xsl:with-param name="interface-language" select="$interface-language"/>
+      <xsl:with-param name="values">titlevalues</xsl:with-param>
+      <xsl:with-param name="template">titletemplate</xsl:with-param>
+      <xsl:with-param name="name">skos:prefLabel</xsl:with-param>
+      <xsl:with-param name="i18nkey">title</xsl:with-param>
+      <xsl:with-param name="i18ntext">Tittel</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="addinputfieldtemplates">
+      <xsl:with-param name="uid">synonym</xsl:with-param>
+      <xsl:with-param name="interface-language" select="$interface-language"/>
+      <xsl:with-param name="values">synonymvalues</xsl:with-param>
+      <xsl:with-param name="template">synonymtemplate</xsl:with-param>
+      <xsl:with-param name="name">skos:altLabel</xsl:with-param>
+      <xsl:with-param name="i18nkey">synonym</xsl:with-param>
+      <xsl:with-param name="i18ntext">Synonym</xsl:with-param>
+    </xsl:call-template>
+
+     <xsl:call-template name="addinputfieldtemplates">
+      <xsl:with-param name="uid">skrivefeil</xsl:with-param>
+      <xsl:with-param name="interface-language" select="$interface-language"/>
+      <xsl:with-param name="values">skrivefeilvalues</xsl:with-param>
+      <xsl:with-param name="template">skrivefeiltemplate</xsl:with-param>
+      <xsl:with-param name="name">skos:hiddenLabel</xsl:with-param>
+      <xsl:with-param name="i18nkey">skrivefeil</xsl:with-param>
+      <xsl:with-param name="i18ntext">Skrivefeil</xsl:with-param>
+    </xsl:call-template>
+
+    <script type="text/javascript">
+
+      // Hook up the add button handler.
+      $(
+      function(){
+
+        <xsl:call-template name="addinputfieldscript">
+          <xsl:with-param name="uid">title</xsl:with-param>
+          <xsl:with-param name="values">titlevalues</xsl:with-param>
+          <xsl:with-param name="template">titletemplate</xsl:with-param>
+          <xsl:with-param name="count" select="count(c:topicdetails/rdf:RDF/skos:Concept/skos:prefLabel)+2"/>
+          <xsl:with-param name="linkid">addtitle</xsl:with-param>
+          <xsl:with-param name="appendto">addtitlebefore</xsl:with-param>
+        </xsl:call-template>
+        <xsl:call-template name="addinputfieldscript">
+          <xsl:with-param name="uid">synonym</xsl:with-param>
+          <xsl:with-param name="values">synonymvalues</xsl:with-param>
+          <xsl:with-param name="template">synonymtemplate</xsl:with-param>
+          <xsl:with-param name="count" select="count(c:topicdetails/rdf:RDF/skos:Concept/skos:altLabel)+2"/>
+          <xsl:with-param name="linkid">addsynonym</xsl:with-param>
+          <xsl:with-param name="appendto">addsynonymbefore</xsl:with-param>
+        </xsl:call-template>
+        <xsl:call-template name="addinputfieldscript">
+          <xsl:with-param name="uid">skrivefeil</xsl:with-param>
+          <xsl:with-param name="values">skrivefeilvalues</xsl:with-param>
+          <xsl:with-param name="template">skrivefeiltemplate</xsl:with-param>
+          <xsl:with-param name="count" select="count(c:topicdetails/rdf:RDF/skos:Concept/skos:hiddenLabel)+2"/>
+          <xsl:with-param name="linkid">addskrivefeil</xsl:with-param>
+          <xsl:with-param name="appendto">addskrivefeilbefore</xsl:with-param>
+        </xsl:call-template>
+
+
+        }
+      );
+    </script>
     <form action="{$baseurl}/admin/emner/emne" method="POST">
 
       <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
@@ -102,6 +169,11 @@
           <xsl:with-param name="type">text</xsl:with-param>
         </xsl:call-template>
 
+        <tr id="addtitlebefore">
+          <td/>
+          <td/>
+          <td><a id="addtitle"><i18n:text key="addtitle">Legg til tittel</i18n:text></a></td>
+        </tr>
 
         <xsl:for-each select="c:topicdetails/rdf:RDF/skos:Concept/skos:altLabel">
           <xsl:call-template name="labels">
@@ -131,6 +203,12 @@
           <xsl:with-param name="type">text</xsl:with-param>
         </xsl:call-template>
 
+        <tr id="addsynonymbefore">
+          <td/>
+          <td/>
+          <td><a id="addsynonym"><i18n:text key="addsynonym">Legg til synonym</i18n:text></a></td>
+        </tr>
+
         <xsl:for-each select="c:topicdetails/rdf:RDF/skos:Concept/skos:hiddenLabel">
           <xsl:call-template name="labels">
             <xsl:with-param name="label">
@@ -158,6 +236,12 @@
           </xsl:with-param>
           <xsl:with-param name="type">text</xsl:with-param>
         </xsl:call-template>
+
+        <tr id="addskrivefeilbefore">
+          <td/>
+          <td/>
+          <td><a id="addskrivefeil"><i18n:text key="addskrivefeil">Legg til skrivefeil</i18n:text></a></td>
+        </tr>
 
       </table>
       <table>

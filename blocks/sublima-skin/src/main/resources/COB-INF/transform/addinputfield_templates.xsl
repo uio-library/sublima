@@ -12,6 +12,7 @@
 
   <xsl:template name="addinputfieldtemplates">
     <xsl:param name="interface-language"/>
+    <xsl:param name="uid"/>
     <xsl:param name="values"/>
     <xsl:param name="template"/>
     <xsl:param name="name"/>
@@ -22,7 +23,7 @@
               id="{$values}"
               style="display: none;">
       {
-      count: intCount,
+      count: intCount<xsl:value-of select="$uid"/>,
       name: "<xsl:value-of select="$name"/>",
       }
     </textarea>
