@@ -17,9 +17,42 @@
 	version="1.0">
   <xsl:import href="rdfxml2html-lang-dropdown.xsl"/>
   <xsl:import href="controlbutton.xsl"/>
+  <xsl:import href="addinputfield_templates.xsl"/>
+  <xsl:import href="addinputfield_script.xsl"/>
+  
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
   <xsl:template match="c:related">
+
+     <xsl:call-template name="addinputfieldtemplates">
+      <xsl:with-param name="uid">relation</xsl:with-param>
+      <xsl:with-param name="interface-language" select="$interface-language"/>
+      <xsl:with-param name="values">relationvalues</xsl:with-param>
+      <xsl:with-param name="template">relationtemplate</xsl:with-param>
+      <xsl:with-param name="name">rdfs:label</xsl:with-param>
+      <xsl:with-param name="i18nkey">name</xsl:with-param>
+      <xsl:with-param name="i18ntext">Navn</xsl:with-param>
+    </xsl:call-template>
+
+    <script type="text/javascript">
+
+      // Hook up the add button handler.
+      $(
+      function(){
+
+        <xsl:call-template name="addinputfieldscript">
+          <xsl:with-param name="uid">relation</xsl:with-param>
+          <xsl:with-param name="values">relationvalues</xsl:with-param>
+          <xsl:with-param name="template">relationtemplate</xsl:with-param>
+          <xsl:with-param name="count" select="count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+2"/>
+          <xsl:with-param name="linkid">addrelation</xsl:with-param>
+          <xsl:with-param name="appendto">addrelationbefore</xsl:with-param>
+        </xsl:call-template>
+
+        }
+      );
+    </script>
+
     <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
       <fieldset>
 
@@ -60,9 +93,10 @@
 	
 	<h3><i18n:text key="relationtype">Relasjonstype</i18n:text></h3>
 	<table>
-	  <tr><th><i18n:text key="name">Navn</i18n:text></th><th><i18n:text key="language">Språk</i18n:text></th></tr>
+    <tr><th/><th/><th scope="col"><i18n:text key="language">Språk</i18n:text></th></tr>
       <xsl:for-each select="./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label">
         <tr>
+          <th scope="row"><i18n:text key="name">Navn</i18n:text></th>
         <td><input type="text" name="rdfs:label-{position()}" size="20" value="{.}" /></td>
         <td>
 	        <select name="rdfs:label-{position()}">
@@ -75,6 +109,7 @@
       </tr>
       </xsl:for-each>
     <tr>
+      <th scope="row"><i18n:text key="name">Navn</i18n:text></th>
       <td><input type="text" name="rdfs:label-{count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+1}" size="20" /></td>
 	    <td>                             
 	      <select name="rdfs:label-{count(./c:relation/rdf:RDF/owl:ObjectProperty/rdfs:label)+1}">
@@ -85,7 +120,14 @@
 	      </select>
 	    </td>
 	  </tr>
-	</table>
+
+    <tr id="addrelationbefore">
+          <td/>
+          <td/>
+          <td><a id="addrelation"><i18n:text key="addrelation">Legg til navn</i18n:text></a></td>
+        </tr>
+
+  </table>
 	<input type="hidden" name="rdfs:subPropertyOf" value="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
 	<input type="hidden" name="a" value="http://www.w3.org/2002/07/owl#ObjectProperty"/>
 	
