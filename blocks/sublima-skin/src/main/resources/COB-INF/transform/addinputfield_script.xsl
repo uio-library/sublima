@@ -40,7 +40,7 @@
         // template. When we do this, we are going
         // to pass in some values that can be
         // leveraged.
-        jElement<xsl:value-of select="$uid"/> = jTemplate<xsl:value-of select="$uid"/>.template(
+        var jElement<xsl:value-of select="$uid"/> = jTemplate<xsl:value-of select="$uid"/>.template(
         eval( "(" + jValues<xsl:value-of select="$uid"/>.val() + ")" )
         );
 
