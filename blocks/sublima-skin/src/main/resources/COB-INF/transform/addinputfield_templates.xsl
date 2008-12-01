@@ -24,7 +24,7 @@
               style="display: none;">
       {
       count: intCount<xsl:value-of select="$uid"/>,
-      name: "<xsl:value-of select="$name"/>",
+      name: "<xsl:value-of select="$name"/>"
       }
     </textarea>
 
