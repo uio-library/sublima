@@ -356,7 +356,7 @@
 
                     <xsl:choose>
 
-                      <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/inaktiv'">
+                      <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/under_behandling'">
                         <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
                           <option value="{./@rdf:about}" selected="selected">
                             <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
