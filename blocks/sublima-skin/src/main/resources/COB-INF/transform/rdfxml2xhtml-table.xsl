@@ -20,6 +20,8 @@
   <xsl:param name="baseurl"/>
 
   <xsl:template match="rdf:RDF" mode="resource">
+     <xsl:call-template name="messages"/>
+
     <table>
       
       <tr>
