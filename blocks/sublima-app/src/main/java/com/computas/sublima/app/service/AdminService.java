@@ -1009,4 +1009,12 @@ public class AdminService {
 
     return queryResult.toString();
   }
+
+  public String query(String query) {
+
+    logger.trace("AdminService.query() executing");
+    Object queryResult = sparqlDispatcher.query(query);
+
+    return queryResult.toString();
+  }
 }
