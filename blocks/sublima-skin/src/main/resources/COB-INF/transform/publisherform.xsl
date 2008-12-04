@@ -136,9 +136,12 @@
           <td>
             <xsl:call-template name="controlbutton">
               <xsl:with-param name="privilege">publisher.edit</xsl:with-param>
-              <xsl:with-param name="buttontext">
-                <i18n:text key="button.savepublisher">Lagre utgiver</i18n:text>
-              </xsl:with-param>
+              <xsl:with-param name="buttontext">button.savepublisher</xsl:with-param>
+            </xsl:call-template>
+            <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">publisher.delete</xsl:with-param>
+              <xsl:with-param name="buttontext">button.deletepublisher</xsl:with-param>
+              <xsl:with-param name="buttonname">actionbuttondelete</xsl:with-param>
             </xsl:call-template>
           </td>
         </tr>

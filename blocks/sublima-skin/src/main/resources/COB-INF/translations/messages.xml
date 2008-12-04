@@ -298,5 +298,9 @@
   <message key="comments">Kommentarer</message>
   <message key="comment">Kommentar</message>
   <message key="sender">Avsender</message>
+  <message key="button.deletepublisher">Slett utgiver</message>
+  <message key="publisher.deletedok">Utgiver slettet</message>
+  <message key="publisher.deletefailed">Feil ved sletting av utgiver</message>
+
 
 </catalogue>
