@@ -393,7 +393,8 @@ public class ResourceController implements StatelessAppleController {
 
         bizData.put("request", params.toString());
         bizData.put("loggedin", "true");
-        bizData.put("messages", "<empty/>");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("messages", messageBuffer.toString());
         bizData.put("abovemaxnumberofhits", "false");
         System.gc();
         res.sendPage("xml/sparql-result", bizData);
