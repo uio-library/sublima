@@ -171,7 +171,7 @@ public class TopicController {
       parameterMap.remove("prefix"); // The prefixes are magic variables
       if (parameterMap.get("subjecturi-prefix") != null) {
         parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
-                parameterMap.get("subjecturi-prefix")[0]});
+            parameterMap.get("subjecturi-prefix")[0]});
       }
       String sparqlQuery = null;
       try {
@@ -216,9 +216,9 @@ public class TopicController {
   }
 
   private void showTopicBrowsing
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+      (AppleResponse
+          res, AppleRequest
+          req) {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     String themeTopics = adminService.getThemeTopics();
@@ -237,9 +237,9 @@ public class TopicController {
   }
 
   private void mergeTopics
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+      (AppleResponse
+          res, AppleRequest
+          req) {
     StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -259,10 +259,10 @@ public class TopicController {
       uri = getProperty("sublima.base.url") + "topic/" + uri;
 
       String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n"
-              + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@no ;\n"
-              + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
-              /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
-              + "}";
+          + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@no ;\n"
+          + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
+          /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
+          + "}";
 
       logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
       boolean updateSuccess;
@@ -274,7 +274,7 @@ public class TopicController {
         updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Object edit status: " + updateSuccess);
         sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
-                "MODIFY\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
+            "MODIFY\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
         logger.trace("Setting " + oldurl + " topics inactive.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Topic inactive status: " + updateSuccess);
@@ -304,9 +304,9 @@ public class TopicController {
   }
 
   private void setThemeTopics
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+      (AppleResponse
+          res, AppleRequest
+          req) {
     StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -393,9 +393,9 @@ public class TopicController {
   }
 
   private void showTopics
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+      (AppleResponse
+          res, AppleRequest
+          req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
 
     if (req.getCocoonRequest().getParameter("wdr:describedBy") != null && !"".equals(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
@@ -406,34 +406,34 @@ public class TopicController {
 
     bizData.put("facets", getRequestXML(req));
     bizData.put("statuses", adminService.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
-            "<http://www.w3.org/2007/05/powder#describedBy>"));
+        "<http://www.w3.org/2007/05/powder#describedBy>"));
 
     res.sendPage("xml2/emner_alle", bizData);
   }
 
   private void editTopic
-          (AppleResponse
-                  res, AppleRequest
-                  req, String
-                  type, String
-                  messages) {
+      (AppleResponse
+          res, AppleRequest
+          req, String
+          type, String
+          messages) {
 
     boolean insertSuccess = false;
     String tempPrefixes = "<c:tempvalues \n" +
-            "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
-            "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
-            "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
-            "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
-            "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
-            "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-            "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
-            "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
-            "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
-            "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
-            "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-            "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-            "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
+        "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
+        "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+        "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+        "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+        "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+        "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+        "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+        "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+        "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+        "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+        "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+        "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+        "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+        "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
     StringBuilder tempValues = new StringBuilder();
     String uri = "";
@@ -478,9 +478,9 @@ public class TopicController {
         if (req.getCocoonRequest().getParameter("warningSingleResource") == null) {
 
           String deleteString = "DELETE {\n" +
-                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
-                  "} WHERE {\n" +
-                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o. }";
+              "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
+              "} WHERE {\n" +
+              "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o. }";
 
           boolean deleteTopicSuccess = sparulDispatcher.query(deleteString);
 
@@ -513,7 +513,7 @@ public class TopicController {
         parameterMap.remove("warningSingleResource");
         if (parameterMap.get("subjecturi-prefix") != null) {
           parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
-                  parameterMap.get("subjecturi-prefix")[0]});
+              parameterMap.get("subjecturi-prefix")[0]});
         }
 
         String sparqlQuery = null;
@@ -560,30 +560,46 @@ public class TopicController {
       }
 
       if (insertSuccess) {
-        bizData.put("topicdetails", adminService.getTopicByURI(uri));
-        bizData.put("topicresources", adminService.getTopicResourcesByURI(uri));
-        bizData.put("tempvalues", "<empty></empty>");
-        bizData.put("mode", "topicedit");
+        bizData.put("result-list", adminService.getTopicDetailsForTopicPageFromAdmin("<" + uri + ">"));
+        bizData.put("navigation", adminService.getNavigationDetailsForTopicPage("<" + uri + ">"));
+        bizData.put("mode", "topic");
+        StringBuilder params = adminService.getMostOfTheRequestXML(req);
+
+        // These will not be brought along unless we add it as request parameters, which is hackish.
+        params.append("\n    <param key=\"prefix\">");
+        params.append("\n      <value>wdr: &lt;http://www.w3.org/2007/05/powder%23&gt;</value>");
+        params.append("\n      <value>dct: &lt;http://purl.org/dc/terms/&gt;</value>");
+        params.append("\n      <value>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema%23&gt;</value>");
+        params.append("\n      <value>skos: &lt;http://www.w3.org/2004/02/skos/core%23&gt;</value>");
+        params.append("\n    </param>");
+        params.append("\n  </request>\n");
+
+        bizData.put("request", params.toString());
+        bizData.put("loggedin", loggedIn);
+        bizData.put("searchparams", "<empty/>");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("messages", messageBuffer.toString());
+        bizData.put("abovemaxnumberofhits", "false");
+        System.gc();
+        res.sendPage("xml/sparql-result", bizData);
+
       } else {
         bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("the-resource")));
         bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("the-resource")));
         bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("mode", "topictemp");
+        bizData.put("status", adminService.getAllStatuses());
+        bizData.put("alltopics", adminService.getAllTopics());
+        bizData.put("relationtypes", adminService.getAllRelationTypes());
+        bizData.put("userprivileges", userPrivileges);
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("facets", getRequestXML(req));
+        bizData.put("messages", messageBuffer.toString());
+        res.sendPage("xml2/emne", bizData);
       }
-
-      bizData.put("status", adminService.getAllStatuses());
-      bizData.put("alltopics", adminService.getAllTopics());
-      bizData.put("relationtypes", adminService.getAllRelationTypes());
-      bizData.put("userprivileges", userPrivileges);
-      messageBuffer.append("</c:messages>\n");
-      bizData.put("facets", getRequestXML(req));
-
-      bizData.put("messages", messageBuffer.toString());
 
       //Invalidate the Topic cache for autocompletion
       AutocompleteCache.invalidateTopicCache();
-
-      res.sendPage("xml2/emne", bizData);
       AutocompleteCache.getTopicList();
     }
   }
@@ -620,8 +636,8 @@ public class TopicController {
   }
 
   private StringBuilder getTempValues
-          (AppleRequest
-                  req) {
+      (AppleRequest
+          req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel");
     String[] temp_broader = req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource");
@@ -674,15 +690,15 @@ public class TopicController {
   }
 
   public void setSparulDispatcher
-          (SparulDispatcher
-                  sparulDispatcher) {
+      (SparulDispatcher
+          sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 
   //todo Move to a Service-class
   private Map<String, String[]> createParametersMap
-          (Request
-                  request) {
+      (Request
+          request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {
@@ -693,8 +709,8 @@ public class TopicController {
   }
 
   public void setAppMan
-          (ApplicationManager
-                  appMan) {
+      (ApplicationManager
+          appMan) {
     this.appMan = appMan;
   }
 

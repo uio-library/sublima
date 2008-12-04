@@ -80,72 +80,11 @@ public class SearchController implements StatelessAppleController {
 
     String subject = "<" + getProperty("sublima.base.url")
             + "topic/" + req.getSitemapParameter("topic") + ">";
-    String queryString = StringUtils.join("\n", new String[]{
-            "PREFIX dct: <http://purl.org/dc/terms/>",
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
-            "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
-            "WHERE {",
-            "        ?resource dct:language ?lang;",
-            "				 dct:publisher ?publisher ;",
-            "                dct:subject " + subject + ", ?subjects ;",
-            "        wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
-            "                ?p ?rest .}"});
-
-    //logger.trace("doGetTopic: SPARQL query sent to dispatcher: " + queryString);
-    Object queryResult = sparqlDispatcher.query(queryString);
-
+    
     Map<String, Object> bizData = new HashMap<String, Object>();
-    bizData.put("result-list", queryResult);
+    bizData.put("result-list", adminService.getTopicDetailsForTopicPage(subject));
 
-    // This query, relies on that all relations are explicitly stated.
-    // I.e. a triple for both skos:broader and skos:narrower must exist.
-    // Small fix added allowing concepts to not have relations at all.
-    String sparqlConstructQuery =
-            "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-                    "prefix skos: <http://www.w3.org/2004/02/skos/core#> \n" +
-                    "prefix owl: <http://www.w3.org/2002/07/owl#> \n" +
-                    "CONSTRUCT {\n" +
-                    subject + "\n" +
-                    "   a skos:Concept ;\n" +
-                    "   skos:prefLabel ?preflabel ; \n" +
-                    "   skos:altLabel ?altlabel ;  \n" +
-                    "   skos:definition ?definition ; \n" +
-                    "   ?semrelation ?object . \n" +
-                    "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n" +
-                    "   rdfs:label ?semrellabel ;\n" +
-                    "   a owl:ObjectProperty .\n" +
-                    "?object skos:prefLabel ?preflabel2 ; \n" +
-                    "   a skos:Concept .\n" +
-                    "}\n" +
-                    "WHERE {\n" +
-                    subject + "\n" +
-                    "   skos:prefLabel ?preflabel ;\n" +
-                    "   a skos:Concept .\n" +
-                    "OPTIONAL {\n" +
-                    subject + "\n" +
-                    "   skos:altLabel ?altlabel .\n" +
-                    "}\n" +
-                    "OPTIONAL {\n" +
-                    subject + "\n" +
-                    "   skos:definition ?definition ;\n" +
-                    "}\n" +
-                    "OPTIONAL {\n" +
-                    subject + "\n" +
-                    "   ?semrelation ?object .\n" +
-                    "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n" +
-                    "   rdfs:label ?semrellabel ;\n" +
-                    "   a owl:ObjectProperty .\n" +
-                    "?object  a skos:Concept ;\n" +
-                    "   skos:prefLabel ?preflabel2 .\n" +
-                    "}\n" +
-                    "}";
-
-    //logger.trace("doGetTopic: SPARQL CONSTRUCT query sent to dispatcher:\n" + sparqlConstructQuery);
-    queryResult = sparqlDispatcher.query(sparqlConstructQuery);
-
-    bizData.put("navigation", queryResult);
+    bizData.put("navigation", adminService.getNavigationDetailsForTopicPage(subject));
     bizData.put("mode", mode);
 
     StringBuilder params = adminService.getMostOfTheRequestXML(req);
