@@ -228,7 +228,8 @@ skos:broader 	a 			owl:ObjectProperty ;
 		rdfs:domain skos:Concept;
 		rdfs:range  skos:Concept;
 		rdfs:label		"Bredere"@no ; 
-		rdfs:subPropertyOf	skos:semanticRelation . 
+		rdfs:subPropertyOf	skos:semanticRelation ; 
+        owl:inverseOf skos:narrower .
 
 skos:related  	a 			owl:ObjectProperty ;
         rdfs:domain skos:Concept;

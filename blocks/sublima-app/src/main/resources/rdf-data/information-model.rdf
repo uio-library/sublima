@@ -1,427 +1,193 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xml:base="http://xmlns.computas.com/sublima-information-model">
-  <rdf:Description rdf:about="http://rdfs.org/sioc/ns#User">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <!--
-  <rdf:Description rdf:about="http://purl.org/dc/terms/title">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-  </rdf:Description> -->
-  
-  <rdf:Description rdf:about="http://purl.org/dc/terms/title">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-<!--
-  <rdf:Description rdf:about="http://purl.org/dc/terms/title">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
-  </rdf:Description>
--->
-  <rdf:Description rdf:about="http://purl.org/dc/terms/title">
-   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-   <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>  
-  
-  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/name">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/name">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/format">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/format">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/format">
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:j.0="http://purl.org/dc/terms/"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xml:base="http://xmlns.computas.com/sublima-information-model">
+  <owl:Ontology rdf:about="">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >information model.</rdfs:comment>
+  </owl:Ontology>
+  <rdfs:Class rdf:about="http://xmlns.computas.com/sublima#LocalURI"/>
+  <rdfs:Class rdf:about="http://www.w3.org/2007/05/powder#DR"/>
+  <owl:Class rdf:about="http://rdfs.org/sioc/ns#User"/>
+  <owl:Class rdf:about="http://purl.org/dc/terms/MediaType"/>
+  <owl:Class rdf:about="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+  <owl:Class rdf:about="http://www.w3.org/2004/02/skos/core#Concept"/>
+  <owl:Class rdf:about="http://www.w3.org/2007/ont/http#ResponseMessage"/>
+  <owl:Class rdf:about="http://www.lingvoj.org/ontology#Lingvo"/>
+  <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Agent"/>
+  <owl:ObjectProperty rdf:about="http://xmlns.computas.com/sublima#isSubjectOf">
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/subject"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="http://www.w3.org/2004/02/skos/core#hasTopConcept"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/language">
+    <rdfs:range rdf:resource="http://www.lingvoj.org/ontology#Lingvo"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/publisher">
+    <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.w3.org/2004/02/skos/core#narrower">
+    <rdfs:label xml:lang="no">Smalere</rdfs:label>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="http://www.w3.org/2004/02/skos/core#broader"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:subPropertyOf>
+      <rdf:Property rdf:about="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
+    </rdfs:subPropertyOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/subject">
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.w3.org/2004/02/skos/core#broader">
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <owl:inverseOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
+    <rdfs:label xml:lang="no">Bredere</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.w3.org/2007/05/powder#describedBy">
+    <rdfs:range rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/audience">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/format">
+    <rdfs:range rdf:resource="http://purl.org/dc/terms/MediaType"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="http://www.w3.org/2000/01/rdf-schema#label"/>
+  <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms/description">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.w3.org/2004/02/skos/core#note">
+    <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.w3.org/2004/02/skos/core#hiddenLabel">
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms/dateSubmitted">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel">
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms/dateAccepted">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://purl.org/dc/terms/title">
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.w3.org/2004/02/skos/core#altLabel">
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://xmlns.computas.com/sublima#classification">
+    <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/0.1/name">
+    <rdfs:domain rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://xmlns.computas.com/sublima#theme">
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://xmlns.computas.com/sublima#definition">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </owl:DatatypeProperty>
+  <owl:SymmetricProperty rdf:about="http://www.w3.org/2004/02/skos/core#related">
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Agent">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Text">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Text</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Text">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Tekst</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Text">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/subject">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/subject">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/subject">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/subject">
+    <rdfs:label xml:lang="no">Relatert</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </owl:SymmetricProperty>
+  <owl:InverseFunctionalProperty rdf:about="http://purl.org/dc/terms/identifier">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Event">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Event</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Event">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Hendelse</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Event">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Image">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Image</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Image">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Avbildning</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Image">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Sound">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Sound</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Sound">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Lyd</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Sound">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/audience">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/audience">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/language">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.lingvoj.org/ontology#Lingvo"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/language">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/language">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/MediaType">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/publisher">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/publisher">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/publisher">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Dataset">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Dataset</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Dataset">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Datasett</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Dataset">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Service">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Service</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Service">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Service</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Service">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/identifier">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#LocalURI"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/identifier">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/identifier">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/identifier">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Software">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Software</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Software">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Programvare</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Software">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  
-  <!--
-  <rdf:Description rdf:about="http://purl.org/dc/terms/description">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
-  </rdf:Description>
-  -->
-  <rdf:Description rdf:about="http://purl.org/dc/terms/description">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <!--
-  <rdf:Description rdf:about="http://purl.org/dc/terms/description">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
-  </rdf:Description>
-  -->
-  
-   <rdf:Description rdf:about="http://purl.org/dc/terms/description">
-   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-   <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>  
-  
-  
-  <rdf:Description rdf:about="http://purl.org/dc/terms/dateAccepted">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/dateAccepted">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/dateAccepted">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Collection">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Collection</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Collection">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Samling</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/Collection">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/StillImage">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">StillImage</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/StillImage">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Bilde</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/StillImage">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/dateSubmitted">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/dateSubmitted">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/terms/dateSubmitted">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.lingvoj.org/ontology#Lingvo">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/MovingImage">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Moving Image</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/MovingImage">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Film</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/MovingImage">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#theme">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#theme">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#theme">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#note">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#note">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#note">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/PhysicalObject">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Physical Object</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/PhysicalObject">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Fysisk ting</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/PhysicalObject">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#label">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#Concept">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#broader">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Bredere</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#broader">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#broader">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#broader">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#broader">
-    <ns0:subPropertyOf xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#related">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Relatert</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#related">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#related">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#related">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#related">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#related">
-    <ns0:subPropertyOf xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#altLabel">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#altLabel">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#altLabel">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#narrower">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Smalere</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#narrower">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#narrower">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#narrower">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#narrower">
-    <ns0:subPropertyOf xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#semanticRelation"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#describedBy">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2007/05/powder#DR"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#describedBy">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#describedBy">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#describedBy">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <!--
-  <rdf:Description rdf:about="http://www.w3.org/2007/05/powder#describedBy">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  -->
-<!--
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
--->
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#definition">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#definition">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#definition">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-
-
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isSubjectOf">
-    <ns0:inverseOf xmlns:ns0="http://www.w3.org/2002/07/owl#" rdf:resource="http://purl.org/dc/terms/subject"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isSubjectOf">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isSubjectOf">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isSubjectOf">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/InteractiveResource">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="en">Interactive Resource</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/InteractiveResource">
-    <ns0:label xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" xml:lang="no">Interaktiv ressurs</ns0:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://purl.org/dc/dcmitype/InteractiveResource">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#hiddenLabel">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#hiddenLabel">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#hiddenLabel">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2007/ont/http#ResponseMessage">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#classification">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#classification">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#classification">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#ConceptScheme">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
-    <ns0:inverseOf xmlns:ns0="http://www.w3.org/2002/07/owl#" rdf:resource="http://www.w3.org/2004/02/skos/core#hasTopConcept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
-    <ns0:range xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
-    <ns0:domain xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima#isMainConceptOf">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima-information-model">
-    <ns0:comment xmlns:ns0="http://www.w3.org/2000/01/rdf-schema#">information model.</ns0:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://xmlns.computas.com/sublima-information-model">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
-  </rdf:Description>
+    <rdfs:range rdf:resource="http://xmlns.computas.com/sublima#LocalURI"/>
+    <rdfs:domain rdf:resource="http://xmlns.computas.com/sublima#Resource"/>
+  </owl:InverseFunctionalProperty>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/PhysicalObject">
+    <rdfs:label xml:lang="no">Fysisk ting</rdfs:label>
+    <rdfs:label xml:lang="en">Physical Object</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/Collection">
+    <rdfs:label xml:lang="no">Samling</rdfs:label>
+    <rdfs:label xml:lang="en">Collection</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/Sound">
+    <rdfs:label xml:lang="no">Lyd</rdfs:label>
+    <rdfs:label xml:lang="en">Sound</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/Image">
+    <rdfs:label xml:lang="no">Avbildning</rdfs:label>
+    <rdfs:label xml:lang="en">Image</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/Service">
+    <rdfs:label xml:lang="no">Service</rdfs:label>
+    <rdfs:label xml:lang="en">Service</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/Event">
+    <rdfs:label xml:lang="no">Hendelse</rdfs:label>
+    <rdfs:label xml:lang="en">Event</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/Software">
+    <rdfs:label xml:lang="no">Programvare</rdfs:label>
+    <rdfs:label xml:lang="en">Software</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/Dataset">
+    <rdfs:label xml:lang="no">Datasett</rdfs:label>
+    <rdfs:label xml:lang="en">Dataset</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/InteractiveResource">
+    <rdfs:label xml:lang="no">Interaktiv ressurs</rdfs:label>
+    <rdfs:label xml:lang="en">Interactive Resource</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/Text">
+    <rdfs:label xml:lang="no">Tekst</rdfs:label>
+    <rdfs:label xml:lang="en">Text</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/MovingImage">
+    <rdfs:label xml:lang="no">Film</rdfs:label>
+    <rdfs:label xml:lang="en">Moving Image</rdfs:label>
+  </j.0:MediaType>
+  <j.0:MediaType rdf:about="http://purl.org/dc/dcmitype/StillImage">
+    <rdfs:label xml:lang="no">Bilde</rdfs:label>
+    <rdfs:label xml:lang="en">StillImage</rdfs:label>
+  </j.0:MediaType>
 </rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4, Build 513)  http://protege.stanford.edu -->
