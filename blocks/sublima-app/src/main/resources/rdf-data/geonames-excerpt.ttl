@@ -1,0 +1,16 @@
+@prefix go:  <http://www.geonames.org/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> . 
+ 
+go:Country a owl:Class;
+    rdfs:comment "A country as defined at http://www.geonames.org/countries"@en ;
+    rdfs:label "Country"@en .
+
+<http://www.geonames.org/countries/#NO> rdfs:label "Norge"@no, "Norge"@da, "Norge"@sv, "Norway"@en ;
+ a go:Country .                                        
+<http://www.geonames.org/countries/#DK> rdfs:label "Danmark"@no, "Danmark"@da, "Danmark"@sv, "Denmark"@en ;
+ a go:Country . 
+<http://www.geonames.org/countries/#SV> rdfs:label "Sverige"@no, "Sverige"@da, "Sverige"@sv, "Sweden"@en ; 
+ a go:Country .
+<http://www.geonames.org/countries/#FI> rdfs:label "Finland"@no, "Finland"@da, "Finland"@sv, "Finland"@en ; 
+ a go:Country .
