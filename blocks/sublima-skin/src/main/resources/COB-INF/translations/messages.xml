@@ -119,6 +119,7 @@
     og<a href="http://www.computas.com/">Computas AS</a>, 2008
   </message>
   <message key="language">Språk</message>
+  <message key="country">Land</message>
   <message key="name">Navn</message>
   <message key="description">Beskrivelse</message>
   <message key="audience">Målgruppe</message>

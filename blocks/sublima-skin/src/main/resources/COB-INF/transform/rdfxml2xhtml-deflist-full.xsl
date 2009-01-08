@@ -151,6 +151,14 @@
 	  <xsl:apply-templates select="./dct:language"/>
 	</td>
       </tr>
+     <tr>
+	<th scope="row">
+	  <i18n:text key="country">Land</i18n:text>:
+	</th>
+	<td>
+	  <xsl:apply-templates select="./dct:coverage"/>
+	</td>
+      </tr>
       <tr>
 	<th scope="row">
 	  <i18n:text key="type">Type</i18n:text>:

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <catalogue xml:lang="nn">
   <!-- menu -->
   <message key="menu.heading">Aktivitetar</message>
@@ -88,6 +88,7 @@
     og <a href="http://www.computas.com/">Computas AS</a>, 2008
   </message>
   <message key="language">Språk</message>
+  <message key="country">Land</message>
   <message key="name">Namn</message>
   <message key="description">Forklaring</message>
   <message key="audience">Målgruppe</message>

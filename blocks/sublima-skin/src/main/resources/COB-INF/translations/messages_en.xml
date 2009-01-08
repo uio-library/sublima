@@ -124,6 +124,7 @@
     and <a href="http://www.computas.com/">Computas AS</a>, 2008
   </message>
   <message key="language">Language</message>
+  <message key="country">Country</message>
   <message key="name">Name</message>
   <message key="description">Description</message>
   <message key="audience">Audience</message>

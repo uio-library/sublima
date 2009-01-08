@@ -12,11 +12,11 @@
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:go="http://www.geonames.org/ontology#"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
 
   <xsl:param name="interface-language">no</xsl:param>
-  <xsl:param name="max_facets">4</xsl:param>
 
   <xsl:template match="rdf:RDF" mode="facets">
     <xsl:variable name="baseurlparams">
@@ -121,9 +121,8 @@ test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]"
 	    </xsl:choose>
 	  </xsl:variable>
 
-
-    <xsl:call-template name="facet-field">
-	    <xsl:with-param name="max-facets-more"><xsl:value-of select="$max_facets"/></xsl:with-param>
+	  <xsl:call-template name="facet-field">
+	    <xsl:with-param name="max-facets-more">4</xsl:with-param>
 	    <xsl:with-param name="this-field">dct:subject</xsl:with-param>
 	    <xsl:with-param name="this-label">
 	      <xsl:choose>
@@ -144,9 +143,7 @@ test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]"
 	</xsl:for-each>
 	</ul>
 
-    <xsl:if test="count(/c:page/c:result-list/rdf:RDF//skos:Concept) > $max_facets">
-      <div class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" ><i18n:text key="more">more</i18n:text> &#187;</a></div>
-    </xsl:if>
+	<div class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" ><i18n:text key="more">more</i18n:text> &#187;</a></div>
 
 
 
@@ -168,6 +165,22 @@ test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]"
  
     </xsl:call-template>
   </xsl:template>
+
+  <xsl:template match="dct:coverage" mode="facets">
+    <xsl:param name="baseurlparams"/>
+    <xsl:variable name="uri" select="./go:Country/@rdf:about"/>
+    <xsl:call-template name="facet-field">
+      <xsl:with-param name="max-facets-more">4</xsl:with-param>
+      <xsl:with-param name="this-field">dct:coverage</xsl:with-param>
+      <xsl:with-param name="this-label" select="./go:Country/rdfs:label[@xml:lang=$interface-language]"/>
+      <xsl:with-param name="uri" select="$uri"/>
+      <xsl:with-param name="count"  select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:coverage[@rdf:resource=$uri])+1"/>
+      <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+ 
+    </xsl:call-template>
+  </xsl:template>
+
+
 
   <xsl:template match="dct:audience" mode="facets">
     <xsl:param name="baseurlparams"/>
