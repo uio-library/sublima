@@ -1,0 +1,58 @@
+<http://www.kanalen.org/vitidiga/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.computas.com/sublima#Resource> ;
+	<http://purl.org/dc/terms/subject> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000325> ;
+	<http://purl.org/dc/terms/title> "Vi tidiga - f\u00F6dd f\u00F6r tidigt "@no ;
+	<http://purl.org/dc/terms/description> "Vi tidiga \u00E4r en m\u00F6tesplats f\u00F6r f\u00F6r\u00E4ldrar till f\u00F6r tidigt f\u00F6dda barn. Syftet med sidorna \u00E4r att hj\u00E4lpa nordiska f\u00F6r\u00E4ldrar till f\u00F6r tidigt f\u00F6dda barn att hitta information - och ge en m\u00F6jlighet att st\u00F6tta varandra.    "@no ;
+	<http://purl.org/dc/terms/language> <http://www.lingvoj.org/lang/sv> ;
+	<http://purl.org/dc/terms/publisher> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Frldrakanalen> ;
+	<http://purl.org/dc/terms/identifier> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vi_tidiga__foedd_foer_tidigt_004314> ;
+	<http://purl.org/dc/terms/dateAccepted> "2004-09-13T14:32:37.000+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<http://www.w3.org/2007/05/powder#describedBy> <http://sublima.computas.com/status/godkjent_av_administrator> ;
+	<http://xmlns.computas.com/sublima#committer> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/det_usr00022> ;
+	<http://xmlns.computas.com/sublima#url> <http://www.kanalen.org/vitidiga/> .
+<http://xmlns.computas.com/sublima#Resource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> ;
+	<http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2000/01/rdf-schema#Resource> ;
+	<http://www.w3.org/2002/07/owl#unionOf> <http://rdfs.org/sioc/ns#Item> ,
+		<http://rdfs.org/sioc/ns#Site> .
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000325> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> ;
+	<http://www.w3.org/2007/05/powder#describedBy> <http://sublima.computas.com/status/godkjent_av_administrator> ;
+	<http://www.w3.org/2004/02/skos/core#prefLabel> "For tidlig f\u00F8dte barn "@no ,
+		"F\u00F6r tidligt f\u00F6dda barn "@sv ,
+		"For tidligt f\u00F8dte b\u00F8rn "@da ;
+	<http://www.w3.org/2004/02/skos/core#altLabel> "Pr\u00E6mature b\u00F8rn "@da ,
+		"Premature barn "@no ,
+		"Prematura barn "@sv ;
+	<http://www.w3.org/2004/02/skos/core#note> "Premature barn "@no ;
+	<http://xmlns.computas.com/sublima#classification> "D007234"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> ;
+	<http://www.w3.org/2004/02/skos/core#broader> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000273> ;
+	<http://www.w3.org/2004/02/skos/core#related> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_50> ;
+	<http://xmlns.computas.com/sublima#committer> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/det_usr00015> ;
+	<http://www.w3.org/2004/02/skos/core#inScheme> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+<http://www.lingvoj.org/lang/sv> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.lingvoj.org/ontology#Lingvo> ;
+	<http://www.w3.org/2002/07/owl#sameAs> <http://psi.oasis-open.org/iso/639/#swe> ,
+		<http://sw.cyc.com/2006/07/27/cyc/SwedishLanguage> ,
+		<http://dbpedia.org/resource/Swedish_language> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Ruo\u0167agiella"@se ,
+		"Swedish"@en ,
+		"Svensk"@no ,
+		"Svensk"@da ,
+		"Svensk"@nn ,
+		"Svenska"@sv ,
+		"Ruotsin kieli"@fi ;
+	<http://www.lingvoj.org/ontology#iso1> "sv" ;
+	<http://xmlns.com/foaf/0.1/depiction> <http://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Sweden.svg> ;
+	<http://www.lingvoj.org/ontology#iso3> "swe" ;
+	<http://www.lingvoj.org/ontology#iso2t> "swe" .
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Frldrakanalen> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Agent> ;
+	<http://purl.org/dc/terms/description> "F\u00F6r\u00E4ldrakanalen \u00E4r en del av kanalen.org och \u00E4r en f\u00F6r\u00E4ldrasajt f\u00F6r f\u00F6r\u00E4ldrar av f\u00F6r\u00E4ldrar som startade 1997. "@no ,
+		"Vi Tidiga \u00E4r en frist\u00E5ende sidokanal till \"F\u00F6r\u00E4ldrakanalen\". Vi Tidiga \u00E4r skapad av ideella krafter utan kommersiellt intresse, av vanliga f\u00F6r\u00E4ldrar. F\u00F6r\u00E4ldrakanalen \u00E4r en f\u00F6r\u00E4ldrasajt med faktasidor, diskussionsforum och chat.   "@no ,
+		"F\u00F6r\u00E4ldrakanalen tillh\u00F6r kanalen.org och det \u00E4r en familjesajt med faktasidor, diskussionsforum och chat. "@no ;
+	<http://xmlns.com/foaf/0.1/name> "F\u00F6r\u00E4ldrakanalen "@no .
+<http://sublima.computas.com/status/godkjent_av_administrator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2007/05/powder#DR> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Godk\u00E4nt av administrator"@sv ,
+		"Approved by administrator"@en ,
+		"approved by administrator"@en ,
+		"godkjent av administrator"@no ,
+		"Godkjent av administrator"@da ,
+		"Godkjent av administrator"@no .
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/det_usr00022> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#User> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Helena Hallgren"@no .

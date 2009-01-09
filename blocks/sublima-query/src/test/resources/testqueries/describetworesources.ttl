@@ -1,0 +1,26 @@
+<http://www.prematur.nu/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.computas.com/sublima#Resource> ;
+	<http://purl.org/dc/terms/subject> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000325> ,
+		<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00016> ;
+	<http://purl.org/dc/terms/title> "F\u00F6r\u00E4ldraf\u00F6reningen f\u00F6r prematurf\u00F6dda barn, Stockholm "@no ;
+	<http://purl.org/dc/terms/description> "Webbsidan inneh\u00E5ller rubriker som; Kontakttr\u00E4ffar - tr\u00E4ffa kontakt-f\u00F6r\u00E4ldrar, Kalendarium, Kontaktv\u00E4gar till f\u00F6reningen, Presentation av styrelsen, Produkter som kan best\u00E4llas, Tidningen Kontakt, Medlemskap - anm\u00E4lan, Verksamhetsber\u00E4ttelse 2004, Kontaktf\u00F6r\u00E4lder - bli/vara.   "@no ;
+	<http://purl.org/dc/terms/language> <http://www.lingvoj.org/lang/sv> ;
+	<http://purl.org/dc/terms/publisher> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/FrldrafreningenfrprematurfddabarnStockholm> ;
+	<http://purl.org/dc/terms/identifier> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/foeraeldrafoereningen_foer_prematurfoedda_barn_stockholm_005355> ;
+	<http://purl.org/dc/terms/dateAccepted> "2005-02-07T01:48:25.000+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	<http://www.w3.org/2007/05/powder#describedBy> <http://sublima.computas.com/status/godkjent_av_administrator> ;
+	<http://xmlns.computas.com/sublima#committer> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/det_usr00016> ;
+	<http://xmlns.computas.com/sublima#url> <http://www.prematur.nu/> .
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000325> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> ;
+	<http://www.w3.org/2007/05/powder#describedBy> <http://sublima.computas.com/status/godkjent_av_administrator> ;
+	<http://www.w3.org/2004/02/skos/core#prefLabel> "For tidligt f\u00F8dte b\u00F8rn "@da ,
+		"F\u00F6r tidligt f\u00F6dda barn "@sv ,
+		"For tidlig f\u00F8dte barn "@no ;
+	<http://www.w3.org/2004/02/skos/core#altLabel> "Pr\u00E6mature b\u00F8rn "@da ,
+		"Prematura barn "@sv ,
+		"Premature barn "@no ;
+	<http://www.w3.org/2004/02/skos/core#note> "Premature barn "@no ;
+	<http://xmlns.computas.com/sublima#classification> "D007234"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> ;
+	<http://www.w3.org/2004/02/skos/core#broader> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000273> ;
+	<http://www.w3.org/2004/02/skos/core#related> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_50> ;
+	<http://xmlns.computas.com/sublima#committer> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/det_usr00015> ;
+	<http://www.w3.org/2004/02/skos/core#inScheme> <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
