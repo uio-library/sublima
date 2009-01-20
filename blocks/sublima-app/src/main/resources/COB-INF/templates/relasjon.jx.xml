@@ -62,6 +62,10 @@
       <jx:out value="#{allanguages}" xmlize="true"/>
     </c:allanguages>
 
+    <c:allrelations>
+      <jx:out value="#{allrelations}" xmlize="true"/>
+    </c:allrelations>
+
     <c:related>
       <c:relation>
         <jx:out value="#{relationdetails}" xmlize="true"/>

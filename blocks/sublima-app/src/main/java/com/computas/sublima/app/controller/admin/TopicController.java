@@ -4,7 +4,6 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.AutocompleteCache;
 import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.IndexService;
-import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
@@ -16,15 +15,11 @@ import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
-import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author: mha
@@ -147,6 +142,7 @@ public class TopicController {
 
     bizData.put("allanguages", adminService.getAllLanguages());
     bizData.put("userprivileges", userPrivileges);
+    bizData.put("allrelations", adminService.getAllRelationTypes());
 
     if ("GET".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
 
@@ -171,9 +167,34 @@ public class TopicController {
       parameterMap.remove("prefix"); // The prefixes are magic variables
       if (parameterMap.get("subjecturi-prefix") != null) {
         parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
-            parameterMap.get("subjecturi-prefix")[0]});
+                parameterMap.get("subjecturi-prefix")[0]});
       }
+      boolean createInverse = false;
       String sparqlQuery = null;
+
+      // Do the relation related thingies here
+      String relationtype = req.getCocoonRequest().getParameter("relationtype");
+      parameterMap.remove("relationtype");
+      if (relationtype.equals("inverse")) {
+        parameterMap.remove("a");
+        parameterMap.put("a", new String[]{"http://www.w3.org/2002/07/owl#ObjectProperty"});
+        parameterMap.remove("relationtype");
+        // We also have to tell the inverse relation that it's inverse of the new one
+        // This have to be done after we have a URI for the new relation, so we flag this with a boolean
+        createInverse = true;
+      } else if (relationtype.equals("symmetric")) {
+        parameterMap.remove("a");
+        parameterMap.put("a", new String[]{"http://www.w3.org/2002/07/owl#SymmetricProperty"});
+        parameterMap.remove("owl:inverseOf");
+        parameterMap.remove("relationtype");
+      } else if (relationtype.equals("oneway")) {
+        parameterMap.remove("a");
+        parameterMap.put("a", new String[]{"http://www.w3.org/2002/07/owl#ObjectProperty"});
+        parameterMap.remove("owl:inverseOf");
+        parameterMap.remove("relationtype");
+      }
+
+
       try {
         sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
       }
@@ -181,7 +202,16 @@ public class TopicController {
         messageBuffer.append("<c:message><i18n:text key=\"topic.relation.saveerror\">Feil ved lagring av ny relasjonstype</i18n:text></c:message>\n");
       }
 
-      logger.trace("TopicController.editRelation --> QUERY:\n" + sparqlQuery);
+      if (createInverse) {
+        StringBuilder inverse = new StringBuilder();
+        inverse.append("PREFIX owl: <http://www.w3.org/2002/07/owl#>\n");
+        inverse.append("INSERT\n{\n");
+        inverse.append("<" + parameterMap.get("owl:inverseOf")[0] + "> owl:inverseOf <" + form2SparqlService.getURI() + "> .\n}");
+        boolean success = sparulDispatcher.query(inverse.toString());
+        logger.trace("TopicController.editRelation --> INSERT INVERSE RELATION: " + success);
+      }
+
+      logger.trace("TopicController.editRelation --> Executing query.\n");
 
       boolean insertSuccess = sparulDispatcher.query(sparqlQuery);
 
@@ -216,9 +246,9 @@ public class TopicController {
   }
 
   private void showTopicBrowsing
-      (AppleResponse
-          res, AppleRequest
-          req) {
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     String themeTopics = adminService.getThemeTopics();
@@ -237,9 +267,9 @@ public class TopicController {
   }
 
   private void mergeTopics
-      (AppleResponse
-          res, AppleRequest
-          req) {
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -259,10 +289,10 @@ public class TopicController {
       uri = getProperty("sublima.base.url") + "topic/" + uri;
 
       String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n"
-          + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@no ;\n"
-          + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
-          /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
-          + "}";
+              + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@no ;\n"
+              + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
+              /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
+              + "}";
 
       logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
       boolean updateSuccess;
@@ -274,7 +304,7 @@ public class TopicController {
         updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Object edit status: " + updateSuccess);
         sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
-            "MODIFY\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
+                "MODIFY\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
         logger.trace("Setting " + oldurl + " topics inactive.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Topic inactive status: " + updateSuccess);
@@ -304,9 +334,9 @@ public class TopicController {
   }
 
   private void setThemeTopics
-      (AppleResponse
-          res, AppleRequest
-          req) {
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     Map<String, Object> bizData = new HashMap<String, Object>();
@@ -393,9 +423,9 @@ public class TopicController {
   }
 
   private void showTopics
-      (AppleResponse
-          res, AppleRequest
-          req) {
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
 
     if (req.getCocoonRequest().getParameter("wdr:describedBy") != null && !"".equals(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
@@ -406,34 +436,34 @@ public class TopicController {
 
     bizData.put("facets", getRequestXML(req));
     bizData.put("statuses", adminService.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
-        "<http://www.w3.org/2007/05/powder#describedBy>"));
+            "<http://www.w3.org/2007/05/powder#describedBy>"));
 
     res.sendPage("xml2/emner_alle", bizData);
   }
 
   private void editTopic
-      (AppleResponse
-          res, AppleRequest
-          req, String
-          type, String
-          messages) {
+          (AppleResponse
+                  res, AppleRequest
+                  req, String
+                  type, String
+                  messages) {
 
     boolean insertSuccess = false;
     String tempPrefixes = "<c:tempvalues \n" +
-        "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
-        "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
-        "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
-        "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
-        "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
-        "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-        "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
-        "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
-        "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-        "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
-        "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
-        "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-        "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-        "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
+            "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
+            "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+            "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+            "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+            "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+            "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+            "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+            "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+            "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+            "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+            "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+            "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+            "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
     StringBuilder tempValues = new StringBuilder();
     String uri = "";
@@ -478,9 +508,9 @@ public class TopicController {
         if (req.getCocoonRequest().getParameter("warningSingleResource") == null) {
 
           String deleteString = "DELETE {\n" +
-              "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
-              "} WHERE {\n" +
-              "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o. }";
+                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
+                  "} WHERE {\n" +
+                  "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o. }";
 
           boolean deleteTopicSuccess = sparulDispatcher.query(deleteString);
 
@@ -513,7 +543,7 @@ public class TopicController {
         parameterMap.remove("warningSingleResource");
         if (parameterMap.get("subjecturi-prefix") != null) {
           parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
-              parameterMap.get("subjecturi-prefix")[0]});
+                  parameterMap.get("subjecturi-prefix")[0]});
         }
 
         String sparqlQuery = null;
@@ -526,7 +556,8 @@ public class TopicController {
 
         uri = form2SparqlService.getURI();
 
-        String insertInverseTriples = createInverseInsert(uri, parameterMap);
+        //String insertInverseTriples = createInverseInsert(uri, parameterMap);
+        String insertRelations = createRelationsInsert(uri, parameterMap);
 
         // Check if a topic with the same uri already exists
         if ((req.getCocoonRequest().getParameter("the-resource") == null) && adminService.getTopicByURI(uri).contains("skos:Concept ")) {
@@ -538,8 +569,9 @@ public class TopicController {
           logger.debug("TopicController.editTopic --> SPARUL QUERY RESULT: " + insertSuccess);
 
           if (insertSuccess) {
-            if (!"".equals(insertInverseTriples)) {
-              sparulDispatcher.query(insertInverseTriples);
+            if (!"".equals(insertRelations)) {
+              //sparulDispatcher.query(insertInverseTriples);
+              sparulDispatcher.query(insertRelations);
             }
             if (req.getCocoonRequest().getParameter("the-resource") == null) {
               messageBuffer.append("<c:message><i18n:text key=\"topic.save.ok\">Nytt emne lagt til</i18n:text></c:message>\n");
@@ -604,7 +636,59 @@ public class TopicController {
     }
   }
 
-  private String createInverseInsert(String uri, Map<String, String[]> parameterMap) {
+  private String createRelationsInsert(String uri, Map<String, String[]> parameterMap) {
+
+    StringBuilder relationsInsert = new StringBuilder();
+    relationsInsert.append("INSERT\n{\n");
+    boolean containsTriples = false;
+
+    Iterator it = parameterMap.entrySet().iterator();
+    while (it.hasNext()) {
+
+      Map.Entry<String, String[]> pairs = (Map.Entry<String, String[]>) it.next();
+      // Check if the value in the key is the uri of a relation
+      // Since the relations are in the form <uri> we can check if it starts with < first
+      String key = pairs.getKey();
+      if (key.startsWith("<")) { // Then it is a uri and possibly a relation
+        if (adminService.isRelation(key)) { // If the uri from the key is a relation
+
+          // Check if the relation is one-way, symmetric or inverse
+          String inverseRelationURI = adminService.getInverseRelationUriIfAny(key);
+          if (!inverseRelationURI.isEmpty()) { // Inverse relation -- > a rel1 b and b rel2 a
+            for (String s : pairs.getValue()) {
+              if (!s.isEmpty()) {
+                relationsInsert.append("<").append(uri).append("> ").append(key).append(" <").append(s).append("> .\n");
+                relationsInsert.append("<").append(s).append("> <").append(inverseRelationURI).append("> <").append(uri).append("> .\n");
+                containsTriples = true;
+              }
+            }
+          } else if (adminService.isSymmetricProperty(key)) { // Symmetric relation --> a rel b and b rel a
+            for (String s : pairs.getValue()) {
+              if (!s.isEmpty()) {
+                relationsInsert.append("<").append(uri).append("> ").append(key).append(" <").append(s).append("> .\n");
+                relationsInsert.append("<").append(s).append("> ").append(key).append(" <").append(uri).append("> .\n");
+                containsTriples = true;
+              }
+            }
+          } else { // one-way relation --> a rel b
+            for (String s : pairs.getValue()) {
+              if (!s.isEmpty()) {
+                relationsInsert.append("<").append(uri).append("> ").append(key).append(" <").append(s).append("> .\n");
+                containsTriples = true;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    relationsInsert.append("}");
+    return containsTriples ? relationsInsert.toString() : "";
+  }
+
+  private String createInverseInsert
+          (String
+                  uri, Map<String, String[]> parameterMap) {
     StringBuilder relationsInsert = new StringBuilder();
     relationsInsert.append("INSERT\n{\n");
     boolean containsTriples = false;
@@ -636,8 +720,8 @@ public class TopicController {
   }
 
   private StringBuilder getTempValues
-      (AppleRequest
-          req) {
+          (AppleRequest
+                  req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel");
     String[] temp_broader = req.getCocoonRequest().getParameterValues("dct:subject/skos:Concept/skos:broader/rdf:resource");
@@ -673,7 +757,9 @@ public class TopicController {
    * @param req
    * @return
    */
-  private String validateRequest(AppleRequest req) {
+  private String validateRequest
+          (AppleRequest
+                  req) {
     StringBuilder validationMessages = new StringBuilder();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
@@ -690,15 +776,15 @@ public class TopicController {
   }
 
   public void setSparulDispatcher
-      (SparulDispatcher
-          sparulDispatcher) {
+          (SparulDispatcher
+                  sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 
   //todo Move to a Service-class
   private Map<String, String[]> createParametersMap
-      (Request
-          request) {
+          (Request
+                  request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {
@@ -709,12 +795,15 @@ public class TopicController {
   }
 
   public void setAppMan
-      (ApplicationManager
-          appMan) {
+          (ApplicationManager
+                  appMan) {
     this.appMan = appMan;
   }
 
-  private void showRelations(AppleResponse res, AppleRequest req) {
+  private void showRelations
+          (AppleResponse
+                  res, AppleRequest
+                  req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("all_relations", adminService.getAllRelationTypes());
     bizData.put("facets", getRequestXML(req));
