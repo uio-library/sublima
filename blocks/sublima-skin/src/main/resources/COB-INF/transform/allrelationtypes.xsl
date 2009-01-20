@@ -23,9 +23,22 @@
       <xsl:for-each select="./rdf:RDF/owl:ObjectProperty | ./rdf:RDF/owl:SymmetricProperty">
         <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
         <li>
-          <a href="{$baseurl}/admin/emner/relasjoner/relasjon?the-resource={./@rdf:about}{$aloc}">
-            <xsl:value-of select="./rdfs:label"/>
-          </a>
+          <xsl:choose>
+            <xsl:when test="contains(./@rdf:about, '#')">
+              <xsl:variable name="uri">
+                <xsl:value-of select="substring-before(./@rdf:about, '#')"/><xsl:text>%23</xsl:text><xsl:value-of select="substring-after(./@rdf:about, '#')"/>
+              </xsl:variable>
+              <a href="{$baseurl}/admin/emner/relasjoner/relasjon?the-resource={$uri}{$aloc}">
+                <xsl:value-of select="./rdfs:label"/>
+              </a>
+            </xsl:when>
+
+            <xsl:otherwise>
+              <a href="{$baseurl}/admin/emner/relasjoner/relasjon?the-resource={./@rdf:about}{$aloc}">
+                <xsl:value-of select="./rdfs:label"/>
+              </a>
+            </xsl:otherwise>
+          </xsl:choose>
         </li>
       </xsl:for-each>
     </ul>
