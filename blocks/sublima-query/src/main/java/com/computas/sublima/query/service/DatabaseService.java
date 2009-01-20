@@ -4,8 +4,6 @@ package com.computas.sublima.query.service;
 import com.hp.hpl.jena.db.DBConnection;
 import com.hp.hpl.jena.db.IDBConnection;
 
-//import java.io.BufferedWriter;
-//import java.io.FileWriter;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.sql.*;
@@ -15,16 +13,34 @@ import java.sql.*;
  * Date: 08.jan.2008
  */
 public class DatabaseService {
+  // todo Use JNDI instead of hard coded database parameters
   private String M_DB_URL = "jdbc:postgresql://localhost/subdata";// SettingsService.getProperty("sublima.database.url");
   private String M_DB_USER = "subuser";//SettingsService.getProperty("sublima.database.username");
   private String M_DB_PASSWD = "subpasswd";//SettingsService.getProperty("sublima.database.password");
   private String M_DB = "PostgreSQL";//SettingsService.getProperty("sublima.database.databasetype");
   private String M_DBDRIVER_CLASS = "org.postgresql.Driver";//SettingsService.getProperty("sublima.database.class");
 
-  private IDBConnection connection = null;
-  private Connection jConnection = null;
-
   public IDBConnection getConnection() {
+
+    IDBConnection connection = null;
+
+    /*
+    try {
+
+
+      Context initCtx = new InitialContext();
+      Context envCtx = (Context) initCtx.lookup("java:comp/env");
+      DataSource ds = (DataSource)
+              envCtx.lookup("jdbc/Sublima");
+
+      connection = new DBConnection(ds.getConnection(), M_DB);
+    } catch (NamingException e) {
+      e.printStackTrace();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return connection;
+    */
 
     try {
       Class.forName(M_DBDRIVER_CLASS);
@@ -35,50 +51,72 @@ public class DatabaseService {
     connection = new DBConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD, M_DB);
 
     return connection;
-  }
 
-  public void closeConnection() {
-    try {
-      connection.close();
-    } catch (SQLException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }
+
   }
 
   public Connection getJavaSQLConnection() {
+
+
+    Connection connection = null;
+
+    /*
     try {
+      Context initCtx = new InitialContext();
+      Context envCtx = (Context) initCtx.lookup("java:comp/env");
+      DataSource ds = (DataSource)
+              envCtx.lookup("jdbc/Sublima");
+      connection = ds.getConnection();
+    } catch (NamingException e) {
+      e.printStackTrace();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return connection;
+    */
+
+    try
+
+    {
       Class.forName(M_DBDRIVER_CLASS);
-    } catch (ClassNotFoundException e) {
+    }
+
+    catch (
+            ClassNotFoundException e
+            )
+
+    {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
-    try {
-      jConnection = DriverManager.getConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD);
-    } catch (SQLException e) {
+    try
+
+    {
+      connection = DriverManager.getConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD);
+    }
+
+    catch (
+            SQLException e
+            )
+
+    {
       e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
     }
 
-    return jConnection;
-  }
-
-  public void closeJavaSQLConnection() {
-    try {
-      jConnection.close();
-    } catch (SQLException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }
+    return connection;
   }
 
   public int doSQLUpdate(String sql) throws SQLException {
     Statement stmt;
     int rows;
 
-    stmt = getJavaSQLConnection().createStatement();
+    Connection connection = getJavaSQLConnection();
+    stmt = connection.createStatement();
     rows = stmt.executeUpdate(sql);
-    jConnection.commit();
+    connection.commit();
     stmt.close();
-    closeJavaSQLConnection();
+    connection.close();
 
     return rows;
   }
@@ -95,10 +133,11 @@ public class DatabaseService {
     Statement stmt;
     ResultSet rs;
 
+    Connection connection = getJavaSQLConnection();
 
-    stmt = getJavaSQLConnection().createStatement();
+    stmt = connection.createStatement();
     rs = stmt.executeQuery(sql);
-    closeJavaSQLConnection();
+    connection.close();
 
     return stmt;
   }
@@ -111,9 +150,9 @@ public class DatabaseService {
       //BufferedWriter out = new BufferedWriter(fstream);
       FileOutputStream fstream = new FileOutputStream(filename);
       BufferedOutputStream out = new BufferedOutputStream(fstream);
-      
-      SettingsService.getModel().write(out, format);     
-      //Close the output stream
+
+      SettingsService.getModel().write(out, format);
+//Close the output stream
       out.close();
     } catch (Exception e) {//Catch exception if any
       System.err.println("Error : " + e.getMessage());
