@@ -30,6 +30,7 @@ public class SearchController implements StatelessAppleController {
   boolean loggedIn;
 
   private static Logger logger = Logger.getLogger(SearchController.class);
+  private static Logger heavylogger = Logger.getLogger("HeavyLogger");
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
@@ -232,6 +233,13 @@ public class SearchController implements StatelessAppleController {
           queryResult = sparqlDispatcher.query(sparqlQuery); // Cache will be used in here.
           abovemaxnumberofhits = false;
         } else {
+            Request r = req.getCocoonRequest();
+            String uri = r.getScheme() + "://" + r.getServerName();
+            if (r.getServerPort() != 80) {
+                uri = uri + ":" + r.getServerPort();
+            }
+            uri = uri + r.getRequestURI() + "?dobigsearchanyway=true&" + r.getQueryString();
+            heavylogger.info("Caching needed for: " + uri);
           queryResult = "<empty/>";
           abovemaxnumberofhits = true;
         }
