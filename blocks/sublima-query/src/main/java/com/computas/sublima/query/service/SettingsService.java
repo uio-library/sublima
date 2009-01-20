@@ -1,6 +1,7 @@
 package com.computas.sublima.query.service;
 
 import com.hp.hpl.jena.db.ModelRDB;
+import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.query.larq.IndexBuilderNode;
 import com.hp.hpl.jena.query.larq.IndexBuilderString;
 import org.apache.cocoon.configuration.Settings;
@@ -9,6 +10,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexWriter;
 
 import java.io.File;
+import java.sql.SQLException;
 
 /**
  * A class that handles the Cocoon settings. Provides getters and setters to access the settings
@@ -34,8 +36,13 @@ public class SettingsService {
   public synchronized static ModelRDB getModel() {
 
     if (model == null) {
-      model = ModelRDB.open(myDbService.getConnection());
-      myDbService.closeConnection();
+      IDBConnection connection = myDbService.getConnection();
+      model = ModelRDB.open(connection);
+      try {
+        connection.close();
+      } catch (SQLException e) {
+        logger.error("Exception closing IDBConnection from SettingsService.java:getModel()");
+      }
     }
     return model;
   }
