@@ -17,10 +17,14 @@ public class RedirectController implements StatelessAppleController {
 
      public void process(AppleRequest req, AppleResponse res) throws Exception {
          Request r = req.getCocoonRequest();
-         String uri = getProperty("sublima.base.url") + "sparql?query=" +
-                 "DESCRIBE <" + r.getScheme() + "://" + r.getServerName() + ":"
-                 + r.getServerPort() + r.getRequestURI() + ">";
-         res.getCocoonResponse().addHeader("Location", uri);
+          String uri = r.getScheme() + "://" + r.getServerName();
+         if (r.getServerPort() != 80) {
+             uri = uri + ":" + r.getServerPort();
+         }
+         uri = uri + r.getRequestURI();
+         String url = getProperty("sublima.base.url") + "sparql?query=" +
+                 "DESCRIBE <" + uri + ">";
+         res.getCocoonResponse().addHeader("Location", url);
          res.sendStatus(303);
      }
 
