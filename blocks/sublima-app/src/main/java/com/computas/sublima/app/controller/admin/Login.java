@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Connection;
 import java.util.Map;
 
 /**
@@ -42,8 +43,12 @@ public class Login extends AbstractSecurityHandler { //implements StatelessApple
 
       } else {
         try {
-          statement = dbService.doSQLQuery(sql);
-          ResultSet rs = statement.getResultSet();
+          ResultSet rs;
+
+          Connection connection = dbService.getJavaSQLConnection();
+
+          statement = connection.createStatement();
+          rs = statement.executeQuery(sql);
 
           if (!rs.next()) { //empty
             return null;//throw new AuthenticationException("Username is wrong or does not exist.");
@@ -54,6 +59,7 @@ public class Login extends AbstractSecurityHandler { //implements StatelessApple
           }
 
           statement.close();
+          connection.close();
 
         } catch (SQLException e) {
           e.printStackTrace();

@@ -8,6 +8,7 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,8 +52,13 @@ public class LoginController implements StatelessAppleController {
         Statement statement = null;
 
         try {
-          statement = dbService.doSQLQuery(sql);
-          ResultSet rs = statement.getResultSet();
+
+          ResultSet rs;
+
+          Connection connection = dbService.getJavaSQLConnection();
+
+          statement = connection.createStatement();
+          rs = statement.executeQuery(sql);
 
           if (!rs.next()) { //empty
             continueLogin = false;
@@ -63,6 +69,8 @@ public class LoginController implements StatelessAppleController {
           }
 
           statement.close();
+          connection.close();         
+
 
         } catch (SQLException e) {
           e.printStackTrace();
