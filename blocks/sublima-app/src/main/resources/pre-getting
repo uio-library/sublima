@@ -1,4 +1,4 @@
 #!/bin/sh
 
-wget --timeout=0 --wait=5m -O - --no-verbose --input-file=example-urls > /dev/null
+wget --timeout=0 --wait=5m -O /dev/null --no-verbose --input-file=example-urls 
 wget --timeout=0 --wait=5m -O /dev/null --no-verbose --input-file=/var/log/tomcat5.5/heavy-urls.log 
