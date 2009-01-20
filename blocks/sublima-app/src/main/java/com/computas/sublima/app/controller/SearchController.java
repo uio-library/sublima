@@ -239,7 +239,7 @@ public class SearchController implements StatelessAppleController {
                 uri = uri + ":" + r.getServerPort();
             }
             uri = uri + r.getRequestURI() + "?dobigsearchanyway=true&" + r.getQueryString();
-            heavylogger.info("Caching needed for: " + uri);
+            heavylogger.info(uri);
           queryResult = "<empty/>";
           abovemaxnumberofhits = true;
         }
