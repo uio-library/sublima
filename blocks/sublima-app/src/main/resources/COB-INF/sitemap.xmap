@@ -7,7 +7,7 @@
   <map:flow language="spring-apples"/>
 
   <map:components>
-    <!-- map:matchers>
+    <map:matchers>
       <map:action name="locale" src="com.computas.sublima.app.action.LocaleAction">
         <map:locale-attribute>locale</map:locale-attribute>
         <map:use-locale>false</map:use-locale>
@@ -18,7 +18,7 @@
         <map:store-in-cookie>false</map:store-in-cookie>
       </map:action>
 
-    </map:matchers -->
+    </map:matchers>
 
     <map:serializers>
       <map:serializer name="xml" mime-type="text/xml"
