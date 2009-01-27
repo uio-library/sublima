@@ -7,18 +7,6 @@
   <map:flow language="spring-apples"/>
 
   <map:components>
-    <map:matchers>
-      <map:action name="locale" src="com.computas.sublima.app.action.LocaleAction">
-        <map:locale-attribute>locale</map:locale-attribute>
-        <map:use-locale>false</map:use-locale>
-        <map:default-locale language="no" country="NO"/>
-        <map:store-in-request>true</map:store-in-request>
-        <map:create-session>false</map:create-session>
-        <map:store-in-session>false</map:store-in-session>
-        <map:store-in-cookie>false</map:store-in-cookie>
-      </map:action>
-
-    </map:matchers>
 
     <map:serializers>
       <map:serializer name="xml" mime-type="text/xml"
@@ -256,7 +244,7 @@
         <map:call function="com.computas.sublima.app.fascade.TopicFascade">
           <map:parameter name="mode" value="a-z"/>
           <map:parameter name="submode" value="{1}"/>
-          <map:parameter name="interface-language" value="no"/>
+          <map:parameter name="interface-language" value="{language}"/>
         </map:call>
       </map:match>
 

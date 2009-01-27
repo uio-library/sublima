@@ -43,7 +43,8 @@ public class SearchController implements StatelessAppleController {
     }
 
     logger.trace("SearchController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
-
+                      res.getCocoonResponse().createCookie();
+      req.getCocoonRequest().getCookies()
     // The initial advanced search page
     if ("advancedsearch".equalsIgnoreCase(mode)) {
       Map<String, Object> bizData = new HashMap<String, Object>();
