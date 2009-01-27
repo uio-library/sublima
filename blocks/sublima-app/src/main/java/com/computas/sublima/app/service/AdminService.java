@@ -1044,11 +1044,16 @@ public class AdminService {
    * @return a String with the uri of the inverse relation if any
    */
   public String getInverseRelationUriIfAny(String relationUri) {
+
+    if (!relationUri.startsWith("<") && !relationUri.endsWith(">")) {
+      relationUri = "<" + relationUri + ">";
+    }
+
     String sparqlConstructQuery = "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
             "\n" +
             "SELECT ?uri \n" +
             "WHERE {\n" +
-            "  " + relationUri + " owl:inverseOf ?uri .\n" +
+            relationUri + " owl:inverseOf ?uri .\n" +
 
             "}";
 
@@ -1066,13 +1071,16 @@ public class AdminService {
 
     } catch (Exception e) {
       e.printStackTrace();
-      return "<empty/>";
+      return "";
     }
   }
 
   public boolean isSymmetricProperty(String relationUri) {
-      String sparqlConstructQuery = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-              "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+
+    if (!relationUri.startsWith("<") && !relationUri.endsWith(">")) {
+      relationUri = "<" + relationUri + ">";
+    }
+      String sparqlConstructQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
               "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
               "\n" +
               "ASK { " + relationUri + " a owl:SymmetricProperty  . \n" +
@@ -1086,12 +1094,14 @@ public class AdminService {
     }
 
   public boolean isRelation(String relationUri) {
-      String sparqlConstructQuery = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
-              "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-              "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+
+    if (!relationUri.startsWith("<") && !relationUri.endsWith(">")) {
+      relationUri = "<" + relationUri + ">";
+    }
+    
+      String sparqlConstructQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
               "\n" +
-              "ASK { " + relationUri + " rdfs:subPropertyOf <http://www.w3.org/2004/02/skos/core#semanticRelation>  .\n" +
-              "}";
+              "ASK { " + relationUri + " rdfs:subPropertyOf <http://www.w3.org/2004/02/skos/core#semanticRelation>  .\n}";
 
 
       logger.trace("AdminService.isRelation() executing");

@@ -221,7 +221,7 @@
                   <xsl:for-each select="/c:page/c:content/c:allrelations/rdf:RDF/owl:ObjectProperty">
                     <xsl:sort select="./rdfs:label"/>
                       <xsl:choose>
-                        <xsl:when test="./@rdf:about = ./c:relation/rdf:RDF/*/@rdf:about">
+                        <xsl:when test="./@rdf:about = /c:page/c:content/c:related/c:relation/rdf:RDF/*/owl:inverseOf/@rdf:resource">
                           <option value="{./@rdf:about}" selected="selected"><xsl:value-of select="./rdfs:label"/></option>
                         </xsl:when>
                         <xsl:otherwise>
@@ -252,6 +252,12 @@
             <i18n:text key="button.saverelation">Lagre relasjonstype</i18n:text>
           </xsl:with-param>
         </xsl:call-template>
+
+        <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">relation.delete</xsl:with-param>
+              <xsl:with-param name="buttontext">button.deleterelation</xsl:with-param>
+              <xsl:with-param name="buttonname">actionbuttondelete</xsl:with-param>
+            </xsl:call-template>
 
 
       </fieldset>
