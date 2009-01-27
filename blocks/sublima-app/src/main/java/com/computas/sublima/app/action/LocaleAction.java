@@ -238,6 +238,10 @@ public class LocaleAction extends ServiceableAction implements ThreadSafe, Confi
                    Parameters params)
     throws Exception {
         // Obtain locale information from request, session, cookies, or params
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Running LocaleAction map:act.");
+            }
+
         Locale locale = I18nUtils.findLocale(objectModel,
                                              localeAttribute,
                                              params,
@@ -267,7 +271,7 @@ public class LocaleAction extends ServiceableAction implements ThreadSafe, Confi
 
         // Set up a map for sitemap parameters
         Map map = new HashMap();
-        map.put("language", "no");
+        map.put("lang", "no");
         map.put("country", locale.getCountry());
         map.put("variant", locale.getVariant());
         map.put("locale", localeStr);
