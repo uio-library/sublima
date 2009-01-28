@@ -2,7 +2,6 @@ package com.computas.sublima.app.controller;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
-import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.CachingService;
 import com.computas.sublima.query.service.SearchService;
@@ -43,12 +42,8 @@ public class SearchController implements StatelessAppleController {
       format = "xml";
     }
 
-    LanguageService langServ = new LanguageService();
-    String language = langServ.checkLanguage(req, res);
-
     logger.trace("SearchController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
-      logger.trace("SearchController: Language from LanguageService is " + language);
-                     
+    
     // The initial advanced search page
     if ("advancedsearch".equalsIgnoreCase(mode)) {
       Map<String, Object> bizData = new HashMap<String, Object>();
