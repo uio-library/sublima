@@ -1,0 +1,20 @@
+# STEG 6
+#
+# Fiks feil URI for nye forslag
+# java Sparul -filemodel detektor5.ttl Turtle -query query6.sparul > detektor6.ttl
+
+
+prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> 
+prefix wdr:     <http://www.w3.org/2007/05/powder#> 
+prefix status:  <http://sublima.computas.com/status/> 
+MODIFY
+DELETE {
+  ?r wdr:describedBy  <http://detektor.sublima.computas.com:8180/detektor/status/ny_forslag>  .
+}
+INSERT { 
+   ?r wdr:describedBy status:nytt_forslag  .
+} 
+WHERE {
+    ?r wdr:describedBy <http://detektor.sublima.computas.com:8180/detektor/status/ny_forslag> .
+}
+

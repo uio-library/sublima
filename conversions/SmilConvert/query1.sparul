@@ -1,0 +1,28 @@
+# STEG 1
+#
+# Hvis språk (på ressurs) = finsk 
+# -> slett alle språk (disse har i dag både språk=finsk og språk=svensk, 
+#    men skal altså bare ha språk=svensk) og sett ett språk = svensk
+# -> sett land = Finland  - setter alle finske ressurser til Finland og 
+#    språk svensk
+#
+# java Sparul -filemodel smil-test-data1.ttl Turtle -query query1.sparul > smil-test-data2.ttl
+
+
+PREFIX dct:  <http://purl.org/dc/terms/> 
+PREFIX lang:  <http://www.lingvoj.org/lang/> 
+PREFIX geo: <http://www.geonames.org/countries/#>
+MODIFY
+DELETE {
+  ?r dct:language lang:fi .
+  ?r dct:language lang:no .
+  ?r dct:language lang:sv .
+  ?r dct:language lang:da .
+}
+INSERT { 
+   ?r dct:coverage  geo:FI ;
+      dct:language lang:sv .
+} 
+WHERE {
+    ?r dct:language lang:fi .
+}

@@ -1,0 +1,28 @@
+# Step 11 (extract concepts-subject) relations
+# This query is run against the edited dataset
+# (asgeirs edition from 2008-10-01)
+# to extract 
+#   relations between resources and concepts
+# 
+
+base <http://detektor.sublima.computas.com:8180/detektor/> 
+prefix rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>
+prefix skos:    <http://www.w3.org/2004/02/skos/core#> 
+prefix sub:     <http://xmlns.computas.com/sublima#>
+prefix dct:     <http://purl.org/dc/terms/> 
+
+CONSTRUCT { 
+    ?resource dct:subject ?topic .
+    ?topic sub:isSubjectOf ?resource .
+} 
+WHERE {
+   {
+     ?topic a skos:Concept .
+     ?topic sub:isSubjectOf ?resourceID .
+     ?resourceID sub:url ?resource .
+   } UNION {
+     ?resourceID a sub:Resource .
+     ?resourceID dct:subject ?topic .
+     ?resourceID sub:url ?resource .
+   }
+}

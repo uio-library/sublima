@@ -1,0 +1,1592 @@
+@prefix dct:     <http://purl.org/dc/terms/> .
+
+<http://www.museumsnett.no/vigelandmuseet/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.dmt.oslo.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.danskekonger.dk/index.html>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.spacecentre.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.arild-hauge.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.miljostatus.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.kongehuset.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.mil.no/felles/ak/start/Festningens_begynnelse/Borgen/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.viking.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.hasselbladfoundation.org/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://mexico.udg.mx/historia/precolombinas/ingles/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.bahai.no/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.magnor-glassverk.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.norway.info//>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.kongleposten.no/artikler/pattedyr.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.bergkonst.org/no/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.afrika.no/norsk/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://npweb.npolar.no/geografi/antarktis/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.etojm.com/Norsk/norsk.htm>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.lienet.no/buddh.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.freud-museum.at/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.canada.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.nativeamericans.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://home.swipnet.se/~w-62480/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.norskfolke.museum.no/wergelandsbarn/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.domstol.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.freedict.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://atlas.gc.ca/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://dict.sylang.com/en/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://allafrica.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.rwanda.net/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.europa.eu.int/en/comm/eurostat/research/isi/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.vasamuseet.se/Vasamuseet/Om.aspx>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.lamis.no/1mxy.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.lanic.utexas.edu/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.burundi.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://virtual.finland.fi/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.mil.fi/perustietoa/talvisota_swe/index.html>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://digitalarkivet.uib.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.pictures.dnlb.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://npweb.npolar.no//>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://samediggi.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://runeberg.org/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.citypopulation.de/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.kirken.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nuav.net/norge.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.annefrank.org/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.iamdina.com/index_no.html>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.belgien.dk/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://norge.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://bible.guge.net/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://bible.gospelcom.net/bible>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://lettland.nu/ambassad/sv/index.html>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://europa.eu.int/index_da.htm>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.byarkivet.oslo.kommune.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.geocities.com/dagtho/noproff.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://home.online.no/~harc/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://unbound.biola.edu/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.sametinget.se/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.greenland-guide.dk/dk/default.htm>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://hem.passagen.se/vogler/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.marx-brothers.org/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.festival-cannes.fr/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.berlinale.de/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.jippicomics.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.tomshardware.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.munch.museum.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.museumsnett.no/nasjonalgalleriet/munch/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nerdrum.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.think-venezuela.net/>
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.norden.org/start/start.asp?lang=3>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://skandulv.nina.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://leopardmannen.no/musikk/index.asp?lang=no>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.ddd.dda.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.disnorge.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.mic.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nordskol.org/ordbog/index_sv.html>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.clara.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.grida.no/geo2000/ov-no/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.udi.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.hrw.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.hindu.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.goethe.de/ins/no/osl/noindex.htm>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.bandindex.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://hassafon.nvg.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.museumsnett.no/kon-tiki/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://home.online.no/~vindnes/deutschlinks/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://home.online.no/~jorgenj/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.recmusic.org/lieder/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.elgar.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.skole.karmoy.kommune.no/olavskirken/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.vaarboda.se/kboye/home.html>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.andersen.sdu.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.mic.no/symfoni/kontakt.nsf/personyrke?OpenView&expand=16>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.vulkaner.no/v/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.royalcourt.se/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.bible.ort.org/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.moomin.fi/moomin.htm>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.psykoterapiforum.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.google.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.taize.fr/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.olav-duun.vgs.no/ftp/duun/oduun.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.todotango.com/english/main.html>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.flamenco-world.com/flamenco.htm>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.statsbiblioteket.dk/Standart/2000-3/index.html#stand_in>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.johann-strauss-gesellschaft.at/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://kunst.no/torild/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://fish-view.imr.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.hca2005.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.deathpenaltyinfo.org/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www2.hu-berlin.de/sexology/>
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://forbruker.no/reise/article1542854.ece>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.electricverses.net/sakeet.php?language=2>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.nikk.uio.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://familydoctor.org/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.maihaugen.no/default.aspx?id=5366>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.aschehoug.no/forfattersider/kjaerstad/cover/frames_setup.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.middelaldermusikk.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.tyskland-info.com/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.eire.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.gamereactor.no/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.mincom.gov.ma/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.bks.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.anonymealkoholikere.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.ircam.fr/index-e.html>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://flaggermus.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://home.c2i.net/espenjo/home/tidstavle/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.chateauversailles.fr/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.euratlas.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.bull-hansen.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.molekult.no/intro.swf>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://ydelta.free.fr/index.html>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://m1.404.telia.com/~u40403520/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.danbbs.dk/~erikoest/dk_main.htm>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.mikromarc.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.marquise.de/en/index.html>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.ingeb.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.isabelallende.com/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://home.online.no/~stigsae/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.okprosjekt.no/artikkel.asp?AId=18&MId1=34>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.talkingwithkids.org/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.panda.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.angstringen.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.marinbi.com/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.chemdat.de/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.jugendstil.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.bedin.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.cancer.gov/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.pernoergaard.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.avk.org/ncm/index.html>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.timeanddate.com/norsk/verdensur.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.heavymetal.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.boliviaweb.com/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.magnaram.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.robertnormann.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.viking.no/s/life/music/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://web-jpn.org/kidsweb/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.visitdenmark.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://folk.uio.no/geirthe/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://hem.passagen.se/ujs/halloween.html>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.aland.ax//>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.khm.uio.no/utstillinger/rus/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.ukm.uio.no/utstillinger/kirgisistan/html/911.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.hcandersen-homepage.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://kubrickfilms.warnerbros.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.homeofhorror.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.michael-tippett.com/>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.nypoesi.net/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.ansa.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.fetsundlenser.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.skiinfo.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://members.chello.se/vikingbronze/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.abc.se/~m10354/mark/index.html>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.ntnu.no/vmuseet/fakark/marin/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://whc.unesco.org/pg.cfm?cid=31>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.norwegianwood.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.srnt.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://home.c2i.net/fhoseth/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://forbruker.no/reise/article1536262.ece>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.niaaa.nih.gov/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://farm.gan.no/nova/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.oneworld.net/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://csdl.tamu.edu/cervantes/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.gyldendal.no/toraage/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.ukm.uio.no/utstillinger/madeinafrica/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.morten-h-olsen.net/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.hf.uio.no/iakk/roger/lithic/NORSK%20SARC/sarcN.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nrk.no/magasin/jul/1535367.html?p_saksunivers_id=10880>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.lambiek.net/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.lofotr.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://bazar.deichman.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://home.worldonline.dk/lfmat/Index.htm>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.louvre.fr/llv/commun/home_flash.jsp?bmLocale=en>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.clg.se/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://forbruker.no/reise/article1542856.ece>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.civilization.ca/cultur/inde/indinte.html>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.ukm.uio.no/etnografisk/utstillinger/midlertidig/yanomami/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.khm.uio.no/info/vskip_huset/index.shtml>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://algeinfo.imr.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.antikvariat.net/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.ilab-lila.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.osl.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nsb.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.kidshealth.org/kid/index.html>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://forfattarna.biblioteken.fi/?&lang=sw>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.regnskog.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.garnstudio.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.gfi.uib.no/NOClimI/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.dna.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.hamsun.dk/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.strindbergsmuseet.se/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.nrc.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.worldmusiccentral.org/staticpages/index.php/flamenco.htm>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.who.int/en//>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://cpa.feynsinn.de/eng/index.html>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.cantabile-subito.de/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.maurice-ravel.net/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.tegneseriemuseet.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nlc-bnc.ca/caninfo/ecaninfo.htm>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.vatican.va/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.kulturstreif.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.trell.org/wagner/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.unicef.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.vangoghgallery.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.torvund.net/gitar/BluesGitar/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://users.cybercity.dk/~ccc12787/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.lienet.no/musikk.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.accordionpage.com/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.hf.uio.no/ibsensenteret/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.kappabel.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://ec.europa.eu/ploteus/portal/index.jsp?from=/ploteus/portal/home.jsp>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.fys.uio.no/epf/adventures/particleadventure_2.1/frameless/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.piazzolla.org/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.gemueseorchester.org/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.naturinstrumenter.net/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.notam02.no/~majar/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.instrumentsmedievaux.org/>
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.worldmusiccentral.org/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.rwagner.net/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.sumas.de/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.classical.net/music/comp.lst/works/orff-cb/carmina.html>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.paniksyndrom.com/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.goethe.de/kug/kue/tut/thm/en23307.htm>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.argentour.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.schuyesmans.be/gregoriaans/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://home.c2i.net/issa/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.belizeexplorer.com/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.toyen.uio.no/botanisk/bothage/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.musikkonline.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.barnekunst.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.mirasenteret.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.nlc-bnc.ca/8/11/index-e.html>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.nca.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.folkehjelp.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.un.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.unesco.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.unhcr.org/cgi-bin/texis/vtx/home>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.norad.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.childrensbooksonline.org/>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://home.online.no/~bjornrl/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.norway.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.linne2007.se/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.nato.int/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.barneombudet.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.program.forskningsradet.no/vfo/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.li.lv/old/li_eng_facts.htm>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.kulturrad.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.aboutspain.net/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.seafood.no/fakta>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.liechtenstein.li/en/eliechtenstein_main_sites/portal_fuerstentum_liechtenstein/home.htm>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.astroleg.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.rwanda1.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.ictr.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://home.online.no/~bbruland/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.ub.uit.no/northernlights/nor/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://decentius.hit.uib.no/lexin.html?ui-lang=nbo>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nai.uu.se/index.xml?Language=sv&>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.ui.se/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.natmus.gl/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.arkifoto.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://door.library.uiuc.edu/kolbp/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.bre.museum.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.heinzelnisse.info/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.hkbu.edu.hk/~ppp/Kant.html>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.deutschland.de/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.astridlindgren.se//>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.germanacademyofmusic.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.pettersolberg.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.globalis.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.efn.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nobel.no/nor_index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.heinepedersen.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.hberlioz.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.nb.no/baser/1905>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.smil.uio.no/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.swissworld.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.bdangouleme.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://ibsen.net/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.math.uio.no/~klara/ordliste/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.astronomi.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.pensjonsreform.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://ngis2.statkart.no/gammel/adresser/default.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nada.kth.se/~pohl/ppforf.html>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://tradisjoner.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://en.wikipedia.org/wiki/Main_Page>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.polararet.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://museumsnett.no/ibsen/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://users.skynet.be/providence/vocabulaire/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.karen-blixen.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.cappelen-krefting.no/hans/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.samlaget.no/denstorefesten/index2.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.childbooks.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.handtomouth.net/JVS/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.folkehogskole.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.nifin.helsinki.fi/bibbi/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.moni.se/site/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.tarkus.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://wims.unice.fr/wims/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.aerenlund.dk/quotes/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://home.no.net/rotegud/heimeside1/sider/telemark.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.prb.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.amnesty.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.diva-portal.se/index.xsql?lang=no>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.richardstrauss.at/html/index.html>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.husbanken.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.brikkerogbrett.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://home.online.no/~helgnil/calc4_4.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.litteraturnet.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.hydro.com/no/about/history/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://library.thinkquest.org/28260/norsk/norsk2.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.isoc.org/internet/history/brief.shtml>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://forbruker.no/reise/article1542841.ece>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.bsc-eoc.org/avibase/avibase.jsp>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.barum.folkebibl.no/tema/husoghjem.html>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.skepdic.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.valhalla.norden.org/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.ssb.no/aarbok/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.chessbase.com/>
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.ludochess.com/jester_eng/jester_eng.php3>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.kundera.de/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.skepsis.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.rutebok.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.miljoagentene.no/index.asp>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://home.no.net/alcjul/jul_hoved/jul_hoved.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.ungnett.org/pages/forside.aspx?nr=1>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.khm.uio.no/utstillinger/oseberg/indexN.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.stavkirke.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.outdoor-foto.at/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.klatring.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nrhf.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.suomi.fi/english/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.minbuza.nl/en/home>
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.astrobio.net/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.kafka.org/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.jordforsk.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.camphill.no/Camphill/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.henningmankell.se/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.rimfrost.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.tintin.be/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://gb.obelix.com.fr/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.dragt.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.un.org/terrorism/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.teknologiradet.no/default1.aspx?m=28>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.ntnu.no/gemini/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.bellona.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://158.36.77.168/munch/grafikk/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://mathematica.ludibunda.ch/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.gouv.mc/devwww/wwwnew.nsf/HomeGb>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://norbase.sjakk.biz/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.interpol.int/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://epp.eurostat.cec.eu.int/portal/page?_pageid=1090,30070682,1090_33076576&_dad=portal&_schema=PORTAL>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www2.dmmh.no/~ses/index.php?nid=2>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nordiskforum.net/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.coe.int/t/DG2/TRAFFICKING/campaign/default_en.asp>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://bazar.deichman.no/?language=1&category=292>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.paulocoelho.com/inicio.html>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.fag.hiof.no/lu/fou/HCA/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://skolenettet4.ls.no/samfunnet/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.filosofiske-essays.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.campus-germany.de/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.windows.ucar.edu/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.schoenberg.at/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://lind.no/nor/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.kb.dk/elib/lit/dan/brahe/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.ketilbjornstad.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.tafdrup.com/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.gutenberg.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://documents.un.org//>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.gov.ro/engleza/index.php/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.ch.ch/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.dailysoft.com/berlinwall/index.html>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.salsacubana.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.heimskringla.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.einet.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.ivarmedia.as/dkindex.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.ingmarbergman.se/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.petermadsen.info/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.velkommenoslo.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.luther.de/en/index.html>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.regjeringen.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.wordreference.com/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.bbc.co.uk/languages/french/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.bbc.co.uk/languages/spanish/>
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.bbc.co.uk/languages/german/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://medeltiden.kalmarlansmuseum.se/niva1/innehall.phtml?userid=0>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.curlingbasics.com/>
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.raumabanen.com/index1.html>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.hvalfangstmuseet.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.kulturkanon.kum.dk/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.karinalvtegen.com/>
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.arts.uwa.edu.au/AFLIT/FEMEChomeen.html>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.nordic-literature.org/>
+	dct:language  <http://www.lingvoj.org/lang/en> ;
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.sjomannskirken.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.norwayheritage.com/ships/index-nor.asp>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://kameleonquilt.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.forskningsradet.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://norwegian.wunderground.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.norad.no/items/2633/38/3320230074/Norad2003_Nepal.pdf>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.windpower.org/composite-84.htm>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.ushmm.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://elinor.nu/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> .
+
+<http://www.nasjonalmuseet.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.ystadsallehanda.se/apps/pbcs.dll/section?Category=WALLANDERSYSTAD/>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.norskpen.no/php/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://scripturetext.com/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://matportalen.no/matvaretabellen/portal/index_html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.nilu.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.histos.no/bergen/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://home.online.no/~joeolavl/viking/index.htm>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.statgreen.gl/>
+	dct:language  <http://www.lingvoj.org/lang/da> .
+
+<http://www.fotballen.eu/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.hundespor.no/gamle/jakta/index.html>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://jubileum.vimmerby.se/default.aspx?pageID=1>
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://lnk.nu/eurydice.org/dtb>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> .
+
+<http://www.theeuropeanlibrary.org/portal/index.html>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.kartozoologi.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.sarepta.org/index.php>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.unep.org/>
+	dct:language  <http://www.lingvoj.org/lang/fr> .
+
+<http://www.bjerknes.uib.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://www.oslocomicsexpo.no/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://no.librarything.com/>
+	dct:language  <http://www.lingvoj.org/lang/en> .
+
+<http://eur-lex.europa.eu/>
+	dct:language  <http://www.lingvoj.org/lang/da> ;
+	dct:language  <http://www.lingvoj.org/lang/sv> ;
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .
+
+<http://www.andorra.ad/index_ang.asp>
+	dct:language  <http://www.lingvoj.org/lang/fr> ;
+	dct:language  <http://www.lingvoj.org/lang/de> ;
+	dct:language  <http://www.lingvoj.org/lang/es> .

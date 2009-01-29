@@ -1,0 +1,30 @@
+# STEG 4
+#
+# Hvis ikke land = Finland eller Sverige (land ikke er satt) 
+# Hvis språk (på ressurs) = norsk 
+# -> LAND = Norge 
+#
+#
+
+PREFIX dct:  <http://purl.org/dc/terms/> 
+PREFIX lang:  <http://www.lingvoj.org/lang/> 
+PREFIX geo: <http://www.geonames.org/countries/#>
+MODIFY
+DELETE {
+  ?r dct:language lang:fi .
+  ?r dct:language lang:no .
+  ?r dct:language lang:sv .
+  ?r dct:language lang:da .
+}
+INSERT {
+   ?r dct:coverage  geo:NO ;
+      dct:language lang:no .
+} 
+WHERE {
+    
+    ?r dct:language lang:no .
+    OPTIONAL { 
+      ?r dct:coverage ?country . 
+    }
+    FILTER(!bound(?country))
+}

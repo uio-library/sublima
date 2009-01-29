@@ -1,0 +1,11 @@
+prefix wdr:       <http://www.w3.org/2007/05/powder#> 
+prefix rdfs:      <http://www.w3.org/2000/01/rdf-schema#>
+construct { 
+   ?s a wdr:DR .
+   ?s rdfs:label ?label . 
+}
+where {
+  ?r wdr:describedBy ?s .
+  ?s a wdr:DR .
+  OPTIONAL { ?s rdfs:label ?label . } 
+} 

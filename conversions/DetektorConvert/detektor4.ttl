@@ -1,0 +1,41 @@
+@prefix user:    <http://detektor.sublima.computas.com:8180/detektor/user/> .
+@prefix word:    <http://xmlns.com/wordnet/1.6/> .
+@prefix topic:   <http://detektor.sublima.computas.com:8180/detektor/topic/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix resource:  <http://detektor.sublima.computas.com:8180/detektor/resource/> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix agent:   <http://detektor.sublima.computas.com:8180/detektor/agent/> .
+@prefix audience:  <http://detektor.sublima.computas.com:8180/detektor/audience/> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix :        <http://detektor.sublima.computas.com:8180/detektor/> .
+
+status:inaktiv
+      rdf:type      wdr:DR ;
+      rdfs:label    "inactive"@en ;
+      rdfs:label    "inaktiv"@no .
+
+status:godkjent_av_administrator
+      rdf:type      wdr:DR ;
+      rdfs:label    "approved by administrator"@en ;
+      rdfs:label    "godkjent av administrator"@no .
+
+status:til_godkjenning
+      rdf:type      wdr:DR ;
+      rdfs:label    "for approval"@en ;
+      rdfs:label    "til godkjenning"@no .
+
+status:ikke_godkjent_av_administrator
+      rdf:type      wdr:DR ;
+      rdfs:label    "not approved by administrator"@en ;
+      rdfs:label    "ikke godkjent av administrator"@no .

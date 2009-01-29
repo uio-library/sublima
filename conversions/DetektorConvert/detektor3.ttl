@@ -1,0 +1,326 @@
+@prefix user:    <http://detektor.sublima.computas.com:8180/detektor/user/> .
+@prefix word:    <http://xmlns.com/wordnet/1.6/> .
+@prefix topic:   <http://detektor.sublima.computas.com:8180/detektor/topic/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix resource:  <http://detektor.sublima.computas.com:8180/detektor/resource/> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix agent:   <http://detektor.sublima.computas.com:8180/detektor/agent/> .
+@prefix audience:  <http://detektor.sublima.computas.com:8180/detektor/audience/> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix :        <http://detektor.sublima.computas.com:8180/detektor/> .
+
+<http://sublima.computas.com/user/det_usr00058>
+      rdf:type      sioc:User ;
+      rdfs:label    "Greta Bruu Olsen"@no ;
+      rdfs:label    "Greta Bruu Olsen"@en .
+
+<http://sublima.computas.com/user/det_usr00072>
+      rdf:type      sioc:User ;
+      rdfs:label    "Astrid Wegner"@no ;
+      rdfs:label    "Astrid Wegner"@en .
+
+<http://sublima.computas.com/user/det_usr00098>
+      rdf:type      sioc:User ;
+      rdfs:label    "Herborg Tekshov"@no ;
+      rdfs:label    "Herborg Tekshov"@en .
+
+<http://sublima.computas.com/user/det_usr00077>
+      rdf:type      sioc:User ;
+      rdfs:label    "Kristin Kleiv"@no ;
+      rdfs:label    "Kristin Kleiv"@en .
+
+<http://sublima.computas.com/user/det_usr00075>
+      rdf:type      sioc:User ;
+      rdfs:label    "Anne Lindahl"@no ;
+      rdfs:label    "Anne Lindahl"@en .
+
+<http://sublima.computas.com/user/det_usr00093>
+      rdf:type      sioc:User ;
+      rdfs:label    "Sandvika Bærum Bibliotek"@no ;
+      rdfs:label    "Sandvika Bærum Bibliotek"@en .
+
+<http://sublima.computas.com/user/det_usr00084>
+      rdf:type      sioc:User ;
+      rdfs:label    "Gjertrud Øvland"@no ;
+      rdfs:label    "Gjertrud Øvland"@en .
+
+<http://sublima.computas.com/user/det_usr000103>
+      rdf:type      sioc:User ;
+      rdfs:label    "Computas As"@no ;
+      rdfs:label    "Computas As"@en .
+
+<http://sublima.computas.com/user/det_usr00073>
+      rdf:type      sioc:User ;
+      rdfs:label    "Berit Petersheim"@no ;
+      rdfs:label    "Berit Petersheim"@en .
+
+<http://sublima.computas.com/user/det_usr000101>
+      rdf:type      sioc:User ;
+      rdfs:label    "Kirsti Michaelsen"@no ;
+      rdfs:label    "Kirsti Michaelsen"@en .
+
+<http://sublima.computas.com/user/det_usr00087>
+      rdf:type      sioc:User ;
+      rdfs:label    "Einar S. Berg"@no ;
+      rdfs:label    "Einar S. Berg"@en .
+
+<http://sublima.computas.com/user/det_usr00056>
+      rdf:type      sioc:User ;
+      rdfs:label    "Anne Marit Østby"@no ;
+      rdfs:label    "Anne Marit Østby"@en .
+
+<http://sublima.computas.com/user/det_usr00096>
+      rdf:type      sioc:User ;
+      rdfs:label    "Praktikant Praktikant"@no ;
+      rdfs:label    "Praktikant Praktikant"@en .
+
+<http://sublima.computas.com/user/det_usr00060>
+      rdf:type      sioc:User ;
+      rdfs:label    "Barbro Bakken"@no ;
+      rdfs:label    "Barbro Bakken"@en .
+
+<http://sublima.computas.com/user/det_usr00026>
+      rdf:type      sioc:User ;
+      rdfs:label    "Ola Sørlie"@no ;
+      rdfs:label    "Ola Sørlie"@en .
+
+<http://sublima.computas.com/user/det_usr00059>
+      rdf:type      sioc:User ;
+      rdfs:label    "Kari Solveig Lifjell"@no ;
+      rdfs:label    "Kari Solveig Lifjell"@en .
+
+<http://sublima.computas.com/user/det_usr00099>
+      rdf:type      sioc:User ;
+      rdfs:label    "Ingvild Elvestad Tørre"@no ;
+      rdfs:label    "Ingvild Elvestad Tørre"@en .
+
+<http://sublima.computas.com/user/det_usr00094>
+      rdf:type      sioc:User ;
+      rdfs:label    "Mari Vilnes"@no ;
+      rdfs:label    "Mari Vilnes"@en .
+
+<http://sublima.computas.com/user/det_usr00063>
+      rdf:type      sioc:User ;
+      rdfs:label    "Liv Marit Palm"@no ;
+      rdfs:label    "Liv Marit Palm"@en .
+
+<http://sublima.computas.com/user/det_usr00076>
+      rdf:type      sioc:User ;
+      rdfs:label    "Asgeir Rekkavik"@no ;
+      rdfs:label    "Asgeir Rekkavik"@en .
+
+<http://sublima.computas.com/user/det_usr00055>
+      rdf:type      sioc:User ;
+      rdfs:label    "Thor Arne Sæterholen"@no ;
+      rdfs:label    "Thor Arne Sæterholen"@en .
+
+<http://sublima.computas.com/user/det_usr00057>
+      rdf:type      sioc:User ;
+      rdfs:label    "Astrid Werner"@no ;
+      rdfs:label    "Astrid Werner"@en .
+
+<http://sublima.computas.com/user/det_usr00061>
+      rdf:type      sioc:User ;
+      rdfs:label    "Ole Skimmeland"@no ;
+      rdfs:label    "Ole Skimmeland"@en .
+
+<http://sublima.computas.com/user/det_usr00088>
+      rdf:type      sioc:User ;
+      rdfs:label    "Berit Ferner"@no ;
+      rdfs:label    "Berit Ferner"@en .
+
+<http://sublima.computas.com/user/det_usr00065>
+      rdf:type      sioc:User ;
+      rdfs:label    "Tove Haugen"@no ;
+      rdfs:label    "Tove Haugen"@en .
+
+<http://sublima.computas.com/user/det_usr00083>
+      rdf:type      sioc:User ;
+      rdfs:label    "Vibeke Stokka"@no ;
+      rdfs:label    "Vibeke Stokka"@en .
+
+<http://sublima.computas.com/user/det_usr00082>
+      rdf:type      sioc:User ;
+      rdfs:label    "Roberto Joly"@no ;
+      rdfs:label    "Roberto Joly"@en .
+
+<http://sublima.computas.com/user/det_usr00095>
+      rdf:type      sioc:User ;
+      rdfs:label    "Marie Johansen"@no ;
+      rdfs:label    "Marie Johansen"@en .
+
+<http://sublima.computas.com/user/det_usr00090>
+      rdf:type      sioc:User ;
+      rdfs:label    "Tønsberg Bibliotek"@no ;
+      rdfs:label    "Tønsberg Bibliotek"@en .
+
+<http://sublima.computas.com/user/det_usr00068>
+      rdf:type      sioc:User ;
+      rdfs:label    "Hilde Matre Larsen"@no ;
+      rdfs:label    "Hilde Matre Larsen"@en .
+
+<http://sublima.computas.com/user/det_usr00054>
+      rdf:type      sioc:User ;
+      rdfs:label    "Vibecke Hegge"@no ;
+      rdfs:label    "Vibecke Hegge"@en .
+
+<http://sublima.computas.com/user/det_usr00092>
+      rdf:type      sioc:User ;
+      rdfs:label    "Katalog Bærum Bibliotek"@no ;
+      rdfs:label    "Katalog Bærum Bibliotek"@en .
+
+<http://sublima.computas.com/user/det_usr00036>
+      rdf:type      sioc:User ;
+      rdfs:label    "Goro Aarseth"@no ;
+      rdfs:label    "Goro Aarseth"@en .
+
+<http://sublima.computas.com/user/det_usr00085>
+      rdf:type      sioc:User ;
+      rdfs:label    "Stian Bjørnsson Hope"@no ;
+      rdfs:label    "Stian Bjørnsson Hope"@en .
+
+<http://sublima.computas.com/user/det_usr00089>
+      rdf:type      sioc:User ;
+      rdfs:label    "Eidsberg Bibliotek"@no ;
+      rdfs:label    "Eidsberg Bibliotek"@en .
+
+<http://sublima.computas.com/user/det_usr00046>
+      rdf:type      sioc:User ;
+      rdfs:label    "Jan Tore Dahl"@no ;
+      rdfs:label    "Jan Tore Dahl"@en .
+
+<http://sublima.computas.com/user/det_usr00030>
+      rdf:type      sioc:User ;
+      rdfs:label    "Henriette Frisenberg Sundgaard"@no ;
+      rdfs:label    "Henriette Frisenberg Sundgaard"@en .
+
+<http://sublima.computas.com/user/det_usr00070>
+      rdf:type      sioc:User ;
+      rdfs:label    "Elen Skogmo"@no ;
+      rdfs:label    "Elen Skogmo"@en .
+
+<http://sublima.computas.com/user/det_usr00079>
+      rdf:type      sioc:User ;
+      rdfs:label    "Venke Uglenes"@no ;
+      rdfs:label    "Venke Uglenes"@en .
+
+<http://sublima.computas.com/user/det_usr00029>
+      rdf:type      sioc:User ;
+      rdfs:label    "Julie Agre Stene"@no ;
+      rdfs:label    "Julie Agre Stene"@en .
+
+<http://sublima.computas.com/user/det_usr00028>
+      rdf:type      sioc:User ;
+      rdfs:label    "Gunnar Dypdahl"@no ;
+      rdfs:label    "Gunnar Dypdahl"@en .
+
+<http://sublima.computas.com/user/det_usr00053>
+      rdf:type      sioc:User ;
+      rdfs:label    "Silje Helgevold"@no ;
+      rdfs:label    "Silje Helgevold"@en .
+
+<http://sublima.computas.com/user/det_usr00066>
+      rdf:type      sioc:User ;
+      rdfs:label    "Ann Kunish"@no ;
+      rdfs:label    "Ann Kunish"@en .
+
+<http://sublima.computas.com/user/det_usr000102>
+      rdf:type      sioc:User ;
+      rdfs:label    "Berit Præsthus"@no ;
+      rdfs:label    "Berit Præsthus"@en .
+
+<http://sublima.computas.com/user/det_usr00091>
+      rdf:type      sioc:User ;
+      rdfs:label    "Utlån Bærum Bibliotek"@no ;
+      rdfs:label    "Utlån Bærum Bibliotek"@en .
+
+<http://sublima.computas.com/user/det_usr00014>
+      rdf:type      sioc:User ;
+      rdfs:label    "Deichmanske Folkebibliotek"@no ;
+      rdfs:label    "Deichmanske Folkebibliotek"@en .
+
+<http://sublima.computas.com/user/det_usr00086>
+      rdf:type      sioc:User ;
+      rdfs:label    "Rine Kull Brofoss"@no ;
+      rdfs:label    "Rine Kull Brofoss"@en .
+
+<http://sublima.computas.com/user/det_usr00062>
+      rdf:type      sioc:User ;
+      rdfs:label    "Berit Undheim"@no ;
+      rdfs:label    "Berit Undheim"@en .
+
+<http://sublima.computas.com/user/det_usr00071>
+      rdf:type      sioc:User ;
+      rdfs:label    "Marianne Bøe"@no ;
+      rdfs:label    "Marianne Bøe"@en .
+
+<http://sublima.computas.com/user/det_usr00080>
+      rdf:type      sioc:User ;
+      rdfs:label    "Mathilde Førisdal"@no ;
+      rdfs:label    "Mathilde Førisdal"@en .
+
+<http://sublima.computas.com/user/det_usr00067>
+      rdf:type      sioc:User ;
+      rdfs:label    "Knut Oterholm"@no ;
+      rdfs:label    "Knut Oterholm"@en .
+
+<http://sublima.computas.com/user/det_usr00097>
+      rdf:type      sioc:User ;
+      rdfs:label    "Praktikant Praktikant"@no ;
+      rdfs:label    "Praktikant Praktikant"@en .
+
+<http://sublima.computas.com/user/det_usr00044>
+      rdf:type      sioc:User ;
+      rdfs:label    "Heidi Scarth Stene"@no ;
+      rdfs:label    "Heidi Scarth Stene"@en .
+
+<http://sublima.computas.com/user/det_usr00037>
+      rdf:type      sioc:User ;
+      rdfs:label    "Linux Communications"@no ;
+      rdfs:label    "Linux Communications"@en .
+
+<http://sublima.computas.com/user/det_usr00069>
+      rdf:type      sioc:User ;
+      rdfs:label    "Liv Beathe Bråthen"@no ;
+      rdfs:label    "Liv Beathe Bråthen"@en .
+
+<http://sublima.computas.com/user/det_usr00074>
+      rdf:type      sioc:User ;
+      rdfs:label    "Jørn Helge B. Dahl"@no ;
+      rdfs:label    "Jørn Helge B. Dahl"@en .
+
+<http://sublima.computas.com/user/det_usr00078>
+      rdf:type      sioc:User ;
+      rdfs:label    "Wenche Kolsrud"@no ;
+      rdfs:label    "Wenche Kolsrud"@en .
+
+<http://sublima.computas.com/user/det_usr000100>
+      rdf:type      sioc:User ;
+      rdfs:label    "Mette Rysjedal"@no ;
+      rdfs:label    "Mette Rysjedal"@en .
+
+<http://sublima.computas.com/user/det_usr00023>
+      rdf:type      sioc:User ;
+      rdfs:label    "Ellen Aabakken"@no ;
+      rdfs:label    "Ellen Aabakken"@en .
+
+<http://sublima.computas.com/user/det_usr00064>
+      rdf:type      sioc:User ;
+      rdfs:label    "Trond Bjerkholt"@no ;
+      rdfs:label    "Trond Bjerkholt"@en .
+
+<http://sublima.computas.com/user/det_usr00081>
+      rdf:type      sioc:User ;
+      rdfs:label    "Bjarte Bakken"@no ;
+      rdfs:label    "Bjarte Bakken"@en .

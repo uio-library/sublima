@@ -1,0 +1,15 @@
+# STEG 5
+#
+# Verifiser
+#
+#
+# java arq.sparql --query query5.sparql --data smil-test-data4.ttl
+
+PREFIX dct:  <http://purl.org/dc/terms/> 
+PREFIX lang:  <http://www.lingvoj.org/lang/> 
+PREFIX geo: <http://www.geonames.org/countries/#>
+SELECT ?r ?lang ?country
+WHERE {
+    ?r dct:language ?lang ;
+       dct:coverage ?country . 
+    }

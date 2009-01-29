@@ -1,0 +1,44 @@
+# Step 1 (preparation)
+# This query is run against the original dataset 
+# (roberts conversion from 2008-11-10)
+# to extract resources excluding the 
+#  dct:subject
+#  sub:committer
+# 4520 resources
+
+
+PREFIX :     <http://detektor.sublima.computas.com:8180/detektor/> 
+PREFIX wdr:  <http://www.w3.org/2007/05/powder#>
+PREFIX sub:  <http://xmlns.computas.com/sublima#> 
+PREFIX dct:  <http://purl.org/dc/terms/>
+
+CONSTRUCT { 
+   ?resource a sub:Resource .
+   ?resource sub:url ?url .
+   ?resource dct:title ?title .
+   ?resource dct:language ?language .
+   ?resource dct:audience ?audience .
+   ?resource dct:identifier ?identifier .
+   ?resource dct:publisher ?publisher .
+   ?resource dct:audience ?audience .
+   ?resource dct:dateAccepted ?dateAccepted .
+   ?resource wdr:describedBy ?status .
+   ?resource dct:type ?dcttype . 
+#   ?resource sub:committer ?committer .
+#   ?resource dct:subject ?subject .
+} 
+WHERE {
+   ?resource a sub:Resource .
+OPTIONAL {   ?resource sub:url ?url . }
+OPTIONAL {   ?resource dct:title ?title . }
+OPTIONAL {   ?resource dct:language ?language . }
+OPTIONAL {   ?resource dct:audience ?audience . }
+OPTIONAL {   ?resource dct:identifier ?identifier . }
+OPTIONAL {   ?resource dct:publisher ?publisher . }
+OPTIONAL {   ?resource dct:audience ?audience . }
+OPTIONAL {   ?resource dct:dateAccepted ?dateAccepted . }
+OPTIONAL {   ?resource wdr:describedBy ?status . }
+OPTIONAL {   ?resource dct:type ?dcttype . }
+# OPTIONAL {  ?resource sub:committer ?committer . }
+# OPTIONAL {  ?resource dct:subject ?subject . }
+}

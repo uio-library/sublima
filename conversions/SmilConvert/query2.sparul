@@ -1,0 +1,31 @@
+# STEG 2
+#
+# Hvis ikke land = Finland (land ikke er satt) 
+# Hvis språk (på ressurs) = svensk 
+# -> LAND = Sverige  (dette gjør at alle # svenske OG finske ressurser får
+#    verdien Sverige).
+#
+# java Sparul -filemodel smil-test-data2.ttl Turtle -query query2.sparul > smil-test-data3.ttl
+
+PREFIX dct:  <http://purl.org/dc/terms/> 
+PREFIX lang:  <http://www.lingvoj.org/lang/> 
+PREFIX geo: <http://www.geonames.org/countries/#>
+MODIFY
+DELETE {
+  ?r dct:language lang:fi .
+  ?r dct:language lang:no .
+  ?r dct:language lang:sv .
+  ?r dct:language lang:da .
+}
+INSERT {
+   ?r dct:coverage  geo:SV ;
+      dct:language lang:sv .
+} 
+WHERE {
+    
+    ?r dct:language lang:sv .
+    OPTIONAL{ 
+      ?r dct:coverage ?country . 
+    }
+    FILTER(!bound(?country))
+}

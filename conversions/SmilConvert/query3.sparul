@@ -1,0 +1,30 @@
+# STEG 3
+#
+# Hvis ikke land = Finland eller Sverige (land ikke er satt) 
+# Hvis språk (på ressurs) = dansk 
+# -> LAND = Danmark 
+#
+# java Sparul -filemodel smil-test-data3.ttl Turtle -query query3.sparul > smil-test-data4.ttl
+
+PREFIX dct:  <http://purl.org/dc/terms/> 
+PREFIX lang:  <http://www.lingvoj.org/lang/> 
+PREFIX geo: <http://www.geonames.org/countries/#>
+MODIFY
+DELETE {
+  ?r dct:language lang:fi .
+  ?r dct:language lang:no .
+  ?r dct:language lang:sv .
+  ?r dct:language lang:da .
+}
+INSERT {
+   ?r dct:coverage  geo:DK ;
+      dct:language lang:da .
+} 
+WHERE {
+    
+    ?r dct:language lang:da .
+    OPTIONAL { 
+      ?r dct:coverage ?country . 
+    }
+    FILTER(!bound(?country))
+}

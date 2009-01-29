@@ -1,0 +1,22 @@
+# STEP 0a (preparation)
+#
+# In data from the dataset got in the email 
+# january 2009 from Universitetsbiblioteket, some information was 
+# empty strings. This query removes that infromation
+#
+# After that a construct query is run against
+# the old database to extract the original langauge and 
+# identifiers then it is added to the new dataset before running 
+# step 1 through 4.
+#
+#
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+DELETE { 
+    ?r dct:language ""^^xsd:string .
+    ?r dct:identifier ""^^xsd:string . 
+} 
+WHERE {
+    ?r dct:language ?lang .
+    ?r dct:identifier ?id .
+}

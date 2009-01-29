@@ -1,0 +1,21 @@
+# Step 4 (preparation)
+# This query is run against the converted dataset
+# (roberts conversion from 2008-11-10)
+# to extract 
+#   statuses 
+# 
+
+base <http://detektor.sublima.computas.com:8180/detektor/> 
+prefix user:       <user/> 
+prefix sioc: 		<http://rdfs.org/sioc/ns#> 
+prefix rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>
+prefix wdr: 		<http://www.w3.org/2007/05/powder#> 
+
+CONSTRUCT { 
+   ?status a wdr:DR .
+   ?status rdfs:label ?label .
+} 
+WHERE {
+   ?status a wdr:DR .
+   ?status rdfs:label ?label .
+}

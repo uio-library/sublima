@@ -1,0 +1,27 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix status:  <http://sublima.computas.com/status/> .
+
+status:under_behandling
+      a       wdr:DR ;
+      rdfs:label "Being dealt with"@en , "Under behandling"@da , "Under behandling"@sv , "Under behandling"@no .
+
+status:inaktiv
+      a       wdr:DR ;
+      rdfs:label "Inactive"@en , "Inaktiv"@da , "Inaktiv"@sv , "Inaktiv"@no .
+
+status:nytt_forslag
+      a       wdr:DR ;
+      rdfs:label "Nytt forslag"@da , "Nytt forslag"@no , "New suggestion"@en , "Nytt förslag"@sv .
+
+status:godkjent_av_administrator
+      a       wdr:DR ;
+      rdfs:label "Godkjent av administrator"@da , "Godkjent av administrator"@no , "Godkänt av administrator"@sv , "Approved by administrator"@en .
+
+status:til_godkjenning
+      a       wdr:DR ;
+      rdfs:label "Til godkjenning"@da , "Til godkjenning"@no , "Til godkänning"@sv , "For approval"@en .
+
+status:ikke_godkjent_av_administrator
+      a       wdr:DR ;
+      rdfs:label "Not approved by administrator"@en , "Inte godkänt av administrator"@sv , "Ikke godkjent av administrator"@no , "Ikke godkjent av administraotr"@da .

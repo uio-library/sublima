@@ -1,0 +1,15 @@
+# Step 0b (preparation)
+# This query is run against the old dataset to extract the correct
+# dct:language and dct:identifiers.
+# 
+
+
+PREFIX dct: <http://purl.org/dc/terms/>
+CONSTRUCT { 
+   ?resource dct:language ?lang .
+   ?resource dct:identifier ?identifier .
+} 
+WHERE {
+   ?resource dct:language ?lang .
+   ?resource dct:identifier ?identifier .
+}
