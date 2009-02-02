@@ -25,7 +25,7 @@ import java.util.Map;
  * @author: mha
  * Date: 31.mar.2008
  */
-public class AdminController {
+public class AdminController implements StatelessAppleController {
 
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();

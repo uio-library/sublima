@@ -12,6 +12,7 @@ import net.sf.akismet.Akismet;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
+import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
 
 import java.text.DateFormat;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FeedbackController {
+public class FeedbackController implements StatelessAppleController {
 
   private static Logger logger = Logger.getLogger(FeedbackController.class);
   private String mode;

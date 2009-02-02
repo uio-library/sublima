@@ -12,6 +12,7 @@ import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
+import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
@@ -22,7 +23,7 @@ import java.util.*;
  * @author: mha
  * Date: 31.mar.2008
  */
-public class TopicController {
+public class TopicController implements StatelessAppleController {
 
   private SparulDispatcher sparulDispatcher;
   private IndexService indexService = new IndexService();

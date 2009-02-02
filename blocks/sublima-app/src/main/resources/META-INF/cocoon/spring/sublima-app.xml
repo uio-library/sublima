@@ -7,56 +7,56 @@
                            http://cocoon.apache.org/schema/pipeline http://cocoon.apache.org/schema/pipeline/cocoon-pipeline-1.0.xsd"
        default-init-method="init">
 
-  <bean name="com.computas.sublima.app.fascade.SearchFascade"
-        class="com.computas.sublima.app.fascade.SearchFascade">
+  <bean name="com.computas.sublima.app.controller.SearchController"
+        class="com.computas.sublima.app.controller.SearchController" scope="prototype">
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
     <property name="appMan" ref="org.apache.cocoon.auth.ApplicationManager"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.fascade.RedirectFascade"
-        class="com.computas.sublima.app.fascade.RedirectFascade"/>
+  <bean name="com.computas.sublima.app.controller.RedirectController"
+        class="com.computas.sublima.app.controller.RedirectController" scope="prototype"/>
 
 
-  <bean name="com.computas.sublima.app.fascade.FeedbackFascade"
-        class="com.computas.sublima.app.fascade.FeedbackFascade">
+  <bean name="com.computas.sublima.app.controller.admin.FeedbackController"
+        class="com.computas.sublima.app.controller.admin.FeedbackController" scope="prototype">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
     <property name="appMan" ref="org.apache.cocoon.auth.ApplicationManager"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.fascade.AdminFascade"
-        class="com.computas.sublima.app.fascade.AdminFascade">
+  <bean name="com.computas.sublima.app.controller.admin.AdminController"
+        class="com.computas.sublima.app.controller.admin.AdminController" scope="prototype">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.fascade.PublisherFascade"
-        class="com.computas.sublima.app.fascade.PublisherFascade">
+  <bean name="com.computas.sublima.app.controller.admin.PublisherController"
+        class="com.computas.sublima.app.controller.admin.PublisherController" scope="prototype">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.fascade.ResourceFascade"
-        class="com.computas.sublima.app.fascade.ResourceFascade">
+  <bean name="com.computas.sublima.app.controller.admin.ResourceController"
+        class="com.computas.sublima.app.controller.admin.ResourceController" scope="prototype">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.fascade.TopicFascade"
-        class="com.computas.sublima.app.fascade.TopicFascade">
+  <bean name="com.computas.sublima.app.controller.admin.TopicController"
+        class="com.computas.sublima.app.controller.admin.TopicController" scope="prototype">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
     <property name="appMan" ref="org.apache.cocoon.auth.ApplicationManager"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.fascade.UserFascade"
-        class="com.computas.sublima.app.fascade.UserFascade">
+  <bean name="com.computas.sublima.app.controller.admin.UserController"
+        class="com.computas.sublima.app.controller.admin.UserController" scope="prototype">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.fascade.LinkcheckFascade"
-        class="com.computas.sublima.app.fascade.LinkcheckFascade">
+  <bean name="com.computas.sublima.app.controller.admin.LinkcheckController"
+        class="com.computas.sublima.app.controller.admin.LinkcheckController" scope="prototype">
     <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
   </bean>
 
-  <bean name="com.computas.sublima.app.fascade.LoginFascade"
-        class="com.computas.sublima.app.fascade.LoginFascade">
+  <bean name="com.computas.sublima.app.controller.admin.LoginController"
+        class="com.computas.sublima.app.controller.admin.LoginController" scope="prototype">
   </bean>
 
   <!-- This is a simple security handler: -->

@@ -54,11 +54,11 @@
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
 
-          <map:call function="com.computas.sublima.app.fascade.AdminFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
             <map:parameter name="mode" value=""/>
           </map:call>
         </map:act>
-        <map:call function="com.computas.sublima.app.fascade.LoginFascade">
+        <map:call function="com.computas.sublima.app.controller.admin.LoginController">
           <map:parameter name="mode" value="showform"/>
         </map:call>
       </map:match>
@@ -67,7 +67,7 @@
       <!-- Form target which performs auth service   -->
       <!-- ========================================= -->
       <map:match pattern="do-login">
-        <!--map:call function="com.computas.sublima.app.fascade.LoginFascade"-->
+        <!--map:call function="com.computas.sublima.app.controller.admin.LoginController"-->
         <!-- try to login -->
         <!--map:act type="locale"-->
         <map:act type="cauth-login">
@@ -85,7 +85,7 @@
 
       <!-- Does the initial test before sending to the actual loginhandler. This because we want to display errors to the user when the auth fails -->
       <map:match pattern="do-login2">
-        <map:call function="com.computas.sublima.app.fascade.LoginFascade"/>
+        <map:call function="com.computas.sublima.app.controller.admin.LoginController"/>
       </map:match>
 
       <!-- ========================================= -->
@@ -100,7 +100,7 @@
 
       <!-- To test SPARQL queries -->
       <map:match pattern="testsparql/*">
-        <map:call function="com.computas.sublima.app.fascade.AdminFascade">
+        <map:call function="com.computas.sublima.app.controller.admin.AdminController">
           <map:parameter name="mode" value="testsparql"/>
           <map:parameter name="submode" value="{1}"/>
         </map:call>
@@ -110,7 +110,7 @@
       <map:match pattern="testsparul/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.AdminFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
             <map:parameter name="mode" value="testsparul"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -123,7 +123,7 @@
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
 
-          <map:call function="com.computas.sublima.app.fascade.AdminFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
             <map:parameter name="mode" value=""/>
           </map:call>
 
@@ -142,7 +142,7 @@
       <map:match pattern="admin/ressurser/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.ResourceFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
             <map:parameter name="mode" value="ressurser"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -153,7 +153,7 @@
       <map:match pattern="admin/lenkesjekk/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.LinkcheckFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.LinkcheckController">
             <map:parameter name="mode" value="lenkesjekk"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -164,7 +164,7 @@
       <map:match pattern="admin/brukere/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.UserFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.UserController">
             <map:parameter name="mode" value="brukere"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -176,7 +176,7 @@
       <map:match pattern="admin/utgivere/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.PublisherFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
             <map:parameter name="mode" value="utgivere"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -188,7 +188,7 @@
       <map:match pattern="admin/emner/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.TopicFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.TopicController">
             <map:parameter name="mode" value="emner"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -199,7 +199,7 @@
       <map:match pattern="admin/emner/relasjoner/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.TopicFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.TopicController">
             <map:parameter name="mode" value="relasjoner"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -210,7 +210,7 @@
       <map:match pattern="admin/brukere/roller/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.UserFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.UserController">
             <map:parameter name="mode" value="roller"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -222,7 +222,7 @@
       <map:match pattern="admin/database/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.AdminFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
             <map:parameter name="mode" value="database"/>
             <map:parameter name="submode" value="{../1}"/>
           </map:call>
@@ -233,7 +233,7 @@
       <map:match pattern="admin/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.fascade.AdminFascade">
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
             <map:parameter name="mode" value="{../1}"/>
           </map:call>
         </map:act>
@@ -241,7 +241,7 @@
       </map:match>
 
       <map:match pattern="emner/*">
-        <map:call function="com.computas.sublima.app.fascade.TopicFascade">
+        <map:call function="com.computas.sublima.app.controller.admin.TopicController">
           <map:parameter name="mode" value="a-z"/>
           <map:parameter name="submode" value="{1}"/>
           <map:parameter name="interface-language" value="{cookie:language}"/>
@@ -253,7 +253,7 @@
     <map:pipeline>
       <!-- pattern to match for "", when users don't define a URL -->
       <map:match pattern="">
-        <map:call function="com.computas.sublima.app.fascade.TopicFascade">
+        <map:call function="com.computas.sublima.app.controller.admin.TopicController">
           <map:parameter name="mode" value="browse"/>
         </map:call>
       </map:match>
@@ -272,7 +272,7 @@
       </map:match>
 
       <map:match pattern="tips">
-        <map:call function="com.computas.sublima.app.fascade.FeedbackFascade">
+        <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
           <map:parameter name="mode" value="tips"/>
 
         </map:call>
@@ -288,13 +288,13 @@
       </map:match>
 
       <map:match pattern="sendtips">
-        <map:call function="com.computas.sublima.app.fascade.FeedbackFascade">
+        <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
           <map:parameter name="mode" value="sendtips"/>
         </map:call>
       </map:match>
 
       <map:match pattern="resourcecomment">
-        <map:call function="com.computas.sublima.app.fascade.FeedbackFascade">
+        <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
           <map:parameter name="mode" value="resourcecomment"/>
         </map:call>
       </map:match>
@@ -309,7 +309,7 @@
       </map:match>
 
       <map:match pattern="advancedsearch">
-        <map:call function="com.computas.sublima.app.fascade.SearchFascade">
+        <map:call function="com.computas.sublima.app.controller.SearchController">
           <map:parameter name="mode" value="advancedsearch"/>
         </map:call>
         <!-- apply styling -->
@@ -320,7 +320,7 @@
       </map:match>
 
       <map:match pattern="search-result.*">
-          <map:call function="com.computas.sublima.app.fascade.SearchFascade">
+          <map:call function="com.computas.sublima.app.controller.SearchController">
             <map:parameter name="mode" value="search-result"/>
             <map:parameter name="interface-language" value="{cookie:language}"/>
             <map:parameter name="format" value="{1}"/>
@@ -328,7 +328,7 @@
       </map:match>
 
       <map:match pattern="topic/*.*">
-          <map:call function="com.computas.sublima.app.fascade.SearchFascade">
+          <map:call function="com.computas.sublima.app.controller.SearchController">
             <map:parameter name="mode" value="topic"/>
             <map:parameter name="topic" value="{1}"/>
             <map:parameter name="format" value="{2}"/>
@@ -337,12 +337,12 @@
       </map:match>
 
       <map:match pattern="topic/*">
-	<map:call function="com.computas.sublima.app.fascade.RedirectFascade"/>
+	<map:call function="com.computas.sublima.app.controller.RedirectController"/>
       </map:match>
 
 
       <map:match pattern="resource/*.*">
-          <map:call function="com.computas.sublima.app.fascade.SearchFascade">
+          <map:call function="com.computas.sublima.app.controller.SearchController">
             <map:parameter name="mode" value="resource"/>
             <map:parameter name="name" value="{1}"/>
             <map:parameter name="format" value="{2}"/>
@@ -351,7 +351,7 @@
       </map:match>
 
       <map:match pattern="resource/*">
-	<map:call function="com.computas.sublima.app.fascade.RedirectFascade"/>
+	<map:call function="com.computas.sublima.app.controller.RedirectController"/>
       </map:match>
 
       <map:match pattern="navigation-and-facets">
