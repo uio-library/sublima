@@ -71,7 +71,7 @@
         <!-- try to login -->
         <!--map:act type="locale"-->
         <map:act type="cauth-login">
-          <!--map:parameter name="locale" value="{language}"/-->
+          <!--map:parameter name="locale" value="{cookie:language}"/-->
           <map:parameter name="application" value="Sublima"/>
           <map:parameter name="name" value="{request-param:username}"/>
           <map:parameter name="password" value="{request-param:password}"/>
@@ -244,7 +244,7 @@
         <map:call function="com.computas.sublima.app.fascade.TopicFascade">
           <map:parameter name="mode" value="a-z"/>
           <map:parameter name="submode" value="{1}"/>
-          <map:parameter name="interface-language" value="{language}"/>
+          <map:parameter name="interface-language" value="{cookie:language}"/>
         </map:call>
       </map:match>
 
@@ -320,24 +320,20 @@
       </map:match>
 
       <map:match pattern="search-result.*">
-        <map:act type="locale">
           <map:call function="com.computas.sublima.app.fascade.SearchFascade">
             <map:parameter name="mode" value="search-result"/>
             <map:parameter name="interface-language" value="{cookie:language}"/>
-            <map:parameter name="format" value="{../1}"/>
+            <map:parameter name="format" value="{1}"/>
           </map:call>
-        </map:act>
       </map:match>
 
       <map:match pattern="topic/*.*">
-        <map:act type="locale">
           <map:call function="com.computas.sublima.app.fascade.SearchFascade">
             <map:parameter name="mode" value="topic"/>
-            <map:parameter name="topic" value="{../1}"/>
-            <map:parameter name="format" value="{../2}"/>
-            <map:parameter name="interface-language" value="{language}"/>
+            <map:parameter name="topic" value="{1}"/>
+            <map:parameter name="format" value="{2}"/>
+            <map:parameter name="interface-language" value="{cookie:language}"/>
           </map:call>
-        </map:act>
       </map:match>
 
       <map:match pattern="topic/*">
@@ -346,14 +342,12 @@
 
 
       <map:match pattern="resource/*.*">
-        <map:act type="locale">
           <map:call function="com.computas.sublima.app.fascade.SearchFascade">
             <map:parameter name="mode" value="resource"/>
-            <map:parameter name="name" value="{../1}"/>
-            <map:parameter name="format" value="{../2}"/>
-            <map:parameter name="interface-language" value="{language}"/>
+            <map:parameter name="name" value="{1}"/>
+            <map:parameter name="format" value="{2}"/>
+            <map:parameter name="interface-language" value="{cookie:language}"/>
           </map:call>
-        </map:act>
       </map:match>
 
       <map:match pattern="resource/*">

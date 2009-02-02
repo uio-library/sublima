@@ -4,13 +4,13 @@
              xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
-     <map:transformers>
+    <map:transformers>
       <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer" logger="sitemap.transformer.i18n">
 
-     <catalogues default="messages">
-       <catalogue id="messages" name="messages" location="translations" />
-     </catalogues>
-   </map:transformer>
+        <catalogues default="messages">
+          <catalogue id="messages" name="messages" location="translations"/>
+        </catalogues>
+      </map:transformer>
     </map:transformers>
   </map:components>
 
@@ -18,57 +18,51 @@
     <map:pipeline>
 
       <map:match pattern="sublima-styling">
-        <map:act type="locale">
-          <map:generate src="service-consumer:"/>
-          <map:transform type="i18n">
-            <map:parameter name="locale" value="{cookie:language}"/>
-          </map:transform>
-          <map:transform src="transform/alt-styling.xslt">
-            <map:parameter name="baseurl" value="{request:contextPath}"/>
-            <map:parameter name="interface-language" value="{cookie:language}"/>
-          </map:transform>
-          <map:transform type="i18n">
-            <map:parameter name="locale" value="{cookie:language}"/>
-          </map:transform>
-          <map:serialize type="xhtml"/>
-        </map:act>
+        <map:generate src="service-consumer:"/>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{cookie:language}"/>
+        </map:transform>
+        <map:transform src="transform/alt-styling.xslt">
+          <map:parameter name="baseurl" value="{request:contextPath}"/>
+          <map:parameter name="interface-language" value="{cookie:language}"/>
+        </map:transform>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{cookie:language}"/>
+        </map:transform>
+        <map:serialize type="xhtml"/>
       </map:match>
 
 
-    <map:match pattern="rss-styling">
-        <map:act type="locale">
-          <map:generate src="service-consumer:"/>
-	  <map:transform src="transform/rss-styling.xsl">
-	    <map:parameter name="servername" value="{request:serverName}"/>
-	    <map:parameter name="serverport" value="{request:serverPort}"/>
-          </map:transform>
-          <map:serialize type="xml" mime-type="application/rss+xml;charset=UTF-8"/>
-        </map:act>
+      <map:match pattern="rss-styling">
+        <map:generate src="service-consumer:"/>
+        <map:transform src="transform/rss-styling.xsl">
+          <map:parameter name="servername" value="{request:serverName}"/>
+          <map:parameter name="serverport" value="{request:serverPort}"/>
+        </map:transform>
+        <map:serialize type="xml" mime-type="application/rss+xml;charset=UTF-8"/>
       </map:match>
-  
+
       <map:match pattern="rdfxml2sru-transform">
-	<map:generate src="service-consumer:"/>
-	<map:transform src="transform/rdfxml2sru.xsl"/>
-	<map:serialize type="xml"/>
+        <map:generate src="service-consumer:"/>
+        <map:transform src="transform/rdfxml2sru.xsl"/>
+        <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="admin-styling">
-        <map:act type="locale">
-          <map:generate src="service-consumer:"/>
-          <map:transform type="i18n">
-            <map:parameter name="locale" value="{cookie:language}"/>
-          </map:transform>
-          <map:transform src="transform/admin-styling.xslt">
-            <map:parameter name="baseurl" value="{request:contextPath}"/>
-            <map:parameter name="servername" value="{request:serverName}"/>
-            <map:parameter name="serverport" value="{request:serverPort}"/>
-            <map:parameter name="interface-language" value="{cookie:language}"/>
-          </map:transform>
-          <map:transform type="i18n">
-            <map:parameter name="locale" value="{cookie:language}"/>
-          </map:transform>
-          <map:serialize type="xhtml"/>
-        </map:act>
+        <map:generate src="service-consumer:"/>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{cookie:language}"/>
+        </map:transform>
+        <map:transform src="transform/admin-styling.xslt">
+          <map:parameter name="baseurl" value="{request:contextPath}"/>
+          <map:parameter name="servername" value="{request:serverName}"/>
+          <map:parameter name="serverport" value="{request:serverPort}"/>
+          <map:parameter name="interface-language" value="{cookie:language}"/>
+        </map:transform>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{cookie:language}"/>
+        </map:transform>
+        <map:serialize type="xhtml"/>
       </map:match>
 
       <!-- Matchers for CSS and images -->
@@ -93,7 +87,7 @@
       </map:match>
 
       <map:match pattern="**/errors/*">
-	<map:read src="resources/errors/{2}" mime-type="text/xml"/>
+        <map:read src="resources/errors/{2}" mime-type="text/xml"/>
       </map:match>
 
     </map:pipeline>
