@@ -611,7 +611,7 @@ public class TopicController {
         //String insertInverseTriples = createInverseInsert(uri, parameterMap);
         String insertRelations = createRelationsInsert(uri, parameterMap);
 
-        String deleteRelatedToTopic = "DELETE { ?s ?p <" + uri + "> . } WHERE { ?s ?p <" + uri + "> . }";
+        String deleteRelatedToTopic = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n DELETE { ?s ?p <" + uri + "> . } WHERE { ?s a skos:Concept . ?s ?p <" + uri + "> . }";
         boolean deletedRelatedToTopic = sparulDispatcher.query(deleteRelatedToTopic);
         logger.trace("Deleted ?s ?p <" + uri + "> to remove inverse relations before new insert of topic. Result: " + insertRelations);
 
