@@ -59,7 +59,7 @@
     <div id="header">
       <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
       
-      <h2>Sublima 1.0.0 RC-18</h2>
+      <h2>Sublima 1.0.0 RC-19</h2>
       <div>
 
 	  <a href="{$baseurl}/{$qloc}" class="active">
