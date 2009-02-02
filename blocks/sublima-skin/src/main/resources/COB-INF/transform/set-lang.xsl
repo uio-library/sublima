@@ -8,7 +8,6 @@
   <xsl:template name="lang-text">
     <xsl:param name="url"/>
     <a lang="no" hreflang="no" href="{$url}no">Norsk</a>, 
-    <a lang="en" hreflang="en" href="{$url}en">English</a>, 
     <a lang="da" hreflang="da" href="{$url}da">Dansk</a>, 
     <a lang="sv" hreflang="sv" href="{$url}sv">Svenska</a>, 
   </xsl:template>
@@ -52,7 +51,6 @@
 	
       </xsl:choose>
       
-      eller se <a href="http://www.w3.org/International/questions/qa-lang-priorities">hvordan sette nettleserens språk</a>.
     </div>
   </xsl:template>
 
