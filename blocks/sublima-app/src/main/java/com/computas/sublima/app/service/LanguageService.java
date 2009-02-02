@@ -26,7 +26,10 @@ public class LanguageService {
      */
     public String checkLanguage (AppleRequest req, AppleResponse res) {
         String setLang;
-        String paramLang = req.getCocoonRequest().getParameterValues("locale")[0];
+        String paramLang = null;
+        if (req.getCocoonRequest().getParameterValues("locale") != null) {
+           paramLang = req.getCocoonRequest().getParameterValues("locale")[0];
+        }
         logger.trace("The query parameter language was " + paramLang);
         Cookie[] cookies = req.getCocoonRequest().getCookies();
         // cookieLang is what is in the language cookie
