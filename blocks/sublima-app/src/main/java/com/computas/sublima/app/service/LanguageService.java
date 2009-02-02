@@ -61,7 +61,7 @@ public class LanguageService {
                 langCookie.setValue(setLang);
             }
         } else {
-            if (! paramLang.equals(cookieLang)) {
+            if (! cookieLang.equals(paramLang)) {
                 List defaultLangs = Arrays.asList(getProperty("sublima.supported.locales").split(","));
                 if (defaultLangs.contains(paramLang)) {
                     setLang = paramLang;

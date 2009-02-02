@@ -21,14 +21,14 @@
         <map:act type="locale">
           <map:generate src="service-consumer:"/>
           <map:transform type="i18n">
-            <map:parameter name="locale" value="{language}"/>
+            <map:parameter name="locale" value="{cookie:language}"/>
           </map:transform>
           <map:transform src="transform/alt-styling.xslt">
             <map:parameter name="baseurl" value="{request:contextPath}"/>
-            <map:parameter name="interface-language" value="{language}"/>
+            <map:parameter name="interface-language" value="{cookie:language}"/>
           </map:transform>
           <map:transform type="i18n">
-            <map:parameter name="locale" value="{language}"/>
+            <map:parameter name="locale" value="{cookie:language}"/>
           </map:transform>
           <map:serialize type="xhtml"/>
         </map:act>
@@ -56,16 +56,16 @@
         <map:act type="locale">
           <map:generate src="service-consumer:"/>
           <map:transform type="i18n">
-            <map:parameter name="locale" value="{language}"/>
+            <map:parameter name="locale" value="{cookie:language}"/>
           </map:transform>
           <map:transform src="transform/admin-styling.xslt">
             <map:parameter name="baseurl" value="{request:contextPath}"/>
             <map:parameter name="servername" value="{request:serverName}"/>
             <map:parameter name="serverport" value="{request:serverPort}"/>
-            <map:parameter name="interface-language" value="{language}"/>
+            <map:parameter name="interface-language" value="{cookie:language}"/>
           </map:transform>
           <map:transform type="i18n">
-            <map:parameter name="locale" value="{language}"/>
+            <map:parameter name="locale" value="{cookie:language}"/>
           </map:transform>
           <map:serialize type="xhtml"/>
         </map:act>

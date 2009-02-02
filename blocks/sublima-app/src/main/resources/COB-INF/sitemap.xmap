@@ -323,7 +323,7 @@
         <map:act type="locale">
           <map:call function="com.computas.sublima.app.fascade.SearchFascade">
             <map:parameter name="mode" value="search-result"/>
-            <map:parameter name="interface-language" value="{language}"/>
+            <map:parameter name="interface-language" value="{cookie:language}"/>
             <map:parameter name="format" value="{../1}"/>
           </map:call>
         </map:act>
