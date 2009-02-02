@@ -1,10 +1,11 @@
 package com.computas.sublima.app.controller;
 
-import org.apache.cocoon.components.flow.apples.StatelessAppleController;
+import com.computas.sublima.app.service.LanguageService;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
+import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
-import static com.computas.sublima.query.service.SettingsService.getProperty;
 
 
 /**
@@ -15,17 +16,21 @@ import static com.computas.sublima.query.service.SettingsService.getProperty;
  */
 public class RedirectController implements StatelessAppleController {
 
-     public void process(AppleRequest req, AppleResponse res) throws Exception {
-         Request r = req.getCocoonRequest();
-          String uri = r.getScheme() + "://" + r.getServerName();
-         if (r.getServerPort() != 80) {
-             uri = uri + ":" + r.getServerPort();
-         }
-         uri = uri + r.getRequestURI();
-         String url = getProperty("sublima.base.url") + "sparql?query=" +
-                 "DESCRIBE <" + uri + ">";
-         res.getCocoonResponse().addHeader("Location", url);
-         res.sendStatus(303);
-     }
+  public void process(AppleRequest req, AppleResponse res) throws Exception {
+
+    LanguageService langServ = new LanguageService();
+    String language = langServ.checkLanguage(req, res);
+
+    Request r = req.getCocoonRequest();
+    String uri = r.getScheme() + "://" + r.getServerName();
+    if (r.getServerPort() != 80) {
+      uri = uri + ":" + r.getServerPort();
+    }
+    uri = uri + r.getRequestURI();
+    String url = getProperty("sublima.base.url") + "sparql?query=" +
+            "DESCRIBE <" + uri + ">";
+    res.getCocoonResponse().addHeader("Location", url);
+    res.sendStatus(303);
+  }
 
 }

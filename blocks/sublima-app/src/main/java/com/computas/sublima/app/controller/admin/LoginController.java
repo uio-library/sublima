@@ -1,6 +1,7 @@
 package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.service.DatabaseService;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -25,6 +26,9 @@ public class LoginController implements StatelessAppleController {
   AdminService adminService = new AdminService();
 
   public void process(AppleRequest appleRequest, AppleResponse appleResponse) throws Exception {
+
+    LanguageService langServ = new LanguageService();
+    String language = langServ.checkLanguage(appleRequest, appleResponse);
 
     if ("showform".equalsIgnoreCase(appleRequest.getSitemapParameter("mode"))) {
       Map<String, Object> bizData = new HashMap<String, Object>();
@@ -69,7 +73,7 @@ public class LoginController implements StatelessAppleController {
           }
 
           statement.close();
-          connection.close();         
+          connection.close();
 
 
         } catch (SQLException e) {

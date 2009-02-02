@@ -2,6 +2,7 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.URLActions;
+import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
@@ -36,6 +37,12 @@ public class FeedbackController {
 
     this.mode = req.getSitemapParameter("mode");
     loggedIn = appMan.isLoggedIn("Sublima");
+
+    LanguageService langServ = new LanguageService();
+    String language = langServ.checkLanguage(req, res);
+
+    logger.trace("FeedbackController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
+    logger.trace("FeedbackController: Language from service is " + language);
 
     if ("resourcecomment".equalsIgnoreCase(mode)) {
       commentOnResource(req, res);

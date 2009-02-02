@@ -2,6 +2,7 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.IndexService;
+import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -41,6 +42,12 @@ public class LinkcheckController implements StatelessAppleController {
 
     this.mode = req.getSitemapParameter("mode");
     this.submode = req.getSitemapParameter("submode");
+
+    LanguageService langServ = new LanguageService();
+    String language = langServ.checkLanguage(req, res);
+
+    logger.trace("LinkcheckController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
+    logger.trace("LinkcheckController: Language from service is " + language);
 
     if ("lenkesjekk".equalsIgnoreCase(mode)) {
       if ("".equals(submode)) {

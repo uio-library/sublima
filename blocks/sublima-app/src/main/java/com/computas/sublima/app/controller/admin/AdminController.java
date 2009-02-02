@@ -3,6 +3,7 @@ package com.computas.sublima.app.controller.admin;
 import com.computas.sublima.app.adhoc.ConvertSublimaResources;
 import com.computas.sublima.app.adhoc.ImportData;
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SettingsService;
@@ -47,6 +48,12 @@ public class AdminController {
 
     String mode = req.getSitemapParameter("mode");
     String submode = req.getSitemapParameter("submode");
+
+    LanguageService langServ = new LanguageService();
+    String language = langServ.checkLanguage(req, res);
+
+    logger.trace("AdminController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
+    logger.trace("AdminController: Language from service is " + language);
 
     if ("".equalsIgnoreCase(mode)) {
       Map<String, Object> bizData = new HashMap<String, Object>();

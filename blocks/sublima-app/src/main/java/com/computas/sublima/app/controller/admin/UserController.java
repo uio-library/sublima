@@ -2,7 +2,7 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
-import com.computas.sublima.query.SparqlDispatcher;
+import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
@@ -62,6 +62,12 @@ public class UserController implements StatelessAppleController {
       user = appUtil.getUser();
       userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
     }
+
+    LanguageService langServ = new LanguageService();
+    String language = langServ.checkLanguage(req, res);
+
+    logger.trace("UserController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
+    logger.trace("UserController: Language from service is " + language);
 
 
     if ("brukere".equalsIgnoreCase(mode)) {
