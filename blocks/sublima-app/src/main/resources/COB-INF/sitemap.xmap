@@ -425,7 +425,7 @@
 
       <map:match pattern="nostyle/*">
         <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <map:serialize type="xml"/>
+        <map:serialize type="text"/>
       </map:match>
 
 

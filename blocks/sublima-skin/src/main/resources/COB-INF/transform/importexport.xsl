@@ -73,8 +73,8 @@
           <td>
             <select name="type" id="type">
               <option value="RDF/XML" selected="selected">RDF/XML</option>
-              <option value="N3" disabled="disabled">N3</option>
-              <option value="Turtle" disabled="disabled">Turtle</option>
+              <option value="N3">N3</option>
+              <option value="Turtle">Turtle</option>
             </select>
           </td>
         </tr>
