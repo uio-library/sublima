@@ -24,6 +24,17 @@
 	<xsl:variable name="label-uri" select="concat(namespace-uri(..), local-name(..))"/>
 	<xsl:if test="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]">
 	  <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]"/>
+	</xsl:if>
+	<xsl:for-each select="../../*[@rdf:resource = $uri]">
+	   <xsl:variable name="label2-uri" select="concat(namespace-uri(.), local-name(.))"/>
+	   <xsl:if test="//owl:ObjectProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]">
+	     <xsl:text>,  </xsl:text>
+	     <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]"/>
+	   </xsl:if>
+
+	</xsl:for-each>
+
+	<xsl:if test="$role!='this-param'">
 	  <xsl:text>: </xsl:text>
 	</xsl:if>
 	<xsl:choose>
