@@ -3,7 +3,7 @@
 
   <!-- menu -->
   <message key="menu.heading">Actions</message>
-  <message key="menu.tips">Tips us about new resources</message>
+  <message key="menu.tips">Suggest new resources</message>
   <message key="menu.topic">Topics</message>
   <message key="menu.resource">Resources</message>
   <message key="menu.user">Users</message>
@@ -31,8 +31,8 @@
   <message key="search.numberofhits">Number of hits</message>
   <message key="search.submit">Search</message>
   <message key="search.exactmatch">Exact word(s)</message>
-  <message key="search.for">S�k etter</message>
-  <message key="in.google">i Google</message>
+  <message key="search.for">Search for</message>
+  <message key="in.google">in Google</message>
 
   <!-- advanced search -->
   <message key="adv.title">Title</message>
@@ -65,9 +65,9 @@
   <!-- validation -->
   <message key="validation.providedurlok">Provided URL validated.</message>
   <message key="validation.topic.notitle">Topic has no title</message>
-  <message key="validation.topic.resourceempty">One or more resources has a link to this subject. Please revide the list
-    below and remove any links between resources and this subject, then try again.
-  </message>
+  <message key="validation.topic.resourceempty">One or more resources
+  has a link to this subject. Please revise the list below and remove
+  any links between resources and this subject, then try again.</message>
   <message key="validation.urlexists">The URL given is already registered as a resource.</message>
 
   <!-- login validation -->
@@ -76,8 +76,9 @@
 
   <!-- resource -->
   <message key="resource.sendcomment">Comment on this resource</message>
-  <message key="resource.choosepublisher">Choose a publisher from the dropdown list, or leave it empty and name a new
-    publisher in the following field
+  <message key="resource.choosepublisher">Choose a publisher from the
+  dropdown list, or leave it empty and name a new publisher in the
+  following field
   </message>
   <message key="resource.usercomments">Users comments</message>
 
@@ -93,19 +94,20 @@
   <message key="admin.approvedby">Approved by</message>
   <message key="admin.posteddate">Posted</message>
   <message key="admin.accepteddate">Accepted</message>
-  <message key="admin.intro">On this page you can administer topics, resources, users and publishers. Choose which part
-    of Sublima you would like to administer from the menu on the left.
+  <message key="admin.intro">On this page you can administer topics,
+  resources, users and publishers. Choose which part of Sublima you
+  would like to administer from the menu on the left.
   </message>
 
   <!-- tips -->
   <message key="tips.heading">
     <h2>Not finding what you are looking for?</h2>
     <br/>
-    <p>Please send us a tip if you find that information elsewhere, and we'll include it in our resources!</p>
+    <p>Please send us a suggestion if you find that information elsewhere, and we'll include it in our resources!</p>
   </message>
   <message key="tips.suggestedtopics">Suggestions for suitable topics</message>
   <message key="tips.submit">Send</message>
-  <message key="tips.thanks">Thanks for the tip!</message>
+  <message key="tips.thanks">Thanks for the suggestion!</message>
 
   <!-- a-z -->
   <message key="az.heading">Alphabetical list of topics</message>
@@ -121,7 +123,7 @@
   <!-- general -->
   <message key="sublima.footer">A Free Software Project supported by
     <a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
-    and <a href="http://www.computas.com/">Computas AS</a>, 2008
+    and <a href="http://www.computas.com/">Computas AS</a>, 2008-2009
   </message>
   <message key="language">Language</message>
   <message key="country">Country</message>

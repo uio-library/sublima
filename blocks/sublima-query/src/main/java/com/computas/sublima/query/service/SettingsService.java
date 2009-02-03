@@ -86,7 +86,7 @@ public class SettingsService {
           logger.warn("SUBLIMA: getIndexBuilderNode() --> Indexing - Failed to retrieve index, creating a new (empty in-memory index)");
           indexBuilderNode = new IndexBuilderNode();
         } catch (org.apache.lucene.store.LockObtainFailedException lofe) {
-          logger.warn("SUBLIMA: getIndexBuilderNode() --> Indexing - Failed to optain lock for index, creating a new (empty in-memory index)");
+          logger.warn("SUBLIMA: getIndexBuilderNode() --> Indexing - Failed to obtain lock for index, creating a new (empty in-memory index)");
           lofe.printStackTrace();
           indexBuilderNode = new IndexBuilderNode();
         } catch (java.io.IOException ie) {
