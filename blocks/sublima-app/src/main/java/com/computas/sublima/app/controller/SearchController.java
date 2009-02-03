@@ -212,6 +212,12 @@ public class SearchController implements StatelessAppleController {
       parameterMap.remove("prefix"); // The prefixes are magic variables
       parameterMap.remove("freetext-field"); // The freetext-fields are magic variables too
       parameterMap.remove("res-view"); //  As is this
+
+      // Check if it is an advanced search on topics
+      if (req.getCocoonRequest().getParameter("dct:subject/all-labels") != null) {
+        form2SparqlService.setTruncate(false);
+      }
+
       sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
       countNumberOfHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMap, Integer.valueOf(SettingsService.getProperty("sublima.search.maxhitsbeforestop")));
     } else {

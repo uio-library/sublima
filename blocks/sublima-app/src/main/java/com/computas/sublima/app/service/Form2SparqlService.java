@@ -54,6 +54,8 @@ public class Form2SparqlService {
 
   private ArrayList n3List = null;
 
+  private boolean truncate = true;
+
 
   public Form2SparqlService(String[] pr) {
     prefixes = new ArrayList<String>(Arrays.asList(pr));
@@ -199,7 +201,10 @@ public class Form2SparqlService {
             n3Buffer.append("\n?free" + freetextNo + " pf:textMatch \"\"\"");
             String[] words = value.split(" ");
             if (words.length == 1) {
-              n3Buffer.append("+" + value.trim() + "*");
+              n3Buffer.append("+" + value.trim());
+              if (truncate) {
+                n3Buffer.append("*");
+              }
             } else if (words.length > 1) {
               for (String word : words) {
                 n3Buffer.append("+" + word.trim() + " ");
@@ -576,6 +581,10 @@ public class Form2SparqlService {
     ordered.insert(0, start);
     ordered.append(end);
     return ordered;
+  }
+
+  public void setTruncate(boolean truncate) {
+    this.truncate = truncate;
   }
 
 }
