@@ -110,7 +110,6 @@ public class FeedbackController implements StatelessAppleController {
       return;
     }
 
-    //todo We have to get the interface-language @no from somewhere
     //todo Move the 30x check to a private static method
     if (status != null && ("302".equals(status) ||
             "303".equals(status) ||
@@ -119,6 +118,7 @@ public class FeedbackController implements StatelessAppleController {
             "307".equals(status) ||
             status.startsWith("2"))) {
 
+      String lang = req.getSitemapParameter("interface-language");
       String dctidentifier = searchService.sanitizeStringForURI(tittel);
       String insertTipString =
               "PREFIX dct: <http://purl.org/dc/terms/>\n" +
@@ -127,9 +127,9 @@ public class FeedbackController implements StatelessAppleController {
                       "INSERT\n" +
                       "{\n" +
                       "<" + url + "> a sub:Resource .\n" +
-                      "<" + url + "> dct:title " + "\"\"\"" + tittel + "\"\"\"@no . \n" +
-                      "<" + url + "> dct:description " + "\"\"\"" + beskrivelse.replace("\\", "\\\\") + "\"\"\"@no . \n" +
-                      "<" + url + "> sub:keywords " + "\"\"\"" + stikkord + "\"\"\"@no . \n" +
+                      "<" + url + "> dct:title " + "\"\"\"" + tittel + "\"\"\"@"+lang+" . \n" +
+                      "<" + url + "> dct:description " + "\"\"\"" + beskrivelse.replace("\\", "\\\\") + "\"\"\"@"+lang+" . \n" +
+                      "<" + url + "> sub:keywords " + "\"\"\"" + stikkord + "\"\"\"@"+lang+" . \n" +
                       "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
                       "<" + url + "> sub:url <" + url + "> . \n" +
                       "<" + url + "> dct:identifier <" + SettingsService.getProperty("sublima.base.url") + "resource/" + dctidentifier + url.hashCode() + "> . }";
