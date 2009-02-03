@@ -390,8 +390,12 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     }
   }
 
-  public void updateResourceExternalContent
-          () throws UnsupportedEncodingException, PSQLException {
+  /**
+   * @deprecated Deprecated because of new index method
+   * @throws UnsupportedEncodingException
+   * @throws PSQLException
+   */
+  public void updateResourceExternalContent() throws UnsupportedEncodingException, PSQLException {
     sparulDispatcher = new DefaultSparulDispatcher();
     String resourceExternalContent = readContent();
     SearchService searchService = new SearchService();

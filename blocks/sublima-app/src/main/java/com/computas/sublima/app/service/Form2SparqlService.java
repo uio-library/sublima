@@ -2,6 +2,7 @@ package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.RDFObject;
 import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.query.service.MappingService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -55,6 +56,8 @@ public class Form2SparqlService {
   private ArrayList n3List = null;
 
   private boolean truncate = true;
+
+  private MappingService mapping = new MappingService();
 
 
   public Form2SparqlService(String[] pr) {
@@ -199,6 +202,8 @@ public class Form2SparqlService {
           if (freetextFields != null && freetextFields.contains("dct:subject/all-labels")) {
             int freetextNo = freetextFields.indexOf(key) + 1;
             n3Buffer.append("\n?free" + freetextNo + " pf:textMatch \"\"\"");
+            // Map characters
+            value = mapping.charactermapping(value);
             String[] words = value.split(" ");
             if (words.length == 1) {
               n3Buffer.append("+" + value.trim());
@@ -541,6 +546,9 @@ public class Form2SparqlService {
     if (!subjectVarList.contains(resourceSubject)) {
       subjectVarList.add(resourceSubject);
     }
+
+    searchstring = mapping.charactermapping(searchstring);
+
     String result = "\n?lit pf:textMatch \"\"\"" + searchstring + "\"\"\" .";
 
     if (deepsearch) {

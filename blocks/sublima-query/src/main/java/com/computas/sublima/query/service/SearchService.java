@@ -1,6 +1,7 @@
 package com.computas.sublima.query.service;
 
 import com.ibm.icu.text.Normalizer;
+import com.computas.sublima.query.service.MappingService;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class SearchService {
 
   private String defaultBooleanOperator;
 
+  private MappingService mapping = new MappingService();
+
   public SearchService() {
   }
 
@@ -38,6 +41,8 @@ public class SearchService {
    */
   //todo More advanced check on search string. Ie. - + NOT OR AND if defined in the search term by the user
   public String buildSearchString(String searchstring, boolean truncate) {
+
+    searchstring = mapping.charactermapping(searchstring);
 
     // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
     searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]", "");

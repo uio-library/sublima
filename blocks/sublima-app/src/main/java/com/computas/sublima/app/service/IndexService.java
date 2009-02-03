@@ -4,6 +4,7 @@ import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.MappingService;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.rdf.model.*;
@@ -30,6 +31,7 @@ public class IndexService {
   private DefaultSparulDispatcher sparulDispatcher = new DefaultSparulDispatcher();
   private DefaultSparqlDispatcher sparqlDispatcher = new DefaultSparqlDispatcher();
   private SearchService searchService = new SearchService();
+  private MappingService mapping = new MappingService();
 
   /**
    * Method to create an index based on the internal content
@@ -101,6 +103,9 @@ public class IndexService {
     Resource r = SettingsService.getModel().getResource(uri);
 
     String s = getTopicLiteralsAsString(uri, topicSearchfields, prefixes);
+
+    // Character mapping
+    s = mapping.charactermapping(s);
 
     Property pPrefLabel = SettingsService.getModel().createProperty("http://www.w3.org/2004/02/skos/core#prefLabel");
 
@@ -537,6 +542,8 @@ public class IndexService {
     Resource r = SettingsService.getModel().getResource(resourceString);
 
     String s = getResourceInternalLiteralsAsString(resourceString, searchfields, prefixes);
+    s = mapping.charactermapping(s);
+
 
     Property pIdentifier = SettingsService.getModel().createProperty("http://purl.org/dc/terms/identifier");
 
@@ -638,6 +645,10 @@ public class IndexService {
 
     String internalContent = getResourceInternalLiteralsAsString(resourceString, searchfields, prefixes);
     String externalContent = getResourceExternalLiteralsAsString(resourceString);
+
+    // Character mapping
+    internalContent = mapping.charactermapping(internalContent);
+    externalContent = mapping.charactermapping(externalContent);
 
     Property pUrl = SettingsService.getModel().createProperty("http://xmlns.computas.com/sublima#url");
 
