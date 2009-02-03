@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 
+import com.computas.sublima.query.service.MappingService;
+
 /**
  * A class that uses heuristics to determine the type of a RDF object string. An
  * RDF object can be either a URI or a Literal, in the latter case, the Literal
@@ -30,7 +32,9 @@ public class RDFObject implements Serializable {
 
 	private Integer freetext = null;
 
-	public RDFObject() {
+  private MappingService mapping = new MappingService();
+
+  public RDFObject() {
 	}
 
 	/**
@@ -160,10 +164,10 @@ public class RDFObject implements Serializable {
                 n3Buffer.append("?free" + freetext + " pf:textMatch \"\"\"");
                 String[] words = getValue().split(" ");
                 if (words.length == 1) {
-                    n3Buffer.append("+" + getValue().trim() + "*");
+                    n3Buffer.append("+" + mapping.charactermapping(getValue().trim()).trim() + "*");
                 } else if (words.length > 1) {
                    for (String word : words) {
-                       n3Buffer.append("+" + word.trim() + " ");
+                       n3Buffer.append("+" + mapping.charactermapping(word.trim()).trim() + " ");
                    }
                 } else {
                     logger.info("RDFObject freetext: " + getValue() + "was not used.");

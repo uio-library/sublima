@@ -509,7 +509,7 @@ public class IndexService {
     StringBuilder tripleString = new StringBuilder();
 
     tripleString.append("<" + resource + "> sub:literals \"\"\"");
-    tripleString.append(getResourceInternalLiteralsAsString(resource, searchfields, prefixes));
+    tripleString.append(mapping.charactermapping(getResourceInternalLiteralsAsString(resource, searchfields, prefixes)));
     tripleString.append("\"\"\" .");
 
     return tripleString.toString();
@@ -544,7 +544,6 @@ public class IndexService {
     String s = getResourceInternalLiteralsAsString(resourceString, searchfields, prefixes);
     s = mapping.charactermapping(s);
 
-
     Property pIdentifier = SettingsService.getModel().createProperty("http://purl.org/dc/terms/identifier");
 
     // dct:identifier used for internal content
@@ -570,7 +569,7 @@ public class IndexService {
     while (nTitle.hasNext()) {
       RDFNode node = nTitle.nextNode();
       if (node.isLiteral()) {
-        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+        SettingsService.getIndexBuilderNode(null).index(node, mapping.charactermapping(((Literal) node).getString()));
       }
     }
 
@@ -579,7 +578,7 @@ public class IndexService {
     while (nDescription.hasNext()) {
       RDFNode node = nDescription.nextNode();
       if (node.isLiteral()) {
-        SettingsService.getIndexBuilderNode(null).index(node, ((Literal) node).getString());
+        SettingsService.getIndexBuilderNode(null).index(node, mapping.charactermapping(((Literal) node).getString()));
       }
     }
 
@@ -592,7 +591,7 @@ public class IndexService {
         while (nFnamel.hasNext()) {
           RDFNode rdfNode = nFnamel.nextNode();
           if (rdfNode.isLiteral()) {
-            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, mapping.charactermapping(((Literal) rdfNode).getString()));
           }
         }
       }
@@ -609,19 +608,19 @@ public class IndexService {
         while (nPrefLabel.hasNext()) { // prefLabel
           RDFNode rdfNode = nPrefLabel.nextNode();
           if (rdfNode.isLiteral()) {
-            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, mapping.charactermapping(((Literal) rdfNode).getString()));
           }
         }
         while (nAltLabel.hasNext()) { // altLabel
           RDFNode rdfNode = nAltLabel.nextNode();
           if (rdfNode.isLiteral()) {
-            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, mapping.charactermapping(((Literal) rdfNode).getString()));
           }
         }
         while (nHiddenLabel.hasNext()) { // hiddenLabel
           RDFNode rdfNode = nHiddenLabel.nextNode();
           if (rdfNode.isLiteral()) {
-            SettingsService.getIndexBuilderNode(null).index(rdfNode, ((Literal) rdfNode).getString());
+            SettingsService.getIndexBuilderNode(null).index(rdfNode, mapping.charactermapping(((Literal) rdfNode).getString()));
           }
         }
       }
