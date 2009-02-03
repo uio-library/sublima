@@ -48,17 +48,27 @@
 			      local-name(..))"/>
 	<!-- Get the label of the Semantic Relation itself, if it
 	     exists -->
-	<xsl:if test="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]">
-	  <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]"/>
-	</xsl:if>
-	<!-- Iterate over all relations that has the current URI -->
+	<xsl:choose>
+	  <xsl:when test="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]">
+	    <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]"/>
+	  </xsl:when>
+	  <xsl:when test="//owl:SymmetricProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]">	
+	    <xsl:value-of select="//owl:SymmetricProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]"/>
+	  </xsl:when>
+	</xsl:choose>
+<!-- Iterate over all relations that has the current URI -->
 	<xsl:for-each select="../../*[@rdf:resource = $uri]">
 	   <xsl:variable name="label2-uri" select="concat(namespace-uri(.), local-name(.))"/>
-	   <xsl:if test="//owl:ObjectProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]">
-	     <xsl:text>,  </xsl:text>
-	     <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]"/>
-	   </xsl:if>
-
+	   <xsl:choose>
+	     <xsl:when test="//owl:ObjectProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]">
+	       <xsl:text>,  </xsl:text>
+	       <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]"/>
+	     </xsl:when>
+	     <xsl:when test="//owl:SymmetricProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]">
+	       <xsl:text>,  </xsl:text>
+	       <xsl:value-of select="//owl:SymmProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]"/>
+	     </xsl:when>
+	   </xsl:choose>
 	</xsl:for-each>
 
 	<xsl:if test="$role!='this-param'">
@@ -91,7 +101,7 @@
            to. -->
            
       <!-- We could here also sort by the specific relation, i.e.  
-      //owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language] 
+      //owl:ObjectProperty|owl:SymmetricProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language] 
       for now sorting alphabetically on all the concepts regardless of relation.
       -->   
       
