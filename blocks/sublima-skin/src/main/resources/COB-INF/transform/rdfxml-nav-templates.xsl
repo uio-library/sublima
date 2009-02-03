@@ -16,15 +16,42 @@
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr"
   >
 
+
+  <!-- This is a recursive template, so that there is just a single
+       skos:Concept template, which calls itself to format the label.
+       It takes a single parameter "role", which when set to
+       "this-param" will cause the template to behave is if this
+       particular concept is the main concept, e.g. is the concept of
+       the page that you are on. To this concept, synonyms, broader
+       and other relations are attached. Then, the template continues
+       to recurse into the linked concepts. 
+  -->
   <xsl:template match="skos:Concept">
     <xsl:param name="role"/>
+    <!-- uri is the URI of the concept we are on -->
     <xsl:variable name="uri" select="@rdf:about"/>
     <div class="skos:Concept">
       <p>
-	<xsl:variable name="label-uri" select="concat(namespace-uri(..), local-name(..))"/>
+	<!-- The following deals mostly with the labels of Semantic
+	     Relations, not the labels of the concepts.
+	     First, we will find the label of relation that is a
+	     direct child node of the node that we are on, e.g. we
+	     have /skos:Concept/skos:broader/skos:Concept, we'd like
+	     the label of skos:broader.
+	     Then, we continue to iterate over all relations that are
+	     not a child node of the current concept.
+	-->
+	<!-- label-uri will contain the URI of the Semantic Relation,
+	i.e. it has to expand elements like skos:related to a full URI -->
+	<xsl:variable name="label-uri"
+		      select="concat(namespace-uri(..),
+			      local-name(..))"/>
+	<!-- Get the label of the Semantic Relation itself, if it
+	     exists -->
 	<xsl:if test="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]">
 	  <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]"/>
 	</xsl:if>
+	<!-- Iterate over all relations that has the current URI -->
 	<xsl:for-each select="../../*[@rdf:resource = $uri]">
 	   <xsl:variable name="label2-uri" select="concat(namespace-uri(.), local-name(.))"/>
 	   <xsl:if test="//owl:ObjectProperty[@rdf:about = $label2-uri]/rdfs:label[@xml:lang=$interface-language]">
@@ -37,14 +64,15 @@
 	<xsl:if test="$role!='this-param'">
 	  <xsl:text>: </xsl:text>
 	</xsl:if>
-	<xsl:choose>
-	
-	  <!-- The main concept --> 
+
+
+	<xsl:choose>	
+	  <!-- The main concept, e.g. the concept of the page we're on. --> 
 	  <xsl:when test="$role='this-param'">
 	    <h4><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></h4>
 	  </xsl:when>
 	  
-	  <!-- or any other concept -->
+	  <!-- or any other concept, synonyms, semantic relations, etc. -->
 	  <xsl:otherwise>
 	    <a href="{$uri}.html{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
 	  </xsl:otherwise>
