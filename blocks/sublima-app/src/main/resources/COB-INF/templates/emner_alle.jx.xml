@@ -8,13 +8,6 @@
   
   <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
-  <c:breadcrumbs>
-    <c:breadcrumb title="Sublima"></c:breadcrumb>
-    <c:breadcrumb title="Admin">admin</c:breadcrumb>
-    <c:breadcrumb title="menu.topic" i18n:attr="title">admin/emner/</c:breadcrumb>
-    <c:breadcrumb title="menu.showall" i18n:attr="title">admin/emner/alle</c:breadcrumb>
-  </c:breadcrumbs>
-
   <c:menu>
       <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title">
           <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/emner/nytt"/>

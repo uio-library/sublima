@@ -7,13 +7,6 @@
 
   <c:facets><jx:out value="#{facets}" xmlize="true"/></c:facets>
 
-    <c:breadcrumbs>
-        <c:breadcrumb title="Sublima"></c:breadcrumb>
-        <c:breadcrumb title="Admin">admin</c:breadcrumb>
-        <c:breadcrumb title="Ressurser">admin/ressurser/</c:breadcrumb>
-        <c:breadcrumb title="Ressurs">admin/ressurser/ny</c:breadcrumb>
-    </c:breadcrumbs>
-
     <c:menu>
       <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
       <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title">

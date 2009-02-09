@@ -20,12 +20,6 @@
     <c:mode><jx:out value="#{mode}" xmlize="false"/></c:mode>
     <c:userprivileges><jx:out value="#{userprivileges}" xmlize="true"/></c:userprivileges>
 
-    <c:breadcrumbs>
-        <c:breadcrumb title="Sublima"></c:breadcrumb>
-        <c:breadcrumb title="Admin">admin</c:breadcrumb>
-        <c:breadcrumb title="Ressurser">admin/ressurser/</c:breadcrumb>
-    </c:breadcrumbs>
-
     <c:menu>
       <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
       <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title">
