@@ -51,7 +51,7 @@ public class UserController implements StatelessAppleController {
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
 
-  private static Logger logger = Logger.getLogger(AdminController.class);
+  private static Logger logger = Logger.getLogger(UserController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {

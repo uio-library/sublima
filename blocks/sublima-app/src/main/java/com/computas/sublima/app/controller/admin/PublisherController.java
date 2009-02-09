@@ -47,7 +47,7 @@ public class PublisherController implements StatelessAppleController {
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
   private String userPrivileges = "<empty/>";
 
-  private static Logger logger = Logger.getLogger(AdminController.class);
+  private static Logger logger = Logger.getLogger(PublisherController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {

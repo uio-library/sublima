@@ -35,7 +35,7 @@ public class LinkcheckController implements StatelessAppleController {
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
 
-  private static Logger logger = Logger.getLogger(AdminController.class);
+  private static Logger logger = Logger.getLogger(LinkcheckController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {

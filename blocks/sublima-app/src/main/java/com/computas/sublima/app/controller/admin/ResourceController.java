@@ -50,7 +50,7 @@ public class ResourceController implements StatelessAppleController {
 
   private String userPrivileges = "<empty/>";
 
-  private static Logger logger = Logger.getLogger(AdminController.class);
+  private static Logger logger = Logger.getLogger(ResourceController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
