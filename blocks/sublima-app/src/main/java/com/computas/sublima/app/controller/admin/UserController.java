@@ -211,9 +211,9 @@ public class UserController implements StatelessAppleController {
 
 
           } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
           } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
           } catch (SQLException e) { // Cause most probably that user already exists
             logger.trace("UserController.editUser --> NEW USER: INSERT USERNAME FAILED\n" + e.toString() + "\n");
             messageBuffer.append("<c:message><i18n:text xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" key=\"validation.user.new.existingusername\">En bruker med dette brukernavnet finnes allerede.</i18n:text></c:message>\n</c:messages>\n");
@@ -343,11 +343,7 @@ public class UserController implements StatelessAppleController {
   }
 
 
-  public void editRole
-          (AppleRequest
-                  req, AppleResponse
-                  res, String
-                  messages) {
+  public void editRole(AppleRequest req, AppleResponse res, String messages) {
     StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
@@ -356,8 +352,6 @@ public class UserController implements StatelessAppleController {
     bizData.put("allstatuses", adminService.getAllStatuses());
     bizData.put("userprivileges", userPrivileges);
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-
-//bizData.put("allanguages", adminService.getAllLanguages());
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       bizData.put("tempvalues", "<empty></empty>");
@@ -369,7 +363,6 @@ public class UserController implements StatelessAppleController {
         bizData.put("roledetails", adminService.getRoleByURI(req.getCocoonRequest().getParameter("uri")));
         bizData.put("roleprivileges", adminService.getRolePrivilegesAsXML(req.getCocoonRequest().getParameter("uri")));
       }
-
 
       bizData.put("mode", "roleedit");
       bizData.put("messages", "<empty></empty>");
@@ -535,9 +528,7 @@ public class UserController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private String validateRoleRequest
-          (AppleRequest
-                  req) {
+  private String validateRoleRequest(AppleRequest req) {
     StringBuilder validationMessages = new StringBuilder();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("rdfs:label")) || req.getCocoonRequest().getParameter("rdfs:label") == null) {
@@ -547,9 +538,7 @@ public class UserController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private StringBuilder getUserTempValues
-          (AppleRequest
-                  req) {
+  private StringBuilder getUserTempValues(AppleRequest req) {
     StringBuilder tempValues = new StringBuilder();
 
     String uri = req.getCocoonRequest().getParameter("the-resource");
@@ -568,15 +557,13 @@ public class UserController implements StatelessAppleController {
     return tempValues;
   }
 
-  private StringBuilder getRoleTempValues
-          (AppleRequest
-                  req) {
+  private StringBuilder getRoleTempValues(AppleRequest req) {
     StringBuilder tempValues = new StringBuilder();
 
     String uri = req.getCocoonRequest().getParameter("uri");
     String temp_name = req.getCocoonRequest().getParameter("rdfs:label");
 
-//Create an XML structure for the selected values, to use in the JX template
+    //Create an XML structure for the selected values, to use in the JX template
     tempValues.append("<rdf:about>" + uri + "</rdf:about>\n");
     tempValues.append("<rdfs:label>" + temp_name + "</rdfs:label>\n");
 

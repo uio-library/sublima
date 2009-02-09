@@ -38,6 +38,7 @@ public class TopicController implements StatelessAppleController {
   String[] completePrefixArray = {"PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#>", "PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#>", "PREFIX owl: 		<http://www.w3.org/2002/07/owl#>", "PREFIX foaf: 		<http://xmlns.com/foaf/0.1/>", "PREFIX lingvoj: 	<http://www.lingvoj.org/ontology#>", "PREFIX dcmitype: 	<http://purl.org/dc/dcmitype/>", "PREFIX dct: 		<http://purl.org/dc/terms/>", "PREFIX sub: 		<http://xmlns.computas.com/sublima#>", "PREFIX wdr: 		<http://www.w3.org/2007/05/powder#>", "PREFIX sioc: 		<http://rdfs.org/sioc/ns#>", "PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#>", "PREFIX topic: 		<topic/>", "PREFIX skos:		<http://www.w3.org/2004/02/skos/core#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
+  String language;
 
   private static Logger logger = Logger.getLogger(TopicController.class);
 
@@ -53,7 +54,7 @@ public class TopicController implements StatelessAppleController {
     }
 
     LanguageService langServ = new LanguageService();
-    String language = langServ.checkLanguage(req, res);
+    language = langServ.checkLanguage(req, res);
 
     logger.trace("TopicController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
     logger.trace("TopicController: Language from service is " + language);
@@ -368,7 +369,7 @@ public class TopicController implements StatelessAppleController {
       uri = getProperty("sublima.base.url") + "topic/" + uri;
 
       String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n"
-              + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@no ;\n"
+              + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@" + language + ";\n"
               + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
               /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
               + "}";
@@ -586,8 +587,8 @@ public class TopicController implements StatelessAppleController {
 
           boolean deleteTopicSuccess = sparulDispatcher.query(deleteString);
 
-          logger.trace("ResourceController.editResource --> DELETE TOPIC QUERY:\n" + deleteString);
-          logger.trace("ResourceController.editResource --> DELETE TOPIC QUERY RESULT: " + deleteTopicSuccess);
+          logger.trace("DELETE TOPIC QUERY:\n" + deleteString);
+          logger.trace("DELETE TOPIC QUERY RESULT: " + deleteTopicSuccess);
 
 
           if (deleteTopicSuccess) {
@@ -674,7 +675,7 @@ public class TopicController implements StatelessAppleController {
               }
 
               indexService.indexTopic(uri, SettingsService.getProperty("sublima.topic.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
-              logger.trace("AdminController.editResource --> Added the resource to the index");
+              logger.trace("Added the topic to the index");
               LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
 
@@ -779,37 +780,6 @@ public class TopicController implements StatelessAppleController {
 
     relationsInsert.append("}");
     return containsTriples ? relationsInsert.toString() : "";
-  }
-
-  private String createInverseInsert(String uri, Map<String, String[]> parameterMap) {
-    StringBuilder relationsInsert = new StringBuilder();
-    relationsInsert.append("INSERT\n{\n");
-    boolean containsTriples = false;
-
-// Add the broader/narrower inverse relation if broader | narrower is chosen
-    if (parameterMap.get("<http://www.w3.org/2004/02/skos/core#broader>") != null) {
-      String[] broader = parameterMap.get("<http://www.w3.org/2004/02/skos/core#broader>");
-      for (String s : broader) {
-        relationsInsert.append("<" + s + "> " + "<http://www.w3.org/2004/02/skos/core#narrower> <" + uri + "> .\n");
-      }
-      containsTriples = true;
-
-    }
-
-    if (parameterMap.get("<http://www.w3.org/2004/02/skos/core#narrower>") != null) {
-      String[] broader = parameterMap.get("<http://www.w3.org/2004/02/skos/core#narrower>");
-      for (String s : broader) {
-        relationsInsert.append("<" + s + "> " + "<http://www.w3.org/2004/02/skos/core#broader> <" + uri + "> .\n");
-      }
-      containsTriples = true;
-    }
-
-    relationsInsert.append("}");
-
-    if (containsTriples)
-      return relationsInsert.toString();
-    else
-      return "";
   }
 
   private StringBuilder getTempValues(AppleRequest req) {

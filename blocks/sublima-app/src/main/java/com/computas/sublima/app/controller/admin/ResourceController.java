@@ -361,7 +361,7 @@ public class ResourceController implements StatelessAppleController {
         insertSuccess = sparulDispatcher.query(sparqlQuery);
 
         //validated = sparulDispatcher.query(sparqlQuery);
-        logger.trace("AdminController.editResource --> INSERT QUERY RESULT: " + insertSuccess);
+        logger.trace("INSERT QUERY RESULT: " + insertSuccess);
 
         if (insertSuccess) {
           if (updateDate) {
@@ -371,7 +371,7 @@ public class ResourceController implements StatelessAppleController {
           }
 
           indexService.indexResource(req.getCocoonRequest().getParameter("the-resource").trim(), SettingsService.getProperty("sublima.resource.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
-          logger.trace("AdminController.editResource --> Added the resource to the index");
+          logger.trace("Added the resource to the index");
           LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
         } else {
