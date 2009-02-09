@@ -3,20 +3,21 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:c="http://xmlns.computas.com/cocoon"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
    version="1.0">
   
   <xsl:template name="lang-text">
     <xsl:param name="url"/>
-    <a lang="no" hreflang="no" href="{$url}no">Norsk</a>, 
-    <a lang="da" hreflang="da" href="{$url}da">Dansk</a>, 
-    <a lang="sv" hreflang="sv" href="{$url}sv">Svenska</a>, 
+    <a lang="no" hreflang="no" href="{$url}no"><i18n:text key="norwegian">Norsk</i18n:text></a>,
+    <a lang="da" hreflang="da" href="{$url}da"><i18n:text key="danish">Dansk</i18n:text></a>, 
+    <a lang="sv" hreflang="sv" href="{$url}sv"><i18n:text key="swedish">Svenska</i18n:text></a>, 
   </xsl:template>
 
   
   <xsl:template name="set-langs"> 
     <xsl:param name="baseurl"/>
     <div class="set-langs">
-      Sett språk til:
+      <i18n:text key="setlanguageto">Sett språk til</i18n:text>:
       <xsl:choose>
 	<xsl:when test="not(/c:page/c:facets/c:request/@paramcount) or /c:page/c:facets/c:request/@paramcount = 0">
 	  <xsl:call-template name="lang-text">

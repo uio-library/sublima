@@ -198,7 +198,7 @@ PVJ: Made the file UTF-8
           <xsl:choose>
 			<xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">
 			  <input type="radio" name="booleanoperator" value="AND"/><i18n:text key="search.boolean.and">OG</i18n:text>
-			  <input type="radio" name="booleanoperator" value="OR" checked="checked"/><i18n:text key="search_boolean_or">ELLER</i18n:text>
+			  <input type="radio" name="booleanoperator" value="OR" checked="checked"/><i18n:text key="search.boolean.or">ELLER</i18n:text>
 			</xsl:when>
 			<xsl:otherwise>
 			  <input type="radio" name="booleanoperator" value="AND" checked="checked"/><i18n:text key="search.boolean.and">OG</i18n:text>

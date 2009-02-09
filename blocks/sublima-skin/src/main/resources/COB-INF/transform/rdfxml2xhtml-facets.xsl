@@ -253,7 +253,7 @@ test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]"
 		<xsl:with-param name="value" select="$uri"/>
 	      </xsl:call-template>
 	    </xsl:attribute>
-	    Fjern
+	    <i18n:text key="remove">Fjern</i18n:text>
 	  </a>
 	</xsl:if>
       </li>

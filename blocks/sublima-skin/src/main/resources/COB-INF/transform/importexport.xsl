@@ -81,7 +81,7 @@
         <tr>
           <td></td>
           <td>
-            <input type="checkbox" name="replacement" value="url"/><i18n:text key="repladeurlwithuri">Erstatt URL med URI</i18n:text>
+            <input type="checkbox" name="replacement" value="url"/><i18n:text key="replaceurlwithuri">Erstatt URL med URI</i18n:text>
           </td>
         </tr>
         <tr>

@@ -35,7 +35,7 @@
        <fieldset>
 	 <table>
 	   <tr>
-	     <th>Regular Expression</th>
+	     <th><i18n:text key="regex">Regular Expression</i18n:text></th>
 	     <th>Pattern</th>
 	     <th></th>
 	   </tr>
@@ -59,10 +59,10 @@
        <table id="my-table">
 	 <thead>
 	   <tr>
-	     <th>Id</th>
-	     <th>Tittel</th>
-	     <th>Gammel URL</th>
-	     <th>Ny URL</th>
+	     <th><i18n:text key="id">Id</i18n:text></th>
+	     <th><i18n:text key="title">Tittel</i18n:text></th>
+	     <th><i18n:text key="oldurl">Gammel URL</i18n:text></th>
+	     <th><i18n:text key="newurl">Ny URL</i18n:text></th>
 	   </tr>
 	 </thead>
 	 <tbody>

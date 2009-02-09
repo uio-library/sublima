@@ -62,7 +62,7 @@
            </xsl:otherwise>
          </xsl:choose>
        </xsl:attribute>
-       medium description
+       <i18n:text key="mediumdescription">medium description </i18n:text>
     </a>    
     <a>
        <xsl:attribute name="href">
@@ -75,7 +75,7 @@
            </xsl:otherwise>
          </xsl:choose>
        </xsl:attribute>
-       full description
+       <i18n:text key="fulldescription">full description</i18n:text>
     </a>
 
     

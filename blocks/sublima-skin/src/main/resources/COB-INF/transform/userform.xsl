@@ -161,7 +161,7 @@
       <table>
         <tr>
           <td>
-            <label for="sioc:email">E-post (brukernavn)</label>
+            <label for="sioc:email"><i18n:text key="email">E-post</i18n:text>(<i18n:text key="username">brukernavn</i18n:text>)</label>
           </td>
           <td>
             <input id="sioc:email" type="text"
@@ -172,7 +172,7 @@
 
         <tr>
           <td>
-            <label for="rdfs:label">Navn</label>
+            <label for="rdfs:label"><i18n:text key="name">Navn</i18n:text></label>
           </td>
           <td>
             <input id="rdfs:label" type="text"
@@ -183,7 +183,7 @@
 
         <tr>
           <td>
-            <label for="password1">Passord</label>
+            <label for="password1"><i18n:text key="password">Passord</i18n:text></label>
           </td>
           <td>
             <input id="password1" type="password"
@@ -194,7 +194,7 @@
 
         <tr>
           <td>
-            <label for="password2">Gjenta passord</label>
+            <label for="password2"><i18n:text key="repeat">Gjenta</i18n:text><xsl:text> </xsl:text><i18n:text key="password">passord</i18n:text></label>
           </td>
           <td>
             <input id="password2" type="password"
@@ -205,7 +205,7 @@
 
         <tr>
             <td>
-              <label for="sioc:has_function">Rolle</label>
+              <label for="sioc:has_function"><i18n:text key="role">Rolle</i18n:text></label>
             </td>
             <td>
               <select id="sioc:has_function"
@@ -238,7 +238,7 @@
           <td>
              <xsl:call-template name="controlbutton">
                         <xsl:with-param name="privilege">user.edit</xsl:with-param>
-                        <xsl:with-param name="buttontext">Lagre bruker</xsl:with-param>
+                        <xsl:with-param name="buttontext"><i18n:text key="button.saveuser">Lagre bruker</i18n:text></xsl:with-param>
                       </xsl:call-template>
           </td>
           <td>

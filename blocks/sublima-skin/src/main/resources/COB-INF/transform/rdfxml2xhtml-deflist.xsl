@@ -57,7 +57,7 @@
            </xsl:otherwise>
          </xsl:choose>
        </xsl:attribute>
-       short description</a>
+       <i18n:text key="shortdescription">short description</i18n:text></a>
     <xsl:text>  </xsl:text>    
 <!--
     <a>
@@ -79,7 +79,7 @@
            </xsl:otherwise>
          </xsl:choose>
        </xsl:attribute>
-       full description</a>
+       <i18n:text key="fulldescription">full description</i18n:text></a>
     
     
     

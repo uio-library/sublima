@@ -15,19 +15,19 @@
     <xsl:param name="title"/>
     <head>
       <title>
-	<xsl:value-of select="$title"/>
-	<xsl:text> | Detektor</xsl:text>
+        <xsl:value-of select="$title"/>
+        <xsl:text> | Detektor</xsl:text>
       </title>
-   
+
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
       <link rel="stylesheet" type="text/css" href="styles/alt-css.css"/>
-      <script type="text/javascript" src="styles/expand.js"></script>
+      <script type="text/javascript" src="styles/expand.js"/>
       <link rel="stylesheet" href="styles/autocomplete.css" type="text/css"/>
       <script type="text/javascript" src="styles/expand.js"/>
       <script type="text/javascript" src="styles/jquery.js"/>
       <script type="text/javascript" src="styles/dimensions.js"/>
       <script type="text/javascript" src="styles/autocomplete.js"/>
-      
+
     </head>
   </xsl:template>
 
@@ -35,42 +35,32 @@
     <xsl:param name="baseurl"/>
     <div id="header">
       <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
-      
+
       <h2>Sublima 0.9.6.1</h2>
       <ul>
-	<li>
-	  <a href="{$baseurl}/" class="active"><i18n:text key="menu.search">Søk</i18n:text></a>
-	</li>
-	<li>
-	  <a href="{$baseurl}/advancedsearch"><i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
-	  </a>
-	</li>
-	<li>
-	  <a href="{$baseurl}/a-z"><i18n:text key="menu.az">A-Å</i18n:text></a>
-	</li>
-	<!--
-	    <li>
-              <a href="{$baseurl}/admin">Administrasjon
-	      </a>
-	      </li>
-	-->
+        <li>
+          <a href="{$baseurl}/" class="active">
+            <i18n:text key="menu.search">Søk</i18n:text>
+          </a>
+        </li>
+        <li>
+          <a href="{$baseurl}/advancedsearch">
+            <i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
+          </a>
+        </li>
+        <li>
+          <a href="{$baseurl}/a-z">
+            <i18n:text key="menu.az">A-Å</i18n:text>
+          </a>
+        </li>
       </ul>
- 
-            <p id="layoutdims">
-            <!--xsl:for-each select="c:page/c:breadcrumbs/c:breadcrumb">
-              <a>
-                <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/<xsl:value-of select="."/></xsl:attribute><xsl:value-of select="@title"/></a>
-              <xsl:text> | </xsl:text>
-            </xsl:for-each-->
 
-          </p>
-	   
-      <!-- xsl:if test="c:page/c:mode != 'search-result'">
-	   <xsl:call-template name="set-langs"/>
-	   </xsl:if -->
-      
       <p id="layoutdims">
-	<a href="{$baseurl}/login">Admin</a>
+      </p>
+
+
+      <p id="layoutdims">
+        <a href="{$baseurl}/login">Admin</a>
       </p>
     </div>
   </xsl:template>
