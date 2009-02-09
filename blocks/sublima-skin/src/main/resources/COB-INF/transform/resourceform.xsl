@@ -102,7 +102,7 @@
               </xsl:if>
             </xsl:for-each>
           </select>
-          <a href="#" id="addpublisher" class="selectmultiplebutton">add &gt;&gt;</a>
+          <a href="#" id="addpublisher" class="selectmultiplebutton"><i18n:text key="add">add</i18n:text> &gt;&gt;</a>
         </td>
           <td>
             <select name="dct:publisher" class="selectmultiple" multiple="multiple" id="dctpublisher">
@@ -118,7 +118,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="removepublisher" class="selectmultiplebutton">&lt;&lt; remove</a>
+            <a href="#" id="removepublisher" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
           </td>
 
         </tr>
@@ -150,7 +150,7 @@
               </xsl:if>
             </xsl:for-each>
           </select>
-          <a href="#" id="addlanguage" class="selectmultiplebutton">add &gt;&gt;</a>
+          <a href="#" id="addlanguage" class="selectmultiplebutton"><i18n:text key="add">add</i18n:text> &gt;&gt;</a>
         </td>
           <td>
             <select name="dct:language" class="selectmultiple" multiple="multiple" id="dctlanguage">
@@ -166,7 +166,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="removelanguage" class="selectmultiplebutton">&lt;&lt; remove</a>
+            <a href="#" id="removelanguage" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
           </td>
         </tr>
         <tr>
@@ -197,7 +197,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="addformat" class="selectmultiplebutton">add &gt;&gt;</a>
+            <a href="#" id="addformat" class="selectmultiplebutton"><i18n:text key="add">add</i18n:text> &gt;&gt;</a>
           </td>
           <td>
             <select name="dct:format" class="selectmultiple" multiple="multiple" id="dctformat">
@@ -213,7 +213,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="removeformat" class="selectmultiplebutton">&lt;&lt; remove</a>
+            <a href="#" id="removeformat" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
           </td>
 
 
@@ -245,7 +245,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="addaudience" class="selectmultiplebutton">add &gt;&gt;</a>
+            <a href="#" id="addaudience" class="selectmultiplebutton"><i18n:text key="add">add</i18n:text> &gt;&gt;</a>
           </td>
           <td>
             <select name="dct:audience" class="selectmultiple" multiple="multiple" id="dctaudience">
@@ -261,7 +261,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="removeaudience" class="selectmultiplebutton">&lt;&lt; remove</a>
+            <a href="#" id="removeaudience" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
           </td>
 
         </tr>
@@ -305,7 +305,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="addsubject" class="selectmultiplebutton">add &gt;&gt;</a>
+            <a href="#" id="addsubject" class="selectmultiplebutton"><i18n:text key="add">add</i18n:text> &gt;&gt;</a>
           </td>
           <td>
             <select name="dct:subject" class="selectmultiple" multiple="multiple" id="dctsubject">
@@ -321,7 +321,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="removesubject" class="selectmultiplebutton">&lt;&lt; remove</a>
+            <a href="#" id="removesubject" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
           </td>
 
         </tr>

@@ -313,7 +313,7 @@
                   </xsl:if>
                 </xsl:for-each>
               </select>
-              <a href="#" id="add{position()}" class="selectmultiplebutton">add &gt;&gt;</a>
+              <a href="#" id="add{position()}" class="selectmultiplebutton"><i18n:text key="add">add</i18n:text> &gt;&gt;</a>
             </td>
             <td>
               <select name="&lt;{$relation-uri}&gt;" class="selectmultiple" multiple="multiple" id="the-relation-{position()}">
@@ -329,7 +329,7 @@
                   </xsl:if>
                 </xsl:for-each>
               </select>
-              <a href="#" id="remove{position()}" class="selectmultiplebutton">&lt;&lt; remove</a>
+              <a href="#" id="remove{position()}" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
             </td>
           </tr>
 

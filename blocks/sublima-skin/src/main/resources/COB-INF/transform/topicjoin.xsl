@@ -54,7 +54,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="addconcept" class="selectmultiplebutton">add &gt;&gt;</a>
+            <a href="#" id="addconcept" class="selectmultiplebutton"><i18n:text key="add">add</i18n:text> &gt;&gt;</a>
           </td>
           <td>
             <select name="skos:Concept" class="selectmultiple" multiple="multiple" id="skosconcept">
@@ -70,7 +70,7 @@
                 </xsl:if>
               </xsl:for-each>
             </select>
-            <a href="#" id="removeconcept" class="selectmultiplebutton">&lt;&lt; remove</a>
+            <a href="#" id="removeconcept" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
           </td>
 
         </tr>
