@@ -39,7 +39,7 @@ public class TopicController implements StatelessAppleController {
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
 
-  private static Logger logger = Logger.getLogger(AdminController.class);
+  private static Logger logger = Logger.getLogger(TopicController.class);
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
@@ -387,7 +387,6 @@ public class TopicController implements StatelessAppleController {
         logger.trace("Setting " + oldurl + " topics inactive.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Topic inactive status: " + updateSuccess);
-
 
       }
 
