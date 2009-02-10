@@ -1,3 +1,4 @@
+@base <http://detektor.sublima.computas.com:8180/detektor/> . 
 @prefix user:    <http://detektor.sublima.computas.com:8180/detektor/user/> .
 @prefix word:    <http://xmlns.com/wordnet/1.6/> .
 @prefix topic:   <http://detektor.sublima.computas.com:8180/detektor/topic/> .
@@ -5,7 +6,7 @@
 @prefix sioc:    <http://rdfs.org/sioc/ns#> .
 @prefix sub:     <http://xmlns.computas.com/sublima#> .
 @prefix wdr:     <http://www.w3.org/2007/05/powder#> .
-@prefix status:  <http://detektor.sublima.computas.com:8180/detektor/status/> .
+@prefix status:  <http://sublima.computas.com/status/> .
 @prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
 @prefix resource:  <http://detektor.sublima.computas.com:8180/detektor/resource/> .
 @prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
