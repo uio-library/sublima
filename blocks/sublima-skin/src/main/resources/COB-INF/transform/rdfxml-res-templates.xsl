@@ -82,7 +82,21 @@
 	    <xsl:value-of select="//skos:Concept[@rdf:about=$uri]/skos:prefLabel[@xml:lang=$interface-language]"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+      <xsl:choose>
+        <xsl:when test="$interface-language = 'no'">
+          <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+          </xsl:when>
+        <xsl:when test="$interface-language = 'nn'">
+          <span class="warning"><i18n:text key="validation.topic.notitle">Emnet manglar tittel på valgt språk</i18n:text></span>
+          </xsl:when>
+        <xsl:when test="$interface-language = 'sv'">
+          <span class="warning"><i18n:text key="validation.topic.notitle">Ämnet har inte titel på angivet språk</i18n:text></span>
+          </xsl:when>
+        <xsl:otherwise>
+          <span class="warning"><i18n:text key="validation.topic.notitle">Topic has no title for the selected language</i18n:text></span>
+        </xsl:otherwise>
+      </xsl:choose>
+
 	  </xsl:otherwise>
 	</xsl:choose>
 	</a>
@@ -94,13 +108,41 @@
 	    <xsl:value-of select="./skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+      <xsl:choose>
+        <xsl:when test="$interface-language = 'no'">
+          <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+          </xsl:when>
+        <xsl:when test="$interface-language = 'nn'">
+          <span class="warning"><i18n:text key="validation.topic.notitle">Emnet manglar tittel på valgt språk</i18n:text></span>
+          </xsl:when>
+        <xsl:when test="$interface-language = 'sv'">
+          <span class="warning"><i18n:text key="validation.topic.notitle">Ämnet har inte titel på angivet språk</i18n:text></span>
+          </xsl:when>
+        <xsl:otherwise>
+          <span class="warning"><i18n:text key="validation.topic.notitle">Topic has no title for the selected language</i18n:text></span>
+        </xsl:otherwise>
+      </xsl:choose>
+
 	  </xsl:otherwise>
 	</xsl:choose>
 	</a>
       </xsl:when>
       <xsl:otherwise>
-	<span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+        <xsl:choose>
+          <xsl:when test="$interface-language = 'no'">
+            <span class="warning"><i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text></span>
+            </xsl:when>
+          <xsl:when test="$interface-language = 'nn'">
+            <span class="warning"><i18n:text key="validation.topic.notitle">Emnet manglar tittel på valgt språk</i18n:text></span>
+            </xsl:when>
+          <xsl:when test="$interface-language = 'sv'">
+            <span class="warning"><i18n:text key="validation.topic.notitle">Ämnet har inte titel på angivet språk</i18n:text></span>
+            </xsl:when>
+          <xsl:otherwise>
+            <span class="warning"><i18n:text key="validation.topic.notitle">Topic has no title for the selected language</i18n:text></span>
+          </xsl:otherwise>
+        </xsl:choose>
+
       </xsl:otherwise>
     </xsl:choose>
     <xsl:if test="position() != last()">

@@ -58,7 +58,7 @@
   <message key="comments">Kommentarer</message>
   <message key="comment.received"></message> <!-- MÅ OVERSETTES -->
   <message key="country">Land</message>
-  <message key="danish"></message> <!-- MÅ OVERSETTES -->
+  <message key="danish">Dansk</message> <!-- MÅ OVERSETTES -->
   <message key="date"></message> <!-- MÅ OVERSETTES -->
   <message key="delete">Radera</message>
   <message key="description">Beskrivning</message>
@@ -134,7 +134,7 @@
   <message key="more">mer</message>
   <message key="name">Namn</message>
   <message key="newurl"></message> <!-- MÅ OVERSETTES -->
-  <message key="norwegian"></message> <!-- MÅ OVERSETTES -->
+  <message key="norwegian">Norsk</message> <!-- MÅ OVERSETTES -->
   <message key="oldurl"></message> <!-- MÅ OVERSETTES -->
   <message key="oneway"></message> <!-- MÅ OVERSETTES -->
   <message key="password">Lösenord</message>
@@ -195,13 +195,13 @@
   <message key="search.sortby.relevance">Relevans</message>
   <message key="search.submit">Sök</message>
   <message key="sender"></message> <!-- MÅ OVERSETTES -->
-  <message key="setlanguageto"></message> <!-- MÅ OVERSETTES -->
+  <message key="setlanguageto">Sett språk til</message> <!-- MÅ OVERSETTES -->
   <message key="setthemetopics">Bestämma teman</message>
   <message key="shortdescription"></message> <!-- MÅ OVERSETTES -->
   <message key="status">Status</message>
-  <message key="sublima.footer">Ett open-source project med stöd av <a href="http://www.abm-utvikling.no/">ABM utvikling</a> og <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
+  <message key="sublima.footer">Ett open-source project med stöd av <a href="http://www.abm-utvikling.no/">ABM utvikling</a> och <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
   <message key="suggested">Föreslagna</message>
-  <message key="swedish"></message> <!-- MÅ OVERSETTES -->
+  <message key="swedish">Svänsk</message> <!-- MÅ OVERSETTES -->
   <message key="symmetric"></message> <!-- MÅ OVERSETTES -->
   <message key="synonym">Synonym</message>
   <message key="text">Text</message>
