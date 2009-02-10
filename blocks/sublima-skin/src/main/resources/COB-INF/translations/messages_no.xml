@@ -39,6 +39,7 @@
   <message key="button.copyasnew">Kopier felter til nytt skjema</message>
   <message key="button.copyasnew">Kopier til ny</message>
   <message key="button.deletepublisher">Slett utgiver</message>
+  <message key="button.deleterelation">Slett relasjon</message>
   <message key="button.deleteresource">Slett ressurs</message>
   <message key="button.deletetopic">Slett emne</message>
   <message key="button.empty">Tøm skjema</message>
@@ -69,6 +70,7 @@
   <message key="fulldescription">Full beskrivelse</message>
   <message key="id">Id</message>
   <message key="in.google">i Google</message>
+  <message key="inactivate">Inaktivere</message>
   <message key="instructions.regex">Her kan man bruke regulære uttrykk slik det er definert av JavaScript. I det første feltet skriver man inn uttrykket man ønsker skal matche URLen. I det andre feltet hvordan URLen skal omformes.</message>
   <message key="intopics">i emner</message>
   <message key="inverse">invers</message>

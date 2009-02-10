@@ -40,6 +40,7 @@
   <message key="button.copyasnew">Kopier til ny</message>
   <message key="button.deletepublisher">Slett utgivar</message>
   <message key="button.deleteresource">Slett ressurs</message>
+  <message key="button.deleterelation">Slett relasjon</message>
   <message key="button.deletetopic">Slett emne</message>
   <message key="button.empty">Tøm skjema</message>
   <message key="button.export">Export</message>
@@ -69,6 +70,7 @@
   <message key="fulldescription"></message> <!-- MÅ OVERSETTES -->
   <message key="id"></message> <!-- MÅ OVERSETTES -->
   <message key="in.google"></message> <!-- MÅ OVERSETTES -->
+  <message key="inactivate">Inaktivera</message>
   <message key="instructions.regex"></message> <!-- MÅ OVERSETTES -->
   <message key="intopics"> i emner</message> <!-- MÅ OVERSETTES -->
   <message key="inverse"></message> <!-- MÅ OVERSETTES -->
