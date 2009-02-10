@@ -821,7 +821,7 @@ public class TopicController implements StatelessAppleController {
   private String validateRequest(AppleRequest req) {
     StringBuilder validationMessages = new StringBuilder();
 
-    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel-1")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel-1") == null) {
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("skos:prefLabel-1")) || req.getCocoonRequest().getParameter("skos:prefLabel-1") == null) {
       validationMessages.append("<c:message><i18n:text key=\"topic.validation.titleblank\">Emnets tittel kan ikke være blank</i18n:text></c:message>\n");
     }
 
@@ -849,16 +849,11 @@ public class TopicController implements StatelessAppleController {
     return result;
   }
 
-  public void setAppMan
-          (ApplicationManager
-                  appMan) {
+  public void setAppMan(ApplicationManager appMan) {
     this.appMan = appMan;
   }
 
-  private void showRelations
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+  private void showRelations(AppleResponse res, AppleRequest req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("all_relations", adminService.getAllRelationTypes());
     bizData.put("facets", getRequestXML(req));
