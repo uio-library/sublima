@@ -821,7 +821,7 @@ public class TopicController implements StatelessAppleController {
   private String validateRequest(AppleRequest req) {
     StringBuilder validationMessages = new StringBuilder();
 
-    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel") == null) {
+    if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel-1")) || req.getCocoonRequest().getParameter("dct:subject/skos:Concept/skos:prefLabel-1") == null) {
       validationMessages.append("<c:message><i18n:text key=\"topic.validation.titleblank\">Emnets tittel kan ikke være blank</i18n:text></c:message>\n");
     }
 
