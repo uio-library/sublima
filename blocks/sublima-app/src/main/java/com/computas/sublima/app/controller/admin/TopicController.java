@@ -91,7 +91,7 @@ public class TopicController implements StatelessAppleController {
           showRelation(req, res, null);
         } else if ("POST".equalsIgnoreCase(req.getCocoonRequest().getMethod())) {
           if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) { // delete relation
-            deleteRelation(req);
+            deleteRelation(req, res);
           } else {
             editRelation(res, req, null); // edit relation
           }
@@ -104,7 +104,7 @@ public class TopicController implements StatelessAppleController {
     }
   }
 
-  private void deleteRelation(AppleRequest req) {
+  private void deleteRelation(AppleRequest req, AppleResponse res) {
     StringBuilder messageBuffer = new StringBuilder();
     String uri = req.getCocoonRequest().getParameter("the-resource");
     StringBuilder deleteQueries = new StringBuilder();
@@ -123,6 +123,7 @@ public class TopicController implements StatelessAppleController {
       messageBuffer.append("<c:message><i18n:text key=\"relation.deleted.error\">Feil ved sletting av relasjon</i18n:text></c:message>\n");
     }
 
+    showRelation(req, res, messageBuffer);
   }
 
   private void showRelation(AppleRequest req, AppleResponse res, StringBuilder existingMessages) {
