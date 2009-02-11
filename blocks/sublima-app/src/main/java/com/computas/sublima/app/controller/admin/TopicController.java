@@ -591,6 +591,9 @@ public class TopicController implements StatelessAppleController {
           logger.trace("DELETE TOPIC QUERY:\n" + deleteString);
           logger.trace("DELETE TOPIC QUERY RESULT: " + deleteTopicSuccess);
 
+          String deleteRelatedToTopic = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n DELETE { ?s ?p <" + req.getCocoonRequest().getParameter("the-resource") + "> . } WHERE { ?s ?p <" + req.getCocoonRequest().getParameter("the-resource") + "> . }";
+          boolean deletedRelatedToTopic = sparulDispatcher.query(deleteRelatedToTopic);
+          logger.trace("Deleted ?s ?p <" + uri + "> to remove relations to topic. Result: " + deletedRelatedToTopic);
 
           if (deleteTopicSuccess) {
             messageBuffer.append("<c:message><i18n:text key=\"topic.deleted.ok\">Emne slettet!</i18n:text></c:message>\n");
@@ -600,6 +603,23 @@ public class TopicController implements StatelessAppleController {
         } else {
           messageBuffer.append("<c:message><i18n:text key=\"validation.topic.resourceempty\">En eller flere ressurser vil bli stående uten tilknyttet emne dersom du sletter dette emnet. Vennligst kontroller disse ressursene fra listen nederst, og tildel de nye emner eller slett de.</i18n:text></c:message>\n");
         }
+
+        bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("the-resource")));
+        bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("the-resource")));
+        bizData.put("tempvalues", tempPrefixes + tempValues.toString() + "</c:tempvalues>");
+        bizData.put("mode", "topictemp");
+        bizData.put("status", adminService.getAllStatuses());
+        bizData.put("alltopics", adminService.getAllTopics());
+        bizData.put("relationtypes", adminService.getAllRelationTypes());
+        bizData.put("userprivileges", userPrivileges);
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("facets", getRequestXML(req));
+        bizData.put("messages", messageBuffer.toString());
+        res.sendPage("xml2/emne", bizData);
+
+        //Invalidate the Topic cache for autocompletion
+        AutocompleteCache.invalidateTopicCache();
+        AutocompleteCache.getTopicList();
 
       } else {
 
