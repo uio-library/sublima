@@ -246,6 +246,7 @@
   <message key="upload.instructions">Her kan du velge hvilke filer som skal lastes inn i databasen. Velg filen ved å trykke Browse... og angi riktig formattype.</message>
   <message key="url">URL</message>
   <message key="user">Brukar</message>
+  <message key="user.deleteprivilege">Du har ikke rettigheter til å inaktivere en bruker</message> <!-- MÅ OVERSETTES -->
   <message key="user.login.failed">En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prøv igjen.</message> <!-- MÅ OVERSETTES -->
   <message key="user.name.blank">Navn kan ikke være blank.</message> <!-- MÅ OVERSETTES -->
   <message key="user.norole">En rolle må være valgt.</message> <!-- MÅ OVERSETTES -->

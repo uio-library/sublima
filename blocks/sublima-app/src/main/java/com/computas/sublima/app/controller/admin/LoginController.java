@@ -44,14 +44,17 @@ public class LoginController implements StatelessAppleController {
       String name = appleRequest.getCocoonRequest().getParameter("username");
       String password = appleRequest.getCocoonRequest().getParameter("password");
 
-      /*
-      if ("Computas".equalsIgnoreCase(name) && "Computas".equalsIgnoreCase(password)) {
-        // do nothing
-      } else {*/
 
       if (name == null) {
         continueLogin = false;
       } else {
+
+        if (!name.equalsIgnoreCase("administrator")) {
+          if (adminService.isInactiveUser(name)) {
+            continueLogin = false;
+          }
+        }
+
         String sql = "SELECT * FROM users WHERE username = '" + name + "'";
         Statement statement = null;
 
@@ -74,7 +77,6 @@ public class LoginController implements StatelessAppleController {
 
           statement.close();
           connection.close();
-
 
         } catch (SQLException e) {
           e.printStackTrace();

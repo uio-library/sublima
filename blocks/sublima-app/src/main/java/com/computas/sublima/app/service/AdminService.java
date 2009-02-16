@@ -13,8 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -117,6 +117,37 @@ public class AdminService {
 
     return queryResult.toString();
   }
+
+  /**
+   * Method to get all statuses valid for user administration
+   *
+   * @return A String RDF/XML containing all the statuses
+   */
+  public String getAllStatusesForUser() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                    "CONSTRUCT {\n" +
+                    "    <http://sublima.computas.com/status/godkjent_av_administrator> a wdr:DR ;\n" +
+                    "    rdfs:label ?label1 .\n" +
+                    " <http://sublima.computas.com/status/inaktiv> a wdr:DR ;\n" +
+                    "    rdfs:label ?label2 .\n" +
+                    "}\n" +
+                    "WHERE {\n" +
+                    " OPTIONAL {\n" +
+                    " <http://sublima.computas.com/status/godkjent_av_administrator> a wdr:DR ;\n" +
+                    "    rdfs:label ?label1 .}\n" +
+                    " OPTIONAL {\n" +
+                    " <http://sublima.computas.com/status/inaktiv> a wdr:DR ;\n" +
+                    "    rdfs:label ?label2 .}\n" +
+                    "}"});
+
+    logger.trace("AdminService.getAllStatusesForUser() executing");
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
+
 
   /**
    * Method to get all languages
@@ -617,28 +648,29 @@ public class AdminService {
     }
   }
 
- /**
- * Recursive implementation of the method
- * org.w3c.dom.Node.getTextContent which is present in JDK 1.5 but not 1.4
- * @author Tobias Hinnerup
- * @param node Node that you need to get the text content of
- * @return
- */
- private static String getTextContent(Node node) {
-     Node child;
-     String sContent = node.getNodeValue() != null ? node.getNodeValue() : "";
+  /**
+   * Recursive implementation of the method
+   * org.w3c.dom.Node.getTextContent which is present in JDK 1.5 but not 1.4
+   *
+   * @param node Node that you need to get the text content of
+   * @return
+   * @author Tobias Hinnerup
+   */
+  private static String getTextContent(Node node) {
+    Node child;
+    String sContent = node.getNodeValue() != null ? node.getNodeValue() : "";
 
-     NodeList nodes = node.getChildNodes();
-     for(int i = 0; i < nodes.getLength(); i++) {
-         child = nodes.item(i);
-         sContent += child.getNodeValue() != null ? child.getNodeValue() : "";
-         if(nodes.item(i).getChildNodes().getLength() > 0) {
-             sContent += getTextContent(nodes.item(i));
-         }
-     }
+    NodeList nodes = node.getChildNodes();
+    for (int i = 0; i < nodes.getLength(); i++) {
+      child = nodes.item(i);
+      sContent += child.getNodeValue() != null ? child.getNodeValue() : "";
+      if (nodes.item(i).getChildNodes().getLength() > 0) {
+        sContent += getTextContent(nodes.item(i));
+      }
+    }
 
-     return sContent;
- }
+    return sContent;
+  }
 
   /**
    * Method to get the user based on the e-mail
@@ -1040,6 +1072,7 @@ public class AdminService {
 
   /**
    * This method returns the uri of the inverse relation if such a relation exists
+   *
    * @param relationUri The uri of the relation to check wether has an inverse relation or not
    * @return a String with the uri of the inverse relation if any
    */
@@ -1059,7 +1092,7 @@ public class AdminService {
 
     logger.trace("AdminService.getInverseRelationUriIfAny() executing");
     Object queryResult = sparqlDispatcher.query(sparqlConstructQuery);
-    String inverseUri ="";
+    String inverseUri = "";
 
     try {
 
@@ -1080,36 +1113,48 @@ public class AdminService {
     if (!relationUri.startsWith("<") && !relationUri.endsWith(">")) {
       relationUri = "<" + relationUri + ">";
     }
-      String sparqlConstructQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-              "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-              "\n" +
-              "ASK { " + relationUri + " a owl:SymmetricProperty  . \n" +
-              "}";
+    String sparqlConstructQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+            "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+            "\n" +
+            "ASK { " + relationUri + " a owl:SymmetricProperty  . \n" +
+            "}";
 
-      logger.trace("AdminService.isSymmetricProperty() executing");
-      Object queryResult = sparqlDispatcher.query(sparqlConstructQuery);
+    logger.trace("AdminService.isSymmetricProperty() executing");
+    Object queryResult = sparqlDispatcher.query(sparqlConstructQuery);
 
     return queryResult.toString().contains("true");
 
-    }
+  }
 
   public boolean isRelation(String relationUri) {
 
     if (!relationUri.startsWith("<") && !relationUri.endsWith(">")) {
       relationUri = "<" + relationUri + ">";
     }
-    
-      String sparqlConstructQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-              "\n" +
-              "ASK { " + relationUri + " rdfs:subPropertyOf <http://www.w3.org/2004/02/skos/core#semanticRelation>  .\n}";
+
+    String sparqlConstructQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+            "\n" +
+            "ASK { " + relationUri + " rdfs:subPropertyOf <http://www.w3.org/2004/02/skos/core#semanticRelation>  .\n}";
 
 
-      logger.trace("AdminService.isRelation() executing");
-      Object queryResult = sparqlDispatcher.query(sparqlConstructQuery);
+    logger.trace("AdminService.isRelation() executing");
+    Object queryResult = sparqlDispatcher.query(sparqlConstructQuery);
 
     return queryResult.toString().contains("true");
 
-    }
+  }
+
+  public boolean isInactiveUser(String name) {
+    String sparqlAsk = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>" +
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>" +
+            "ASK { ?s sioc:email <mailto:" + name + "> ;" +
+            "         wdr:describedBy <http://sublima.computas.com/status/inaktiv> . }";
+
+    logger.trace("AdminService.isInactiveUser() executing");
+    Object queryResult = sparqlDispatcher.query(sparqlAsk);
+
+    return queryResult.toString().contains("true");
+  }
 
   public String query(String query) {
 
@@ -1118,4 +1163,6 @@ public class AdminService {
 
     return queryResult.toString();
   }
+
+
 }

@@ -265,24 +265,11 @@
           <td></td>
           <td>
             <xsl:choose>
-              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'user.approve'">
-                <input type="checkbox" name="privileges" value="user.approve" checked="checked"/><i18n:text key="approve">Godkjenne</i18n:text>
-              </xsl:when>
-              <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="user.approve"/><i18n:text key="approve">Godkjenne</i18n:text>
-              </xsl:otherwise>
-            </xsl:choose>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'user.delete'">
-                <input type="checkbox" name="privileges" value="user.delete" checked="checked"/><i18n:text key="delete">Slette</i18n:text>
+                <input type="checkbox" name="privileges" value="user.delete" checked="checked"/><i18n:text key="inactivate">Inaktivere</i18n:text>
               </xsl:when>
               <xsl:otherwise>
-                <input type="checkbox" name="privileges" value="user.delete"/><i18n:text key="delete">Slette</i18n:text>
+                <input type="checkbox" name="privileges" value="user.delete"/><i18n:text key="inactivate">Inaktivere</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
           </td>

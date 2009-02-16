@@ -27,6 +27,7 @@
 
       <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
       <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
+      <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
       <input type="hidden" name="prefix" value="sioc: &lt;http://rdfs.org/sioc/ns#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://rdfs.org/sioc/ns#User"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
@@ -115,6 +116,86 @@
               </select>
             </td>
         </tr>
+
+        <tr>
+          <td>
+            <label for="wdr:describedBy">
+              <i18n:text key="status">Status</i18n:text>
+            </label>
+          </td>
+          <td>
+            <xsl:choose>
+
+              <xsl:when test="not(/c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/wdr:describedBy/@rdf:resource)">
+                <select id="wdr:describedBy" name="wdr:describedBy">
+
+                  <xsl:for-each select="/c:page/c:content/c:user/c:statuses/rdf:RDF/wdr:DR">
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
+
+                    <xsl:choose>
+
+                      <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/godkjent_av_administrator'">
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}" selected="selected">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
+                      </xsl:when>
+
+                      <xsl:otherwise>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
+                      </xsl:otherwise>
+
+                    </xsl:choose>
+
+                  </xsl:for-each>
+
+                </select>
+
+              </xsl:when>
+
+              <xsl:otherwise>
+
+                <select id="wdr:describedBy" name="wdr:describedBy">
+
+                  <xsl:for-each select="/c:page/c:content/c:user/c:statuses/rdf:RDF/wdr:DR">
+                    <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+
+                    <xsl:choose>
+
+                      <xsl:when test="./@rdf:about = /c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/wdr:describedBy/@rdf:resource">
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}" selected="selected">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
+                      </xsl:when>
+
+                      <xsl:otherwise>
+                        <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                          <option value="{./@rdf:about}">
+                            <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                          </option>
+                        </xsl:if>
+                      </xsl:otherwise>
+
+                    </xsl:choose>
+
+                  </xsl:for-each>
+
+                </select>
+
+              </xsl:otherwise>
+
+            </xsl:choose>
+
+          </td>
+        </tr>
+
         <tr>
           <td></td>
           <td></td>
@@ -142,6 +223,7 @@
       <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
       <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
       <input type="hidden" name="prefix" value="sioc: &lt;http://rdfs.org/sioc/ns#&gt;"/>
+      <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://rdfs.org/sioc/ns#User"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
       <xsl:call-template name="hidden-locale-field"/>
@@ -229,6 +311,85 @@
               </select>
             </td>
         </tr>
+
+        <tr>
+                  <td>
+                    <label for="wdr:describedBy">
+                      <i18n:text key="status">Status</i18n:text>
+                    </label>
+                  </td>
+                  <td>
+                    <xsl:choose>
+
+                      <xsl:when test="not(/c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/wdr:describedBy/@rdf:resource)">
+                        <select id="wdr:describedBy" name="wdr:describedBy">
+
+                          <xsl:for-each select="/c:page/c:content/c:user/c:statuses/rdf:RDF/wdr:DR">
+                            <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
+
+                            <xsl:choose>
+
+                              <xsl:when test="./@rdf:about = 'http://sublima.computas.com/status/godkjent_av_administrator'">
+                                <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                                  <option value="{./@rdf:about}" selected="selected">
+                                    <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                                  </option>
+                                </xsl:if>
+                              </xsl:when>
+
+                              <xsl:otherwise>
+                                <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                                  <option value="{./@rdf:about}">
+                                    <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                                  </option>
+                                </xsl:if>
+                              </xsl:otherwise>
+
+                            </xsl:choose>
+
+                          </xsl:for-each>
+
+                        </select>
+
+                      </xsl:when>
+
+                      <xsl:otherwise>
+
+                        <select id="wdr:describedBy" name="wdr:describedBy">
+
+                          <xsl:for-each select="/c:page/c:content/c:user/c:statuses/rdf:RDF/wdr:DR">
+                            <xsl:sort lang="{$interface-language}" select="./rdfs:label"/>
+
+                            <xsl:choose>
+
+                              <xsl:when test="./@rdf:about = /c:page/c:content/c:user/c:userdetails/rdf:RDF/sioc:User/wdr:describedBy/@rdf:resource">
+                                <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                                  <option value="{./@rdf:about}" selected="selected">
+                                    <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                                  </option>
+                                </xsl:if>
+                              </xsl:when>
+
+                              <xsl:otherwise>
+                                <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
+                                  <option value="{./@rdf:about}">
+                                    <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
+                                  </option>
+                                </xsl:if>
+                              </xsl:otherwise>
+
+                            </xsl:choose>
+
+                          </xsl:for-each>
+
+                        </select>
+
+                      </xsl:otherwise>
+
+                    </xsl:choose>
+
+                  </td>
+                </tr>
 
         <tr>
           <td></td>

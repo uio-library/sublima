@@ -113,12 +113,11 @@ public class UserController implements StatelessAppleController {
     messageBuffer.append(messages);
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("allroles", adminService.getAllRoles());
+    bizData.put("statuses", adminService.getAllStatusesForUser());
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
     // Check whether the logged in user requests his/hers own page. If so, allow editing.
-    if (adminService.getUserByURI(
-            req.getCocoonRequest().getParameter("the-resource")).contains(
-            user.getId())) {
+    if (adminService.getUserByURI(req.getCocoonRequest().getParameter("the-resource")).contains(user.getId())) {
       userPrivileges = userPrivileges.replace("</c:privileges>", "<c:privilege>user.edit</c:privilege></c:privileges>");
     }
 
@@ -497,9 +496,7 @@ public class UserController implements StatelessAppleController {
     res.sendPage("xml2/brukere_alle", bizData);
   }
 
-  private String validateUserRequest
-          (AppleRequest
-                  req) {
+  private String validateUserRequest(AppleRequest req) {
     StringBuilder validationMessages = new StringBuilder();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:email")) || req.getCocoonRequest().getParameter("sioc:email") == null) {
@@ -523,6 +520,10 @@ public class UserController implements StatelessAppleController {
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:has_function")) || req.getCocoonRequest().getParameter("sioc:has_function") == null) {
       validationMessages.append("<c:message><i18n:text key=\"user.norole\">En rolle m vre valgt</i18n:text></c:message>\n");
+    }
+
+    if ("http://sublima.computas.com/status/inaktiv".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) && !userPrivileges.contains("user.delete")) {
+      validationMessages.append("<c:message><i18n:text key=\"user.deleteprivilege\">Du har ikke rettigheter til å sette en bruker til inaktiv</i18n:text></c:message>\n");
     }
 
     return validationMessages.toString();

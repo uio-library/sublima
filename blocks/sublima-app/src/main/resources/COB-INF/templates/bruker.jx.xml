@@ -50,6 +50,10 @@
         <jx:out value="#{userdetails}" xmlize="true"/>
       </c:userdetails>
 
+      <c:statuses>
+        <jx:out value="#{statuses}" xmlize="true"/>
+      </c:statuses>
+
       <c:allroles>
         <jx:out value="#{allroles}" xmlize="true"/>
       </c:allroles>

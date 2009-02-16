@@ -201,7 +201,7 @@
   <message key="setthemetopics">Sette tema</message>
   <message key="shortdescription">Kort beskrivelse</message>
   <message key="status">Status</message>
-  <message key="sublima.footer">Et fri programvareprosjekt støttet av <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> og<a href="http://www.computas.com/">Computas AS</a>, 2008</message>
+  <message key="sublima.footer">Et fri programvareprosjekt støttet av <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> og <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
   <message key="suggested">Foreslått</message>
   <message key="swedish">Svensk</message>
   <message key="symmetric">Symmetrisk</message>
@@ -246,6 +246,7 @@
   <message key="upload.instructions">Her kan du velge hvilke filer som skal lastes inn i databasen. Velg filen ved å trykke Browse... og angi riktig formattype.<br/></message>
   <message key="url">URL</message>
   <message key="user">Bruker</message>
+  <message key="user.deleteprivilege">Du har ikke rettigheter til å inaktivere en bruker</message>
   <message key="user.login.failed">En feil skjedde ved innlegging av passordet, vennligst kontroller alle felter og prøv igjen.</message>
   <message key="user.name.blank">Navn kan ikke være blank.</message>
   <message key="user.norole">En rolle må være valgt.</message>
