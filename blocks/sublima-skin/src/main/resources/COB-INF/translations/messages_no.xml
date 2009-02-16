@@ -146,6 +146,7 @@
   <message key="publisher.deletedok">Utgiver slettet</message>
   <message key="publisher.deletefailed">Feil ved sletting av utgiver</message>
   <message key="publisher.exists">En utgiver med det navnet finnes allerede registrert.</message>
+  <message key="publisher.nodeletehasresources">Utgiveren har ressurser tilknyttet seg, bytt utgiver på disse ressursene.</message>
   <message key="publisher.noname">Utgivernavn må angis.</message>
   <message key="publisher.saveerror">Feil ved lagring av ny utgiver.</message>
   <message key="publisher.saveok">Lagring av ny utgiver vellykket.</message>

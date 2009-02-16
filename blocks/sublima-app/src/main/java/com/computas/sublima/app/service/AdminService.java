@@ -1169,4 +1169,28 @@ public class AdminService {
     String sparqlDelete = "DELETE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .} WHERE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .}";
     return sparulDispatcher.query(sparqlDelete);
   }
+
+  public boolean hasPublisherResources(String uri) {
+    String sparqlAsk = "ASK { ?s ?p <" + uri + "> . }";
+
+    logger.trace("AdminService.hasPublisherResources() executing");
+    Object queryResult = sparqlDispatcher.query(sparqlAsk);
+
+    return queryResult.toString().contains("true");
+  }
+
+  public String getPublisherByURI(String publisherURI) {
+    String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
+            "PREFIX dct: <http://purl.org/dc/terms/>",
+            "DESCRIBE <" + publisherURI + "> ?resource ?subject",
+            "WHERE {",
+            "OPTIONAL { ?resource dct:publisher <" + publisherURI + "> .",
+            "?resource dct:subject ?subject . }",
+            "}"});
+
+
+    logger.trace("AdminController.showPublisherByURI() --> SPARQL query sent to dispatcher: \n" + findPublisherByURIQuery);
+    Object queryResult = sparqlDispatcher.query(findPublisherByURIQuery);
+    return queryResult.toString();
+  }
 }

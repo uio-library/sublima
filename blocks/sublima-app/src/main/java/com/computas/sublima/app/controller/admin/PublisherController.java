@@ -46,6 +46,7 @@ public class PublisherController implements StatelessAppleController {
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
   private String userPrivileges = "<empty/>";
+  private String language;
 
   private static Logger logger = Logger.getLogger(PublisherController.class);
 
@@ -58,7 +59,7 @@ public class PublisherController implements StatelessAppleController {
     }
 
     LanguageService langServ = new LanguageService();
-    String language = langServ.checkLanguage(req, res);
+    language = langServ.checkLanguage(req, res);
 
     logger.trace("PublisherController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
     logger.trace("PublisherController: Language from service is " + language);
@@ -96,26 +97,30 @@ public class PublisherController implements StatelessAppleController {
   private void deletePublisher(AppleResponse res, AppleRequest req) {
     StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
-    String deleteString = "DELETE {\n" +
-            "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o.\n" +
-            "} WHERE {\n" +
-            "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o. }";
 
-    boolean deletePublisherSuccess = sparulDispatcher.query(deleteString);
-
-    logger.trace("PublisherController.deletePublisher --> DELETE RESOURCE QUERY:\n" + deleteString);
-    logger.trace("PublisherController.deletePublisher --> DELETE RESOURCE QUERY RESULT: " + deletePublisherSuccess);
-
-    if (deletePublisherSuccess) {
-      messageBuffer.append("<c:message><i18n:text key=\"publisher.deletedok\">Utgiver slettet!</i18n:text></c:message>\n");
+    if (adminService.hasPublisherResources(req.getCocoonRequest().getParameter("the-resource").trim())) {
+      messageBuffer.append("<c:message><i18n:text key=\"publisher.nodeletehasresources\">Utgiveren har ressurser tilknyttet seg, bytt utgiver på disse ressursene.</i18n:text></c:message>\n");
     } else {
-      messageBuffer.append("<c:message><i18n:text key=\"publisher.deletefailed\">Feil ved sletting av utgiver</i18n:text></c:message>\n");
-    }
+      String deleteString = "DELETE {\n" +
+              "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o.\n" +
+              "} WHERE {\n" +
+              "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o. }";
 
+      boolean deletePublisherSuccess = sparulDispatcher.query(deleteString);
+
+      logger.trace("PublisherController.deletePublisher --> DELETE RESOURCE QUERY:\n" + deleteString);
+      logger.trace("PublisherController.deletePublisher --> DELETE RESOURCE QUERY RESULT: " + deletePublisherSuccess);
+
+      if (deletePublisherSuccess) {
+        messageBuffer.append("<c:message><i18n:text key=\"publisher.deletedok\">Utgiver slettet!</i18n:text></c:message>\n");
+      } else {
+        messageBuffer.append("<c:message><i18n:text key=\"publisher.deletefailed\">Feil ved sletting av utgiver</i18n:text></c:message>\n");
+      }
+    }
     messageBuffer.append("</c:messages>");
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("messages", messageBuffer.toString());
-    bizData.put("publisherdetails", "<empty/>");
+    bizData.put("publisherdetails", adminService.getPublisherByURI(req.getCocoonRequest().getParameter("the-resource")));
     bizData.put("languages", adminService.getAllLanguages());
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
     bizData.put("userprivileges", userPrivileges);
@@ -192,8 +197,8 @@ public class PublisherController implements StatelessAppleController {
                       "INSERT\n" +
                       "{\n" +
                       "<" + publisherURI + "> a foaf:Agent ;\n" +
-                      "foaf:name \"" + publishername + "\"@no ;\n" +
-                      "dct:description \"\"\"" + description + "\"\"\"@no . \n" +
+                      "foaf:name \"" + publishername + "\"@" + language +" ;\n" +
+                      "dct:description \"\"\"" + description + "\"\"\"@" + language +" . \n" +
                       "}";
 
       logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);
@@ -288,23 +293,11 @@ public class PublisherController implements StatelessAppleController {
     if ("".equalsIgnoreCase(publisherURI) || publisherURI == null) {
       publisherURI = req.getCocoonRequest().getParameter("uri");
     }
-    //Find the publisher URI based on name
-    String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
-            completePrefixes,
-            "DESCRIBE <" + publisherURI + "> ?resource ?subject",
-            "WHERE {",
-            "OPTIONAL { ?resource dct:publisher <" + publisherURI + "> .",
-            "?resource dct:subject ?subject . }",
-            "}"});
-
-
-    logger.trace("AdminController.showPublisherByURI() --> SPARQL query sent to dispatcher: \n" + findPublisherByURIQuery);
-    Object queryResult = sparqlDispatcher.query(findPublisherByURIQuery);
 
     messageBuffer.append("</c:messages>");
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("messages", messageBuffer.toString());
-    bizData.put("publisherdetails", queryResult);
+    bizData.put("publisherdetails", adminService.getPublisherByURI(publisherURI));
     bizData.put("languages", adminService.getAllLanguages());
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
     bizData.put("userprivileges", userPrivileges);
