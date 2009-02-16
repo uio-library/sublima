@@ -25,7 +25,7 @@
       <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title">
         <c:childmenuelement title="menu.new" i18n:attr="title" link="admin/ressurser/ny"/>
         <c:childmenuelement title="menu.mass" i18n:attr="title" link="admin/ressurser/masse"/>
-        <c:childmenuelement title="menu.comments" i18n:attr="title" link="admin/ressurser/kommentarer"/>
+        <c:childmenuelement title="menu.comments" i18n:attr="title" link="admin/ressurser/kommentarer/"/>
       </c:menuelement>
       <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
       <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>

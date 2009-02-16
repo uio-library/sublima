@@ -63,6 +63,9 @@
                     <xsl:value-of select="./sioc:has_creator"/>
                   </a>
                 </td>
+                <td>
+                  <i18n:text> - </i18n:text><a href="{$baseurl}/admin/ressurser/kommentarer/slett?uri={./@rdf:about}"><i18n:text key="delete">Slett</i18n:text></a>
+                </td>
               </tr>
             </xsl:if>
           </xsl:for-each>

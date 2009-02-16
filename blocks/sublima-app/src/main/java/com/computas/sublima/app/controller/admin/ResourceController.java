@@ -81,25 +81,55 @@ public class ResourceController implements StatelessAppleController {
         editResource(res, req, "edit", null);
       } else if ("checkurl".equalsIgnoreCase(submode)) {
         registerNewResourceURL(req, res);
-      } else if ("kommentarer".equalsIgnoreCase(submode)) {
-        showComments(res, req);
       }
-
+    }else if ("kommentarer".equalsIgnoreCase(mode)) {
+        if ("".equalsIgnoreCase(submode) || submode == null) {
+          showComments(res, req, null);
+        } else if ("slett".equalsIgnoreCase(submode)) {
+          deleteComment(req,res);
+        }
     } else {
       res.sendStatus(404);
     }
   }
 
   /**
+   * Method to delete a comment
+   * @param req Request
+   * @param res Response
+   */
+  private void deleteComment(AppleRequest req, AppleResponse res) {
+    boolean success = adminService.deleteComment(req.getCocoonRequest().getParameter("uri"));
+    StringBuilder messages = new StringBuilder();
+    messages.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
+
+    if (success) {
+      messages.append("<c:message><i18n:text key=\"comment.deletedok\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n");
+    } else {
+      messages.append("<c:message><i18n:text key=\"comment.deletefailed\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n");      
+    }
+
+    showComments(res, req, messages);
+
+  }
+
+  /**
    * Method to show all comments on resources.
    *
-   * @param res
-   * @param req
+   * @param res Response
+   * @param req Request
    */
-  private void showComments(AppleResponse res, AppleRequest req) {
+  private void showComments(AppleResponse res, AppleRequest req, StringBuilder messages) {
     Map<String, Object> bizData = new HashMap<String, Object>();
-    StringBuilder messageBuffer = new StringBuilder();
-    messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
+
+    if (messages == null) {
+      messages = new StringBuilder();
+      messages.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
+    }
+
+
+    messages.append("</c:messages>\n");
+    bizData.put("messages", messages.toString());
     bizData.put("userprivileges", userPrivileges);
     bizData.put("messages", "<empty/>");
     bizData.put("comments", adminService.getAllComments());

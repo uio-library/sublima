@@ -58,6 +58,8 @@
   <message key="comment">Kommentar</message>
   <message key="comments">Kommentarer</message>
   <message key="comment.received">Kommentaren sendt.</message>
+  <message key="comment.deletedok">Kommentaren slettet</message>
+  <message key="comment.deletefailed">Feil ved sletting av kommentaren</message>
   <message key="country">Land</message>
   <message key="danish">Dansk</message>
   <message key="date">Dato</message>

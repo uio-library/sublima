@@ -1165,4 +1165,8 @@ public class AdminService {
   }
 
 
+  public boolean deleteComment(String uri) {
+    String sparqlDelete = "DELETE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .} WHERE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .}";
+    return sparulDispatcher.query(sparqlDelete);
+  }
 }

@@ -58,6 +58,8 @@
   <message key="comment">Kommentar</message>
   <message key="comments">Kommentarer</message>
   <message key="comment.received"></message> <!-- MÅ OVERSETTES -->
+  <message key="comment.deletedok">Kommentaren slettet</message> <!-- MÅ OVERSETTES -->
+  <message key="comment.deletefailed">Feil ved sletting av kommentaren</message> <!-- MÅ OVERSETTES -->
   <message key="country">Land</message>
   <message key="danish">Dansk</message> <!-- MÅ OVERSETTES -->
   <message key="date"></message> <!-- MÅ OVERSETTES -->

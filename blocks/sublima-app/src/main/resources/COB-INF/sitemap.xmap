@@ -139,6 +139,17 @@
       </map:match>
 
       <!-- all resource admin pages. Returns a 404 if the page is not found. -->
+      <map:match pattern="admin/ressurser/kommentarer/*">
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
+            <map:parameter name="mode" value="kommentarer"/>
+            <map:parameter name="submode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="{request:contextPath}/login"/>
+      </map:match>
+
       <map:match pattern="admin/ressurser/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>
