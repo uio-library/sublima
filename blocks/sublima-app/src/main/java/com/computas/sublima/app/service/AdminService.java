@@ -280,7 +280,7 @@ public class AdminService {
     return queryResult.toString();
   }
 
-  public String insertPublisher(String publishername) {
+  public String insertPublisher(String publishername, String language) {
     String publisherURI = publishername.replace(" ", "_");
     publisherURI = publisherURI.replace(".", "_");
     publisherURI = publisherURI.replace(",", "_");
@@ -296,7 +296,7 @@ public class AdminService {
                     "INSERT\n" +
                     "{\n" +
                     "<" + publisherURI + "> a foaf:Agent ;\n" +
-                    "foaf:name \"" + publishername + "\"@no .\n" +
+                    "foaf:name \"" + publishername + "\"@" + language + " .\n" +
                     "}";
 
     logger.info("updatePublisherByURI() executing");

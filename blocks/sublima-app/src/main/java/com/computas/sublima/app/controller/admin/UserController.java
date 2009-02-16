@@ -52,6 +52,7 @@ public class UserController implements StatelessAppleController {
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
 
   private static Logger logger = Logger.getLogger(UserController.class);
+  private String language;
 
   @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
@@ -64,7 +65,7 @@ public class UserController implements StatelessAppleController {
     }
 
     LanguageService langServ = new LanguageService();
-    String language = langServ.checkLanguage(req, res);
+    language = langServ.checkLanguage(req, res);
 
     logger.trace("UserController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
     logger.trace("UserController: Language from service is " + language);
@@ -418,7 +419,7 @@ public class UserController implements StatelessAppleController {
         insertString.append("<" + uri + "> ?o ?p .\n}\n");
         insertString.append("INSERT DATA {\n");
         insertString.append("<" + uri + "> a sioc:Role ;\n");
-        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@no ;\n}");
+        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@" + language + " ;\n}");
 
         boolean insertSuccess = sparulDispatcher.query(insertString.toString());
 

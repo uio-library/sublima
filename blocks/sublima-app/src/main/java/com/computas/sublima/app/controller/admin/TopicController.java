@@ -372,7 +372,6 @@ public class TopicController implements StatelessAppleController {
       String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n"
               + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@" + language + ";\n"
               + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
-              /*           + " owl:unionOf <" + StringUtils.join(">, <", req.getCocoonRequest().getParameterValues("skos:Concept")) + "> .\n"  */
               + "}";
 
       logger.trace("TopicController.mergeTopics --> INSERT NEW TOPIC QUERY:\n" + insertNewTopicString);
@@ -380,9 +379,16 @@ public class TopicController implements StatelessAppleController {
       updateSuccess = sparulDispatcher.query(insertNewTopicString);
 
       for (String oldurl : req.getCocoonRequest().getParameterValues("skos:Concept")) {
-        String sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        //String sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        String sparulQuery = "INSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        String sparulDelete = "DELETE { ?s ?p <" + oldurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
         logger.trace("Changing " + oldurl + " to " + uri + " in objects.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
+        updateSuccess = sparulDispatcher.query(sparulDelete);
+
+        sparulQuery = "prefix owl: <http://www.w3.org/2002/07/owl#> \nINSERT { <" + uri + "> ?p ?o }\nWHERE { OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:ObjectProperty . }\n OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:SymmetricProperty . } }\n";
+        updateSuccess = sparulDispatcher.query(sparulQuery);
+
         logger.debug("Object edit status: " + updateSuccess);
         sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
                 "MODIFY\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
