@@ -159,7 +159,7 @@
   </xsl:template>
 
   <xsl:template match="wdr:describedBy">
-    <xsl:value-of select="./rdf:Description/rdfs:label[@xml:lang=$interface-language]"/>
+    <xsl:value-of select="./wdr:DR/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
   <xsl:template match="dct:format">
