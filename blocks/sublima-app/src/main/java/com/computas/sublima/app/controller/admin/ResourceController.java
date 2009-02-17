@@ -248,7 +248,6 @@ public class ResourceController implements StatelessAppleController {
   private void editResource(AppleResponse res, AppleRequest req, String type, String messages) {
 
     boolean insertSuccess = false;
-    boolean updateDate = false;
 
     String dctIdentifier = "";
     String date;
