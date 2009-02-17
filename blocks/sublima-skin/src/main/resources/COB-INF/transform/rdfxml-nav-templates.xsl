@@ -79,21 +79,28 @@
 	<xsl:choose>	
 	  <!-- The main concept, e.g. the concept of the page we're on. --> 
 	  <xsl:when test="$role='this-param'">
-	    <h4><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></h4>
-	  </xsl:when>
+      <xsl:for-each select="skos:prefLabel[@xml:lang=$interface-language]">
+        <h4><xsl:value-of select="."/></h4>
+      </xsl:for-each>
+    </xsl:when>
 	  
 	  <!-- or any other concept, synonyms, semantic relations, etc. -->
 	  <xsl:otherwise>
-	    <a href="{$uri}.html{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
+      <xsl:for-each select="skos:prefLabel[@xml:lang=$interface-language]">
+        <a href="{$uri}.html{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
+      </xsl:for-each>
 	  </xsl:otherwise>
 	</xsl:choose>
       </p>
       
       <!-- Synonyms -->
       <xsl:if test="$role='this-param' and skos:altLabel[@xml:lang=$interface-language]">
-	<p>
-	  <i18n:text key="synonym">Synonym</i18n:text>: <xsl:value-of select="skos:altLabel[@xml:lang=$interface-language]"/>
-	</p>
+        <xsl:for-each select="skos:altLabel[@xml:lang=$interface-language]">
+          <p>
+	          <i18n:text key="synonym">Synonym</i18n:text>: <xsl:value-of select="."/>
+	        </p>
+        </xsl:for-each>
+
       </xsl:if>
 
       <!-- Now, run through all nodes that has skos:Concept as child
