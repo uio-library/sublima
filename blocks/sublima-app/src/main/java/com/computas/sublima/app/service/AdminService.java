@@ -32,7 +32,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
-import java.net.URLEncoder;
 
 /**
  * A class to support the administration of Sublima
@@ -382,6 +381,7 @@ public class AdminService {
             "WHERE {",
             "?o a foaf:Agent ; ",
             "       foaf:name ?label .",
+            "?s ?p ?o .",
             "}",
             "ORDER BY ?label"});
 
@@ -918,6 +918,7 @@ public class AdminService {
         results.add(s[0]);
       }
     }
+
     return results;
   }
 
