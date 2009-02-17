@@ -497,9 +497,7 @@ public class ResourceController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private StringBuilder getTempValues
-          (AppleRequest
-                  req) {
+  private StringBuilder getTempValues(AppleRequest req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:title");
     String temp_uri = req.getCocoonRequest().getParameter("the-resource").trim();
