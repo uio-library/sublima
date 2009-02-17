@@ -164,7 +164,7 @@
 	  <i18n:text key="type">Type</i18n:text>:
 	</th>
 	<td>
-	  <xsl:apply-templates select="./dct:format"/>
+	  <xsl:apply-templates select="./dct:type"/>
 	</td>
       </tr>
       <tr>

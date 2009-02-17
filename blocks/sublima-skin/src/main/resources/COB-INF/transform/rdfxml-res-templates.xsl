@@ -162,7 +162,7 @@
     <xsl:value-of select="./wdr:DR/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
-  <xsl:template match="dct:format">
+  <xsl:template match="dct:type">
     <xsl:value-of select="./dct:MediaType/rdfs:label[@xml:lang=$interface-language]"/>
 
     <xsl:if test="position() != last()">

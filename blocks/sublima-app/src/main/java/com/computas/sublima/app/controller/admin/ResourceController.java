@@ -511,7 +511,7 @@ public class ResourceController implements StatelessAppleController {
     String temp_description = req.getCocoonRequest().getParameter("dct:description");
     String[] temp_publisher = req.getCocoonRequest().getParameterValues("dct:publisher");
     String[] temp_languages = req.getCocoonRequest().getParameterValues("dct:language");
-    String[] temp_mediatypes = req.getCocoonRequest().getParameterValues("dct:format");
+    String[] temp_mediatypes = req.getCocoonRequest().getParameterValues("dct:type");
     String[] temp_audiences = req.getCocoonRequest().getParameterValues("dct:audience");
     String[] temp_subjects = req.getCocoonRequest().getParameterValues("dct:subject");
     String temp_comment = req.getCocoonRequest().getParameter("rdfs:comment");
@@ -565,7 +565,7 @@ public class ResourceController implements StatelessAppleController {
     if (temp_mediatypes != null) {
 
       for (String s : temp_mediatypes) {
-        xmlStructureBuffer.append("<dct:format rdf:resource=\"" + s + "\"/>\n");
+        xmlStructureBuffer.append("<dct:type rdf:resource=\"" + s + "\"/>\n");
       }
 
     }

@@ -77,7 +77,7 @@
         </tr>
 
 	<xsl:apply-templates select="/c:page/c:mediatypes/sq:sparql">
-	  <xsl:with-param name="field">dct:format</xsl:with-param>
+	  <xsl:with-param name="field">dct:type</xsl:with-param>
 	  <xsl:with-param name="label"><i18n:text key="adv.mediaType">Mediatype</i18n:text></xsl:with-param>
 	</xsl:apply-templates>
 

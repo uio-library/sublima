@@ -188,7 +188,7 @@
             <select class="selectmultiple" id="tempformat" multiple="multiple">
               <xsl:for-each select="./c:mediatypes/rdf:RDF/dct:MediaType">
                 <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
-                <xsl:if test="not(./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource)">
+                <xsl:if test="not(./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:type/@rdf:resource)">
                   <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
                     <option value="{./@rdf:about}">
                       <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
@@ -200,11 +200,11 @@
             <a href="#" id="addformat" class="selectmultiplebutton"><i18n:text key="add">add</i18n:text> &gt;&gt;</a>
           </td>
           <td>
-            <select name="dct:format" class="selectmultiple" multiple="multiple" id="dctformat">
+            <select name="dct:type" class="selectmultiple" multiple="multiple" id="dctformat">
               <option/>
               <xsl:for-each select="./c:mediatypes/rdf:RDF/dct:MediaType">
                 <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
-                <xsl:if test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:format/@rdf:resource">
+                <xsl:if test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:type/@rdf:resource">
                   <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
                     <option value="{./@rdf:about}" selected="selected">
                       <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
