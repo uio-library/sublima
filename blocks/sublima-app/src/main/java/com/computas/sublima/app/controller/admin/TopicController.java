@@ -729,6 +729,7 @@ public class TopicController implements StatelessAppleController {
           messageBuffer.append("</c:messages>\n");
           bizData.put("messages", messageBuffer.toString());
           bizData.put("abovemaxnumberofhits", "false");
+          bizData.put("comment", "<empty/>");
           System.gc();
           res.sendPage("xml/sparql-result", bizData);
 

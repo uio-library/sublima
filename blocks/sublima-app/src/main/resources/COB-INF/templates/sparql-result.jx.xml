@@ -18,6 +18,7 @@
   <searchparams><jx:out value="#{searchparams}" xmlize="true"/></searchparams>
   <result-list><jx:out value="#{result-list}" xmlize="true"/></result-list>
   <content>
+    <comment><jx:out value="#{comment}" xmlize="true"/></comment>
     <messages>
       <jx:out value="#{messages}" xmlize="true"/>
     </messages>

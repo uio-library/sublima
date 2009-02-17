@@ -112,6 +112,8 @@ public class SearchController implements StatelessAppleController {
     bizData.put("searchparams", "<empty/>");
     bizData.put("messages", "<empty/>");
     bizData.put("abovemaxnumberofhits", "false");
+    bizData.put("comment", "<empty/>");
+
     System.gc();
     res.sendPage(format + "/sparql-result", bizData);
   }
@@ -303,6 +305,7 @@ public class SearchController implements StatelessAppleController {
     bizData.put("loggedin", loggedIn);
     bizData.put("messages", "<empty/>");
     bizData.put("abovemaxnumberofhits", abovemaxnumberofhits);
+    bizData.put("comment", "<empty/>");
     System.gc();
     res.sendPage(format + "/sparql-result", bizData);
   }

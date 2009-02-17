@@ -199,9 +199,16 @@ public class FeedbackController implements StatelessAppleController {
 
   private void commentOnResource(AppleRequest req, AppleResponse res) {
     Map<String, Object> bizData = new HashMap<String, Object>();
+
     String uri = req.getCocoonRequest().getParameter("uri");
     String email = req.getCocoonRequest().getParameter("email");
     String comment = req.getCocoonRequest().getParameter("comment");
+
+    StringBuilder commentData = new StringBuilder();
+    commentData.append("<c:comment xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+    commentData.append("<c:email>"+ email +"</c:email>\n");
+    commentData.append("<c:commentcontent>"+ comment +"</c:commentcontent>\n");
+    commentData.append("</c:comment>");
 
     StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:c=\"http://xmlns.computas.com/cocoon\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\">\n");
@@ -250,6 +257,7 @@ public class FeedbackController implements StatelessAppleController {
     bizData.put("request", "<empty/>");
     bizData.put("loggedin", loggedIn);
     bizData.put("abovemaxnumberofhits", "false");
+    bizData.put("comment", commentData.toString());
     res.sendPage("xml/sparql-result", bizData);
   }
 

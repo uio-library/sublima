@@ -135,7 +135,7 @@
             <label for="email"><i18n:text key="email">E-post</i18n:text></label>
           </td>
           <td>
-            <input id="email" type="text" name="email" size="40"/>
+            <input id="email" type="text" name="email" size="40" value="{/c:page/c:content/c:comment/c:comment/c:email}"/>
           </td>
         </tr>
         <tr>
@@ -143,7 +143,7 @@
             <label for="comment"><i18n:text key="comment">Kommentar</i18n:text></label>
           </td>
           <td>
-            <textarea id="comment" name="comment" rows="6" cols="40"><xsl:text> </xsl:text></textarea>
+            <textarea id="comment" name="comment" rows="6" cols="40"><xsl:value-of select="/c:page/c:content/c:comment/c:comment/c:commentcontent"/><xsl:text> </xsl:text></textarea>
           </td>
         </tr>
         <tr>
