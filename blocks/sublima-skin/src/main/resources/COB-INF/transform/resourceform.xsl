@@ -490,7 +490,7 @@
           </td>
         </tr>
         <xsl:if test="./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource">
-          <tr>
+          <tr id="markasnew">
             <td>
               <i18n:text key="resourceasnew">Marker som ny</i18n:text>
             </td>
@@ -515,8 +515,9 @@
 
             <script type="text/javascript">
               function copyAsNew() {
-              document.getElementById("the-resource").value = '';
-              document.getElementById("dct:identifier").value = '';
+                document.getElementById("the-resource").value = '';
+                document.getElementById("dct:identifier").value = '';
+                document.getElementById("markasnew").style.visibility = "hidden";
               }
             </script>
 
