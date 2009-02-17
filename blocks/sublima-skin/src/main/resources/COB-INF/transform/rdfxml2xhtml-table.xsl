@@ -58,7 +58,7 @@
 	  <i18n:text key="admin.approvedby">Redaksjonelt godkjent av</i18n:text>:
 	</th>
 	<td>
-	  <xsl:apply-templates select="sub:Resource/sub:committer"/>
+	  <xsl:apply-templates select="sub:Resource/sub:lastApprovedBy"/>
 	</td>
       </tr>
       <tr>

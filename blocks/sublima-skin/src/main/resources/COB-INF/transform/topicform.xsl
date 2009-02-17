@@ -276,6 +276,16 @@
             </textarea>
           </td>
         </tr>
+        <tr>
+          <td>
+            <label for="sub:classification">
+              <i18n:text key="classification">Klassifisering</i18n:text>
+            </label>
+          </td>
+          <td>
+            <input id="sub:classification" type="text" name="sub:classification" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/sub:classification}"/>
+          </td>
+        </tr>
       </table>
 
       <table>

@@ -521,12 +521,7 @@ public class TopicController implements StatelessAppleController {
     res.sendPage("xml2/emner_alle", bizData);
   }
 
-  private void editTopic
-          (AppleResponse
-                  res, AppleRequest
-                  req, String
-                  type, String
-                  messages) {
+  private void editTopic(AppleResponse res, AppleRequest req, String type, String messages) {
 
     boolean insertSuccess = false;
     String tempPrefixes = "<c:tempvalues \n" +

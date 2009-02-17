@@ -199,6 +199,7 @@ public class ResourceController implements StatelessAppleController {
             bizData.put("mediatypes", adminService.getAllMediaTypes());
             bizData.put("audience", adminService.getAllAudiences());
             bizData.put("status", adminService.getAllStatuses());
+            bizData.put("users", adminService.getAllUsers());
             bizData.put("publishers", adminService.getAllPublishers());
             bizData.put("userprivileges", userPrivileges);
             bizData.put("mode", "edit");
@@ -270,6 +271,7 @@ public class ResourceController implements StatelessAppleController {
     bizData.put("audience", allAudiences);
     bizData.put("status", allStatuses);
     bizData.put("userprivileges", userPrivileges);
+    bizData.put("users", adminService.getAllUsers());
 
     // When GET present a blank form with listvalues or prefilled with resource
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
@@ -312,7 +314,7 @@ public class ResourceController implements StatelessAppleController {
 
       } else {
 
-        boolean isNew = (req.getCocoonRequest().getParameter("dct:identifier") == null);
+        boolean isNew = (req.getCocoonRequest().getParameter("dct:identifier") == null || req.getCocoonRequest().getParameter("dct:identifier").isEmpty());
 
 
         StringBuilder tempValues = getTempValues(req);
@@ -342,10 +344,11 @@ public class ResourceController implements StatelessAppleController {
 
         // if it's a new resource, or it is marked as new, register commiter, registered date
         if (isNew || parameterMap.containsKey("markasnew")) {
+          parameterMap.remove("markasnew");
           parameterMap.remove("sub:committer");
-          parameterMap.remove("sub:registeredDate");
+          parameterMap.remove("dct:dateSubmitted");
           parameterMap.put("sub:committer", new String[]{user.getAttribute("uri").toString()});
-          parameterMap.put("sub:registeredDate", new String[]{date});
+          parameterMap.put("dct:dateSubmitted", new String[]{date});
         }
 
         // if the status is approved by administrator then we update last approved by and date
@@ -388,7 +391,7 @@ public class ResourceController implements StatelessAppleController {
         insertSuccess = sparulDispatcher.query(sparqlQuery);
 
         //validated = sparulDispatcher.query(sparqlQuery);
-        logger.trace("INSERT QUERY RESULT: " + insertSuccess);
+        logger.trace("INSERT QUERY RESULTS: " + insertSuccess);
 
         if (insertSuccess) {
           if (isNew) {

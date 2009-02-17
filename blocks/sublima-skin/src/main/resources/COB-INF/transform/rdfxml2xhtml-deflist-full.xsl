@@ -131,7 +131,7 @@
 	  <i18n:text key="admin.posteddate">Innsendt</i18n:text>:
 	</th>
 	<td>
-	  <xsl:apply-templates select="./sub:registeredDate"/>
+	  <xsl:apply-templates select="./dct:dateSubmitted"/>
 	</td>
       </tr>
      

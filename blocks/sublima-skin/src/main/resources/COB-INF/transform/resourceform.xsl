@@ -10,7 +10,6 @@
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
-        xmlns:sioc="http://rdfs.org/sioc/ns#"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sioc="http://rdfs.org/sioc/ns#"
@@ -35,7 +34,7 @@
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
       <input type="hidden" name="sub:committer" value="{./c:resource/rdf:RDF/sub:Resource/sub:committer/@rdf:resource}"/>
-      <input type="hidden" name="sub:registeredDate" value="{./c:resource/rdf:RDF/sub:Resource/sub:registeredDate}"/>
+      <input type="hidden" name="dct:dateSubmitted" value="{./c:resource/rdf:RDF/sub:Resource/dct:dateSubmitted}"/>
       <input type="hidden" name="sub:lastApprovedBy" value="{./c:resource/rdf:RDF/sub:Resource/sub:lastApprovedBy/@rdf:resource}"/>
       <input type="hidden" name="dct:dateAccepted" value="{./c:resource/rdf:RDF/sub:Resource/dct:dateAccepted}"/>
       <input type="hidden" id="dct:identifier" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
@@ -61,7 +60,7 @@
                 <i18n:text key="date">Dato</i18n:text>
             </td>
             <td>
-              <xsl:value-of select="./sub:registeredDate"/>
+              <xsl:value-of select="substring-before(./c:resource/rdf:RDF/sub:Resource/dct:dateSubmitted, 'T')"/>
             </td>
           </tr>
         </xsl:if>
@@ -83,7 +82,7 @@
                 <i18n:text key="date">Dato</i18n:text>
             </td>
             <td>
-              <xsl:value-of select="./sub:dateAccepted"/>
+              <xsl:value-of select="substring-before(./c:resource/rdf:RDF/sub:Resource/dct:dateAccepted, 'T')"/>
             </td>
           </tr>
         </xsl:if>

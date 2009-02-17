@@ -13,8 +13,7 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:c="http://xmlns.computas.com/cocoon"
   xmlns="http://www.w3.org/1999/xhtml" 
-  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr skos"
-  >
+  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr skos">
 
   <xsl:import href="labels.xsl"/>
 
@@ -43,6 +42,10 @@
   </xsl:template>
 
   <xsl:template match="sub:committer">
+    <xsl:value-of select="./sioc:User/rdfs:label"/>
+  </xsl:template>
+
+  <xsl:template match="sub:lastApprovedBy">
     <xsl:value-of select="./sioc:User/rdfs:label"/>
   </xsl:template>
   

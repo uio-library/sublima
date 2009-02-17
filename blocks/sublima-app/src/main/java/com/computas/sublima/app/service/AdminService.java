@@ -32,6 +32,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
+import java.net.URLEncoder;
 
 /**
  * A class to support the administration of Sublima
@@ -256,7 +257,6 @@ public class AdminService {
   public Object getResourceByURI(String uri) {
 
     try {
-      //uri = URLEncoder.encode(uri, "UTF-8");
       uri = "<" + uri + ">";
 
     } catch (Exception e) {
@@ -535,16 +535,12 @@ public class AdminService {
       return false;
     }
 
-    if ("302".equals(ourcode) ||
+    return "302".equals(ourcode) ||
             "303".equals(ourcode) ||
             "304".equals(ourcode) ||
             "305".equals(ourcode) ||
             "307".equals(ourcode) ||
-            ourcode.startsWith("2")) {
-      return true;
-    } else {
-      return false;
-    }
+            ourcode.startsWith("2");
   }
 
   public String getAllRoles() {

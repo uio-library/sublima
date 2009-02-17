@@ -48,6 +48,9 @@
             <c:resource>
                 <jx:out value="#{resource}" xmlize="true"/>
             </c:resource>
+            <c:users>
+                <jx:out value="#{users}" xmlize="true"/>
+            </c:users>
             <c:topics>
                 <jx:out value="#{topics}" xmlize="true"/>
             </c:topics>
