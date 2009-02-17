@@ -356,7 +356,7 @@ public class ResourceController implements StatelessAppleController {
           parameterMap.remove("sub:lastApprovedBy");
           parameterMap.remove("dct:dateAccepted");
           parameterMap.put("sub:lastApprovedBy", new String[]{user.getAttribute("uri").toString()});
-          parameterMap.put("dct:dateAccepted", new String[]{date});          
+          parameterMap.put("dct:dateAccepted", new String[]{date});
         }
 
         // Generate a dct:identifier if it's a new resource, and set the time and date for approval
@@ -485,9 +485,13 @@ public class ResourceController implements StatelessAppleController {
       validationMessages.append("<c:message><i18n:text key=\"validation.url.errorcode\">Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</i18n:text></c:message>\n");
     }
 
-    // Check if the user tries to save it with an approved status, but without a subject
-    if (req.getCocoonRequest().getParameterValues("dct:subject") == null && "http://sublima.computas.com/status/godkjent_av_administrator".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
-      validationMessages.append("<c:message><i18n:text key=\"validation.resource.notopic\">At least one subject must be chosen</i18n:text></c:message>\n");
+
+    if ("http://sublima.computas.com/status/godkjent_av_administrator".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
+      // Check if the user tries to save it with an approved status, but without a subject
+      // It's only one element in the list, and that element is empty
+      if (req.getCocoonRequest().getParameterValues("dct:subject") == null || (req.getCocoonRequest().getParameterValues("dct:subject").length == 1 && req.getCocoonRequest().getParameterValues("dct:subject")[0].isEmpty())) {
+        validationMessages.append("<c:message><i18n:text key=\"validation.resource.notopic\">At least one subject must be chosen</i18n:text></c:message>\n");
+      }
     }
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) || req.getCocoonRequest().getParameter("wdr:describedBy") == null) {
@@ -513,6 +517,9 @@ public class ResourceController implements StatelessAppleController {
     String temp_comment = req.getCocoonRequest().getParameter("rdfs:comment");
     String temp_status = req.getCocoonRequest().getParameter("wdr:describedBy");
     String temp_date = req.getCocoonRequest().getParameter("dct:dateAccepted");
+    String temp_dateSubmitted = req.getCocoonRequest().getParameter("dct:dateSubmitted");
+    String temp_registeredby = req.getCocoonRequest().getParameter("sub:committer");
+    String temp_approvedby = req.getCocoonRequest().getParameter("sub:lastApprovedBy");
 
 //Create an XML structure for the selected values, to use in the JX template
     StringBuilder xmlStructureBuffer = new StringBuilder();
@@ -543,8 +550,10 @@ public class ResourceController implements StatelessAppleController {
 
     xmlStructureBuffer.append("<dct:description>" + temp_description + "</dct:description>\n");
 
-    xmlStructureBuffer.append("<dct:dateAccepted rdf:datatype=\"http://www.w3.org/2001/XMLSchema#dateTime\">" + temp_date + "</dct:dateAccepted>\n");
-
+    if (temp_registeredby != null || !temp_registeredby.isEmpty()) xmlStructureBuffer.append("<sub:committer rdf:resource=\"" + temp_registeredby + "\"/>\n");
+    if (temp_approvedby != null || !temp_approvedby.isEmpty()) xmlStructureBuffer.append("<sub:lastApprovedBy rdf:resource=\"" + temp_approvedby + "\"/>\n");
+    if (temp_date != null || !temp_date.isEmpty()) xmlStructureBuffer.append("<dct:dateAccepted rdf:datatype=\"http://www.w3.org/2001/XMLSchema#dateTime\">" + temp_date + "</dct:dateAccepted>\n");
+    if (temp_dateSubmitted != null || !temp_dateSubmitted.isEmpty()) xmlStructureBuffer.append("<dct:dateSubmitted rdf:datatype=\"http://www.w3.org/2001/XMLSchema#dateTime\">" + temp_dateSubmitted + "</dct:dateSubmitted>\n");
 
     if (temp_languages != null) {
       for (String s : temp_languages) {
