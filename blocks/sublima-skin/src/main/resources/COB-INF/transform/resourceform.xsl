@@ -10,6 +10,7 @@
         xmlns:dct="http://purl.org/dc/terms/"
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:sioc="http://rdfs.org/sioc/ns#"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sioc="http://rdfs.org/sioc/ns#"
@@ -33,13 +34,59 @@
       <input type="hidden" name="prefix" value="rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;"/>
       <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
       <input type="hidden" name="rdf:type" value="http://xmlns.computas.com/sublima#Resource"/>
+      <input type="hidden" name="sub:committer" value="{./c:resource/rdf:RDF/sub:Resource/sub:committer/@rdf:resource}"/>
+      <input type="hidden" name="sub:registeredDate" value="{./c:resource/rdf:RDF/sub:Resource/sub:registeredDate}"/>
+      <input type="hidden" name="sub:lastApprovedBy" value="{./c:resource/rdf:RDF/sub:Resource/sub:lastApprovedBy/@rdf:resource}"/>
       <input type="hidden" name="dct:dateAccepted" value="{./c:resource/rdf:RDF/sub:Resource/dct:dateAccepted}"/>
-      <input type="hidden" id="dct:identifier" name="dct:identifier"
-             value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
+      <input type="hidden" id="dct:identifier" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
       <xsl:call-template name="hidden-locale-field"/>
 
       <table>
+        <xsl:if test="./c:resource/rdf:RDF/sub:Resource/sub:committer/@rdf:resource">
+          <tr>
+            <td>
+                <i18n:text key="registeredby">Registrert av</i18n:text>
+            </td>
+            <td>
+                <xsl:for-each select="./c:users/rdf:RDF/sioc:User">
+                  <xsl:if test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/sub:committer/@rdf:resource">
+                    <xsl:value-of select="./rdfs:label"/>
+                  </xsl:if>
+                </xsl:for-each>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <i18n:text key="date">Dato</i18n:text>
+            </td>
+            <td>
+              <xsl:value-of select="./sub:registeredDate"/>
+            </td>
+          </tr>
+        </xsl:if>
+        <xsl:if test="./c:resource/rdf:RDF/sub:Resource/sub:lastApprovedBy/@rdf:resource">
+          <tr>
+            <td>
+                <i18n:text key="lastapprovedby">Sist godkjent av</i18n:text>
+            </td>
+            <td>
+                <xsl:for-each select="./c:users/rdf:RDF/sioc:User">
+                  <xsl:if test="./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/sub:lastApprovedBy/@rdf:resource">
+                    <xsl:value-of select="./rdfs:label"/>
+                  </xsl:if>
+                </xsl:for-each>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <i18n:text key="date">Dato</i18n:text>
+            </td>
+            <td>
+              <xsl:value-of select="./sub:dateAccepted"/>
+            </td>
+          </tr>
+        </xsl:if>
         <tr>
           <td>
             <label for="dct:title">

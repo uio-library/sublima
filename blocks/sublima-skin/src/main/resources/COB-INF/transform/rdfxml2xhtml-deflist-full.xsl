@@ -123,7 +123,7 @@
 	  <i18n:text key="admin.approvedby">Redaksjonelt godkjent av</i18n:text>:
 	</th>
 	<td>
-	  <xsl:apply-templates select="./sub:committer"/>
+	  <xsl:apply-templates select="./sub:lastApprovedBy"/>
 	</td>
       </tr>
       <tr>
@@ -131,7 +131,7 @@
 	  <i18n:text key="admin.posteddate">Innsendt</i18n:text>:
 	</th>
 	<td>
-	  <xsl:apply-templates select="./dct:dateSubmitted"/>
+	  <xsl:apply-templates select="./sub:registeredDate"/>
 	</td>
       </tr>
      

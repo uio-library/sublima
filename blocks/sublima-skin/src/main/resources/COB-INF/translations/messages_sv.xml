@@ -279,5 +279,7 @@
   <message key="validation.user.new.existingusername">En bruker med dette brukernavnet finnes allerede.</message><!-- MÅ OVERSETTES -->
   <message key="validation.user.new.nopassword">Et nytt passord må angis</message><!-- MÅ OVERSETTES -->
   <message key="validation.user.new.passworddontmatch">Passordet må være likt i begge feltene.</message><!-- MÅ OVERSETTES -->
+  <message key="registeredby">Registrert av</message><!-- MÅ OVERSETTES -->
+  <message key="lastapprovedby">Sist godkjent av</message><!-- MÅ OVERSETTES -->
 </catalogue>
 

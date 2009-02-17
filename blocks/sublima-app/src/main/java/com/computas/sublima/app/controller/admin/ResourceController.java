@@ -38,13 +38,13 @@ public class ResourceController implements StatelessAppleController {
   private String mode;
   private String submode;
   String[] completePrefixArray = {
-      "PREFIX dct: <http://purl.org/dc/terms/>",
-      "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
-      "PREFIX sub: <http://xmlns.computas.com/sublima#>",
-      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-      "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
-      "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
-      "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
+          "PREFIX dct: <http://purl.org/dc/terms/>",
+          "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
+          "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+          "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+          "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+          "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+          "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
 
   String completePrefixes = StringUtils.join("\n", completePrefixArray);
 
@@ -64,11 +64,11 @@ public class ResourceController implements StatelessAppleController {
     }
 
     LanguageService langServ = new LanguageService();
-        String language = langServ.checkLanguage(req, res);
+    String language = langServ.checkLanguage(req, res);
 
-        logger.trace("ResourceController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
-        logger.trace("ResourceController: Language from service is " + language);
-    
+    logger.trace("ResourceController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
+    logger.trace("ResourceController: Language from service is " + language);
+
 
     if ("ressurser".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode) || submode == null) {
@@ -82,12 +82,12 @@ public class ResourceController implements StatelessAppleController {
       } else if ("checkurl".equalsIgnoreCase(submode)) {
         registerNewResourceURL(req, res);
       }
-    }else if ("kommentarer".equalsIgnoreCase(mode)) {
-        if ("".equalsIgnoreCase(submode) || submode == null) {
-          showComments(res, req, null);
-        } else if ("slett".equalsIgnoreCase(submode)) {
-          deleteComment(req,res);
-        }
+    } else if ("kommentarer".equalsIgnoreCase(mode)) {
+      if ("".equalsIgnoreCase(submode) || submode == null) {
+        showComments(res, req, null);
+      } else if ("slett".equalsIgnoreCase(submode)) {
+        deleteComment(req, res);
+      }
     } else {
       res.sendStatus(404);
     }
@@ -95,6 +95,7 @@ public class ResourceController implements StatelessAppleController {
 
   /**
    * Method to delete a comment
+   *
    * @param req Request
    * @param res Response
    */
@@ -106,7 +107,7 @@ public class ResourceController implements StatelessAppleController {
     if (success) {
       messages.append("<c:message><i18n:text key=\"comment.deletedok\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n");
     } else {
-      messages.append("<c:message><i18n:text key=\"comment.deletefailed\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n");      
+      messages.append("<c:message><i18n:text key=\"comment.deletefailed\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n");
     }
 
     showComments(res, req, messages);
@@ -152,20 +153,20 @@ public class ResourceController implements StatelessAppleController {
     bizData.put("userprivileges", userPrivileges);
 
     String tempPrefixes = "<c:tempvalues \n" +
-        "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
-        "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
-        "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
-        "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
-        "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
-        "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-        "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
-        "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
-        "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-        "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
-        "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
-        "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-        "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-        "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
+            "xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
+            "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+            "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+            "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+            "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+            "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+            "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+            "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+            "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+            "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+            "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+            "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+            "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n";
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
 
@@ -203,12 +204,12 @@ public class ResourceController implements StatelessAppleController {
             bizData.put("mode", "edit");
             bizData.put("messages", messageBuffer.toString());
             bizData.put("resource", "<rdf:RDF\n" +
-                "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-                "    xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n" +
-                "  <sub:Resource>\n" +
-                "    <sub:url rdf:resource=\"" + url + "\"/>\n" +
-                "  </sub:Resource>\n" +
-                "</rdf:RDF>");
+                    "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+                    "    xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n" +
+                    "  <sub:Resource>\n" +
+                    "    <sub:url rdf:resource=\"" + url + "\"/>\n" +
+                    "  </sub:Resource>\n" +
+                    "</rdf:RDF>");
 
             res.sendPage("xml2/ressurs", bizData);
           }
@@ -244,21 +245,13 @@ public class ResourceController implements StatelessAppleController {
    * @param type     - String "new" or "edit"
    * @param messages
    */
-  private void editResource
-      (AppleResponse
-          res, AppleRequest
-          req, String
-          type, String
-          messages) {
+  private void editResource(AppleResponse res, AppleRequest req, String type, String messages) {
 
-    boolean validated = true;
     boolean insertSuccess = false;
     boolean updateDate = false;
 
-    String dctPublisher;
     String dctIdentifier = "";
-    String dateAccepted;
-    String committer;
+    String date;
 
     // Get all list values
     String allTopics = adminService.getAllTopics();
@@ -302,9 +295,9 @@ public class ResourceController implements StatelessAppleController {
       if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
         String deleteString = "DELETE {\n" +
-            "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o.\n" +
-            "} WHERE {\n" +
-            "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o. }";
+                "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o.\n" +
+                "} WHERE {\n" +
+                "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o. }";
 
         boolean deleteResourceSuccess = sparulDispatcher.query(deleteString);
 
@@ -319,6 +312,8 @@ public class ResourceController implements StatelessAppleController {
         }
 
       } else {
+
+        boolean isNew = (req.getCocoonRequest().getParameter("dct:identifier") == null);
 
 
         StringBuilder tempValues = getTempValues(req);
@@ -341,30 +336,33 @@ public class ResourceController implements StatelessAppleController {
           return;
         }
 
-        Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        dateAccepted = dateFormat.format(date); //"2008-18-09T13:39:38";
 
-        // If the user checks that the resource should be marked as new, set updateDate to true
-        if (parameterMap.containsKey("markasnew")) {
-          updateDate = true;
-          parameterMap.remove("markasnew");
+        Date dateToday = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        date = dateFormat.format(dateToday); //"2008-18-09T13:39:38";
+
+        // if it's a new resource, or it is marked as new, register commiter, registered date
+        if (isNew || parameterMap.containsKey("markasnew")) {
+          parameterMap.remove("sub:committer");
+          parameterMap.remove("sub:registeredDate");
+          parameterMap.put("sub:committer", new String[]{user.getAttribute("uri").toString()});
+          parameterMap.put("sub:registeredDate", new String[]{date});
         }
 
-        parameterMap.put("sub:committer", new String[]{user.getAttribute("uri").toString()});
+        // if the status is approved by administrator then we update last approved by and date
+        if ("http://sublima.computas.com/status/godkjent_av_administrator".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
+          parameterMap.remove("sub:lastApprovedBy");
+          parameterMap.remove("dct:dateAccepted");
+          parameterMap.put("sub:lastApprovedBy", new String[]{user.getAttribute("uri").toString()});
+          parameterMap.put("dct:dateAccepted", new String[]{date});          
+        }
 
         // Generate a dct:identifier if it's a new resource, and set the time and date for approval
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier")) || req.getCocoonRequest().getParameter("dct:identifier") == null) {
-          updateDate = true;
           dctIdentifier = searchService.sanitizeStringForURI(req.getCocoonRequest().getParameter("dct:title"));
           dctIdentifier = getProperty("sublima.base.url") + "resource/" + dctIdentifier + parameterMap.get("the-resource").hashCode();
         } else {
           dctIdentifier = req.getCocoonRequest().getParameter("dct:identifier");
-        }
-
-        if (updateDate) {
-          parameterMap.remove("dct:dateAccepted");
-          parameterMap.put("dct:dateAccepted", new String[]{dateAccepted});
         }
 
         Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
@@ -375,7 +373,7 @@ public class ResourceController implements StatelessAppleController {
         parameterMap.remove("actionbutton"); // The name of the submit button
         if (parameterMap.get("subjecturi-prefix") != null) {
           parameterMap.put("subjecturi-prefix", new String[]{getProperty("sublima.base.url") +
-              parameterMap.get("subjecturi-prefix")[0]});
+                  parameterMap.get("subjecturi-prefix")[0]});
         }
 
         String sparqlQuery = null;
@@ -394,7 +392,7 @@ public class ResourceController implements StatelessAppleController {
         logger.trace("INSERT QUERY RESULT: " + insertSuccess);
 
         if (insertSuccess) {
-          if (updateDate) {
+          if (isNew) {
             messageBuffer.append("<c:message><i18n:text key=\"resource.resourceadded\">Ny ressurs lagt til</i18n:text></c:message>\n");
           } else {
             messageBuffer.append("<c:message><i18n:text key=\"resource.updated\">Ressurs oppdatert</i18n:text></c:message>\n");
@@ -422,10 +420,10 @@ public class ResourceController implements StatelessAppleController {
         String sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
         String queryResult = adminService.query(sparqlQuery);
         bizData.put("result-list", queryResult);
-        bizData.put("navigation",  "<empty></empty>");
+        bizData.put("navigation", "<empty></empty>");
         bizData.put("mode", "resource");
 
-        bizData.put("searchparams",  "<empty></empty>");
+        bizData.put("searchparams", "<empty></empty>");
         StringBuilder params = adminService.getMostOfTheRequestXML(req);
         params.append("\n  </request>\n");
 
@@ -463,9 +461,7 @@ public class ResourceController implements StatelessAppleController {
    * @param req
    * @return
    */
-  private String validateRequest
-      (AppleRequest
-          req) {
+  private String validateRequest(AppleRequest req) {
     StringBuilder validationMessages = new StringBuilder();
 
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:title")) || req.getCocoonRequest().getParameter("dct:title") == null) {
@@ -502,8 +498,8 @@ public class ResourceController implements StatelessAppleController {
   }
 
   private StringBuilder getTempValues
-      (AppleRequest
-          req) {
+          (AppleRequest
+                  req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:title");
     String temp_uri = req.getCocoonRequest().getParameter("the-resource").trim();
@@ -521,20 +517,20 @@ public class ResourceController implements StatelessAppleController {
 //Create an XML structure for the selected values, to use in the JX template
     StringBuilder xmlStructureBuffer = new StringBuilder();
     xmlStructureBuffer.append("<rdf:RDF  xmlns:topic=\"" + getProperty("sublima.base.url") + "topic/\"\n" +
-        "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
-        "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
-        "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
-        "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
-        "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-        "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
-        "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
-        "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
-        "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
-        "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
-        "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
-        "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
-        "xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"\n" +
-        "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n");
+            "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n" +
+            "xmlns:wdr=\"http://www.w3.org/2007/05/powder#\"\n" +
+            "xmlns:lingvoj=\"http://www.lingvoj.org/ontology#\"\n" +
+            "xmlns:sioc=\"http://rdfs.org/sioc/ns#\"\n" +
+            "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+            "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n" +
+            "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" +
+            "xmlns:dct=\"http://purl.org/dc/terms/\"\n" +
+            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n" +
+            "xmlns:dcmitype=\"http://purl.org/dc/dcmitype/\"\n" +
+            "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
+            "xmlns:c=\"http://xmlns.computas.com/cocoon\"\n" +
+            "xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"\n" +
+            "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n");
     xmlStructureBuffer.append("<sub:Resource>\n");
     xmlStructureBuffer.append("<dct:title>" + temp_title + "</dct:title>\n");
     xmlStructureBuffer.append("<sub:url rdf:resource=\"" + temp_uri + "\"/>\n");
@@ -600,22 +596,22 @@ public class ResourceController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     AdminService adminservice = new AdminService();
     bizData.put("statuses", adminservice.getDistinctAndUsedLabels("<http://www.w3.org/2007/05/powder#DR>",
-        "<http://www.w3.org/2007/05/powder#describedBy>"));
+            "<http://www.w3.org/2007/05/powder#describedBy>"));
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
     res.sendPage("xml2/ressurser", bizData);
   }
 
   public void setSparulDispatcher
-      (SparulDispatcher
-          sparulDispatcher) {
+          (SparulDispatcher
+                  sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 
   //todo Move to a Service-class
   private Map<String, String[]> createParametersMap
-      (Request
-          request) {
+          (Request
+                  request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {
