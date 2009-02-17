@@ -1,0 +1,156 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix pf:      <http://jena.hpl.hp.com/ARQ/property#> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_5> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/horendebarn> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000273> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/barnmedsykeforeldre> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/soskenavfunksjonshemmede> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/funksjonshemmedebarn> ;
+      skos:prefLabel "Barn "@no , "Barn "@sv , "Børn "@da ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_166> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001461> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D002648"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+status:godkjent_av_administrator
+      rdf:type wdr:DR ;
+      rdfs:label "Godkjent av administrator"@no , "Godkjent av administrator"@da , "Approved by administrator"@en , "Godkänt av administrator"@sv .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000502>
+      rdf:type skos:Concept ;
+      skos:altLabel "Kondrodystrofi "@no , "Kondrodystrofi "@da ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000791> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_244> ;
+      skos:hiddenLabel "Achondroplasi"@da ;
+      skos:note "bruk samtidig emnet \"Kortvoksthet\" / \"Kortväxthet\" "@no ;
+      skos:prefLabel "Akondroplasi "@sv , "Akondroplasi "@no , "Akondroplasi "@da ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D000130"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://www.rbu.se/start.asp?sida=7242>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#SV> ;
+      dct:dateAccepted "2004-01-08T17:23:46"^^xsd:dateTime ;
+      dct:description "Dokumentet innehåller information om skelettdysplasier: Akondroplasi, Hypokondroplasi, Diastrofisk dysplasi, Osteogenesis Imperfecta - OI samt om andra orsaker till kortvuxenhet.   "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vad_aer_kortvaexthet_002469> ;
+      dct:language <http://www.lingvoj.org/lang/sv> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/RiksfrbundetfrRrelsehindradeBarnochUngdomarRBU> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000502> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000791> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000929> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000792> ;
+      dct:title "Vad är kortväxthet? "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.rbu.se/start.asp?sida=7242> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000791>
+      rdf:type skos:Concept ;
+      skos:altLabel "Dvärgväxt "@sv , "Dvergvekst "@no ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00075> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_174> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_90> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000475> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001541> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001590> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000502> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001897> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001330> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001567> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_110> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000614> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001460> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001455> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001527> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000929> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001471> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_105> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000593> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001469> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001344> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001335> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001000> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001759> ;
+      skos:prefLabel "Kortvoksthet "@no , "Væksthæmning "@da , "Kortväxthet "@sv ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_107> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000792> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D004392"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+sub:Resource
+      rdf:type rdfs:Class ;
+      rdfs:subClassOf rdfs:Resource ;
+      owl:unionOf sioc:Site , sioc:Item .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/grenskaNyhetsbrev2142003>
+      rdf:type foaf:Agent ;
+      dct:description "Ågrenska bedriver verksamheter utifrån ett helhetsperspektiv för barn och ungdomar med funktionshinder, deras familjer och professionella som möter barn och familjer. "@no ;
+      foaf:name "Ågrenska Nyhetsbrev 214/ 2003 "@no .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000929>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000791> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_61> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_244> ;
+      skos:note "Bruk samtidig emnet Kortvoksthet "@no ;
+      skos:prefLabel "Diastrofisk dysplasi "@sv , "Diastrofisk dysplasi "@no , "Diastrofisk dysplasi "@da ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert>
+      rdf:type sioc:User ;
+      rdfs:label "Konvertert"@no , "Konvertert"@da , "Konverterad"@sv , "Converted"@en .
+
+<http://www.lingvoj.org/lang/sv>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Ruotsin kieli"@fi , "Swedish"@en , "Svenska"@sv , "Svensk"@nn , "Svensk"@no , "Svensk"@da , "Ruoŧagiella"@se ;
+      lingvoj:iso1 "sv" ;
+      lingvoj:iso2t "swe" ;
+      lingvoj:iso3 "swe" ;
+      owl:sameAs <http://dbpedia.org/resource/Swedish_language> , <http://psi.oasis-open.org/iso/639/#swe> , <http://sw.cyc.com/2006/07/27/cyc/SwedishLanguage> ;
+      foaf:depiction <http://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Sweden.svg> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/RiksfrbundetfrRrelsehindradeBarnochUngdomarRBU>
+      rdf:type foaf:Agent ;
+      dct:description "I Riksförbundet för Rörelsehindrade Barn och ungdomar samlas föräldrar, barn, ungdomar och vuxna. RBU välkomnar familjer med alla typer av rörelsehinder samt även andra funktionshinder.  "@no , "I Riksförbundet för Rörelsehindrade Barn och ungdomar samlas föräldrar, barn, ungdomar och vuxna. RBU välkomnar familjer med alla typer av rörelsehinder samt även andra funktionshinder. "@no ;
+      foaf:name "Riksförbundet för Rörelsehindrade Barn och Ungdomar, RBU "@no , "Riksförbundet för Rörelsehindrade Barn och Ungdomar - RBU "@no .
+
+<http://www6.goteborg.se/agrenska/nyhetsbrev/alla_utgavor_files/Akondroplasi03.pdf>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#SV> ;
+      dct:dateAccepted "2003-11-16T13:22:11"^^xsd:dateTime ;
+      dct:description "Nyhetsbrev från familjevistelser på Ågrenska är bearbetade sammanfattningar av sjukdomen/syndromet utifrån medicinska och psykosociala föreläsningar samt fallbeskrivning. Kontrollerad 2007-02-13 "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/akondroplasi_002334> ;
+      dct:language <http://www.lingvoj.org/lang/sv> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/grenskaNyhetsbrev2142003> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000502> ;
+      dct:title "Akondroplasi "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "Klumpig motorik  Hörselproblem   "@no ;
+      sub:url <http://www6.goteborg.se/agrenska/nyhetsbrev/alla_utgavor_files/Akondroplasi03.pdf> .
+
+<http://www.sos.se/smkh/1997-29-046/1997-29-046.htm>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#SV> ;
+      dct:dateAccepted "2003-04-25T04:17:38"^^xsd:dateTime ;
+      dct:description "Sjukdom/skada/diagnos Förekomst Orsak till sjukdomen/skadan Ärftlighet Symtom Diagnostik Behandling/åtgärder Praktiska tips Resurser på riks-/regionnivå Resurspersoner Kurser, erfarenhetsutbyte, rekreation Handikapporganisation/ patientförening/ motsvarande Kurser, erfarenhetsutbyte för personal Forskning och utveckling (FoU) Samhällets stödinsatser Informationsmaterial Litteratur Databasreferenser  Kontrollerad 2007-02-13 "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/akondroplasi_00918> ;
+      dct:language <http://www.lingvoj.org/lang/sv> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/SocialstyrelsenSmochmindrekndahandikappgrupper> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000502> ;
+      dct:title "Akondroplasi "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "genetikk "@no ;
+      sub:url <http://www.sos.se/smkh/1997-29-046/1997-29-046.htm> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000792>
+      rdf:type skos:Concept ;
+      skos:altLabel "Medfødt knogleskørhed "@da , "Medfödd benskörhet "@sv , "Medfødt benskjørhet "@no ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001167> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_174> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_244> ;
+      skos:prefLabel "Osteogenesis imperfekta "@sv , "Osteogenesis Imperfecta "@da , "Osteogenesis Imperfecta "@no ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000791> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D010013"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/SocialstyrelsenSmochmindrekndahandikappgrupper>
+      rdf:type foaf:Agent ;
+      dct:description "Till små och mindre kända handikappgrupper räknas ovanliga sjukdomar/skador som leder till omfattande funktionshinder och som finns hos högst 100 personer per en miljon invånare. Syftet med databasen är att ge aktuell information om dessa handikappgrupper och om det stöd och den service som de behöver.    "@no , "Till små och mindre kända handikappgrupper räknas ovanliga sjukdomar/skador som leder till omfattande funktionshinder och som finns hos högst 100 personer per en miljon invånare. Syftet med databasen är att ge aktuell information om dessa handikappgrupper och om det stöd och den service som de behöver.   "@no , "Till små och mindre kända handikappgrupper räknas ovanliga sjukdomar/skador som leder till omfattande funktionshinder och som finns hos högst 100 personer per en miljon invånare. Syftet med databasen är att ge aktuell information om dessa handikappgrupper och om det stöd och den service som de behöver.  "@no , "(diagnosen är under uppdatering) "@no , "Till små och mindre kända handikappgrupper räknas ovanliga sjukdomar/skador som leder till omfattande funktionshinder och som finns hos högst 100 personer per en miljon invånare. Syftet med databasen är att ge aktuell information om dessa handikappgrupper och om det stöd och den service som de behöver. "@no , "Till små och mindre kända handikappgrupper räknas ovanliga sjukdomar/skador som leder till omfattande funktionshinder och som finns hos högst 100 personer per en miljon invånare.  Syftet med databasen är att ge aktuell information om dessa handikappgrupper och om det stöd och den service som de behöver.  "@no , "Detta är ett utdrag ur Socialstyrelsens kunskapsdatabas om små och mindre kända handikappgrupper. Syftet med databasen är att ge aktuell information om små och mindre kända handikappgrupper och om det stöd och den service som dessa grupper behöver.  "@no ;
+      foaf:name "Socialstyrelsen. Små och mindre kända handikappgrupper "@no , "Socialstyrelsen, Små och mindre kända handikappgrupper "@no .
