@@ -281,4 +281,5 @@
   <message key="validation.user.new.passworddontmatch">Passordet må være likt i begge feltene.</message>
   <message key="registeredby">Registrert av</message>
   <message key="lastapprovedby">Sist godkjent av</message>
+  <message key="classification">Klassifisering</message>
 </catalogue>
