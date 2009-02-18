@@ -1,0 +1,205 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix pf:      <http://jena.hpl.hp.com/ARQ/property#> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Nasjonalforeningenforfolkehelsen>
+      rdf:type foaf:Agent ;
+      dct:description "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Sjekket 4/9-07  "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 13/3-07 "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 25/10-05.  "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.     "@no , "Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.  "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.              "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 8/3-07 "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 10/12-07 "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak.  Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.  "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.   "@no , " "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 25/10-05. "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.       "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 19/11-07 "@no , "Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.       "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.  Sjekket 17/8-05 "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak.      "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.      "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 21/6-06 "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 12/3-07 "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.   Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation.  "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Organisasjonen ble stiftet i 1910. Sjekket 22/12-05 "@no , "Nasjonalforeningen for folkehelsen er en frivillig, humanitær organisasjon som arbeider for å bedre folkehelsen gjennom forskning, opplysning og praktiske tiltak. Helsenytt følger HONcode prinsippene for medisinsk/helseinformasjon fra Health on the Net Foundation. Sjekket 04/12-06 "@no ;
+      foaf:name "Nasjonalforeningen for folkehelsen "@no , "Nasjonalforeningen for  folkehelsen "@no .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_5> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/horendebarn> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000273> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/barnmedsykeforeldre> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/soskenavfunksjonshemmede> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/funksjonshemmedebarn> ;
+      skos:prefLabel "Barn "@no , "Barn "@sv , "Børn "@da ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_166> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001461> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D002648"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://www.lingvoj.org/lang/no>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:isDefinedBy <http://www.lingvoj.org/lingvo/no.rdf> ;
+      rdfs:label "Norjan kieli"@fi , "Norsk"@da , "Norsk"@no , "Norsk"@nn , "Norwegian"@en , "Norska"@sv , "Dárogiella"@se ;
+      lingvoj:iso1 "no" ;
+      lingvoj:iso2b "nor" ;
+      lingvoj:iso2t "nor" ;
+      lingvoj:iso3 "nor" ;
+      owl:sameAs <http://psi.oasis-open.org/iso/639/#nor> , <http://dbpedia.org/resource/Norwegian_language> , <http://downlode.org/rdf/iso-639/languages#no> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000579>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000253> ;
+      skos:prefLabel "Psykosomatiske sygdomme "@da , "Psykosomatiska sjukdomar "@sv , "Psykosomatiske sykdommer "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D011602"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000649>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_125> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000194> ;
+      skos:prefLabel "Øresmerter "@da , "Øresmerter "@no , "Öronsmärta "@sv ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D004433"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+status:godkjent_av_administrator
+      rdf:type wdr:DR ;
+      rdfs:label "Godkjent av administrator"@no , "Godkjent av administrator"@da , "Approved by administrator"@en , "Godkänt av administrator"@sv .
+
+<http://www.lommelegen.no/art/art1203.asp>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2004-11-24T10:07:32"^^xsd:dateTime ;
+      dct:description "Det er viktig å skille mellom smerter som sitter i korsryggen, og smerter som stråler nedover ett eller begge bein. Utstrålende smerter kan tyde på at en eller flere nerver er i klem, men kan også skyldes stive, betente muskler.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vondt_i_korsryggen__hva_kan_det_skyldes_004700> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Lommelegen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000259> ;
+      dct:title "Vondt i korsryggen - hva kan det skyldes? "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.lommelegen.no/art/art1203.asp> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000291>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000194> ;
+      skos:prefLabel "Huvudvärk "@sv , "Hodepine "@no , "Hovedpine "@da ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_180> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D006261"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://www.helsenytt.no/artikler/barnpust.htm>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-02-04T10:39:59"^^xsd:dateTime ;
+      dct:description "Pusteproblemer er ikke nødvendigvis ensbetydende med alvorlig sykdom. De kan også skyldes andre, mer uskyldige tilstander. Intervju med overlege Arve Hexeberg.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/naar_barnet_har_vondt_for_aa_puste_00179> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Nasjonalforeningenforfolkehelsen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000256> ;
+      dct:title "Når barnet har vondt for å puste "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "rs bronkitt lungebetennelse falsk krupp astma "@no ;
+      sub:url <http://www.helsenytt.no/artikler/barnpust.htm> .
+
+<http://www.helsenytt.no/artikler/barn_sjelen.htm>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-05-28T08:38:19"^^xsd:dateTime ;
+      dct:description "Når barn utsettes for store påkjenninger, kan de svare med det legene kaller psykosomatiske reaksjoner, dvs. kroppslige forandringer eller plager med sjelelig årsak. Reaksjonene varierer med barnets alder og med tryggheten og støtten barnet får, sier professor i barne-og ungdomspsykiatri ved Haukeland sykehus, Jofrid Alice Nygaard.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/hvordan_reagerer_barn_naar_de_har_vondt_i_sjelen_001064> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Nasjonalforeningenforfolkehelsen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000579> ;
+      dct:title "Hvordan reagerer barn når de har vondt i sjelen? "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "psykosomatiske reaksjoner NOFT (Non-Organic Failure to Trive vantrivsel holde-pusten-anfall søvnvansker nattskrekk mareritt vondt i magen søk lege "@no ;
+      sub:url <http://www.helsenytt.no/artikler/barn_sjelen.htm> .
+
+<http://www.helsenytt.no/artikler/barnoere.htm>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-03-04T08:21:49"^^xsd:dateTime ;
+      dct:description "Ørebetennelse er en vanlig sykdom hos barn. Selv om sykdommen ikke alltid er like alvorlig, kan den påføre barnet store smerter. Og blir barnet gående med væske i mellomøret over lang tid, kan dette resultere i dårlig hørsel, og dermed forsinket språkutvikling. "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/naar_barn_faar_vondt_i_oeret_00491> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Nasjonalforeningenforfolkehelsen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000649> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/mellomorebetennelse> ;
+      dct:title "Når barn får vondt i øret "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.helsenytt.no/artikler/barnoere.htm> .
+
+sub:Resource
+      rdf:type rdfs:Class ;
+      rdfs:subClassOf rdfs:Resource ;
+      owl:unionOf sioc:Site , sioc:Item .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000259>
+      rdf:type skos:Concept ;
+      skos:altLabel "Vondt i ryggen "@no , "Ont i ryggen "@sv ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000194> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001603> ;
+      skos:prefLabel "Rygsmerter "@da , "Ryggont "@sv , "Ryggsmerter "@no ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001604> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "	D001416"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00068>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_3> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000238> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/netthinnesykdommer> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000784> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001622> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001624> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001345> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001607> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000820> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_234> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001645> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001403> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_955> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001827> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_960> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001508> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/synsnervesykdommer> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000545> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001327> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000816> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_47> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000783> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_182> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001631> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001766> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000753> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_979> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_993> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000221> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001547> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001465> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000186> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001080> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000188> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000766> ;
+      skos:prefLabel "Ögonsjukdomar "@sv , "Øyesykdommer "@no , "Øjensygdomme "@da ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000785> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D005128"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert>
+      rdf:type sioc:User ;
+      rdfs:label "Konvertert"@no , "Konvertert"@da , "Konverterad"@sv , "Converted"@en .
+
+<http://www.lommelegen.no/art/art2674.asp>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2004-08-02T09:56:44"^^xsd:dateTime ;
+      dct:description "Noen øyesykdommer kan gi vondt i hodet. Dessuten kan nedsatt syn føre til at du anstrenger deg for å se, som igjen kan resultere i hodepine.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vondt_i_hodet__noe_galt_med_oeyet_004004> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Lommelegen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00068> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000291> ;
+      dct:title "Vondt i hodet = noe galt med øyet? "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.lommelegen.no/art/art2674.asp> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000256>
+      rdf:type skos:Concept ;
+      skos:altLabel "Andpustenhet"@no , "Dyspne"@no , "Dyspne"@sv , "Tung pust "@no , "Andfåddhet"@sv , "Dyspnea"@da ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_980> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_958> ;
+      skos:prefLabel "Åndenød "@da , "Åndenød "@no , "Andnöd "@sv ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D004417"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/mellomorebetennelse>
+      rdf:type skos:Concept ;
+      skos:altLabel "Akut öroninflammation"@sv , "Otitis media"@no , "Otitis media"@sv , "Otitis media"@da , "Akut ørebetændelse"@da , "Akutt ørebetennelse"@no ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000174> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001770> ;
+      skos:prefLabel "Mellanöreinflammation"@sb , "Mellemørebetændelse "@da , "Mellomørebetennelse"@no ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001224> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D010033"^^rdf:XMLLiteral .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Lommelegen>
+      rdf:type foaf:Agent ;
+      dct:description "Det meste av stoffet Lommelegen.no tilbyr, er skrevet av norske leger for norske forhold. Stoff som ikke er skrevet av leger, er vurdert av leger før publisering. Redaktørene for Lommelegen er legene Cecilie Arentz-Hansen og Kåre Moen. Det finnes en god del reklame på Lommelegen.no      "@no , "Det meste av stoffet Lommelegen.no tilbyr, er skrevet av norske leger for norske forhold. Stoff som ikke er skrevet av leger, er vurdert av leger før publisering. Redaktørene for Lommelegen er legene Cecilie Arentz-Hansen og Kåre Moen. Det finnes en god del reklame på Lommelegen.no            "@no , "Det meste av stoffet Lommelegen.no tilbyr, er skrevet av norske leger for norske forhold. Stoff som ikke er skrevet av leger, er vurdert av leger før publisering. Redaktørene for Lommelegen er legene Cecilie Arentz-Hansen og Kåre Moen. Det finnes en god del reklame på Lommelegen.no "@no , "lommelegen er... "@no , "Det meste av stoffet Lommelegen.no tilbyr, er skrevet av norske leger for norske forhold. Stoff som ikke er skrevet av leger, er vurdert av leger før publisering. Redaktørene for Lommelegen er legene Cecilie Arentz-Hansen og Kåre Moen. Det finnes en god del reklame på Lommelegen.no. Sjekket 9/3-06  "@no , "Det meste av stoffet Lommelegen.no tilbyr, er skrevet av norske leger for norske forhold. Stoff som ikke er skrevet av leger, er vurdert av leger før publisering. Redaktørene for Lommelegen er legene Cecilie Arentz-Hansen og Kåre Moen. Det finnes en god del reklame på Lommelegen.no  "@no , "Det meste av stoffet Lommelegen.no tilbyr, er skrevet av norske leger for norske forhold. Stoff som ikke er skrevet av leger, er vurdert av leger før publisering. Redaktørene for Lommelegen er legene Cecilie Arentz-Hansen og Kåre Moen. Det finnes en god del reklame på Lommelegen.no. Sjekket 24/1-08 "@no , " Det meste av stoffet Lommelegen.no tilbyr, er skrevet av norske leger for norske forhold. Stoff som ikke er skrevet av leger, er vurdert av leger før publisering. Redaktørene for Lommelegen er legene Cecilie Arentz-Hansen og Kåre Moen. Det finnes en god del reklame på Lommelegen.no  "@no , " "@no , "Det meste av stoffet Lommelegen.no tilbyr, er skrevet av norske leger for norske forhold. Stoff som ikke er skrevet av leger, er vurdert av leger før publisering. Redaktørene for Lommelegen er legene Cecilie Arentz-Hansen og Kåre Moen. Det finnes en god del reklame på Lommelegen.no       "@no ;
+      foaf:name "Lommelegen "@no .
