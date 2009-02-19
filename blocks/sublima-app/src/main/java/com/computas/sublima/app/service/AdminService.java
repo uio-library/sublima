@@ -1047,7 +1047,7 @@ public class AdminService {
                     "}\n" +
                     "OPTIONAL {\n" +
                     subject + "\n" +
-                    "   skos:definition ?definition ;\n" +
+                    "   skos:definition ?definition .\n" +
                     "}\n" +
                     "OPTIONAL {\n" +
                     subject + "\n" +
