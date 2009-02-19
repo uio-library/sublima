@@ -45,7 +45,7 @@ status:godkjent_av_administrator
 <http://www.ssi.dk/sw15010.asp>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#DK> ;
-      dct:dateAccepted "2004-12-03T14:02:59"^^xsd:dateTime ;
+      dct:dateAccepted "2004-12-03T14:02:59.000+01:00"^^xsd:dateTime ;
       dct:description "Årsag Forekomst Smitteveje og reservoir Symptomer Diagnose Behandling Vaccination Anden forebyggelse Hyppighed  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/q_feber_004770> ;
       dct:language <http://www.lingvoj.org/lang/da> ;
@@ -83,7 +83,7 @@ sub:Resource
 <http://www.smittskyddsinstitutet.se/sjukdomar/q-feber/>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#SV> ;
-      dct:dateAccepted "2004-03-23T12:32:51"^^xsd:dateTime ;
+      dct:dateAccepted "2004-03-23T12:32:51.000+01:00"^^xsd:dateTime ;
       dct:description "Q-feber är en globalt förekommande zoonos, d.v.s. en sjukdom som kan smitta såväl djur som människa, som förmodligen är betydligt vanligare än vad som rapporteras i officiell statistik. Dokumentet innehåller information om orsak, smittvägar,symptom, behandling och åtgärder "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/q_feber_003077> ;
       dct:language <http://www.lingvoj.org/lang/sv> ;
@@ -113,7 +113,7 @@ sub:Resource
 <http://www.fhi.no/dav/B1770DE3CB.pdf>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-03-26T13:01:16"^^xsd:dateTime ;
+      dct:dateAccepted "2003-03-26T13:01:16.000+01:00"^^xsd:dateTime ;
       dct:description "Zoonose som smitter til mennesker vanligvis gjennom inhalasjon av støv og aerosoler fra forurenset miljø. Forårsakes av en rickettsia-organisme kalt Coxiella burnetti. Nettsiden gir informasjon om smittemåter, symptomer og behandling. Her finner du også oversikt over forekomst og forebyggende tiltak.  PDF, 1 side. "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/q_feber_00747> ;
       dct:language <http://www.lingvoj.org/lang/no> ;

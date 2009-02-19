@@ -88,34 +88,10 @@ status:godkjent_av_administrator
       sub:classification "D007562"^^rdf:XMLLiteral ;
       sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
 
-<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000744>
-      rdf:type skos:Concept ;
-      skos:altLabel "Weils sjukdom "@sv , "Weils sykdom "@no , "Weils sygdom "@da ;
-      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_53> ;
-      skos:prefLabel "Leptospirose "@no , "Leptospiros "@sv , "Leptospirosis "@da ;
-      wdr:describedBy status:godkjent_av_administrator ;
-      sub:classification "	D007922"^^rdf:XMLLiteral ;
-      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
-
-<http://www.fhi.no/dav/DDA20CB57C.pdf>
-      rdf:type sub:Resource ;
-      dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-03-20T08:56:28"^^xsd:dateTime ;
-      dct:description "Gruppe av zoonoser forårsaket av spiralbakterien Leptospira interrogans som er i familie med spiroketer. Mennesker smittes ved kontakt med vann, f.eks. kloakkvann og badevann, forurenset med dyrs urin. Nettsiden gir informasjon om smittemåter, symptomer og behandling. Her finner du også oversikt over forekomst og forebyggende tiltak. PDF, 1 side. "@no ;
-      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/leptospirose_00668> ;
-      dct:language <http://www.lingvoj.org/lang/no> ;
-      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
-      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000744> ;
-      dct:title "Leptospirose "@no ;
-      wdr:describedBy status:godkjent_av_administrator ;
-      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
-      sub:keywords "icterohaemorrhagiae Weils sykdom canicola sejroe "@no ;
-      sub:url <http://www.fhi.no/dav/DDA20CB57C.pdf> .
-
 <http://tinyurl.com/2vlmy9>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-03-11T10:38:56"^^xsd:dateTime ;
+      dct:dateAccepted "2003-03-11T10:38:56.000+01:00"^^xsd:dateTime ;
       dct:description "Creutzfeldt-Jakobs sykdom (CJS) er den vanligste forekommende formen av humane spongiforme encefalopatier (prionsykdommer). Sykdommen er karakterisert av typiske nevropatologiske forandringer med dødelig utgang innen 1-2 år etter symptomdebut. Nettsiden gir informasjon om smittemåter, symptomer og behandling. Her finner du også oversikt over forekomst og forebyggende tiltak.   "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/creutzfeldt_jakobs_sykdom_og_andre_prionsykdommer_00579> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
@@ -139,7 +115,7 @@ sub:Resource
 <http://www.fhi.no/artikler/?id=56092>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-03-28T06:08:31"^^xsd:dateTime ;
+      dct:dateAccepted "2003-03-28T06:08:31.000+01:00"^^xsd:dateTime ;
       dct:description "Gruppe B-streptokokker kan forårsake flere typer infeksjon som faller i to hovedgrupper: neonatal sykdom og sykdom hos voksne. Sykdom hos voksne rammer vanligvis enten kvinner i forbindelse med svangerskap /fødsel eller eldre mennesker med underliggende sykdom. Langt de fleste kvinnene med GBS-bæreskap er aymptomatiske.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/streptokokkinfeksjon_gruppe_b__systemisk_sykdom_00794> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
@@ -150,15 +126,6 @@ sub:Resource
       sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
       sub:keywords "primær bakteriemi, septikemi, endokarditt og pneumoni, foruten urinveisinfeksjoner og bløtvevsinfeksjoner. , endometritt, amnionitt og postparum sårinfeksjon  "@no ;
       sub:url <http://www.fhi.no/artikler/?id=56092> .
-
-<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000521>
-      rdf:type skos:Concept ;
-      skos:altLabel "Afrikansk sömsjuka "@sv , "Sömnsjuka, afrikansk "@sv , "Chagas sygdom "@da , "Sovesyke, afrikansk "@no , "Sovesyge, afrikansk "@da , "Afrikansk sovesyke "@no , "Afrikansk sovesyge "@da , "Chagas sykdom "@no , "Chagas sjukdom "@sv ;
-      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_129> ;
-      skos:prefLabel "Trypanosomiasis "@sv , "Trypanosomiasis "@no , "Trypanosomiasis "@da ;
-      wdr:describedBy status:godkjent_av_administrator ;
-      sub:classification "D014352"^^rdf:XMLLiteral ;
-      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
 
 <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000432>
       rdf:type skos:Concept ;
@@ -185,25 +152,10 @@ sub:Resource
       sub:classification "D004927"^^rdf:XMLLiteral ;
       sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
 
-<http://www.fhi.no/dav/431357061A.pdf>
-      rdf:type sub:Resource ;
-      dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-03-31T07:17:36"^^xsd:dateTime ;
-      dct:description "Sykdom som forårsakes av trypanosomparasitter. Trypanasomer forårsaker på verdensbasis to viktige sykdommer: Chagas sykdom (amerikansk trypanosomiasis) og Sovesyke (afrikansk trypanosomiasis). Nettsiden gir informasjon om smittemåter, symptomer og behandling. Her finner du også oversikt over forekomst og forebyggende tiltak. PDF, 2 sider.  "@no ;
-      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/trypanosomiasis_00822> ;
-      dct:language <http://www.lingvoj.org/lang/no> ;
-      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
-      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000521> ;
-      dct:title "Trypanosomiasis "@no ;
-      wdr:describedBy status:godkjent_av_administrator ;
-      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
-      sub:keywords "Trypanosoma cruzi Trypanosoma brucei gambiense Trypanosoma brucei rhodesiense  "@no ;
-      sub:url <http://www.fhi.no/dav/431357061A.pdf> .
-
 <http://www.fhi.no/artikler/?id=55677>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-03-14T09:12:14"^^xsd:dateTime ;
+      dct:dateAccepted "2003-03-14T09:12:14.000+01:00"^^xsd:dateTime ;
       dct:description "Etter introduksjon av Hib-vaksine i barnevaksinasjonsprogrammer har man sett en sterk reduksjon av Hib-infeksjoner i industrialiserte land. I dag er systemisk sykdom med serotype non-b vanligst i Norge. I utviklingsland er Hib-meningitt fremdeles et betydelig problem, spesielt hos barn under seks måneders alder.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/haemophilus_influenzae_invasiv_sykdom_00626> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
@@ -217,7 +169,7 @@ sub:Resource
 <http://www.fhi.no/artikler/?id=57476>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2006-03-20T11:56:46"^^xsd:dateTime ;
+      dct:dateAccepted "2006-03-20T11:56:46.000+01:00"^^xsd:dateTime ;
       dct:description "E.coli O103 tilhører en gruppe E.coli-varianter som kalles \"EHEC-gruppen\". EHEC er en forkortelse for enterohemorrhagisk E.coli - som oversatt til norsk betyr \"E.coli som kan gi opphav til blødende tarmsykdom\". E.coli hører normalt hjemme i tarmen til alle mennesker og varmblodige dyr og er vanligvis både nyttige og uskadelige. Men noen få varianter er likevel i stand til å gi opphav til til dels alvorlig sykdom - herunder EHEC-gruppen. Nyrekomplikasjoner - i form av HUS (hemolytisk-uremisk syndrom) - inntrer som regel i 8-10% av alle barn < 10 år som får slik infeksjon. "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/bakterien_e_coli_o103_og_sykdommen_den_er_aarsak_til_006667> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
