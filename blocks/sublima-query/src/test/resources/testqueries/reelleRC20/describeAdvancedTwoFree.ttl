@@ -1,0 +1,230 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix pf:      <http://jena.hpl.hp.com/ARQ/property#> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_5> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/horendebarn> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000273> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/barnmedsykeforeldre> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/soskenavfunksjonshemmede> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/funksjonshemmedebarn> ;
+      skos:prefLabel "Barn "@no , "Barn "@sv , "Børn "@da ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_166> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001461> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D002648"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://www.lingvoj.org/lang/no>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:isDefinedBy <http://www.lingvoj.org/lingvo/no.rdf> ;
+      rdfs:label "Norjan kieli"@fi , "Norsk"@da , "Norsk"@no , "Norsk"@nn , "Norwegian"@en , "Norska"@sv , "Dárogiella"@se ;
+      lingvoj:iso1 "no" ;
+      lingvoj:iso2b "nor" ;
+      lingvoj:iso2t "nor" ;
+      lingvoj:iso3 "nor" ;
+      owl:sameAs <http://psi.oasis-open.org/iso/639/#nor> , <http://dbpedia.org/resource/Norwegian_language> , <http://downlode.org/rdf/iso-639/languages#no> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000519>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_53> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000448> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000549> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000460> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000627> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000730> ;
+      skos:note "Brukes på ressurser som handler spesifikt om streptokokker og streptokokkinfeksjoner. "@no ;
+      skos:prefLabel "Streptokockinfektioner "@sv , "Streptokokkinfektioner "@da , "Streptokokkinfeksjoner "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D013290"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000548>
+      rdf:type skos:Concept ;
+      skos:altLabel "HIB-infeksjoner"@no , "HIB-infektioner "@sv , "HIB-infektioner "@da ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_53> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_964> ;
+      skos:note "Haemophilus influenzae type b norsk hämofilus influensa typ b svensk haemophilus influenzae type b dansk "@no ;
+      skos:prefLabel "Hæmophilus influenzae infektioner"@da , "Hämofilus influensa infektioner"@sv , "Haemophilus influenzae infeksjoner"@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D006192"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+status:godkjent_av_administrator
+      rdf:type wdr:DR ;
+      rdfs:label "Godkjent av administrator"@no , "Godkjent av administrator"@da , "Approved by administrator"@en , "Godkänt av administrator"@sv .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001475>
+      rdf:type skos:Concept ;
+      skos:altLabel "HUS "@sv , "HUS "@da , "HUS "@no ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00099> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000334> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001704> ;
+      skos:prefLabel "Haemolytisk uraemisk syndrom "@da , "Hemolytiskt uremiskt syndrom "@sv , "Hemolytisk uremisk syndrom "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D006463"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000454>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_177> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000164> ;
+      skos:note "Vurder om du samtidig bør bruke emnet: \"Bovin spongiform encefalopati\" "@no ;
+      skos:prefLabel "Creutzfeldt-Jakobs sykdom "@no , "Creutzfeldt-Jakobs sjukdom "@sv , "Creutzfeldt-Jakob sygdom "@da ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001269> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D007562"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000744>
+      rdf:type skos:Concept ;
+      skos:altLabel "Weils sjukdom "@sv , "Weils sykdom "@no , "Weils sygdom "@da ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_53> ;
+      skos:prefLabel "Leptospirose "@no , "Leptospiros "@sv , "Leptospirosis "@da ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "	D007922"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://www.fhi.no/dav/DDA20CB57C.pdf>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-03-20T08:56:28"^^xsd:dateTime ;
+      dct:description "Gruppe av zoonoser forårsaket av spiralbakterien Leptospira interrogans som er i familie med spiroketer. Mennesker smittes ved kontakt med vann, f.eks. kloakkvann og badevann, forurenset med dyrs urin. Nettsiden gir informasjon om smittemåter, symptomer og behandling. Her finner du også oversikt over forekomst og forebyggende tiltak. PDF, 1 side. "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/leptospirose_00668> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000744> ;
+      dct:title "Leptospirose "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "icterohaemorrhagiae Weils sykdom canicola sejroe "@no ;
+      sub:url <http://www.fhi.no/dav/DDA20CB57C.pdf> .
+
+<http://tinyurl.com/2vlmy9>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-03-11T10:38:56"^^xsd:dateTime ;
+      dct:description "Creutzfeldt-Jakobs sykdom (CJS) er den vanligste forekommende formen av humane spongiforme encefalopatier (prionsykdommer). Sykdommen er karakterisert av typiske nevropatologiske forandringer med dødelig utgang innen 1-2 år etter symptomdebut. Nettsiden gir informasjon om smittemåter, symptomer og behandling. Her finner du også oversikt over forekomst og forebyggende tiltak.   "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/creutzfeldt_jakobs_sykdom_og_andre_prionsykdommer_00579> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000454> ;
+      dct:title "Creutzfeldt-Jakobs sykdom og andre prionsykdommer "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "cjd kugalskap overførbare spongiforme encephalopatier (transmissible spongiform encefalopati eller TSE prionsykdommer "@no ;
+      sub:url <http://tinyurl.com/2vlmy9> .
+
+sub:Resource
+      rdf:type rdfs:Class ;
+      rdfs:subClassOf rdfs:Resource ;
+      owl:unionOf sioc:Site , sioc:Item .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert>
+      rdf:type sioc:User ;
+      rdfs:label "Konvertert"@no , "Konvertert"@da , "Konverterad"@sv , "Converted"@en .
+
+<http://www.fhi.no/artikler/?id=56092>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-03-28T06:08:31"^^xsd:dateTime ;
+      dct:description "Gruppe B-streptokokker kan forårsake flere typer infeksjon som faller i to hovedgrupper: neonatal sykdom og sykdom hos voksne. Sykdom hos voksne rammer vanligvis enten kvinner i forbindelse med svangerskap /fødsel eller eldre mennesker med underliggende sykdom. Langt de fleste kvinnene med GBS-bæreskap er aymptomatiske.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/streptokokkinfeksjon_gruppe_b__systemisk_sykdom_00794> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000519> ;
+      dct:title "Streptokokkinfeksjon, gruppe B - systemisk sykdom "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "primær bakteriemi, septikemi, endokarditt og pneumoni, foruten urinveisinfeksjoner og bløtvevsinfeksjoner. , endometritt, amnionitt og postparum sårinfeksjon  "@no ;
+      sub:url <http://www.fhi.no/artikler/?id=56092> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000521>
+      rdf:type skos:Concept ;
+      skos:altLabel "Afrikansk sömsjuka "@sv , "Sömnsjuka, afrikansk "@sv , "Chagas sygdom "@da , "Sovesyke, afrikansk "@no , "Sovesyge, afrikansk "@da , "Afrikansk sovesyke "@no , "Afrikansk sovesyge "@da , "Chagas sykdom "@no , "Chagas sjukdom "@sv ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_129> ;
+      skos:prefLabel "Trypanosomiasis "@sv , "Trypanosomiasis "@no , "Trypanosomiasis "@da ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D014352"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000432>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_949> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000204> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001168> ;
+      skos:prefLabel "Vaccinationer "@sv , "Vaccinationer "@da , "Vaksinasjoner "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D014611"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet>
+      rdf:type foaf:Agent ;
+      dct:description "Informasjonen er beregnet på helsepersonell. Folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 4/10-05     "@no , "Brosjyre i PDF-format. 1 side. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 19/12-06 "@no , "Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 4/10-05  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 17/8-06 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 2/1-06 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 15/8-07 "@no , "Brosjyre i PDF-format. 9 sider. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den.  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 16/8-07 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 6/10-05            "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 4/10-05 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den.  Sjekket 3/10-05     "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 5/10-05 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 22/8-06 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 17/8-06          "@no , "Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 25/8-05 "@no , "Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 28/11-07 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 6/10-05  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 3/10-05 "@no , "Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den.  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 11/10-05 "@no , "“Fakta om Hepatitt A, B og C” Utgitt av Nasjonalt folkehelseinstitutt i samarbeid med Sosial- og Helsedirektoratet. PDF-format. 8 sider. Rev. utg. 2001. Sjekket 25/8-05 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekkeet 5/10-05 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 12/10-06 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 6/10-05 "@no , "Brosjyre fra Statens helsetilsyn og Folkehelseinstituttet datert 19.7.2002. I pdf-format.  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den.  Sjekket 6/10-05     "@no , "Om hivinfeksjon er skrevet av Ingeborg Lyngstad Vik ved Olafiaklinikken i samarbeid med Una Due-Tønnessen, Olafiaklinikken. Ragnhild Seip og Hilde Kløvstad, Nasjonalt folkehelseinstitutt, har bidratt til redigeringen og stått for den praktiske tilretteleggingen. PDF-format. 51 sider. Sjekket 25/8-05 "@no ;
+      foaf:name "Folkehelseinstituttet "@no .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000637>
+      rdf:type skos:Concept ;
+      skos:altLabel "E. coli infektioner "@sv , "Escherichia coli infeksjon "@no , "ETEC "@no , "ETEC "@sv , "ETEC "@da , "Escherichia coli infektion "@da ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_53> ;
+      skos:hiddenLabel "E-coli infeksjoner "@no , "E-coli infektioner "@sv , "E-coli infektioner "@da ;
+      skos:note "vurder om du også bør bruke emnet \"Matforgiftning\" / \"Matförgiftning\" - eller \"Diaré\" (ETEC = Turistdiare) "@no ;
+      skos:prefLabel "E. coli infeksjoner "@no , "E. coli infektioner "@da , "Escherichia coli infektioner "@sv ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D004927"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://www.fhi.no/dav/431357061A.pdf>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-03-31T07:17:36"^^xsd:dateTime ;
+      dct:description "Sykdom som forårsakes av trypanosomparasitter. Trypanasomer forårsaker på verdensbasis to viktige sykdommer: Chagas sykdom (amerikansk trypanosomiasis) og Sovesyke (afrikansk trypanosomiasis). Nettsiden gir informasjon om smittemåter, symptomer og behandling. Her finner du også oversikt over forekomst og forebyggende tiltak. PDF, 2 sider.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/trypanosomiasis_00822> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000521> ;
+      dct:title "Trypanosomiasis "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "Trypanosoma cruzi Trypanosoma brucei gambiense Trypanosoma brucei rhodesiense  "@no ;
+      sub:url <http://www.fhi.no/dav/431357061A.pdf> .
+
+<http://www.fhi.no/artikler/?id=55677>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-03-14T09:12:14"^^xsd:dateTime ;
+      dct:description "Etter introduksjon av Hib-vaksine i barnevaksinasjonsprogrammer har man sett en sterk reduksjon av Hib-infeksjoner i industrialiserte land. I dag er systemisk sykdom med serotype non-b vanligst i Norge. I utviklingsland er Hib-meningitt fremdeles et betydelig problem, spesielt hos barn under seks måneders alder.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/haemophilus_influenzae_invasiv_sykdom_00626> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000432> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000548> ;
+      dct:title "Haemophilus influenzae, invasiv sykdom "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.fhi.no/artikler/?id=55677> .
+
+<http://www.fhi.no/artikler/?id=57476>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2006-03-20T11:56:46"^^xsd:dateTime ;
+      dct:description "E.coli O103 tilhører en gruppe E.coli-varianter som kalles \"EHEC-gruppen\". EHEC er en forkortelse for enterohemorrhagisk E.coli - som oversatt til norsk betyr \"E.coli som kan gi opphav til blødende tarmsykdom\". E.coli hører normalt hjemme i tarmen til alle mennesker og varmblodige dyr og er vanligvis både nyttige og uskadelige. Men noen få varianter er likevel i stand til å gi opphav til til dels alvorlig sykdom - herunder EHEC-gruppen. Nyrekomplikasjoner - i form av HUS (hemolytisk-uremisk syndrom) - inntrer som regel i 8-10% av alle barn < 10 år som får slik infeksjon. "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/bakterien_e_coli_o103_og_sykdommen_den_er_aarsak_til_006667> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001475> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000637> ;
+      dct:title "Bakterien E.coli O103 og sykdommen den er årsak til "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "Nyresvikt blodig diare "@no ;
+      sub:url <http://www.fhi.no/artikler/?id=57476> .

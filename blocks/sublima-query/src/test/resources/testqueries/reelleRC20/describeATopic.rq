@@ -1,0 +1,13 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX wdr: <http://www.w3.org/2007/05/powder#>
+DESCRIBE ?resource <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514> ?publisher ?subjects ?rest
+WHERE {
+        ?resource dct:language ?lang;
+                                 dct:publisher ?publisher ;
+                dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514>, ?subjects ;
+        wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;
+                ?p ?rest .}
+
+

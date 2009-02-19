@@ -52,7 +52,7 @@ status:godkjent_av_administrator
 <http://www.rbu.se/start.asp?sida=7242>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#SV> ;
-      dct:dateAccepted "2004-01-08T17:23:46"^^xsd:dateTime ;
+      dct:dateAccepted "2004-01-08T17:23:46.000+01:00"^^xsd:dateTime ;
       dct:description "Dokumentet innehåller information om skelettdysplasier: Akondroplasi, Hypokondroplasi, Diastrofisk dysplasi, Osteogenesis Imperfecta - OI samt om andra orsaker till kortvuxenhet.   "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vad_aer_kortvaexthet_002469> ;
       dct:language <http://www.lingvoj.org/lang/sv> ;
@@ -113,7 +113,7 @@ sub:Resource
 <http://www6.goteborg.se/agrenska/nyhetsbrev/alla_utgavor_files/Akondroplasi03.pdf>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#SV> ;
-      dct:dateAccepted "2003-11-16T13:22:11"^^xsd:dateTime ;
+      dct:dateAccepted "2003-11-16T13:22:11.000+01:00"^^xsd:dateTime ;
       dct:description "Nyhetsbrev från familjevistelser på Ågrenska är bearbetade sammanfattningar av sjukdomen/syndromet utifrån medicinska och psykosociala föreläsningar samt fallbeskrivning. Kontrollerad 2007-02-13 "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/akondroplasi_002334> ;
       dct:language <http://www.lingvoj.org/lang/sv> ;
@@ -128,7 +128,7 @@ sub:Resource
 <http://www.sos.se/smkh/1997-29-046/1997-29-046.htm>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#SV> ;
-      dct:dateAccepted "2003-04-25T04:17:38"^^xsd:dateTime ;
+      dct:dateAccepted "2003-04-25T04:17:38.000+01:00"^^xsd:dateTime ;
       dct:description "Sjukdom/skada/diagnos Förekomst Orsak till sjukdomen/skadan Ärftlighet Symtom Diagnostik Behandling/åtgärder Praktiska tips Resurser på riks-/regionnivå Resurspersoner Kurser, erfarenhetsutbyte, rekreation Handikapporganisation/ patientförening/ motsvarande Kurser, erfarenhetsutbyte för personal Forskning och utveckling (FoU) Samhällets stödinsatser Informationsmaterial Litteratur Databasreferenser  Kontrollerad 2007-02-13 "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/akondroplasi_00918> ;
       dct:language <http://www.lingvoj.org/lang/sv> ;

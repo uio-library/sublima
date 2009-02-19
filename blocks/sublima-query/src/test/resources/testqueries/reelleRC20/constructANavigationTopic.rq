@@ -1,0 +1,38 @@
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+CONSTRUCT {
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514>
+   a skos:Concept ;
+   skos:prefLabel ?preflabel ;
+   skos:altLabel ?altlabel ;
+   skos:definition ?definition ;
+   ?semrelation ?object .
+?semrelation rdfs:subPropertyOf skos:semanticRelation ;
+   rdfs:label ?semrellabel ;
+   a owl:ObjectProperty .
+?object skos:prefLabel ?preflabel2 ;
+   a skos:Concept .
+}
+WHERE {
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514>
+   skos:prefLabel ?preflabel ;
+   a skos:Concept .
+OPTIONAL {
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514>
+   skos:altLabel ?altlabel .
+}
+OPTIONAL {
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514>
+   skos:definition ?definition .
+}
+OPTIONAL {
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514>
+   ?semrelation ?object .
+?semrelation rdfs:subPropertyOf skos:semanticRelation ;
+   rdfs:label ?semrellabel ;
+   a owl:ObjectProperty .
+?object  a skos:Concept ;
+   skos:prefLabel ?preflabel2 .
+}
+}

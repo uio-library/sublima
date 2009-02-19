@@ -72,7 +72,7 @@ status:godkjent_av_administrator
 <http://www.lommelegen.no/art/art1203.asp>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2004-11-24T10:07:32"^^xsd:dateTime ;
+      dct:dateAccepted "2004-11-24T10:07:32.000+01:00"^^xsd:dateTime ;
       dct:description "Det er viktig å skille mellom smerter som sitter i korsryggen, og smerter som stråler nedover ett eller begge bein. Utstrålende smerter kan tyde på at en eller flere nerver er i klem, men kan også skyldes stive, betente muskler.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vondt_i_korsryggen__hva_kan_det_skyldes_004700> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
@@ -95,7 +95,7 @@ status:godkjent_av_administrator
 <http://www.helsenytt.no/artikler/barnpust.htm>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-02-04T10:39:59"^^xsd:dateTime ;
+      dct:dateAccepted "2003-02-04T10:39:59.000+01:00"^^xsd:dateTime ;
       dct:description "Pusteproblemer er ikke nødvendigvis ensbetydende med alvorlig sykdom. De kan også skyldes andre, mer uskyldige tilstander. Intervju med overlege Arve Hexeberg.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/naar_barnet_har_vondt_for_aa_puste_00179> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
@@ -110,7 +110,7 @@ status:godkjent_av_administrator
 <http://www.helsenytt.no/artikler/barn_sjelen.htm>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-05-28T08:38:19"^^xsd:dateTime ;
+      dct:dateAccepted "2003-05-28T08:38:19.000+01:00"^^xsd:dateTime ;
       dct:description "Når barn utsettes for store påkjenninger, kan de svare med det legene kaller psykosomatiske reaksjoner, dvs. kroppslige forandringer eller plager med sjelelig årsak. Reaksjonene varierer med barnets alder og med tryggheten og støtten barnet får, sier professor i barne-og ungdomspsykiatri ved Haukeland sykehus, Jofrid Alice Nygaard.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/hvordan_reagerer_barn_naar_de_har_vondt_i_sjelen_001064> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
@@ -125,7 +125,7 @@ status:godkjent_av_administrator
 <http://www.helsenytt.no/artikler/barnoere.htm>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2003-03-04T08:21:49"^^xsd:dateTime ;
+      dct:dateAccepted "2003-03-04T08:21:49.000+01:00"^^xsd:dateTime ;
       dct:description "Ørebetennelse er en vanlig sykdom hos barn. Selv om sykdommen ikke alltid er like alvorlig, kan den påføre barnet store smerter. Og blir barnet gående med væske i mellomøret over lang tid, kan dette resultere i dårlig hørsel, og dermed forsinket språkutvikling. "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/naar_barn_faar_vondt_i_oeret_00491> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
@@ -169,7 +169,7 @@ sub:Resource
 <http://www.lommelegen.no/art/art2674.asp>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2004-08-02T09:56:44"^^xsd:dateTime ;
+      dct:dateAccepted "2004-08-02T09:56:44.000+01:00"^^xsd:dateTime ;
       dct:description "Noen øyesykdommer kan gi vondt i hodet. Dessuten kan nedsatt syn føre til at du anstrenger deg for å se, som igjen kan resultere i hodepine.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vondt_i_hodet__noe_galt_med_oeyet_004004> ;
       dct:language <http://www.lingvoj.org/lang/no> ;

@@ -4,9 +4,21 @@ PREFIX sub: <http://xmlns.computas.com/sublima#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wdr: <http://www.w3.org/2007/05/powder#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-DESCRIBE ?resource ?rest WHERE {
+
+DESCRIBE ?resource ?var1 ?rest WHERE {
+
 ?resource dct:title ?free1 .
-?free1 <bif:contains> """'vondt*'""" .
+?free1 <bif:contains> """'sykdom*'""" .
+
+
+?var1 foaf:name ?free4 .
+?free4 <bif:contains> """'Folkehelseinstituttet*'""" .
+?resource dct:publisher ?var1 .
+
+
+
+
+
 ?resource wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .
 ?resource ?p ?rest .
 }

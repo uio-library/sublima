@@ -1,0 +1,135 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Smittskyddsinstitutet>
+      rdf:type foaf:Agent ;
+      dct:description "Smittskyddsinstitutet (SMI) är en statlig expertmyndighet som på regeringens uppdrag har till uppgift att skydda Sveriges befolkning från smittsamma sjukdomar. Verksamheten vid institutet delas upp i verksamhetsgrenarna smittskydd, epidemiologisk övervakning och utvärdering, forskning och metodutveckling, speciell diagnostik, experimentell biomedicin och kvalitetsstöd. "@no , "Smittskyddsinstitutet (SMI) är en statlig expertmyndighet som på regeringens uppdrag har till uppgift att skydda Sveriges befolkning från smittsamma sjukdomar. Verksamheten vid institutet delas upp i verksamhetsgrenarna smittskydd, epidemiologisk övervakning och utvärdering, forskning och metodutveckling, speciell diagnostik, experimentell biomedicin och kvalitetsstöd.  "@no ;
+      foaf:name "Smittskyddsinstitutet "@no .
+
+<http://www.lingvoj.org/lang/no>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:isDefinedBy <http://www.lingvoj.org/lingvo/no.rdf> ;
+      rdfs:label "Norjan kieli"@fi , "Norsk"@da , "Norsk"@no , "Norsk"@nn , "Norwegian"@en , "Norska"@sv , "Dárogiella"@se ;
+      lingvoj:iso1 "no" ;
+      lingvoj:iso2b "nor" ;
+      lingvoj:iso2t "nor" ;
+      lingvoj:iso3 "nor" ;
+      owl:sameAs <http://psi.oasis-open.org/iso/639/#nor> , <http://dbpedia.org/resource/Norwegian_language> , <http://downlode.org/rdf/iso-639/languages#no> .
+
+status:godkjent_av_administrator
+      rdf:type wdr:DR ;
+      rdfs:label "Godkjent av administrator"@no , "Godkjent av administrator"@da , "Approved by administrator"@en , "Godkänt av administrator"@sv .
+
+<http://www.ssi.dk/sw15010.asp>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#DK> ;
+      dct:dateAccepted "2004-12-03T14:02:59"^^xsd:dateTime ;
+      dct:description "Årsag Forekomst Smitteveje og reservoir Symptomer Diagnose Behandling Vaccination Anden forebyggelse Hyppighed  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/q_feber_004770> ;
+      dct:language <http://www.lingvoj.org/lang/da> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/StatensSerumInstitut> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514> ;
+      dct:title "Q-feber "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "COXIELLA BURNETTI "@no ;
+      sub:url <http://www.ssi.dk/sw15010.asp> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/StatensSerumInstitut>
+      rdf:type foaf:Agent ;
+      dct:description " Statens Serum Institut er en international bioteknologisk forsknings- , produktions- og servicevirksomhed organiseret som en offentlig markedsorienteret statsvirksomhed under Indenrigs- og Sundhedsministeriet.       "@no , "Statens Serum Institut er en international bioteknologisk forsknings- , produktions- og servicevirksomhed organiseret som en offentlig markedsorienteret statsvirksomhed under Indenrigs- og Sundhedsministeriet. "@no , "Statens Serum Institut er en international bioteknologisk forsknings- , produktions- og servicevirksomhed organiseret som en offentlig markedsorienteret statsvirksomhed under Indenrigs- og Sundhedsministeriet.      "@no , "Statens Serum Institut er en international bioteknologisk forsknings- , produktions- og servicevirksomhed organiseret som en offentlig markedsorienteret statsvirksomhed under Indenrigs- og Sundhedsministeriet.  "@no , "Statens Serum Institut er en international bioteknologisk forsknings- , produktions- og servicevirksomhed organiseret som en offentlig markedsorienteret statsvirksomhed under Indenrigs- og Sundhedsministeriet "@no , "Statens Serum Institut er en international bioteknologisk forsknings- , produktions- og servicevirksomhed organiseret som en offentlig markedsorienteret statsvirksomhed under Indenrigs- og Sundhedsministeriet.            "@no ;
+      foaf:name "Statens Serum Institut "@no .
+
+sub:Resource
+      rdf:type rdfs:Class ;
+      rdfs:subClassOf rdfs:Resource ;
+      owl:unionOf sioc:Site , sioc:Item .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert>
+      rdf:type sioc:User ;
+      rdfs:label "Konvertert"@no , "Konvertert"@da , "Konverterad"@sv , "Converted"@en .
+
+<http://www.lingvoj.org/lang/sv>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Ruotsin kieli"@fi , "Swedish"@en , "Svenska"@sv , "Svensk"@nn , "Svensk"@no , "Svensk"@da , "Ruoŧagiella"@se ;
+      lingvoj:iso1 "sv" ;
+      lingvoj:iso2t "swe" ;
+      lingvoj:iso3 "swe" ;
+      owl:sameAs <http://dbpedia.org/resource/Swedish_language> , <http://psi.oasis-open.org/iso/639/#swe> , <http://sw.cyc.com/2006/07/27/cyc/SwedishLanguage> ;
+      foaf:depiction <http://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Sweden.svg> .
+
+<http://www.smittskyddsinstitutet.se/sjukdomar/q-feber/>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#SV> ;
+      dct:dateAccepted "2004-03-23T12:32:51"^^xsd:dateTime ;
+      dct:description "Q-feber är en globalt förekommande zoonos, d.v.s. en sjukdom som kan smitta såväl djur som människa, som förmodligen är betydligt vanligare än vad som rapporteras i officiell statistik. Dokumentet innehåller information om orsak, smittvägar,symptom, behandling och åtgärder "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/q_feber_003077> ;
+      dct:language <http://www.lingvoj.org/lang/sv> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Smittskyddsinstitutet> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514> ;
+      dct:title "Q-feber "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.smittskyddsinstitutet.se/sjukdomar/q-feber/> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet>
+      rdf:type foaf:Agent ;
+      dct:description "Informasjonen er beregnet på helsepersonell. Folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 4/10-05     "@no , "Brosjyre i PDF-format. 1 side. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 19/12-06 "@no , "Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 4/10-05  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 17/8-06 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 2/1-06 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 15/8-07 "@no , "Brosjyre i PDF-format. 9 sider. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den.  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 16/8-07 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 6/10-05            "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 4/10-05 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den.  Sjekket 3/10-05     "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 5/10-05 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 22/8-06 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 17/8-06          "@no , "Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 25/8-05 "@no , "Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 28/11-07 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 6/10-05  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 3/10-05 "@no , "Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den.  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 11/10-05 "@no , "“Fakta om Hepatitt A, B og C” Utgitt av Nasjonalt folkehelseinstitutt i samarbeid med Sosial- og Helsedirektoratet. PDF-format. 8 sider. Rev. utg. 2001. Sjekket 25/8-05 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekkeet 5/10-05 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 12/10-06 "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den. Sjekket 6/10-05 "@no , "Brosjyre fra Statens helsetilsyn og Folkehelseinstituttet datert 19.7.2002. I pdf-format.  "@no , "Informasjonen er beregnet på helsepersonell. Nasjonalt folkehelseinstitutt er et offentlig organ som arbeider for å bedre befolkningens helse ved å styrke det forebyggende helsearbeidet i samfunnet. Instituttet gir råd, yter tjenester og fremskaffer kunnskap om hvordan helsetilstanden utvikler seg, hvilke forhold som påvirker den og hva som kan gjøres for å bedre den.  Sjekket 6/10-05     "@no , "Om hivinfeksjon er skrevet av Ingeborg Lyngstad Vik ved Olafiaklinikken i samarbeid med Una Due-Tønnessen, Olafiaklinikken. Ragnhild Seip og Hilde Kløvstad, Nasjonalt folkehelseinstitutt, har bidratt til redigeringen og stått for den praktiske tilretteleggingen. PDF-format. 51 sider. Sjekket 25/8-05 "@no ;
+      foaf:name "Folkehelseinstituttet "@no .
+
+<http://www.lingvoj.org/lang/da>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:isDefinedBy <http://www.lingvoj.org/lingvo/da.rdf> ;
+      rdfs:label "Danish"@en , "Danska"@sv , "Dansk"@da , "Dansk"@no , "Dansk"@nn , "Tanskan kieli"@fi ;
+      lingvoj:iso1 "da" ;
+      lingvoj:iso2b "dan" ;
+      lingvoj:iso2t "dan" ;
+      lingvoj:iso3 "dan" ;
+      owl:sameAs <http://dbpedia.org/resource/Danish_language> , <http://downlode.org/rdf/iso-639/languages#da> , <http://psi.oasis-open.org/iso/639/#dan> , <http://sw.cyc.com/2006/07/27/cyc/DanishLanguage> ;
+      foaf:depiction <http://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg> .
+
+<http://www.fhi.no/dav/B1770DE3CB.pdf>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-03-26T13:01:16"^^xsd:dateTime ;
+      dct:description "Zoonose som smitter til mennesker vanligvis gjennom inhalasjon av støv og aerosoler fra forurenset miljø. Forårsakes av en rickettsia-organisme kalt Coxiella burnetti. Nettsiden gir informasjon om smittemåter, symptomer og behandling. Her finner du også oversikt over forekomst og forebyggende tiltak.  PDF, 1 side. "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/q_feber_00747> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Folkehelseinstituttet> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514> ;
+      dct:title "Q-feber "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "Query-fever queryfeber "@no ;
+      sub:url <http://www.fhi.no/dav/B1770DE3CB.pdf> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000514>
+      rdf:type skos:Concept ;
+      skos:altLabel "Query-feber "@da , "Query-feber "@sv , "Query-feber "@no ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_53> ;
+      skos:prefLabel "Q-feber "@sv , "Q-feber "@da , "Q-feber "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D011778"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
