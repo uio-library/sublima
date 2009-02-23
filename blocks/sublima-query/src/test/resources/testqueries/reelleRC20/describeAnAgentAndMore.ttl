@@ -26,7 +26,7 @@
 <http://www.adhd.dk/>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#DK> ;
-      dct:dateAccepted "2006-12-20T14:20:42"^^xsd:dateTime ;
+      dct:dateAccepted "2006-12-20T14:20:42.000+01:00"^^xsd:dateTime ;
       dct:description "ADHD står for Attention-Deficit/Hyperactivity Disorder - det vil sige forstyrrelser af opmærksomhed, aktivitet og impulsivitet.  På hjemmesiden her kan du læse meget mere om ADHD, DAMP og beslægtede forstyrrelser.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/adhd_foreningen_007445> ;
       dct:language <http://www.lingvoj.org/lang/da> ;
@@ -59,7 +59,7 @@
 <http://www.adhd.dk/images/stories/pdf/voksnemedadhd.pdf>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#DK> ;
-      dct:dateAccepted "2006-12-20T14:35:46"^^xsd:dateTime ;
+      dct:dateAccepted "2006-12-20T14:35:46.000+01:00"^^xsd:dateTime ;
       dct:description "Brosjyre, 16 sider, PDF. Tekst: ADHD-foreningen i samarbejde med journalist og læge Jan Andreasen.  Ansvarshavende: Direktør Birgit Christiansen.  Layout: myDIRECTION/ImageConsult.  Tryk: Trykteam. 2004.   ISBN: 87-90364-07-4 "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/voksne_med_adhd_007448> ;
       dct:language <http://www.lingvoj.org/lang/da> ;
@@ -73,7 +73,7 @@
 <http://www.adhd.dk/index.php?option=content&task=view&id=18&Itemid=68>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#DK> ;
-      dct:dateAccepted "2006-12-20T14:38:13"^^xsd:dateTime ;
+      dct:dateAccepted "2006-12-20T14:38:13.000+01:00"^^xsd:dateTime ;
       dct:description "DAMP er en forkortelse for Deficits in Attention, Motor Control and Perception. Ved DAMP er der problemer med opmærksomhed, motorisk kontrol, opfattelse og bearbejdning af sanseindtryk fra kroppen og omverdenen. Både indlæringsevne og hukommelse kan være påvirket.    "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/damp_007449> ;
       dct:language <http://www.lingvoj.org/lang/da> ;
@@ -87,7 +87,7 @@
 <http://www.adhd.dk/index.php?option=content&task=view&id=44&Itemid=97>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#DK> ;
-      dct:dateAccepted "2006-12-20T15:03:04"^^xsd:dateTime ;
+      dct:dateAccepted "2006-12-20T15:03:04.000+01:00"^^xsd:dateTime ;
       dct:description "Lenker til artikler om ADHD fra ADHD-foreningen. "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/artikelliste_007453> ;
       dct:language <http://www.lingvoj.org/lang/da> ;
@@ -101,7 +101,7 @@
 <http://www.adhd.dk/index.php?option=content&task=view&id=23&Itemid=119>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#DK> ;
-      dct:dateAccepted "2006-12-20T14:39:27"^^xsd:dateTime ;
+      dct:dateAccepted "2006-12-20T14:39:27.000+01:00"^^xsd:dateTime ;
       dct:description "Der findes en del neuropsykologiske udviklingsforstyrrelser, der har mange lighedspunkter med ADHD. Det er fx diagnoser som DAMP, ADD, Hyperkinetiske forstyrrelser, MBD, NLD og DCD. Det kan ofte være svært at skille disse tilstande fra hinanden, da der er naturlige overlap.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/beslaegtede_diagnoser_007450> ;
       dct:language <http://www.lingvoj.org/lang/da> ;
@@ -135,7 +135,7 @@
 <http://www.adhd.dk/images/stories/pdf/boern%20med%20adhd.pdf>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#DK> ;
-      dct:dateAccepted "2006-12-20T14:32:17"^^xsd:dateTime ;
+      dct:dateAccepted "2006-12-20T14:32:17.000+01:00"^^xsd:dateTime ;
       dct:description "Brosjyre, 16 sider, PDF.  Tekst: ADHD-foreningen i samarbejde med journalist og læge Jan Andreasen.  Ansvarshavende: Direktør Birgit Christiansen.  Layout: myDIRECTION/ImageConsult.  Tryk: Trykteam. 2004.   ISBN: 87-90364-06-0 "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/boern_med_adhd_007447> ;
       dct:language <http://www.lingvoj.org/lang/da> ;
