@@ -44,7 +44,7 @@ public class CQL2SPARQL {
         }
         SearchService searchService = new SearchService("AND");
 
-        String searchString = searchService.buildSearchString(thisNode.getTerm(), true); // This is the freetext we will search for.
+        String searchString = searchService.buildSearchString(thisNode.getTerm(), true, false); // This is the freetext we will search for.
         logger.debug("CQL2SPARQL: Search String is: " + searchString);
         return  "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
                 "PREFIX dct: <http://purl.org/dc/terms/>\n" +

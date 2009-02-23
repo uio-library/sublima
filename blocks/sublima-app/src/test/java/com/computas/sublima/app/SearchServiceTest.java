@@ -35,63 +35,63 @@ public class SearchServiceTest extends TestCase {
 
     String test1 = "Henrik Ibsen";
     String testExpected1 = "Henrik* " + booleanOperator + " Ibsen*";
-    assertEquals(testExpected1, myService.buildSearchString(test1, true));
+    assertEquals(testExpected1, myService.buildSearchString(test1, true, false));
 
     String test2 = "\"Henrik Ibsen\"";
     String testExpected2 = "\"Henrik Ibsen\"";
-    assertEquals(testExpected2, myService.buildSearchString(test2, true));
+    assertEquals(testExpected2, myService.buildSearchString(test2, true, false));
 
     String test3 = "\"Henrik Ibsen\" forfatter";
     String testExpected3 = "\"Henrik Ibsen\" " + booleanOperator + " forfatter*";
-    assertEquals(testExpected3, myService.buildSearchString(test3, true));
+    assertEquals(testExpected3, myService.buildSearchString(test3, true, false));
 
     String test4 = "\"Henrik Ibsen\" \"i Skien\"";
     String testExpected4 = "\"Henrik Ibsen\" " + booleanOperator + " \"i Skien\"";
-    assertEquals(testExpected4, myService.buildSearchString(test4, true));
+    assertEquals(testExpected4, myService.buildSearchString(test4, true, false));
 
     String test5 = "forfatter \"Henrik Ibsen\"";
     String testExpected5 = "forfatter* " + booleanOperator + " \"Henrik Ibsen\"";
-    assertEquals(testExpected5, myService.buildSearchString(test5, true));
+    assertEquals(testExpected5, myService.buildSearchString(test5, true, false));
 
     String test6 = "\"Henrik Ibsen\" bosatt \"i Skien\"";
     String testExpected6 = "\"Henrik Ibsen\" " + booleanOperator + " bosatt* " + booleanOperator + " \"i Skien\"";
-    assertEquals(testExpected6, myService.buildSearchString(test6, true));
+    assertEquals(testExpected6, myService.buildSearchString(test6, true, false));
 
     String test6b = "\"Henrik Ibsen i 1814\" bosatt \"i Skien\" 1814";
     String testExpected6b = "\"Henrik Ibsen i 1814\" " + booleanOperator + " bosatt* " + booleanOperator + " \"i Skien\" " + booleanOperator + " 1814*";
-    assertEquals(testExpected6b, myService.buildSearchString(test6b, true));
+    assertEquals(testExpected6b, myService.buildSearchString(test6b, true, false));
 
     myService.setDefaultBooleanOperator("OR");
     booleanOperator = myService.getDefaultBooleanOperator();
 
     String test7 = "Henrik Ibsen";
     String testExpected7 = "Henrik* " + booleanOperator + " Ibsen*";
-    assertEquals(testExpected7, myService.buildSearchString(test7, true));
+    assertEquals(testExpected7, myService.buildSearchString(test7, true, false));
 
     String test8 = "\"Henrik Ibsen\"";
     String testExpected8 = "\"Henrik Ibsen\"";
-    assertEquals(testExpected8, myService.buildSearchString(test8, true));
+    assertEquals(testExpected8, myService.buildSearchString(test8, true, false));
 
     String test9 = "\"Henrik Ibsen\" forfatter";
     String testExpected9 = "\"Henrik Ibsen\" " + booleanOperator + " forfatter*";
-    assertEquals(testExpected9, myService.buildSearchString(test9, true));
+    assertEquals(testExpected9, myService.buildSearchString(test9, true, false));
 
     String test10 = "\"Henrik Ibsen\" \"i Skien\"";
     String testExpected10 = "\"Henrik Ibsen\" " + booleanOperator + " \"i Skien\"";
-    assertEquals(testExpected10, myService.buildSearchString(test10, true));
+    assertEquals(testExpected10, myService.buildSearchString(test10, true, false));
 
     String test11 = "forfatter \"Henrik Ibsen\"";
     String testExpected11 = "forfatter* " + booleanOperator + " \"Henrik Ibsen\"";
-    assertEquals(testExpected11, myService.buildSearchString(test11, true));
+    assertEquals(testExpected11, myService.buildSearchString(test11, true, false));
 
     String test12 = "\"Henrik Ibsen\" bosatt \"i Skien\"";
     String testExpected12 = "\"Henrik Ibsen\" " + booleanOperator + " bosatt* " + booleanOperator + " \"i Skien\"";
-    assertEquals(testExpected12, myService.buildSearchString(test12, true));
+    assertEquals(testExpected12, myService.buildSearchString(test12, true, false));
 
     // Test if the truncate option works
     String test13 = "\"Henrik Ibsen\" bosatt \"i Skien\"";
     String testExpected13 = "\"Henrik Ibsen\" " + booleanOperator + " bosatt " + booleanOperator + " \"i Skien\"";
-    assertEquals(testExpected13, myService.buildSearchString(test13, false));
+    assertEquals(testExpected13, myService.buildSearchString(test13, false, false));
 
   }
 
@@ -100,7 +100,7 @@ public class SearchServiceTest extends TestCase {
 
     String test1 = "Härmän Göthe";
     String testExpected1 = "Harman* " + booleanOperator + " Gothe*";
-    assertEquals(testExpected1, myService.buildSearchString(test1, true));
+    assertEquals(testExpected1, myService.buildSearchString(test1, true, false));
   }
 
 

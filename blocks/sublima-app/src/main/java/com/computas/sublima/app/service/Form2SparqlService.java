@@ -206,13 +206,13 @@ public class Form2SparqlService {
             value = mapping.charactermapping(value);
             String[] words = value.split(" ");
             if (words.length == 1) {
-              n3Buffer.append("+" + value.trim());
+              n3Buffer.append(value.trim());
               if (truncate) {
                 n3Buffer.append("*");
               }
             } else if (words.length > 1) {
               for (String word : words) {
-                n3Buffer.append("+" + word.trim() + " ");
+                n3Buffer.append(word.trim() + " ");
               }
             } else {
               logger.info("Form2SPARQL freetext: " + value + "was not used.");

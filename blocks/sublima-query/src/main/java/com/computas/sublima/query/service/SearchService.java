@@ -40,12 +40,18 @@ public class SearchService {
    * @return A transformed search string, using AND/OR based on the configuration
    */
   //todo More advanced check on search string. Ie. - + NOT OR AND if defined in the search term by the user
-  public String buildSearchString(String searchstring, boolean truncate) {
+  public String buildSearchString(String searchstring, boolean truncate, boolean advancedsearch) {
 
     searchstring = mapping.charactermapping(searchstring);
 
+
     // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
-    searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]", "");
+    if (advancedsearch) {
+      searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\^\\+\\-\\!\\|\\?\\\\]", "");  
+    } else { // normal freetext search
+      searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]", "");
+    }
+
     searchstring = searchstring.replace("&&", "");
     Pattern p = Pattern.compile("(\\S+)|(\\\"[^\\\"]+\\\")");
     Matcher m = p.matcher(searchstring);

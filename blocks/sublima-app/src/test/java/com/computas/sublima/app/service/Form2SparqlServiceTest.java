@@ -227,7 +227,7 @@ public class Form2SparqlServiceTest extends TestCase {
       // Single value test, with simple freetext search
       testMap.put("dct:title", testString);
       SearchService searchService = new SearchService("AND");
-      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true)});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
       myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
       String resultString = myService.convertForm2Sparql(testMap);
       assertEquals("Expected result and actual result not equal", 
@@ -247,7 +247,7 @@ public class Form2SparqlServiceTest extends TestCase {
       // Single value test, with simple freetext search
       testMap.put("dct:title", testString);
       SearchService searchService = new SearchService("AND");
-      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true)});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
       myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
       String resultString = myService.convertForm2SparqlCount(testMap, 100);
       assertEquals("Expected result and actual result not equal",
@@ -267,7 +267,7 @@ public class Form2SparqlServiceTest extends TestCase {
       // Single value test, with simple freetext search
       testMap.put("dct:title", testString);
       SearchService searchService = new SearchService("AND");
-      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true)});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
       myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
       String results = myService.convertForm2Sparql(testMap);
       String resultString = myService.convertForm2SparqlCount(testMap, 100);
@@ -288,7 +288,7 @@ public class Form2SparqlServiceTest extends TestCase {
     public void testConvertForm2SparqlNoValueFreetextDeep() {
       // Single value test, with simple freetext search
       SearchService searchService = new SearchService("AND");
-      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true)});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
       testMap.put("deepsearch", new String[]{"deepsearch"});
 
       myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
@@ -308,7 +308,7 @@ public class Form2SparqlServiceTest extends TestCase {
     public void testConvertForm2SparqlNoValueFreetext() {
       // Single value test, with simple freetext search
       SearchService searchService = new SearchService("AND");
-      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true)});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
       myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
       String resultString = myService.convertForm2Sparql(testMap);
       assertEquals("Expected result and actual result not equal",
@@ -327,7 +327,7 @@ public class Form2SparqlServiceTest extends TestCase {
       // Single value test, with simple freetext search
       SearchService searchService = new SearchService("AND");
       testMap.put("ex:describedBy", new String[]{"http://example.org/status"});
-      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true)});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
 
       myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
       String resultString = myService.convertForm2Sparql(testMap);
@@ -348,7 +348,7 @@ public class Form2SparqlServiceTest extends TestCase {
       SearchService searchService = new SearchService("AND");
       testMap.put("wdr:describedBy", new String[]{"http://sublima.computas.com/status/godkjent_av_administrator"});
       testMap.put("dct:subject", new String[]{"http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000511"});
-      testMap.put("searchstring", new String[]{searchService.buildSearchString("epidemica", true)});
+      testMap.put("searchstring", new String[]{searchService.buildSearchString("epidemica", true, false)});
       myService.addPrefix("wdr: <http://www.w3.org/2007/05/powder#>");
       myService.addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
       String resultString = myService.convertForm2Sparql(testMap);

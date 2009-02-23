@@ -8,7 +8,6 @@ import com.computas.sublima.query.service.CachingService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import net.spy.memcached.MemcachedClient;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -48,7 +47,7 @@ public class SearchController implements StatelessAppleController {
 
     logger.trace("SearchController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
     logger.trace("SearchController: Language from service is " + language);
-    
+
     // The initial advanced search page
     if ("advancedsearch".equalsIgnoreCase(mode)) {
       Map<String, Object> bizData = new HashMap<String, Object>();
@@ -86,7 +85,7 @@ public class SearchController implements StatelessAppleController {
 
     String subject = "<" + getProperty("sublima.base.url")
             + "topic/" + req.getSitemapParameter("topic") + ">";
-    
+
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("result-list", adminService.getTopicDetailsForTopicPage(subject));
 
@@ -119,30 +118,24 @@ public class SearchController implements StatelessAppleController {
   }
 
 
-  private String freeTextSearchString(AppleResponse res, AppleRequest req) {
+  private String freeTextSearchString(String searchstring, String booleanoperator, boolean exactmatch, boolean advancedsearch) {
     String defaultBooleanOperator = getProperty("sublima.default.boolean.operator");
-    String chosenOperator = req.getCocoonRequest().getParameter("booleanoperator");
-
-    boolean truncate = true;
-
-    // Set right truncation or not, based on user choice
-    if (req.getCocoonRequest().getParameter("exactmatch") != null) {
-      truncate = false;
-    }
-
 
     SearchService searchService;
 
     //Use user chosen boolean operator when it doesn't equal the default
-    if (!chosenOperator.equalsIgnoreCase(defaultBooleanOperator)) {
-      searchService = new SearchService(chosenOperator);
-      logger.debug("SUBLIMA: Use " + chosenOperator + " as boolean operator for search");
+    if (!booleanoperator.equalsIgnoreCase(defaultBooleanOperator)) {
+      searchService = new SearchService(booleanoperator);
+      logger.debug("SUBLIMA: Use " + booleanoperator + " as boolean operator for search");
     } else {
       searchService = new SearchService(defaultBooleanOperator);
       logger.debug("SUBLIMA: Use " + defaultBooleanOperator + " as boolean operator for search");
     }
 
-    return searchService.buildSearchString(req.getCocoonRequest().getParameter("searchstring"), truncate);
+    String result = searchService.buildSearchString(searchstring, !exactmatch, advancedsearch);
+    searchService = null;
+
+    return result;
   }
 
 
@@ -196,13 +189,14 @@ public class SearchController implements StatelessAppleController {
       } else {
         // When true, we override the searchstring later in the code
         freetext = true;
-        searchStringOverriden = freeTextSearchString(res, req);
+        searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("searchstring"), req.getCocoonRequest().getParameter("booleanoperator"), (req.getCocoonRequest().getParameter("exactmatch") != null), false);
         parameterMap.put("searchstring", new String[]{searchStringOverriden});
         parameterMap.remove("booleanoperator");
         parameterMap.remove("sort");
         parameterMap.remove("exactmatch");
       }
     }
+
     // sending the result
     String sparqlQuery = null;
     String countNumberOfHitsQuery = null;
@@ -215,9 +209,30 @@ public class SearchController implements StatelessAppleController {
       parameterMap.remove("freetext-field"); // The freetext-fields are magic variables too
       parameterMap.remove("res-view"); //  As is this
 
-      // Check if it is an advanced search on topics
-      if (req.getCocoonRequest().getParameter("dct:subject/all-labels") != null) {
+      // Test if some of the free text fields in the advanced search form exists, if so we build a proper search string
+      if (req.getCocoonRequest().getParameter("dct:title") != null) {
+        parameterMap.remove("dct:title");
         form2SparqlService.setTruncate(false);
+        parameterMap.put("dct:title", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:title"), "AND", true, true)});
+      }
+
+      if (req.getCocoonRequest().getParameter("dct:subject/all-labels") != null) {
+        parameterMap.remove("dct:subject/all-labels");
+        form2SparqlService.setTruncate(false);
+        parameterMap.put("dct:subject/all-labels", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/all-labels"), "AND", true, true)});
+      }
+
+      if (req.getCocoonRequest().getParameter("dct:description") != null) {
+        parameterMap.remove("dct:description");
+        form2SparqlService.setTruncate(false);
+        parameterMap.put("dct:description", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:description"), "AND", true, true)});
+
+      }
+
+      if (req.getCocoonRequest().getParameter("dct:publisher/foaf:name") != null) {
+        parameterMap.remove("dct:publisher/foaf:name");
+        form2SparqlService.setTruncate(false);
+        parameterMap.put("dct:publisher/foaf:name", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:publisher/foaf:name"), "AND", true, true)});
       }
 
       sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
@@ -246,13 +261,13 @@ public class SearchController implements StatelessAppleController {
           queryResult = sparqlDispatcher.query(sparqlQuery); // Cache will be used in here.
           abovemaxnumberofhits = false;
         } else {
-            Request r = req.getCocoonRequest();
-            String uri = r.getScheme() + "://" + r.getServerName();
-            if (r.getServerPort() != 80) {
-                uri = uri + ":" + r.getServerPort();
-            }
-            uri = uri + r.getRequestURI() + "?dobigsearchanyway=true&" + r.getQueryString();
-            heavylogger.info(uri);
+          Request r = req.getCocoonRequest();
+          String uri = r.getScheme() + "://" + r.getServerName();
+          if (r.getServerPort() != 80) {
+            uri = uri + ":" + r.getServerPort();
+          }
+          uri = uri + r.getRequestURI() + "?dobigsearchanyway=true&" + r.getQueryString();
+          heavylogger.info(uri);
           queryResult = "<empty/>";
           abovemaxnumberofhits = true;
         }
@@ -309,7 +324,6 @@ public class SearchController implements StatelessAppleController {
     System.gc();
     res.sendPage(format + "/sparql-result", bizData);
   }
-
 
   private Map<String, String[]> createParametersMap(Request request) {
     Map<String, String[]> result = new HashMap<String, String[]>();

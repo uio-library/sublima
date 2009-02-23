@@ -164,10 +164,10 @@ public class RDFObject implements Serializable {
                 n3Buffer.append("?free" + freetext + " pf:textMatch \"\"\"");
                 String[] words = getValue().split(" ");
                 if (words.length == 1) {
-                    n3Buffer.append("+" + mapping.charactermapping(getValue().trim()).trim() + "*");
+                    n3Buffer.append(mapping.charactermapping(getValue().trim()).trim());
                 } else if (words.length > 1) {
                    for (String word : words) {
-                       n3Buffer.append("+" + mapping.charactermapping(word.trim()).trim() + " ");
+                       n3Buffer.append(mapping.charactermapping(word.trim()).trim() + " ");
                    }
                 } else {
                     logger.info("RDFObject freetext: " + getValue() + "was not used.");
