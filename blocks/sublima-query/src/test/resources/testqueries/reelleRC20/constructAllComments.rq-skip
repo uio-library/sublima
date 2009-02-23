@@ -1,0 +1,24 @@
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX sub: <http://xmlns.computas.com/sublima#>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+CONSTRUCT {
+    ?comment a sioc:Item ;
+             sioc:content ?content ;
+             dct:dateAccepted ?date ;
+             sioc:has_creator ?creator ;
+             sioc:has_owner ?owner .
+    ?owner a sub:Resource ;
+           dct:title ?title ;
+           dct:identifier ?identifier .
+}
+WHERE {
+    ?comment a sioc:Item ;
+             sioc:content ?content ;
+             dct:dateAccepted ?date ;
+             sioc:has_creator ?creator ;
+             sioc:has_owner ?owner .
+    ?owner a sub:Resource ;
+           dct:title ?title ;
+           dct:identifier ?identifier .
+}

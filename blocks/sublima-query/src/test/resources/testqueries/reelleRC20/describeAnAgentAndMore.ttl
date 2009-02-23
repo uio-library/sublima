@@ -1,0 +1,152 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+<http://www.adhd.dk/>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#DK> ;
+      dct:dateAccepted "2006-12-20T14:20:42"^^xsd:dateTime ;
+      dct:description "ADHD står for Attention-Deficit/Hyperactivity Disorder - det vil sige forstyrrelser af opmærksomhed, aktivitet og impulsivitet.  På hjemmesiden her kan du læse meget mere om ADHD, DAMP og beslægtede forstyrrelser.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/adhd_foreningen_007445> ;
+      dct:language <http://www.lingvoj.org/lang/da> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/ADHDforeningen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00016> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000176> ;
+      dct:title "ADHD-foreningen "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.adhd.dk/> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00016>
+      rdf:type skos:Concept ;
+      skos:altLabel "Interesseforeninger "@no , "Interesseorganisationer "@sv , "Interesseorganisationer "@da , "Brukerorganisasjoner "@no , "Brukarorganisationer "@sv , "Patientföreningar "@sv , "Pasientforeninger "@no , "Organisationer "@sv , "Brugerorganisationer "@da , "Patientforeninger "@da , "Organisasjoner "@no , "Foreninger "@da ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001781> ;
+      skos:note "Brukerorganisasjoner Interesseorganisasjoner Pasientforeninger "@no ;
+      skos:prefLabel "Föreningar "@sv , "Organisationer "@da , "Foreninger "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_5> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/horendebarn> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000273> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/barnmedsykeforeldre> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/soskenavfunksjonshemmede> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/funksjonshemmedebarn> ;
+      skos:prefLabel "Barn "@no , "Barn "@sv , "Børn "@da ;
+      skos:related <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_166> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001461> ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D002648"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://www.adhd.dk/images/stories/pdf/voksnemedadhd.pdf>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#DK> ;
+      dct:dateAccepted "2006-12-20T14:35:46"^^xsd:dateTime ;
+      dct:description "Brosjyre, 16 sider, PDF. Tekst: ADHD-foreningen i samarbejde med journalist og læge Jan Andreasen.  Ansvarshavende: Direktør Birgit Christiansen.  Layout: myDIRECTION/ImageConsult.  Tryk: Trykteam. 2004.   ISBN: 87-90364-07-4 "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/voksne_med_adhd_007448> ;
+      dct:language <http://www.lingvoj.org/lang/da> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/ADHDforeningen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000176> ;
+      dct:title "Voksne med ADHD "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.adhd.dk/images/stories/pdf/voksnemedadhd.pdf> .
+
+<http://www.adhd.dk/index.php?option=content&task=view&id=18&Itemid=68>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#DK> ;
+      dct:dateAccepted "2006-12-20T14:38:13"^^xsd:dateTime ;
+      dct:description "DAMP er en forkortelse for Deficits in Attention, Motor Control and Perception. Ved DAMP er der problemer med opmærksomhed, motorisk kontrol, opfattelse og bearbejdning af sanseindtryk fra kroppen og omverdenen. Både indlæringsevne og hukommelse kan være påvirket.    "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/damp_007449> ;
+      dct:language <http://www.lingvoj.org/lang/da> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/ADHDforeningen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000176> ;
+      dct:title "DAMP "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.adhd.dk/index.php?option=content&task=view&id=18&Itemid=68> .
+
+<http://www.adhd.dk/index.php?option=content&task=view&id=44&Itemid=97>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#DK> ;
+      dct:dateAccepted "2006-12-20T15:03:04"^^xsd:dateTime ;
+      dct:description "Lenker til artikler om ADHD fra ADHD-foreningen. "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/artikelliste_007453> ;
+      dct:language <http://www.lingvoj.org/lang/da> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/ADHDforeningen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000176> ;
+      dct:title "Artikelliste "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.adhd.dk/index.php?option=content&task=view&id=44&Itemid=97> .
+
+<http://www.adhd.dk/index.php?option=content&task=view&id=23&Itemid=119>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#DK> ;
+      dct:dateAccepted "2006-12-20T14:39:27"^^xsd:dateTime ;
+      dct:description "Der findes en del neuropsykologiske udviklingsforstyrrelser, der har mange lighedspunkter med ADHD. Det er fx diagnoser som DAMP, ADD, Hyperkinetiske forstyrrelser, MBD, NLD og DCD. Det kan ofte være svært at skille disse tilstande fra hinanden, da der er naturlige overlap.  "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/beslaegtede_diagnoser_007450> ;
+      dct:language <http://www.lingvoj.org/lang/da> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/ADHDforeningen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000534> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000176> ;
+      dct:title "Beslægtede diagnoser "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "ADD (Attention Deficit Disorder DAMP (Deficits in Attention, Motor Control and Perception) DCD (Developmental Coordination Disorder) Hyperkinetisk forstyrrelse  MBD (Minimal Brain Dysfunction)  MPD (Motorisk perceptuel dysfunktion) NLD (Non-verbal Learning Disabilities)  "@no ;
+      sub:url <http://www.adhd.dk/index.php?option=content&task=view&id=23&Itemid=119> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000176>
+      rdf:type skos:Concept ;
+      skos:altLabel "MBD/DAMP "@da , "Hyperkinetiske forstyrrelser "@no , "MBD "@no , "DAMP/MBD "@sv ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_962> ;
+      skos:prefLabel "MBD/DAMP "@sv , "DAMP/MBD "@da , "ADHD "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D001289"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000534>
+      rdf:type skos:Concept ;
+      skos:altLabel "Klossete barn "@no , "Klodsede børn "@da , "DCD"@no , "DCD"@da , "DCD"@sv , "Klumpiga barn "@sv ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_962> ;
+      skos:note "developmental co-ordination disorder developmental coordination disorder  "@no ;
+      skos:prefLabel "Motoriska färdigheter, rubbningar"@sv , "Motoriske oordineringsproblemer"@da , "Motoriske koordineringsvansker "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D019957"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
+
+<http://www.adhd.dk/images/stories/pdf/boern%20med%20adhd.pdf>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#DK> ;
+      dct:dateAccepted "2006-12-20T14:32:17"^^xsd:dateTime ;
+      dct:description "Brosjyre, 16 sider, PDF.  Tekst: ADHD-foreningen i samarbejde med journalist og læge Jan Andreasen.  Ansvarshavende: Direktør Birgit Christiansen.  Layout: myDIRECTION/ImageConsult.  Tryk: Trykteam. 2004.   ISBN: 87-90364-06-0 "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/boern_med_adhd_007447> ;
+      dct:language <http://www.lingvoj.org/lang/da> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/ADHDforeningen> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic00017> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000176> ;
+      dct:title "Børn med ADHD "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:url <http://www.adhd.dk/images/stories/pdf/boern%20med%20adhd.pdf> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/ADHDforeningen>
+      rdf:type foaf:Agent ;
+      dct:description "ADHD-foreningen arbejder for mennesker, der har udtalte vanskeligheder inden for områderne opmærksomhed og/eller aktivitetskontrol; ofte kombineret med problemer med motorisk kontrol, opfattelse og bearbejdning af sanseindtryk fra kroppen og omverdenen. ADHD-foreningens formål er at skabe forståelse for og faktisk forbedring af forholdene for mennesker med ADHD og deres pårørende. "@no ;
+      foaf:name "ADHD-foreningen "@no .

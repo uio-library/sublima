@@ -1,0 +1,7 @@
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+DESCRIBE ?role
+WHERE {
+    ?role a sioc:Role ;
+        rdfs:label ?label .
+}

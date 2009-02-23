@@ -1,0 +1,7 @@
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+DESCRIBE ?user
+WHERE {
+    ?user a sioc:User ;
+        rdfs:label ?label .
+}

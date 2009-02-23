@@ -1,0 +1,17 @@
+PREFIX wdr: <http://www.w3.org/2007/05/powder#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+CONSTRUCT {
+    <http://sublima.computas.com/status/godkjent_av_administrator> a wdr:DR ;
+    rdfs:label ?label1 .
+ <http://sublima.computas.com/status/inaktiv> a wdr:DR ;
+    rdfs:label ?label2 .
+}
+WHERE {
+ OPTIONAL {
+ <http://sublima.computas.com/status/godkjent_av_administrator> a wdr:DR ;
+    rdfs:label ?label1 .}
+ OPTIONAL {
+ <http://sublima.computas.com/status/inaktiv> a wdr:DR ;
+    rdfs:label ?label2 .}
+}
+
