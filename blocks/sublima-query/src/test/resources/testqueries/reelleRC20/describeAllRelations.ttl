@@ -1,0 +1,46 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+skos:narrower
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain skos:Concept ;
+      rdfs:label "Smalere"@no ;
+      rdfs:range skos:Concept ;
+      rdfs:subPropertyOf skos:semanticRelation .
+
+skos:related
+      rdf:type owl:ObjectProperty , owl:SymmetricProperty ;
+      rdfs:domain skos:Concept ;
+      rdfs:label "Relatert"@no ;
+      rdfs:range skos:Concept ;
+      rdfs:subPropertyOf skos:semanticRelation .
+
+skos:broader
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain skos:Concept ;
+      rdfs:label "Bredere"@no ;
+      rdfs:range skos:Concept ;
+      rdfs:subPropertyOf skos:semanticRelation ;
+      owl:inverseOf skos:narrower .

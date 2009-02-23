@@ -1,0 +1,10 @@
+PREFIX lingvoj: <http://www.lingvoj.org/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+CONSTRUCT {
+?language a lingvoj:Lingvo ;
+          rdfs:label ?label .
+}
+WHERE {
+?language a lingvoj:Lingvo ;
+          rdfs:label ?label .
+}

@@ -1,0 +1,56 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+<http://www.lingvoj.org/lang/no>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Norjan kieli"@fi , "Norsk"@nn , "Norsk"@no , "Norsk"@da , "Norwegian"@en , "Norska"@sv , "Dárogiella"@se .
+
+<http://www.lingvoj.org/lang/se>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Northern Sami"@en , "Nordsamisk"@nn , "Nordsamisk"@no , "Pohjoissaame"@fi , "Nordsamiska"@sv .
+
+<http://www.lingvoj.org/lang/sv>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Ruotsin kieli"@fi , "Swedish"@en , "Svenska"@sv , "Svensk"@da , "Svensk"@nn , "Svensk"@no , "Ruoŧagiella"@se .
+
+<http://www.lingvoj.org/lang/nb>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Bokmål"@en , "Bokmål"@no , "Bokmål"@nn .
+
+<http://www.lingvoj.org/lang/fi>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Suomen kieli"@fi , "Suomagiella"@se , "Finska"@sv , "Finsk"@no , "Finsk"@da , "Finsk"@nn , "Finnish"@en .
+
+<http://www.lingvoj.org/lang/da>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Danish"@en , "Danska"@sv , "Dansk"@nn , "Dansk"@no , "Dansk"@da , "Tanskan kieli"@fi .
+
+<http://www.lingvoj.org/lang/nn>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Nynorska"@sv , "Nynorsk"@en , "Nynorsk"@no , "Nynorsk"@nn .
+
+<http://www.lingvoj.org/lang/en>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:label "Englannin kieli"@fi , "English language"@en , "Engelska"@sv , "Engelsk"@nn , "Engelsk"@da , "Engelsk"@no .

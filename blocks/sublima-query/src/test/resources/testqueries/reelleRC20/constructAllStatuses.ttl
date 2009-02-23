@@ -1,0 +1,60 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+status:ikke_godkjent_av_administrator
+      rdf:type wdr:DR ;
+      rdfs:label "Inte godkänt av administrator"@sv , "Not approved by administrator"@en , "Ikke godkjent av administrator"@no , "Ikke godkjent av administraotr"@da .
+
+status:til_godkjenning
+      rdf:type wdr:DR ;
+      rdfs:label "For approval"@en , "Til godkjenning"@da , "Til godkjenning"@no , "Til godkänning"@sv .
+
+status:gone
+      rdf:type wdr:DR ;
+      rdfs:label "Permanent borte"@da , "Permanent borte"@no , "Permanent borta"@sv , "Permanently gone"@en .
+
+status:godkjent_av_administrator
+      rdf:type wdr:DR ;
+      rdfs:label "Godkjent av administrator"@da , "Godkjent av administrator"@no , "Approved by administrator"@en , "Godkänt av administrator"@sv .
+
+status:under_behandling
+      rdf:type wdr:DR ;
+      rdfs:label "Being dealt with"@en , "Under behandling"@da , "Under behandling"@sv , "Under behandling"@no .
+
+status:nytt_forslag
+      rdf:type wdr:DR ;
+      rdfs:label "New suggestion"@en , "Nytt forslag"@da , "Nytt förslag"@sv , "Nytt forslag"@no .
+
+status:ok
+      rdf:type wdr:DR ;
+      rdfs:label "Ok"@en , "Ok"@da , "Ok"@sv , "Ok"@no .
+
+status:check
+      rdf:type wdr:DR ;
+      rdfs:label "Check manually"@en , "Kontrolleras manuellt"@sv , "Sjekkes manuelt"@da , "Sjekkes manuelt"@no .
+
+status:inaktiv
+      rdf:type wdr:DR ;
+      rdfs:label "Inaktiv"@da , "Inaktiv"@sv , "Inaktiv"@no , "Inactive"@en .

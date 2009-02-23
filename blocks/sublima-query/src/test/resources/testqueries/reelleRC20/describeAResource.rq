@@ -1,0 +1,8 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+DESCRIBE ?resource ?rest WHERE {
+
+?resource dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vondt_i_korsryggen__hva_kan_det_skyldes_004700> .
+?resource ?p ?rest .
+}
