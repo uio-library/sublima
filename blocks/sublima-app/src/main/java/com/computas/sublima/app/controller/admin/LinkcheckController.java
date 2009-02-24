@@ -4,7 +4,6 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
-import com.computas.sublima.query.SparulDispatcher;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
@@ -65,7 +64,7 @@ public class LinkcheckController implements StatelessAppleController {
   private void performLinktest(AppleResponse res, AppleRequest req) {
     IndexService indexService = new IndexService();
     indexService.validateURLs();
-    showLinkcheckResults(res, req );
+    showLinkcheckResults(res, req);
   }
 
   /**
@@ -74,10 +73,7 @@ public class LinkcheckController implements StatelessAppleController {
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
-  private void showLinkcheckResults
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+  private void showLinkcheckResults(AppleResponse res, AppleRequest req) {
 
     // CHECK
     String queryStringCHECK = StringUtils.join("\n", new String[]{
@@ -136,9 +132,7 @@ public class LinkcheckController implements StatelessAppleController {
     res.sendPage("xml2/lenkesjekk", bizData);
   }
 
-  public void setSparqlDispatcher
-          (SparqlDispatcher
-                  sparqlDispatcher) {
+  public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
   }
 }
