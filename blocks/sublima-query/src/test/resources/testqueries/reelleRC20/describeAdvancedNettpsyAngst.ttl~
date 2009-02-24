@@ -1,0 +1,77 @@
+@prefix :        <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sub:     <http://xmlns.computas.com/sublima#> .
+@prefix p1:      <http://xmlns.computas.com/sublima-information-model#> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl:    <http://www.w3.org/2003/11/swrl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix topic:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix xsp:     <http://www.owl-ontologies.com/2005/08/07/xsp.owl#> .
+@prefix status:  <http://sublima.computas.com/status/> .
+@prefix lingvoj:  <http://www.lingvoj.org/ontology#> .
+@prefix dcmitype:  <http://purl.org/dc/dcmitype/> .
+@prefix resource:  <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/> .
+@prefix agent:   <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/> .
+@prefix pf:      <http://jena.hpl.hp.com/ARQ/property#> .
+@prefix http:    <http://www.w3.org/2007/ont/http#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix swrlb:   <http://www.w3.org/2003/11/swrlb#> .
+@prefix wdr:     <http://www.w3.org/2007/05/powder#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix user:    <http://tigger.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/> .
+
+<http://www.lingvoj.org/lang/no>
+      rdf:type lingvoj:Lingvo ;
+      rdfs:isDefinedBy <http://www.lingvoj.org/lingvo/no.rdf> ;
+      rdfs:label "Norjan kieli"@fi , "Norsk"@da , "Norsk"@no , "Norsk"@nn , "Norwegian"@en , "Norska"@sv , "Dárogiella"@se ;
+      lingvoj:iso1 "no" ;
+      lingvoj:iso2b "nor" ;
+      lingvoj:iso2t "nor" ;
+      lingvoj:iso3 "nor" ;
+      owl:sameAs <http://psi.oasis-open.org/iso/639/#nor> , <http://dbpedia.org/resource/Norwegian_language> , <http://downlode.org/rdf/iso-639/languages#no> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert>
+      rdf:type sioc:User ;
+      rdfs:label "Konvertert"@no , "Konvertert"@da , "Konverterad"@sv , "Converted"@en .
+
+status:godkjent_av_administrator
+      rdf:type wdr:DR ;
+      rdfs:label "Godkjent av administrator"@no , "Godkjent av administrator"@da , "Approved by administrator"@en , "Godkänt av administrator"@sv .
+
+<http://nettpsykologene.no/angst.htm>
+      rdf:type sub:Resource ;
+      dct:coverage <http://www.geonames.org/countries/#NO> ;
+      dct:dateAccepted "2003-10-15T03:23:55"^^xsd:dateTime ;
+      dct:description "Hva er angst? Symptomer, utbredelse, årsaker og behandling. Om panikklidelse, generalisert angstlidelse, fobiske angstlidelser, tvangslidelser og posttraumatisk stressforstyrrelse    "@no ;
+      dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/angst_001790> ;
+      dct:language <http://www.lingvoj.org/lang/no> ;
+      dct:publisher <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Nettpsykologene> ;
+      dct:subject <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000314> ;
+      dct:title "Angst "@no ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> ;
+      sub:keywords "panikkangst Obsessiv-kompulsiv lidelse ptsd  "@no ;
+      sub:url <http://nettpsykologene.no/angst.htm> .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/agent/Nettpsykologene>
+      rdf:type foaf:Agent ;
+      dct:description "Nettpsykologene er fire psykologer utdannet fra Universitetet i Oslo med varierte interesseområder og erfaringsbakgrunn. Innholdet på web-sidene er utelukkende ment som informasjon. Nettpsykologene.no tilbyr ikke nettbasert psykologisk behandling og svarer heller ikke på henvendelser om spesifikke psykologiske problemstillinger.       "@no , "Nettpsykologene er fire psykologer utdannet fra Universitetet i Oslo med varierte interesseområder og erfaringsbakgrunn. Innholdet på web-sidene er utelukkende ment som informasjon. Nettpsykologene.no tilbyr ikke nettbasert psykologisk behandling og svarer heller ikke på henvendelser om spesifikke psykologiske problemstillinger.   "@no , "Nettpsykologene er fire psykologer utdannet fra Universitetet i Oslo med varierte interesseområder og erfaringsbakgrunn. Innholdet på web-sidene er utelukkende ment som informasjon. Nettpsykologene.no tilbyr ikke nettbasert psykologisk behandling og svarer heller ikke på henvendelser om spesifikke psykologiske problemstillinger.  "@no ;
+      foaf:name "Nettpsykologene "@no .
+
+sub:Resource
+      rdf:type rdfs:Class ;
+      rdfs:subClassOf rdfs:Resource ;
+      owl:unionOf sioc:Site , sioc:Item .
+
+<http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000314>
+      rdf:type skos:Concept ;
+      skos:broader <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000195> ;
+      skos:narrower <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_953> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001809> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/Concept_951> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic0001613> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000114> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000915> , <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/topic/topic000165> ;
+      skos:prefLabel "Angst "@no , "Angst "@da , "Ångest "@sv ;
+      wdr:describedBy status:godkjent_av_administrator ;
+      sub:classification "D001008"^^rdf:XMLLiteral ;
+      sub:committer <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/user/konvertert> .
