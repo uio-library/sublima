@@ -1,0 +1,10 @@
+PREFIX sub: <http://xmlns.computas.com/sublima#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX wdr: <http://www.w3.org/2007/05/powder#>
+DESCRIBE ?theme
+WHERE {
+    ?theme a skos:Concept .
+    ?theme sub:theme "true"^^xsd:boolean .
+    ?theme wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .
+}

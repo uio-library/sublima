@@ -44,7 +44,7 @@ status:godkjent_av_administrator
 <http://www.lommelegen.no/art/art1203.asp>
       rdf:type sub:Resource ;
       dct:coverage <http://www.geonames.org/countries/#NO> ;
-      dct:dateAccepted "2004-11-24T10:07:32"^^xsd:dateTime ;
+      dct:dateAccepted "2004-11-24T10:07:32.000+01:00"^^xsd:dateTime ;
       dct:description "Det er viktig å skille mellom smerter som sitter i korsryggen, og smerter som stråler nedover ett eller begge bein. Utstrålende smerter kan tyde på at en eller flere nerver er i klem, men kan også skyldes stive, betente muskler.  "@no ;
       dct:identifier <http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/resource/vondt_i_korsryggen__hva_kan_det_skyldes_004700> ;
       dct:language <http://www.lingvoj.org/lang/no> ;
