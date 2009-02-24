@@ -21,7 +21,6 @@
 @prefix wdr: <http://www.w3.org/2007/05/powder#> .
 @prefix status: <http://sublima.computas.com/status/> .
 
-
 # UNDER NO CIRCUMSTANCES REMOVE THE FOLLOWING STATEMENT
 # IT WILL BREAK PROTEGE INTEGRATION
 <> a owl:Ontology ;
@@ -42,6 +41,8 @@ sub:Resource		a 		rdfs:Class;
 sub:stripped		rdfs:range 	rdfs:Literal ;		
 			a 		owl:AnnotationProperty ;
 			rdfs:domain	http:ResponseMessage .
+
+sub:Linkstatus	  a    owl:Class .
 
 sub:status		rdfs:range 	rdfs:Literal ;		
 			a 		owl:AnnotationProperty ;
@@ -86,11 +87,14 @@ status:nytt_forslag a wdr:DR ;
 status:under_behandling a wdr:DR ;
     rdfs:label "Under behandling"@no, "Under behandling"@sv, "Under behandling"@da, "Being dealt with"@en .
 
-status:check a wdr:DR ;
+status:check a sub:Linkstatus ;
     rdfs:label "Sjekkes manuelt"@no, "Kontrolleras manuellt"@sv, "Sjekkes manuelt"@da, "Check manually"@en .
 
-status:gone a wdr:DR ;
+status:gone a sub:Linkstatus ;
     rdfs:label "Permanent borte"@no, "Permanent borta"@sv, "Permanent borte"@da, "Permanently gone"@en .
 
-status:ok a wdr:DR ;
+status:ok a sub:Linkstatus ;
     rdfs:label "Ok"@no, "Ok"@sv, "Ok"@da, "Ok"@en .
+
+status:inaktiv a sub:Linkstatus ;
+    rdfs:label "Inaktiv"@no, "Inaktiv"@sv, "Inaktiv"@da, "Inactive"@en .

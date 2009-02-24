@@ -375,5 +375,3 @@ lingvoj:Lingvo a owl:Class .
 # Response Message
 ########################
 http:ResponseMessage a owl:Class .
-
-
