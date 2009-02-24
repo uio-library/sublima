@@ -94,11 +94,10 @@ public class AdminController implements StatelessAppleController {
     }
   }
 
-  private void exportOntologyToXML
-          (AppleResponse
-                  res, AppleRequest
-                  req) throws Exception {
+  private void exportOntologyToXML(AppleResponse res, AppleRequest req) throws Exception {
     Map<String, Object> bizData = new HashMap<String, Object>();
+
+    adminService.insertSubjectOf();
 
     String type = req.getCocoonRequest().getParameter("type");
 
@@ -112,13 +111,11 @@ public class AdminController implements StatelessAppleController {
 
     model.close();
     System.gc();
+    adminService.deleteSubjectOf();
     res.sendPage("nostyle/export", bizData);
   }
 
-  private void uploadForm
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+  private void uploadForm(AppleResponse res, AppleRequest req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
@@ -140,6 +137,7 @@ public class AdminController implements StatelessAppleController {
         }
       }
       System.gc();
+      adminService.deleteSubjectOf();
       res.sendPage("xml2/upload", bizData);
     }
   }

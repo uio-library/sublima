@@ -1161,6 +1161,23 @@ public class AdminService {
     return queryResult.toString();
   }
 
+  public boolean insertSubjectOf() {
+    String sparul = "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+            "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "INSERT {?s sub:isSubjectOf ?o}\n" +
+            "WHERE {?o dct:subject ?s}";
+
+    return sparulDispatcher.query(sparul);
+  }
+
+  public boolean deleteSubjectOf() {
+    String sparul = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "DELETE {?s sub:isSubjectOf ?o}\n" +
+            "WHERE {?s sub:isSubjectOf ?o} ";
+
+    return sparulDispatcher.query(sparul);
+  }
+
 
   public boolean deleteComment(String uri) {
     String sparqlDelete = "DELETE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .} WHERE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .}";
