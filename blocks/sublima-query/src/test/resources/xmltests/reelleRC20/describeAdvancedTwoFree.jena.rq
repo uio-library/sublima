@@ -5,13 +5,18 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wdr: <http://www.w3.org/2007/05/powder#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>
+
 DESCRIBE ?resource ?var1 ?rest WHERE {
 ?free1 pf:textMatch """+sykdom*""" .
 ?resource dct:title ?free1 .
 
+
 ?free4 pf:textMatch """+Folkehelseinstituttet*""" .
 ?var1 foaf:name ?free4 .
+
 ?resource dct:publisher ?var1 .
+
+
 
 
 
