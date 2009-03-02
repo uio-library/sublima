@@ -13,6 +13,9 @@ import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
+import org.apache.cocoon.auth.ApplicationManager;
+import org.apache.cocoon.auth.ApplicationUtil;
+import org.apache.cocoon.auth.User;
 import org.apache.log4j.Logger;
 
 import java.io.ByteArrayOutputStream;
@@ -29,6 +32,9 @@ public class AdminController implements StatelessAppleController {
 
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
+  private ApplicationUtil appUtil = new ApplicationUtil();
+  private User user;
+  private String userPrivileges = "<empty/>";
   String[] completePrefixArray = {
           "PREFIX dct: <http://purl.org/dc/terms/>",
           "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
@@ -48,6 +54,12 @@ public class AdminController implements StatelessAppleController {
 
     String mode = req.getSitemapParameter("mode");
     String submode = req.getSitemapParameter("submode");
+
+    if (appUtil.getUser() != null) {
+          user = appUtil.getUser();
+          userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
+     }
+
 
     LanguageService langServ = new LanguageService();
     String language = langServ.checkLanguage(req, res);
@@ -118,6 +130,7 @@ public class AdminController implements StatelessAppleController {
   private void uploadForm(AppleResponse res, AppleRequest req) {
     Map<String, Object> bizData = new HashMap<String, Object>();
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    bizData.put("userprivileges", userPrivileges);
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       System.gc();

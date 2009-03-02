@@ -4,33 +4,49 @@
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:c="http://xmlns.computas.com/cocoon"
         xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
-  
-    <c:facets><jx:out value="#{facets}" xmlize="true"/></c:facets>
-    <c:title>Sublima <i18n:text key="administration">administrasjon</i18n:text></c:title>
 
-    <c:menu>
-      <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
-      <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
-      <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
-      <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
-      <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
-      <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
-      <c:menuelement title="menu.stats" link="" extlink="/stats/" i18n:attr="title"/>
-      <c:menuelement title="admin.logout" link="do-logout" i18n:attr="title"/>
-    </c:menu>
+  <c:facets>
+    <jx:out value="#{facets}" xmlize="true"/>
+  </c:facets>
+  <c:title>Sublima
+    <i18n:text key="administration">administrasjon</i18n:text>
+  </c:title>
 
-    <c:content>
-        <c:text>
-            <p><i18n:text key="upload.instructions">
-                Angi fil/URL og konverteringstypen i feltene nedenfor.<br/><br/>
-                Format for filer:<br/>
-                file:\Sti\til\fil\information-model.n3<br/>
-                <br/>
-                Format for URL:<br/>
-                http://www.urltilfil.com/information-model.n3<br/></i18n:text>
-            </p>
-        </c:text>
-      <c:upload/>
-    </c:content>
+  <c:menu>
+    <c:menuelement title="menu.topic" link="admin/emner/" i18n:attr="title"/>
+    <c:menuelement title="menu.resource" link="admin/ressurser/" i18n:attr="title"/>
+    <c:menuelement title="menu.user" link="admin/brukere/" i18n:attr="title"/>
+    <c:menuelement title="menu.publisher" link="admin/utgivere/" i18n:attr="title"/>
+    <c:menuelement title="menu.link" link="admin/lenkesjekk/" i18n:attr="title"/>
+    <c:menuelement title="menu.database" link="admin/database/" i18n:attr="title"/>
+    <c:menuelement title="menu.stats" link="" extlink="/stats/" i18n:attr="title"/>
+    <c:menuelement title="admin.logout" link="do-logout" i18n:attr="title"/>
+  </c:menu>
+
+  <c:userprivileges>
+    <jx:out value="#{userprivileges}" xmlize="true"/>
+  </c:userprivileges>
+
+  <c:content>
+    <c:text>
+      <p>
+        <i18n:text key="upload.instructions">
+          Angi fil/URL og konverteringstypen i feltene nedenfor.
+          <br/>
+          <br/>
+          Format for filer:
+          <br/>
+          file:\Sti\til\fil\information-model.n3
+          <br/>
+          <br/>
+          Format for URL:
+          <br/>
+          http://www.urltilfil.com/information-model.n3
+          <br/>
+        </i18n:text>
+      </p>
+    </c:text>
+    <c:upload/>
+  </c:content>
 
 </c:page>
