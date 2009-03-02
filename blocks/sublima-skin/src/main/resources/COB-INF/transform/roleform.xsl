@@ -349,6 +349,32 @@
         </tr>
         <tr>
           <td></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'database.import'">
+                <input type="checkbox" name="privileges" value="database.import" checked="checked"/><i18n:text key="import">Importere</i18n:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="database.import"/><i18n:text key="import">Importere</i18n:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'database.export'">
+                <input type="checkbox" name="privileges" value="database.export" checked="checked"/><i18n:text key="export">Eksportere</i18n:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="database.export"/><i18n:text key="export">Eksportere</i18n:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
           <td></td>
         </tr>
         <tr>
@@ -661,6 +687,36 @@
               </xsl:when>
               <xsl:otherwise>
                 <input type="checkbox" name="privileges" value="publisher.delete"/><i18n:text key="delete">Slette</i18n:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><i18n:text key="database">Database</i18n:text></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'database.import'">
+                <input type="checkbox" name="privileges" value="database.import" checked="checked"/><i18n:text key="import">Importere</i18n:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="database.import"/><i18n:text key="import">Importere</i18n:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="./c:tempvalues/c:tempvalues/c:privileges/c:privilege = 'database.export'">
+                <input type="checkbox" name="privileges" value="database.export" checked="checked"/><i18n:text key="export">Eksportere</i18n:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <input type="checkbox" name="privileges" value="database.export"/><i18n:text key="export">Eksportere</i18n:text>
               </xsl:otherwise>
             </xsl:choose>
           </td>

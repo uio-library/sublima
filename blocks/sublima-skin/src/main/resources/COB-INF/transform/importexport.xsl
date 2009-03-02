@@ -51,7 +51,10 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" value="button.read" i18n:attr="value"/>
+            <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">database.import</xsl:with-param>
+              <xsl:with-param name="buttontext">button.read</xsl:with-param>
+            </xsl:call-template>
           </td>
         </tr>
       </table>
@@ -87,7 +90,10 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" value="button.export" i18n:attr="value"/>
+            <xsl:call-template name="controlbutton">
+              <xsl:with-param name="privilege">database.export</xsl:with-param>
+              <xsl:with-param name="buttontext">button.export</xsl:with-param>
+            </xsl:call-template>
           </td>
         </tr>
       </table>
