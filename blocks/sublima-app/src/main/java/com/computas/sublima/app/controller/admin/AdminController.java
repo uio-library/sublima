@@ -142,9 +142,7 @@ public class AdminController implements StatelessAppleController {
     }
   }
 
-  public void setSparulDispatcher
-          (SparulDispatcher
-                  sparulDispatcher) {
+  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 }
