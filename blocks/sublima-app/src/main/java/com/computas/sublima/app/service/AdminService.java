@@ -5,6 +5,7 @@ import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
+import com.computas.sublima.query.service.MappingService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -46,6 +47,7 @@ public class AdminService {
   private static Logger logger = Logger.getLogger(AdminService.class);
   private SparqlDispatcher sparqlDispatcher = new DefaultSparqlDispatcher();
   private SparulDispatcher sparulDispatcher = new DefaultSparulDispatcher();
+  private MappingService ms = new MappingService();
 
   /**
    * Method to get all relation types
@@ -913,8 +915,11 @@ public class AdminService {
   public ArrayList<String> getTopicsByPartialName(String name, String language) {
     ArrayList<String> results = new ArrayList<String>();
 
+    String comparename = ms.charactermapping(name);
+
     for (String[] s : AutocompleteCache.getTopicList()) {
-      if (s[0].toLowerCase().startsWith(name.toLowerCase()) && (language.equalsIgnoreCase(s[1]) || language.equals(""))) {
+      String s0 = ms.charactermapping(s[0]);
+      if (s0.toLowerCase().startsWith(comparename.toLowerCase()) && (language.equalsIgnoreCase(s[1]) || language.equals(""))) {
         results.add(s[0]);
       }
     }
@@ -925,8 +930,11 @@ public class AdminService {
   public ArrayList<String> getPublishersByPartialName(String name) {
     ArrayList<String> results = new ArrayList<String>();
 
+    String comparename = ms.charactermapping(name);
+    
     for (String s : AutocompleteCache.getPublisherSet()) {
-      if (s != null && s.toLowerCase().startsWith(name.toLowerCase())) {
+      String s0 = ms.charactermapping(s);
+      if (s0 != null && s0.toLowerCase().startsWith(comparename.toLowerCase())) {
         results.add(s);
       }
     }

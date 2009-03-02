@@ -111,8 +111,8 @@ public class AdminController implements StatelessAppleController {
 
     model.close();
     System.gc();
-    adminService.deleteSubjectOf();
     res.sendPage("nostyle/export", bizData);
+    adminService.deleteSubjectOf();
   }
 
   private void uploadForm(AppleResponse res, AppleRequest req) {
@@ -137,8 +137,8 @@ public class AdminController implements StatelessAppleController {
         }
       }
       System.gc();
-      adminService.deleteSubjectOf();
       res.sendPage("xml2/upload", bizData);
+      adminService.deleteSubjectOf();
     }
   }
 
