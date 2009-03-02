@@ -349,6 +349,10 @@
         </tr>
         <tr>
           <td></td>
+          <td><i18n:text key="database">Database</i18n:text></td>
+        </tr>
+        <tr>
+          <td></td>
           <td>
             <xsl:choose>
               <xsl:when test="./c:roleprivilegies/c:privileges/c:privilege = 'database.import'">
