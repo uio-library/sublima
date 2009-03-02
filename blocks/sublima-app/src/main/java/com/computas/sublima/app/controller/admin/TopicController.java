@@ -214,7 +214,7 @@ public class TopicController implements StatelessAppleController {
         createInverse = true;
       } else if (relationtype.equals("symmetric")) {
         parameterMap.remove("a");
-        parameterMap.put("a", new String[]{"http://www.w3.org/2002/07/owl#SymmetricProperty"});
+        parameterMap.put("a", new String[]{"http://www.w3.org/2002/07/owl#SymmetricProperty", "http://www.w3.org/2002/07/owl#ObjectProperty"});
         parameterMap.remove("owl:inverseOf");
       } else if (relationtype.equals("oneway")) {
         parameterMap.remove("a");
