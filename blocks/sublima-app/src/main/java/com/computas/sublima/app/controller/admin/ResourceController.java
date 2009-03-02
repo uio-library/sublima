@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.net.URLEncoder;
 
 /**
  * @author: mha
@@ -178,7 +179,7 @@ public class ResourceController implements StatelessAppleController {
 
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
       String url = req.getCocoonRequest().getParameter("sub:url").trim();
-      bizData.put("tempvalues", tempPrefixes + "<sub:url>" + req.getCocoonRequest().getParameter("sub:url").trim() + "</sub:url></c:tempvalues>\n");
+      bizData.put("tempvalues", tempPrefixes + "<sub:url>" + URLEncoder.encode(req.getCocoonRequest().getParameter("sub:url").trim()) + "</sub:url></c:tempvalues>\n");
       bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
       if (!"".equalsIgnoreCase(url)) {
@@ -208,7 +209,7 @@ public class ResourceController implements StatelessAppleController {
                     "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
                     "    xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n" +
                     "  <sub:Resource>\n" +
-                    "    <sub:url rdf:resource=\"" + url + "\"/>\n" +
+                    "    <sub:url rdf:resource=\"" + URLEncoder.encode(url) + "\"/>\n" +
                     "  </sub:Resource>\n" +
                     "</rdf:RDF>");
 
@@ -541,7 +542,7 @@ public class ResourceController implements StatelessAppleController {
             "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n");
     xmlStructureBuffer.append("<sub:Resource>\n");
     xmlStructureBuffer.append("<dct:title>" + temp_title + "</dct:title>\n");
-    xmlStructureBuffer.append("<sub:url rdf:resource=\"" + temp_uri + "\"/>\n");
+    xmlStructureBuffer.append("<sub:url rdf:resource=\"" + URLEncoder.encode(temp_uri) + "\"/>\n");
 
     if ("".equals(temp_identifier)) {
       xmlStructureBuffer.append("<dct:identifier/>\n");

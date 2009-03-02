@@ -11,8 +11,9 @@
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-  xmlns="http://www.w3.org/1999/xhtml" 
-  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:url="http://whatever/java/java.net.URLEncoder"
+  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr url">
   <xsl:import href="rdfxml-res-templates.xsl"/>
   <xsl:output indent="yes"/>
 
@@ -91,7 +92,7 @@
       
       <tr>
 	<th colspan="2" scope="col">
-	  <xsl:apply-templates select="./dct:title" mode="external-link"/> <xsl:if test="../../c:loggedin = 'true'"> - <a href="{$baseurl}/admin/ressurser/edit?uri={./@rdf:about}{$aloc}">[Edit]</a> </xsl:if>
+	  <xsl:apply-templates select="./dct:title" mode="external-link"/> <xsl:if test="../../c:loggedin = 'true'"> - <a href="{$baseurl}/admin/ressurser/edit?uri={url:encode(./@rdf:about)}{$aloc}">[Edit]</a> </xsl:if>
     </th>
       </tr>
       <tr>

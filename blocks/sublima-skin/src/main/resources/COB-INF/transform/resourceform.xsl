@@ -13,7 +13,9 @@
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns:sioc="http://rdfs.org/sioc/ns#"
+        xmlns:url="http://whatever/java/java.net.URLDecoder"
         xmlns="http://www.w3.org/1999/xhtml"
+        exclude-result-prefixes="url"
         version="1.0">
 
   <xsl:import href="controlbutton.xsl"/>
@@ -37,7 +39,7 @@
       <input type="hidden" name="dct:dateSubmitted" value="{./c:resource/rdf:RDF/sub:Resource/dct:dateSubmitted}"/>
       <input type="hidden" name="sub:lastApprovedBy" value="{./c:resource/rdf:RDF/sub:Resource/sub:lastApprovedBy/@rdf:resource}"/>
       <input type="hidden" name="dct:dateAccepted" value="{./c:resource/rdf:RDF/sub:Resource/dct:dateAccepted}"/>
-      <input type="hidden" id="dct:identifier" name="dct:identifier" value="{./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource}"/>
+      <input type="hidden" id="dct:identifier" name="dct:identifier" value="{url:decode(./c:resource/rdf:RDF/sub:Resource/dct:identifier/@rdf:resource)}"/>
       <input type="hidden" name="interface-language" value="{$interface-language}"/>
       <xsl:call-template name="hidden-locale-field"/>
 
@@ -105,7 +107,7 @@
           </td>
           <td>
             <input id="the-resource" type="text" name="the-resource" size="40"
-                   value="{./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource}"/>
+                   value="{url:decode(./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource)}"/>
           </td>
         </tr>
         <tr>
