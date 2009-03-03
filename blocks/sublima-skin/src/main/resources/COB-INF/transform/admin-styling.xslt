@@ -75,9 +75,9 @@
   </xsl:template>
 
   <xsl:template name="messages">
-    <xsl:if test="c:page/c:content/c:messages/c:messages/c:message">
+    <xsl:if test="/c:page/c:content/c:messages/c:messages/c:message">
       <ul>
-        <xsl:for-each select="c:page/c:content/c:messages/c:messages/c:message">
+        <xsl:for-each select="/c:page/c:content/c:messages/c:messages/c:message">
           <li>
             <xsl:value-of select="."/>
             <br/>
@@ -261,7 +261,7 @@
      menues
 	 ###################################################################### -->       
         <div class="col1" style="border:0px dotted black;">     <!-- Column 1 start -->
-	  <!-- xsl:call-template name="debug"/ -->
+	  <!--xsl:call-template name="debug"/-->
 		  <xsl:text> </xsl:text> <!-- avoid an empty div tag -->
 		
 		<div style="border:0px dotted orange;">
