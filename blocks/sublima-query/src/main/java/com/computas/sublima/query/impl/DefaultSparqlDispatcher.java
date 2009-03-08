@@ -38,7 +38,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     CachingService cache = new CachingService();
     MemcachedClient memcached = cache.connect();
 
-    String url = SettingsService.getProperty("sublima.joseki.endpoint");
+    String url = SettingsService.getProperty("sublima.sparql.endpoint");
     logger.info("SPARQLdispatcher executing.\n" + query + "\n");
     String cacheString = query.replaceAll("\\s+", " ") + SettingsService.getProperty("sublima.base.url");
     String cacheKey = String.valueOf(cacheString.hashCode()); // We could parse the query first to get a better key
