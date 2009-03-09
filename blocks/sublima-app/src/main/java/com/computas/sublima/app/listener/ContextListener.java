@@ -29,7 +29,7 @@ public final class ContextListener implements ServletContextListener {
       logger.info("SUBLIMA: Property sublima.checkurl.onstartup set to TRUE --> URL Check - Performing a url check");
       indexService.validateURLs();
     }
-
+    /*
     if ("true".equalsIgnoreCase(SettingsService.getProperty("sublima.index.internal.onstartup"))) {
       logger.info("SUBLIMA: Property sublima.index.internal.onstartup set to TRUE --> Indexing - Internal content");
       try {
@@ -44,7 +44,7 @@ public final class ContextListener implements ServletContextListener {
     // and bind it to the model...
     else {
       indexService.setIndex(SettingsService.getProperty("sublima.index.directory"));
-    }
+    }*/
 
 
   }
