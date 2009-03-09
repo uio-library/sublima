@@ -401,7 +401,7 @@ public class ResourceController implements StatelessAppleController {
             messageBuffer.append("<c:message><i18n:text key=\"resource.updated\">Ressurs oppdatert</i18n:text></c:message>\n");
           }
 
-          indexService.indexResource(req.getCocoonRequest().getParameter("the-resource").trim(), SettingsService.getProperty("sublima.resource.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          //indexService.indexResource(req.getCocoonRequest().getParameter("the-resource").trim(), SettingsService.getProperty("sublima.resource.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
           logger.trace("Added the resource to the index");
           LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 

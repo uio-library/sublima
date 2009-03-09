@@ -57,23 +57,23 @@ public class IndexService {
    * A method to validate all urls on the resources. Adds the URL to the list along with
    * the http code.
    */
-  /*
+
   public void validateURLs() {
-    ResultSet resultSet;
-    resultSet = getAllExternalResourcesURLs();
+    ResultSet resultSet = null;
+    //resultSet = getAllExternalResourcesURLs();
 
     // For each URL, do a HTTP GET and check the HTTP code
     int i = 1;
     while (resultSet.hasNext()) {
       String resultURL = resultSet.next().toString();
       String url = resultURL.substring(10, resultURL.length() - 3).trim();
-      logger.info("SUBLIMA: validateURLs() --> Updating status for resource " + i + " " + url);
+      //logger.info("SUBLIMA: validateURLs() --> Updating status for resource " + i + " " + url);
       URLActions urlAction = new URLActions(url);
       urlAction.getAndUpdateResourceStatus();
       i++;
     }
   }
 
-  */
+
  
 }

@@ -14,11 +14,11 @@ import java.sql.*;
  */
 public class DatabaseService {
   // todo Use JNDI instead of hard coded database parameters
-  private String M_DB_URL = "jdbc:postgresql://localhost/subdata";// SettingsService.getProperty("sublima.database.url");
-  private String M_DB_USER = "subuser";//SettingsService.getProperty("sublima.database.username");
-  private String M_DB_PASSWD = "subpasswd";//SettingsService.getProperty("sublima.database.password");
-  private String M_DB = "PostgreSQL";//SettingsService.getProperty("sublima.database.databasetype");
-  private String M_DBDRIVER_CLASS = "org.postgresql.Driver";//SettingsService.getProperty("sublima.database.class");
+  private String M_DB_URL = "jdbc:virtuoso://rabbit.computas.int:1111";// SettingsService.getProperty("sublima.database.url");
+  private String M_DB_USER = "dba";//SettingsService.getProperty("sublima.database.username");
+  private String M_DB_PASSWD = "dba";//SettingsService.getProperty("sublima.database.password");
+  private String M_DB = "DB";//SettingsService.getProperty("sublima.database.databasetype");
+  private String M_DBDRIVER_CLASS = "virtuoso.jdbc3.Driver";//SettingsService.getProperty("sublima.database.class");
 
   public IDBConnection getConnection() {
 

@@ -74,7 +74,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
   }
 
   public String getResultsAsJSON(String queryString) {
-
+    /*
     logger.info("SPARQLdispatcher executing.\n" + queryString + "\n");
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
@@ -82,13 +82,16 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     ResultSetFormatter.outputAsJSON(out, qExec.execSelect());
     qExec.close();
     System.gc();
-    return out.toString();
+    return out.toString(); */
+    return "";
   }
 
   public ResultSet getResultsAsResultSet(String queryString) {
+    /*
     logger.info("SPARQLdispatcher executing.\n" + queryString + "\n");
     Query query = QueryFactory.create(queryString);
     QueryExecution qExec = QueryExecutionFactory.create(query, SettingsService.getModel());
-    return qExec.execSelect();
+    return qExec.execSelect();*/
+    return null;
   }
 }

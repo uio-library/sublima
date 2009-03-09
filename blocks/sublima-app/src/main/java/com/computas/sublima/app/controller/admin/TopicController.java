@@ -696,7 +696,7 @@ public class TopicController implements StatelessAppleController {
                 messageBuffer.append("<c:message><i18n:text key=\"topic.updated\">Emne oppdatert</i18n:text></c:message>\n");
               }
 
-              indexService.indexTopic(uri, SettingsService.getProperty("sublima.topic.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+              //indexService.indexTopic(uri, SettingsService.getProperty("sublima.topic.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
               logger.trace("Added the topic to the index");
               LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
