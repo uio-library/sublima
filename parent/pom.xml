@@ -118,10 +118,14 @@
       </dependency>
 
       <dependency>
-        <groupId>postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>8.2-504.jdbc3</version>
-        <scope>compile</scope>
+        <groupId>com.openlinksw</groupId>
+        <artifactId>virtjdbc3</artifactId>
+        <version>5.0.9</version>
+      </dependency>
+      <dependency>
+        <groupId>com.openlinksw</groupId>
+        <artifactId>virt_jena</artifactId>
+        <version>5.0.9</version>
       </dependency>
 
       <!-- Test -->
@@ -214,10 +218,16 @@
       </dependency>
       <!-- Joseki -->
       <dependency>
+        <!--  <groupId>org.joseki</groupId>
+       <artifactId>joseki</artifactId>
+       <version>3.2.0</version> -->
         <groupId>org.joseki</groupId>
         <artifactId>joseki</artifactId>
+        <!--version>3.3-SNAPSHOT</version-->
         <version>3.2.0</version>
+
       </dependency>
+
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-core</artifactId>
@@ -297,6 +307,10 @@
       <name>dustin</name>
       <url>http://bleu.west.spy.net/~dustin/repo</url>
       <layout>legacy</layout>
+    </repository>
+    <repository>
+      <id>Jena</id>
+      <url>http://jena.hpl.hp.com/repo-dev/</url>
     </repository>
   </repositories>
 
