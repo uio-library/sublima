@@ -137,6 +137,14 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+        <groupId>com.openlinksw</groupId>
+        <artifactId>virtjdbc3</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>com.openlinksw</groupId>
+        <artifactId>virt_jena</artifactId>
+      </dependency>
+    <dependency>
       <groupId>spy</groupId>
       <artifactId>memcached</artifactId>
     </dependency>

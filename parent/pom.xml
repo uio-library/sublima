@@ -128,6 +128,13 @@
         <version>5.0.9</version>
       </dependency>
 
+      <dependency>
+        <groupId>postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>8.2-504.jdbc3</version>
+        <scope>compile</scope>
+      </dependency>
+
       <!-- Test -->
       <dependency>
         <groupId>junit</groupId>
