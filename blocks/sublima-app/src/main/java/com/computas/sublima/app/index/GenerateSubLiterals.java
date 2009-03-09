@@ -38,7 +38,7 @@ public class GenerateSubLiterals {
 
     for (String graph : graphs) {
 
-      ArrayList<String> uriList = gu.getListOfURIs(new String[]{graph});
+      ArrayList<String> uriList = gu.getListOfResourceURIs();
 
       try {
         String pathname = "/tmp/mediasone/index/";
@@ -47,7 +47,7 @@ public class GenerateSubLiterals {
         String name = graph.split(" ")[0].split("/")[graph.split(" ")[0].split("/").length - 2] + "_" + graph.split(" ")[0].split("/")[graph.split(" ")[0].split("/").length - 1];
         String filename = getDate() + "_" + name + "_subliterals.n3";
 
-        EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.sparul.endpoint"), gu.getBaseGraph() + "/index/" + name, "dba", "dba", "SPARQL", 500);
+        EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.basegraph"), 250);
         String query = "INSERT INTO <" + gu.getBaseGraph() + "> {\n<" + gu.getBaseGraph() + "/index/" + name + "> a <" + gu.getBaseGraph() + "#IndexGraph> ;\n rdfs:label \"Index for " + name + "\" .}";
         save.ExecQuery(query);
 
@@ -67,7 +67,7 @@ public class GenerateSubLiterals {
         BufferedWriter out = new BufferedWriter(fstream);
 
         for (String uri : uriList) {
-          String line = gen.generateFreetextForSingleResource(uri, searchableProperties, prefixes, new String[]{graph});
+          String line = gen.generateInternalFreetextForSingleResource(uri, searchableProperties, prefixes, new String[]{graph}, false);
 
           if (line != null) {
             save.Add(line);

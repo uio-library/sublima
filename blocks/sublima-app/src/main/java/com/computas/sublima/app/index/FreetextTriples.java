@@ -1,5 +1,6 @@
 package com.computas.sublima.app.index;
 
+import com.computas.sublima.app.service.URLActions;
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.service.MappingService;
 import org.w3c.dom.Document;
@@ -43,15 +44,19 @@ public class FreetextTriples {
    * @param graphs               graphname
    * @return String with sub:literals N3-triple
    */
-  public String generateFreetextTripleForURI(String uri, String[] searchableProperties, String[] prefixes, String[] graphs) {
+  public String generateFreetextTripleForURI(String uri, String[] searchableProperties, String[] prefixes, String[] graphs, boolean indexExternalContent) {
     if (!uri.startsWith("<") && !uri.endsWith(">")) {
       uri = "<" + uri + ">";
     }
 
     String concatenatedSearchableText = getConcatenatedTextFromURI(uri, searchableProperties, prefixes, graphs);
 
-    return concatenatedSearchableText.isEmpty() ? null : uri + " <http://xmlns.computas.com/sublima#literals> \"\"\"" + concatenatedSearchableText + "\"\"\" .";
-
+    if (indexExternalContent) {
+      String externalContent = getResourceExternalLiteralsAsString(uri);
+      return uri + " <http://xmlns.computas.com/sublima#literals> \"" + concatenatedSearchableText + "\" .\n" + uri + " <http://xmlns.computas.com/sublima#externalliterals> \"" + concatenatedSearchableText + " " + externalContent + "\" .\n";
+    } else {
+      return concatenatedSearchableText.isEmpty() ? null : uri + " <http://xmlns.computas.com/sublima#literals> \"" + concatenatedSearchableText + "\" .";
+    }
   }
 
   /**
@@ -98,7 +103,61 @@ public class FreetextTriples {
       e.printStackTrace();
     }
 
-    return results.toString();
+    return escapeString(results.toString());
+  }
+
+  /**
+   * Method to get the external content as an triple for a specific resource including the internal literals
+   *
+   * @param uri
+   * @return a String ie. "<http://theresource.net> sub:externalliterals """ This is the resource . net external content including internal content""""
+   */
+  public String getResourceExternalLiteralsAsString(String uri) {
+    StringBuilder externalContent = new StringBuilder();
+
+    URLActions urlAction = new URLActions(uri);
+    String code = urlAction.getCode();
+
+    if ("302".equals(code) ||
+            "303".equals(code) ||
+            "304".equals(code) ||
+            "305".equals(code) ||
+            "307".equals(code) ||
+            code.startsWith("2")) {
+      try {
+
+        externalContent.append(urlAction.strippedContent(null).replace("\\", "\\\\"));
+
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+    }
+    return escapeString(externalContent.toString());
+  }
+
+  private String escapeString(String s) {
+    StringBuilder sb = new StringBuilder();
+    int i;
+    char c;
+    for (i = 0; i < s.length(); i++) {
+      c = s.charAt(i);
+      if (c >= 32 && c <= 127) { //<http://www.w3.org/2001/sw/RDFCore/ntriples/#character>
+        if (c == 92 || c == 34 || c == 10 || c == 13 || c == 9) { //<http://www.w3.org/2001/sw/RDFCore/ntriples/#sec-string1>
+          sb.append('\\');
+          sb.append(c);
+        } else {
+          sb.append(c);
+        }
+      } else {
+        String hexstr = Integer.toHexString(c).toUpperCase();
+        int pad = 4 - hexstr.length();
+        sb.append("\\u");
+        for (; pad > 0; pad--)
+          sb.append('0');
+        sb.append(hexstr);
+      }
+    }
+    return sb.toString();
   }
 
 }

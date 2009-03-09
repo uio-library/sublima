@@ -2,6 +2,7 @@ package com.computas.sublima.app.index;
 
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.service.SettingsService;
+import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -11,11 +12,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Properties;
 
 /**
  * @author: mha
@@ -28,25 +25,19 @@ public class GenerateUtils {
   public GenerateUtils() {
   }
 
+
   /**
-   * Method to extract the URIs from a XML format using XPATH
+   * Method to extract the topic URIs from a XML format using XPATH
    *
-   * @param graphs Graphname
    * @return ArrayList<String> containing all URIs
    */
-  public ArrayList<String> getListOfURIs(String[] graphs) {
+  public ArrayList<String> getListOfTopicURIs() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "SELECT DISTINCT ?uri",
+            "WHERE {",
+            "        ?uri a <http://www.w3.org/2004/02/skos/core#Concept> }"});
 
-    StringBuilder getAllURIsQuery = new StringBuilder();
-
-    getAllURIsQuery.append("SELECT DISTINCT ?s\n");
-
-    for (String graph : graphs) {
-      getAllURIsQuery.append("FROM <" + graph + ">\n");
-    }
-
-    getAllURIsQuery.append("WHERE {?s ?p ?o}");
-
-    String xmlResult = (String) sq.query(getAllURIsQuery.toString());
+    String xmlResult = (String) sq.query(queryString);
 
     ArrayList<String> uriList = new ArrayList<String>();
 
@@ -66,7 +57,39 @@ public class GenerateUtils {
     }
 
     return uriList;
+  }
 
+  /**
+   * Method to extract the resource URIs from a XML format using XPATH
+   *
+   * @return ArrayList<String> containing all URIs
+   */
+  public ArrayList<String> getListOfResourceURIs() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "SELECT DISTINCT ?uri",
+            "WHERE {",
+            "        ?uri a <http://xmlns.computas.com/sublima#Resource> }"});
+
+    String xmlResult = (String) sq.query(queryString);
+
+    ArrayList<String> uriList = new ArrayList<String>();
+
+    try {
+      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Document doc = builder.parse(new ByteArrayInputStream(xmlResult.getBytes("UTF-8")));
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+      for (int i = 0; i < nodes.getLength(); i++) {
+        uriList.add(nodes.item(i).getTextContent());
+      }
+
+    } catch (Exception e) {
+      System.out.println("Could not get list of URIs from XML");
+      e.printStackTrace();
+    }
+
+    return uriList;
   }
 
   /**
