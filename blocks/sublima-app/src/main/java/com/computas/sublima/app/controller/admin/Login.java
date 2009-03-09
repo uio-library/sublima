@@ -37,7 +37,7 @@ public class Login extends AbstractSecurityHandler { //implements StatelessApple
       return null;//throw new AuthenticationException("Required user name property is missing for login.");
     } else {
 
-      String sql = "SELECT * FROM users WHERE username = '" + name + "'";
+      String sql = "SELECT * FROM DB.DBA.users WHERE username = '" + name + "'";
 
       if ("Computas".equalsIgnoreCase(name)) {
 

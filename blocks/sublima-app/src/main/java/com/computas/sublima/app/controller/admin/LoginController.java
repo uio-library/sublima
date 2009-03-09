@@ -55,7 +55,7 @@ public class LoginController implements StatelessAppleController {
           }
         }
 
-        String sql = "SELECT * FROM users WHERE username = '" + name + "'";
+        String sql = "SELECT * FROM DB.DBA.users WHERE username = '" + name + "'";
         Statement statement = null;
 
         try {

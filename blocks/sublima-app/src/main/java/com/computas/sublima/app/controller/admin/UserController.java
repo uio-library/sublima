@@ -201,8 +201,8 @@ public class UserController implements StatelessAppleController {
 
           try {
             String password = adminService.generateSHA1(req.getCocoonRequest().getParameter("password1"));
-            String insertSql = "INSERT INTO users "
-                    + "(username, password) "
+            String insertSql = "INSERT INTO DB.DBA.users "
+                    + "(username, \"password\") "
                     + "VALUES "
                     + "('" + req.getCocoonRequest().getParameter("sioc:email") + "', '" + password + "')";
 
@@ -234,7 +234,7 @@ public class UserController implements StatelessAppleController {
             String insertSql;
 
             //String[] username = req.getCocoonRequest().getParameter("oldusername").split(":");
-            insertSql = "UPDATE users "
+            insertSql = "UPDATE DB.DBA.users "
                     + "SET username = '" + req.getCocoonRequest().getParameter("sioc:email") + "' "
                     + "WHERE username = '" + req.getCocoonRequest().getParameter("oldusername") + "'";
 
@@ -256,7 +256,7 @@ public class UserController implements StatelessAppleController {
               logger.trace("UserController.editUser --> GENERATE PASSWORD SHA1 " + password + "\n");
 
               String insertSql = "UPDATE users "
-                      + "SET password = '" + password + "' "
+                      + "SET \"password\" = '" + password + "' "
                       + "WHERE username = '" + req.getCocoonRequest().getParameter("sioc:email") + "'";
 
               logger.trace("UserController.editUser --> INSERT USERINFO:\n" + insertSql);
@@ -431,13 +431,13 @@ public class UserController implements StatelessAppleController {
 
           // Delete old privileges to shortcut INSERT/UPDATE check. Add the role privilegies to the database
           try {
-            String deletePrivilegeSql = "DELETE FROM roleprivilege WHERE role ='" + uri + "';";
+            String deletePrivilegeSql = "DELETE FROM DB.DBA.roleprivilege WHERE \"role\" ='" + uri + "'";
             dbService.doSQLUpdate(deletePrivilegeSql);
             String insertPrivilegesSql;
 
             if (req.getCocoonRequest().getParameterValues("privileges") != null) {
               for (String s : req.getCocoonRequest().getParameterValues("privileges")) {
-                insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','" + s + "');";
+                insertPrivilegesSql = "INSERT INTO DB.DBA.roleprivilege(\"role\", privilege) VALUES('" + uri + "','" + s + "')";
                 logger.trace(insertPrivilegesSql);
                 dbService.doSQLUpdate(insertPrivilegesSql);
               }
@@ -445,7 +445,7 @@ public class UserController implements StatelessAppleController {
 
             if (req.getCocoonRequest().getParameterValues("resource.status") != null) {
               for (String s : req.getCocoonRequest().getParameterValues("resource.status")) {
-                insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','resource.status." + s + "');";
+                insertPrivilegesSql = "INSERT INTO DB.DBA.roleprivilege(\"role\", privilege) VALUES('" + uri + "','resource.status." + s + "')";
                 logger.trace(insertPrivilegesSql);
                 dbService.doSQLUpdate(insertPrivilegesSql);
               }
@@ -453,7 +453,7 @@ public class UserController implements StatelessAppleController {
 
             if (req.getCocoonRequest().getParameterValues("topic.status") != null) {
               for (String s : req.getCocoonRequest().getParameterValues("topic.status")) {
-                insertPrivilegesSql = "INSERT INTO roleprivilege(role, privilege) VALUES('" + uri + "','topic.status." + s + "');";
+                insertPrivilegesSql = "INSERT INTO DB.DBA.roleprivilege(\"role\", privilege) VALUES('" + uri + "','topic.status." + s + "')";
                 logger.trace(insertPrivilegesSql);
                 dbService.doSQLUpdate(insertPrivilegesSql);
               }
@@ -518,10 +518,10 @@ public class UserController implements StatelessAppleController {
     if (!req.getCocoonRequest().getParameter("password1").equals(req.getCocoonRequest().getParameter("password2"))) {
       validationMessages.append("<c:message><i18n:text key=\"user.password.equal\">Passordfeltene m vre like</i18n:text></c:message>\n");
     }
-
+    /*
     if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("sioc:has_function")) || req.getCocoonRequest().getParameter("sioc:has_function") == null) {
       validationMessages.append("<c:message><i18n:text key=\"user.norole\">En rolle m vre valgt</i18n:text></c:message>\n");
-    }
+    } */
 
     if ("http://sublima.computas.com/status/inaktiv".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy")) && !userPrivileges.contains("user.delete")) {
       validationMessages.append("<c:message><i18n:text key=\"user.deleteprivilege\">Du har ikke rettigheter til å sette en bruker til inaktiv</i18n:text></c:message>\n");
