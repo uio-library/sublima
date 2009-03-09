@@ -33,6 +33,8 @@ public class Generate {
     }
 
     save.Flush();
+
+    save = null;
   }
 
   public void generateIndexForResource(String uri) {
@@ -46,6 +48,7 @@ public class Generate {
     String freetext = generateInternalFreetextForSingleResource(uri, gu.getResourceFreetextFieldsToIndex(), gu.getPrefixes(), new String[]{SettingsService.getProperty("sublima.basegraph")}, false);
     save.Add(freetext);
     save.Flush();
+    save = null;
   }
 
   public void generateIndexForTopics() {
@@ -59,6 +62,7 @@ public class Generate {
     }
 
     save.Flush();
+    save = null;
   }
 
   public void generateIndexForTopic(String uri) {
@@ -72,6 +76,7 @@ public class Generate {
     String freetext = generateFreetextForSingleTopic(uri, gu.getResourceFreetextFieldsToIndex(), gu.getPrefixes(), new String[]{SettingsService.getProperty("sublima.basegraph")});
     save.Add(freetext);
     save.Flush();
+    save = null;
   }
 
   public String generateInternalFreetextForSingleResource(String uri, String[] freetext, String[] prefixes, String[] graphs, boolean indexExternalContent) {
