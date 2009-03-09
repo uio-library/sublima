@@ -46,11 +46,10 @@ public class CQL2SPARQL {
 
         String searchString = searchService.buildSearchString(thisNode.getTerm(), true, false); // This is the freetext we will search for.
         logger.debug("CQL2SPARQL: Search String is: " + searchString);
-        return  "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
-                "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+        return  "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                 "DESCRIBE ?resource ?rest WHERE {\n" +
-                "?lit pf:textMatch '" + searchString + "' .\n" +
                 "?resource dct:identifier ?lit .\n" +
+                "?lit <bif:contains> \"'" + searchString + "'\" .\n" +
                 "?resource ?p ?rest .\n" +
                 "}";
 

@@ -26,12 +26,11 @@ public class CQL2SPARQLTest extends TestCase {
     }
 
     public void setUp() throws Exception {
-        expectedPrefix = "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
-                "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+        expectedPrefix =                 "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                 "DESCRIBE ?resource ?rest WHERE {\n" +
-                "?lit pf:textMatch '";
-        expectedSuffix = "' .\n?resource dct:identifier ?lit .\n" +
-                "?resource ?p ?rest .\n" +
+                "?resource dct:identifier ?lit .\n" +
+                "?lit <bif:contains> \"'";
+        expectedSuffix = "'\" .\n?resource ?p ?rest .\n" +
                 "}";
         super.setUp();
     }

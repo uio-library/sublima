@@ -299,10 +299,9 @@ public class SearchController implements StatelessAppleController {
                       "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n" +
                       "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n" +
                       "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-                      "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#> \n" +
                       "DESCRIBE ?subject WHERE {\n" +
-                      "  ?lit pf:textMatch \"\"\"" + searchStringOverriden + "\"\"\" . " +
                       "  ?subject skos:prefLabel ?lit .\n" +
+                      "  ?lit <bif:contains> \"\"\"'" + searchStringOverriden + "'\"\"\" . " +
                       "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
                       "\n}\n";
 

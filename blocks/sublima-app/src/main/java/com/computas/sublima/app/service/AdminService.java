@@ -850,7 +850,7 @@ public class AdminService {
     if (query == null) {
       return true;
     }
-    if (!query.contains("pf:textMatch")) {
+    if (!query.contains("bif:contains")) {
       return false;
     }
     try {

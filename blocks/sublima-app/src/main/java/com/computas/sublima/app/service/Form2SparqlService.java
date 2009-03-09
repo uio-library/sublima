@@ -5,6 +5,7 @@ import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.MappingService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.commons.lang.NotImplementedException;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,7 +25,7 @@ import java.util.*;
  * <p/>
  * This class has become rather complex, as it has to account for a very high number of
  * different situations
- *
+ * <p/>
  * It is important to note that the list of WHERE clause statements is built only once.
  * This means that if the query changes, one will have to create a new instance of this class.
  *
@@ -47,15 +48,18 @@ public class Form2SparqlService {
 
   private List<String> prefixes = new ArrayList<String>();
 
-  private List subjectVarList = new LinkedList();
+  private List<String> subjectVarList = new LinkedList<String>();
 
   private int variablecount = 1; // the var below has to be unique across calls
 
-  private List freetextFields = new ArrayList<String>();
+  private List<String> freetextFields = new ArrayList<String>();
 
-  private ArrayList n3List = null;
+  private ArrayList<String> n3List = null;
+
 
   private boolean truncate = true;
+
+  private String archiveuri;
 
   private MappingService mapping = new MappingService();
 
@@ -200,8 +204,10 @@ public class Form2SparqlService {
           RDFObject myRDFObject = new RDFObject(value, language);
           String thisObjectString = null;
           if (freetextFields != null && freetextFields.contains("dct:subject/all-labels")) {
-            int freetextNo = freetextFields.indexOf(key) + 1;
-            n3Buffer.append("\n?free" + freetextNo + " pf:textMatch \"\"\"");
+            throw new NotImplementedException("Freetext search with dct:subject/all-labels is not implemented in Mediesone");
+/*              int freetextNo = freetextFields.indexOf(key) + 1;
+            n3Buffer.append("\n?free" + freetextNo + " <bif:contains> \"\"\"'");
+            value = mapping.charactermapping(value);
             // Map characters
             value = mapping.charactermapping(value);
             String[] words = value.split(" ");
@@ -217,26 +223,25 @@ public class Form2SparqlService {
             } else {
               logger.info("Form2SPARQL freetext: " + value + "was not used.");
             }
-            n3Buffer.append("\"\"\" .");
-            thisObjectString = "?free" + freetextNo + " .";
+            n3Buffer.append("'\"\"\" .");
+            thisObjectString = "?free" + freetextNo + " .";     */
           } else if (value == null) {
             thisObjectString = "?object" + values.length + " .";
           } else {
             thisObjectString = myRDFObject.toN3() + " .";
           }
-          if  (freetextFields == null)
-          {
-              n3Buffer.append("\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:prefLabel ");
-              n3Buffer.append(thisObjectString);
-              n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:altLabel ");
-              n3Buffer.append(thisObjectString);
-              n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:hiddenLabel ");
-              n3Buffer.append(thisObjectString);
-              n3Buffer.append(" }\nFILTER ( bound( " + var + ") )\n");
+          if (freetextFields == null) {
+            n3Buffer.append("\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:prefLabel ");
+            n3Buffer.append(thisObjectString);
+            n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:altLabel ");
+            n3Buffer.append(thisObjectString);
+            n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:hiddenLabel ");
+            n3Buffer.append(thisObjectString);
+            n3Buffer.append(" }\nFILTER ( bound( " + var + ") )\n");
           } else {
-              n3Buffer.append("\n" +var +"skos:prefLabel ");
-              n3Buffer.append(thisObjectString);
-              n3Buffer.append("\n" +resourceSubject + "dct:subject " + var + ".\n");
+            n3Buffer.append("\n" + var + "skos:prefLabel ");
+            n3Buffer.append(thisObjectString);
+            n3Buffer.append("\n" + resourceSubject + "dct:subject " + var + ".\n");
           }
 
         }
@@ -306,10 +311,10 @@ public class Form2SparqlService {
     StringBuilder sparqlQueryBuffer = new StringBuilder();
     sparqlQueryBuffer.append("DESCRIBE ");
 
-    ArrayList n3List = getN3List(parameterMap);
+    ArrayList<String> n3List = getN3List(parameterMap);
     // Add the variables to the query
-    for (Object element : subjectVarList) {
-      sparqlQueryBuffer.append((String) element);
+    for (String element : subjectVarList) {
+      sparqlQueryBuffer.append(element);
     }
     sparqlQueryBuffer.append("?rest WHERE {");
     sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
@@ -333,7 +338,7 @@ public class Form2SparqlService {
    * returned using this WHERE clause.
    *
    * @param parameterMap The data structure with the key-value-pairs.
-   * @param cutoff int the number of hits
+   * @param cutoff       int the number of hits
    * @return A SPARQL count query.
    */
   public String convertForm2SparqlCount(Map<String, String[]> parameterMap, int cutoff) {
@@ -344,16 +349,16 @@ public class Form2SparqlService {
     sparqlQueryBuffer.append("SELECT DISTINCT ?resource ");
     ArrayList<String> n3Listtmp = getN3List(parameterMap);
     if (n3Listtmp.size() < 1) {
-        logger.info("convertForm2SparqlCount had no triples in the WHERE clause, avoiding getting the whole database.");
-        return null;
+      logger.info("convertForm2SparqlCount had no triples in the WHERE clause, avoiding getting the whole database.");
+      return null;
     }
-    ArrayList<String> n3List = new ArrayList();
+    ArrayList<String> n3List = new ArrayList<String>();
     sparqlQueryBuffer.append("WHERE {");
     for (String triple : n3Listtmp) {
-        // This is a hack to optimize the count a bit by leaving out the check for approved resources.
-        if (! triple.contains("status/godkjent_av_administrator")) {
-            n3List.add(triple);
-        }
+      // This is a hack to optimize the count a bit by leaving out the check for approved resources.
+      if (!triple.contains("status/godkjent_av_administrator")) {
+        n3List.add(triple);
+      }
     }
     sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
     sparqlQueryBuffer.append("\n}\nOFFSET " + (cutoff - 1) + " LIMIT 1");
@@ -368,10 +373,10 @@ public class Form2SparqlService {
    *
    * @param parameterMap
    */
-  private ArrayList getN3List(Map<String, String[]> parameterMap) {
+  private ArrayList<String> getN3List(Map<String, String[]> parameterMap) {
 
     if (n3List == null) {
-      n3List = new ArrayList();
+      n3List = new ArrayList<String>();
       if (parameterMap.get("interface-language") != null) {
         setLanguage(parameterMap.get("interface-language")[0]);
         parameterMap.remove("interface-language");
@@ -406,18 +411,12 @@ public class Form2SparqlService {
         parameterMap.remove("searchstring");
       }
 
-
-      if (freetextFields != null) {
-        addPrefix("pf: <http://jena.hpl.hp.com/ARQ/property#>");
-      }
-
-
       for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
         n3List.add(convertFormField2N3(e.getKey(), e.getValue()));
       }
 
       return n3List;
-      
+
     } else {
       return n3List;
     }
@@ -447,8 +446,7 @@ public class Form2SparqlService {
    * @throws IOException if no subject can be found or constructed.
    */
 
-  public String convertForm2Sparul(Map<String, String[]> parameterMap)
-          throws IOException {
+  public String convertForm2Sparul(Map<String, String[]> parameterMap) throws IOException {
 
     String language = new String();
     if (parameterMap.get("interface-language") != null) {
@@ -488,11 +486,12 @@ public class Form2SparqlService {
                       "parameter or of a title-field and subjecturi-prefix combination.");
     }
 
+    if (archiveuri.isEmpty()) throw new IOException("No archive is given. Cannot insert or delete without a given archive uri.");
+
     StringBuilder sparqlQueryBuffer = new StringBuilder();
     sparqlQueryBuffer.append(getPrefixString());
-    sparqlQueryBuffer.append("DELETE { <" + SparulSubjectURI + "> ?p ?o . ");
-    sparqlQueryBuffer.append("}\nWHERE { <" + SparulSubjectURI + "> ?p ?o . }\n");
-    sparqlQueryBuffer.append("\nINSERT DATA {\n");
+    sparqlQueryBuffer.append("DELETE FROM GRAPH " + archiveuri + " { <" + SparulSubjectURI + "> ?p ?o . }\n WHERE { <" + SparulSubjectURI + "> ?p ?o . }\n");
+    sparqlQueryBuffer.append("\nINSERT INTO GRAPH " + archiveuri + " {\n");
 
     for (Map.Entry<String, String[]> e : parameterMap.entrySet()) {
       if (e.getValue() != null) {
@@ -546,17 +545,18 @@ public class Form2SparqlService {
     if (!subjectVarList.contains(resourceSubject)) {
       subjectVarList.add(resourceSubject);
     }
-
     searchstring = mapping.charactermapping(searchstring);
 
-    String result = "\n?lit pf:textMatch \"\"\"" + searchstring + "\"\"\" .";
+    String result = "";
 
     if (deepsearch) {
       result = result + "\n?resource sub:url ?lit .";
     } else {
-      //result = result + "\n?resource sub:literals ?lit .";
-      result = result + "\n?resource dct:identifier ?lit ."; // for test
+      result = result + "\n?resource sub:literals ?lit .";
+      //result = result + "\n?resource dct:identifier ?lit ."; // for test
     }
+
+    result = result + "\n?lit <bif:contains> \"\"\"'" + searchstring + "'\"\"\" .";
     return result;
   }
 
@@ -566,21 +566,19 @@ public class Form2SparqlService {
     StringBuilder end = new StringBuilder(); // Stuff that should end the query goes here.
 
     for (String triple : n3List) {
-      if (triple.contains("pf:textMatch") && ! triple.contains("skos:prefLabel")) {
-          if (triple.contains("?lit ")) {
-              start.insert(0, triple);
-          } else {
-              // In this case, it isn't actually a triple, and the freetext thing needs to go first
-              List<String> tmplist = Arrays.asList(triple.split("\n"));
-              Collections.reverse(tmplist);
-              start.insert(0, StringUtils.join("\n", tmplist));
-              start.insert(0, "\n");
-          }
-      } else
-      if (triple.contains("dct:language")) {
-          end.append(triple);
-      } else 
-        if (triple.contains("describedBy")) {
+      if (triple.contains("bif:contains") && (!triple.contains("skos:prefLabel"))) {
+       if (triple.contains("?lit ")) {
+          start.insert(0, triple);
+        } else {
+          // In this case, it isn't actually a triple, and the freetext thing needs to go first
+          List<String> tmplist = Arrays.asList(triple.split("\n"));
+           Collections.reverse(tmplist);
+          start.insert(0, triple);
+      //    start.insert(0, "\n");
+        }
+      } else if (triple.contains("dct:language")) {
+        end.append(triple);
+      } else if (triple.contains("describedBy")) {
         end.append(triple);
       } else {
         ordered.insert(0, triple);
@@ -593,6 +591,11 @@ public class Form2SparqlService {
 
   public void setTruncate(boolean truncate) {
     this.truncate = truncate;
+  }
+
+
+  public void setArchiveuri(String archiveuri) {
+    this.archiveuri = archiveuri;
   }
 
 }
