@@ -584,7 +584,7 @@ public class AdminService {
     ResultSet resultSet;
     StringBuilder xmlBuffer = new StringBuilder();
 
-    String getRolePrivilegesString = "SELECT privilege FROM roleprivilege WHERE role = '" + roleuri + "';";
+    String getRolePrivilegesString = "SELECT privilege FROM DB.DBA.roleprivilege WHERE \"role\" = '" + roleuri + "'";
 
     xmlBuffer.append("<c:privileges xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
 
