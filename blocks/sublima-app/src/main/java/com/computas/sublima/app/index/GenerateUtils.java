@@ -1,6 +1,7 @@
 package com.computas.sublima.app.index;
 
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
+import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.w3c.dom.Document;
@@ -13,6 +14,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 /**
  * @author: mha
@@ -305,5 +308,35 @@ public class GenerateUtils {
     }
 
     return graph;
+  }
+
+  public void updateIndexStatistics(String type) {
+    DatabaseService dbService = new DatabaseService();
+
+    Calendar cal = Calendar.getInstance();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy - HH:mm:ss");
+    String date = sdf.format(cal.getTime());
+
+    try {
+      String updateSQL = "UPDATE DB.DBA.indexstatistics "
+              + "SET \"date\" = '" + date + "' "
+              + "WHERE type =  '" + type + "'";
+
+      int insertedRows = dbService.doSQLUpdate(updateSQL);
+
+      if (insertedRows == 0) {
+       String insertSQL = "INSERT INTO DB.DBA.indexstatistics "
+                    + "(type, \"date\") "
+                    + "VALUES "
+                    + "('" + type + "', '" + date + "')";
+
+        insertedRows = dbService.doSQLUpdate(insertSQL);
+      }
+
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      dbService = null;
+    }
+    dbService = null;
   }
 }

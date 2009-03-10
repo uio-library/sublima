@@ -282,4 +282,8 @@
   <message key="registeredby">Registrert av</message>
   <message key="lastapprovedby">Sist godkjent av</message>
   <message key="classification">Klassifisering</message>
+  <message key="button.index">Indekser</message>
+  <message key="menu.index">Indeks</message>
+  <message key="index.type">Type</message>
+  <message key="lastRun">Sist kjørt</message>
 </catalogue>

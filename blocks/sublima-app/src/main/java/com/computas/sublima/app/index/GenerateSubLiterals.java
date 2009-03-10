@@ -24,19 +24,7 @@ public class GenerateSubLiterals {
     // default constructor
   }
 
-  private void generateSubLiterals() {
-
-    String[] graphs = {"http://msone.computas.no/graphs/instance/nfi",
-            "http://msone.computas.no/graphs/instance/mo",
-            "http://msone.computas.no/graphs/ontology/mediasone",
-            "http://msone.computas.no/graphs/vocab/mediasone",
-            "http://msone.computas.no/graphs/ontology/mediasone/agent",
-    };
-
-    String[] searchableProperties = gu.getResourceFreetextFieldsToIndex();
-    String[] prefixes = gu.getPrefixes();
-
-    for (String graph : graphs) {
+  private void generateSubLiterals(String graph, String[] searchableProperties, String[] prefixes, String type, boolean indexexternal) {
 
       ArrayList<String> uriList = gu.getListOfResourceURIs();
 
@@ -45,11 +33,11 @@ public class GenerateSubLiterals {
         boolean createdDirectory = new File(pathname).mkdirs();
         System.out.println("Created " + pathname + " " + createdDirectory);
         String name = graph.split(" ")[0].split("/")[graph.split(" ")[0].split("/").length - 2] + "_" + graph.split(" ")[0].split("/")[graph.split(" ")[0].split("/").length - 1];
-        String filename = getDate() + "_" + name + "_subliterals.n3";
+        String filename = getDate() + "_" + name + "_" + type + "_subliterals.n3";
 
-        EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.basegraph"), 250);
-        String query = "INSERT INTO <" + gu.getBaseGraph() + "> {\n<" + gu.getBaseGraph() + "/index/" + name + "> a <" + gu.getBaseGraph() + "#IndexGraph> ;\n rdfs:label \"Index for " + name + "\" .}";
-        save.ExecQuery(query);
+        EndpointSaver save = new EndpointSaver(graph, 5);
+        //String query = "INSERT INTO <" + gu.getBaseGraph() + "> {\n<" + gu.getBaseGraph() + "/index/" + name + "> a <" + gu.getBaseGraph() + "#IndexGraph> ;\n rdfs:label \"Index for " + name + "\" .}";
+        //save.ExecQuery(query);
 
         File file = new File(pathname, filename);
         boolean createdFile = file.createNewFile();
@@ -67,7 +55,7 @@ public class GenerateSubLiterals {
         BufferedWriter out = new BufferedWriter(fstream);
 
         for (String uri : uriList) {
-          String line = gen.generateInternalFreetextForSingleResource(uri, searchableProperties, prefixes, new String[]{graph}, false);
+          String line = gen.generateInternalFreetextForSingleResource(uri, searchableProperties, prefixes, new String[]{graph}, indexexternal);
 
           if (line != null) {
             save.Add(line);
@@ -88,7 +76,6 @@ public class GenerateSubLiterals {
       } catch (Exception e) {
         System.err.println("Error: " + e.getMessage());
       }
-    }
   }
 
   public String getDate() {
@@ -99,7 +86,15 @@ public class GenerateSubLiterals {
 
   public static void main(String[] args) {
     GenerateSubLiterals gs = new GenerateSubLiterals();
-    gs.generateSubLiterals();
-  }
+    String basegraph = "http://rabbit.computas.int:8180/sublima-webapp-1.0-SNAPSHOT/";
+    String[] indexfields = {"dct:title", "dct:description", "dct:publisher/foaf:name", "dct:subject/skos:prefLabel", "dct:subject/skos:altLabel", "dct:subject/skos:hiddenLabel"};
+    String[] prefixes = {"dct: <http://purl.org/dc/terms/>", "foaf: <http://xmlns.com/foaf/0.1/>", "sub: <http://xmlns.computas.com/sublima#>", "skos: <http://www.w3.org/2004/02/skos/core#>"};
+    String type = "resources";
+    boolean indexexternal = false;
+    gs.generateSubLiterals(basegraph, indexfields, prefixes, type, indexexternal);
 
+    indexfields = new String[]{"skos:prefLabel", "skos:altLabel", "skos:hiddenLabel"};
+    type = "topics";
+    gs.generateSubLiterals(basegraph, indexfields, prefixes, type, indexexternal);
+  }
 }

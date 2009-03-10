@@ -229,7 +229,17 @@
         <map:redirect-to uri="{request:contextPath}/login"/>
       </map:match>
 
-      <!-- all other admin pages. Returns a 404 if the page is not found. -->
+      <map:match pattern="admin/database/index/*">
+        <map:act type="cauth-is-logged-in">
+          <map:parameter name="application" value="Sublima"/>
+          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+            <map:parameter name="mode" value="index"/>
+            <map:parameter name="submode" value="{../1}"/>
+          </map:call>
+        </map:act>
+        <map:redirect-to uri="{request:contextPath}/login"/>
+      </map:match>
+
       <map:match pattern="admin/database/*">
         <map:act type="cauth-is-logged-in">
           <map:parameter name="application" value="Sublima"/>

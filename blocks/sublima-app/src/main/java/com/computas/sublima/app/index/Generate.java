@@ -1,7 +1,5 @@
 package com.computas.sublima.app.index;
 
-import com.computas.sublima.query.service.SettingsService;
-
 import java.util.ArrayList;
 
 /**
@@ -17,65 +15,84 @@ public class Generate {
     // empty constructor
   }
 
-  public void generateIndexForResources(boolean indexExternalContent) {
-
-    EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.basegraph"), 250);
+  public void generateIndexForResources(boolean indexExternalContent, String basegraph, String[] fieldstoindex, String[] prefixes) {
+    EndpointSaver save = new EndpointSaver(basegraph, 250);
     save.DropPropertyForType("?s", "<http://xmlns.computas.com/sublima#literals>", "<http://xmlns.computas.com/sublima#Resource>");
 
     if (indexExternalContent) {
-      save.DropPropertyForType("?s","<http://xmlns.computas.com/sublima#externalliterals>", "<http://xmlns.computas.com/sublima#Resource>");
+      save.DropPropertyForType("?s", "<http://xmlns.computas.com/sublima#externalliterals>", "<http://xmlns.computas.com/sublima#Resource>");
     }
     ArrayList<String> uris = gu.getListOfResourceURIs();
 
+    int i = 1;
+    int size = uris.size();
     for (String uri : uris) {
-      String freetext = generateInternalFreetextForSingleResource(uri, gu.getResourceFreetextFieldsToIndex(), gu.getPrefixes(), new String[]{SettingsService.getProperty("sublima.basegraph")}, indexExternalContent);
-      save.Add(freetext);
+      String freetext = generateInternalFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, indexExternalContent);
+      if (freetext != null) {
+        save.Add(freetext);
+      }
+      System.out.println("Indexing resource " + i + " of " + size);
+      i++;
     }
 
     save.Flush();
-
     save = null;
+    gu.updateIndexStatistics("resources");
   }
 
-  public void generateIndexForResource(String uri) {
+  public void generateIndexForResource(String uri, String basegraph, String[] fieldstoindex, String[] prefixes) {
     if (!uri.startsWith("<") && !uri.endsWith(">")) {
       uri = "<" + uri + ">";
     }
 
-    EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.basegraph"), 250);
+    EndpointSaver save = new EndpointSaver(basegraph, 250);
     save.DropPropertyForType(uri, "<http://xmlns.computas.com/sublima#literals>", "<http://xmlns.computas.com/sublima#Resource>");
+    String freetext = generateInternalFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, false);
 
-    String freetext = generateInternalFreetextForSingleResource(uri, gu.getResourceFreetextFieldsToIndex(), gu.getPrefixes(), new String[]{SettingsService.getProperty("sublima.basegraph")}, false);
-    save.Add(freetext);
-    save.Flush();
+    if (freetext != null) {
+      save.Add(freetext);
+      save.Flush();
+    }
     save = null;
   }
 
-  public void generateIndexForTopics() {
-    EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.basegraph"), 250);
+  public void generateIndexForTopics(String basegraph, String[] fieldstoindex, String[] prefixes) {
+    EndpointSaver save = new EndpointSaver(basegraph, 250);
     save.DropPropertyForType("?s", "<http://xmlns.computas.com/sublima#literals>", "<http://www.w3.org/2004/02/skos/core#Concept>");
     ArrayList<String> uris = gu.getListOfTopicURIs();
 
+    int i = 1;
+    int size = uris.size();
+
     for (String uri : uris) {
-      String freetext = generateFreetextForSingleTopic(uri, gu.getResourceFreetextFieldsToIndex(), gu.getPrefixes(), new String[]{SettingsService.getProperty("sublima.basegraph")});
-      save.Add(freetext);
+      String freetext = generateFreetextForSingleTopic(uri, fieldstoindex, prefixes, new String[]{basegraph});
+      if (freetext != null) {
+        save.Add(freetext);
+      }
+
+      System.out.println("Indexing topic " + i + " of " + size);
+      i++;
     }
 
     save.Flush();
     save = null;
+
+    gu.updateIndexStatistics("topics");
   }
 
-  public void generateIndexForTopic(String uri) {
+  public void generateIndexForTopic(String uri, String basegraph, String[] fieldstoindex, String[] prefixes) {
     if (!uri.startsWith("<") && !uri.endsWith(">")) {
       uri = "<" + uri + ">";
     }
 
-    EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.basegraph"), 250);
+    EndpointSaver save = new EndpointSaver(basegraph, 250);
     save.DropPropertyForType(uri, "<http://xmlns.computas.com/sublima#literals>", "<http://www.w3.org/2004/02/skos/core#Concept>");
 
-    String freetext = generateFreetextForSingleTopic(uri, gu.getResourceFreetextFieldsToIndex(), gu.getPrefixes(), new String[]{SettingsService.getProperty("sublima.basegraph")});
-    save.Add(freetext);
-    save.Flush();
+    String freetext = generateFreetextForSingleTopic(uri, fieldstoindex, prefixes, new String[]{basegraph});
+    if (freetext != null) {
+      save.Add(freetext);
+      save.Flush();
+    }
     save = null;
   }
 

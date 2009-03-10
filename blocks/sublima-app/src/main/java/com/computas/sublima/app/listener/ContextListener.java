@@ -23,30 +23,6 @@ public final class ContextListener implements ServletContextListener {
     } catch (Exception e) {
       logger.warn("SUBLIMA: Initializing cache lists failed. Probably because of an error with the database.");  
     }
-
-
-    if ("true".equalsIgnoreCase(SettingsService.getProperty("sublima.checkurl.onstartup"))) {
-      logger.info("SUBLIMA: Property sublima.checkurl.onstartup set to TRUE --> URL Check - Performing a url check");
-      indexService.validateURLs();
-    }
-    /*
-    if ("true".equalsIgnoreCase(SettingsService.getProperty("sublima.index.internal.onstartup"))) {
-      logger.info("SUBLIMA: Property sublima.index.internal.onstartup set to TRUE --> Indexing - Internal content");
-      try {
-        boolean indexExternal = Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup"));
-        indexService.createIndex(SettingsService.getProperty("sublima.index.directory"), SettingsService.getProperty("sublima.index.type"), SettingsService.getProperty("sublima.resource.searchfields").split(";"), SettingsService.getProperty("sublima.topic.searchfields").split(";"),  SettingsService.getProperty("sublima.prefixes").split(";"), indexExternal);
-        logger.info("SUBLIMA: Indexing - Internal content finished");
-      } catch (com.hp.hpl.jena.shared.DoesNotExistException e) {
-        logger.warn("SUBLIMA: getFreetextToIndex() --> Database didn't exist. This iads OK on startup, but fatal otherwise");
-      }
-    }
-    // What happens if this is not set? We need to check if we can read from an existing index
-    // and bind it to the model...
-    else {
-      indexService.setIndex(SettingsService.getProperty("sublima.index.directory"));
-    }*/
-
-
   }
 
 

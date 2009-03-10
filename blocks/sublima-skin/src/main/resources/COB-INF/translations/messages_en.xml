@@ -278,6 +278,10 @@
   <message key="validation.url.errorcode"></message> <!-- MÅ OVERSETTES -->
   <message key="validation.url.novalue"></message> <!-- MÅ OVERSETTES -->
   <message key="validation.urlexists">The URL given is already registered as a resource.</message>
+  <message key="button.index">Index</message><!-- MÅ OVERSETTES -->
+  <message key="menu.index">Index</message><!-- MÅ OVERSETTES -->
+  <message key="index.type">Type</message><!-- MÅ OVERSETTES -->
+  <message key="lastRun">Sist kjørt</message><!-- MÅ OVERSETTES -->
 </catalogue>
 
 

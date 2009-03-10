@@ -30,25 +30,7 @@
   </c:userprivileges>
 
   <c:content>
-    <c:text>
-      <p>
-        <i18n:text key="upload.instructions">
-          Angi fil/URL og konverteringstypen i feltene nedenfor.
-          <br/>
-          <br/>
-          Format for filer:
-          <br/>
-          file:\Sti\til\fil\information-model.n3
-          <br/>
-          <br/>
-          Format for URL:
-          <br/>
-          http://www.urltilfil.com/information-model.n3
-          <br/>
-        </i18n:text>
-      </p>
-    </c:text>
-    <c:upload/>
+    <c:index><jx:out value="#{index}" xmlize="true"/></c:index>
   </c:content>
 
 </c:page>

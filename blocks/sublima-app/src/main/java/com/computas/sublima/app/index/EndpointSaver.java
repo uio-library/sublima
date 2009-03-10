@@ -53,9 +53,13 @@ public class EndpointSaver {
     queryBuffer.append(graph);
     queryBuffer.append(" {\n");
     for (String triple : triples) {
-      queryBuffer.append(triple);
-      if (!triple.endsWith("\n")) {
-        queryBuffer.append("\n");
+      System.out.println(triples.size());
+      System.out.println(triple);
+      if (triple != null) {
+        queryBuffer.append(triple);
+        if (!triple.endsWith("\n")) {
+          queryBuffer.append("\n");
+        }
       }
     }
     triples.clear();

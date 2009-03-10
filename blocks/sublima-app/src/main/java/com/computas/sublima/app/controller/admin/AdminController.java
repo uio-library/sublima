@@ -3,19 +3,18 @@ package com.computas.sublima.app.controller.admin;
 import com.computas.sublima.app.adhoc.ConvertSublimaResources;
 import com.computas.sublima.app.adhoc.ImportData;
 import com.computas.sublima.app.service.AdminService;
+import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.app.service.LanguageService;
-import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.sparql.util.StringUtils;
+import org.apache.cocoon.auth.ApplicationUtil;
+import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.auth.ApplicationManager;
-import org.apache.cocoon.auth.ApplicationUtil;
-import org.apache.cocoon.auth.User;
 import org.apache.log4j.Logger;
 
 import java.io.ByteArrayOutputStream;
@@ -56,9 +55,9 @@ public class AdminController implements StatelessAppleController {
     String submode = req.getSitemapParameter("submode");
 
     if (appUtil.getUser() != null) {
-          user = appUtil.getUser();
-          userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
-     }
+      user = appUtil.getUser();
+      userPrivileges = adminService.getRolePrivilegesAsXML(user.getAttribute("role").toString());
+    }
 
 
     LanguageService langServ = new LanguageService();
@@ -101,9 +100,38 @@ public class AdminController implements StatelessAppleController {
       } else if ("export".equalsIgnoreCase(submode)) {
         exportOntologyToXML(res, req);
       }
+    } else if ("index".equalsIgnoreCase(mode)) {
+      if ("".equals(submode)) {
+        if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+          index(res, req);
+        } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+          showIndexStatus(res, req);
+        }
+      }
+
     } else {
       res.sendStatus(404);
     }
+  }
+
+  private void showIndexStatus(AppleResponse res, AppleRequest req) {
+    // Les indexstatistikk fra databasen
+
+    Map<String, Object> bizData = new HashMap<String, Object>();
+    bizData.put("index", adminService.getIndexStatisticsAsXML());
+    bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+    bizData.put("userprivileges", userPrivileges);
+    res.sendPage("xml2/index", bizData);
+  }
+
+  private void index(AppleResponse res, AppleRequest req) {
+    IndexService is = new IndexService();
+
+    is.createResourceIndex();
+    is.createTopicIndex();
+
+    showIndexStatus(res, req);
+
   }
 
   private void exportOntologyToXML(AppleResponse res, AppleRequest req) throws Exception {

@@ -591,10 +591,10 @@ public class AdminService {
 
     logger.trace("AdminService.getRolePrivilegesAsXML --> " + getRolePrivilegesString);
 
-    try {
-      ResultSet rs;
+    Connection connection = null ;
 
-      Connection connection = dbService.getJavaSQLConnection();
+    try {
+      connection = dbService.getJavaSQLConnection();
 
       statement = connection.createStatement();
       resultSet = statement.executeQuery(getRolePrivilegesString);
@@ -609,6 +609,67 @@ public class AdminService {
       e.printStackTrace();
       logger.trace("AdminService.getRolePrivilegesAsXML --> FAILED\n");
 
+    }
+
+    finally {
+      if (connection != null) {
+        try {
+          connection.close();
+        } catch (SQLException e) {
+          logger.error("Could not close Database connection");
+        }
+      }
+    }
+    return xmlBuffer.toString();
+  }
+
+  /**
+   * Method to get the role privileges based on the given URI.
+   * Returns the privileges as XML.
+   *
+   * @return
+   */
+  public String getIndexStatisticsAsXML() {
+    DatabaseService dbService = new DatabaseService();
+    Statement statement;
+    ResultSet resultSet;
+    StringBuilder xmlBuffer = new StringBuilder();
+
+    String getIndexStatisticsString = "SELECT type, \"date\" FROM DB.DBA.indexstatistics";
+
+    xmlBuffer.append("<c:statistics xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+
+
+    logger.trace("AdminService.getIndexStatisticsAsXML --> " + getIndexStatisticsString);
+
+    Connection connection = null;
+
+    try {
+      connection = dbService.getJavaSQLConnection();
+
+      statement = connection.createStatement();
+      resultSet = statement.executeQuery(getIndexStatisticsString);
+
+      while (resultSet.next()) {
+        xmlBuffer.append("<c:statistic><c:type>" + resultSet.getString(1) + "</c:type><c:date>" + resultSet.getString(2) + "</c:date></c:statistic>");
+      }
+
+      xmlBuffer.append("</c:statistics>\n");
+    } catch (SQLException e) {
+      xmlBuffer.append("</c:statistics>\n");
+      e.printStackTrace();
+      logger.trace("AdminService.getIndexStatisticsAsXML --> FAILED\n");
+
+    }
+
+    finally {
+      if (connection != null) {
+        try {
+          connection.close();
+        } catch (SQLException e) {
+          logger.error("Could not close Database connection");
+        }
+      }
     }
     return xmlBuffer.toString();
   }

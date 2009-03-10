@@ -282,5 +282,9 @@
   <message key="registeredby">Registrert av</message><!-- MÅ OVERSETTES -->
   <message key="lastapprovedby">Sist godkjent av</message><!-- MÅ OVERSETTES -->
   <message key="classification">Klassifisering</message><!-- MÅ OVERSETTES -->
+  <message key="button.index">Indekser</message><!-- MÅ OVERSETTES -->
+  <message key="menu.index">Indeks</message><!-- MÅ OVERSETTES -->
+  <message key="index.type">Type</message><!-- MÅ OVERSETTES -->
+  <message key="lastRun">Sist kjørt</message><!-- MÅ OVERSETTES -->
 </catalogue>
 

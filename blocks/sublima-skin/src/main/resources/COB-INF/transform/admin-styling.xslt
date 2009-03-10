@@ -34,6 +34,7 @@
   <xsl:import href="publisherform.xsl"/>
   <xsl:import href="sparql-uri-label-pairs.xsl"/>
   <xsl:import href="kommentarer.xsl"/>
+  <xsl:import href="index.xsl"/>
 
   <xsl:output method="xml"
               encoding="UTF-8"
@@ -424,10 +425,16 @@
                   </ul>
                 </xsl:if>
                 <xsl:text> </xsl:text>
-           </div>     
+           </div>
 
- 
- 
+           <xsl:if test="c:page/c:content/c:index">
+              <div>
+                <xsl:apply-templates select="c:page/c:content/c:index"/>
+                <xsl:text> </xsl:text>
+              </div>
+           </xsl:if>
+
+
 
               </div>                <!-- Column 1 end -->
 

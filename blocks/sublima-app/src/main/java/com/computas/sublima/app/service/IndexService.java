@@ -6,6 +6,7 @@ import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.app.index.Generate;
+import com.computas.sublima.app.index.GenerateUtils;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.rdf.model.*;
@@ -29,6 +30,7 @@ import java.util.Set;
 public class IndexService {
 
   private Generate gen = new Generate();
+  private GenerateUtils gu = new GenerateUtils();
 
   public void createIndex() {
     createResourceIndex();
@@ -36,11 +38,11 @@ public class IndexService {
   }
 
   public void createResourceIndex() {
-    gen.generateIndexForResources(Boolean.valueOf(SettingsService.getProperty("sublima.index.external.onstartup")));
+    gen.generateIndexForResources(Boolean.valueOf(SettingsService.getProperty("sublima.index.external")), SettingsService.getProperty("sublima.basegraph"), gu.getResourceFreetextFieldsToIndex(), gu.getPrefixes());
   }
 
   public void createTopicIndex() {
-    gen.generateIndexForTopics();
+    gen.generateIndexForTopics(SettingsService.getProperty("sublima.basegraph"), gu.getTopicFieldsToIndex(), gu.getPrefixes());
   }
 
   public boolean indexResource() {
