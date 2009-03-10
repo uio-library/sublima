@@ -16,7 +16,6 @@ public final class ContextListener implements ServletContextListener {
   private static Logger logger = Logger.getLogger(ContextListener.class);
 
   public void contextInitialized(ServletContextEvent servletContextEvent) {
-    IndexService indexService = new IndexService();
     try {
       AutocompleteCache.getPublisherSet();
       AutocompleteCache.getTopicList();  
