@@ -13,6 +13,9 @@ import java.net.URLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import net.spy.memcached.MemcachedClient;
 
 
@@ -30,7 +33,28 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
    *         where the returning object is not derived from java.lang.Object
    */
   public Object query(String query) {
+      // Mostly a nasty hack for backwards compatibility
+      // ASK has been fixed in the AdminService
+      // DESCRIBE and CONSTRUCT will both return RDF/XML so we don't need to distringuish them now.
+      Pattern p = Pattern.compile("SELECT");
+      Matcher m = p.matcher(query);
+      if (m.matches()) {
+          return query(query, "SELECT");
+      } else {
+          return query(query, "DESCRIBE");
+      }
+  }
 
+  /**
+   * This method takes all SPARQL requests and identifies the corrent receiver.
+   *
+   * @param query
+   * @param queryType whether the query is a DECSRIBE, CONSTRUCT or SELECT
+   * @return Object - based on what method it forwards to. Must be cased in cases
+   *         where the returning object is not derived from java.lang.Object
+   */
+
+  public Object query(String query, String queryType) {
     String result = null;
     HttpURLConnection con = null;
 
@@ -49,12 +73,16 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
         logger.debug("SPARQLdispatcher found nothing in the cache.");
         try {
             URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8"));
-            logger.debug("SPARQLdispatcher connected to Joseki.");
+            logger.debug("SPARQLdispatcher connected to the triplestore.");
             long connecttime = System.currentTimeMillis();
             con = (HttpURLConnection) u.openConnection();
+            if ("SELECT".equals(queryType) || "ASK".equals(queryType)) {
+                con.setRequestProperty("Accept", "application/sparql-results+xml");
+            }
+
             result = IOUtils.toString(con.getInputStream());
             long requesttime = System.currentTimeMillis() - connecttime;
-            logger.info("SPARQLdispatcher got results from Joseki. Query took " + requesttime + " ms." );
+            logger.info("SPARQLdispatcher got results from the triplestore. Query took " + requesttime + " ms." );
             if (cache.useMemcached()) {
                 memcached.set(cacheKey, 60 * 60 * 24 * 30, result);
             }
