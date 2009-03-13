@@ -191,10 +191,12 @@ public class AdminService {
             "WHERE {",
             "?uri a " + rdfType + " ;",
             "          rdfs:label ?label .",
+            "?resource " + property + " ?uri .",
             "}"});
 
     logger.trace("AdminService.getDistinctAndUsedLabels() executing");
-    Object queryResult = sparqlDispatcher.query(queryString);
+    Object queryResult = sparqlDispatcher.query(queryString, "SELECT");
+    logger.trace("AdminService.getDistinctAndUsedLabels() got "+ queryResult.toString());
 
     return queryResult.toString();
   }
@@ -1186,7 +1188,7 @@ public class AdminService {
             "}";
 
     logger.trace("AdminService.isSymmetricProperty() executing");
-    Object queryResult = sparqlDispatcher.query(sparqlConstructQuery);
+    Object queryResult = sparqlDispatcher.query(sparqlConstructQuery, "ASK");
 
     return queryResult.toString().contains("true");
 
@@ -1204,7 +1206,7 @@ public class AdminService {
 
 
     logger.trace("AdminService.isRelation() executing");
-    Object queryResult = sparqlDispatcher.query(sparqlConstructQuery);
+    Object queryResult = sparqlDispatcher.query(sparqlConstructQuery, "ASK");
 
     return queryResult.toString().contains("true");
 
@@ -1217,7 +1219,7 @@ public class AdminService {
             "         wdr:describedBy <http://sublima.computas.com/status/inaktiv> . }";
 
     logger.trace("AdminService.isInactiveUser() executing");
-    Object queryResult = sparqlDispatcher.query(sparqlAsk);
+    Object queryResult = sparqlDispatcher.query(sparqlAsk, "ASK");
 
     return queryResult.toString().contains("true");
   }
@@ -1257,7 +1259,7 @@ public class AdminService {
     String sparqlAsk = "ASK { ?s ?p <" + uri + "> . }";
 
     logger.trace("AdminService.hasPublisherResources() executing");
-    Object queryResult = sparqlDispatcher.query(sparqlAsk);
+    Object queryResult = sparqlDispatcher.query(sparqlAsk, "ASK");
 
     return queryResult.toString().contains("true");
   }
