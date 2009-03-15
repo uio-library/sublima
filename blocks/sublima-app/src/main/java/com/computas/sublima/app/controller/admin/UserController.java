@@ -5,6 +5,7 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
+import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
@@ -307,6 +308,7 @@ public class UserController implements StatelessAppleController {
                   parameterMap.get("subjecturi-prefix")[0]});
         }
 
+        form2SparqlService.setArchiveuri(SettingsService.getProperty("sublima.basegraph"));
         String sparqlQuery = null;
         try {
           sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
@@ -413,13 +415,13 @@ public class UserController implements StatelessAppleController {
 
         StringBuilder insertString = new StringBuilder();
         insertString.append(completePrefixes);
-        insertString.append("\nDELETE {\n");
+        insertString.append("\nDELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{\n");
         insertString.append("<" + uri + "> ?o ?p .\n}\n");
         insertString.append("WHERE {\n");
         insertString.append("<" + uri + "> ?o ?p .\n}\n");
-        insertString.append("INSERT DATA {\n");
+        insertString.append("INSERT DATA INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{\n");
         insertString.append("<" + uri + "> a sioc:Role ;\n");
-        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@" + language + " ;\n}");
+        insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@" + language + " .\n}");
 
         boolean insertSuccess = sparulDispatcher.query(insertString.toString());
 
