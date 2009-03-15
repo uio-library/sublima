@@ -1,11 +1,10 @@
 package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.RDFObject;
-import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.MappingService;
-import com.hp.hpl.jena.sparql.util.StringUtils;
-import org.apache.log4j.Logger;
+import com.computas.sublima.query.service.SearchService;
 import org.apache.commons.lang.NotImplementedException;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.*;
@@ -567,14 +566,14 @@ public class Form2SparqlService {
 
     for (String triple : n3List) {
       if (triple.contains("bif:contains") && (!triple.contains("skos:prefLabel"))) {
-       if (triple.contains("?lit ")) {
+        if (triple.contains("?lit ")) {
           start.insert(0, triple);
         } else {
           // In this case, it isn't actually a triple, and the freetext thing needs to go first
           List<String> tmplist = Arrays.asList(triple.split("\n"));
-           Collections.reverse(tmplist);
+          Collections.reverse(tmplist);
           start.insert(0, triple);
-      //    start.insert(0, "\n");
+          //    start.insert(0, "\n");
         }
       } else if (triple.contains("dct:language")) {
         end.append(triple);
@@ -595,7 +594,12 @@ public class Form2SparqlService {
 
 
   public void setArchiveuri(String archiveuri) {
-    this.archiveuri = archiveuri;
+    if (!archiveuri.startsWith("<") && !archiveuri.endsWith(">")) {
+      this.archiveuri = "<" + archiveuri + ">";
+    } else {
+      this.archiveuri = archiveuri;
+    }
+
   }
 
 }
