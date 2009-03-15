@@ -7,6 +7,7 @@ import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
+import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
@@ -101,7 +102,7 @@ public class PublisherController implements StatelessAppleController {
     if (adminService.hasPublisherResources(req.getCocoonRequest().getParameter("the-resource").trim())) {
       messageBuffer.append("<c:message><i18n:text key=\"publisher.nodeletehasresources\">Utgiveren har ressurser tilknyttet seg, bytt utgiver på disse ressursene.</i18n:text></c:message>\n");
     } else {
-      String deleteString = "DELETE {\n" +
+      String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{\n" +
               "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o.\n" +
               "} WHERE {\n" +
               "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o. }";
@@ -194,7 +195,7 @@ public class PublisherController implements StatelessAppleController {
       String insertPublisherByName =
               "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
-                      "INSERT\n" +
+                      "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                       "{\n" +
                       "<" + publisherURI + "> a foaf:Agent ;\n" +
                       "foaf:name \"" + publishername + "\"@" + language +" ;\n" +

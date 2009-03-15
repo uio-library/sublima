@@ -124,7 +124,7 @@ public class FeedbackController implements StatelessAppleController {
               "PREFIX dct: <http://purl.org/dc/terms/>\n" +
                       "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
                       "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                      "INSERT\n" +
+                      "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                       "{\n" +
                       "<" + url + "> a sub:Resource .\n" +
                       "<" + url + "> dct:title " + "\"\"\"" + tittel + "\"\"\"@"+lang+" . \n" +
@@ -234,7 +234,7 @@ public class FeedbackController implements StatelessAppleController {
               "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
               "PREFIX sub: <http://xmlns.computas.com/sublima#>",
               "PREFIX sioc:<http://rdfs.org/sioc/ns#>",
-              "INSERT",
+              "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n",
               "{",
               "    <" + uri + ">" + " sub:comment <" + generatedCommentURI + "> .",
               "    <" + generatedCommentURI + "> a sioc:Item ;",

@@ -109,9 +109,9 @@ public class TopicController implements StatelessAppleController {
     String uri = req.getCocoonRequest().getParameter("the-resource");
     StringBuilder deleteQueries = new StringBuilder();
 
-    deleteQueries.append("DELETE {\n  ?relasjon ?p <" + uri + "> .\n }\n WHERE {\n  ?relasjon ?p <" + uri + "> .\n }");
-    deleteQueries.append("DELETE {\n  ?emne <" + uri + "> ?o .\n }\n WHERE {\n  ?emne <" + uri + "> ?o .\n }");
-    deleteQueries.append("DELETE {\n  <" + uri + "> ?q ?r .\n }\n WHERE {\n  <" + uri + "> ?q ?r .\n }");
+    deleteQueries.append("DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?relasjon ?p <" + uri + "> .\n }\n WHERE {\n  ?relasjon ?p <" + uri + "> .\n }");
+    deleteQueries.append("DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?emne <" + uri + "> ?o .\n }\n WHERE {\n  ?emne <" + uri + "> ?o .\n }");
+    deleteQueries.append("DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  <" + uri + "> ?q ?r .\n }\n WHERE {\n  <" + uri + "> ?q ?r .\n }");
 
     boolean deleteSuccess = sparulDispatcher.query(deleteQueries.toString());
 
@@ -230,38 +230,38 @@ public class TopicController implements StatelessAppleController {
         if (inverseUri.isEmpty()) {                                   // Var invers relasjon
           if (relationtype.equals("oneway")) {                        // og har blitt enkel
 
-            deleteQueries.append("DELETE {\n  ?relasjon ?p <" + uri + "> .\n }\n WHERE {\n  ?relasjon ?p <" + uri + "> .\n }");
+            deleteQueries.append("DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?relasjon ?p <" + uri + "> .\n }\n WHERE {\n  ?relasjon ?p <" + uri + "> .\n }");
             deleteSuccess = sparulDispatcher.query(deleteQueries.toString());
 
           } else if (relationtype.equals("symmetric")) {              // og har blitt symmetrisk
 
-            deleteQueries.append("DELETE {\n  ?relasjon ?p <" + uri + "> .\n }\n WHERE {\n  ?relasjon ?p <" + uri + "> .\n }");
-            deleteQueries.append("INSERT {\n  ?emne <" + uri + "> ?o .\n }\n WHERE {\n  ?o <" + uri + "> ?emne .\n }");
+            deleteQueries.append("DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?relasjon ?p <" + uri + "> .\n }\n WHERE {\n  ?relasjon ?p <" + uri + "> .\n }");
+            deleteQueries.append("INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?emne <" + uri + "> ?o .\n }\n WHERE {\n  ?o <" + uri + "> ?emne .\n }");
             deleteSuccess = sparulDispatcher.query(deleteQueries.toString());
 
           }
         } else if (adminService.isSymmetricProperty(uri)) {           // Var symmetrisk relasjon
           if (relationtype.equals("oneway")) {                        // og har blitt enkel
 
-            deleteQueries.append("DELETE {\n  ?o <" + uri + "> ?emne .\n }\n WHERE {\n  ?emne <" + uri + "> ?o .\n }");
+            deleteQueries.append("DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?o <" + uri + "> ?emne .\n }\n WHERE {\n  ?emne <" + uri + "> ?o .\n }");
             deleteSuccess = sparulDispatcher.query(deleteQueries.toString());
 
           } else if (relationtype.equals("inverse")) {                // og har blitt invers
 
-            deleteQueries.append("DELETE {\n  ?o <" + uri + "> ?emne .\n }\n WHERE {\n  ?emne <" + uri + "> ?o .\n }");
-            deleteQueries.append("INSERT {\n  ?emne <" + parameterMap.get("owl:inverseOf")[0] + "> ?o .\n }\n WHERE {\n  ?o <" + uri + "> ?emne .\n }");
+            deleteQueries.append("DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?o <" + uri + "> ?emne .\n }\n WHERE {\n  ?emne <" + uri + "> ?o .\n }");
+            deleteQueries.append("INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?emne <" + parameterMap.get("owl:inverseOf")[0] + "> ?o .\n }\n WHERE {\n  ?o <" + uri + "> ?emne .\n }");
             deleteSuccess = sparulDispatcher.query(deleteQueries.toString());
 
           }
         } else {                                                      // Var enkel relasjon
           if (relationtype.equals("symmetric")) {                     // og har blitt symmetrisk
 
-            deleteQueries.append("INSERT {\n  ?emne <" + uri + "> ?o .\n }\n WHERE {\n  ?o <" + uri + "> ?emne .\n }");
+            deleteQueries.append("INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?emne <" + uri + "> ?o .\n }\n WHERE {\n  ?o <" + uri + "> ?emne .\n }");
             deleteSuccess = sparulDispatcher.query(deleteQueries.toString());
 
           } else if (relationtype.equals("inverse")) {                // og har blitt invers
 
-            deleteQueries.append("INSERT {\n  ?o <" + parameterMap.get("owl:inverseOf")[0] + "> ?emne .\n }\n WHERE {\n  ?emne <" + uri + "> ?o .\n }");
+            deleteQueries.append("INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> {\n  ?o <" + parameterMap.get("owl:inverseOf")[0] + "> ?emne .\n }\n WHERE {\n  ?emne <" + uri + "> ?o .\n }");
             deleteSuccess = sparulDispatcher.query(deleteQueries.toString());
 
           }
@@ -369,7 +369,7 @@ public class TopicController implements StatelessAppleController {
       String uri = searchService.sanitizeStringForURI(req.getCocoonRequest().getParameter("skos:prefLabel"));
       uri = getProperty("sublima.base.url") + "topic/" + uri;
 
-      String insertNewTopicString = completePrefixes + "\nINSERT\n{\n" + "<" + uri + "> a skos:Concept ;\n"
+      String insertNewTopicString = completePrefixes + "\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n{\n" + "<" + uri + "> a skos:Concept ;\n"
               + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@" + language + ";\n"
               + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
               + "}";
@@ -380,18 +380,18 @@ public class TopicController implements StatelessAppleController {
 
       for (String oldurl : req.getCocoonRequest().getParameterValues("skos:Concept")) {
         //String sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
-        String sparulQuery = "INSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
-        String sparulDelete = "DELETE { ?s ?p <" + oldurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        String sparulQuery = "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{ ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        String sparulDelete = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{ ?s ?p <" + oldurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
         logger.trace("Changing " + oldurl + " to " + uri + " in objects.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
         updateSuccess = sparulDispatcher.query(sparulDelete);
 
-        sparulQuery = "prefix owl: <http://www.w3.org/2002/07/owl#> \nINSERT { <" + uri + "> ?p ?o }\nWHERE { OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:ObjectProperty . }\n OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:SymmetricProperty . } }\n";
+        sparulQuery = "prefix owl: <http://www.w3.org/2002/07/owl#> \nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{ <" + uri + "> ?p ?o }\nWHERE { OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:ObjectProperty . }\n OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:SymmetricProperty . } }\n";
         updateSuccess = sparulDispatcher.query(sparulQuery);
 
         logger.debug("Object edit status: " + updateSuccess);
         sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
-                "MODIFY\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
+                "MODIFY\nDELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{ <" + oldurl + "> wdr:describedBy ?status . }\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
         logger.trace("Setting " + oldurl + " topics inactive.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Topic inactive status: " + updateSuccess);
@@ -446,7 +446,7 @@ public class TopicController implements StatelessAppleController {
       StringBuilder insertString = new StringBuilder();
 
       deleteString.append(completePrefixes);
-      deleteString.append("\nDELETE\n{\n");
+      deleteString.append("\nDELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">\n{\n");
       whereString.append("\nWHERE\n{\n");
       deleteString.append("?topic sub:theme ?theme .\n");
       deleteString.append("}\n");
@@ -454,7 +454,7 @@ public class TopicController implements StatelessAppleController {
       whereString.append("}\n");
 
       insertString.append(completePrefixes);
-      insertString.append("\nINSERT\n{\n");
+      insertString.append("\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n{\n");
 
       for (String s : requestMap.keySet()) {
         for (String t : requestMap.get(s)) {
@@ -582,7 +582,7 @@ public class TopicController implements StatelessAppleController {
 
         if (req.getCocoonRequest().getParameter("warningSingleResource") == null) {
 
-          String deleteString = "DELETE {\n" +
+          String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {\n" +
                   "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o.\n" +
                   "} WHERE {\n" +
                   "<" + req.getCocoonRequest().getParameter("the-resource") + "> ?a ?o. }";
@@ -592,7 +592,7 @@ public class TopicController implements StatelessAppleController {
           logger.trace("DELETE TOPIC QUERY:\n" + deleteString);
           logger.trace("DELETE TOPIC QUERY RESULT: " + deleteTopicSuccess);
 
-          String deleteRelatedToTopic = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n DELETE { ?s ?p <" + req.getCocoonRequest().getParameter("the-resource") + "> . } WHERE { ?s ?p <" + req.getCocoonRequest().getParameter("the-resource") + "> . }";
+          String deleteRelatedToTopic = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> { ?s ?p <" + req.getCocoonRequest().getParameter("the-resource") + "> . } WHERE { ?s ?p <" + req.getCocoonRequest().getParameter("the-resource") + "> . }";
           boolean deletedRelatedToTopic = sparulDispatcher.query(deleteRelatedToTopic);
           logger.trace("Deleted ?s ?p <" + uri + "> to remove relations to topic. Result: " + deletedRelatedToTopic);
 
@@ -671,7 +671,7 @@ public class TopicController implements StatelessAppleController {
           //String insertInverseTriples = createInverseInsert(uri, parameterMap);
           String insertRelations = createRelationsInsert(uri, parameterMap);
 
-          String deleteRelatedToTopic = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n DELETE { ?s ?p <" + uri + "> . } WHERE { ?s a skos:Concept . ?s ?p <" + uri + "> . }";
+          String deleteRelatedToTopic = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> { ?s ?p <" + uri + "> . } WHERE { ?s a skos:Concept . ?s ?p <" + uri + "> . }";
           boolean deletedRelatedToTopic = sparulDispatcher.query(deleteRelatedToTopic);
           logger.trace("Deleted ?s ?p <" + uri + "> to remove inverse relations before new insert of topic. Result: " + insertRelations);
 
@@ -758,7 +758,7 @@ public class TopicController implements StatelessAppleController {
   private String createRelationsInsert(String uri, Map<String, String[]> parameterMap) {
 
     StringBuilder relationsInsert = new StringBuilder();
-    relationsInsert.append("INSERT\n{\n");
+    relationsInsert.append("INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n{\n");
     boolean containsTriples = false;
 
     Iterator it = parameterMap.entrySet().iterator();

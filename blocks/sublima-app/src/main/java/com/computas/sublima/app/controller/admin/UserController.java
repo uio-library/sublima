@@ -419,7 +419,7 @@ public class UserController implements StatelessAppleController {
         insertString.append("<" + uri + "> ?o ?p .\n}\n");
         insertString.append("WHERE {\n");
         insertString.append("<" + uri + "> ?o ?p .\n}\n");
-        insertString.append("INSERT DATA INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{\n");
+        insertString.append("INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{\n");
         insertString.append("<" + uri + "> a sioc:Role ;\n");
         insertString.append("    rdfs:label \"" + req.getCocoonRequest().getParameter("rdfs:label") + "\"@" + language + " .\n}");
 

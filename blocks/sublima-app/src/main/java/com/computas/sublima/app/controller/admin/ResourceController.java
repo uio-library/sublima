@@ -296,7 +296,7 @@ public class ResourceController implements StatelessAppleController {
 
       if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
-        String deleteString = "DELETE {\n" +
+        String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{\n" +
                 "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o.\n" +
                 "} WHERE {\n" +
                 "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o. }";
@@ -642,11 +642,11 @@ public class ResourceController implements StatelessAppleController {
       while (req.getCocoonRequest().getParameterValues("new-" + i) != null) {
         String newurl = req.getCocoonRequest().getParameterValues("new-" + i)[0];
         String oldurl = req.getCocoonRequest().getParameterValues("old-" + i)[0];
-        String sparulQuery = "MODIFY\nDELETE { <" + oldurl + "> ?p ?o }\nINSERT { <" + newurl + "> ?p ?o }\nWHERE { <" + oldurl + "> ?p ?o }\n";
+        String sparulQuery = "MODIFY\nDELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> { <" + oldurl + "> ?p ?o }\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> { <" + newurl + "> ?p ?o }\nWHERE { <" + oldurl + "> ?p ?o }\n";
         logger.trace("Changing " + oldurl + " to " + newurl + " in subjects.");
         boolean updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Subject edit status: " + updateSuccess);
-        sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + newurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        sparulQuery = "MODIFY\nDELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> { ?s ?p <" + oldurl + "> }\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> { ?s ?p <" + newurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
         logger.trace("Changing " + oldurl + " to " + newurl + " in objects.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Object edit status: " + updateSuccess);
