@@ -6,6 +6,7 @@ import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.MappingService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import net.sf.akismet.Akismet;
@@ -30,6 +31,7 @@ public class FeedbackController implements StatelessAppleController {
   private ApplicationManager appMan;
   private AdminService adminService = new AdminService();
   private SearchService searchService = new SearchService();
+  private MappingService mapping = new MappingService();
   boolean loggedIn;
 
   //todo Check how to send error messages with Cocoon (like Struts 2's s:actionmessage)
@@ -127,9 +129,9 @@ public class FeedbackController implements StatelessAppleController {
                       "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                       "{\n" +
                       "<" + url + "> a sub:Resource .\n" +
-                      "<" + url + "> dct:title " + "\"\"\"" + tittel + "\"\"\"@"+lang+" . \n" +
-                      "<" + url + "> dct:description " + "\"\"\"" + beskrivelse.replace("\\", "\\\\") + "\"\"\"@"+lang+" . \n" +
-                      "<" + url + "> sub:keywords " + "\"\"\"" + stikkord + "\"\"\"@"+lang+" . \n" +
+                      "<" + url + "> dct:title " + "\"\"\"" + mapping.escapeString(tittel) + "\"\"\"@"+lang+" . \n" +
+                      "<" + url + "> dct:description " + "\"\"\"" + mapping.escapeString(beskrivelse.replace("\\", "\\\\")) + "\"\"\"@"+lang+" . \n" +
+                      "<" + url + "> sub:keywords " + "\"\"\"" + mapping.escapeString(stikkord) + "\"\"\"@"+lang+" . \n" +
                       "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
                       "<" + url + "> sub:url <" + url + "> . \n" +
                       "<" + url + "> dct:identifier <" + SettingsService.getProperty("sublima.base.url") + "resource/" + dctidentifier + url.hashCode() + "> . }";
@@ -238,9 +240,9 @@ public class FeedbackController implements StatelessAppleController {
               "{",
               "    <" + uri + ">" + " sub:comment <" + generatedCommentURI + "> .",
               "    <" + generatedCommentURI + "> a sioc:Item ;",
-              "        sioc:content \"\"\"" + comment + "\"\"\" ;",
+              "        sioc:content \"\"\"" + mapping.escapeString(comment) + "\"\"\" ;",
               "        dct:dateAccepted \"" + dateCommented + "\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;",
-              "        sioc:has_creator \"\"\"" + email + "\"\"\" ;",
+              "        sioc:has_creator \"\"\"" + mapping.escapeString(email) + "\"\"\" ;",
               "        sioc:has_owner <" + uri + "> .",
               "}"});
 

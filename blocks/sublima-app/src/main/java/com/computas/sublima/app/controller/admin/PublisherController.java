@@ -8,6 +8,7 @@ import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.MappingService;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
@@ -33,6 +34,7 @@ public class PublisherController implements StatelessAppleController {
   private SparulDispatcher sparulDispatcher;
   AdminService adminService = new AdminService();
   private ApplicationUtil appUtil = new ApplicationUtil();
+  private MappingService mapping = new MappingService();
   private String mode;
   private String submode;
   private User user;
@@ -198,8 +200,8 @@ public class PublisherController implements StatelessAppleController {
                       "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                       "{\n" +
                       "<" + publisherURI + "> a foaf:Agent ;\n" +
-                      "foaf:name \"" + publishername + "\"@" + language +" ;\n" +
-                      "dct:description \"\"\"" + description + "\"\"\"@" + language +" . \n" +
+                      "foaf:name \"" + mapping.escapeString(publishername) + "\"@" + language +" ;\n" +
+                      "dct:description \"\"\"" + mapping.escapeString(description) + "\"\"\"@" + language +" . \n" +
                       "}";
 
       logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);

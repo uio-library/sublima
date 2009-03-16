@@ -4,6 +4,7 @@ import com.computas.sublima.app.service.*;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.query.service.MappingService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.sparql.util.StringUtils;
@@ -28,6 +29,7 @@ public class TopicController implements StatelessAppleController {
   private SparulDispatcher sparulDispatcher;
   private IndexService indexService = new IndexService();
   private AdminService adminService = new AdminService();
+  private MappingService mapping = new MappingService();
   private ApplicationManager appMan;
   private ApplicationUtil appUtil = new ApplicationUtil();
   private User user;
@@ -370,7 +372,7 @@ public class TopicController implements StatelessAppleController {
       uri = getProperty("sublima.base.url") + "topic/" + uri;
 
       String insertNewTopicString = completePrefixes + "\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n{\n" + "<" + uri + "> a skos:Concept ;\n"
-              + " skos:prefLabel \"" + req.getCocoonRequest().getParameter("skos:prefLabel") + "\"@" + language + ";\n"
+              + " skos:prefLabel \"" + mapping.escapeString(req.getCocoonRequest().getParameter("skos:prefLabel")) + "\"@" + language + ";\n"
               + " wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
               + "}";
 
