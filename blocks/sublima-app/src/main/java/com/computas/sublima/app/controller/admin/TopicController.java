@@ -2,11 +2,10 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.*;
 import com.computas.sublima.query.SparulDispatcher;
+import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
-import com.computas.sublima.query.service.MappingService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
-import com.hp.hpl.jena.query.larq.LARQ;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.auth.ApplicationUtil;
@@ -102,7 +101,11 @@ public class TopicController implements StatelessAppleController {
         showRelations(res, req);
       }
     } else if ("a-z".equalsIgnoreCase(mode)) {
-      getTopicsByLetter(res, req, submode);
+      if ("a-z".equalsIgnoreCase(submode)) {
+        res.sendPage("xml/a-z", null);
+      } else {
+        getTopicsByLetter(res, req, submode);
+      }
     }
   }
 
