@@ -40,14 +40,14 @@ public class Generate {
     gu.updateIndexStatistics("resources");
   }
 
-  public void generateIndexForResource(String uri, String basegraph, String[] fieldstoindex, String[] prefixes) {
+  public void generateIndexForResource(String uri, String basegraph, String[] fieldstoindex, String[] prefixes, boolean indexExternalContent) {
     if (!uri.startsWith("<") && !uri.endsWith(">")) {
       uri = "<" + uri + ">";
     }
 
     EndpointSaver save = new EndpointSaver(basegraph, 250);
     save.DropPropertyForType(uri, "<http://xmlns.computas.com/sublima#literals>", "<http://xmlns.computas.com/sublima#Resource>");
-    String freetext = generateInternalFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, false);
+    String freetext = generateInternalFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, indexExternalContent);
 
     if (freetext != null) {
       save.Add(freetext);
