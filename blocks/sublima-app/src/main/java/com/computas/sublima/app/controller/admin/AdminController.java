@@ -103,12 +103,10 @@ public class AdminController implements StatelessAppleController {
         exportOntologyToXML(res, req);
       }
     } else if ("index".equalsIgnoreCase(mode)) {
-      if ("index".equals(submode)) {
         if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
           index(res, req);
         } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
           showIndexStatus(res, req);
-        }
       }
 
     } else {
