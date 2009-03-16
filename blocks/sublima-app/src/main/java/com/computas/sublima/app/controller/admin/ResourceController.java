@@ -401,9 +401,8 @@ public class ResourceController implements StatelessAppleController {
             messageBuffer.append("<c:message><i18n:text key=\"resource.updated\">Ressurs oppdatert</i18n:text></c:message>\n");
           }
 
-          //indexService.indexResource(req.getCocoonRequest().getParameter("the-resource").trim(), SettingsService.getProperty("sublima.resource.searchfields").split(";"), SettingsService.getProperty("sublima.prefixes").split(";"));
+          indexService.indexResource(form2SparqlService.getURI());
           logger.trace("Added the resource to the index");
-          LARQ.setDefaultIndex(SettingsService.getIndexBuilderNode(null).getIndex());
 
         } else {
           messageBuffer.append("<c:message><i18n:text key=\"resource.saveerror\">Feil ved lagring av ressurs</i18n:text></c:message>\n");
