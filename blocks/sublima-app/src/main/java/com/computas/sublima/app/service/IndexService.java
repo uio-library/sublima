@@ -31,6 +31,8 @@ public class IndexService {
 
   private Generate gen = new Generate();
   private GenerateUtils gu = new GenerateUtils();
+  private AdminService adminService = new AdminService();
+  private static Logger logger = Logger.getLogger(IndexService.class);
 
   public void createIndex() {
     createResourceIndex();
@@ -45,11 +47,13 @@ public class IndexService {
     gen.generateIndexForTopics(SettingsService.getProperty("sublima.basegraph"), gu.getTopicFieldsToIndex(), gu.getPrefixes());
   }
 
-  public boolean indexResource() {
+  public boolean indexResource(String uri) {
+    gen.generateIndexForResource(uri, SettingsService.getProperty("sublima.basegraph"), gu.getResourceFreetextFieldsToIndex(), gu.getPrefixes(), Boolean.valueOf(SettingsService.getProperty("sublima.index.external")));
     return true;
   }
 
-  public boolean indexTopic() {
+  public boolean indexTopic(String uri) {
+    gen.generateIndexForTopic(uri, SettingsService.getProperty("sublima.basegraph"), gu.getTopicFieldsToIndex(), gu.getPrefixes());
     return true;    
   }
 
@@ -61,15 +65,12 @@ public class IndexService {
    */
 
   public void validateURLs() {
-    ResultSet resultSet = null;
-    //resultSet = getAllExternalResourcesURLs();
+    HashSet<String> urls = adminService.getAllExternalResourcesURLs();
 
     // For each URL, do a HTTP GET and check the HTTP code
     int i = 1;
-    while (resultSet.hasNext()) {
-      String resultURL = resultSet.next().toString();
-      String url = resultURL.substring(10, resultURL.length() - 3).trim();
-      //logger.info("SUBLIMA: validateURLs() --> Updating status for resource " + i + " " + url);
+    for (String url : urls) {
+      logger.info("SUBLIMA: validateURLs() --> Updating status for resource " + i + " of " + urls.size() + " : " + url);
       URLActions urlAction = new URLActions(url);
       urlAction.getAndUpdateResourceStatus();
       i++;
