@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 
 /**
@@ -197,7 +198,7 @@ public class AdminService {
 
     logger.trace("AdminService.getDistinctAndUsedLabels() executing");
     Object queryResult = sparqlDispatcher.query(queryString, "SELECT");
-    logger.trace("AdminService.getDistinctAndUsedLabels() got "+ queryResult.toString());
+    logger.trace("AdminService.getDistinctAndUsedLabels() got " + queryResult.toString());
 
     return queryResult.toString();
   }
@@ -594,7 +595,7 @@ public class AdminService {
 
     logger.trace("AdminService.getRolePrivilegesAsXML --> " + getRolePrivilegesString);
 
-    Connection connection = null ;
+    Connection connection = null;
 
     try {
       connection = dbService.getJavaSQLConnection();
@@ -700,7 +701,7 @@ public class AdminService {
 
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("/sparql/results/result/binding/uri");
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
       return getTextContent(nodes.item(0));
 
@@ -995,7 +996,7 @@ public class AdminService {
     ArrayList<String> results = new ArrayList<String>();
 
     String comparename = ms.charactermapping(name);
-    
+
     for (String s : AutocompleteCache.getPublisherSet()) {
       String s0 = ms.charactermapping(s);
       if (s0 != null && s0.toLowerCase().startsWith(comparename.toLowerCase())) {
@@ -1161,13 +1162,12 @@ public class AdminService {
 
     logger.trace("AdminService.getInverseRelationUriIfAny() executing");
     Object queryResult = sparqlDispatcher.query(sparqlConstructQuery);
-    String inverseUri = "";
 
     try {
 
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("/sparql/results/result/binding/uri");
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
       return nodes.item(0) == null ? "" : getTextContent(nodes.item(0));
 
@@ -1280,5 +1280,30 @@ public class AdminService {
     return queryResult.toString();
   }
 
-  
+
+  public HashSet<String> getAllExternalResourcesURLs() {
+    HashSet<String> results = new HashSet<String>();
+    String query = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+            "SELECT ?uri WHERE { ?uri a sub:Resource }";
+
+    logger.trace("AdminService.getAllExternalResourcesURLs() executing");
+    Object queryResult = sparqlDispatcher.query(query);
+    try {
+
+      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+      for (int i = 0; i < nodes.getLength(); i++) {
+        results.add(getTextContent(nodes.item(i)));
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return results;
+
+  }
 }
