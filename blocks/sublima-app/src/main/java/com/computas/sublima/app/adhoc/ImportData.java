@@ -31,8 +31,7 @@ public class ImportData {
       model.read(url, lang);
 
       ByteArrayOutputStream out = new ByteArrayOutputStream();
-      model.write(out, lang);
-      System.out.println(out.toString());
+      model.write(out, "N-TRIPLE");
 
       StringBuilder insert = new StringBuilder();
 
