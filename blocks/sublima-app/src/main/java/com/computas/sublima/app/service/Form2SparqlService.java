@@ -3,6 +3,7 @@ package com.computas.sublima.app.service;
 import com.computas.sublima.query.RDFObject;
 import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.query.service.SettingsService;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.log4j.Logger;
 
@@ -66,10 +67,12 @@ public class Form2SparqlService {
   public Form2SparqlService(String[] pr) {
     prefixes = new ArrayList<String>(Arrays.asList(pr));
     freetextFields = null;
+    this.archiveuri = "<" + SettingsService.getProperty("sublima.basegraph") + ">";
   }
 
   public Form2SparqlService(String[] pr, String[] ff) {
     prefixes = new ArrayList<String>(Arrays.asList(pr));
+    this.archiveuri = "<" + SettingsService.getProperty("sublima.basegraph") + ">";
     if (ff != null) {
       freetextFields = new ArrayList<String>(Arrays.asList(ff));
     } else {
