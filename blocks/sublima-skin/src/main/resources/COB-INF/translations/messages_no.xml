@@ -286,4 +286,6 @@
   <message key="menu.index">Indeks</message>
   <message key="index.type">Type</message>
   <message key="lastRun">Sist kjørt</message><!-- MÅ OVERSETTES -->
+  <message key="letter.ä">Ä</message>
+  <message key="letter.ö">Ö</message>
 </catalogue>

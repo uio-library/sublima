@@ -47,9 +47,22 @@
     <a href="{$baseurl}/emner/x{$qloc}"><i18n:text key="letter.x">X</i18n:text></a><xsl:text> </xsl:text>
     <a href="{$baseurl}/emner/y{$qloc}"><i18n:text key="letter.y">Y</i18n:text></a><xsl:text> </xsl:text>
     <a href="{$baseurl}/emner/z{$qloc}"><i18n:text key="letter.z">Z</i18n:text></a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/æ{$qloc}"><i18n:text key="letter.æ">Æ</i18n:text></a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/ø{$qloc}"><i18n:text key="letter.ø">Ø</i18n:text></a><xsl:text> </xsl:text>
-    <a href="{$baseurl}/emner/å{$qloc}"><i18n:text key="letter.å">Å</i18n:text></a><xsl:text> </xsl:text>
+
+    <xsl:choose>
+      <xsl:when test="$interface-language = 'sv'">
+        <a href="{$baseurl}/emner/å{$qloc}"><i18n:text key="letter.å">Å</i18n:text></a><xsl:text> </xsl:text>
+        <a href="{$baseurl}/emner/ä{$qloc}"><i18n:text key="letter.ä">Ä</i18n:text></a><xsl:text> </xsl:text>
+        <a href="{$baseurl}/emner/ö{$qloc}"><i18n:text key="letter.ö">Ö</i18n:text></a><xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="$interface-language = 'en'">
+        <!-- Just A to Z -->
+      </xsl:when>
+      <xsl:otherwise>
+        <a href="{$baseurl}/emner/æ{$qloc}"><i18n:text key="letter.æ">Æ</i18n:text></a><xsl:text> </xsl:text>
+        <a href="{$baseurl}/emner/ø{$qloc}"><i18n:text key="letter.ø">Ø</i18n:text></a><xsl:text> </xsl:text>
+        <a href="{$baseurl}/emner/å{$qloc}"><i18n:text key="letter.å">Å</i18n:text></a><xsl:text> </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
     <a href="{$baseurl}/emner/0-9{$qloc}"><i18n:text key="letter.0-9">0-9</i18n:text></a>
   </xsl:template>
 </xsl:stylesheet>

@@ -107,9 +107,9 @@
   <message key="letter.x">X</message>
   <message key="letter.y">Y</message>
   <message key="letter.z">Z</message>
-  <message key="letter.å"></message> <!-- MÅ OVERSETTES -->
-  <message key="letter.æ"></message> <!-- MÅ OVERSETTES -->
-  <message key="letter.ø"></message> <!-- MÅ OVERSETTES -->
+  <message key="letter.å">Å</message>
+  <message key="letter.æ">Æ</message>
+  <message key="letter.ø">Ø</message>
   <message key="link"></message> <!-- MÅ OVERSETTES -->
   <message key="linkcheck.run">Perform linkcheck (NB! Might take a while)</message>
   <message key="location">Location</message>
@@ -282,6 +282,8 @@
   <message key="menu.index">Index</message><!-- MÅ OVERSETTES -->
   <message key="index.type">Type</message><!-- MÅ OVERSETTES -->
   <message key="lastRun">Sist kjørt</message><!-- MÅ OVERSETTES -->
+  <message key="letter.ä">Ä</message>
+  <message key="letter.ö">Ö</message>
 </catalogue>
 
 
