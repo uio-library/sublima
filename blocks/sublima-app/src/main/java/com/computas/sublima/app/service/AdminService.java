@@ -1210,7 +1210,11 @@ public class AdminService {
     logger.trace("AdminService.isRelation() executing");
     Object queryResult = sparqlDispatcher.query(sparqlConstructQuery, "ASK");
 
-    return queryResult.toString().contains("true");
+    if (queryResult != null) {
+      return queryResult.toString().contains("true");
+    } else {
+      return false;
+    }
 
   }
 
@@ -1223,7 +1227,11 @@ public class AdminService {
     logger.trace("AdminService.isInactiveUser() executing");
     Object queryResult = sparqlDispatcher.query(sparqlAsk, "ASK");
 
-    return queryResult.toString().contains("true");
+    if (queryResult != null) {
+      return queryResult.toString().contains("true");
+    } else {
+      return false;
+    }
   }
 
   public String query(String query) {
@@ -1263,7 +1271,11 @@ public class AdminService {
     logger.trace("AdminService.hasPublisherResources() executing");
     Object queryResult = sparqlDispatcher.query(sparqlAsk, "ASK");
 
-    return queryResult.toString().contains("true");
+    if (queryResult != null) {
+      return queryResult.toString().contains("true");
+    } else {
+      return false;
+    }
   }
 
   public String getPublisherByURI(String publisherURI) {
