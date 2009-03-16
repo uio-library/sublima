@@ -500,6 +500,7 @@ public class AdminService {
 
 
   public String getTopicsByLetter(String letter) {
+    letter = letter.toUpperCase();
     if (letter.equalsIgnoreCase("0-9")) {
       letter = "[0-9]";
     }
