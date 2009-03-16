@@ -1279,4 +1279,29 @@ public class AdminService {
     Object queryResult = sparqlDispatcher.query(findPublisherByURIQuery);
     return queryResult.toString();
   }
+
+  public String escapeString(String s) {
+    StringBuilder sb = new StringBuilder();
+    int i;
+    char c;
+    for (i = 0; i < s.length(); i++) {
+      c = s.charAt(i);
+      if (c >= 32 && c <= 127) { //<http://www.w3.org/2001/sw/RDFCore/ntriples/#character>
+        if (c == 92 || c == 34 || c == 10 || c == 13 || c == 9) { //<http://www.w3.org/2001/sw/RDFCore/ntriples/#sec-string1>
+          sb.append('\\');
+          sb.append(c);
+        } else {
+          sb.append(c);
+        }
+      } else {
+        String hexstr = Integer.toHexString(c).toUpperCase();
+        int pad = 4 - hexstr.length();
+        sb.append("\\u");
+        for (; pad > 0; pad--)
+          sb.append('0');
+        sb.append(hexstr);
+      }
+    }
+    return sb.toString();
+  }
 }
