@@ -3,6 +3,7 @@ package com.computas.sublima.app.adhoc;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.CachingService;
 import com.computas.sublima.query.service.SettingsService;
+import com.computas.sublima.app.index.EndpointSaver;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import net.spy.memcached.MemcachedClient;
@@ -33,14 +34,23 @@ public class ImportData {
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       model.write(out, "N-TRIPLE");
 
-      StringBuilder insert = new StringBuilder();
+      //StringBuilder insert = new StringBuilder();
 
       //insert.append("CLEAR <http://msone.computas.no/graphs/ontology/mediasone>\n");
-      insert.append("INSERT INTO <"+ SettingsService.getProperty("sublima.basegraph") +"> {\n");
-      insert.append(out.toString());
-      insert.append("\n}");
+      //insert.append("INSERT INTO <"+ SettingsService.getProperty("sublima.basegraph") +"> {\n");
+      //insert.append(out.toString());
+      //insert.append("\n}");
 
-      sparul.query(insert.toString());
+      //sparul.query(insert.toString());
+
+      String[] results = out.toString().split("\n");
+      EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.basegraph"), 250);
+
+      for (String result : results) {
+        save.Add(result);
+      }
+
+      save.Flush();
 
       out.close();
       model.close();
