@@ -16,7 +16,7 @@ public class Generate {
   }
 
   public void generateIndexForResources(boolean indexExternalContent, String basegraph, String[] fieldstoindex, String[] prefixes) {
-    EndpointSaver save = new EndpointSaver(basegraph, 250);
+    EndpointSaver save = new EndpointSaver(basegraph, 10);
     save.DropPropertyForType("?s", "<http://xmlns.computas.com/sublima#literals>", "<http://xmlns.computas.com/sublima#Resource>");
 
     if (indexExternalContent) {
@@ -45,7 +45,7 @@ public class Generate {
       uri = "<" + uri + ">";
     }
 
-    EndpointSaver save = new EndpointSaver(basegraph, 250);
+    EndpointSaver save = new EndpointSaver(basegraph, 10);
     save.DropPropertyForType(uri, "<http://xmlns.computas.com/sublima#literals>", "<http://xmlns.computas.com/sublima#Resource>");
     String freetext = generateInternalFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, indexExternalContent);
 
@@ -57,7 +57,7 @@ public class Generate {
   }
 
   public void generateIndexForTopics(String basegraph, String[] fieldstoindex, String[] prefixes) {
-    EndpointSaver save = new EndpointSaver(basegraph, 250);
+    EndpointSaver save = new EndpointSaver(basegraph, 10);
     save.DropPropertyForType("?s", "<http://xmlns.computas.com/sublima#literals>", "<http://www.w3.org/2004/02/skos/core#Concept>");
     ArrayList<String> uris = gu.getListOfTopicURIs();
 
@@ -85,7 +85,7 @@ public class Generate {
       uri = "<" + uri + ">";
     }
 
-    EndpointSaver save = new EndpointSaver(basegraph, 250);
+    EndpointSaver save = new EndpointSaver(basegraph, 10);
     save.DropPropertyForType(uri, "<http://xmlns.computas.com/sublima#literals>", "<http://www.w3.org/2004/02/skos/core#Concept>");
 
     String freetext = generateFreetextForSingleTopic(uri, fieldstoindex, prefixes, new String[]{basegraph});
