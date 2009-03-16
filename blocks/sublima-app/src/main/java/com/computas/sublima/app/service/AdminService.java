@@ -6,6 +6,7 @@ import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.MappingService;
+import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -1235,7 +1236,7 @@ public class AdminService {
   public boolean insertSubjectOf() {
     String sparul = "PREFIX dct: <http://purl.org/dc/terms/>\n" +
             "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-            "INSERT {?s sub:isSubjectOf ?o}\n" +
+            "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> {?s sub:isSubjectOf ?o}\n" +
             "WHERE {?o dct:subject ?s}";
 
     return sparulDispatcher.query(sparul);
@@ -1243,7 +1244,7 @@ public class AdminService {
 
   public boolean deleteSubjectOf() {
     String sparul = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-            "DELETE {?s sub:isSubjectOf ?o}\n" +
+            "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {?s sub:isSubjectOf ?o}\n" +
             "WHERE {?s sub:isSubjectOf ?o} ";
 
     return sparulDispatcher.query(sparul);
@@ -1251,7 +1252,7 @@ public class AdminService {
 
 
   public boolean deleteComment(String uri) {
-    String sparqlDelete = "DELETE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .} WHERE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .}";
+    String sparqlDelete = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .} WHERE {<" + uri + "> ?p1 ?o1 . ?s ?p2 <" + uri + "> .}";
     return sparulDispatcher.query(sparqlDelete);
   }
 

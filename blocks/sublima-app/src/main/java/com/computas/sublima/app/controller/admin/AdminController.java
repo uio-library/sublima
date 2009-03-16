@@ -20,6 +20,8 @@ import org.apache.log4j.Logger;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.net.URLEncoder;
+import java.net.URL;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,20 +137,21 @@ public class AdminController implements StatelessAppleController {
   }
 
   private void exportOntologyToXML(AppleResponse res, AppleRequest req) throws Exception {
-    Map<String, Object> bizData = new HashMap<String, Object>();
-
     adminService.insertSubjectOf();
+    Map<String, Object> bizData = new HashMap<String, Object>();
 
     String type = req.getCocoonRequest().getParameter("type");
 
+    String query ="CONSTRUCT {?s ?p ?o} FROM <" + SettingsService.getProperty("sublima.basegraph") + "> WHERE {?s ?p ?o}";
+    String url = SettingsService.getProperty("sublima.sparql.endpoint") + "?query=" + URLEncoder.encode(query, "UTF-8");
+    URL u = new URL(url);
+    HttpURLConnection con = (HttpURLConnection) u.openConnection();
     Model model = ModelFactory.createDefaultModel();
-    model.add(SettingsService.getModel());
-    model.setNsPrefixes(SettingsService.getModel().getNsPrefixMap());
-
     ByteArrayOutputStream out = new ByteArrayOutputStream();
+    model.read(con.getInputStream(), "");
     model.write(out, type);
     bizData.put("ontology", out.toString());
-
+    out.close();
     model.close();
     System.gc();
     res.sendPage("nostyle/export", bizData);
@@ -168,10 +171,11 @@ public class AdminController implements StatelessAppleController {
       if (req.getCocoonRequest().getParameter("location") != null) {
         String type = req.getCocoonRequest().getParameter("type");
         File file = new File(req.getCocoonRequest().getParameter("location"));
+        ImportData id = new ImportData();
 
         try {
           ConvertSublimaResources.applyRules(file.toURL().toString(), type, file.getCanonicalPath(), type);
-          ImportData.load(file.toURL().toString(), type);
+          id.load(file.toURL().toString(), type);
         } catch (Exception e) {
           logger.trace("AdminController.uploadForm --> Error during loading of resource");
           e.printStackTrace();
