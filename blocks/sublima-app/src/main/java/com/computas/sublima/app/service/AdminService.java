@@ -362,7 +362,7 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
             "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
-            "SELECT ?label",
+            "SELECT ?label <" + SettingsService.getProperty("sublima.basegraph") + ">",
             "WHERE {",
             "    ?topic a skos:Concept .",
             "   {?topic skos:prefLabel ?label .}",
@@ -383,7 +383,7 @@ public class AdminService {
             "PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
-            "SELECT ?label",
+            "SELECT ?label FROM <" + SettingsService.getProperty("sublima.basegraph") + ">",
             "WHERE {",
             "?o a foaf:Agent ; ",
             "       foaf:name ?label .",
