@@ -5,6 +5,7 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.CachingService;
+import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
@@ -25,6 +26,7 @@ public class SearchController implements StatelessAppleController {
   private SparqlDispatcher sparqlDispatcher;
   private ApplicationManager appMan;
   private AdminService adminService = new AdminService();
+  private MappingService ms = new MappingService();
   private String mode;
   private String format;
   boolean loggedIn;
@@ -294,16 +296,19 @@ public class SearchController implements StatelessAppleController {
     Object navigationResults = "<empty></empty>";
     if (searchStringOverriden != null && searchStringOverriden.length() > 0) {
       // Now get the matching topics
-      String sparqlTopicsQuery =
-              "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-                      "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n" +
-                      "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n" +
-                      "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-                      "DESCRIBE ?subject WHERE {\n" +
-                      "  ?subject skos:prefLabel ?lit .\n" +
-                      "  ?lit <bif:contains> \"\"\"'" + searchStringOverriden + "'\"\"\" . " +
-                      "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
-                      "\n}\n";
+      String sparqlTopicsQuery = null;
+
+      sparqlTopicsQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
+              "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n" +
+              "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n" +
+              "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+              "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+              "DESCRIBE ?subject WHERE {\n" +
+              "  ?subject sub:literals ?lit .\n" +
+              "  ?lit <bif:contains> \"\"\"'" + searchStringOverriden + "'\"\"\" . \n" +
+              "  ?subject a skos:Concept .\n" +
+              "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
+              "\n}\n";
 
       //logger.trace("doAdvanced: SPARQL query to get topics sent to dispatcher:\n" + sparqlTopicsQuery);
       navigationResults = sparqlDispatcher.query(sparqlTopicsQuery);
