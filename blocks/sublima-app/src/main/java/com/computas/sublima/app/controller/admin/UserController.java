@@ -298,6 +298,7 @@ public class UserController implements StatelessAppleController {
         parameterMap.remove("prefix"); // The prefixes are magic variables
         parameterMap.remove("password1"); // The passwords as stored seperatly in an RDB
         parameterMap.remove("password2"); // The passwords as stored seperatly in an RDB
+        parameterMap.remove("password2"); // The passwords as stored seperatly in an RDB
         parameterMap.remove("oldusername"); // Field to check wether the user changes the username (email) or not
         parameterMap.remove("actionbutton"); // The name of the submit button
         String email = req.getCocoonRequest().getParameter("sioc:email");
