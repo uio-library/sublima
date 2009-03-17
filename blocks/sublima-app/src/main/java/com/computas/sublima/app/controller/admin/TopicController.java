@@ -341,7 +341,7 @@ public class TopicController implements StatelessAppleController {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     String themeTopics = adminService.getThemeTopics();
-    if (!themeTopics.contains("sub:theme")) {
+    if (!themeTopics.contains("theme")) {
       bizData.put("themetopics", "<empty></empty>");
     } else {
       bizData.put("themetopics", themeTopics);
@@ -463,7 +463,9 @@ public class TopicController implements StatelessAppleController {
 
       for (String s : requestMap.keySet()) {
         for (String t : requestMap.get(s)) {
-          insertString.append("<" + t + "> sub:theme \"true\"^^xsd:boolean .\n");
+          if (!t.isEmpty()) {
+            insertString.append("<" + t + "> sub:theme \"true\"^^xsd:boolean .\n");
+          }
         }
       }
 
