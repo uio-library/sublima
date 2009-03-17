@@ -31,9 +31,16 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     // Mostly a nasty hack for backwards compatibility
     // ASK has been fixed in the AdminService
     // DESCRIBE and CONSTRUCT will both return RDF/XML so we don't need to distringuish them now.
+    /*
     Pattern p = Pattern.compile("SELECT");
     Matcher m = p.matcher(query);
     if (m.matches()) {
+      return query(query, "SELECT");
+    } else {
+      return query(query, "DESCRIBE");
+    }*/
+
+    if (query.toLowerCase().contains("select")) {
       return query(query, "SELECT");
     } else {
       return query(query, "DESCRIBE");
@@ -87,6 +94,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
         e.printStackTrace();
       }
       con.disconnect();
+
     } else {
       logger.debug("SPARQLdispatcher using cache.");
       result = fromCache.toString();
