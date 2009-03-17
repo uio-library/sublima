@@ -104,7 +104,8 @@ public class AdminController implements StatelessAppleController {
       }
     } else if ("index".equalsIgnoreCase(mode)) {
         if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
-          index(res, req);
+            index(res, req, submode);
+
         } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
           showIndexStatus(res, req);
       }
@@ -124,11 +125,17 @@ public class AdminController implements StatelessAppleController {
     res.sendPage("xml2/index", bizData);
   }
 
-  private void index(AppleResponse res, AppleRequest req) {
+  private void index(AppleResponse res, AppleRequest req, String type) {
     IndexService is = new IndexService();
 
-    is.createResourceIndex();
-    is.createTopicIndex();
+    if ("resources".equalsIgnoreCase(type)) {
+      is.createResourceIndex();
+    } else if ("topics".equalsIgnoreCase(type)) {
+      is.createTopicIndex();
+    } else if ("all".equalsIgnoreCase(type)) {
+      is.createResourceIndex();
+      is.createTopicIndex();
+    }
 
     showIndexStatus(res, req);
 

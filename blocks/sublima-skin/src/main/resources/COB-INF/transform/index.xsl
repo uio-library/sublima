@@ -21,7 +21,7 @@
   <xsl:template match="c:index">
 
     <h4>Index</h4>
-    <form action="index" method="POST">
+
       <xsl:call-template name="hidden-locale-field"/>
       <fieldset>
         <table>
@@ -48,16 +48,38 @@
             </xsl:for-each>
             <tr>
               <td>
+                <form action="all" method="POST">
                 <xsl:call-template name="controlbutton">
                   <xsl:with-param name="privilege">database.import</xsl:with-param>
-                  <xsl:with-param name="buttontext">button.index</xsl:with-param>
+                  <xsl:with-param name="buttontext">button.index.all</xsl:with-param>
                 </xsl:call-template>
+                </form>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form action="resources" method="POST">
+                <xsl:call-template name="controlbutton">
+                  <xsl:with-param name="privilege">database.import</xsl:with-param>
+                  <xsl:with-param name="buttontext">button.index.resources</xsl:with-param>
+                </xsl:call-template>
+                </form>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form action="topics" method="POST">
+                <xsl:call-template name="controlbutton">
+                  <xsl:with-param name="privilege">database.import</xsl:with-param>
+                  <xsl:with-param name="buttontext">button.index.topics</xsl:with-param>
+                </xsl:call-template>
+                </form>
               </td>
             </tr>
           </tbody>
         </table>
       </fieldset>
-    </form>
+
 
   </xsl:template>
 </xsl:stylesheet>
