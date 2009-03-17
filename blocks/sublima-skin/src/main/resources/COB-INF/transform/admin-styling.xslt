@@ -181,7 +181,7 @@
          <xsl:sort lang="{$interface-language}" select="./sparql:binding[@name='name']/sparql:literal[@xml:lang=$interface-language]"/>
         <li>
           <a>
-            <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:uri"/><xsl:value-of
+            <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:literal"/><xsl:value-of
                     select="$aloc"/></xsl:attribute>
             <xsl:value-of select="./sparql:binding[@name='name']/sparql:literal[@xml:lang=$interface-language]"/>
           </a>
