@@ -47,7 +47,7 @@ public class GenerateUtils {
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(new ByteArrayInputStream(xmlResult.getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//uri");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
       for (int i = 0; i < nodes.getLength(); i++) {
@@ -80,7 +80,7 @@ public class GenerateUtils {
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(new ByteArrayInputStream(xmlResult.getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//uri");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
       for (int i = 0; i < nodes.getLength(); i++) {
