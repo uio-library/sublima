@@ -83,7 +83,7 @@ public class FreetextTriples {
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//literal");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
       // I use set here to avoid getting the same results over and over. Seems like the query gives me a result that is repeated per n(Agent)
