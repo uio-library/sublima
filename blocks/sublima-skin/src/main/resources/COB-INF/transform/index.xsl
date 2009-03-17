@@ -46,6 +46,7 @@
                 </td>
               </tr>
             </xsl:for-each>
+            
             <tr>
               <td>
                 <form action="all" method="POST">

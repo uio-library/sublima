@@ -128,6 +128,7 @@ public class AdminController implements StatelessAppleController {
   private void index(AppleResponse res, AppleRequest req, String type) {
     IndexService is = new IndexService();
 
+    
     if ("resources".equalsIgnoreCase(type)) {
       is.createResourceIndex();
     } else if ("topics".equalsIgnoreCase(type)) {
