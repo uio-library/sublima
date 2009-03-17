@@ -702,7 +702,7 @@ public class AdminService {
 
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//uri");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
       return getTextContent(nodes.item(0));
 
@@ -1168,7 +1168,7 @@ public class AdminService {
 
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//uri");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
       return nodes.item(0) == null ? "" : getTextContent(nodes.item(0));
 
@@ -1305,7 +1305,7 @@ public class AdminService {
 
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document doc = builder.parse(new ByteArrayInputStream(queryResult.toString().getBytes("UTF-8")));
-      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//uri");
       NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
       for (int i = 0; i < nodes.getLength(); i++) {
