@@ -31,7 +31,7 @@
 
     <form action="search-result.html" method="GET">
       <input type="hidden" name="freetext-field" value="dct:title"/>
-      <input type="hidden" name="freetext-field" value="dct:subject/all-labels"/>
+      <input type="hidden" name="freetext-field" value="dct:subject/sub:literals"/>
       <input type="hidden" name="freetext-field" value="dct:description"/>
       <input type="hidden" name="freetext-field" value="dct:publisher/foaf:name"/>
 
@@ -56,7 +56,7 @@
             <label for="subject"><i18n:text key="adv.subject">Emne</i18n:text></label>
           </th>
           <td>
-            <input id="subject" type="text" name="dct:subject/all-labels" size="20"/>
+            <input id="subject" type="text" name="dct:subject/sub:literals" size="20"/>
           </td>
         </tr>
         <tr>
