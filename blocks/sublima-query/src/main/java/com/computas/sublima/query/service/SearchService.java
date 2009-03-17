@@ -1,7 +1,6 @@
 package com.computas.sublima.query.service;
 
 import com.ibm.icu.text.Normalizer;
-import com.computas.sublima.query.service.MappingService;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -44,10 +43,9 @@ public class SearchService {
 
     searchstring = mapping.charactermapping(searchstring);
 
-
     // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
     if (advancedsearch) {
-      searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\^\\+\\-\\!\\|\\?\\\\]", "");  
+      searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\^\\+\\-\\!\\|\\?\\\\]", "");
     } else { // normal freetext search
       searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]", "");
     }
@@ -66,26 +64,33 @@ public class SearchService {
 
     // Split the search string, and add * after each word that isn't a part of a phrase
     boolean partOfPhrase = false;
-    StringBuilder StringBuilder = new StringBuilder();
+    StringBuilder querystring = new StringBuilder();
     String[] partialSearchString = actual.split(" ");
 
     for (int i = 0; i < partialSearchString.length; i++) {
       if (partialSearchString[i].startsWith("\"")) {
         partOfPhrase = true;
+        querystring.append("'");
+
       }
 
-      if ("AND".equalsIgnoreCase(partialSearchString[i]) ||
-              "OR".equalsIgnoreCase(partialSearchString[i])) {
+      if ("AND".equalsIgnoreCase(partialSearchString[i]) || "OR".equalsIgnoreCase(partialSearchString[i])) {
 
         if (!partOfPhrase) {
-          StringBuilder.append(partialSearchString[i] + " ");
+          querystring.append(partialSearchString[i] + " ");
         }
 
       } else {
-        if (partOfPhrase || !truncate || partialSearchString[i].length() <= 2) {
-          StringBuilder.append(partialSearchString[i] + " ");
+        if (partOfPhrase) {
+          if (partialSearchString[i].endsWith("\"")) {
+            querystring.append(partialSearchString[i] + "' ");
+          } else {
+            querystring.append(partialSearchString[i] + " ");
+          }
+        } else if (!truncate || partialSearchString[i].length() <= 2) {
+          querystring.append("'" + partialSearchString[i] + "' ");
         } else {
-          StringBuilder.append(partialSearchString[i] + "* ");
+          querystring.append("'" + partialSearchString[i] + "*' ");
         }
 
         if (partialSearchString[i].endsWith("\"")) {
@@ -94,8 +99,9 @@ public class SearchService {
       }
     }
 
-    actual = StringBuilder.toString().trim();
+    actual = querystring.toString().trim();
     if (actual.endsWith("\"")) { // since it would cause four double quotes
+
       actual = actual + " ";
     }
 

@@ -558,7 +558,7 @@ public class Form2SparqlService {
       //result = result + "\n?resource dct:identifier ?lit ."; // for test
     }
 
-    result = result + "\n?lit <bif:contains> \"\"\"'" + searchstring + "'\"\"\" .";
+    result = result + "\n?lit <bif:contains> \"\"\"" + searchstring + "\"\"\" .";
     return result;
   }
 
