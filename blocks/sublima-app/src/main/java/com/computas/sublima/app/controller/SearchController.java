@@ -214,26 +214,26 @@ public class SearchController implements StatelessAppleController {
       boolean truncate = Boolean.valueOf(SettingsService.getProperty("sublima.advancedsearch.truncate"));
 
       // Test if some of the free text fields in the advanced search form exists, if so we build a proper search string
-      if (req.getCocoonRequest().getParameter("dct:title") != null) {
+      if (req.getCocoonRequest().getParameter("dct:title") != null && !"".equals(req.getCocoonRequest().getParameter("dct:title"))) {
         parameterMap.remove("dct:title");
         form2SparqlService.setTruncate(truncate);
         parameterMap.put("dct:title", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:title"), "AND", true, true)});
       }
 
-      if (req.getCocoonRequest().getParameter("dct:subject/all-labels") != null) {
+      if (req.getCocoonRequest().getParameter("dct:subject/all-labels") != null && !"".equals(req.getCocoonRequest().getParameter("dct:subject/all-labels"))) {
         parameterMap.remove("dct:subject/all-labels");
         form2SparqlService.setTruncate(truncate);
         parameterMap.put("dct:subject/all-labels", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/all-labels"), "AND", true, true)});
       }
 
-      if (req.getCocoonRequest().getParameter("dct:description") != null) {
+      if (req.getCocoonRequest().getParameter("dct:description") != null && !"".equals(req.getCocoonRequest().getParameter("dct:description"))) {
         parameterMap.remove("dct:description");
         form2SparqlService.setTruncate(truncate);
         parameterMap.put("dct:description", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:description"), "AND", true, true)});
 
       }
 
-      if (req.getCocoonRequest().getParameter("dct:publisher/foaf:name") != null) {
+      if (req.getCocoonRequest().getParameter("dct:publisher/foaf:name") != null && !"".equals(req.getCocoonRequest().getParameter("dct:publisher/foaf:name"))) {
         parameterMap.remove("dct:publisher/foaf:name");
         form2SparqlService.setTruncate(truncate);
         parameterMap.put("dct:publisher/foaf:name", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:publisher/foaf:name"), "AND", true, true)});
