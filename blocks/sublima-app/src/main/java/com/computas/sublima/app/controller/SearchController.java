@@ -305,7 +305,7 @@ public class SearchController implements StatelessAppleController {
               "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
               "DESCRIBE ?subject WHERE {\n" +
               "  ?subject sub:literals ?lit .\n" +
-              "  ?lit <bif:contains> \"\"\"'" + searchStringOverriden + "'\"\"\" . \n" +
+              "  ?lit <bif:contains> \"\"\"" + searchStringOverriden + "\"\"\" . \n" +
               "  ?subject a skos:Concept .\n" +
               "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
               "\n}\n";

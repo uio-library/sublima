@@ -67,33 +67,36 @@ public class SearchService {
     StringBuilder querystring = new StringBuilder();
     String[] partialSearchString = actual.split(" ");
 
-    for (int i = 0; i < partialSearchString.length; i++) {
-      if (partialSearchString[i].startsWith("\"")) {
+    for (String aPartialSearchString : partialSearchString) {
+
+      aPartialSearchString = mapping.charactermapping(aPartialSearchString);
+
+      if (aPartialSearchString.startsWith("\"")) {
         partOfPhrase = true;
         querystring.append("'");
 
       }
 
-      if ("AND".equalsIgnoreCase(partialSearchString[i]) || "OR".equalsIgnoreCase(partialSearchString[i])) {
+      if ("AND".equalsIgnoreCase(aPartialSearchString) || "OR".equalsIgnoreCase(aPartialSearchString)) {
 
         if (!partOfPhrase) {
-          querystring.append(partialSearchString[i] + " ");
+          querystring.append(aPartialSearchString + " ");
         }
 
       } else {
         if (partOfPhrase) {
-          if (partialSearchString[i].endsWith("\"")) {
-            querystring.append(partialSearchString[i] + "' ");
+          if (aPartialSearchString.endsWith("\"")) {
+            querystring.append(aPartialSearchString + "' ");
           } else {
-            querystring.append(partialSearchString[i] + " ");
+            querystring.append(aPartialSearchString + " ");
           }
-        } else if (!truncate || partialSearchString[i].length() <= 2) {
-          querystring.append("'" + partialSearchString[i] + "' ");
+        } else if (!truncate || aPartialSearchString.length() <= 2) {
+          querystring.append("'" + aPartialSearchString + "' ");
         } else {
-          querystring.append("'" + partialSearchString[i] + "*' ");
+          querystring.append("'" + aPartialSearchString + "*' ");
         }
 
-        if (partialSearchString[i].endsWith("\"")) {
+        if (aPartialSearchString.endsWith("\"")) {
           partOfPhrase = false;
         }
       }

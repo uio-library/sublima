@@ -547,12 +547,12 @@ public class Form2SparqlService {
     if (!subjectVarList.contains(resourceSubject)) {
       subjectVarList.add(resourceSubject);
     }
-    searchstring = mapping.charactermapping(searchstring);
+    //searchstring = mapping.charactermapping(searchstring);
 
     String result = "";
 
     if (deepsearch) {
-      result = result + "\n?resource sub:url ?lit .";
+      result = result + "\n?resource sub:externalliterals ?lit .";
     } else {
       result = result + "\n?resource sub:literals ?lit .";
       //result = result + "\n?resource dct:identifier ?lit ."; // for test
