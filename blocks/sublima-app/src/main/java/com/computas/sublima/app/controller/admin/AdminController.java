@@ -158,6 +158,7 @@ public class AdminController implements StatelessAppleController {
     model.write(out, type);
     bizData.put("ontology", out.toString());
     out.close();
+    con.disconnect();
     model.close();
     System.gc();
     res.sendPage("nostyle/export", bizData);
