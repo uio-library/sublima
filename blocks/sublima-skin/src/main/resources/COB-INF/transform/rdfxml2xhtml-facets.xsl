@@ -17,6 +17,7 @@
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
 
   <xsl:param name="interface-language">no</xsl:param>
+  <xsl:param name="max_facets">4</xsl:param>
 
   <xsl:template match="rdf:RDF" mode="facets">
     <xsl:variable name="baseurlparams">
@@ -122,7 +123,7 @@ test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]"
 	  </xsl:variable>
 
 	  <xsl:call-template name="facet-field">
-	    <xsl:with-param name="max-facets-more">4</xsl:with-param>
+	    <xsl:with-param name="max-facets-more"><xsl:value-of select="$max_facets"/></xsl:with-param>
 	    <xsl:with-param name="this-field">dct:subject</xsl:with-param>
 	    <xsl:with-param name="this-label">
 	      <xsl:choose>
@@ -157,7 +158,9 @@ test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]"
 	</xsl:for-each>
 	</ul>
 
-	<div class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" ><i18n:text key="more">more</i18n:text> &#187;</a></div>
+  <xsl:if test="count(/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept) > $max_facets">
+    <div class="more"><a href="javascript:void(0);showHide('collapse');showHide('more');" ><i18n:text key="more">more</i18n:text> &#187;</a></div>
+  </xsl:if>
 
 
 
