@@ -174,7 +174,7 @@ public class AdminController implements StatelessAppleController {
         ImportData id = new ImportData();
 
         try {
-          ConvertSublimaResources.applyRules(file.toURL().toString(), type, file.getCanonicalPath(), type);
+          //ConvertSublimaResources.applyRules(file.toURL().toString(), type, file.getCanonicalPath(), type);
           id.load(file.toURL().toString(), type);
         } catch (Exception e) {
           logger.trace("AdminController.uploadForm --> Error during loading of resource");
