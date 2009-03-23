@@ -3,6 +3,7 @@ package com.computas.sublima.app.adhoc;
 import com.computas.sublima.app.index.EndpointSaver;
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.CachingService;
+import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.rdf.model.InfModel;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -63,7 +64,7 @@ public class ImportData {
       inf.write(out, "N-TRIPLE");
 
       String[] results = out.toString().split("\n");
-      EndpointSaver save = new EndpointSaver("http://detektor.sublima.computas.com:8180/test/", 250);//SettingsService.getProperty("sublima.basegraph"), 250);
+      EndpointSaver save = new EndpointSaver(SettingsService.getProperty("sublima.basegraph"), 250);
 
       for (String result : results) {
         save.Add(result);
