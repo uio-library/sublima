@@ -536,18 +536,19 @@ public class AdminService {
       // Do a URL check so that we know we have a valid URL
       URLActions urlAction = new URLActions(url);
       ourcode = urlAction.getCode();
+      return "302".equals(ourcode) ||
+              "303".equals(ourcode) ||
+              "304".equals(ourcode) ||
+              "305".equals(ourcode) ||
+              "307".equals(ourcode) ||
+              ourcode.startsWith("2");
     }
-    catch (NullPointerException e) {
+    catch (Exception e) {
       e.printStackTrace();
       return false;
     }
 
-    return "302".equals(ourcode) ||
-            "303".equals(ourcode) ||
-            "304".equals(ourcode) ||
-            "305".equals(ourcode) ||
-            "307".equals(ourcode) ||
-            ourcode.startsWith("2");
+
   }
 
   public String getAllRoles() {
