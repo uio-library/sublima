@@ -41,7 +41,7 @@ public class EndpointSaver {
       type = "<" + type + ">";
     }
 
-    return ExecQuery("DELETE FROM " + getGraph() + "\n{ " + object + " " + property + " ?o }\nWHERE { " + object + " " + property + " ?o .\n?s a " + type + " . }\n");
+    return ExecQuery("DELETE FROM " + getGraph() + "\n{ " + object + " " + property + " ?o }\nWHERE { " + object + " " + property + " ?o .\n" + object + " a " + type + " . }\n");
   }
 
   public boolean Flush() {
