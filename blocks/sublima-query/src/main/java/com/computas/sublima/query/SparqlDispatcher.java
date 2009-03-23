@@ -8,5 +8,5 @@ public interface SparqlDispatcher {
 
   Object query(String sparqlQuery, String queryType);
 
-  String getResultsAsJSON(String sparqlQuery);
+  String getResultsAsFormat(String sparqlQuery, String format);
 }

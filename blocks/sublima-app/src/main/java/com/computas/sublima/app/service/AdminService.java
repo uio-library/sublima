@@ -373,7 +373,7 @@ public class AdminService {
             "ORDER BY ?label"});
 
     logger.trace("AdminService.getTopicByPartialName() executing");
-    Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
+    Object queryResult = sparqlDispatcher.getResultsAsFormat(queryString, "application/sparql-results+json");
 
     return queryResult.toString();
   }
@@ -392,7 +392,7 @@ public class AdminService {
             "ORDER BY ?label"});
 
     logger.trace("AdminService.getPublishersAsJSON() executing");
-    Object queryResult = sparqlDispatcher.getResultsAsJSON(queryString);
+    Object queryResult = sparqlDispatcher.getResultsAsFormat(queryString, "application/sparql-results+json");
 
     return queryResult.toString();
   }
@@ -1238,6 +1238,14 @@ public class AdminService {
 
     logger.trace("AdminService.query() executing");
     Object queryResult = sparqlDispatcher.query(query);
+
+    return queryResult.toString();
+  }
+
+  public String getResultsAsFormat(String query, String format) {
+
+    logger.trace("AdminService.getResultsAsFormat() executing");
+    Object queryResult = sparqlDispatcher.getResultsAsFormat(query, format);
 
     return queryResult.toString();
   }

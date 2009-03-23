@@ -10,8 +10,6 @@ import org.apache.log4j.Logger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -104,7 +102,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     return result;
   }
 
-  public String getResultsAsJSON(String query) {
+  public String getResultsAsFormat(String query, String format) {
     String result = null;
     HttpURLConnection con = null;
 
@@ -122,11 +120,11 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     if (fromCache == null) {
       logger.debug("SPARQLdispatcher found nothing in the cache.");
       try {
-        URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8") + "&format=" + URLEncoder.encode("application/sparql-results+json", "UTF-8"));
+        URL u = new URL(url + "?query=" + URLEncoder.encode(query, "UTF-8") + "&format=" + URLEncoder.encode(format, "UTF-8"));
         logger.debug("SPARQLdispatcher connected to the triplestore.");
         long connecttime = System.currentTimeMillis();
         con = (HttpURLConnection) u.openConnection();
-        con.setRequestProperty("Accept", "application/sparql-results+json");
+        con.setRequestProperty("Accept", format);
 
         result = IOUtils.toString(con.getInputStream());
         long requesttime = System.currentTimeMillis() - connecttime;
