@@ -163,7 +163,7 @@
                   <i18n:text key="inverse">Invers</i18n:text>
                   <br/>
                 </xsl:when>
-                <xsl:when test="./c:relation/rdf:RDF/*/rdf:type/@rdf:resource= 'http://www.w3.org/2002/07/owl#SymmetricProperty'">
+                <xsl:when test="./c:relation/rdf:RDF/*/rdf:type/@rdf:resource = 'http://www.w3.org/2002/07/owl#SymmetricProperty' or ./c:relation/rdf:RDF/owl:SymmetricProperty">
                   <input type="radio" name="relationtype" value="oneway"/>
                   <i18n:text key="oneway">Enveis</i18n:text>
                   <br/>
