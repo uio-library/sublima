@@ -32,7 +32,7 @@
       <link rel="stylesheet" type="text/css" href="{$baseurl}/styles/alt-css.css"/>
       <link rel="stylesheet" href="{$baseurl}/styles/jquery.autocomplete.css" type="text/css" />
       <link rel="stylesheet" href="{$baseurl}/styles/jquery.asmselect.css" type="text/css" />
-      <script src="{$baseurl}/styles/jquery-1.2.6.js" type="text/javascript" />
+      <script src="{$baseurl}/styles/jquery-1.3.2.min.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>      
       <script src="{$baseurl}/styles/jquery.bgiframe.min.js" type="text/javascript"/>
       <script type="text/javascript">var dummy = null;</script>
