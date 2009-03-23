@@ -26,6 +26,7 @@
   <bean name="com.computas.sublima.app.controller.admin.AdminController"
         class="com.computas.sublima.app.controller.admin.AdminController" scope="prototype">
     <property name="sparulDispatcher" ref="com.computas.sublima.query.SparulDispatcher"/>
+    <property name="sparqlDispatcher" ref="com.computas.sublima.query.SparqlDispatcher"/>
   </bean>
 
   <bean name="com.computas.sublima.app.controller.admin.PublisherController"

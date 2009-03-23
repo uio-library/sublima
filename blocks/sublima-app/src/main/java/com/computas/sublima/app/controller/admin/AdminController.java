@@ -6,6 +6,7 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
+import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SettingsService;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -32,6 +33,7 @@ import java.util.Map;
 public class AdminController implements StatelessAppleController {
 
   private SparulDispatcher sparulDispatcher;
+  private SparqlDispatcher sparqlDispatcher;
   AdminService adminService = new AdminService();
   private ApplicationUtil appUtil = new ApplicationUtil();
   private User user;
@@ -149,17 +151,8 @@ public class AdminController implements StatelessAppleController {
     String type = req.getCocoonRequest().getParameter("type");
 
     String query ="CONSTRUCT {?s ?p ?o} FROM <" + SettingsService.getProperty("sublima.basegraph") + "> WHERE {?s ?p ?o}";
-    String url = SettingsService.getProperty("sublima.sparql.endpoint") + "?query=" + URLEncoder.encode(query, "UTF-8");
-    URL u = new URL(url);
-    HttpURLConnection con = (HttpURLConnection) u.openConnection();
-    Model model = ModelFactory.createDefaultModel();
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    model.read(con.getInputStream(), "");
-    model.write(out, type);
-    bizData.put("ontology", out.toString());
-    out.close();
-    con.disconnect();
-    model.close();
+    String results = sparqlDispatcher.getResultsAsFormat(query, type);
+    bizData.put("ontology", results);
     System.gc();
     res.sendPage("nostyle/export", bizData);
     adminService.deleteSubjectOf();
@@ -196,6 +189,10 @@ public class AdminController implements StatelessAppleController {
 
   public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
+  }
+
+  public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
+    this.sparqlDispatcher = sparqlDispatcher;
   }
 }
 

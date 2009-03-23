@@ -75,16 +75,9 @@
           </td>
           <td>
             <select name="type" id="type">
-              <option value="RDF/XML" selected="selected">RDF/XML</option>
-              <option value="N3">N3</option>
-              <option value="Turtle">Turtle</option>
+              <option value="application/rdf+xml" selected="selected">RDF/XML</option>
+              <option value="text/rdf+n3">N3/Turtle</option>
             </select>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            <input type="checkbox" name="replacement" value="url"/><i18n:text key="replaceurlwithuri">Erstatt URL med URI</i18n:text>
           </td>
         </tr>
         <tr>
