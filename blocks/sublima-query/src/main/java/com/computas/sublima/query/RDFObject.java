@@ -130,7 +130,8 @@ public class RDFObject implements Serializable {
       n3Buffer.append("\"" + getValue() + "\"^^<http://www.w3.org/2001/XMLSchema#boolean>");
     }
     // Very ad-hoc date detection, doesn't support negative years,
-    if (getValue().matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[+-]\\d{2}:\\d{2}")) {
+    // 2009-03-23T11:49:28+0100
+    if (getValue().matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?(Z|[+-]\\d{2}:\\d{2})?")) {
       logger.trace("Found xsd:dateTime " + getValue());
       n3Buffer.append("\"" + getValue()
               + "\"^^<http://www.w3.org/2001/XMLSchema#dateTime>");
