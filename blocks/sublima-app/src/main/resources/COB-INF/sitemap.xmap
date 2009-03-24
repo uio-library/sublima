@@ -279,7 +279,7 @@
         </map:call>
       </map:match>
 
-      <map:match pattern="#">
+      <map:match pattern="home">
         <map:call function="com.computas.sublima.app.controller.admin.TopicController">
           <map:parameter name="mode" value="browse"/>
         </map:call>
