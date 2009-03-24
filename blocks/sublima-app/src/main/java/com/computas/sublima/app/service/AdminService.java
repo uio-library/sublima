@@ -1131,8 +1131,7 @@ public class AdminService {
                     subject + "\n" +
                     "   ?semrelation ?object .\n" +
                     "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n" +
-                    "   rdfs:label ?semrellabel ;\n" +
-                    "   a owl:ObjectProperty .\n" +
+                    "   rdfs:label ?semrellabel .\n" +
                     "?object  a skos:Concept ;\n" +
                     "   skos:prefLabel ?preflabel2 .\n" +
                     "}\n" +
