@@ -79,6 +79,8 @@ public class TopicController implements StatelessAppleController {
       } else {
         res.sendStatus(404);
       }
+    } else if ("start".equalsIgnoreCase(mode)) {
+      res.redirectTo("");
     } else if ("browse".equalsIgnoreCase(mode)) {
       showTopicBrowsing(res, req);
     } else if ("relasjoner".equalsIgnoreCase(mode)) {
@@ -334,10 +336,7 @@ public class TopicController implements StatelessAppleController {
     return validationMessages.toString();
   }
 
-  private void showTopicBrowsing
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+  private void showTopicBrowsing(AppleResponse res, AppleRequest req) {
 
     Map<String, Object> bizData = new HashMap<String, Object>();
     String themeTopics = adminService.getThemeTopics();

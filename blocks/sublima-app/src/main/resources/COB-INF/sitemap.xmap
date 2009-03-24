@@ -275,6 +275,12 @@
       <!-- pattern to match for "", when users don't define a URL -->
       <map:match pattern="">
         <map:call function="com.computas.sublima.app.controller.admin.TopicController">
+          <map:parameter name="mode" value="start"/>
+        </map:call>
+      </map:match>
+
+      <map:match pattern="#">
+        <map:call function="com.computas.sublima.app.controller.admin.TopicController">
           <map:parameter name="mode" value="browse"/>
         </map:call>
       </map:match>
