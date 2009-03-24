@@ -220,10 +220,10 @@ public class SearchController implements StatelessAppleController {
         parameterMap.put("dct:title", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:title"), "AND", true, true)});
       }
 
-      if (req.getCocoonRequest().getParameter("dct:subject/all-labels") != null && !"".equals(req.getCocoonRequest().getParameter("dct:subject/all-labels"))) {
-        parameterMap.remove("dct:subject/all-labels");
+      if (req.getCocoonRequest().getParameter("dct:subject/sub:literals") != null && !"".equals(req.getCocoonRequest().getParameter("dct:subject/sub:literals"))) {
+        parameterMap.remove("dct:subject/sub:literals");
         form2SparqlService.setTruncate(truncate);
-        parameterMap.put("dct:subject/all-labels", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/all-labels"), "AND", true, true)});
+        parameterMap.put("dct:subject/sub:literals", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/sub:literals"), "AND", true, true)});
       }
 
       if (req.getCocoonRequest().getParameter("dct:description") != null && !"".equals(req.getCocoonRequest().getParameter("dct:description"))) {

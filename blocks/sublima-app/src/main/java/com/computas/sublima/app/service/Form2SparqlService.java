@@ -206,8 +206,8 @@ public class Form2SparqlService {
           RDFObject myRDFObject = new RDFObject(value, language);
           String thisObjectString = null;
           if (freetextFields != null && freetextFields.contains("dct:subject/all-labels")) {
-            //throw new NotImplementedException("Freetext search with dct:subject/all-labels is not implemented in Mediesone");
-              int freetextNo = freetextFields.indexOf(key) + 1;
+            throw new NotImplementedException("Freetext search with dct:subject/all-labels is not implemented in Mediesone");
+           /*   int freetextNo = freetextFields.indexOf(key) + 1;
             n3Buffer.append("\n?free" + freetextNo + " <bif:contains> \"\"\"'");
             value = mapping.charactermapping(value);
             // Map characters
@@ -226,7 +226,7 @@ public class Form2SparqlService {
               logger.info("Form2SPARQL freetext: " + value + "was not used.");
             }
             n3Buffer.append("'\"\"\" .");
-            thisObjectString = "?free" + freetextNo + " .";
+            thisObjectString = "?free" + freetextNo + " ."; */
           } else if (value == null) {
             thisObjectString = "?object" + values.length + " .";
           } else {

@@ -155,7 +155,11 @@ public class RDFObject implements Serializable {
       logger.trace("Found Literal " + getValue());
       if (freetext != null && freetext > 0) { // Should this literal be treated as a free text?
         n3Buffer.append("?free" + freetext + " .\n"); // The actual previous object
-        n3Buffer.append("?free" + freetext + " <bif:contains> \"\"\"'");
+        n3Buffer.append("?free" + freetext + " <bif:contains> \"\"\"");
+        n3Buffer.append(getValue());
+
+
+        /*
         String[] words = getValue().split(" ");
         if (words.length == 1) {
           n3Buffer.append(mapping.charactermapping(getValue().trim()).trim() + "*");
@@ -165,8 +169,8 @@ public class RDFObject implements Serializable {
           }
         } else {
           logger.info("RDFObject freetext: " + getValue() + "was not used.");
-        }
-        n3Buffer.append("'\"\"\"");
+        }*/
+        n3Buffer.append("\"\"\"");
       } else {
         n3Buffer.append("\"\"\"" + mapping.escapeString(getValue()).trim() + "\"\"\"");
         if (language != null) {
