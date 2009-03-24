@@ -147,6 +147,9 @@ public class SearchController implements StatelessAppleController {
     Map<String, Object> bizData = new HashMap<String, Object>();
     boolean abovemaxnumberofhits = false;
 
+    StringBuilder messageBuffer = new StringBuilder();
+    messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
+
     // Boolean that can be set to false if we don't want the actual search to be performed. Typically when the search string is empty.
     boolean doSearch = true;
 
@@ -260,6 +263,9 @@ public class SearchController implements StatelessAppleController {
         if (!parameterMapBackup.containsKey("searchstring")) {
           parameterMapBackup.remove("deepsearch");
         }
+
+        messageBuffer.append("<c:message><i18n:text key=\"search.searcheddeepsearch\">Et vanlig søk ga ingen resultater, så jeg søkte i eksterne data også.</i18n:text></c:message>\n");
+
         sparqlQuery = form2SparqlServiceBackup.convertForm2Sparql(parameterMapBackup);
         countNumberOfHitsQuery = form2SparqlServiceBackup.convertForm2SparqlCount(parameterMapBackup, Integer.valueOf(SettingsService.getProperty("sublima.search.maxhitsbeforestop")));
       }
@@ -346,9 +352,11 @@ public class SearchController implements StatelessAppleController {
     StringBuilder params = adminService.getMostOfTheRequestXML(req);
     params.append("\n  </request>\n");
 
+    messageBuffer.append("</c:messages>");
+
     bizData.put("request", params.toString());
     bizData.put("loggedin", loggedIn);
-    bizData.put("messages", "<empty/>");
+    bizData.put("messages", messageBuffer.toString());
     bizData.put("abovemaxnumberofhits", abovemaxnumberofhits);
     bizData.put("comment", "<empty/>");
     System.gc();
