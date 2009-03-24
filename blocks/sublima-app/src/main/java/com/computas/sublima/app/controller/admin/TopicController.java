@@ -385,8 +385,8 @@ public class TopicController implements StatelessAppleController {
       for (String oldurl : req.getCocoonRequest().getParameterValues("skos:Concept")) {
         if (!"".equals(oldurl) && oldurl != null) {
           //String sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
-          String sparulQuery = "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{ ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
-          String sparulDelete = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{ ?s ?p <" + oldurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+          String sparulQuery = "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+          String sparulDelete = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> { ?s ?p <" + oldurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
           logger.trace("Changing " + oldurl + " to " + uri + " in objects.");
           updateSuccess = sparulDispatcher.query(sparulQuery);
           updateSuccess = sparulDispatcher.query(sparulDelete);
