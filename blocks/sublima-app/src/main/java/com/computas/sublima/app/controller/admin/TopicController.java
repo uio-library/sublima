@@ -383,23 +383,24 @@ public class TopicController implements StatelessAppleController {
       updateSuccess = sparulDispatcher.query(insertNewTopicString);
 
       for (String oldurl : req.getCocoonRequest().getParameterValues("skos:Concept")) {
-        //String sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
-        String sparulQuery = "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{ ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
-        String sparulDelete = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{ ?s ?p <" + oldurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
-        logger.trace("Changing " + oldurl + " to " + uri + " in objects.");
-        updateSuccess = sparulDispatcher.query(sparulQuery);
-        updateSuccess = sparulDispatcher.query(sparulDelete);
+        if (!"".equals(oldurl) || oldurl != null) {
+          //String sparulQuery = "MODIFY\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+          String sparulQuery = "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{ ?s ?p <" + uri + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+          String sparulDelete = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{ ?s ?p <" + oldurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+          logger.trace("Changing " + oldurl + " to " + uri + " in objects.");
+          updateSuccess = sparulDispatcher.query(sparulQuery);
+          updateSuccess = sparulDispatcher.query(sparulDelete);
 
-        sparulQuery = "prefix owl: <http://www.w3.org/2002/07/owl#> \nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{ <" + uri + "> ?p ?o }\nWHERE { OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:ObjectProperty . }\n OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:SymmetricProperty . } }\n";
-        updateSuccess = sparulDispatcher.query(sparulQuery);
+          sparulQuery = "prefix owl: <http://www.w3.org/2002/07/owl#> \nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">{ <" + uri + "> ?p ?o }\nWHERE { OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:ObjectProperty . }\n OPTIONAL {<" + oldurl + "> ?p ?o . ?p a owl:SymmetricProperty . } }\n";
+          updateSuccess = sparulDispatcher.query(sparulQuery);
 
-        logger.debug("Object edit status: " + updateSuccess);
-        sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
-                "MODIFY <" + SettingsService.getProperty("sublima.basegraph") + ">\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
-        logger.trace("Setting " + oldurl + " topics inactive.");
-        updateSuccess = sparulDispatcher.query(sparulQuery);
-        logger.debug("Topic inactive status: " + updateSuccess);
-
+          logger.debug("Object edit status: " + updateSuccess);
+          sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
+                  "MODIFY <" + SettingsService.getProperty("sublima.basegraph") + ">\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
+          logger.trace("Setting " + oldurl + " topics inactive.");
+          updateSuccess = sparulDispatcher.query(sparulQuery);
+          logger.debug("Topic inactive status: " + updateSuccess);
+        }
       }
 
       if (updateSuccess) {
