@@ -427,7 +427,6 @@
         <!-- apply styling -->
         <map:serialize type="servletService">
           <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-          <map:parameter name="interface-language" value="{cookie:language}"/>
         </map:serialize>
       </map:match>
 
@@ -436,7 +435,6 @@
         <!-- apply styling -->
         <map:serialize type="servletService">
           <map:parameter name="service" value="servlet:skin:/rss-styling"/>
-          <map:parameter name="interface-language" value="{cookie:language}"/>
         </map:serialize>
       </map:match>
 
@@ -450,7 +448,6 @@
         <map:generate src="templates/{1}.jx.xml" type="jx"/>
         <map:serialize type="servletService">
           <map:parameter name="service" value="servlet:skin:/admin-styling"/>
-          <map:parameter name="interface-language" value="{cookie:language}"/>
         </map:serialize>
         <!--map:serialize type="xml"/-->
       </map:match>
