@@ -75,6 +75,7 @@ public class ImportData {
       out.close();
       model.close();
       inf.close();
+      modelChanged();
 
     } catch (Exception e) {
       e.printStackTrace();
