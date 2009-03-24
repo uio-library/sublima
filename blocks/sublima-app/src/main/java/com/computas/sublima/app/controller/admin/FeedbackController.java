@@ -84,6 +84,17 @@ public class FeedbackController implements StatelessAppleController {
       logger.trace("FeedbackController.java --> Akismet said " + url + " is ham.");
     }
 
+    if (("".equals(tittel) || tittel == null)) {
+      messageBuffer.append("<c:message><i18n:text key=\"tips.resourcenotitle\">En tittel må angis før tipset kan sendes.</i18n:text></c:message>");
+      messageBuffer.append("</c:messages>\n");
+      bizData.put("messages", messageBuffer.toString());
+      bizData.put("mode", "form");
+      bizData.put("loggedin", loggedIn);
+
+      res.sendPage("xml/tips", bizData);
+      return;  
+    }
+
     if ((!"".equals(url)) && adminService.checkForDuplicatesByURI(url)) {
       messageBuffer.append("<c:message><i18n:text key=\"tips.resourceexists\">Ressursen du tipset om finnes allerede.</i18n:text></c:message>");
       messageBuffer.append("</c:messages>\n");
