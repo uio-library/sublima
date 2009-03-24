@@ -80,7 +80,7 @@ public class TopicController implements StatelessAppleController {
         res.sendStatus(404);
       }
     } else if ("start".equalsIgnoreCase(mode)) {
-      res.redirectTo("");
+      res.redirectTo("#");
     } else if ("browse".equalsIgnoreCase(mode)) {
       showTopicBrowsing(res, req);
     } else if ("relasjoner".equalsIgnoreCase(mode)) {
