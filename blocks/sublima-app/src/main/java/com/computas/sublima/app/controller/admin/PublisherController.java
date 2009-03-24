@@ -6,9 +6,9 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.SparulDispatcher;
-import static com.computas.sublima.query.service.SettingsService.getProperty;
-import com.computas.sublima.query.service.SettingsService;
 import com.computas.sublima.query.service.MappingService;
+import com.computas.sublima.query.service.SettingsService;
+import static com.computas.sublima.query.service.SettingsService.getProperty;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
@@ -141,81 +141,10 @@ public class PublisherController implements StatelessAppleController {
   private String validateRequest(AppleRequest req) {
     StringBuilder validationMessages = new StringBuilder();
 
-
-    return validationMessages.toString();
-  }
-
-  /**
-   * Method to insert a new publisher
-   *
-   * @param res - AppleResponse
-   * @param req - AppleRequest
-   */
-  private void insertPublisherByName
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
-
-    StringBuilder messageBuffer = new StringBuilder();
-    String publishername = req.getCocoonRequest().getParameter("new_publisher");
-    String description = req.getCocoonRequest().getParameter("dct:description");
-
-    if ("".equalsIgnoreCase(publishername) || publishername == null) {
-      messageBuffer.append("<c:message><i18n:text key=\"publisher.noname\">Utgivernavn må angis</i18n:text></c:message>\n");
-    } else {
-
-      // Check if a publisher by that name already exists
-      //Find the publisher URI based on name
-      String findPublisherByNameQuery = StringUtils.join("\n", new String[]{
-              completePrefixes,
-              "SELECT ?publisher ?name",
-              "WHERE {",
-              "?publisher a foaf:Agent ;",
-              "           foaf:name ?name  .",
-              "FILTER regex(str(?name), \"^" + publishername + "\", \"i\" )",
-              //"FILTER langMatches( lang(?name), \"*\" )",
-              "}"});
-
-      logger.trace("AdminController.insertPublisherByName() --> SPARQL query sent to dispatcher: \n" + findPublisherByNameQuery);
-      Object queryResult = sparqlDispatcher.query(findPublisherByNameQuery);
-
-      if (queryResult.toString().contains(publishername)) {
-        messageBuffer.append("<c:message><i18n:text key=\"publisher.exists\">En utgiver med det navnet finnes allerede registrert</i18n:text></c:message>\n");
-        showPublishersIndex(res, req, messageBuffer.toString());
-        return;
-      }
-
-      String publisherURI = publishername.replace(" ", "_");
-      publisherURI = publisherURI.replace(".", "_");
-      publisherURI = publisherURI.replace(",", "_");
-      publisherURI = publisherURI.replace("/", "_");
-      publisherURI = publisherURI.replace("-", "_");
-      publisherURI = publisherURI.replace("'", "_");
-      publisherURI = getProperty("sublima.base.url") + "agent/" + publisherURI;
-
-
-      String insertPublisherByName =
-              "PREFIX dct: <http://purl.org/dc/terms/>\n" +
-                      "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
-                      "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
-                      "{\n" +
-                      "<" + publisherURI + "> a foaf:Agent ;\n" +
-                      "foaf:name \"" + mapping.escapeString(publishername) + "\"@" + language +" ;\n" +
-                      "dct:description \"\"\"" + mapping.escapeString(description) + "\"\"\"@" + language +" . \n" +
-                      "}";
-
-      logger.info("updatePublisherByURI() ---> " + publisherURI + " -- SPARUL INSERT  --> " + insertPublisherByName);
-      boolean success = sparulDispatcher.query(insertPublisherByName);
-      logger.info("updatePublisherByURI() ---> " + publisherURI + " -- INSERT NEW NAME --> " + success);
-
-      if (success) {
-        messageBuffer.append("<c:message><i18n:text key=\"publisher.saveok\">Lagring av ny utgiver vellykket</i18n:text></c:message>\n");
-      } else {
-        messageBuffer.append("<c:message><i18n:text key=\"publisher.saveerror\">Feil ved lagring av utgiver</i18n:text></c:message>\n");
-      }
+    if ("".equals(req.getCocoonRequest().getParameter("foaf:name-1")) || req.getCocoonRequest().getParameter("foaf:name-1") == null ) {
+      validationMessages.append("<c:message><i18n:text key=\"publisher.notitle\">Feil ved lagring av utgiver</i18n:text></c:message>\n");
     }
-
-    showPublishersIndex(res, req, messageBuffer.toString());
+    return validationMessages.toString();
   }
 
   /**
@@ -224,20 +153,15 @@ public class PublisherController implements StatelessAppleController {
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
-  private void editPublisher
-          (AppleResponse
-                  res, AppleRequest
-                  req) {
+  private void editPublisher(AppleResponse res, AppleRequest req) {
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
       showPublisherByURI(res, req, null, req.getCocoonRequest().getParameter("the-resource"));
 
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
+      String valid = validateRequest(req);
       StringBuilder messageBuffer = new StringBuilder();
-
       Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
-
-      //logger.info("updatePublisherByURI() ---> " + publisheruri + " -- SPARUL DELETE  --> " + deleteString);
 
       Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
       parameterMap.remove("prefix"); // The prefixes are magic variables
@@ -247,28 +171,39 @@ public class PublisherController implements StatelessAppleController {
                 parameterMap.get("subjecturi-prefix")[0]});
       }
 
-      String sparqlQuery = null;
-      try {
-        sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
-        logger.info("editPublisher() ---> SPARUL INSERT  --> " + sparqlQuery);
-      }
-      catch (IOException e) {
-        messageBuffer.append("<c:message><i18n:text key=\"publisher.saveerror\">Feil ved lagring av utgiver</i18n:text></c:message>\n");
-      }
+      if ("".equals(valid) || valid == null) {
 
-      boolean success = sparulDispatcher.query(sparqlQuery);
-      logger.info("editPublisher() ---> INSERT --> " + success);
+        //logger.info("updatePublisherByURI() ---> " + publisheruri + " -- SPARUL DELETE  --> " + deleteString);
 
-      if (success) {
-        messageBuffer.append("<c:message><i18n:text key=\"publisher.updated\">Utgiveren oppdatert</i18n:text></c:message>\n");
+
+        String sparqlQuery = null;
+        try {
+          sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
+          logger.info("editPublisher() ---> SPARUL INSERT  --> " + sparqlQuery);
+        }
+        catch (IOException e) {
+          messageBuffer.append("<c:message><i18n:text key=\"publisher.saveerror\">Feil ved lagring av utgiver</i18n:text></c:message>\n");
+        }
+
+        boolean success = sparulDispatcher.query(sparqlQuery);
+        logger.info("editPublisher() ---> INSERT --> " + success);
+
+        if (success) {
+          messageBuffer.append("<c:message><i18n:text key=\"publisher.updated\">Utgiveren oppdatert</i18n:text></c:message>\n");
+        } else {
+          messageBuffer.append("<c:message><i18n:text key=\"publisher.updatefailed\">Feil ved oppdatering</i18n:text></c:message>\n");
+        }
+
+        //Invalidate the Topic cache for autocompletion
+        AutocompleteCache.invalidatePublisherCache();
+        showPublisherByURI(res, req, messageBuffer.toString(), form2SparqlService.getURI());
+        AutocompleteCache.getPublisherSet();
       } else {
-        messageBuffer.append("<c:message><i18n:text key=\"publisher.updatefailed\">Feil ved oppdatering</i18n:text></c:message>\n");
+        messageBuffer.append(valid);
+        showPublisherByURI(res, req, messageBuffer.toString(), form2SparqlService.getURI());
+
       }
 
-      //Invalidate the Topic cache for autocompletion
-      AutocompleteCache.invalidatePublisherCache();
-      showPublisherByURI(res, req, messageBuffer.toString(), form2SparqlService.getURI());
-      AutocompleteCache.getPublisherSet();
     }
   }
 
@@ -281,12 +216,7 @@ public class PublisherController implements StatelessAppleController {
    * @param publisherURI
    */
 
-  private void showPublisherByURI
-          (AppleResponse
-                  res, AppleRequest
-                  req, String
-                  messages, String
-                  publisherURI) {
+  private void showPublisherByURI(AppleResponse res, AppleRequest req, String messages, String publisherURI) {
     //String publisheruri = this.submode;
 
     StringBuilder messageBuffer = new StringBuilder();
@@ -314,11 +244,7 @@ public class PublisherController implements StatelessAppleController {
    * @param res - AppleResponse
    * @param req - AppleRequest
    */
-  private void showPublishersIndex
-          (AppleResponse
-                  res, AppleRequest
-                  req, String
-                  messages) {
+  private void showPublishersIndex(AppleResponse res, AppleRequest req, String messages) {
 
     StringBuilder messageBuffer = new StringBuilder();
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
@@ -346,22 +272,16 @@ public class PublisherController implements StatelessAppleController {
     res.sendPage("xml2/utgivere_alle", bizData);
   }
 
-  public void setSparqlDispatcher
-          (SparqlDispatcher
-                  sparqlDispatcher) {
+  public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {
     this.sparqlDispatcher = sparqlDispatcher;
   }
 
-  public void setSparulDispatcher
-          (SparulDispatcher
-                  sparulDispatcher) {
+  public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
   }
 
   //todo Move to a Service-class
-  private Map<String, String[]> createParametersMap
-          (Request
-                  request) {
+  private Map<String, String[]> createParametersMap(Request request) {
     Map<String, String[]> result = new HashMap<String, String[]>();
     Enumeration parameterNames = request.getParameterNames();
     while (parameterNames.hasMoreElements()) {

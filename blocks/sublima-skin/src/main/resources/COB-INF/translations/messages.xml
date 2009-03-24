@@ -290,4 +290,7 @@
   <message key="lastRun">Sist kjørt</message>
   <message key="letter.ä">Ä</message>
   <message key="letter.ö">Ö</message>
+  <message key="tips.resourcenotitle">En tittel må angis før tipset kan sendes</message>
+  <message key="publisher.notitle">En tittel må angis</message>  
 </catalogue>
+

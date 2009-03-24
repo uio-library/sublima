@@ -288,5 +288,7 @@
   <message key="lastRun">Sist kjørt</message><!-- MÅ OVERSETTES -->
   <message key="letter.ä">Ä</message>
   <message key="letter.ö">Ö</message>
+  <message key="tips.resourcenotitle">En tittel må angis før tipset kan sendes</message><!-- MÅ OVERSETTES -->
+  <message key="publisher.notitle">En tittel må angis</message><!-- MÅ OVERSETTES -->
 </catalogue>
 
