@@ -395,7 +395,7 @@ public class TopicController implements StatelessAppleController {
 
         logger.debug("Object edit status: " + updateSuccess);
         sparulQuery = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\nPREFIX status: <http://sublima.computas.com/status/>\n" + "" +
-                "MODIFY\nDELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{ <" + oldurl + "> wdr:describedBy ?status . }\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
+                "MODIFY <" + SettingsService.getProperty("sublima.basegraph") + ">\nDELETE { <" + oldurl + "> wdr:describedBy ?status . }\nINSERT { <" + oldurl + "> wdr:describedBy status:inaktiv . }\nWHERE { <" + oldurl + "> wdr:describedBy ?status . }\n";
         logger.trace("Setting " + oldurl + " topics inactive.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Topic inactive status: " + updateSuccess);
