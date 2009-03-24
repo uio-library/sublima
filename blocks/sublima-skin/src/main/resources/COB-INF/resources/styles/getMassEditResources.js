@@ -1,16 +1,20 @@
-function getResources() {
+function getResources(endpoint) {
   sparqlquery = 'PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX sub: <http://xmlns.computas.com/sublima#>\nPREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>\nSELECT ?uri ?title WHERE \n{ ?uri dct:title ?title ;\n   a sub:Resource  .\n   FILTER regex(xsd:string(?uri), "'+document.getElementById("selectregex").value+'", "i")\n} ORDER BY xsd:string(?uri)';
-  $().ajaxStart($.blockUI).ajaxStop($.unblockUI);
-  $.ajax({
-    type: "GET",
-    url: "../../sparql",
-    dataType: "json",
-    data: {query: sparqlquery, accept:"application/sparql-results+json"},
-    error: function (XMLHttpRequest, textStatus) {
-      alert("An error occured, contact webmaster. Message was: " + textStatus);
-    },
-    success: function(data) { createTable(data); }
-  });
+  if (!document.getElementById("selectregex").value) {
+    alert("Regular expression needed");
+  } else { 
+    $().ajaxStart($.blockUI).ajaxStop($.unblockUI);
+    $.ajax({
+      type: "GET",
+      url: endpoint,
+      dataType: "json",
+      data: {query: sparqlquery, format:"application/sparql-results+json"},
+      error: function (XMLHttpRequest, textStatus) {
+	alert("An error occured, contact webmaster. Message was: " + textStatus);
+      },
+      success: function(data) { createTable(data); }
+    });
+  }
 }
 
 

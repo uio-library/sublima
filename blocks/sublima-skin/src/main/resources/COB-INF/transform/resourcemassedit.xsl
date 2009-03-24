@@ -16,6 +16,7 @@
         version="1.0">
 
   <xsl:template match="c:massediting">
+    <xsl:param name="endpoint"/>
     <!-- problems with self-closing empty script tags in firefox --> 
     <script src="styles/getMassEditResources.js" type="text/javascript">;</script>
     <script type="text/javascript">var dummy = null;</script> 
@@ -47,7 +48,7 @@
 	       <input id="selectpattern" name="selectpattern" type="text" />
 	     </td>
 	     <td>
-	       <input type="button" name="query" value="Get resources" onClick="getResources()"/>
+	       <input type="button" name="query" value="Get resources" onClick="getResources('{$endpoint}')"/>
 	     </td>
 	   </tr>
 	 </table>

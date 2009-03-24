@@ -372,9 +372,11 @@
           </div>  
           
           <!-- Mass editing -->
-          <div name="mass-editing" style="border:0px dotted pink;">  
-                <xsl:apply-templates select="c:page/c:massediting"/>		
-            <xsl:text> </xsl:text>
+          <div name="mass-editing" style="border:0px dotted pink;">
+	    <xsl:apply-templates select="c:page/c:massediting">	
+	      <xsl:with-param name="endpoint" select="c:page/c:endpoint"/>
+	    </xsl:apply-templates>
+	    <xsl:text> </xsl:text>
           </div>  
 
           

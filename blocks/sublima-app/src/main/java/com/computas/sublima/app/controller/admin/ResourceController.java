@@ -652,8 +652,11 @@ public class ResourceController implements StatelessAppleController {
         i++;
       }
       logger.debug("Mass updated " + i + " records.");
+    } else {
+        bizData.put("endpoint", SettingsService.getProperty("sublima.sparql.endpoint"));
     }
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+
 
     res.sendPage("xml2/massedit", bizData);
   }
