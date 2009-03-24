@@ -637,21 +637,25 @@ public class ResourceController implements StatelessAppleController {
     // When GET present a blank form with listvalues or prefilled with resource
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
       int i = 0;
+      int modified = 0;
       Enumeration fo = req.getCocoonRequest().getParameterNames();
       while (req.getCocoonRequest().getParameterValues("new-" + i) != null) {
         String newurl = req.getCocoonRequest().getParameterValues("new-" + i)[0];
         String oldurl = req.getCocoonRequest().getParameterValues("old-" + i)[0];
-        String sparulQuery = "MODIFY\nDELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> { <" + oldurl + "> ?p ?o }\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> { <" + newurl + "> ?p ?o }\nWHERE { <" + oldurl + "> ?p ?o }\n";
+        String sparulQuery = "MODIFY <" + SettingsService.getProperty("sublima.basegraph") + ">\nDELETE { <" + oldurl + "> ?p ?o }\nINSERT { <" + newurl + "> ?p ?o }\nWHERE { <" + oldurl + "> ?p ?o }\n";
         logger.trace("Changing " + oldurl + " to " + newurl + " in subjects.");
         boolean updateSuccess = sparulDispatcher.query(sparulQuery);
         logger.debug("Subject edit status: " + updateSuccess);
-        sparulQuery = "MODIFY\nDELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + "> { ?s ?p <" + oldurl + "> }\nINSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> { ?s ?p <" + newurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
+        sparulQuery = "MODIFY <" + SettingsService.getProperty("sublima.basegraph") + ">\nDELETE { ?s ?p <" + oldurl + "> }\nINSERT { ?s ?p <" + newurl + "> }\nWHERE { ?s ?p <" + oldurl + "> }\n";
         logger.trace("Changing " + oldurl + " to " + newurl + " in objects.");
         updateSuccess = sparulDispatcher.query(sparulQuery);
+        if (updateSuccess) {
+            modified++;
+        }
         logger.debug("Object edit status: " + updateSuccess);
         i++;
       }
-      logger.debug("Mass updated " + i + " records.");
+      logger.debug("Mass updated " + modified + " records.");
     } else {
         bizData.put("endpoint", SettingsService.getProperty("sublima.sparql.endpoint"));
     }
