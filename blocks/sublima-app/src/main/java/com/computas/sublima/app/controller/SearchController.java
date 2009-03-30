@@ -291,11 +291,11 @@ public class SearchController implements StatelessAppleController {
 
 
     if (searchStringOverriden == null) {
-      searchStringOverriden = req.getCocoonRequest().getParameter("dct:subject/sub:literals");
+      searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/sub:literals"), "AND", true, true);
     }
 
     if (searchStringOverriden == null) {
-      searchStringOverriden = req.getCocoonRequest().getParameter("dct:subject/skos:prefLabel");
+      searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/skos:prefLabel"), "AND", true, true);
     }
 
     Object navigationResults = "<empty></empty>";
@@ -310,7 +310,7 @@ public class SearchController implements StatelessAppleController {
               "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
               "DESCRIBE ?subject WHERE {\n" +
               "  ?subject sub:literals ?lit .\n" +
-              "  ?lit <bif:contains> \"\"\"" + freeTextSearchString(searchStringOverriden, "AND", true, true) + "\"\"\" . \n" +
+              "  ?lit <bif:contains> \"\"\"" + searchStringOverriden + "\"\"\" . \n" +
               "  ?subject a skos:Concept .\n" +
               "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
               "\n}\n";
