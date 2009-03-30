@@ -200,6 +200,9 @@ public class Form2SparqlService {
     int j = 0;
     for (String qname : keys) {
       j++;
+
+      // Everything that has to do with all-labels is obsolete and should be removed.
+      // The character mapping should be refactor to make the code unit testable again.
       if ("dct:subject/all-labels".equals(key) && "all-labels".equals(qname)) {
         logger.debug("Will expand the search to include all labels");
         for (String value : values) {
