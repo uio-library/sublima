@@ -440,7 +440,11 @@ public class ResourceController implements StatelessAppleController {
 
 
       } else {
-        bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource").trim()));
+        if (req.getCocoonRequest().getParameter("the-resource") == null) {
+          bizData.put("resource", "<empty/>");  
+        } else {
+          bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource").trim()));
+        }
         bizData.put("tempvalues", "<empty/>");//tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("mode", "edit");
         messageBuffer.append("</c:messages>\n");
