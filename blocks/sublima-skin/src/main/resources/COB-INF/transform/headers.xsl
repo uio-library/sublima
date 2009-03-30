@@ -18,7 +18,7 @@
     <head>
       <title>
 	<xsl:value-of select="$title"/>
-	<xsl:text> | SMIL</xsl:text>
+	<xsl:text> | Detektor</xsl:text>
       </title>
    
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -59,7 +59,7 @@
     <div id="header">
       <img alt="header logo" src="{$baseurl}/images/detektor_beta_header.png"/>
       
-      <h2>Sublima 1.0.0 RC-19</h2>
+      <h2>Sublima 1.0.0 RC-20 Virtuoso</h2>
       <div>
 
 	  <a href="{$baseurl}/{$qloc}" class="active">
