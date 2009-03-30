@@ -45,14 +45,16 @@ public class FreetextTriples {
    * @return String with sub:literals N3-triple
    */
   public String generateFreetextTripleForURI(String uri, String[] searchableProperties, String[] prefixes, String[] graphs, boolean indexExternalContent) {
-    if (!uri.startsWith("<") && !uri.endsWith(">")) {
-      uri = "<" + uri + ">";
-    }
 
     String concatenatedSearchableText = getConcatenatedTextFromURI(uri, searchableProperties, prefixes, graphs);
 
     if (indexExternalContent) {
       String externalContent = getResourceExternalLiteralsAsString(uri);
+
+      if (!uri.startsWith("<") && !uri.endsWith(">")) {
+        uri = "<" + uri + ">";
+      }
+
       return uri + " <http://xmlns.computas.com/sublima#literals> \"" + concatenatedSearchableText + "\" .\n" + uri + " <http://xmlns.computas.com/sublima#externalliterals> \"" + concatenatedSearchableText + " " + externalContent + "\" .\n";
     } else {
       return concatenatedSearchableText.isEmpty() ? null : uri + " <http://xmlns.computas.com/sublima#literals> \"" + concatenatedSearchableText + "\" .";
@@ -127,7 +129,6 @@ public class FreetextTriples {
       try {
 
         externalContent.append(urlAction.strippedContent(null).replace("\\", "\\\\"));
-
       } catch (Exception e) {
         System.out.println(e);
       }
