@@ -221,26 +221,30 @@ public class SearchController implements StatelessAppleController {
       if (req.getCocoonRequest().getParameter("dct:title") != null && !"".equals(req.getCocoonRequest().getParameter("dct:title"))) {
         parameterMap.remove("dct:title");
         form2SparqlService.setTruncate(truncate);
-        parameterMap.put("dct:title", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:title"), "AND", true, true)});
+        searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("dct:title"), "AND", true, true);
+        parameterMap.put("dct:title", new String[]{searchStringOverriden});
       }
 
       if (req.getCocoonRequest().getParameter("dct:subject/sub:literals") != null && !"".equals(req.getCocoonRequest().getParameter("dct:subject/sub:literals"))) {
         parameterMap.remove("dct:subject/sub:literals");
         form2SparqlService.setTruncate(truncate);
-        parameterMap.put("dct:subject/sub:literals", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/sub:literals"), "AND", true, true)});
+        searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/sub:literals"), "AND", true, true);
+        parameterMap.put("dct:subject/sub:literals", new String[]{searchStringOverriden});
       }
 
       if (req.getCocoonRequest().getParameter("dct:description") != null && !"".equals(req.getCocoonRequest().getParameter("dct:description"))) {
         parameterMap.remove("dct:description");
         form2SparqlService.setTruncate(truncate);
-        parameterMap.put("dct:description", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:description"), "AND", true, true)});
+        searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("dct:description"), "AND", true, true);
+        parameterMap.put("dct:description", new String[]{searchStringOverriden});
 
       }
 
       if (req.getCocoonRequest().getParameter("dct:publisher/foaf:name") != null && !"".equals(req.getCocoonRequest().getParameter("dct:publisher/foaf:name"))) {
         parameterMap.remove("dct:publisher/foaf:name");
         form2SparqlService.setTruncate(truncate);
-        parameterMap.put("dct:publisher/foaf:name", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:publisher/foaf:name"), "AND", true, true)});
+        searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("dct:publisher/foaf:name"), "AND", true, true);
+        parameterMap.put("dct:publisher/foaf:name", new String[]{searchStringOverriden});
       }
 
       sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
@@ -287,15 +291,6 @@ public class SearchController implements StatelessAppleController {
       }
     } else {
       queryResult = "<empty/>";
-    }
-
-
-    if (searchStringOverriden == null) {
-      searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/sub:literals"), "AND", true, true);
-    }
-
-    if (searchStringOverriden == null) {
-      searchStringOverriden = freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/skos:prefLabel"), "AND", true, true);
     }
 
     Object navigationResults = "<empty></empty>";
