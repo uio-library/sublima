@@ -171,8 +171,16 @@ public class URLActions { // Should this class extend HttpUrlConnection?
       e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
     }
 
+    finally {
+      try {
+        con.disconnect();
+        con = null;
+      } catch(Exception e) {
+        logger.error("Could not close connection");
+      }
+    }
+    
     logger.info("getCode() ---> " + url.toString() + " returned a " + ourcode);
-    con = null;
 
     return ourcode;
   }
