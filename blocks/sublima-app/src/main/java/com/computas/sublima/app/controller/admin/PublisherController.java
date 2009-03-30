@@ -252,7 +252,7 @@ public class PublisherController implements StatelessAppleController {
 
     String queryString = StringUtils.join("\n", new String[]{
             completePrefixes,
-            "SELECT DISTINCT ?publisher ?name",
+            "CONSTRUCT { ?publisher foaf:name ?name; a foaf:Agent .}",
             "WHERE {",
             "?publisher foaf:name ?name ;",
             "           a foaf:Agent .",

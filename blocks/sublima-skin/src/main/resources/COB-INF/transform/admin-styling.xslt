@@ -177,13 +177,13 @@
   <!-- Publisherlist -->
   <xsl:template name="publisherlist">
     <ul>
-      <xsl:for-each select="c:page/c:content/c:publisherlist/sparql:sparql/sparql:results/sparql:result">
-         <xsl:sort lang="{$interface-language}" select="./sparql:binding[@name='name']/sparql:literal[@xml:lang=$interface-language]"/>
+      <xsl:for-each select="c:page/c:content/c:publisherlist/rdf:RDF/foaf:Agent">
+         <xsl:sort lang="{$interface-language}" select="./foaf:name"/>
         <li>
           <a>
-            <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./sparql:binding[@name='publisher']/sparql:literal"/><xsl:value-of
+            <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./@rdf:about"/><xsl:value-of
                     select="$aloc"/></xsl:attribute>
-            <xsl:value-of select="./sparql:binding[@name='name']/sparql:literal[@xml:lang=$interface-language]"/>
+            <xsl:value-of select="./foaf:name"/>
           </a>
         </li>
       </xsl:for-each>
