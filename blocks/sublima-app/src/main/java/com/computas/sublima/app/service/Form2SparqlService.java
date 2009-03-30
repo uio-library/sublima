@@ -200,59 +200,7 @@ public class Form2SparqlService {
     int j = 0;
     for (String qname : keys) {
       j++;
-
-      // Everything that has to do with all-labels is obsolete and should be removed.
-      // The character mapping should be refactor to make the code unit testable again.
-      if ("dct:subject/all-labels".equals(key) && "all-labels".equals(qname)) {
-        logger.debug("Will expand the search to include all labels");
-        for (String value : values) {
-          RDFObject myRDFObject = new RDFObject(value, language);
-          String thisObjectString = null;
-          if (freetextFields != null && freetextFields.contains("dct:subject/all-labels")) {
-            throw new NotImplementedException("Freetext search with dct:subject/all-labels is not implemented in Mediesone");
-           /*   int freetextNo = freetextFields.indexOf(key) + 1;
-            n3Buffer.append("\n?free" + freetextNo + " <bif:contains> \"\"\"'");
-            value = mapping.charactermapping(value);
-            // Map characters
-            value = mapping.charactermapping(value);
-            String[] words = value.split(" ");
-            if (words.length == 1) {
-              n3Buffer.append(value.trim());
-              if (truncate) {
-                n3Buffer.append("*");
-              }
-            } else if (words.length > 1) {
-              for (String word : words) {
-                n3Buffer.append(word.trim() + " ");
-              }
-            } else {
-              logger.info("Form2SPARQL freetext: " + value + "was not used.");
-            }
-            n3Buffer.append("'\"\"\" .");
-            thisObjectString = "?free" + freetextNo + " ."; */
-          } else if (value == null) {
-            thisObjectString = "?object" + values.length + " .";
-          } else {
-            thisObjectString = myRDFObject.toN3() + " .";
-          }
-          if (freetextFields == null) {
-            n3Buffer.append("\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:prefLabel ");
-            n3Buffer.append(thisObjectString);
-            n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:altLabel ");
-            n3Buffer.append(thisObjectString);
-            n3Buffer.append(" }\nOPTIONAL {\n" + resourceSubject + "dct:subject " + var + ".\n" + var + "skos:hiddenLabel ");
-            n3Buffer.append(thisObjectString);
-            n3Buffer.append(" }\nFILTER ( bound( " + var + ") )\n");
-          } else {
-            n3Buffer.append("\n" + var + "skos:prefLabel ");
-            n3Buffer.append(thisObjectString);
-            n3Buffer.append("\n" + resourceSubject + "dct:subject " + var + ".\n");
-          }
-
-        }
-      } else if (!("dct:subject".equals(qname) && "dct:subject/all-labels".equals(key))) {
         n3Buffer.append("\n" + var + qname + " ");
-      }
       if ("".equals(values[0])) { // Then, it is a block with no value, which will be caught by a catch-all
         return "\n";
       }
@@ -260,7 +208,6 @@ public class Form2SparqlService {
         subjectVarList.add(var);
       }
 
-      if (!"all-labels".equals(qname)) {
         if (keys.length == j && !"".equals(values[0])) {
           // Then we are on the actual form input value
           int i = 0;
@@ -289,12 +236,9 @@ public class Form2SparqlService {
           var = "?var" + variablecount + " "; // Might need more work
           // to ensure uniqueness
           logger.debug("Using unique N3 variable " + var);
-          if (!("dct:subject".equals(qname) && "dct:subject/all-labels".equals(key))) {
-            n3Buffer.append(var + ".");
-          }
+          n3Buffer.append(var + ".");
           variablecount++;
         }
-      }
     }
     logger.trace("Returning N3: " + n3Buffer.toString());
     return n3Buffer.toString();
@@ -397,7 +341,7 @@ public class Form2SparqlService {
         parameterMap.remove("locale");
       }
 
-      if (parameterMap.get("dct:subject/all-labels") != null) { // Then there are SKOS labels
+      if (parameterMap.get("dct:subject/sub:literals") != null) { // Then there are SKOS labels
         addPrefix("skos: <http://www.w3.org/2004/02/skos/core#>");
       }
 

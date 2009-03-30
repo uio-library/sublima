@@ -211,7 +211,6 @@ public class SearchController implements StatelessAppleController {
       // Calls the Form2SPARQL service with the parameterMap which returns
       // a SPARQL as String
       Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"), parameterMap.get("freetext-field"));
-      Form2SparqlService form2SparqlServiceBackup = new Form2SparqlService(parameterMap.get("prefix"), parameterMap.get("freetext-field"));
       parameterMap.remove("prefix"); // The prefixes are magic variables
       parameterMap.remove("freetext-field"); // The freetext-fields are magic variables too
       parameterMap.remove("res-view"); //  As is this
@@ -222,21 +221,18 @@ public class SearchController implements StatelessAppleController {
       if (req.getCocoonRequest().getParameter("dct:title") != null && !"".equals(req.getCocoonRequest().getParameter("dct:title"))) {
         parameterMap.remove("dct:title");
         form2SparqlService.setTruncate(truncate);
-        form2SparqlServiceBackup.setTruncate(truncate);
         parameterMap.put("dct:title", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:title"), "AND", true, true)});
       }
 
       if (req.getCocoonRequest().getParameter("dct:subject/sub:literals") != null && !"".equals(req.getCocoonRequest().getParameter("dct:subject/sub:literals"))) {
         parameterMap.remove("dct:subject/sub:literals");
         form2SparqlService.setTruncate(truncate);
-        form2SparqlServiceBackup.setTruncate(truncate);
         parameterMap.put("dct:subject/sub:literals", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:subject/sub:literals"), "AND", true, true)});
       }
 
       if (req.getCocoonRequest().getParameter("dct:description") != null && !"".equals(req.getCocoonRequest().getParameter("dct:description"))) {
         parameterMap.remove("dct:description");
         form2SparqlService.setTruncate(truncate);
-        form2SparqlServiceBackup.setTruncate(truncate);
         parameterMap.put("dct:description", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:description"), "AND", true, true)});
 
       }
@@ -244,32 +240,11 @@ public class SearchController implements StatelessAppleController {
       if (req.getCocoonRequest().getParameter("dct:publisher/foaf:name") != null && !"".equals(req.getCocoonRequest().getParameter("dct:publisher/foaf:name"))) {
         parameterMap.remove("dct:publisher/foaf:name");
         form2SparqlService.setTruncate(truncate);
-        form2SparqlServiceBackup.setTruncate(truncate);
         parameterMap.put("dct:publisher/foaf:name", new String[]{freeTextSearchString(req.getCocoonRequest().getParameter("dct:publisher/foaf:name"), "AND", true, true)});
       }
 
-      // Create a backup of the parameter map to use for creating a new sparql query with deep search enabled in case the normal query gives 0 results
-      Map<String, String[]> parameterMapBackup = new TreeMap<String, String[]>(parameterMap);
-      parameterMapBackup.remove("deepsearch");
-      parameterMapBackup.put("deepsearch", new String[]{"deepsearch"});
-
       sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMap);
       countNumberOfHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMap, Integer.valueOf(SettingsService.getProperty("sublima.search.maxhitsbeforestop")));
-      // Create a query to check if it gives us zero results
-      String zeroHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMap, 1);
-
-      // If the zeroHitsQuery returns 0 results, we make the deep search the actual sparql that is executed
-      if (!adminService.isAboveMaxNumberOfHits(zeroHitsQuery)) {
-        if (!parameterMapBackup.containsKey("searchstring")) {
-          parameterMapBackup.remove("deepsearch");
-        }
-
-        messageBuffer.append("<c:message><i18n:text key=\"search.searcheddeepsearch\">Et vanlig søk ga ingen resultater, så jeg søkte i eksterne data også.</i18n:text></c:message>\n");
-
-        sparqlQuery = form2SparqlServiceBackup.convertForm2Sparql(parameterMapBackup);
-        countNumberOfHitsQuery = form2SparqlServiceBackup.convertForm2SparqlCount(parameterMapBackup, Integer.valueOf(SettingsService.getProperty("sublima.search.maxhitsbeforestop")));
-      }
-            
     } else {
       res.sendStatus(400);
     }
@@ -335,7 +310,7 @@ public class SearchController implements StatelessAppleController {
               "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
               "DESCRIBE ?subject WHERE {\n" +
               "  ?subject sub:literals ?lit .\n" +
-              "  ?lit <bif:contains> \"\"\"" + searchStringOverriden + "\"\"\" . \n" +
+              "  ?lit <bif:contains> \"\"\"" + freeTextSearchString(searchStringOverriden, "AND", true, true) + "\"\"\" . \n" +
               "  ?subject a skos:Concept .\n" +
               "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
               "\n}\n";
