@@ -19,6 +19,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -294,6 +295,14 @@ public class ResourceController implements StatelessAppleController {
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
       Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
+      // Fix problem with url encoding
+        try {
+          parameterMap.remove("the-resource");
+          parameterMap.put("the-resource", new String[]{URLEncoder.encode(req.getCocoonRequest().getParameter("the-resource").trim(), "UTF-8")});
+        } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
       if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
         String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{\n" +
@@ -368,7 +377,9 @@ public class ResourceController implements StatelessAppleController {
           dctIdentifier = req.getCocoonRequest().getParameter("dct:identifier");
         }
 
+
         Form2SparqlService form2SparqlService = new Form2SparqlService(parameterMap.get("prefix"));
+        
         parameterMap.put("sub:url", parameterMap.get("the-resource"));
         parameterMap.remove("dct:identifier");
         parameterMap.put("dct:identifier", new String[]{dctIdentifier});
@@ -380,6 +391,7 @@ public class ResourceController implements StatelessAppleController {
         }
 
         String sparqlQuery = null;
+
         try {
           sparqlQuery = form2SparqlService.convertForm2Sparul(parameterMap);
         }
@@ -443,8 +455,14 @@ public class ResourceController implements StatelessAppleController {
         if (req.getCocoonRequest().getParameter("the-resource") == null) {
           bizData.put("resource", "<empty/>");  
         } else {
-          bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource").trim()));
+          try {
+            bizData.put("resource", adminService.getResourceByURI(URLEncoder.encode(req.getCocoonRequest().getParameter("the-resource").trim(), "UTF-8")));
+          } catch (UnsupportedEncodingException e) {
+            e.printStackTrace(); 
+            bizData.put("resource", "<empty/>");
+          }
         }
+        
         bizData.put("tempvalues", "<empty/>");//tempPrefixes + tempValues.toString() + "</c:tempvalues>");
         bizData.put("mode", "edit");
         messageBuffer.append("</c:messages>\n");

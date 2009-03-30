@@ -107,7 +107,7 @@
           </td>
           <td>
             <input id="the-resource" type="text" name="the-resource" size="40"
-                   value="{./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource}"/>
+                   value="{url:decode(./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource)}"/>
           </td>
         </tr>
         <tr>
