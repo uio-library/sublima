@@ -24,6 +24,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.net.URLEncoder;
+import java.net.URLDecoder;
 
 /**
  * @author: mha
@@ -296,19 +297,15 @@ public class ResourceController implements StatelessAppleController {
       Map<String, String[]> parameterMap = new TreeMap<String, String[]>(createParametersMap(req.getCocoonRequest()));
 
       // Fix problem with url encoding
-        try {
-          parameterMap.remove("the-resource");
-          parameterMap.put("the-resource", new String[]{URLEncoder.encode(req.getCocoonRequest().getParameter("the-resource").trim(), "UTF-8")});
-        } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+      parameterMap.remove("the-resource");
+      parameterMap.put("the-resource", new String[]{req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20")});
 
       if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
         String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{\n" +
-                "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o.\n" +
+                "<" + req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20") + "> ?a ?o.\n" +
                 "} WHERE {\n" +
-                "<" + req.getCocoonRequest().getParameter("the-resource").trim() + "> ?a ?o. }";
+                "<" + req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20") + "> ?a ?o. }";
 
         boolean deleteResourceSuccess = sparulDispatcher.query(deleteString);
 
@@ -455,12 +452,7 @@ public class ResourceController implements StatelessAppleController {
         if (req.getCocoonRequest().getParameter("the-resource") == null) {
           bizData.put("resource", "<empty/>");  
         } else {
-          try {
-            bizData.put("resource", adminService.getResourceByURI(URLEncoder.encode(req.getCocoonRequest().getParameter("the-resource").trim(), "UTF-8")));
-          } catch (UnsupportedEncodingException e) {
-            e.printStackTrace(); 
-            bizData.put("resource", "<empty/>");
-          }
+          bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20")));
         }
         
         bizData.put("tempvalues", "<empty/>");//tempPrefixes + tempValues.toString() + "</c:tempvalues>");
@@ -499,12 +491,12 @@ public class ResourceController implements StatelessAppleController {
 
     if (req.getCocoonRequest().getParameter("dct:identifier") == null || "".equalsIgnoreCase(req.getCocoonRequest().getParameter("dct:identifier").trim())) {
       // if the uri is empty, then it's a new resource and we do a already-exists check
-      if (adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("the-resource").trim())) {
+      if (adminService.checkForDuplicatesByURI(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20"))) {
         validationMessages.append("<c:message><i18n:text key=\"validation.resource.exists\">En ressurs med denne URI finnes fra før</i18n:text></c:message>\n");
       }
     }
 
-    if (req.getCocoonRequest().getParameter("the-resource") == null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim())) {
+    if (req.getCocoonRequest().getParameter("the-resource") == null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20"))) {
       validationMessages.append("<c:message><i18n:text key=\"validation.url.errorcode\">Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</i18n:text></c:message>\n");
     }
 
@@ -529,7 +521,7 @@ public class ResourceController implements StatelessAppleController {
   private StringBuilder getTempValues(AppleRequest req) {
     //Keep all selected values in case of validation error
     String temp_title = req.getCocoonRequest().getParameter("dct:title");
-    String temp_uri = req.getCocoonRequest().getParameter("the-resource").trim();
+    String temp_uri = req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20");
     String temp_identifier = req.getCocoonRequest().getParameter("dct:identifier");
     String temp_description = req.getCocoonRequest().getParameter("dct:description");
     String[] temp_publisher = req.getCocoonRequest().getParameterValues("dct:publisher");
