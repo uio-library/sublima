@@ -255,7 +255,7 @@ public class SearchController implements StatelessAppleController {
     if (doBigSearchAnyway) {
       // This will do the search despite it being large, thus populating the cache
       queryResult = sparqlDispatcher.query(sparqlQuery);
-      
+
     } else if (doSearch) {
       if (adminService.isAboveMaxNumberOfHits(countNumberOfHitsQuery)) {
         // We are above the threshold, lets see if we have it cached
@@ -303,20 +303,24 @@ public class SearchController implements StatelessAppleController {
       // Now get the matching topics
       String sparqlTopicsQuery = null;
 
-      sparqlTopicsQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-              "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n" +
-              "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n" +
-              "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-              "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-              "DESCRIBE ?subject WHERE {\n" +
-              "  ?subject sub:literals ?lit .\n" +
-              "  ?lit <bif:contains> \"\"\"" + searchStringOverriden + "\"\"\" . \n" +
-              "  ?subject a skos:Concept .\n" +
-              "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
-              "\n}\n";
+      if (!searchStringOverriden.isEmpty() && !"''".equals(searchStringOverriden)) {
+        sparqlTopicsQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
+                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n" +
+                "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n" +
+                "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "DESCRIBE ?subject WHERE {\n" +
+                "  ?subject sub:literals ?lit .\n" +
+                "  ?lit <bif:contains> \"\"\"" + searchStringOverriden + "\"\"\" . \n" +
+                "  ?subject a skos:Concept .\n" +
+                "  ?subject wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
+                "\n}\n";
 
-      //logger.trace("doAdvanced: SPARQL query to get topics sent to dispatcher:\n" + sparqlTopicsQuery);
-      navigationResults = sparqlDispatcher.query(sparqlTopicsQuery);
+        //logger.trace("doAdvanced: SPARQL query to get topics sent to dispatcher:\n" + sparqlTopicsQuery);
+        navigationResults = sparqlDispatcher.query(sparqlTopicsQuery);
+      } else {
+        navigationResults = "<empty/>";
+      }
     }
 
     bizData.put("result-list", queryResult);
