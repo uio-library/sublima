@@ -309,12 +309,12 @@
       <id>jivesoftware</id>
       <url>http://maven.jivesoftware.com/central</url>
     </repository -->
-    <repository>
+    <!--repository>
       <id>dustin</id>
       <name>dustin</name>
       <url>http://bleu.west.spy.net/~dustin/repo</url>
       <layout>legacy</layout>
-    </repository>
+    </repository-->
     <repository>
       <id>Jena</id>
       <url>http://jena.hpl.hp.com/repo-dev/</url>
