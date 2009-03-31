@@ -13,9 +13,9 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.text.SimpleDateFormat;
 
 /**
  * @author: mha
@@ -59,6 +59,21 @@ public class GenerateUtils {
       e.printStackTrace();
     }
 
+    try {
+      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Document doc = builder.parse(new ByteArrayInputStream(xmlResult.getBytes("UTF-8")));
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+      for (int i = 0; i < nodes.getLength(); i++) {
+        uriList.add(nodes.item(i).getTextContent());
+      }
+
+    } catch (Exception e) {
+      System.out.println("Could not get list of URIs from XML");
+      e.printStackTrace();
+    }
+
     return uriList;
   }
 
@@ -76,6 +91,21 @@ public class GenerateUtils {
     String xmlResult = (String) sq.query(queryString);
 
     ArrayList<String> uriList = new ArrayList<String>();
+
+    try {
+      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Document doc = builder.parse(new ByteArrayInputStream(xmlResult.getBytes("UTF-8")));
+      XPathExpression expr = XPathFactory.newInstance().newXPath().compile("//td");
+      NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+      for (int i = 0; i < nodes.getLength(); i++) {
+        uriList.add(nodes.item(i).getTextContent());
+      }
+
+    } catch (Exception e) {
+      System.out.println("Could not get list of URIs from XML");
+      e.printStackTrace();
+    }
 
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -325,10 +355,10 @@ public class GenerateUtils {
       int insertedRows = dbService.doSQLUpdate(updateSQL);
 
       if (insertedRows == 0) {
-       String insertSQL = "INSERT INTO DB.DBA.indexstatistics "
-                    + "(type, \"date\") "
-                    + "VALUES "
-                    + "('" + type + "', '" + date + "')";
+        String insertSQL = "INSERT INTO DB.DBA.indexstatistics "
+                + "(type, \"date\") "
+                + "VALUES "
+                + "('" + type + "', '" + date + "')";
 
         insertedRows = dbService.doSQLUpdate(insertSQL);
       }
