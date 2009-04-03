@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<catalogue xml:lang="da">
+  <message key="add">Tilføje</message>
+  <message key="added">Tilføjet</message>
+  <message key="addedit">Tilføje/Redigere</message>
+  <message key="addpublisher">Tilføje udgiver</message>
+  <message key="addrelation">Tilføje relation</message>
+
+  <message key="addskrivefeil">Tilføje skrivefejl</message>
+  <message key="addsynonym">Tilføje synonym</message>
+  <message key="addtitle">Tilføje titel</message>
+  <message key="admin.accepteddate">Godkendt</message>
+  <message key="admin.approvedby">Godkendt af</message>
+  <message key="admin.intro">På denne side kan du administrere emner, ressourcer, brugere og udgivere. Vælg hvilken del af Sublima du vil administrere fra lænkerne til venstre.</message>
+
+  <message key="admin.linkcheck.gone">Ressourcen er permanent borte</message>
+  <message key="admin.linkcheck.inactive">Inaktiv pga vedvarende problemer</message>
+  <message key="admin.linkcheck.manual">Tjekkes manuelt på grund af problemer med tilkobling på det aktuelle tidspunkt</message>
+  <message key="admin.login">Login</message>
+  <message key="admin.login.failed">Fejl ved indlogning</message>
+  <message key="admin.logout">Log ud</message>
+
+  <message key="admin.posteddate">Indsendt</message>
+  <message key="admin.publisher.resources">Ressourcer tilknyttet udgiveren</message>
+  <message key="admin.topic.usedby">Ressourcer tilknyttet emnet</message>
+  <message key="administration">administration</message>
+  <message key="adv.approved">Godkendt af</message>
+  <message key="adv.audience">Målgruppe</message>
+
+  <message key="adv.dateAccepted">Godkendt Dato ÅÅÅÅ-MM-DD</message>
+  <message key="adv.dateSubmitted">Indsendt Dato ÅÅÅÅ-MM-DD</message>
+  <message key="adv.description">Beskrivelse</message>
+  <message key="adv.language">Sprog</message>
+  <message key="adv.mediaType">Medietype</message>
+  <message key="adv.publisher">Udgiver</message>
+
+  <message key="adv.subject">Emne</message>
+  <message key="adv.title">Titel</message>
+  <message key="approve">Godkende</message>
+  <message key="audience">Målgruppe</message>
+  <message key="az.heading">Alfabetisk navigation i emnerne</message>
+  <message key="back">Tilbage</message>
+
+  <message key="button.adv.search">Søg</message>
+  <message key="button.copyasnew">Kopier til ny</message>
+  <message key="button.deletepublisher">Slet udgiver</message>
+  <message key="button.deleterelation">Slet relation</message>
+  <message key="button.deleteresource">Slet ressource</message>
+  <message key="button.deletetopic">Slet emne</message>
+
+  <message key="button.empty">Tøm skema</message>
+  <message key="button.export">Eksporter</message>
+  <message key="button.join">Knytte sammen</message>
+  <message key="button.next">Næste</message>
+  <message key="button.read">Læs ind</message>
+  <message key="button.resource.search">Søg</message>
+
+  <message key="button.savepublisher">Gem udgiver</message>
+  <message key="button.saverelation">Gem relation</message>
+  <message key="button.saveresource">Gem ressource</message>
+  <message key="button.saverole">Gem rolle</message>
+  <message key="button.savethemetopics">Gem valgte tema</message>
+  <message key="button.savetopic">Gem emne</message>
+
+  <message key="button.saveuser">Gem bruger</message>
+  <message key="comment">Kommentar</message>
+  <message key="comments">Kommentarer</message>
+  <message key="comment.received">Kommentaren sendt</message>
+  <message key="comment.deletedok">Kommentaren slettet</message>
+  <message key="comment.deletefailed">Fejl ved sletning af kommentar</message>
+
+  <message key="country">Land</message>
+  <message key="danish">Dansk</message>
+  <message key="date">Dato</message>
+  <message key="delete">Slette</message>
+  <message key="description">Beskrivelse</message>
+  <message key="email">E-post</message>
+
+  <message key="error.generic.message">Der opstod en fejl. Årsagen er højst sandsynligt tegn i søgningen som ikke kunne håndteres.</message>
+  <message key="facets.heading">Vælg afgrænsning</message>
+  <message key="feedback.spam">Ressourcen du foreslår er spærret i vores spam-database</message>
+  <message key="fulldescription">Fuld beskrivelse</message>
+  <message key="id">Id</message>
+  <message key="in.google">i Google</message>
+
+  <message key="inactivate">Inaktivere</message>
+  <message key="instructions.regex">Her kan man bruge regulære udtryk sådan som de er defineret i JavaScript. I det første felt skriver man udtrykket man vil skal matche URLen. I det andet felt hvordan URLn skal omformuleres.</message>
+  <message key="intopics">i emner</message>
+  <message key="inverse">invers</message>
+  <message key="inverseOf">invers af</message>
+  <message key="jointopics">Knytte sammen emner</message>
+
+  <message key="language">Sprog</message>
+  <message key="letter.0-9">0-9</message>
+  <message key="letter.a">A</message>
+  <message key="letter.b">B</message>
+  <message key="letter.c">C</message>
+  <message key="letter.d">D</message>
+
+  <message key="letter.e">E</message>
+  <message key="letter.f">F</message>
+  <message key="letter.g">G</message>
+  <message key="letter.h">H</message>
+  <message key="letter.i">I</message>
+  <message key="letter.j">J</message>
+
+  <message key="letter.k">K</message>
+  <message key="letter.l">L</message>
+  <message key="letter.m">M</message>
+  <message key="letter.n">N</message>
+  <message key="letter.o">O</message>
+  <message key="letter.p">P</message>
+
+  <message key="letter.q">Q</message>
+  <message key="letter.r">R</message>
+  <message key="letter.s">S</message>
+  <message key="letter.t">T</message>
+  <message key="letter.u">U</message>
+  <message key="letter.v">V</message>
+
+  <message key="letter.w">W</message>
+  <message key="letter.x">X</message>
+  <message key="letter.y">Y</message>
+  <message key="letter.z">Z</message>
+  <message key="letter.å">Å</message>
+  <message key="letter.æ">Æ</message>
+
+  <message key="letter.ø">Ø</message>
+  <message key="link">link</message>
+  <message key="linkcheck.run">Tjek lænker! (NB! Kan tage lang tid)</message>
+  <message key="location">Fil</message>
+  <message key="mediatype">Medietype</message>
+  <message key="mediumdescription">medium beskrivelse</message>
+
+  <message key="menu.advancedsearch">Avanceret søgning</message>
+  <message key="menu.az">A-Å</message>
+  <message key="menu.comments">Kommentarer</message>
+  <message key="menu.database">Database</message>
+  <message key="menu.heading">Aktiviteter</message>
+  <message key="menu.join">Knytte sammen</message>
+
+  <message key="menu.link">Tjek lænker</message>
+  <message key="menu.mass">Masseredigering af ressourcernes URL</message>
+  <message key="menu.new">Ny</message>
+  <message key="menu.publisher">Udgivere</message>
+  <message key="menu.relations">Relationer</message>
+  <message key="menu.resource">Ressourcer</message>
+
+  <message key="menu.roles">Roller</message>
+  <message key="menu.search">Søg</message>
+  <message key="menu.showall">Vis alle</message>
+  <message key="menu.stats">Statistik</message>
+  <message key="menu.suggested">Foreslåede</message>
+  <message key="menu.theme">Tema</message>
+
+  <message key="menu.tips">Foreslå ny ressource</message>
+  <message key="menu.topic">Emner</message>
+  <message key="menu.user">Brugere</message>
+  <message key="more">mere</message>
+  <message key="name">Navn</message>
+  <message key="newurl">ny URL</message>
+
+  <message key="norwegian">Norsk</message>
+  <message key="oldurl">gammel URL</message>
+  <message key="oneway">envejs</message>
+  <message key="password">Kodeord</message>
+  <message key="publisher">Udgiver</message>
+  <message key="publisher.deletedok">Udgiver slettet</message>
+
+  <message key="publisher.deletefailed">Fejl ved sletning af udgiver</message>
+  <message key="publisher.exists">En udgiver med dette navn findes allerede.</message>
+  <message key="publisher.nodeletehasresources">Udgiveren har tilknyttede ressourcer. Erstat udgiver på disse ressourcer.</message>
+  <message key="publisher.noname">Udgiver skal angives</message>
+  <message key="publisher.saveerror">Fejl ved lagring af ny udgiver</message>
+  <message key="publisher.saveok">Lagring af ny udgiver lykkedes</message>
+
+  <message key="publisher.updated">Udgiver opdateret</message>
+  <message key="publisher.updatefailed">Fejl ved opdatering af udgiver</message>
+  <message key="publishers">Udgivere</message>
+  <message key="regex">regulært udtryk</message>
+  <message key="relation">Relation</message>
+  <message key="relation.deleted.error">Fejl ved sletning af relation</message>
+
+  <message key="relation.deleted.ok">Relation slettet</message>
+  <message key="relation.validation.titleblank">Relationen skal have en titel</message>
+  <message key="relations">Relationer</message>
+  <message key="relationtype">Relationstype</message>
+  <message key="remove">Fjern</message>
+  <message key="removed">Fjernet</message>
+
+  <message key="repeat">Gentag</message>
+  <message key="replaceurlwithuri">Erstat med URI</message>
+  <message key="resource">Ressource</message>
+  <message key="resource.choosepublisher">Vælg udgiver fra drop-down listen, eller lad den være tom og skriv ind navnet på den nye udgiver i tekstfeltet herunder</message>
+  <message key="resource.deletedok">Ressourcen slettet</message>
+  <message key="resource.deletefailed">Fejl ved sletning af ressource</message>
+
+  <message key="resource.resourceadded">Ny ressouce lagt til</message>
+  <message key="resource.saveerror">Fejl ved lagring af ressource</message>
+  <message key="resource.sendcomment">Send en kommentar vedrørende denne ressource</message>
+  <message key="resource.updated">Ressource opdateret</message>
+  <message key="resource.url.blank">URL kan ikke være blank</message>
+  <message key="resource.url.invalid">URL-en giver en ugyldig statuskode. Vennligst kontroller URL.</message>
+
+  <message key="resource.usercomments">Brugernes kommentarer</message>
+  <message key="resourceasnew">Mærk som ny</message>
+  <message key="resources">Ressourcer</message>
+  <message key="resources.heading">Ressourcer</message>
+  <message key="rights">Rettigheder</message>
+  <message key="role">Rolle</message>
+
+  <message key="role.update.failed">Fejl ved opdatering af rolle</message>
+  <message key="role.updated">Rolle opdateret</message>
+  <message key="roles">Roller</message>
+  <message key="search">Søg</message>
+  <message key="search.boolean.and">OG</message>
+  <message key="search.boolean.or">ELLER</message>
+
+  <message key="search.exactmatch">Eksakt træf</message>
+  <message key="search.externalresources">Inkluder eksterne ressourcer</message>
+  <message key="search.for">Søg efter</message>
+  <message key="search.nohits">Vi fandt desværre ingen netsider om dette, men aktuelle emner  findes i listen til højre.</message>
+  <message key="search.noresources">Vi har desværre ingen netsider om dette emnet, men relaterede emner findes i listen til højre.</message>
+  <message key="search.numberofhits">Antal træf</message>
+
+  <message key="search.refine">Dit søg giver for mange træf. Vælg heller et emne fra listen til højre eller forsøg med at søge med flere end et ord.</message>
+  <message key="search.result.hastopic">har emne</message>
+  <message key="search.result.publishedby">Publiceret af</message>
+  <message key="search.sortby">Sorter efter</message>
+  <message key="search.sortby.date">Dato</message>
+  <message key="search.sortby.relevance">Relevans</message>
+
+  <message key="search.submit">Søg</message>
+  <message key="sender">Afsender</message>
+  <message key="setlanguageto">Angiv sprog</message>
+  <message key="setthemetopics">Angiv tema</message>
+  <message key="shortdescription">Kort beskrivelse</message>
+  <message key="status">Status</message>
+
+  <message key="sublima.footer">Et fri programvareprojekt med støtte af <a href="http://www.abm-utvikling.no/">ABM Utvikling</a> og <a href="http://www.computas.com/">Computas AS</a>, 2008</message>
+  <message key="suggested">Foreslået</message>
+  <message key="swedish">Svensk</message>
+  <message key="symmetric">Symmetrisk</message>
+
+  <message key="synonym">Synonym</message>
+  <message key="text">Tekst</message>
+  <message key="tips.error">Der opstod en fejl. Kontroller alle felterne og forsøg på nyt.</message>
+  <message key="tips.heading"><h2>Fandt du ikke hvad du søgte?</h2><br/><p>Giv os gerne tips om ressourcer du synes vi mangler.</p></message>
+  <message key="tips.invalidurl">Fejl ved angivet URL. Venligst kontroller at lænken fungerer.</message>
+  <message key="tips.linkerror">Fejl ved angivet URL. Venligst kontroller at lænken fungerer.</message>
+
+  <message key="tips.received">Dit tips er modtaget</message>
+  <message key="tips.resourceexists">Ressourcen du foreslog findes allerede</message>
+  <message key="tips.submit">Send ind</message>
+  <message key="tips.suggestedtopics">Forslag til emner på ressourcen</message>
+  <message key="tips.thanks">Tak for tipset!</message>
+  <message key="title">Titel</message>
+
+  <message key="topconcept">Hovedemne</message>
+  <message key="topic">Emne</message>
+  <message key="topic.commonname">Fælles navn</message>
+  <message key="topic.deleted.error">Fejl ved sletning af emne</message>
+  <message key="topic.deleted.ok">Emne slettet</message>
+  <message key="topic.exists">Et emne med denne titel og URI findes allerede</message>
+
+  <message key="topic.heading">Emne</message>
+  <message key="topic.merged.failed">Der opstod en fejl ved sammenknytningen</message>
+  <message key="topic.merged.ok">Emnerne er sammenknyttet</message>
+  <message key="topic.navigation">Navigation</message>
+  <message key="topic.related">Relaterede emner</message>
+  <message key="topic.relation.saved">Ny relationstype lagret</message>
+
+  <message key="topic.relation.saveerror">Fejl ved lagring af ny relationstype</message>
+  <message key="topic.save.error">Fejl ved lagring af emne</message>
+  <message key="topic.save.ok">Nyt emne tilføjet</message>
+  <message key="topic.theme">Tema</message>
+  <message key="topic.theme.error">Fejl ved mærkning af tema</message>
+  <message key="topic.theme.ok">Emnerne sat som tema</message>
+
+  <message key="topic.updated">Emne opdateret</message>
+  <message key="topic.validation.rolestatus">Du har ikke rettigheder til at gemme et emne med denne status</message>
+  <message key="topic.validation.titleblank">Emnets titel kan ikke være blank</message>
+  <message key="topics">Emner</message>
+  <message key="topics.heading">Emner</message>
+  <message key="topics.theme">Tema</message>
+
+  <message key="type">Type</message>
+  <message key="typo">Skrivefejl</message>
+  <message key="upload.instructions">Her kan du vælge hvilke filer som skal overføres til databasen. Vælg filen ved at trykke Browse... og angiv rigtig formattype.<br/></message>
+  <message key="url">URL</message>
+  <message key="user">Bruger</message>
+  <message key="user.deleteprivilege">Du har ikke rettigheder til at inaktivere en bruger</message>
+
+  <message key="user.login.failed">Der opstod en fejl ved indtastning af kodeord. Kontroller alle felterne og forsøg igen.</message>
+  <message key="user.name.blank">Navn kan ikke være blank</message>
+  <message key="user.norole">En rolle skal vælges</message>
+  <message key="user.password.blank">Kodeordsfelterne kan ikke være blanke, og kodeordet må være ens i begge felter</message>
+  <message key="user.password.equal">Kodeordet må være ens i begge felter</message>
+  <message key="user.save.error">Fejl ved lagring af bruger</message>
+
+  <message key="user.update.failed">Fejl ved opdatering af bruger</message>
+  <message key="user.updated">Bruger opdateret</message>
+  <message key="user.username.blank">E-post (brugernavn) kan ikke være blank</message>
+  <message key="username">Brugernavn</message>
+  <message key="users">Brugere</message>
+  <message key="validation.comment.isspam">E-postadressen er registreret som kilde for spam</message>
+
+  <message key="validation.comment.nocomment">Kommentarfeltet må være udfyldt</message>
+  <message key="validation.comment.noemail">E-postadresse må angives</message>
+  <message key="validation.nostatus">Der må vælges en status</message>
+  <message key="validation.providedurlok">Angivet URL godkendt</message>
+  <message key="validation.resource.exists">En ressource med denne URI findes allerede</message>
+  <message key="validation.resource.notitle">Ressourcen mangler titel</message>
+
+  <message key="validation.resource.notopic">Der må vælges mindst et emne</message>
+  <message key="validation.role.statusnotallowed">Du har ikke rettigheder til at gemme et emne med denne status</message>
+  <message key="validation.statuschoice">Der må vælges en status</message>
+  <message key="validation.topic.notitle">Emnet mangler titel</message>
+  <message key="validation.topic.resourceempty">En eller flere ressourcer er tilknyttet dette emne. Venligst fjern alle relationer til emnet, og forsøg igen.</message>
+  <message key="validation.url.errorcode">Denne ressourcens URI giver en statuskode som betyder at den ikke er OK.</message>
+
+  <message key="validation.url.novalue">URL kan ikke være blank</message>
+  <message key="validation.urlexists">Angivet URL findes allerede</message>
+  <message key="validation.user.new.existingusername">En bruger med dette brugernavn findes allerede</message>
+  <message key="validation.user.new.nopassword">Et nyt kodeord må angives</message>
+  <message key="validation.user.new.passworddontmatch">Kodeordet skal være ens i begge felter</message>
+  <message key="registeredby">Registreret af</message>
+
+  <message key="lastapprovedby">Sidst godkendt af</message>
+  <message key="classification">Klassifikationskode</message>
+  <message key="button.index">Indeks</message>
+  <message key="menu.index">Indeks</message>
+  <message key="index.type">Type</message>
+  <message key="lastRun">Sidst kørt</message>
+
+  <message key="letter.ä">Ä</message>
+  <message key="letter.ö">Ö</message>
+
+  <message key="tips.resourcenotitle">En tittel må angis før tipset kan sendes</message><!-- MÅ OVERSETTES -->
+  <message key="publisher.notitle">En tittel må angis</message><!-- MÅ OVERSETTES -->  
+</catalogue>
