@@ -150,7 +150,7 @@
         <tr>
           <td></td>
           <td>
-            <input type="submit" value="Send inn"/>
+            <input type="submit" value="tips.submit" i18n:attr="value"/>
           </td>
         </tr>
       </table>
