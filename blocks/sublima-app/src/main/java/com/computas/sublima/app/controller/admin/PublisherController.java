@@ -243,6 +243,7 @@ public class PublisherController implements StatelessAppleController {
    *
    * @param res - AppleResponse
    * @param req - AppleRequest
+   * @param messages messages originated in other methods
    */
   private void showPublishersIndex(AppleResponse res, AppleRequest req, String messages) {
 
