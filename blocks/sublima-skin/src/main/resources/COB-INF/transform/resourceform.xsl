@@ -140,11 +140,11 @@
 
           <select class="selectmultiple" id="temppublisher" multiple="multiple">
             <xsl:for-each select="./c:publishers/rdf:RDF/foaf:Agent">
-              <xsl:sort lang="{$interface-language}" select="./foaf:name[@xml:lang=$interface-language]"/>
+              <xsl:sort lang="{$interface-language}" select="./foaf:name"/>
               <xsl:if test="not(./@rdf:about = /c:page/c:content/c:resourcedetails/c:resource/rdf:RDF/sub:Resource/dct:publisher/@rdf:resource)">
-                <xsl:if test="./foaf:name[@xml:lang=$interface-language]">
+                <xsl:if test="./foaf:name">
                   <option value="{./@rdf:about}">
-                    <xsl:value-of select="./foaf:name[@xml:lang=$interface-language]"/>
+                    <xsl:value-of select="./foaf:name"/>
                   </option>
                 </xsl:if>
               </xsl:if>
