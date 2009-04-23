@@ -188,6 +188,8 @@ public class FeedbackController implements StatelessAppleController {
 
     if ("".equalsIgnoreCase(email)) {
       validationMessages.append("<c:message><i18n:text key=\"validation.comment.noemail\">uoversatt</i18n:text></c:message>\n");
+    } else if (!adminService.validateEmail(email)) {
+      validationMessages.append("<c:message><i18n:text key=\"validation.comment.noemail\">uoversatt</i18n:text></c:message>\n");  
     }
 
     if ("".equalsIgnoreCase(comment.trim())) {

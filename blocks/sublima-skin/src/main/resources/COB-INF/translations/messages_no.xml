@@ -262,7 +262,7 @@
   <message key="users">Brukere</message>
   <message key="validation.comment.isspam">E-postadressen angitt er registrert som kilde for spam</message>
   <message key="validation.comment.nocomment">Kommentarfeltet må være utfylt</message>
-  <message key="validation.comment.noemail">E-postadresse må angis</message>
+  <message key="validation.comment.noemail">En gyldig e-postadresse må angis</message>
   <message key="validation.nostatus">En status må velges</message>
   <message key="validation.providedurlok">Angitt URL godkjent</message>
   <message key="validation.resource.exists">En ressurs med denne URI finnes fra før</message>

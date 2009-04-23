@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * A class to support the administration of Sublima
@@ -1329,5 +1331,16 @@ public class AdminService {
 
     return results;
 
+  }
+
+  public boolean validateEmail(String email) {
+//Set the email pattern string
+    Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+
+    //Match the given string with the pattern
+    Matcher m = p.matcher(email);
+
+    //check whether match is found
+    return m.matches();
   }
 }

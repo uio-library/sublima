@@ -306,7 +306,7 @@
   <message key="validation.comment.isspam">E-postadressen er registreret som kilde for spam</message>
 
   <message key="validation.comment.nocomment">Kommentarfeltet må være udfyldt</message>
-  <message key="validation.comment.noemail">E-postadresse må angives</message>
+  <message key="validation.comment.noemail">En gyldig e-postadresse må angives</message>
   <message key="validation.nostatus">Der må vælges en status</message>
   <message key="validation.providedurlok">Angivet URL godkendt</message>
   <message key="validation.resource.exists">En ressource med denne URI findes allerede</message>

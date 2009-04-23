@@ -262,7 +262,7 @@
   <message key="users">Användare</message>
   <message key="validation.comment.isspam">E-postadressen är registrerad i spamspärren</message>
   <message key="validation.comment.nocomment">Kommentarfältet måste vara ifyllt</message>
-  <message key="validation.comment.noemail">E-postadress måste anges</message>
+  <message key="validation.comment.noemail">En giltig e-postadress måste anges</message>
   <message key="validation.nostatus">Status måset väljas</message>
   <message key="validation.providedurlok">Angiven URL godkänd</message>
   <message key="validation.resource.exists">En resurs med denna URI finns redan</message>
