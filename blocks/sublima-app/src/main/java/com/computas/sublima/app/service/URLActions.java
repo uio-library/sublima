@@ -120,7 +120,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
    */
   public String getCode() {
     if (ourcode != null) {
-      logger.debug("getCode() has allready thrown exception ---> " + url.toString());
+      logger.debug("getCode() has already thrown exception ---> ");
       return ourcode;
     }
 
