@@ -76,7 +76,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
         logger.debug("SPARQLdispatcher connected to the triplestore.");
         long connecttime = System.currentTimeMillis();
         con = (HttpURLConnection) u.openConnection();
-        if ("SELECT".equals(queryType) || "ASK".equals(queryType)) {
+        if ("SELECT".equals(queryType)) {
           con.setRequestProperty("Accept", "application/sparql-results+xml");
         }
 
