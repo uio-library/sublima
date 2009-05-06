@@ -370,15 +370,11 @@ PVJ: Made the file UTF-8
        <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about and c:page/c:mode = 'topic'">
          <xsl:call-template name="messages"/>
           <div id="topicdescription">
-            <h3><i18n:text key="topic.heading">Emne</i18n:text></h3>
-            <dl>
-              <dt>
-                <xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/> <xsl:if test="/c:page/c:loggedin = 'true'"> - <a href="{$baseurl}/admin/emner/emne?uri={/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about}{$aloc}">[Edit]</a> </xsl:if>
-              </dt>
-              <dd>
+            <!--h3><i18n:text key="topic.heading">Emne</i18n:text></h3-->
+            <h3><xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/></h3> <xsl:if test="/c:page/c:loggedin = 'true'"> - <a href="{$baseurl}/admin/emner/emne?uri={/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about}{$aloc}">[Edit]</a> </xsl:if>
+            <p>
                 <xsl:value-of disable-output-escaping="yes" select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:definition"/>
-              </dd>
-            </dl>
+            </p>
           </div>
         </xsl:if>
 
