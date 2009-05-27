@@ -339,16 +339,26 @@ PVJ: Made the file UTF-8
 		              <!-- Generer et google søk -->     
 		              <a>
 		                  <xsl:attribute name="href">
-		                      <xsl:text>http://www.google.com/search?hl=</xsl:text>
-		                      <xsl:value-of select="$interface-language"/>
-		                      <xsl:text>&amp;q=</xsl:text>
+		                      <xsl:text>http://no.wikipedia.org/w/index.php?title=Spesial%3ASearch&amp;search=</xsl:text>
 		                      <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/>
-		                      <xsl:text>&amp;btnG=Google-søk</xsl:text>
+		                      <xsl:text>&amp;fulltext=Søk</xsl:text>
                           </xsl:attribute>
 		                  <i18n:text key="search.for">Søk etter</i18n:text><xsl:text> '</xsl:text>
 		                  <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/> 
 		                  <xsl:text>' </xsl:text> 
-		                  <i18n:text key="in.google">i Google</i18n:text>
+		                  <i18n:text key="in.wikipedia">i Wikipedia</i18n:text>
+		              </a>
+		              <br/>
+		             <!-- Generer et SNL-søk -->     
+		              <a>
+		                  <xsl:attribute name="href">
+		                      <xsl:text>http://www.snl.no/.search?query=</xsl:text>
+		                      <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/>
+                          </xsl:attribute>
+		                  <i18n:text key="search.for">Søk etter</i18n:text><xsl:text> '</xsl:text>
+		                  <xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/> 
+		                  <xsl:text>' </xsl:text> 
+		                  <i18n:text key="in.snl">i Store norske leksikon</i18n:text>
 		              </a>
 		              <br/>
 		   </xsl:if>
@@ -371,7 +381,20 @@ PVJ: Made the file UTF-8
          <xsl:call-template name="messages"/>
           <div id="topicdescription">
             <!--h3><i18n:text key="topic.heading">Emne</i18n:text></h3-->
-            <h3><xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/></h3> <xsl:if test="/c:page/c:loggedin = 'true'"> - <a href="{$baseurl}/admin/emner/emne?uri={/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about}{$aloc}">[Edit]</a> </xsl:if>
+            <h3><xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+            <xsl:if test="/c:page/c:loggedin = 'true'"> - <a href="{$baseurl}/admin/emner/emne?uri={/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about}{$aloc}">[Edit]</a> </xsl:if></h3>
+            <xsl:if test="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]">
+            <p>
+				<xsl:text>(</xsl:text>
+				<xsl:for-each select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]">
+					<xsl:value-of select="."/>
+					<xsl:if test="position() !=last()">
+						<xsl:text>, </xsl:text>
+					</xsl:if>
+				</xsl:for-each>
+				<xsl:text>)</xsl:text>
+            </p>
+            </xsl:if>
             <p>
                 <xsl:value-of disable-output-escaping="yes" select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:definition"/>
             </p>
@@ -497,15 +520,17 @@ PVJ: Made the file UTF-8
 		<!--when one topic is in focus-->
 		<div name="panel-nav" style="border:0px solid black">
 		<xsl:if test="c:page/c:mode = 'topic'">
-		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
+		  <h3><i18n:text key="seealso">Se også</i18n:text></h3>
 		  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
 		    <xsl:with-param name="role">this-param</xsl:with-param>
 		  </xsl:apply-templates>
 		</xsl:if>
 
 		<!--more than one topic-->
+		
 		<xsl:if test="c:page/c:mode = 'search-result'">
-		  <h3><i18n:text key="topic.navigation">Navigering</i18n:text></h3>
+		<xsl:if test="c:page/c:navigation/rdf:RDF//skos:Concept">
+		  <h3><i18n:text key="topics">Emner</i18n:text></h3>
 		  <ul>
 		    <xsl:for-each select="c:page/c:navigation/rdf:RDF//skos:Concept">
 		      <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
@@ -514,6 +539,7 @@ PVJ: Made the file UTF-8
 		      </li>
 		    </xsl:for-each>
 		  </ul>
+		  </xsl:if>
 		</xsl:if>
 		<xsl:text> </xsl:text> <!-- avoid empty div -->
 		</div>

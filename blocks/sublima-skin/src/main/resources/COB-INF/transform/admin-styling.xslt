@@ -178,7 +178,7 @@
   <xsl:template name="publisherlist">
     <ul>
       <xsl:for-each select="c:page/c:content/c:publisherlist/rdf:RDF/foaf:Agent">
-         <xsl:sort lang="{$interface-language}" select="./foaf:name"/>
+         <xsl:sort select="./foaf:name"/>
         <li>
           <a>
             <xsl:attribute name="href"><xsl:value-of select="$baseurl"/>/admin/utgivere/utgiver?uri=<xsl:value-of select="./@rdf:about"/><xsl:value-of

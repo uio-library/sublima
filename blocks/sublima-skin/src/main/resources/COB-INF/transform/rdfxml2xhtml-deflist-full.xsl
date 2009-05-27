@@ -29,9 +29,9 @@
     <!-- issue: a & is left.... -->
     <xsl:param name="gen-req">
     <xsl:choose>
-	<xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=short')">
+	<!-- xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=short')">
 	  <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, 'res-view=short'),  substring-after(/c:page/c:facets/c:request/@requesturl, 'res-view=short'))"/>
-	</xsl:when>
+	</xsl:when -->
 	<xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=full')">
 	  <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, 'res-view=full'),  substring-after(/c:page/c:facets/c:request/@requesturl, 'res-view=full'))"/>
 	</xsl:when>
@@ -46,7 +46,7 @@
 	</xsl:param>
     
     
-    <a>
+    <!-- a>
        <xsl:attribute name="href">
          <xsl:choose>
            <xsl:when test="not(contains(/c:page/c:facets/c:request/@requesturl, '?'))">
@@ -58,7 +58,7 @@
          </xsl:choose>
        </xsl:attribute>
        <i18n:text key="shortdescription">short description</i18n:text>
-    </a>    
+    </a-->    
     
     <a>
        <xsl:attribute name="href">

@@ -30,8 +30,8 @@
     <xsl:param name="role"/>
     <!-- uri is the URI of the concept we are on -->
     <xsl:variable name="uri" select="@rdf:about"/>
-    <div class="skos:Concept">
-      <p>
+	<div class="skos:Concept">
+    <p>
 	<!-- The following deals mostly with the labels of Semantic
 	     Relations, not the labels of the concepts.
 	     First, we will find the label of relation that is a
@@ -73,28 +73,17 @@
 
 	<xsl:if test="$role!='this-param'">
 	  <xsl:text>: </xsl:text>
+	  <a href="{$uri}.html{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
 	</xsl:if>
 
-
-	<xsl:choose>
-	  <!-- The main concept, e.g. the concept of the page we're on. -->
-	  <xsl:when test="$role='this-param'">
-	    <h4><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></h4>
-	  </xsl:when>
-
-	  <!-- or any other concept, synonyms, semantic relations, etc. -->
-	  <xsl:otherwise>
-	    <a href="{$uri}.html{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
-	  </xsl:otherwise>
-	</xsl:choose>
       </p>
 
       <!-- Synonyms -->
-      <xsl:if test="$role='this-param' and skos:altLabel[@xml:lang=$interface-language]">
+      <!--xsl:if test="$role='this-param' and skos:altLabel[@xml:lang=$interface-language]">
 	<p>
 	  <i18n:text key="synonym">Synonym</i18n:text>: <xsl:value-of select="skos:altLabel[@xml:lang=$interface-language]"/>
 	</p>
-      </xsl:if>
+      </xsl:if-->
 
       <!-- Now, run through all nodes that has skos:Concept as child
 	   node. These will be nodes that this concept has a relation

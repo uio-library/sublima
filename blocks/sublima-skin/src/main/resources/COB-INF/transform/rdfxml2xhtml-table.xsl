@@ -26,87 +26,94 @@
     <table>
       
       <tr>
-	<th colspan="2" scope="col">
+	<td colspan="2" scope="col">
 	  <xsl:apply-templates select="sub:Resource/dct:title" mode="external-link"/> <xsl:if test="../../c:loggedin = 'true'"> - <a href="{$baseurl}/admin/ressurser/edit?uri={url:encode(sub:Resource/@rdf:about)}{$aloc}">[Edit]</a> </xsl:if>
-    </th>
+    </td>
       </tr>
       <tr>
-	<th scope="row">
+	<td scope="row">
     <i18n:text key="search.result.publishedby">Publisert av</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:publisher" mode="external-link" />
 	</td>
       </tr>
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <i18n:text key="topics">Emner</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:subject"/>
 	</td>
       </tr>
       <tr>
-	<th scope="row">
-	  <i18n:text key="description">Beskrivelse</i18n:text>
-	</th>
+	<td scope="row" valign="top">
+	  <i18n:text key="description">Beskrivelse</i18n:text>:
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:description"/>
 	</td>
       </tr>
+    <xsl:if test="../../c:loggedin = 'true'">
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <i18n:text key="admin.approvedby">Redaksjonelt godkjent av</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/sub:lastApprovedBy"/>
 	</td>
       </tr>
+    </xsl:if>
+    <xsl:if test="../../c:loggedin = 'true'">
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <i18n:text key="admin.posteddate">Innsendt</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:dateSubmitted"/>
 	</td>
       </tr>
-     
+     </xsl:if>
+     <xsl:if test="../../c:loggedin = 'true'">
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <i18n:text key="admin.accepteddate">Akseptert</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:dateAccepted"/>
 	</td>
       </tr>
+      </xsl:if>
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <i18n:text key="language">Språk</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:language"/>
 	</td>
       </tr>
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <i18n:text key="type">Type</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:type"/>
 	</td>
       </tr>
+      <xsl:if test="../../c:loggedin = 'true'">
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <i18n:text key="status">Status</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/wdr:describedBy"/>
 	</td>
       </tr>
+      </xsl:if>
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <i18n:text key="audience">Målgruppe</i18n:text>:
-	</th>
+	</td>
 	<td>
 	  <xsl:apply-templates select="sub:Resource/dct:audience" />
 	</td>

@@ -37,6 +37,14 @@
     <a href="{../@rdf:about}"><xsl:value-of select="."/></a>
   </xsl:template>
   
+  <xsl:template match="dct:title" mode="description-link">
+    <a href="{../dct:identifier/@rdf:resource}.html{$qloc}"><i18n:text key="descriptionlink"/></a>
+  </xsl:template>
+  
+    <!--xsl:template match="dct:title" mode="show-external-link">
+    <a href="{../@rdf:about}"><xsl:value-of select="../@rdf:about"/></a>
+  </xsl:template-->
+  
   <xsl:template match="dct:description">
     <xsl:value-of select="." disable-output-escaping="yes"/>
   </xsl:template>

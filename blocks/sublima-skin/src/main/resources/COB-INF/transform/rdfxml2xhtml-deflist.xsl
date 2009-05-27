@@ -28,9 +28,9 @@
     <!-- issue: a & is left.... -->
     <xsl:param name="gen-req">
     <xsl:choose>
-	<xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=short')">
+	<!--xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=short')">
 	  <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, 'res-view=short'),  substring-after(/c:page/c:facets/c:request/@requesturl, 'res-view=short'))"/>
-	</xsl:when>
+	</xsl:when-->
 	<xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=full')">
 	  <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, 'res-view=full'),  substring-after(/c:page/c:facets/c:request/@requesturl, 'res-view=full'))"/>
 	</xsl:when>
@@ -46,7 +46,7 @@
     
     
 
-    <a>
+    <!-- a>
        <xsl:attribute name="href">
          <xsl:choose>
            <xsl:when test="not(contains(/c:page/c:facets/c:request/@requesturl, '?'))">
@@ -57,7 +57,7 @@
            </xsl:otherwise>
          </xsl:choose>
        </xsl:attribute>
-       <i18n:text key="shortdescription">short description</i18n:text></a>
+       <i18n:text key="shortdescription">short description</i18n:text></a -->
     <xsl:text>  </xsl:text>    
 <!--
     <a>
@@ -122,15 +122,16 @@
         
 
 	  <dt>
-	    <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+	    <xsl:apply-templates select="./dct:title" mode="external-link"/>
 	  </dt>
 	<dd>
-	  <div style="font-size:small"><i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
+	  <div style="font-size:small">
+	    <i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
 	    <xsl:apply-templates select="dct:publisher"/>
 	    <xsl:text> </xsl:text>
-	    <xsl:apply-templates select="./dct:dateAccepted"/>
+	    <!--xsl:apply-templates select="./dct:dateAccepted"/-->
 	  </div>
-	  <xsl:apply-templates select="./dct:description"/>
+	  <xsl:apply-templates select="./dct:description"/><xsl:text> (</xsl:text><xsl:apply-templates select="./dct:title" mode="description-link"/><xsl:text>)</xsl:text><p/>
 	</dd>
       </xsl:for-each>
     </dl>

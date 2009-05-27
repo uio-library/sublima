@@ -17,7 +17,7 @@
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
 
   <xsl:param name="interface-language">no</xsl:param>
-  <xsl:param name="max_facets">4</xsl:param>
+  <xsl:param name="max_facets">10</xsl:param>
 
   <xsl:template match="rdf:RDF" mode="facets">
     <xsl:variable name="baseurlparams">
@@ -41,7 +41,21 @@
     </xsl:variable>
     
     <div class="facets">
+
+ <xsl:if test="sub:Resource/dct:publisher">
+     <div class="facet">
+       <i18n:text key="publisher">Utgiver</i18n:text>
+       <ul>
+	 <xsl:apply-templates select="sub:Resource/dct:publisher" mode="facets">
+	   <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+	    <xsl:sort lang="{$interface-language}" select="foaf:Agent/foaf:name"/>
+	 </xsl:apply-templates> 
+       </ul>
+     </div>
+   </xsl:if>
+
    <div class="facet">
+   
    <i18n:text key="language">Språk</i18n:text>
    <xsl:if test="sub:Resource/dct:language">
     <ul>
@@ -178,6 +192,20 @@ test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]"
       <xsl:with-param name="this-label" select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
       <xsl:with-param name="uri" select="$uri"/>
       <xsl:with-param name="count"  select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:language[@rdf:resource=$uri])+1"/>
+      <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+ 
+    </xsl:call-template>
+  </xsl:template>
+  
+    <xsl:template match="dct:publisher" mode="facets">
+    <xsl:param name="baseurlparams"/>
+    <xsl:variable name="uri" select="./foaf:Agent/@rdf:about"/>
+    <xsl:call-template name="facet-field">
+      <xsl:with-param name="max-facets-more">6</xsl:with-param>
+      <xsl:with-param name="this-field">dct:publisher</xsl:with-param>
+      <xsl:with-param name="this-label" select="./foaf:Agent/foaf:name"/>
+      <xsl:with-param name="uri" select="$uri"/>
+      <xsl:with-param name="count" select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:publisher[@rdf:resource=$uri])+1"/>
       <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
  
     </xsl:call-template>
