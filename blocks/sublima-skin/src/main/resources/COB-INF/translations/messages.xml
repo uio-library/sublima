@@ -65,13 +65,16 @@
   <message key="date">Dato</message>
   <message key="delete">Slette</message>
   <message key="description">Beskrivelse</message>
+  <message key="descriptionlink">Mer informasjon...</message>
   <message key="email">E-post</message>
   <message key="error.generic.message">En feil oppsto. Årsaken er høyst sannsynlig tegn i søket som ikke kunne håndteres.</message>
   <message key="facets.heading">Velg avgrensning</message>
   <message key="feedback.spam">Ressursen du sendte inn er markert i vår spam-database. Vennligst kontakt administrator.</message>
-  <message key="fulldescription">Full beskrivelse</message>
+  <message key="fulldescription">Detaljert beskrivelse</message>
   <message key="id">Id</message>
   <message key="in.google">i Google</message>
+  <message key="in.snl">i Store norske leksikon</message>
+  <message key="in.wikipedia">i Wikipedia</message>
   <message key="inactivate">Inaktivere</message>
   <message key="instructions.regex">Her kan man bruke regulære uttrykk slik det er definert av JavaScript. I det første feltet skriver man inn uttrykket man ønsker skal matche URLen. I det andre feltet hvordan URLen	skal omformes.</message>
   <message key="intopics">i emner</message>
@@ -113,7 +116,7 @@
   <message key="linkcheck.run">Kjør lenkesjekk (NB! Kan ta lang tid)</message>
   <message key="location">Fil</message>
   <message key="mediatype">Mediatype</message>
-  <message key="mediumdescription">medium beskrivelse</message>
+  <message key="mediumdescription">Kort beskrivelse</message>
   <message key="menu.advancedsearch">Avansert søk</message>
   <message key="menu.az">A-Å</message>
   <message key="menu.comments">Kommentarer</message>
@@ -199,6 +202,7 @@
   <message key="search.sortby.date">Dato</message>
   <message key="search.sortby.relevance">Relevans</message>
   <message key="search.submit">Søk</message>
+  <message key="seealso">Se også</message>
   <message key="sender">Avsender</message>
   <message key="setlanguageto">Sett språk til</message>
   <message key="setthemetopics">Sette tema</message>
@@ -291,6 +295,6 @@
   <message key="letter.ä">Ä</message>
   <message key="letter.ö">Ö</message>
   <message key="tips.resourcenotitle">En tittel må angis før tipset kan sendes</message>
-  <message key="publisher.notitle">En tittel må angis</message>  
+  <message key="publisher.notitle">En tittel må angis</message>
 </catalogue>
 
