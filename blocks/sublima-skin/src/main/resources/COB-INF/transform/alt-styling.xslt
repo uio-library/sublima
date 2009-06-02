@@ -39,6 +39,7 @@ PVJ: Made the file UTF-8
   <xsl:import href="a-z.xsl"/>
   <xsl:import href="set-lang.xsl"/>
   <xsl:import href="advancedsearch.xsl"/>
+  <xsl:import href="statiskinnhold.xsl"/>
 
   <xsl:param name="baseurl"/>
   <xsl:param name="querystring"/>
@@ -155,17 +156,17 @@ PVJ: Made the file UTF-8
 	 <div class="col1" style="border:0px dotted red;">
 
 		<!-- xsl:call-template name="debug"/ -->
-
-	
 		
 		<!-- A-Z -->
+       <xsl:if test="not(c:page/c:innhold)">
 		<div name="panel-az" style="border:0px solid lightgray">
 		<xsl:apply-templates select="c:page" mode="a-z"/>                
         </div>
+       </xsl:if>
 		
 		<!-- Search -->
-		<!-- Search is shown when advanced search is not -->	
-		<xsl:if test="not(c:page/c:advancedsearch)">
+		<!-- Search is shown when advanced search is not, and when there are no static content -->	
+		<xsl:if test="not(c:page/c:advancedsearch) and not(c:page/c:innhold)">
 
       <div name="panel-search" style="border:0px solid brown">
 
@@ -297,6 +298,13 @@ PVJ: Made the file UTF-8
 		  precondition:
 		-->
 		<xsl:apply-templates select="c:page/c:login" mode="login"/>
+
+       <!-- Static content -->
+       <xsl:if test="/c:page/c:innhold">
+         <div>
+            <xsl:apply-templates select="/c:page/c:innhold"/>
+         </div>
+       </xsl:if>
 		
 		
 		<!-- 
