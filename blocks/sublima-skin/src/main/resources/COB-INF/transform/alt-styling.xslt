@@ -234,11 +234,17 @@ PVJ: Made the file UTF-8
 		      <i18n:text key="search.sortby">Sorter etter</i18n:text>
 
           <select id="sort" name="sort">
-            <option value="sub:relevance">
+            <!--option value="sub:relevance">
               <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'sub:relevance'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
               </xsl:if>
               <i18n:text key="search.sortby.relevance">Relevans</i18n:text>
+            </option-->
+            <option value="dct:title">
+              <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:title'">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+              </xsl:if>
+              <i18n:text key="title">Tittel</i18n:text>
             </option>
             <option value="dct:dateAccepted">
               <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:dateAccepted'">
@@ -246,12 +252,7 @@ PVJ: Made the file UTF-8
               </xsl:if>
               <i18n:text key="search.sortby.date">Dato</i18n:text>
             </option>
-            <option value="dct:title">
-              <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:title'">
-                <xsl:attribute name="selected">selected</xsl:attribute>
-              </xsl:if>
-              <i18n:text key="title">Tittel</i18n:text>
-            </option>
+
           </select>
 		    </fieldset>
 		  </form>
@@ -281,7 +282,6 @@ PVJ: Made the file UTF-8
 		    Her kommer avansert søk dersom denne er angitt
 		-->
 		<xsl:apply-templates select="c:page/c:advancedsearch" mode="advancedsearch"/>
-		
 		
 		
 		<!-- 
