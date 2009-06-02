@@ -121,47 +121,49 @@
      
     </table>
     <br/>
-    <p><i18n:text key="resource.sendcomment">Send inn en kommentar angående denne ressursen</i18n:text></p>
+    <div class="more"><a href="javascript:void(0);showHide('collapse');"><i18n:text key="resource.sendcomment">Send inn en kommentar angående denne ressursen</i18n:text></a></div>
 
-    <xsl:if test="/c:page/c:content/c:messages/c:messages/c:message">
-      <ul>
-        <xsl:for-each select="/c:page/c:content/c:messages/c:messages/c:message">
-          <li>
-            <xsl:value-of select="."/>
-            <br/>
-          </li>
-        </xsl:for-each>
-      </ul>
-    </xsl:if>
-    
-    <form action="{$baseurl}/resourcecomment" method="GET">
-        <input type="hidden" name="uri" value="{sub:Resource/@rdf:about}"/>
-        <input type="hidden" name="resource" value="{sub:Resource/dct:identifier/@rdf:resource}"/>
-      <table>
-        <tr>
-          <td align="right">
-            <label for="email"><i18n:text key="email">E-post</i18n:text></label>
-          </td>
-          <td>
-            <input id="email" type="text" name="email" size="40" value="{/c:page/c:content/c:comment/c:comment/c:email}"/>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">
-            <label for="comment"><i18n:text key="comment">Kommentar</i18n:text></label>
-          </td>
-          <td>
-            <textarea id="comment" name="comment" rows="6" cols="40"><xsl:value-of select="/c:page/c:content/c:comment/c:comment/c:commentcontent"/><xsl:text> </xsl:text></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            <input type="submit" value="tips.submit" i18n:attr="value"/>
-          </td>
-        </tr>
-      </table>
-    </form>
+    <div class="collapse" style="display: none;">
+        <xsl:if test="/c:page/c:content/c:messages/c:messages/c:message">
+          <ul>
+            <xsl:for-each select="/c:page/c:content/c:messages/c:messages/c:message">
+              <li>
+                <xsl:value-of select="."/>
+                <br/>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </xsl:if>
+
+        <form action="{$baseurl}/resourcecomment" method="GET">
+            <input type="hidden" name="uri" value="{sub:Resource/@rdf:about}"/>
+            <input type="hidden" name="resource" value="{sub:Resource/dct:identifier/@rdf:resource}"/>
+          <table>
+            <tr>
+              <td align="right">
+                <label for="email"><i18n:text key="email">E-post</i18n:text></label>
+              </td>
+              <td>
+                <input id="email" type="text" name="email" size="40" value="{/c:page/c:content/c:comment/c:comment/c:email}"/>
+              </td>
+            </tr>
+            <tr>
+              <td align="right">
+                <label for="comment"><i18n:text key="comment">Kommentar</i18n:text></label>
+              </td>
+              <td>
+                <textarea id="comment" name="comment" rows="6" cols="40"><xsl:value-of select="/c:page/c:content/c:comment/c:comment/c:commentcontent"/><xsl:text> </xsl:text></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <input type="submit" value="tips.submit" i18n:attr="value"/>
+              </td>
+            </tr>
+          </table>
+        </form>
+    </div>
   </xsl:template>
 
 
