@@ -16,8 +16,8 @@
 
       <map:serializer name="xhtml"
                       src="org.apache.cocoon.serialization.XMLSerializer"
-                      mime-type="text/html; charset=UTF-8"
-              >
+                      mime-type="text/html; charset=UTF-8">
+        
         <map:doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</map:doctype-public>
         <map:doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</map:doctype-system>
         <map:encoding>UTF-8</map:encoding>
@@ -289,6 +289,13 @@
         <map:call function="com.computas.sublima.app.controller.admin.TopicController">
           <map:parameter name="mode" value="a-z"/>
           <map:parameter name="submode" value="a-z"/>
+          <map:parameter name="interface-language" value="{cookie:language}"/>
+        </map:call>
+      </map:match>
+
+      <map:match pattern="portal/*">
+        <map:call function="com.computas.sublima.app.controller.ContentController">
+          <map:parameter name="mode" value="{1}"/>
           <map:parameter name="interface-language" value="{cookie:language}"/>
         </map:call>
       </map:match>
