@@ -16,6 +16,10 @@
   <bean name="com.computas.sublima.app.controller.RedirectController"
         class="com.computas.sublima.app.controller.RedirectController" scope="prototype"/>
 
+  <bean name="com.computas.sublima.app.controller.ContentController"
+        class="com.computas.sublima.app.controller.ContentController" scope="prototype">
+    <property name="appMan" ref="org.apache.cocoon.auth.ApplicationManager"/>
+  </bean>
 
   <bean name="com.computas.sublima.app.controller.admin.FeedbackController"
         class="com.computas.sublima.app.controller.admin.FeedbackController" scope="prototype">
