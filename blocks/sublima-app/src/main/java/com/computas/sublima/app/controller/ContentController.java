@@ -26,7 +26,7 @@ public class ContentController implements StatelessAppleController {
     logger.trace("ContentController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
     logger.trace("ContentController: Language from service is " + language);
 
-    res.sendPage("xml/" + mode, null);
+    res.sendPage("static/" + mode, null);
 
   }
 
