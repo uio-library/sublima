@@ -58,7 +58,7 @@
   </xsl:template>
   
   <xsl:template match="dct:audience">
-    <xsl:value-of select="./dct:AgentClass/rdfs:label"/>
+    <xsl:value-of select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
   </xsl:template>
 
   <xsl:template match="dct:dateAccepted|dct:dateSubmitted">
