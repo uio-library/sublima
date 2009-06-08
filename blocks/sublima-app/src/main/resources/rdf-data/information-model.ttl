@@ -221,14 +221,14 @@ sub:isSubjectOf a owl:ObjectProperty ;
 skos:narrower 	a 			owl:ObjectProperty ;
 		rdfs:domain skos:Concept;
 		rdfs:range  skos:Concept;
-		rdfs:label		"Smalere"@no ; 
+		rdfs:label		"Mer spesifikke emner"@no ; 
 		rdfs:label		"Narrower"@en ; 
 		rdfs:subPropertyOf	skos:semanticRelation . 
  
 skos:broader 	a 			owl:ObjectProperty ;
 		rdfs:domain skos:Concept;
 		rdfs:range  skos:Concept;
-		rdfs:label		"Bredere"@no ; 
+		rdfs:label		"Mer generelle emner"@no ; 
 		rdfs:label		"Broader"@en ; 
 		rdfs:subPropertyOf	skos:semanticRelation ; 
         owl:inverseOf skos:narrower .
@@ -237,7 +237,7 @@ skos:related  	a 			owl:ObjectProperty ;
         rdfs:domain skos:Concept;
         rdfs:range  skos:Concept;
 		a                   owl:SymmetricProperty ;
-		rdfs:label		    "Relatert"@no ; 
+		rdfs:label		    "Andre aktuelle emner"@no ; 
 		rdfs:label		    "Related"@en ; 
 		rdfs:subPropertyOf	skos:semanticRelation .
 
