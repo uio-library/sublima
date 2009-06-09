@@ -8,16 +8,15 @@
   
   <xsl:template name="lang-text">
     <xsl:param name="url"/>
-    <a lang="no" hreflang="no" href="{$url}no"><i18n:text key="norwegian">Norsk</i18n:text></a>,
-    <a lang="da" hreflang="da" href="{$url}da"><i18n:text key="danish">Dansk</i18n:text></a>, 
-    <a lang="sv" hreflang="sv" href="{$url}sv"><i18n:text key="swedish">Svenska</i18n:text></a>, 
+    <a lang="no" hreflang="no" href="{$url}no"><i18n:text key="norwegian">Norsk</i18n:text></a>&#160;&#160;
+    <a lang="da" hreflang="da" href="{$url}da"><i18n:text key="danish">Dansk</i18n:text></a> &#160;&#160;
+    <a lang="sv" hreflang="sv" href="{$url}sv"><i18n:text key="swedish">Svenska</i18n:text></a> 
   </xsl:template>
 
   
   <xsl:template name="set-langs"> 
     <xsl:param name="baseurl"/>
     <div class="set-langs">
-      <i18n:text key="setlanguageto">Sett språk til</i18n:text>:
       <xsl:choose>
 	<xsl:when test="not(/c:page/c:facets/c:request/@paramcount) or /c:page/c:facets/c:request/@paramcount = 0">
 	  <xsl:call-template name="lang-text">

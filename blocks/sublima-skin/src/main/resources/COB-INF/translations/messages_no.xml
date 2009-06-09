@@ -131,7 +131,7 @@
   <message key="menu.stats">Statistikk</message>
   <message key="menu.suggested">Foreslåtte</message>
   <message key="menu.theme">Tema</message>
-  <message key="menu.tips">Tips oss om en ny ressurs</message>
+  <message key="menu.tips">Forslag</message>
   <message key="menu.topic">Emner</message>
   <message key="menu.user">Brukere</message>
   <message key="more">mer</message>
@@ -183,8 +183,8 @@
   <message key="role.updated">Rolle oppdatert</message>
   <message key="roles">Roller</message>
   <message key="search">Søk</message>
-  <message key="search.boolean.and">OG</message>
-  <message key="search.boolean.or">ELLER</message>
+  <message key="search.boolean.and">og</message>
+  <message key="search.boolean.or">eller</message>
   <message key="search.exactmatch">Eksakt treff</message>
   <message key="search.externalresources">Inkluder eksterne ressurser</message>
   <message key="search.for">Søk etter</message>
@@ -289,4 +289,6 @@
   <message key="letter.ö">Ö</message>
   <message key="tips.resourcenotitle">En tittel må angis før tipset kan sendes</message>
   <message key="publisher.notitle">En tittel må angis</message>
+  <message key="limit.search">Avgrens søk</message>
+  <message key="browseTheme.header">Kategorier</message>
 </catalogue>

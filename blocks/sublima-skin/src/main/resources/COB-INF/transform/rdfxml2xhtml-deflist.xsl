@@ -68,7 +68,7 @@
     <xsl:text> </xsl:text>    
       
 -->
-      <a>
+		<!--a>
        <xsl:attribute name="href">
          <xsl:choose>
            <xsl:when test="not(contains(/c:page/c:facets/c:request/@requesturl, '?'))">
@@ -79,7 +79,7 @@
            </xsl:otherwise>
          </xsl:choose>
        </xsl:attribute>
-       <i18n:text key="fulldescription">full description</i18n:text></a>
+       <i18n:text key="fulldescription">full description</i18n:text></a-->
     
     
     

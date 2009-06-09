@@ -5,20 +5,21 @@ body {
   border: 0; /* This removes the border around the viewport in old versions of IE */
   width: 100%;
   background: #fff;
-  min-width:
-  600px; /* Minimum width of layout - remove line if not required */
-/* The min-width property does not work in old versions of Internet Explorer */
-  font-size:
-  90%;
+  min-width:  1200px; /* Minimum width of layout - remove line if not required */
+  font-size:  12px;
+  font-family: Verdana;
+}
+form {
+  padding: 0;
+  margin: 0;
 }
 
 a {
-  color: #369;
+  color: #0072bc;
 }
 
 a:hover {
-  color: #fff;
-  background: #369;
+  color: #0072bc;
   text-decoration: none;
 }
 
@@ -38,20 +39,330 @@ img {
 
 fieldset {
   border: 0px solid white;
+  padding: 0;
+  margin: 0;
+}
+.floatLeft {
+  float:left;
+}
+.floatRight {
+  float:right;
+}
+.clearer {
+	line-height: 0; /* ie */
+	clear: both;
 }
 
 /* Header styles */
 #header {
-  clear: both;
-  float: left;
+  width: 100%;
+  background-color: #89c0d7;
+  height: 120px;
+}
+#headerLogo {
+  float:left;
+}
+.headerImg {
+   margin:20px 0 0 15px;
+}
+#headerText {
+  display:inline;
+  color: #ffffff;
+  font-weight:normal;
+  margin-left:10px;
+  font-size: 20px;
+}
+#topMenu {
+ float:left;
+ height: 100%;
+ margin-left:25px;
+}
+#headerSpacer {
+  height: 76px;
   width: 100%;
 }
-
-#header {
-  border-bottom: 1px solid #000;
+.MenuItem {
+  background-color: #409ebd;
+  text-align: center;
+  height:40px;
+  float:left;
+  width: 150px;
+  margin-left: 10px;
+  border:2px solid #fff;
+  line-height: 40px;
+  color: #fff;
+  font-size: 16px;
+  font-weight:bold;
+}
+.MenuItem a {
+  color:#fff;
+  text-decoration: none;
+}
+#textSize {
+  float: right;
+  margin-top: 40px;
+  padding: 5px;
+}
+#textSizeLarge {
+  font-size:  14px;
+  padding: 5px;
+}
+#textSizeMedium {
+   font-size:  12px;
+   background-color: #c8dce6;
+   padding: 5px;
+}
+#textSizeSmall {
+  font-size:  10px;
+  padding: 5px;
+}
+.langBar {
+  margin: 15px 15px 0 0;
+  float:right;
+}
+.langBar a {
+  text-decoration: none;
+  color: #000000;
+}
+.langBar a:hover {
+  text-decoration: underline;
+  color: #000000;
+  background: none;
+}
+.langBar a:active {
+  text-decoration: underline;
+  color: #000000;
+  background: none;
+}
+.spacer {
+  height: 40px;
+  width: 100%;
+}
+/*content header*/
+#contentLeftMiddleHeader {
+  float: left;
+  height: 100%;
+  width: 75%;
+}
+#contentLeftHeader {
+  height: 100%;
+  float:left;
+  width: 33%;
+  background-image: url(lefttop.png);
+  background-position: right;
+  background-repeat:no-repeat;
+  background-color:#d3dfe5;
+}
+#contentMiddleHeader {
+  height: 100%;
+  float:left;
+  width: 67%;
+  background-color: #ffffff; /*background color middle col */
+}
+#contentRightHeader {
+  height: 100%;
+  float:left;
+  width:25%;
+  background-image: url(righttop.png);
+  background-position: left;
+  background-repeat:no-repeat;
+  background-color:#c0d2db;
+}
+#panel-az {
+  text-align: center;
+  padding: 5px 15px 0 15px;
+}
+#panel-az a {
+  margin-left: 10px; 
+}
+/*content*/
+#content {
+  width:100%;
+   background-color:#c0d2db;
+}
+#colmidleft {
+  background-color: #d3dfe5; /*Background color left col*/
+  width: 75%;
+  float: left;
+}
+#colleft {
+  float:left;
+  width:33%; 
+}
+#colmid {
+  float:left;
+  width:67%;
+  background-color: #ffffff; /*background color middle col */
+  height:100%;
+  min-height: 500px;
+}
+#colright {
+  float:left;
+  width:25%;
+}
+.col1 {
+  margin: 0 10px;
 }
 
-#header p,
+#panel-search {
+  padding: 0 30px;
+}
+#keyword {
+  background-color: #fffef8;
+  margin: 0 10px 0 0;
+  border-color: #2d588a;
+  width: 400px;
+  float:left;
+  display: block;
+}
+#btnSearch {
+  margin-right: 10px;
+}
+.radio {
+  margin-left: 20px;
+}
+#sortingpanel {
+  margin-left: 60px;
+}
+#sort {
+  margin-left: 10px;
+  width: 145px;
+}
+.subHeading {
+  padding:0;
+  margin: 0 10px 0 40px;
+  font-size:25px;
+}
+.facetHeading {
+ background-color: #89c0d7;
+ padding: 5px 20px 5px 40px;
+ margin-top: 10px;
+}
+.facetHeading h3 {
+  margin:0;
+  padding:0;
+  float:left;
+  font-size: 14px;
+}
+.facetHeading img {
+  float: right;
+  cursor: pointer;
+  margin: 0;
+}
+.facet ul {
+  list-style: none;
+  margin: 0;
+  padding: 5px 0 5px 40px;
+}
+.facet li {
+ margin-bottom: 5px;
+}
+#panel-nav ul {
+  list-style: none;
+}
+#panel-nav li {
+
+}
+.facet a {
+  text-decoration: none;
+}
+#panel-nav a {
+  text-decoration: none;
+}
+#resourceHeading {
+  width: 100%;
+  line-height:26px;
+  background-color:#89C0D7;
+}
+#numberOfHits {
+  font-size:14px;
+  margin-left: 40px;
+  font-weight:bold;
+  float:left;
+}
+#describtion {
+  float:left;
+  margin-left: 40px;
+}
+.rssImg {
+  float: right;
+  margin: 0;
+  border-style: none;
+}
+#navi {
+  margin-left: 40px;
+}
+#panel-results {
+  background-color: #f4f8fa;
+  padding-top: 10px;
+}
+#panel-results dl {
+  margin: 0;
+}
+
+#browseHeader {
+  background-color:#89C0D7;
+  line-height:26px;
+  width:100%;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+#browseHeaderText {
+  margin-left: 15px;
+}
+#panel-topic-details 
+{
+  background-color: #f4f8fa;
+  
+  }
+#panel-topic-details ul {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  list-style-type: none;
+}
+#panel-topic-details li {
+  line-height: 1.5em;
+}
+li.themeCol1 {
+  width:32%;
+  float:left;
+  margin-left: 1%;
+}
+li.themeCol2 {
+  width:32%;
+  float:left;
+  margin-left: 1%;
+}
+li.themeCol0 {
+  width:32%;
+  float:left;
+  margin-left: 1%;
+}
+
+#footer {
+  margin-top: 10px;
+  background-color: #c8dce6;
+  height: 30px;
+}
+#leftFooter {
+  width: 49%;
+  float:left;
+  background-color: #89c0d7;
+  text-align:center;
+  height:100%;
+ }
+#rightFooter {
+    float:right;
+    width: 49%;
+    background-color: #89c0d7;
+    padding: 0 10px;
+    text-align:center;
+    height:100%;
+}
+/*#header p,
   #header h1,
   #header h2 {
   padding: .4em 15px 0 15px;
@@ -103,191 +414,8 @@ fieldset {
 #header ul li a span {
   display: block;
 }
-
+*/
 /* 'widths' sub menu */
-#layoutdims {
-  clear: both;
-  background: #eee;
-  border-top: 4px solid #000;
-  margin: 0;
-  padding: 6px 15px !important;
-  text-align: right;
-}
 
-/* column container */
-.colmask {
-  position: relative; /* This fixes the IE7 overflow hidden bug */
-  clear: both;
-  float: left;
-  width: 100%; /* width of whole page */
-  overflow: hidden; /*hidden; /* This chops off any overhanging divs */
-}
-
-/* common column settings */
-.colright,
-  .colmidleft,
-  .colleft {
-  float: left;
-  width: 100%; /* width of page */
-  position: relative;
-}
-
-.col1,
-  .col2,
-  .col3 {
-  float: left;
-  position: relative;
-  padding: 0 0 1em 0;
-  /* no left and right padding on columns, we just make them narrower instead
-only padding top and bottom is included here, make it whatever value you need */
-  overflow: visible;
-}
-
-/* 3 Column settings */
-.threecol {
-  background: #eee; /* right column background colour */
-}
-
-.threecol .colmidleft {
-  right: 25%; /* width of the right column */
-  background: #fff; /* center column background colour */
-}
-
-.threecol .colleft {
-  right: 50%; /* width of the middle column */
-  background: #f4f4f4; /* left column background colour */
-}
-
-.threecol .col1 {
-  width: 46%; /* width of center column content (column width minus padding on either side) */
-  left: 102%; /* 100% plus left padding of center column */
-}
-
-.threecol .col2 {
-  width: 21%; /* Width of left column content (column width minus padding on either side) */
-  left: 31%;
-  /* width of (right column) plus (center column left and right padding) plus (left column left
- padding) */
-}
-
-.threecol .col3 {
-  width: 21%; /* Width of right column content (column width minus padding on either side) */
-  left: 85%;
-  /* Please make note of the brackets here:
-(100% - left column width) plus (center column left and right padding) plus (left column left and right
-padding) plus (right column left padding) */
-}
-
-/* 2 Column settings */
-
-.twocol {
-  background: #fff; /* right column background colour */
-}
-
-.twocol .colleft {
-  right: 75%; /* width of the middle column */
-  background: #f4f4f4; /* left column background colour */
-}
-
-.twocol .col1 {
-  width: 71%; /* width of left column content (column width minus padding on either side) */
-  left: 102%; /* 100% plus left padding of center column */
-}
-
-.twocol .col2 {
-  width: 21%; /* Width of left column content (column width minus padding on either side) */
-  left: 5%;
-  /* width of (right column) plus (center column left and right padding) plus (left column left
- padding) */
-}
-
-/* Footer styles */
-#footer {
-  clear: both;
-  float: left;
-  width: 100%;
-  border-top: 1px solid #000;
-}
-
-#footer p {
-  padding: 10px;
-  margin: 0;
-}
-
-/* Validation messages */
-p.validationmessage {
-  font-size: medium;
-  font-weight: bold;
-  color: blue;
-}
-
-.navigation {
-  background: #FF0000;
-}
-
-.facets {
-  width: 100%;
-  overflow: hidden;
-  background: #F7F7F7;
-
-}
-
-/*
-.facets ul {
-     max-height:3em; 
-}
-*/
-
-/*  
-.facets ul:hover {
-  background: red;
-  max-height:100%;
-} 
-*/
-
-.facets a:active {
-  background: red;
-}
-
-.facet {
-  float: left;
-  padding: 1em;
-
-}
-
-.facet ul {
-  padding-left: 1em;
-}
-
-.activities {
-  background: #0000FF;
-}
-
-.resources {
-  background: #00FFFF;
-}
-
-.resources dd {
-  padding-bottom: .2em;
-}
-
-#topicdescription {
-  background: #F7F7F7;
-}
-
-.selectmultiplebutton {
-  display: block;
-  border: 1px solid #aaa;
-  text-decoration: none;
-  background-color: #fafafa;
-  color: #123456;
-  margin: 2px;
-  clear: both;
-}
-
-.selectmultiple {
-  width: 400px;
-  height: 200px;
-}
 
 

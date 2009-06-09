@@ -62,7 +62,7 @@
        <i18n:text key="shortdescription">short description</i18n:text>
     </a-->
 
-    <a>
+		<!--a>
       <xsl:attribute name="href">
         <xsl:choose>
           <xsl:when test="not(contains(/c:page/c:facets/c:request/@requesturl, '?'))">
@@ -74,7 +74,7 @@
         </xsl:choose>
       </xsl:attribute>
       <i18n:text key="mediumdescription">medium description</i18n:text>
-    </a>
+    </a-->
 
     <!--
     <a>

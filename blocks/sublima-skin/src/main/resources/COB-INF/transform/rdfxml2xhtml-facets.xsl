@@ -41,11 +41,19 @@
     </xsl:variable>
 
     <div class="facets">
-
+			
       <xsl:if test="sub:Resource/dct:publisher">
-        <div class="facet">
-          <i18n:text key="publisher">Utgiver</i18n:text>
-          <ul>
+				<h2 class="subHeading">
+				<i18n:text key="limit.search">Avgrens søk</i18n:text>
+				</h2>
+				<br/>
+				<div class="facet">
+					<div class="facetHeading">
+						<h3><i18n:text key="publisher">Utgiver</i18n:text></h3>
+						<img id="openClosePublisher" alt="open/close publisher" src="{$baseurl}/images/closefacet.png" onclick="OpenCloseFact('publisherFacets', this);"/>
+						<div class="clearer">&#160;</div>
+					</div>
+						<ul id="publisherFacets">
             <xsl:apply-templates select="sub:Resource/dct:publisher" mode="facets">
               <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
               <xsl:sort lang="{$interface-language}" select="foaf:Agent/foaf:name"/>
@@ -56,10 +64,12 @@
 
       <xsl:if test="sub:Resource/dct:language">
         <div class="facet">
-
-          <i18n:text key="language">Språk</i18n:text>
-
-          <ul>
+					<div class="facetHeading">
+						<h3><i18n:text key="language">Språk</i18n:text></h3>
+						<img id="openCloseLanguage" alt="open/close publisher" src="{$baseurl}/images/closefacet.png" onclick="OpenCloseFact('languageFacets', this);"/>
+						<div class="clearer">&#160;</div>
+					</div>
+          <ul id="languageFacets">
             <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
               <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
               <xsl:sort lang="{$interface-language}" select="lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
@@ -71,8 +81,12 @@
 
       <xsl:if test="sub:Resource/dct:audience">
         <div class="facet">
-          <i18n:text key="audience">Målgruppe</i18n:text>
-          <ul>
+					<div class="facetHeading">
+						<h3><i18n:text key="audience">Målgruppe</i18n:text></h3>
+						<img id="openCloseAudience" alt="open/close publisher" src="{$baseurl}/images/closefacet.png" onclick="OpenCloseFact('audienceFacets', this);"/>
+						<div class="clearer">&#160;</div>
+					</div>	
+          <ul id="audienceFacets">
             <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
               <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
               <xsl:sort lang="{$interface-language}" select="dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
@@ -117,9 +131,13 @@
       <div class="facet">
 
         <!-- sorted by preferred label -->
-        <i18n:text key="topic">Emne</i18n:text>
+				<div class="facetHeading">
+					<h3><i18n:text key="topic">Emne</i18n:text></h3>
+					<img id="openCloseTopic" alt="open/close publisher" src="{$baseurl}/images/closefacet.png" onclick="OpenCloseFact('subjectFacets', this);"/>
+					<div class="clearer">&#160;</div>
+				</div>	
         <xsl:if test="sub:Resource/dct:subject">
-          <ul>
+          <ul id="subjectFacets">
             <xsl:for-each select="/c:page/c:result-list/rdf:RDF//skos:Concept">
               <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
               <xsl:variable name="uri" select="./@rdf:about"/>

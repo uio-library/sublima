@@ -50,35 +50,59 @@
       <script type="text/javascript">var dummy = null;</script>
       <script src="{$baseurl}/styles/jquery.template.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
-          
-    </head>
+			<script src="{$baseurl}/styles/curvycorners.js" type="text/javascript" />
+			<script type="text/javascript">var dummy = null;</script>
+			<script src="{$baseurl}/styles/facts.js" type="text/javascript" />
+			<script type="text/javascript">var dummy = null;</script>
+			<script src="{$baseurl}/styles/textsize.js" type="text/javascript" />
+			<script type="text/javascript">var dummy = null;</script>
+			<script type="text/JavaScript">
+				addEvent(window, 'load', initCorners);
+
+				function initCorners() {
+				var headerMenuSettings = {
+				tl: { radius: 20 },
+				tr: { radius: 20 },
+				bl: { radius: 0 },
+				br: { radius: 0 },
+				antiAlias: true
+				}
+				curvyCorners(headerMenuSettings, ".MenuItem");
+				ChangeTextSize(null, null)
+				}
+			</script>
+		</head>
   </xsl:template>
 
   <xsl:template name="headers">
     <xsl:param name="baseurl"/>
     <div id="header">
-      <img alt="header logo" src="{$baseurl}/images/smil_beta_header.png"/>
-      
-      <h2>Sublima 1.0.0 RC-20 Virtuoso</h2>
-      <div>
-
-	  <a href="{$baseurl}/{$qloc}" class="active">
-	  <i18n:text key="menu.search">Søk</i18n:text></a> ,
-
-	  <a href="{$baseurl}/advancedsearch{$qloc}"><i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
-	  </a> ,
-	  <a href="{$baseurl}/a-z{$qloc}"><i18n:text key="menu.az">A-Å</i18n:text></a>
-      </div>
- 
-      <p id="layoutdims"> 
-	<xsl:call-template name="set-langs">
-	  <xsl:with-param name="baseurl" select="$baseurl"/>
-	</xsl:call-template>
-      </p>
-
-      <p id="layoutdims">
-	<a href="{$baseurl}/login{$qloc}">Admin</a>         
-      </p>
+			<div id="headerLogo">
+				<img alt="header logo" class="headerImg" src="{$baseurl}/images/sublima-logo.png"/>
+				<h1 id="headerText">Emneportalverktøy</h1>
+			</div>
+			<div id="topMenu">
+				<div id="headerSpacer">&#160;</div>
+				<div class="MenuItem">Om portalen</div>
+				<div class="MenuItem">
+					<a href="{$baseurl}/tips{$qloc}">
+						<i18n:text key="menu.tips">Forsalg</i18n:text>
+					</a>
+				</div>
+				<div class="MenuItem">Hjelp</div>
+			</div>
+			
+			<div class="langBar">
+				<xsl:call-template name="set-langs">
+					<xsl:with-param name="baseurl" select="$baseurl"/>
+				</xsl:call-template>
+				<div id="textSize">
+					<a id="textSizeLarge" onclick="ChangeTextSize('14px', this);">A</a>
+					<a id="textSizeMedium" onclick="ChangeTextSize('12px', this);">A</a>
+					<a id="textSizeSmall" onclick="ChangeTextSize('10px', this);">A</a>
+				</div>
+			</div>
+			
     </div>
   </xsl:template>
 
