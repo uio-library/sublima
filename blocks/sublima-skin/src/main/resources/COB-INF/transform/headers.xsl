@@ -56,6 +56,8 @@
 			<script type="text/javascript">var dummy = null;</script>
 			<script src="{$baseurl}/styles/textsize.js" type="text/javascript" />
 			<script type="text/javascript">var dummy = null;</script>
+			<script src="{$baseurl}/styles/calculateHeight.js" type="text/javascript" />
+			<script type="text/javascript">var dummy = null;</script>
 			<script type="text/JavaScript">
 				addEvent(window, 'load', initCorners);
 
@@ -68,7 +70,8 @@
 				antiAlias: true
 				}
 				curvyCorners(headerMenuSettings, ".MenuItem");
-				ChangeTextSize(null, null)
+				ChangeTextSize(null, null);
+				calculateDivHeight();
 				}
 			</script>
 		</head>
