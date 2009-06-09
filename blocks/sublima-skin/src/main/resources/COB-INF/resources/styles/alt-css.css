@@ -178,7 +178,7 @@ fieldset {
 /*content*/
 #content {
   width:100%;
-   background-color:#c0d2db;
+  background-color:#c0d2db;
 }
 #colmidleft {
   background-color: #d3dfe5; /*Background color left col*/
@@ -361,6 +361,65 @@ li.themeCol0 {
     padding: 0 10px;
     text-align:center;
     height:100%;
+}
+
+
+
+/*Admin*/
+
+#adminContentLeftHeader {
+  height: 100%;
+  float:left;
+  width: 25%;
+  background-image: url(lefttop.png);
+  background-position: right;
+  background-repeat:no-repeat;
+  background-color:#d3dfe5;
+  }
+#adminContentMiddleRightHeader {
+  height: 100%;
+  float:left;
+  width: 75%;
+  background-color: #ffffff
+}
+#admincontent{
+    background-color:#d3dfe5;
+   
+}
+#admincolleft {
+  height: 100%;
+  float:left;
+  width: 25%;
+  
+}
+#admincolmidright {
+  height: 100%;
+  float:left;
+  width: 75%;
+  background-color: #ffffff;
+  min-height: 500px;
+}
+
+/* Validation messages */
+p.validationmessage {
+  font-size: medium;
+  font-weight: bold;
+  color: blue;
+}
+
+.selectmultiplebutton {
+  display: block;
+  border: 1px solid #aaa;
+  text-decoration: none;
+  background-color: #fafafa;
+  color: #123456;
+  margin: 2px;
+  clear: both;
+}
+
+.selectmultiple {
+  width: 400px;
+  height: 200px;
 }
 /*#header p,
   #header h1,
