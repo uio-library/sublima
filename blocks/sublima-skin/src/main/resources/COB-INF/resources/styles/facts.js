@@ -9,7 +9,7 @@ function OpenCloseFact(element, sender) {
   } else 
   {
     e.style.display = 'none';
-    sender.src = '{$baseurl}/images/openfacet.png';
+    sender.src = '{$baseurl}/images/openFacet.png';
   }
 
 }

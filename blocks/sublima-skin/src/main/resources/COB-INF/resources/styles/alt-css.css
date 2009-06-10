@@ -78,18 +78,18 @@ fieldset {
  margin-left:25px;
 }
 #headerSpacer {
-  height: 76px;
+  height: 86px;
   width: 100%;
 }
 .MenuItem {
   background-color: #409ebd;
   text-align: center;
-  height:40px;
+  height:30px;
   float:left;
-  width: 150px;
+  width: 120px;
   margin-left: 10px;
   border:2px solid #fff;
-  line-height: 40px;
+  line-height: 30px;
   color: #fff;
   font-size: 16px;
   font-weight:bold;
@@ -173,7 +173,7 @@ fieldset {
   padding: 5px 15px 0 15px;
 }
 #panel-az a {
-  margin-left: 10px; 
+  margin-left: 5px; 
 }
 /*content*/
 #content {
