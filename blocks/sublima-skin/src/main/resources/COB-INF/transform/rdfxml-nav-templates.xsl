@@ -26,32 +26,30 @@
       <i18n:text key="seealso">Se også</i18n:text>
     </h3>
     <div id="navi">   
-      <div class="skosConcept">
 	
-	<xsl:for-each select="/c:page/c:navigation/rdf:RDF/*[rdfs:subPropertyOf/@rdf:resource = 'http://www.w3.org/2004/02/skos/core#semanticRelation']">
-	  <h4><xsl:value-of select="rdfs:label[@xml:lang=$interface-language]"/></h4>
-	  <xsl:variable name="label-uri" select="@rdf:about"/>
-	  <ul>
-	    <xsl:for-each select="/c:page/c:navigation/rdf:RDF/skos:Concept/*">
-	      <!-- The order isn't entirely predictable since multiple
-		   concepts will be pointed to from different relations
-		   <xsl:sort lang="{$interface-language}"
-		   select=".//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
-	      -->
-	      <xsl:choose>
-		<xsl:when test="$label-uri = concat(namespace-uri(.), local-name(.)) and ./@rdf:resource">
-		  <xsl:variable name="concept-uri" select="./@rdf:resource"/>
-		  <xsl:apply-templates select="//skos:Concept[@rdf:about = $concept-uri]" mode="link"/>
-		</xsl:when>
-		<xsl:when test="$label-uri = concat(namespace-uri(.), local-name(.))">
-		  <xsl:apply-templates select="./skos:Concept" mode="link"/>
-		</xsl:when>
-	      </xsl:choose>
-	    </xsl:for-each>
-	  </ul>
-	</xsl:for-each>
+      <xsl:for-each select="/c:page/c:navigation/rdf:RDF/*[rdfs:subPropertyOf/@rdf:resource = 'http://www.w3.org/2004/02/skos/core#semanticRelation']">
+	<h4><xsl:value-of select="rdfs:label[@xml:lang=$interface-language]"/></h4>
+	<xsl:variable name="label-uri" select="@rdf:about"/>
+	<ul>
+	  <xsl:for-each select="/c:page/c:navigation/rdf:RDF/skos:Concept/*">
+	    <!-- The order isn't entirely predictable since multiple
+		 concepts will be pointed to from different relations
+		 <xsl:sort lang="{$interface-language}"
+		 select=".//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+	    -->
+	    <xsl:choose>
+	      <xsl:when test="$label-uri = concat(namespace-uri(.), local-name(.)) and ./@rdf:resource">
+		<xsl:variable name="concept-uri" select="./@rdf:resource"/>
+		<xsl:apply-templates select="//skos:Concept[@rdf:about = $concept-uri]" mode="link"/>
+	      </xsl:when>
+	      <xsl:when test="$label-uri = concat(namespace-uri(.), local-name(.))">
+		<xsl:apply-templates select="./skos:Concept" mode="link"/>
+	      </xsl:when>
+	    </xsl:choose>
+	  </xsl:for-each>
+	</ul>
+      </xsl:for-each>
 	
-      </div>
     </div>
   </xsl:template>
 
