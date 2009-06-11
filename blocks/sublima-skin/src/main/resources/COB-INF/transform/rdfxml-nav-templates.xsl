@@ -12,6 +12,7 @@
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:c="http://xmlns.computas.com/cocoon"
   xmlns="http://www.w3.org/1999/xhtml"
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr"
   >
@@ -30,24 +31,24 @@
     <xsl:param name="role"/>
     <!-- uri is the URI of the concept we are on -->
     <xsl:variable name="uri" select="@rdf:about"/>
-	<div class="skos:Concept">
-    <p>
-	<!-- The following deals mostly with the labels of Semantic
-	     Relations, not the labels of the concepts.
-	     First, we will find the label of relation that is a
-	     direct child node of the node that we are on, e.g. we
-	     have /skos:Concept/skos:broader/skos:Concept, we'd like
-	     the label of skos:broader.
-	     Then, we continue to iterate over all relations that are
-	     not a child node of the current concept.
-	-->
-	<!-- label-uri will contain the URI of the Semantic Relation,
-	i.e. it has to expand elements like skos:related to a full URI -->
-	<xsl:variable name="label-uri"
-		      select="concat(namespace-uri(..),
-			      local-name(..))"/>
-	<!-- Get the label of the Semantic Relation itself, if it
-	     exists -->
+    <!-- The following deals mostly with the labels of Semantic
+	 Relations, not the labels of the concepts.
+	 First, we will find the label of relation that is a
+	 direct child node of the node that we are on, e.g. we
+	 have /skos:Concept/skos:broader/skos:Concept, we'd like
+	 the label of skos:broader.
+	 Then, we continue to iterate over all relations that are
+	 not a child node of the current concept.
+    -->
+    <!-- label-uri will contain the URI of the Semantic Relation,
+	 i.e. it has to expand elements like skos:related to a full URI -->
+    <xsl:variable name="label-uri"
+		  select="concat(namespace-uri(..),
+			  local-name(..))"/>
+    <!-- Get the label of the Semantic Relation itself, if it
+	 exists -->
+    <div class="skos:Concept">
+      <p>
 	<xsl:choose>
 	  <xsl:when test="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]">
 	    <xsl:value-of select="//owl:ObjectProperty[@rdf:about = $label-uri]/rdfs:label[@xml:lang=$interface-language]"/>
@@ -73,7 +74,7 @@
 
 	<xsl:if test="$role!='this-param'">
 	  <xsl:text>: </xsl:text>
-	  <a href="{$uri}.html{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a>
+	 
 	</xsl:if>
 
       </p>
@@ -94,10 +95,40 @@
       for now sorting alphabetically on all the concepts regardless of relation.
       -->
 
-      <xsl:apply-templates select="./*/skos:Concept">
+      
+      <xsl:for-each select="//*[rdfs:subPropertyOf/@rdf:resource = 'http://www.w3.org/2004/02/skos/core#semanticRelation']">
+	<h4><xsl:value-of select="rdfs:label[@xml:lang=$interface-language]"/></h4>
+	<xsl:variable name="label-uri" select="@rdf:about"/>
+	<ul>
+	  <xsl:for-each select="/c:page/c:navigation/rdf:RDF/skos:Concept/*">
+	    <xsl:if test="$label-uri = concat(namespace-uri(.), local-name(.))">
+	      <xsl:apply-templates select="./skos:Concept" mode="link"/>
+	    </xsl:if>
+	  </xsl:for-each>
+	</ul>
+      </xsl:for-each>
+		      
+
+
+
+      <!-- xsl:for-each select="./*/skos:Concept">
+	<xsl:sort lang="{$interface-language}" select="//owl:ObjectProperty[@rdf:about = concat(namespace-uri(..), local-name(..))]/rdfs:label[@xml:lang=$interface-language]"/>
 	<xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
-      </xsl:apply-templates>
+	<li><xsl:value-of select="//owl:ObjectProperty[@rdf:about = concat(namespace-uri(..), local-name(..))]/rdfs:label[@xml:lang=$interface-language]"/> :
+
+	<xsl:value-of select="concat(namespace-uri(..), local-name(..))"/> :
+
+	<xsl:if test="//*[@rdf:about = concat(namespace-uri(..), local-name(..))]">fpoo :</xsl:if>
+	<xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></li>
+      </xsl:for-each -->
+
+
     </div>
 
   </xsl:template>
+
+  <xsl:template match="skos:Concept" mode="link">
+    <li><a href="{@rdf:about}.html{$qloc}"><xsl:value-of select="skos:prefLabel[@xml:lang=$interface-language]"/></a></li>
+  </xsl:template>
+
 </xsl:stylesheet>
