@@ -651,16 +651,11 @@ PVJ: Made the file UTF-8
 				<!--when one topic is in focus-->
 				<div id="panel-nav" style="border:0px solid black">
 					<xsl:if test="c:page/c:mode = 'topic'">
-						<h3 class="subHeading">
-							<i18n:text key="seealso">Se også</i18n:text>
-						</h3>
-						<div id="navi">
-							<xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept">
-								<xsl:with-param name="role">this-param</xsl:with-param>
-							</xsl:apply-templates>
+					  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept"/>
+								
 							<xsl:text> </xsl:text>
 							<!-- avoid empty div -->
-						</div>
+						
 					</xsl:if>
 
 					<!--more than one topic-->
