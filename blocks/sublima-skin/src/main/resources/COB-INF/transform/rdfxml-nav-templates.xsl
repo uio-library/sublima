@@ -33,10 +33,10 @@
 	<ul>
 	  <xsl:for-each select="/c:page/c:navigation/rdf:RDF/skos:Concept/*">
 	    <!-- The order isn't entirely predictable since multiple
-		 concepts will be pointed to from different relations
-		 <xsl:sort lang="{$interface-language}"
-		 select=".//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
-	    -->
+		 concepts will be pointed to from different relations -->
+	    <xsl:sort lang="{$interface-language}"
+		      select=".//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+
 	    <xsl:choose>
 	      <xsl:when test="$label-uri = concat(namespace-uri(.), local-name(.)) and ./@rdf:resource">
 		<xsl:variable name="concept-uri" select="./@rdf:resource"/>
