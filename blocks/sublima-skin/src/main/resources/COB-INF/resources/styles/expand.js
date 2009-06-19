@@ -18,6 +18,33 @@ function showHide(elementclass){
 			myEls[i].style.display = '';
 		} else {
 			myEls[i].style.display = 'none';
-		}
 	}
-} 
+
+	if (document.getElementById("innerMidCol")) {
+	  var height = document.getElementById("innerMidCol").clientHeight;
+	  var colmidleft = document.getElementById("colmidleft");
+	  if (height > 500) {
+	    colmidleft.style.height = height + 'px';
+	  }
+	  else {
+	    colmidleft.style.height = '500px';
+	  }
+	 
+	}
+	}
+}
+function checkExpandComment() {
+
+  if (document.getElementById("commenterror")) {
+    var commenterrorDiv = document.getElementById("commenterror");
+    if (commenterrorDiv.firstChild.attributes == null) {
+      if (document.getElementById("commentDiv")) {
+        var commentDiv = document.getElementById("commentDiv");
+        commentDiv.style.display = "none";
+      }
+      var test = 'asdasf'; commentDiv
+    }
+    var test2 = 'asdasf';
+  }
+
+}

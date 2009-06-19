@@ -151,7 +151,7 @@ PVJ: Made the file UTF-8
      <xsl:with-param name="baseurl" select="$baseurl"/>
       </xsl:call-template>
    
-<body>
+<body onload="checkExpandComment()">
 
 	<xsl:value-of select="$querystring"/>
 	<xsl:call-template name="headers">
@@ -211,7 +211,7 @@ PVJ: Made the file UTF-8
      CENTER COLUMN (col1)
 	 contains: search panel, topic description panel, resource hits 
 	 ###################################################################### -->
-				<div class="col1" style="border:0px dotted red;">
+				<div id="innerMidCol" class="col1" style="border:0px dotted red;">
 
 					<!-- xsl:call-template name="debug"/ -->
 
@@ -413,7 +413,7 @@ PVJ: Made the file UTF-8
 							</xsl:if>
 							<xsl:text> </xsl:text>
 							<!-- avoid empty results -->
-							
+							&#160;
 						</div>
 						<div class="clearer">&#160;</div>
 					</div>
@@ -737,7 +737,7 @@ PVJ: Made the file UTF-8
 		</div>
 		<div class="clearer">&#160;</div>
 	</div> <!-- three column layout end -->
-	
+	<div class="clearer">&#160;</div>
 	
 	<div id="footer">
 		<div id="leftFooter">

@@ -124,6 +124,7 @@ fieldset {
 .langBar {
   margin: 15px 15px 0 0;
   float:right;
+  text-align:right;
 }
 .langBar a {
   text-decoration: none;

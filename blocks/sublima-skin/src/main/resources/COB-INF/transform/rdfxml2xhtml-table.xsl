@@ -150,8 +150,9 @@
       </a>
     </div>
 
-    <div class="collapse" style="display: none;">
-      <xsl:if test="/c:page/c:content/c:messages/c:messages/c:message">
+    <div id="commentDiv" class="collapse">
+			<div id="commenterror">
+			<xsl:if test="/c:page/c:content/c:messages/c:messages/c:message">
         <ul>
           <xsl:for-each select="/c:page/c:content/c:messages/c:messages/c:message">
             <li>
@@ -161,7 +162,8 @@
           </xsl:for-each>
         </ul>
       </xsl:if>
-
+				&#160;
+			</div>
       <form action="{$baseurl}/resourcecomment" method="GET">
         <input type="hidden" name="uri" value="{sub:Resource/@rdf:about}"/>
         <input type="hidden" name="resource" value="{sub:Resource/dct:identifier/@rdf:resource}"/>
