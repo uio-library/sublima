@@ -21,13 +21,13 @@ function showHide(elementclass){
 	}
 
 	if (document.getElementById("innerMidCol")) {
-	  var height = document.getElementById("innerMidCol").clientHeight;
+	  var height = document.getElementById("innerMidCol").offsetHeight;
 	  var colmidleft = document.getElementById("colmidleft");
 	  if (height > 500) {
 	    colmidleft.style.height = height + 'px';
 	  }
 	  else {
-	    colmidleft.style.height = '500px';
+	    colmidleft.style.height = height +'px';
 	  }
 	 
 	}
@@ -42,7 +42,7 @@ function checkExpandComment() {
         var commentDiv = document.getElementById("commentDiv");
         commentDiv.style.display = "none";
       }
-      var test = 'asdasf'; commentDiv
+      var test = 'asdasf';
     }
     var test2 = 'asdasf';
   }

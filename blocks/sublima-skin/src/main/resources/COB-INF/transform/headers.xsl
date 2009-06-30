@@ -83,7 +83,7 @@
 			<div id="headerLogo">
 				<a  href="{$baseurl}/">
 				<img alt="header logo" class="headerImg" src="{$baseurl}/images/sublima-logo.png"/>
-				<h1 id="headerText">Emneportalverktøy</h1>
+				<span id="headerText">Emneportalverktøy</span>
 				</a>
 			</div>
 			<div id="topMenu">
@@ -102,9 +102,9 @@
 					<xsl:with-param name="baseurl" select="$baseurl"/>
 				</xsl:call-template>
 				<div id="textSize">
-					<a id="textSizeLarge" onclick="ChangeTextSize('14px', this);">A</a>
-					<a id="textSizeMedium" onclick="ChangeTextSize('12px', this);">A</a>
-					<a id="textSizeSmall" onclick="ChangeTextSize('10px', this);">A</a>
+					<a id="textSizeLarge" style="cursor:pointer;" onclick="ChangeTextSize('16px', this);">A</a>
+					<a id="textSizeMedium" style="cursor:pointer;" onclick="ChangeTextSize('14px', this);">A</a>
+					<a id="textSizeSmall" style="cursor:pointer;" onclick="ChangeTextSize('12px', this);">A</a>
 				</div>
 			</div>
 			

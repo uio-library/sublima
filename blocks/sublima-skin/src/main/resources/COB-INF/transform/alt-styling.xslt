@@ -220,92 +220,92 @@ PVJ: Made the file UTF-8
 					<xsl:if test="not(c:page/c:advancedsearch) and not(c:page/c:innhold)">
 
 						<div id="panel-search" style="border:0px solid brown">
+							<div id="searchBox">
+								<xsl:call-template name="autocompletion">
+									<xsl:with-param name="baseurl">
+										<xsl:value-of select="$baseurl"/>
+									</xsl:with-param>
+									<xsl:with-param name="interface-language">
+										<xsl:value-of select="$interface-language"/>
+									</xsl:with-param>
+								</xsl:call-template>
 
-							<xsl:call-template name="autocompletion">
-								<xsl:with-param name="baseurl">
-									<xsl:value-of select="$baseurl"/>
-								</xsl:with-param>
-								<xsl:with-param name="interface-language">
-									<xsl:value-of select="$interface-language"/>
-								</xsl:with-param>
-							</xsl:call-template>
+								<form action="{$baseurl}/search-result.html" method="get">
 
-							<form action="{$baseurl}/search-result.html" method="get">
+									<fieldset>
+										<input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
+										<input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
+										<input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
+										<input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+										<input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
+										<input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
+										<input type="hidden" name="prefix" value="pf: &lt;http://jena.hpl.hp.com/ARQ/property#&gt;"/>
+										<xsl:call-template name="hidden-locale-field"/>
+										<input type="hidden" name="wdr:describedBy" value="http://sublima.computas.com/status/godkjent_av_administrator"/>
 
-								<fieldset>
-									<input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
-									<input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
-									<input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
-									<input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
-									<input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
-									<input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
-									<input type="hidden" name="prefix" value="pf: &lt;http://jena.hpl.hp.com/ARQ/property#&gt;"/>
-									<xsl:call-template name="hidden-locale-field"/>
-									<input type="hidden" name="wdr:describedBy" value="http://sublima.computas.com/status/godkjent_av_administrator"/>
-								
-									
-									<input id="keyword" class="searchbox" type="text"
-									 name="searchstring" value="{c:page/c:searchparams/c:searchparams/c:searchstring}"/>
-									<input type="submit" id="btnSearch" value="search.submit" i18n:attr="value"/>
-									<a href="{$baseurl}/advancedsearch{$qloc}">
-										<i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
-									</a>
-									<br/>
-									<br/>
 
-									<xsl:choose>
-										<xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">
-											<input type="radio" class="radio" name="booleanoperator" value="AND"/>
-											<i18n:text key="search.boolean.and">og</i18n:text>
-											<input type="radio" class="radio" name="booleanoperator" value="OR" checked="checked"/>
-											<i18n:text key="search.boolean.or">eller</i18n:text>
-										</xsl:when>
-										<xsl:otherwise>
-											<input type="radio" class="radio" name="booleanoperator" value="AND" checked="checked"/>
-											<i18n:text key="search.boolean.and">og</i18n:text>
-											<input type="radio" class="radio" name="booleanoperator" value="OR" />
-											<i18n:text key="search.boolean.or">eller</i18n:text>
-										</xsl:otherwise>
-									</xsl:choose>
-									<!-- sorting panel -->
-									<!-- updates and submits the search form -->
-									<span id="sortingpanel">
-									<i18n:text key="search.sortby">Sorter etter</i18n:text>
+										<input id="keyword" class="searchbox" type="text"
+										 name="searchstring" value="{c:page/c:searchparams/c:searchparams/c:searchstring}"/>
+										<input type="submit" id="btnSearch" value="search.submit" i18n:attr="value"/>
+										<a href="{$baseurl}/advancedsearch{$qloc}">
+											<i18n:text key="menu.advancedsearch">Avansert søk</i18n:text>
+										</a>
+										<br/>
+										<br/>
 
-									<select id="sort" name="sort">
-										<!--option value="sub:relevance">
+										<xsl:choose>
+											<xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">
+												<input type="radio" class="radio" name="booleanoperator" value="AND"/>
+												<i18n:text key="search.boolean.and">og</i18n:text>
+												<input type="radio" class="radio" name="booleanoperator" value="OR" checked="checked"/>
+												<i18n:text key="search.boolean.or">eller</i18n:text>
+											</xsl:when>
+											<xsl:otherwise>
+												<input type="radio" class="radio" name="booleanoperator" value="AND" checked="checked"/>
+												<i18n:text key="search.boolean.and">og</i18n:text>
+												<input type="radio" class="radio" name="booleanoperator" value="OR" />
+												<i18n:text key="search.boolean.or">eller</i18n:text>
+											</xsl:otherwise>
+										</xsl:choose>
+										<!-- sorting panel -->
+										<!-- updates and submits the search form -->
+										<span id="sortingpanel">
+											<i18n:text key="search.sortby">Sorter etter</i18n:text>
+
+											<select id="sort" name="sort">
+												<!--option value="sub:relevance">
               <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'sub:relevance'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
               </xsl:if>
               <i18n:text key="search.sortby.relevance">Relevans</i18n:text>
             </option-->
-										<option value="dct:title">
-											<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:title'">
-												<xsl:attribute name="selected">selected</xsl:attribute>
-											</xsl:if>
-											<i18n:text key="title">Tittel</i18n:text>
-										</option>
-										<option value="dct:dateAccepted">
-											<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:dateAccepted'">
-												<xsl:attribute name="selected">selected</xsl:attribute>
-											</xsl:if>
-											<i18n:text key="search.sortby.date">Dato</i18n:text>
-										</option>
+												<option value="dct:title">
+													<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:title'">
+														<xsl:attribute name="selected">selected</xsl:attribute>
+													</xsl:if>
+													<i18n:text key="title">Tittel</i18n:text>
+												</option>
+												<option value="dct:dateAccepted">
+													<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:dateAccepted'">
+														<xsl:attribute name="selected">selected</xsl:attribute>
+													</xsl:if>
+													<i18n:text key="search.sortby.date">Dato</i18n:text>
+												</option>
 
-									</select>
-									</span>
-									<br/>
-									<xsl:choose>
-										<xsl:when test="c:page/c:searchparams/c:searchparams/c:exactmatch = 'exactmatch'">
-											<input type="checkbox" class="radio" name="exactmatch" value="exactmatch" checked="checked"/>
-										</xsl:when>
-										<xsl:otherwise>
-											<input type="checkbox" class="radio" name="exactmatch" value="exactmatch"/>
-										</xsl:otherwise>
-									</xsl:choose>
-									<i18n:text key="search.exactmatch">Eksakt ord</i18n:text>
+											</select>
+										</span>
+										<br/>
+										<xsl:choose>
+											<xsl:when test="c:page/c:searchparams/c:searchparams/c:exactmatch = 'exactmatch'">
+												<input type="checkbox" class="radio" name="exactmatch" value="exactmatch" checked="checked"/>
+											</xsl:when>
+											<xsl:otherwise>
+												<input type="checkbox" class="radio" name="exactmatch" value="exactmatch"/>
+											</xsl:otherwise>
+										</xsl:choose>
+										<i18n:text key="search.exactmatch">Eksakt ord</i18n:text>
 
-									<!--xsl:choose>
+										<!--xsl:choose>
 										<xsl:when test="c:page/c:searchparams/c:searchparams/c:deepsearch = 'deepsearch'">
 											<input type="checkbox" name="deepsearch" value="deepsearch" checked="checked"/>
 										</xsl:when>
@@ -317,9 +317,10 @@ PVJ: Made the file UTF-8
 									<br/-->
 
 
-									
-								</fieldset>
-							</form>
+
+									</fieldset>
+								</form>
+							</div>
 						</div>
 						<!-- 
 		  Link to RSS representation of search result 
@@ -688,9 +689,6 @@ PVJ: Made the file UTF-8
             none
         -->
 				<div id="panel-tasks">
-					&#160;
-
-
 					<xsl:choose>
 						<xsl:when test="c:page/c:loggedin = 'true' ">
 							<a href="{$baseurl}/admin/emner/{$qloc}">
@@ -728,6 +726,7 @@ PVJ: Made the file UTF-8
 							<br/>
 						</xsl:when>
 					</xsl:choose>
+					&#160;
 				</div>
 
 

@@ -17,19 +17,19 @@
   
     if (get_cookie('textSizeCookie') != 'null') {
       var cookieSize = get_cookie('textSizeCookie');
-      if (cookieSize == '14px') {
+      if (cookieSize == '16px') {
         document.body.style.fontSize = cookieSize;
         document.getElementById("textSizeLarge").style.background = '#c8dce6';
         document.getElementById("textSizeMedium").style.background = 'none';
         document.getElementById("textSizeSmall").style.background = 'none';
       }
-      if (cookieSize == '12px') {
+      if (cookieSize == '14px') {
         document.body.style.fontSize = cookieSize;
         document.getElementById("textSizeLarge").style.background = 'none';
         document.getElementById("textSizeMedium").style.background = '#c8dce6';
         document.getElementById("textSizeSmall").style.background = 'none';
       }
-      if (cookieSize == '10px') {
+      if (cookieSize == '12px') {
         document.body.style.fontSize = cookieSize;
         document.getElementById("textSizeLarge").style.background = 'none';
         document.getElementById("textSizeMedium").style.background = 'none';

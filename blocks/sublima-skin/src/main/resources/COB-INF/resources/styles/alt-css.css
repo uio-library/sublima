@@ -5,7 +5,7 @@ body {
   border: 0; /* This removes the border around the viewport in old versions of IE */
   width: 100%;
   background: #fff;
-  min-width:  1200px; /* Minimum width of layout - remove line if not required */
+  min-width:  1200px; 
   font-size:  12px;
   font-family: Verdana;
 }
@@ -109,16 +109,16 @@ fieldset {
   padding: 5px;
 }
 #textSizeLarge {
-  font-size:  14px;
+  font-size:  16px;
   padding: 5px;
 }
 #textSizeMedium {
-   font-size:  12px;
-   background-color: #c8dce6; /*backgund color selectet text size, also change color in textsize.js*/
+   font-size:  14px;
    padding: 5px;
 }
 #textSizeSmall {
-  font-size:  10px;
+  font-size:  12px;
+  background-color: #c8dce6; /*backgund color selectet text size, also change color in textsize.js*/
   padding: 5px;
 }
 .langBar {
@@ -178,8 +178,7 @@ fieldset {
   background-color:#c0d2db;  /*background color right col */
 }
 #panel-az {
-  text-align: center;
-  padding: 5px 15px 0 15px;
+  padding: 5px 40px 0 40px;
 }
 #panel-az a {
   margin-left: 5px; 
@@ -216,6 +215,10 @@ fieldset {
 #panel-search {
   padding: 0 30px;
 }
+#searchBox 
+{
+  
+  }
 #keyword {
   background-color: #fffef8; /*background color search box */
   margin: 0 10px 0 0;
@@ -338,22 +341,12 @@ fieldset {
 #panel-topic-details li {
   line-height: 1.5em;
 }
-li.themeCol1 {
+.browseCol {
   width:32%;
-  float:left;
   margin-left: 1%;
-}
-li.themeCol2 {
-  width:32%;
   float:left;
-  margin-left: 1%;
+  margin-bottom: 5px;
 }
-li.themeCol0 {
-  width:32%;
-  float:left;
-  margin-left: 1%;
-}
-
 #footer {
   margin-top: 10px;
   background-color: #c8dce6; /* background color footer*/
@@ -394,9 +387,9 @@ li.themeCol0 {
   width: 75%;
   background-color: #ffffff
 }
-#admincontent{
+#admincontent {
     background-color:#d3dfe5;
-   
+    width: 100%;
 }
 #admincolleft {
   height: 100%;
@@ -433,60 +426,20 @@ p.validationmessage {
   width: 400px;
   height: 200px;
 }
-/*#header p,
-  #header h1,
-  #header h2 {
-  padding: .4em 15px 0 15px;
-  margin: 0;
+#panel-tasks {
+  margin-left: 40px;
 }
-
-#header ul {
-  clear: left;
-  float: left;
-  width: 100%;
-  list-style: none;
-  margin: 10px 0 0 0;
-  padding: 0;
+#fullDescribed th {
+  text-align:left;
+  font-weight:normal;
+  vertical-align:top;
 }
-
-#header ul li {
-  display: inline;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+#fullDescribed td {
+  vertical-align:top;
 }
-
-#header ul li a {
-  display: block;
-  float: left;
-  margin: 0 0 0 1px;
-  padding: 3px 10px;
-  text-align: center;
-  background: #eee;
-  color: #000;
-  text-decoration: none;
-  position: relative;
-  left: 15px;
-  line-height: 1.3em;
+.fullDescribedRow th {
+  width: 110px;
 }
-
-#header ul li a:hover {
-  background: #369;
-  color: #fff;
-}
-
-#header ul li a.active,
-  #header ul li a.active:hover {
-  color: #fff;
-  background: #000;
-  font-weight: bold;
-}
-
-#header ul li a span {
-  display: block;
-}
-*/
-/* 'widths' sub menu */
 
 
 

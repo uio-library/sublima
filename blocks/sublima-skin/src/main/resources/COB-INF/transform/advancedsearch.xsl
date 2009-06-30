@@ -45,20 +45,22 @@
       <table>
         <tr>
           <th scope="row">
-            <label for="title"><i18n:text key="adv.title">Tittel</i18n:text></label>
-          </th>
-          <td>
-            <input id="title" type="text" name="dct:title" size="20"/>
-          </td> 
-        </tr>
-        <tr>
-          <th scope="row">
             <label for="subject"><i18n:text key="adv.subject">Emne</i18n:text></label>
           </th>
           <td>
             <input id="subject" type="text" name="dct:subject/sub:literals" size="20"/>
           </td>
         </tr>
+				<tr>
+					<th scope="row">
+						<label for="title">
+							<i18n:text key="adv.title">Tittel</i18n:text>
+						</label>
+					</th>
+					<td>
+						<input id="title" type="text" name="dct:title" size="20"/>
+					</td>
+				</tr>
         <tr>
           <th scope="row">
             <label for="description"><i18n:text key="adv.description">Beskrivelse</i18n:text></label>

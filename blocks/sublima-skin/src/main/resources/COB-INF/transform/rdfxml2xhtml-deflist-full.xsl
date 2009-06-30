@@ -85,14 +85,17 @@
     </a>
     -->
 
-
+		<div id="fullDescribed">
     <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
       <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
       <br/>
       <table>
 
         <tr>
-          <th colspan="2" scope="col">
+					<th>
+						&#160;
+					</th>
+          <th scope="col">
             <xsl:apply-templates select="./dct:title" mode="external-link"/>
             <xsl:if test="../../../c:loggedin = 'true'">-
               <a href="{$baseurl}/admin/ressurser/edit?uri={url:encode(./@rdf:about)}{$aloc}">[Edit]</a>
@@ -100,7 +103,7 @@
           </th>
         </tr>
         <xsl:if test="./dct:publisher">
-          <tr>
+          <tr class="fullDescribedRow">
             <th scope="row">
               <i18n:text key="search.result.publishedby">Publisert av</i18n:text>:
             </th>
@@ -122,7 +125,7 @@
         <xsl:if test="./dct:description">
           <tr>
             <th scope="row">
-              <i18n:text key="description">Beskrivelse</i18n:text>
+              <i18n:text key="description">Beskrivelse</i18n:text>:
             </th>
             <td>
               <xsl:apply-templates select="./dct:description"/>
@@ -221,7 +224,7 @@
       </table>
 
     </xsl:for-each>
-
+		</div>
   </xsl:template>
 
 

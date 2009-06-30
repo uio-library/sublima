@@ -16,6 +16,7 @@
         version="1.0">
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language"/>
+		
 
   <xsl:template match="c:browse" mode="browse">
     <xsl:if test="./rdf:RDF//skos:Concept/rdfs:label[@xml:lang=$interface-language]|./rdf:RDF//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
@@ -24,21 +25,60 @@
 					<i18n:text key="browseTheme.header">Kategorier</i18n:text>
 				</span>
 			</div>
-			<ul>
-        <xsl:for-each select="./rdf:RDF//skos:Concept/rdfs:label[@xml:lang=$interface-language]|./rdf:RDF//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
-          <xsl:sort lang="{$interface-language}" select="."/>
+			
+			<xsl:variable name="colCount" select="1"></xsl:variable>
+			<div class="browseCol">
+				<ul>
+					<xsl:for-each select="./rdf:RDF//skos:Concept/rdfs:label[@xml:lang=$interface-language]|./rdf:RDF//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
+						<xsl:sort lang="{$interface-language}" select="."/>
+						<xsl:variable name="nodeCount" select="last()"></xsl:variable>
+						<xsl:variable name="col1" select="ceiling($nodeCount div 3)"></xsl:variable>
+						
+						<xsl:if test="number($col1) >= position()" >
+							<li>
+								<a href="{../@rdf:about}.html{$qloc}">
+									<xsl:value-of select="."/>
+								</a>
+							</li>
+						</xsl:if>
+					</xsl:for-each>
+				</ul>
+			</div>
+			<div class="browseCol">
+				<ul>
+					<xsl:for-each select="./rdf:RDF//skos:Concept/rdfs:label[@xml:lang=$interface-language]|./rdf:RDF//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
+						<xsl:sort lang="{$interface-language}" select="."/>
+						<xsl:variable name="nodeCount" select="last()"></xsl:variable>
+						<xsl:variable name="col1" select="ceiling($nodeCount div 3)"></xsl:variable>
+						<xsl:variable name="col2" select="ceiling((($nodeCount - $col1) div 2) + $col1)"></xsl:variable>
 
-          <li>
-						<xsl:attribute name="class">
-							<xsl:value-of select="concat('themeCol', position() mod 3)"/>
-						</xsl:attribute>
-            <a href="{../@rdf:about}.html{$qloc}">
-              <xsl:value-of select="."/>
-            </a>
-          </li>
-
-        </xsl:for-each>
-      </ul>
+						<xsl:if test="position() > number($col1) and number($col2) >= position()">
+							<li>
+								<a href="{../@rdf:about}.html{$qloc}">
+									<xsl:value-of select="."/>
+								</a>
+							</li>
+						</xsl:if>
+					</xsl:for-each>
+				</ul>
+			</div>
+			<div class="browseCol">
+				<ul>
+					<xsl:for-each select="./rdf:RDF//skos:Concept/rdfs:label[@xml:lang=$interface-language]|./rdf:RDF//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
+						<xsl:sort lang="{$interface-language}" select="."/>
+						<xsl:variable name="nodeCount" select="last()"></xsl:variable>
+						<xsl:variable name="col1" select="ceiling($nodeCount div 3)"></xsl:variable>
+						<xsl:variable name="col2" select="ceiling((($nodeCount - $col1) div 2) + $col1)"></xsl:variable>
+						<xsl:if test="position() > number($col2)">
+							<li>
+								<a href="{../@rdf:about}.html{$qloc}">
+									<xsl:value-of select="."/>
+								</a>
+							</li>
+						</xsl:if>
+					</xsl:for-each>
+				</ul>
+			</div>
 			<div class="clearer">&#160;</div>
     </xsl:if>
 

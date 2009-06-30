@@ -17,7 +17,7 @@
                 exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
 
   <xsl:param name="interface-language">no</xsl:param>
-  <xsl:param name="max_facets">10</xsl:param>
+  <xsl:param name="max_facets">2</xsl:param>
 
   <xsl:template match="rdf:RDF" mode="facets">
     <xsl:variable name="baseurlparams">
