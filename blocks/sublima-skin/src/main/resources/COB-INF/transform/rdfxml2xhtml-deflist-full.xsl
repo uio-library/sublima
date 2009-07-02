@@ -85,7 +85,7 @@
     </a>
     -->
 
-		<div id="fullDescribed">
+    <div id="fullDescribed">
     <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
       <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
       <br/>
@@ -108,7 +108,7 @@
               <i18n:text key="search.result.publishedby">Publisert av</i18n:text>:
             </th>
             <td>
-              <xsl:apply-templates select="./dct:publisher" mode="external-link"/>
+              <xsl:apply-templates select="./dct:publisher"/>
             </td>
           </tr>
         </xsl:if>
@@ -224,7 +224,7 @@
       </table>
 
     </xsl:for-each>
-		</div>
+  </div>
   </xsl:template>
 
 

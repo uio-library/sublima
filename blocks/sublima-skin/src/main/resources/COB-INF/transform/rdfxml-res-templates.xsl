@@ -66,7 +66,7 @@
   </xsl:template>
 
   <xsl:template match="dct:publisher">
-   <xsl:choose>
+    <xsl:choose>
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
 	<xsl:apply-templates select="//foaf:Agent[@rdf:about=$uri]|foaf:Person[@rdf:about=$uri]|foaf:Group[@rdf:about=$uri]|foaf:Organization[@rdf:about=$uri]" mode="external-link"/>
