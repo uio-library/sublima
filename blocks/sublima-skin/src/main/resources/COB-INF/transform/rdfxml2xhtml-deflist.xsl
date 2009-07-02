@@ -127,7 +127,7 @@
 	<dd>
 	  <div style="font-size:small">
 	    <i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
-	    <xsl:apply-templates select="dct:publisher"/>
+	    <xsl:apply-templates select="./dct:publisher"/>
 	    <xsl:text> </xsl:text>
 	    <!--xsl:apply-templates select="./dct:dateAccepted"/-->
 	  </div>

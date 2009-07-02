@@ -69,10 +69,10 @@
    <xsl:choose>
       <xsl:when test="./@rdf:resource">
 	<xsl:variable name="uri" select="./@rdf:resource"/>
-	<xsl:apply-templates select="//foaf:*[@rdf:about=$uri]" mode="external-link"/>
+	<xsl:apply-templates select="//foaf:Agent[@rdf:about=$uri]|foaf:Person[@rdf:about=$uri]|foaf:Group[@rdf:about=$uri]|foaf:Organization[@rdf:about=$uri]" mode="external-link"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:apply-templates select="./foaf:*" mode="external-link" />
+	<xsl:apply-templates select="./foaf:Agent|foaf:Person|foaf:Group|foaf:Organization" mode="external-link" />
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text> </xsl:text>
