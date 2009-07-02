@@ -10,10 +10,11 @@
   xmlns:lingvoj="http://www.lingvoj.org/ontology#"
   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
+  xmlns:geo="http://www.geonames.org/ontology#"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:c="http://xmlns.computas.com/cocoon"
   xmlns="http://www.w3.org/1999/xhtml" 
-  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr skos">
+  exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr skos geo">
 
   <xsl:import href="labels.xsl"/>
 
@@ -49,16 +50,29 @@
     <xsl:value-of select="." disable-output-escaping="yes"/>
   </xsl:template>
 
-  <xsl:template match="sub:committer">
-    <xsl:value-of select="./sioc:User/rdfs:label"/>
+  <xsl:template match="sub:committer|sub:lastApprovedBy">
+    <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>
+	<xsl:value-of select="//sioc:User[@rdf:about = $uri]/rdfs:label"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="./sioc:User/rdfs:label"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="sub:lastApprovedBy">
-    <xsl:value-of select="./sioc:User/rdfs:label"/>
-  </xsl:template>
   
   <xsl:template match="dct:audience">
-    <xsl:value-of select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+    <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>
+	<xsl:value-of select="//dct:AgentClass[@rdf:about = $uri]/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="dct:dateAccepted|dct:dateSubmitted">
@@ -166,16 +180,51 @@
   </xsl:template>
 
   <xsl:template match="dct:language">
-    <xsl:value-of select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
+    <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>
+	<xsl:value-of select="//lingvoj:Lingvo[@rdf:about = $uri]/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="dct:coverage">
+    <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>
+	<xsl:value-of select="//geo:Country[@rdf:about = $uri]/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="./geo:Country/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="wdr:describedBy">
-    <xsl:value-of select="./wdr:DR/rdfs:label[@xml:lang=$interface-language]"/>
+    <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>      
+	<xsl:value-of select="//wdr:DR[@rdf:about = $uri]/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="./wdr:DR/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="dct:type">
-    <xsl:value-of select="./dct:MediaType/rdfs:label[@xml:lang=$interface-language]"/>
-
+    <xsl:choose>
+      <xsl:when test="./@rdf:resource">
+	<xsl:variable name="uri" select="./@rdf:resource"/>      
+	<xsl:value-of select="//dct:MediaType[@rdf:about = $uri]/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:when>
+      <xsl:otherwise>
+  	<xsl:value-of select="./dct:MediaType/rdfs:label[@xml:lang=$interface-language]"/>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:if test="position() != last()">
       <xsl:text>, </xsl:text>
     </xsl:if>

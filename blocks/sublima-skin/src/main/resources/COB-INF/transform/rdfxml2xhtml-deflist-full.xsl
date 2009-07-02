@@ -86,15 +86,15 @@
     -->
 
     <div id="fullDescribed">
-    <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-      <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
+      <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
+	<xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
       <br/>
       <table>
 
         <tr>
-					<th>
-						&#160;
-					</th>
+	  <th>
+	    &#160;
+	  </th>
           <th scope="col">
             <xsl:apply-templates select="./dct:title" mode="external-link"/>
             <xsl:if test="../../../c:loggedin = 'true'">-
@@ -114,7 +114,7 @@
         </xsl:if>
         <xsl:if test="./dct:subject">
           <tr>
-            <th scope="row">
+	    <th scope="row">
               <i18n:text key="topics">Emner</i18n:text>:
             </th>
             <td>
