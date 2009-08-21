@@ -114,12 +114,14 @@
     
     
     <dl>
-<!--      <xsl:for-each select="sub:Resource"> 
-        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/> -->
+      <xsl:for-each select="sub:Resource"> 
+        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
+
 <!-- The root node for each described resource -->
-       <xsl:for-each select="xalan:nodeset($res-copy)/sub:Resource">
-          <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/> 
-        
+       <!--xsl:for-each select="xalan:nodeset($res-copy)/sub:Resource">
+          <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
+         Name: <xsl:value-of select="./*[name()]"/>
+         Sorting: <xsl:value-of select="$sorting"/-->
 
 	  <dt>
 	    <xsl:apply-templates select="./dct:title" mode="external-link"/>

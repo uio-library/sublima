@@ -279,14 +279,14 @@ PVJ: Made the file UTF-8
               </xsl:if>
               <i18n:text key="search.sortby.relevance">Relevans</i18n:text>
             </option-->
-												<option value="dct:title">
-													<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:title'">
+												<option value="n0pred:title">
+													<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'n0pred:title'">
 														<xsl:attribute name="selected">selected</xsl:attribute>
 													</xsl:if>
 													<i18n:text key="title">Tittel</i18n:text>
 												</option>
-												<option value="dct:dateAccepted">
-													<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'dct:dateAccepted'">
+												<option value="n0pred:dateAccepted">
+													<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'n0pred:dateAccepted'">
 														<xsl:attribute name="selected">selected</xsl:attribute>
 													</xsl:if>
 													<i18n:text key="search.sortby.date">Dato</i18n:text>
