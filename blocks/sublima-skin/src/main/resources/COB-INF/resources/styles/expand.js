@@ -1,3 +1,56 @@
+function hideFacetsOnLoad() {
+  var maxFacets = 6;
+  
+  var publisherFacet = getElementsByClassName("publisherFacet");
+  if (publisherFacet.length > maxFacets) {
+    hidefacets("publisherFacet");
+  }else {
+    document.getElementById("publisherFacetHideShow").style.display = 'none';
+  }
+
+  var languageFacet = getElementsByClassName("languageFacet");
+  if (languageFacet.length > maxFacets) {
+    hidefacets("languageFacet"); 
+  }else {
+  document.getElementById("languageFacetHideShow").style.display = 'none';
+  }
+  
+  var audienceFacet = getElementsByClassName("audienceFacet");
+  if (audienceFacet.length > maxFacets) {
+    hidefacets("audienceFacet");
+  } else {
+    document.getElementById("audienceFacetHideShow").style.display = 'none';
+  }
+
+  var subjectFacet = getElementsByClassName("subjectFacet");
+  if (subjectFacet.length > maxFacets) {
+    hidefacets("subjectFacet");
+  } else {
+    document.getElementById("subjectFacetHideShow").style.display = 'none';
+  }
+}
+
+
+function showfacets(className) {
+  var elements = getElementsByClassName(className);
+  for (i = 1; i < elements.length; i++) {
+    elements[i].style.display = 'block';
+  }
+  document.getElementById(className + "ShowLink").style.display = 'none';
+  document.getElementById(className + "HideLink").style.display = 'block';
+}
+
+function hidefacets(className) {
+  var maxFacets = 6;
+  var elements = getElementsByClassName(className);
+  for (i = 1; i < elements.length; i++) {
+    if (i >= maxFacets) {
+      elements[i].style.display = 'none';
+    }
+  }
+  document.getElementById(className + "ShowLink").style.display = 'block';
+  document.getElementById(className + "HideLink").style.display = 'none';
+}
 
 function getElementsByClassName(cl) {
 var retnode = [];
@@ -8,8 +61,20 @@ var classes = elem[i].className;
 if (myclass.test(classes)) retnode.push(elem[i]);
 }
 return retnode;
-};
+}
 
+function OpenCloseFact(element, sender) {
+
+  var e = document.getElementById(element);
+  if (e.style.display == 'none') {
+    e.style.display = '';
+    sender.src = '{$baseurl}/images/closefacet.png';
+  } else {
+    e.style.display = 'none';
+    sender.src = '{$baseurl}/images/openFacet.png';
+  }
+
+}
 function showHide(elementclass){
  	var myEls = getElementsByClassName(elementclass);
 	for ( i=0;i<myEls.length;i++ ) {

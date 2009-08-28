@@ -72,6 +72,7 @@
 				curvyCorners(headerMenuSettings, ".MenuItem");
 				ChangeTextSize(null, null);
 				calculateDivHeight();
+				hideFacetsOnLoad();
 				}
 			</script>
 		</head>

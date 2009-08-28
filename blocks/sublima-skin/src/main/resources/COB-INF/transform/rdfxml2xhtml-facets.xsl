@@ -53,12 +53,22 @@
 						<img id="openClosePublisher" alt="open/close publisher" src="{$baseurl}/images/closefacet.png" onclick="OpenCloseFact('publisherFacets', this);"/>
 						<div class="clearer">&#160;</div>
 					</div>
-						<ul id="publisherFacets">
-            <xsl:apply-templates select="sub:Resource/dct:publisher" mode="facets">
-              <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-              <xsl:sort lang="{$interface-language}" select="foaf:Agent/foaf:name"/>
-            </xsl:apply-templates>
-          </ul>
+					<div id="publisherFacets">
+							<ul>
+							<xsl:apply-templates select="sub:Resource/dct:publisher" mode="facets">
+								<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+								<xsl:sort lang="{$interface-language}" select="foaf:Agent/foaf:name"/>
+							</xsl:apply-templates>
+						</ul>
+						<div id="publisherFacetHideShow" class="showHideFacetslinks">
+							<a id="publisherFacetShowLink" href="javascript:showfacets('publisherFacet');">
+								<i18n:text key="more">mer</i18n:text>
+							</a>
+							<a id="publisherFacetHideLink" href="javascript:hidefacets('publisherFacet');">
+								<i18n:text key="hide">skjul</i18n:text>
+							</a>
+						</div>
+					</div>
         </div>
       </xsl:if>
 
@@ -69,12 +79,22 @@
 						<img id="openCloseLanguage" alt="open/close publisher" src="{$baseurl}/images/closefacet.png" onclick="OpenCloseFact('languageFacets', this);"/>
 						<div class="clearer">&#160;</div>
 					</div>
-          <ul id="languageFacets">
-            <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
-              <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-              <xsl:sort lang="{$interface-language}" select="lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
-            </xsl:apply-templates>
-          </ul>
+					<div id="languageFacets">
+						<ul>
+							<xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
+								<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+								<xsl:sort lang="{$interface-language}" select="lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
+							</xsl:apply-templates>
+						</ul>
+						<div id="languageFacetHideShow" class="showHideFacetslinks">
+							<a id="languageFacetShowLink" href="javascript:showfacets('languageFacet');">
+								<i18n:text key="more">mer</i18n:text>
+							</a>
+							<a id="languageFacetHideLink" href="javascript:hidefacets('languageFacet');">
+								<i18n:text key="hide">skjul</i18n:text>
+							</a>
+						</div>
+					</div>
         </div>
       </xsl:if>
 
@@ -85,13 +105,23 @@
 						<h3><i18n:text key="audience">Målgruppe</i18n:text></h3>
 						<img id="openCloseAudience" alt="open/close publisher" src="{$baseurl}/images/closefacet.png" onclick="OpenCloseFact('audienceFacets', this);"/>
 						<div class="clearer">&#160;</div>
-					</div>	
-          <ul id="audienceFacets">
-            <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
-              <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-              <xsl:sort lang="{$interface-language}" select="dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
-            </xsl:apply-templates>
-          </ul>
+					</div>
+					<div id="audienceFacets">
+						<ul>
+							<xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
+								<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+								<xsl:sort lang="{$interface-language}" select="dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+							</xsl:apply-templates>
+						</ul>
+						<div id="audienceFacetHideShow" class="showHideFacetslinks">
+							<a id="audienceFacetShowLink" href="javascript:showfacets('audienceFacet');">
+								<i18n:text key="more">mer</i18n:text>
+							</a>
+							<a id="audienceFacetHideLink" href="javascript:hidefacets('audienceFacet');">
+								<i18n:text key="hide">skjul</i18n:text>
+							</a>
+						</div>
+					</div>
         </div>
       </xsl:if>
 
@@ -137,85 +167,82 @@
 					<div class="clearer">&#160;</div>
 				</div>	
         <xsl:if test="sub:Resource/dct:subject">
-          <ul id="subjectFacets">
-            <xsl:for-each select="/c:page/c:result-list/rdf:RDF//skos:Concept">
-              <xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
-              <xsl:variable name="uri" select="./@rdf:about"/>
-              <xsl:variable name="count">
-                <xsl:choose>
-                  <xsl:when test="/c:page/c:result-list/rdf:RDF/skos:Concept[@rdf:about=$uri]">
-                    <xsl:value-of
-                            select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
-                  </xsl:when>
-                  <xsl:when
-                          test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]">
-                    <xsl:value-of
-                            select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of
-                            select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])+1"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
+					<div id="subjectFacets">
+						<ul>
+							<xsl:for-each select="/c:page/c:result-list/rdf:RDF//skos:Concept">
+								<xsl:sort lang="{$interface-language}" select="skos:prefLabel[@xml:lang=$interface-language]"/>
+								<xsl:variable name="uri" select="./@rdf:about"/>
+								<xsl:variable name="count">
+									<xsl:choose>
+										<xsl:when test="/c:page/c:result-list/rdf:RDF/skos:Concept[@rdf:about=$uri]">
+											<xsl:value-of
+															select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
+										</xsl:when>
+										<xsl:when
+														test="/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept[@rdf:about=$uri]">
+											<xsl:value-of
+															select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of
+															select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:subject[@rdf:resource=$uri])+1"/>
+										</xsl:otherwise>
+									</xsl:choose>
+								</xsl:variable>
 
-              <xsl:call-template name="facet-field">
-                <xsl:with-param name="max-facets-more">
-                  <xsl:value-of select="$max_facets"/>
-                </xsl:with-param>
-                <xsl:with-param name="this-field">dct:subject</xsl:with-param>
-                <xsl:with-param name="this-label">
-                  <xsl:choose>
-                    <xsl:when test="./skos:prefLabel[@xml:lang=$interface-language]">
-                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:choose>
-                        <xsl:when test="$interface-language = 'no'">
-                          <span class="warning">
-                            <i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text>
-                          </span>
-                        </xsl:when>
-                        <xsl:when test="$interface-language = 'nn'">
-                          <span class="warning">
-                            <i18n:text key="validation.topic.notitle">Emnet manglar tittel på valgt språk</i18n:text>
-                          </span>
-                        </xsl:when>
-                        <xsl:when test="$interface-language = 'sv'">
-                          <span class="warning">
-                            <i18n:text key="validation.topic.notitle">Ämnet har inte titel på angivet språk</i18n:text>
-                          </span>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <span class="warning">
-                            <i18n:text key="validation.topic.notitle">Topic has no title for the selected language
-                            </i18n:text>
-                          </span>
-                        </xsl:otherwise>
-                      </xsl:choose>
+								<xsl:call-template name="facet-field">
+	                
+									<xsl:with-param name="this-field">dct:subject</xsl:with-param>
+									<xsl:with-param name="this-label">
+										<xsl:choose>
+											<xsl:when test="./skos:prefLabel[@xml:lang=$interface-language]">
+												<xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:choose>
+													<xsl:when test="$interface-language = 'no'">
+														<span class="warning">
+															<i18n:text key="validation.topic.notitle">Emnet mangler tittel på valgt språk</i18n:text>
+														</span>
+													</xsl:when>
+													<xsl:when test="$interface-language = 'nn'">
+														<span class="warning">
+															<i18n:text key="validation.topic.notitle">Emnet manglar tittel på valgt språk</i18n:text>
+														</span>
+													</xsl:when>
+													<xsl:when test="$interface-language = 'sv'">
+														<span class="warning">
+															<i18n:text key="validation.topic.notitle">Ämnet har inte titel på angivet språk</i18n:text>
+														</span>
+													</xsl:when>
+													<xsl:otherwise>
+														<span class="warning">
+															<i18n:text key="validation.topic.notitle">Topic has no title for the selected language
+															</i18n:text>
+														</span>
+													</xsl:otherwise>
+												</xsl:choose>
 
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:with-param>
-                <xsl:with-param name="uri" select="$uri"/>
-                <xsl:with-param name="count" select="$count"/>
-                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+											</xsl:otherwise>
+										</xsl:choose>
+									</xsl:with-param>
+									<xsl:with-param name="uri" select="$uri"/>
+									<xsl:with-param name="count" select="$count"/>
+									<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
 
-              </xsl:call-template>
+								</xsl:call-template>
 
-            </xsl:for-each>
-          </ul>
-
-          <xsl:if test="count(/c:page/c:result-list/rdf:RDF/skos:Concept//skos:Concept) > $max_facets">
-            <div class="more">
-              <a href="javascript:void(0);showHide('collapse');showHide('more');">
-                <i18n:text key="more">more</i18n:text>
-                &#187;
-              </a>
-            </div>
-          </xsl:if>
-
-
+							</xsl:for-each>
+						</ul>
+						<div id="subjectFacetHideShow" class="showHideFacetslinks">
+							<a id="subjectFacetShowLink" href="javascript:showfacets('subjectFacet');">
+								<i18n:text key="more">mer</i18n:text>
+							</a>
+							<a id="subjectFacetHideLink" href="javascript:hidefacets('subjectFacet');">
+								<i18n:text key="hide">skjul</i18n:text>
+							</a>
+						</div>
+					</div>
         </xsl:if>
       </div>
     </div>
@@ -225,7 +252,7 @@
     <xsl:param name="baseurlparams"/>
     <xsl:variable name="uri" select="./lingvoj:Lingvo/@rdf:about"/>
     <xsl:call-template name="facet-field">
-      <xsl:with-param name="max-facets-more">4</xsl:with-param>
+      
       <xsl:with-param name="this-field">dct:language</xsl:with-param>
       <xsl:with-param name="this-label" select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
       <xsl:with-param name="uri" select="$uri"/>
@@ -240,7 +267,7 @@
     <xsl:param name="baseurlparams"/>
     <xsl:variable name="uri" select="./foaf:Agent/@rdf:about"/>
     <xsl:call-template name="facet-field">
-      <xsl:with-param name="max-facets-more">6</xsl:with-param>
+      
       <xsl:with-param name="this-field">dct:publisher</xsl:with-param>
       <xsl:with-param name="this-label" select="./foaf:Agent/foaf:name"/>
       <xsl:with-param name="uri" select="$uri"/>
@@ -255,7 +282,7 @@
     <xsl:param name="baseurlparams"/>
     <xsl:variable name="uri" select="./go:Country/@rdf:about"/>
     <xsl:call-template name="facet-field">
-      <xsl:with-param name="max-facets-more">4</xsl:with-param>
+      
       <xsl:with-param name="this-field">dct:coverage</xsl:with-param>
       <xsl:with-param name="this-label" select="./go:Country/rdfs:label[@xml:lang=$interface-language]"/>
       <xsl:with-param name="uri" select="$uri"/>
@@ -271,7 +298,7 @@
     <xsl:param name="baseurlparams"/>
     <xsl:variable name="uri" select="./dct:AgentClass/@rdf:about"/>
     <xsl:call-template name="facet-field">
-      <xsl:with-param name="max-facets-more">4</xsl:with-param>
+      
       <xsl:with-param name="this-field">dct:audience</xsl:with-param>
       <xsl:with-param name="this-label" select="./dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
       <xsl:with-param name="uri" select="$uri"/>
@@ -285,8 +312,7 @@
   <!-- This template can used to construct facets. See the above for examples.
        it takes a number of parameters:
 
-         max-facets-more - This number sets how many items should be shown untill 
-	                   the user clicks "more". This is optional, defaults to 3.
+         
          baseurlparams   - Should be passed from other templates.
 	 this-field      - The machine field, e.g. dct:subject.
 	 this-label      - The human-readable label for this facet.
@@ -297,18 +323,27 @@
 
 
   <xsl:template name="facet-field">
-    <xsl:param name="max-facets-more">3</xsl:param>
     <xsl:param name="baseurlparams"/>
     <xsl:param name="this-label"/>
     <xsl:param name="this-field"/>
     <xsl:param name="uri"/>
     <xsl:param name="count"/>
     <xsl:if test="$uri">
-      <li>
-        <xsl:if test="$this-field = 'dct:subject' and position() &gt; $max-facets-more"> <!-- This number sets how many items should be shown untill the user clicks "more" -->
-          <xsl:attribute name="class">collapse</xsl:attribute>
-          <xsl:attribute name="style">display : none;</xsl:attribute>
-        </xsl:if>
+      <li>				
+				<xsl:choose>
+					<xsl:when test="$this-field = 'dct:publisher'">
+						<xsl:attribute name="class">publisherFacet</xsl:attribute>
+					</xsl:when>
+					<xsl:when test="$this-field = 'dct:language'">
+						<xsl:attribute name="class">languageFacet</xsl:attribute>
+					</xsl:when>
+					<xsl:when test="$this-field = 'dct:audience'">
+						<xsl:attribute name="class">audienceFacet</xsl:attribute>
+					</xsl:when>
+					<xsl:when test="$this-field = 'dct:subject'">
+						<xsl:attribute name="class">subjectFacet</xsl:attribute>
+					</xsl:when>
+				</xsl:choose>
 
         <xsl:choose>
           <xsl:when test="$count = $numberofhits">

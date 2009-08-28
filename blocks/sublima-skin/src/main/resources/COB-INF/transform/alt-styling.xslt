@@ -684,6 +684,9 @@ PVJ: Made the file UTF-8
 				<div id="panel-tasks">
 					<xsl:choose>
 						<xsl:when test="c:page/c:loggedin = 'true' ">
+							<h3 style="font-size: 25px;">
+								<i18n:text key="menu.adminMeny">Administrasjonsmeny</i18n:text>
+							</h3>
 							<a href="{$baseurl}/admin/emner/{$qloc}">
 								<i18n:text key="menu.topic">Emner</i18n:text>
 							</a>
@@ -746,6 +749,7 @@ PVJ: Made the file UTF-8
 					<a href="http://www.computas.com/">Computas AS</a>
 					, 2008
 				</i18n:text>
+				(Sublima 1.1.1)
 			</p>
 		</div>
 		<div class="clearer">&#160;</div>

@@ -440,6 +440,9 @@ p.validationmessage {
 .fullDescribedRow th {
   width: 110px;
 }
+.showHideFacetslinks {
+  padding-left: 30px;  
+}
 
 
 

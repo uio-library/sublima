@@ -134,7 +134,9 @@
   <message key="menu.tips">Forslag</message> <!-- MÅ OVERSETTES -->
   <message key="menu.topic">Ämnen</message>
   <message key="menu.user">Användare</message>
-  <message key="more">mer</message>
+  <message key="menu.adminMeny">Administrasjonsmeny</message><!-- MÅ OVERSETTES -->
+  <message key="more">mer</message><!-- MÅ OVERSETTES -->
+  <message key="hide">Skjul</message>
   <message key="name">Namn</message>
   <message key="newurl">Ny URL</message>
   <message key="norwegian">Norska</message>
