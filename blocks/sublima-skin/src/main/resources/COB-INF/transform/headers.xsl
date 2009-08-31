@@ -52,8 +52,6 @@
       <script type="text/javascript">var dummy = null;</script>
 			<script src="{$baseurl}/styles/curvycorners.js" type="text/javascript" />
 			<script type="text/javascript">var dummy = null;</script>
-			<script src="{$baseurl}/styles/facts.js" type="text/javascript" />
-			<script type="text/javascript">var dummy = null;</script>
 			<script src="{$baseurl}/styles/textsize.js" type="text/javascript" />
 			<script type="text/javascript">var dummy = null;</script>
 			<script src="{$baseurl}/styles/calculateHeight.js" type="text/javascript" />
