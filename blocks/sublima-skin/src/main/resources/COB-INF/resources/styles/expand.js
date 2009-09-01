@@ -1,5 +1,5 @@
 function hideFacetsOnLoad() {
-  var maxFacets = 6;
+  var maxFacets = 10;
   
   var publisherFacet = getElementsByClassName("publisherFacet");
   if (publisherFacet != null) {
@@ -69,7 +69,7 @@ function showfacets(className) {
 }
 
 function hidefacets(className) {
-  var maxFacets = 6;
+  var maxFacets = 10;
   var elements = getElementsByClassName(className);
   for (i = 1; i < elements.length; i++) {
     if (i >= maxFacets) {
