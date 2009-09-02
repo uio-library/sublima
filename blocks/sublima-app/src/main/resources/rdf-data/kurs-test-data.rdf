@@ -3,7 +3,7 @@
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
     xmlns:resource="http://192.168.5.125:8180/sublima/resource/"
     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
-    xmlns:status="http://192.168.5.125:8180/sublima/status/"
+    xmlns:status="http://sublima.computas.com/status/"
     xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
     xmlns:wdr="http://www.w3.org/2007/05/powder#"
     xmlns:lingvoj="http://www.lingvoj.org/ontology#"
