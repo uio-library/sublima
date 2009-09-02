@@ -48,13 +48,12 @@ public class FreetextTriples {
 
     String concatenatedSearchableText = getConcatenatedTextFromURI(uri, searchableProperties, prefixes, graphs);
 
-    if (indexExternalContent) {
-      String externalContent = getResourceExternalLiteralsAsString(uri);
-
-      if (!uri.startsWith("<") && !uri.endsWith(">")) {
+     if (!uri.startsWith("<") && !uri.endsWith(">")) {
         uri = "<" + uri + ">";
       }
 
+    if (indexExternalContent) {
+      String externalContent = getResourceExternalLiteralsAsString(uri);
       return uri + " <http://xmlns.computas.com/sublima#literals> \"" + concatenatedSearchableText + "\" .\n" + uri + " <http://xmlns.computas.com/sublima#externalliterals> \"" + concatenatedSearchableText + " " + externalContent + "\" .\n";
     } else {
       return concatenatedSearchableText.isEmpty() ? null : uri + " <http://xmlns.computas.com/sublima#literals> \"" + concatenatedSearchableText + "\" .";
