@@ -65,7 +65,8 @@ function showfacets(className) {
   var el2 = document.getElementById(className + "HideLink")
   if (el2 != null) {
     el2.style.display = 'block';
-  }
+}
+calculateDivHeight()
 }
 
 function hidefacets(className) {
@@ -83,7 +84,8 @@ function hidefacets(className) {
   var el2 = document.getElementById(className + "HideLink")
   if (el2 != null) {
     el2.style.display = 'none';
-  }
+}
+calculateDivHeight()
 }
 
 function getElementsByClassName(cl) {

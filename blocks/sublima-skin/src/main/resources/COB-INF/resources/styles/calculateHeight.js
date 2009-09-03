@@ -2,12 +2,23 @@
   if (document.getElementById("content")) {
       var height = document.getElementById("content").clientHeight;
       var innerHeightCenter = document.getElementById("innerMidCol").clientHeight;
+      var innerHeightLeft = document.getElementById("colleft").clientHeight;
           
       var colmidleft = document.getElementById("colmidleft");
       if (height > innerHeightCenter) {
-          colmidleft.style.height = height + 'px';
+          if (height > innerHeightLeft) { 
+            colmidleft.style.height = height + 'px';
+          }else{
+            colmidleft.style.height = innerHeightLeft + 'px';
+          }
       } else {
-        colmidleft.style.height = innerHeightCenter + 'px';
+        if(innerHeightCenter > innerHeightLeft){
+            colmidleft.style.height = innerHeightCenter + 'px';
+        }else{
+            colmidleft.style.height = innerHeightLeft + 'px';
+        }
+        
+       
       }
   }
  }
