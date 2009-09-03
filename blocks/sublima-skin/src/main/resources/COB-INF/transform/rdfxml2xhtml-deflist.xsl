@@ -116,15 +116,16 @@
     <dl>
       <!--xsl:for-each select="sub:Resource">
         <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/-->
-
-      <xsl:choose>
-        <xsl:when test="$sorting = 'n0pred:dateAccepted'">
-          <xsl:variable name="order">descending</xsl:variable>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:variable name="order">ascending</xsl:variable>          
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:variable name="order">
+        <xsl:choose>
+          <xsl:when test="$sorting = 'n0pred:dateAccepted'">
+            descending
+          </xsl:when>
+          <xsl:otherwise>
+            ascending
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
 <!-- The root node for each described resource -->
        <xsl:for-each select="xalan:nodeset($res-copy)/sub:Resource">
         <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]" order="{$order}"/>
