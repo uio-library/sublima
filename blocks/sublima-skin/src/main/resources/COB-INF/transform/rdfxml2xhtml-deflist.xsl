@@ -22,18 +22,8 @@
 
   <xsl:template match="rdf:RDF" mode="results">
     <xsl:param name="sorting"/>
+    <xsl:param name="sortorder"/>
 
-    <!--xsl:param name="order">
-        <xsl:choose>
-          <xsl:when test="$sorting = 'n0pred:dateAccepted'">
-            descending
-          </xsl:when>
-          <xsl:otherwise>
-            ascending
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:param-->
-    
     <!-- views -->
     <!-- "just" remove the res-view attribute -->
     <!-- issue: a & is left.... -->
@@ -130,7 +120,7 @@
 
 <!-- The root node for each described resource -->
        <xsl:for-each select="xalan:nodeset($res-copy)/sub:Resource">
-        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]" order="ascending"/>
+        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]" order="{$sortorder}"/>
 
 	  <dt>
 	    <xsl:apply-templates select="./dct:title" mode="external-link"/>

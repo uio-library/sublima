@@ -290,6 +290,8 @@
   <message key="publisher.notitle">En tittel må angis</message><!-- MÅ OVERSETTES -->
   <message key="limit.search">Avgrens søk</message><!-- MÅ OVERSETTES -->
   <message key="browseTheme.header">Kategorier</message><!-- MÅ OVERSETTES -->
+  <message key="ascending">Stigende</message><!-- MÅ OVERSETTES -->
+  <message key="descending">Synkende</message><!-- MÅ OVERSETTES -->
 </catalogue>
 
 

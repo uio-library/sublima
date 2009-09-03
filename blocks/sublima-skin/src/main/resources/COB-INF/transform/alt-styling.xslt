@@ -286,6 +286,20 @@ PVJ: Made the file UTF-8
 													<i18n:text key="search.sortby.date">Dato</i18n:text>
 												</option>
 											</select>
+											<select id="sortorder" name="sortorder">
+												<option value="ascending">
+													<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortorder = 'ascending'">
+														<xsl:attribute name="selected">selected</xsl:attribute>
+													</xsl:if>
+													<i18n:text key="ascending">Stigende</i18n:text>
+												</option>
+												<option value="descending">
+													<xsl:if test="c:page/c:searchparams/c:searchparams/c:sortorder = 'descending'">
+														<xsl:attribute name="selected">selected</xsl:attribute>
+													</xsl:if>
+													<i18n:text key="descending">Synkende</i18n:text>
+												</option>
+											</select>
 										</span>
 										<br/>
 										<xsl:choose>
@@ -567,6 +581,9 @@ PVJ: Made the file UTF-8
 											<xsl:with-param name="sorting">
 												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/>
 											</xsl:with-param>
+                                            <xsl:with-param name="sortorder">
+												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortorder"/>
+											</xsl:with-param>
 										</xsl:apply-templates>
 									</xsl:when>
 
@@ -576,6 +593,9 @@ PVJ: Made the file UTF-8
 											<xsl:with-param name="sorting">
 												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/>
 											</xsl:with-param>
+                                            <xsl:with-param name="sortorder">
+												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortorder"/>
+											</xsl:with-param>
 										</xsl:apply-templates>
 									</xsl:when>
 
@@ -583,6 +603,9 @@ PVJ: Made the file UTF-8
 										<xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results">
 											<xsl:with-param name="sorting">
 												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/>
+											</xsl:with-param>
+                                            <xsl:with-param name="sortorder">
+												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortorder"/>
 											</xsl:with-param>
 										</xsl:apply-templates>
 									</xsl:otherwise>
