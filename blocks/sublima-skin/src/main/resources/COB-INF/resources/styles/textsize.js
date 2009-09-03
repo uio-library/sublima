@@ -35,11 +35,10 @@
         document.getElementById("textSizeMedium").style.background = 'none';
         document.getElementById("textSizeSmall").style.background = '#c8dce6';
       }
-       
     }
-  
+    
    }
-  
+   calculateDivHeight();
   
 }
 
