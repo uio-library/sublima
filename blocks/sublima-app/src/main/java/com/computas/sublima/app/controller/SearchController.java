@@ -200,6 +200,7 @@ public class SearchController implements StatelessAppleController {
         parameterMap.put("searchstring", new String[]{searchStringOverriden});
         parameterMap.remove("booleanoperator");
         parameterMap.remove("sort");
+        parameterMap.remove("sortorder");
         parameterMap.remove("exactmatch");
       }
     }
