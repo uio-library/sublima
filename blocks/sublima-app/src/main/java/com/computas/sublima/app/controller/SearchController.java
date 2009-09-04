@@ -176,7 +176,6 @@ public class SearchController implements StatelessAppleController {
     xmlSearchParametersBuffer.append("\t<c:operator>" + req.getCocoonRequest().getParameter("booleanoperator") + "</c:operator>\n");
     xmlSearchParametersBuffer.append("\t<c:deepsearch>" + req.getCocoonRequest().getParameter("deepsearch") + "</c:deepsearch>\n");
     xmlSearchParametersBuffer.append("\t<c:sortby>" + req.getCocoonRequest().getParameter("sort") + "</c:sortby>\n");
-    xmlSearchParametersBuffer.append("\t<c:sortorder>" + req.getCocoonRequest().getParameter("sortorder") + "</c:sortorder>\n");
     xmlSearchParametersBuffer.append("\t<c:exactmatch>" + req.getCocoonRequest().getParameter("exactmatch") + "</c:exactmatch>\n");
     xmlSearchParametersBuffer.append("</c:searchparams>\n");
 

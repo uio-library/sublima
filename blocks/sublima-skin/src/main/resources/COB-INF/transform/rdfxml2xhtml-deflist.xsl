@@ -22,7 +22,12 @@
 
   <xsl:template match="rdf:RDF" mode="results">
     <xsl:param name="sorting"/>
-    <xsl:param name="sortorder"/>
+    <xsl:param name="sortorder">
+      <xsl:choose>
+        <xsl:when test="$sorting = 'n0pred:dateAccepted'">descending</xsl:when>
+        <xsl:otherwise>ascending</xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
 
     <!-- views -->
     <!-- "just" remove the res-view attribute -->
