@@ -181,7 +181,7 @@ public class ResourceController implements StatelessAppleController {
 
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
       String url = req.getCocoonRequest().getParameter("sub:url").trim();
-      bizData.put("tempvalues", tempPrefixes + "<sub:url>" + req.getCocoonRequest().getParameter("sub:url").trim() + "</sub:url></c:tempvalues>\n");
+      bizData.put("tempvalues", tempPrefixes + "<sub:url>" + URLEncoder.encode(req.getCocoonRequest().getParameter("sub:url").trim()) + "</sub:url></c:tempvalues>\n");
       bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
       if (!"".equalsIgnoreCase(url)) {
