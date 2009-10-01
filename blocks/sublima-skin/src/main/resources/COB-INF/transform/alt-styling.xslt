@@ -213,7 +213,7 @@ PVJ: Made the file UTF-8
 	 ###################################################################### -->
 				<div id="innerMidCol" class="col1" style="border:0px dotted red;">
 
-					<!-- xsl:call-template name="debug"/ -->
+					<xsl:call-template name="debug"/>
 
 					<!-- Search -->
 					<!-- Search is shown when advanced search is not, and when there are no static content -->
@@ -685,7 +685,7 @@ PVJ: Made the file UTF-8
 					<xsl:choose>
 						<xsl:when test="c:page/c:loggedin = 'true' ">
 							<h3 style="font-size: 25px;">
-								<i18n:text key="menu.adminMeny">Administrasjonsmeny</i18n:text>
+								<i18n:text key="menu.adminMeny">Meny</i18n:text>
 							</h3>
 							<a href="{$baseurl}/admin/emner/{$qloc}">
 								<i18n:text key="menu.topic">Emner</i18n:text>
