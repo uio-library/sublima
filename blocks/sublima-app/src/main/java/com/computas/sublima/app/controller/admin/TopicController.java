@@ -286,7 +286,7 @@ public class TopicController implements StatelessAppleController {
       if (createInverse) {
         StringBuilder inverse = new StringBuilder();
         inverse.append("PREFIX owl: <http://www.w3.org/2002/07/owl#>\n");
-        inverse.append("INSERT\n{\n");
+        inverse.append("INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + "> \n{\n");
         inverse.append("<" + parameterMap.get("owl:inverseOf")[0] + "> owl:inverseOf <" + form2SparqlService.getURI() + "> .\n}");
         boolean success = sparulDispatcher.query(inverse.toString());
         logger.trace("TopicController.editRelation --> INSERT INVERSE RELATION: " + success);
