@@ -434,7 +434,7 @@ public class AdminService {
     return queryResult.toString();
   }
 
-  public String getAllUsers() {
+  public String getAllApprovedUsers() {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
@@ -444,6 +444,22 @@ public class AdminService {
             "    ?user a sioc:User ;",
             "          rdfs:label ?label ;",
             "          wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
+            "}"});
+
+    logger.trace("AdminService.getAllUsers() executing");
+    Object queryResult = sparqlDispatcher.query(queryString);
+
+    return queryResult.toString();
+  }
+
+  public String getAllUsers() {
+    String queryString = StringUtils.join("\n", new String[]{
+            "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "DESCRIBE ?user",
+            "WHERE {",
+            "    ?user a sioc:User ;",
+            "          rdfs:label ?label .",
             "}"});
 
     logger.trace("AdminService.getAllUsers() executing");

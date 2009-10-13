@@ -494,7 +494,7 @@ public class UserController implements StatelessAppleController {
                   req, AppleResponse
                   res) {
     Map<String, Object> bizData = new HashMap<String, Object>();
-    bizData.put("allusers", adminService.getAllUsers());
+    bizData.put("allusers", adminService.getAllApprovedUsers());
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
     System.gc();
     res.sendPage("xml2/brukere_alle", bizData);
