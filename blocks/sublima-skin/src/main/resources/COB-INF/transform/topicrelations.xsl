@@ -53,9 +53,6 @@
       );
 
     </script>
-
-    <script src="{$baseurl}/styles/jquery-1.2.6.js" type="text/javascript" />
-      <script type="text/javascript">var dummy = null;</script>
     
     <form action="{$baseurl}/admin/emner/relasjoner/relasjon" method="POST">
       <fieldset>
@@ -193,17 +190,17 @@
               <script type="text/javascript">
 
                 $(document).ready(function(){
-                  if ($("input[@name='relationtype']:checked").val() == 'inverse')
+                  if ($("input[name='relationtype']:checked").val() == 'inverse')
                     $("#inverserelation").show();
                   else
                     $("#inverserelation").hide();
                 });
 
 
-                $("input[@name='relationtype']").change(
+                $("input[name='relationtype']").change(
                 function()
                 {
-                  $("input[@name='relationtype']:checked").val() == 'inverse' ? $("#inverserelation").show() : $("#inverserelation").hide();
+                  $("input[name='relationtype']:checked").val() == 'inverse' ? $("#inverserelation").show() : $("#inverserelation").hide();
                 }
                 );
               </script>
