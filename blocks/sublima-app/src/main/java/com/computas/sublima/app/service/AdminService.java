@@ -438,10 +438,12 @@ public class AdminService {
     String queryString = StringUtils.join("\n", new String[]{
             "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+            "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
             "DESCRIBE ?user",
             "WHERE {",
             "    ?user a sioc:User ;",
-            "        rdfs:label ?label .",
+            "          rdfs:label ?label ;",
+            "          wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .",
             "}"});
 
     logger.trace("AdminService.getAllUsers() executing");
