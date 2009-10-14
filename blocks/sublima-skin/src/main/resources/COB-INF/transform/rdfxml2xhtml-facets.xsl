@@ -190,6 +190,7 @@
 									</xsl:choose>
 								</xsl:variable>
 
+                                <xsl:if test="not($count ='0')">
 								<xsl:call-template name="facet-field">
 	                
 									<xsl:with-param name="this-field">dct:subject</xsl:with-param>
@@ -231,6 +232,7 @@
 									<xsl:with-param name="baseurlparams" select="$baseurlparams"/>
 
 								</xsl:call-template>
+                                </xsl:if>
 
 							</xsl:for-each>
 						</ul>
