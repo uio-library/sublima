@@ -70,6 +70,16 @@
       <xsl:with-param name="i18ntext">Skrivefeil</xsl:with-param>
     </xsl:call-template>
 
+    <xsl:call-template name="addinputfieldtemplates">
+      <xsl:with-param name="uid">klassifikasjon</xsl:with-param>
+      <xsl:with-param name="interface-language" select="$interface-language"/>
+      <xsl:with-param name="values">klassifikasjonvalues</xsl:with-param>
+      <xsl:with-param name="template">klassifikasjontemplate</xsl:with-param>
+      <xsl:with-param name="name">sub:classification</xsl:with-param>
+      <xsl:with-param name="i18nkey">classification</xsl:with-param>
+      <xsl:with-param name="i18ntext">Klassifikasjon</xsl:with-param>
+    </xsl:call-template>
+
     <script type="text/javascript">
 
       // Hook up the add button handler.
@@ -99,6 +109,14 @@
           <xsl:with-param name="count" select="count(c:topicdetails/rdf:RDF/skos:Concept/skos:hiddenLabel)+2"/>
           <xsl:with-param name="linkid">addskrivefeil</xsl:with-param>
           <xsl:with-param name="appendto">addskrivefeilbefore</xsl:with-param>
+        </xsl:call-template>
+        <xsl:call-template name="addinputfieldscript">
+          <xsl:with-param name="uid">klassifikasjon</xsl:with-param>
+          <xsl:with-param name="values">klassifikasjonvalues</xsl:with-param>
+          <xsl:with-param name="template">klassifikasjontemplate</xsl:with-param>
+          <xsl:with-param name="count" select="count(c:topicdetails/rdf:RDF/skos:Concept/sub:classification)+2"/>
+          <xsl:with-param name="linkid">addklassifikasjon</xsl:with-param>
+          <xsl:with-param name="appendto">addklassifikasjonbefore</xsl:with-param>
         </xsl:call-template>
 
 
@@ -243,6 +261,40 @@
           <td><a id="addskrivefeil"><i18n:text key="addskrivefeil">Legg til skrivefeil</i18n:text></a></td>
         </tr>
 
+          <xsl:for-each select="c:topicdetails/rdf:RDF/skos:Concept/sub:classification">
+          <xsl:call-template name="labels">
+            <xsl:with-param name="label">
+              <i18n:text key="classification">Klassifisering</i18n:text>
+            </xsl:with-param>
+            <xsl:with-param name="value" select="."/>
+            <xsl:with-param name="default-language" select="@xml:lang"/>
+            <xsl:with-param name="field">
+              <xsl:text>sub:classification-</xsl:text>
+              <xsl:value-of select="position()"/>
+            </xsl:with-param>
+            <xsl:with-param name="type">text</xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+
+        <xsl:call-template name="labels">
+          <xsl:with-param name="label">
+            <i18n:text key="classification">Klassifikasjon</i18n:text>
+          </xsl:with-param>
+          <xsl:with-param name="value"/>
+          <xsl:with-param name="default-language" select="$interface-language"/>
+          <xsl:with-param name="field">
+            <xsl:text>sub:classification-</xsl:text>
+            <xsl:value-of select="count(c:topicdetails/rdf:RDF/skos:Concept/sub:classification)+1"/>
+          </xsl:with-param>
+          <xsl:with-param name="type">text</xsl:with-param>
+        </xsl:call-template>
+
+        <tr id="addklassifikasjonbefore">
+          <td/>
+          <td/>
+          <td><a id="addklassifikasjon"><i18n:text key="addklassifisering">Legg til skrivefeil</i18n:text></a></td>
+        </tr>
+
       </table>
       <table>
         <tr>
@@ -276,16 +328,7 @@
             </textarea>
           </td>
         </tr>
-        <tr>
-          <td>
-            <label for="sub:classification">
-              <i18n:text key="classification">Klassifisering</i18n:text>
-            </label>
-          </td>
-          <td>
-            <input id="sub:classification" type="text" name="sub:classification" size="40" value="{./c:topicdetails/rdf:RDF/skos:Concept/sub:classification}"/>
-          </td>
-        </tr>
+
       </table>
 
       <table>
