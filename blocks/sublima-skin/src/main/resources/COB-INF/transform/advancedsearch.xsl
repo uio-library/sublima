@@ -15,126 +15,221 @@
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
 
-  <xsl:import href="autocompletion.xsl"/>
-  <xsl:import href="sparql-uri-label-pairs.xsl"/>
+    <xsl:import href="autocompletion.xsl"/>
+    <xsl:import href="sparql-uri-label-pairs.xsl"/>
 
-  <xsl:param name="baseurl"/>
-  <xsl:param name="interface-language">no</xsl:param>
+    <xsl:param name="baseurl"/>
+    <xsl:param name="interface-language">no</xsl:param>
 
 
-  <xsl:template match="c:advancedsearch" mode="advancedsearch">
+    <xsl:template match="c:advancedsearch" mode="advancedsearch">
 
-    <xsl:call-template name="autocompletion">
-      <xsl:with-param name="baseurl"><xsl:value-of select="$baseurl"/></xsl:with-param>
-      <xsl:with-param name="interface-language"><xsl:value-of select="$interface-language"/></xsl:with-param>
-    </xsl:call-template>
+        <xsl:call-template name="autocompletion">
+            <xsl:with-param name="baseurl">
+                <xsl:value-of select="$baseurl"/>
+            </xsl:with-param>
+            <xsl:with-param name="interface-language">
+                <xsl:value-of select="$interface-language"/>
+            </xsl:with-param>
+        </xsl:call-template>
 
-    <form action="search-result.html" method="GET">
-      <input type="hidden" name="freetext-field" value="dct:title"/>
-      <input type="hidden" name="freetext-field" value="dct:subject/sub:literals"/>
-      <input type="hidden" name="freetext-field" value="dct:description"/>
-      <input type="hidden" name="freetext-field" value="dct:publisher/foaf:name"/>
+        <form action="search-result.html" method="GET">
+            <input type="hidden" name="freetext-field" value="dct:title"/>
+            <input type="hidden" name="freetext-field" value="dct:subject/sub:literals"/>
+            <input type="hidden" name="freetext-field" value="dct:description"/>
+            <input type="hidden" name="freetext-field" value="dct:publisher/foaf:name"/>
 
-      <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
-      <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
-      <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
-      <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
-      <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>  
+            <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
+            <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
+            <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
+            <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+            <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
 
-      <xsl:call-template name="hidden-locale-field"/>
-      <table>
-        <tr>
-          <th scope="row">
-            <label for="subject"><i18n:text key="adv.subject">Emne</i18n:text></label>
-          </th>
-          <td>
-            <input id="subject" type="text" name="dct:subject/sub:literals" size="20"/>
-          </td>
-        </tr>
-				<tr>
-					<th scope="row">
-						<label for="title">
-							<i18n:text key="adv.title">Tittel</i18n:text>
-						</label>
-					</th>
-					<td>
-						<input id="title" type="text" name="dct:title" size="20"/>
-					</td>
-				</tr>
-        <tr>
-          <th scope="row">
-            <label for="description"><i18n:text key="adv.description">Beskrivelse</i18n:text></label>
-          </th>
-          <td>
-            <input id="description" type="text" name="dct:description" size="20"/>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">
-            <label for="publisher"><i18n:text key="adv.publisher">Utgiver</i18n:text></label>
-          </th>
-          <td>
-            <input id="publisher" type="text" name="dct:publisher/foaf:name" size="20"/>
-          </td>
-        </tr>
+            <xsl:call-template name="hidden-locale-field"/>
+            <table>
+                <tr>
+                    <th scope="row">
+                        <label for="subject">
+                            <i18n:text key="adv.subject">Emne</i18n:text>
+                        </label>
+                    </th>
+                    <td>
+                        <input id="subject" type="text" name="dct:subject/sub:literals" size="20"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="title">
+                            <i18n:text key="adv.title">Tittel</i18n:text>
+                        </label>
+                    </th>
+                    <td>
+                        <input id="title" type="text" name="dct:title" size="20"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="description">
+                            <i18n:text key="adv.description">Beskrivelse</i18n:text>
+                        </label>
+                    </th>
+                    <td>
+                        <input id="description" type="text" name="dct:description" size="20"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="publisher">
+                            <i18n:text key="adv.publisher">Utgiver</i18n:text>
+                        </label>
+                    </th>
+                    <td>
+                        <input id="publisher" type="text" name="dct:publisher/foaf:name" size="20"/>
+                    </td>
+                </tr>
 
-	<xsl:apply-templates select="/c:page/c:mediatypes/sq:sparql">
-	  <xsl:with-param name="field">dct:type</xsl:with-param>
-	  <xsl:with-param name="label"><i18n:text key="adv.mediaType">Mediatype</i18n:text></xsl:with-param>
-	</xsl:apply-templates>
+                <xsl:apply-templates select="/c:page/c:mediatypes/sq:sparql">
+                    <xsl:with-param name="field">dct:type</xsl:with-param>
+                    <xsl:with-param name="label">
+                        <i18n:text key="adv.mediaType">Mediatype</i18n:text>
+                    </xsl:with-param>
+                </xsl:apply-templates>
 
-	<xsl:apply-templates select="/c:page/c:languages/sq:sparql">
-	  <xsl:with-param name="field">dct:language</xsl:with-param>
-	  <xsl:with-param name="label"><i18n:text key="adv.language">Språk</i18n:text></xsl:with-param>
-	</xsl:apply-templates>
+                <xsl:apply-templates select="/c:page/c:languages/sq:sparql">
+                    <xsl:with-param name="field">dct:language</xsl:with-param>
+                    <xsl:with-param name="label">
+                        <i18n:text key="adv.language">Språk</i18n:text>
+                    </xsl:with-param>
+                </xsl:apply-templates>
 
-	<xsl:apply-templates select="/c:page/c:audiences/sq:sparql">
-	  <xsl:with-param name="field">dct:audience</xsl:with-param>
-	  <xsl:with-param name="label"><i18n:text key="adv.audience">Målgruppe</i18n:text></xsl:with-param>
-	</xsl:apply-templates>
+                <xsl:apply-templates select="/c:page/c:audiences/sq:sparql">
+                    <xsl:with-param name="field">dct:audience</xsl:with-param>
+                    <xsl:with-param name="label">
+                        <i18n:text key="adv.audience">Målgruppe</i18n:text>
+                    </xsl:with-param>
+                </xsl:apply-templates>
 
-	<xsl:choose>
-	  <xsl:when test="/c:page/c:loggedin = 'true'">
+                <xsl:choose>
+                    <xsl:when test="/c:page/c:loggedin = 'true'">
 
-	    <tr>
-	      <th scope="row">
-		<label for="dateAccepted"><i18n:text key="adv.dateAccepted">Godkjent Dato</i18n:text></label>
-	      </th>
-	      <td>
-		<input id="dateAccepted" type="text" name="dct:dateAccepted" size="20"/>
-	      </td>
-	    </tr>
-	    <tr>
-	      <th scope="row">
-		<label for="dateSubmitted"><i18n:text key="adv.dateSubmitted">Innsendt Dato</i18n:text></label>
-	      </th>
-	      <td>
-		<input id="dateSubmitted" type="text" name="dct:dateSubmitted" size="20"/>
-	      </td>
-	    </tr>	    
-	    <xsl:apply-templates select="/c:page/c:committers/sq:sparql">
-	      <xsl:with-param name="field">sub:committer</xsl:with-param>
-	      <xsl:with-param name="label"><i18n:text key="adv.approved">Godkjent av</i18n:text></xsl:with-param>
-	    </xsl:apply-templates>
-	    
-	    <xsl:apply-templates select="/c:page/c:statuses/sq:sparql">
-	      <xsl:with-param name="field">wdr:describedBy</xsl:with-param>
-	      <xsl:with-param name="label">Status</xsl:with-param>
-	    </xsl:apply-templates>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <input type="hidden" name="wdr:describedBy" value="http://sublima.computas.com/status/godkjent_av_administrator"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-        <tr>
-          <td></td>
-          <td>
-            <input type="submit" i18n:attr="value" value="button.adv.search"/>
-            <input type="reset" value="button.empty" i18n:attr="value"/>
-          </td>
-        </tr>
-      </table>
-    </form>
-  </xsl:template>
+                        <tr>
+                            <th scope="row">
+                                <label for="dateAccepted">
+                                    <i18n:text key="adv.dateAccepted">Godkjent Dato</i18n:text>
+                                </label>
+                            </th>
+                            <td>
+                                <input id="dateAccepted" type="text" name="dct:dateAccepted" size="20"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="dateSubmitted">
+                                    <i18n:text key="adv.dateSubmitted">Innsendt Dato</i18n:text>
+                                </label>
+                            </th>
+                            <td>
+                                <input id="dateSubmitted" type="text" name="dct:dateSubmitted" size="20"/>
+                            </td>
+                        </tr>
+                        <xsl:apply-templates select="/c:page/c:committers/sq:sparql">
+                            <xsl:with-param name="field">sub:committer</xsl:with-param>
+                            <xsl:with-param name="label">
+                                <i18n:text key="adv.approved">Godkjent av</i18n:text>
+                            </xsl:with-param>
+                        </xsl:apply-templates>
+
+                        <xsl:apply-templates select="/c:page/c:statuses/sq:sparql">
+                            <xsl:with-param name="field">wdr:describedBy</xsl:with-param>
+                            <xsl:with-param name="label">Status</xsl:with-param>
+                        </xsl:apply-templates>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <input type="hidden" name="wdr:describedBy"
+                               value="http://sublima.computas.com/status/godkjent_av_administrator"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" i18n:attr="value" value="button.adv.search"/>
+                        <input type="reset" value="button.empty" i18n:attr="value"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br/>
+        <br/>
+        <i18n:text key="search.externalresources">Søk i ressursenes innhold</i18n:text>
+        <form action="{$baseurl}/search-result.html" method="get">
+
+            <fieldset>
+                <input type="hidden" name="prefix" value="dct: &lt;http://purl.org/dc/terms/&gt;"/>
+                <input type="hidden" name="prefix" value="foaf: &lt;http://xmlns.com/foaf/0.1/&gt;"/>
+                <input type="hidden" name="prefix" value="sub: &lt;http://xmlns.computas.com/sublima#&gt;"/>
+                <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
+                <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
+                <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
+                <input type="hidden" name="prefix" value="pf: &lt;http://jena.hpl.hp.com/ARQ/property#&gt;"/>
+                <input type="hidden" name="deepsearch" value="deepsearch" checked="checked"/>
+                <xsl:call-template name="hidden-locale-field"/>
+                <input type="hidden" name="wdr:describedBy"
+                       value="http://sublima.computas.com/status/godkjent_av_administrator"/>
+
+
+                <input id="keyword" class="searchbox" type="text"
+                       name="searchstring" value="{c:page/c:searchparams/c:searchparams/c:searchstring}"/>
+                <input type="submit" id="btnSearch" value="search.submit" i18n:attr="value"/>
+                <br/>
+
+                <xsl:choose>
+                    <xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">
+                        <input type="radio" class="radio" name="booleanoperator" value="AND"/>
+                        <i18n:text key="search.boolean.and">og</i18n:text>
+                        <input type="radio" class="radio" name="booleanoperator" value="OR" checked="checked"/>
+                        <i18n:text key="search.boolean.or">eller</i18n:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <input type="radio" class="radio" name="booleanoperator" value="AND" checked="checked"/>
+                        <i18n:text key="search.boolean.and">og</i18n:text>
+                        <input type="radio" class="radio" name="booleanoperator" value="OR"/>
+                        <i18n:text key="search.boolean.or">eller</i18n:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <!-- sorting panel -->
+                <!-- updates and submits the search form -->
+                <span id="sortingpanel">
+                    <i18n:text key="search.sortby">Sorter etter</i18n:text>
+
+                    <select id="sort" name="sort">
+                        <option value="n0pred:title">
+                            <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'n0pred:title'">
+                                <xsl:attribute name="selected">selected</xsl:attribute>
+                            </xsl:if>
+                            <i18n:text key="title">Tittel</i18n:text>
+                        </option>
+                        <option value="n0pred:dateAccepted">
+                            <xsl:if test="c:page/c:searchparams/c:searchparams/c:sortby = 'n0pred:dateAccepted'">
+                                <xsl:attribute name="selected">selected</xsl:attribute>
+                            </xsl:if>
+                            <i18n:text key="search.sortby.date">Dato</i18n:text>
+                        </option>
+                    </select>
+                </span>
+                <br/>
+                <xsl:choose>
+                    <xsl:when test="c:page/c:searchparams/c:searchparams/c:exactmatch = 'exactmatch'">
+                        <input type="checkbox" class="radio" name="exactmatch" value="exactmatch" checked="checked"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <input type="checkbox" class="radio" name="exactmatch" value="exactmatch"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <i18n:text key="search.exactmatch">Eksakt ord</i18n:text>
+            </fieldset>
+        </form>
+
+
+    </xsl:template>
 
 </xsl:stylesheet>
