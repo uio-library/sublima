@@ -71,13 +71,13 @@
     </xsl:call-template>
 
     <xsl:call-template name="addinputfieldtemplates">
-      <xsl:with-param name="uid">klassifikasjon</xsl:with-param>
+      <xsl:with-param name="uid">klassifisering</xsl:with-param>
       <xsl:with-param name="interface-language" select="$interface-language"/>
-      <xsl:with-param name="values">klassifikasjonvalues</xsl:with-param>
-      <xsl:with-param name="template">klassifikasjontemplate</xsl:with-param>
+      <xsl:with-param name="values">klassifiseringvalues</xsl:with-param>
+      <xsl:with-param name="template">klassifiseringtemplate</xsl:with-param>
       <xsl:with-param name="name">sub:classification</xsl:with-param>
       <xsl:with-param name="i18nkey">classification</xsl:with-param>
-      <xsl:with-param name="i18ntext">Klassifikasjon</xsl:with-param>
+      <xsl:with-param name="i18ntext">Klassifisering</xsl:with-param>
     </xsl:call-template>
 
     <script type="text/javascript">
@@ -111,12 +111,12 @@
           <xsl:with-param name="appendto">addskrivefeilbefore</xsl:with-param>
         </xsl:call-template>
         <xsl:call-template name="addinputfieldscript">
-          <xsl:with-param name="uid">klassifikasjon</xsl:with-param>
-          <xsl:with-param name="values">klassifikasjonvalues</xsl:with-param>
-          <xsl:with-param name="template">klassifikasjontemplate</xsl:with-param>
+          <xsl:with-param name="uid">klassifisering</xsl:with-param>
+          <xsl:with-param name="values">lassifiseringvalues</xsl:with-param>
+          <xsl:with-param name="template">klassifiseringtemplate</xsl:with-param>
           <xsl:with-param name="count" select="count(c:topicdetails/rdf:RDF/skos:Concept/sub:classification)+2"/>
-          <xsl:with-param name="linkid">addklassifikasjon</xsl:with-param>
-          <xsl:with-param name="appendto">addklassifikasjonbefore</xsl:with-param>
+          <xsl:with-param name="linkid">addklassifisering</xsl:with-param>
+          <xsl:with-param name="appendto">addklassifiseringbefore</xsl:with-param>
         </xsl:call-template>
 
 
@@ -278,7 +278,7 @@
 
         <xsl:call-template name="labels">
           <xsl:with-param name="label">
-            <i18n:text key="classification">Klassifikasjon</i18n:text>
+            <i18n:text key="classification">Klassifisering</i18n:text>
           </xsl:with-param>
           <xsl:with-param name="value"/>
           <xsl:with-param name="default-language" select="$interface-language"/>
@@ -292,7 +292,7 @@
         <tr id="addklassifikasjonbefore">
           <td/>
           <td/>
-          <td><a id="addklassifikasjon"><i18n:text key="addklassifisering">Legg til skrivefeil</i18n:text></a></td>
+          <td><a id="addklassifikasjon"><i18n:text key="addklassifisering">Legg til klassifisering</i18n:text></a></td>
         </tr>
 
       </table>
