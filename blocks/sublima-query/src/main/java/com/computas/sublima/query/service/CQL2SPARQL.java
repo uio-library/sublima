@@ -9,6 +9,9 @@ import org.z3950.zing.cql.CQLTermNode;
 import org.apache.log4j.Logger;                              
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.net.URLDecoder;
 
 /**
  * 
@@ -30,7 +33,7 @@ public class CQL2SPARQL {
         cqlRootNode = root;
     }
 
-    public String Level0() throws UnsupportedCQLFeatureException {
+    public String Level0() throws UnsupportedCQLFeatureException, UnsupportedEncodingException {
         // Check what we don't need to do for Level 0 and throw an exception if those conditions occur.
         if (! (cqlRootNode instanceof CQLTermNode)) {
             throw new UnsupportedCQLFeatureException("Only Level 0 queries are supported. Not a Term");
@@ -44,7 +47,8 @@ public class CQL2SPARQL {
         }
         SearchService searchService = new SearchService("AND");
 
-        String searchString = searchService.buildSearchString(thisNode.getTerm(), true, false); // This is the freetext we will search for.
+        String searchString = URLDecoder.decode(thisNode.getTerm(), "UTF-8");
+        searchString = searchService.buildSearchString(searchString, true, false); // This is the freetext we will search for.
         logger.debug("CQL2SPARQL: Search String is: " + searchString);
         return  "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
