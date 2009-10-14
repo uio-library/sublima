@@ -87,13 +87,13 @@
 			</div>
 			<div id="topMenu">
 				<div id="headerSpacer">&#160;</div>
-				<div class="MenuItem">Om portalen</div>
+				<div class="MenuItem"><a href="{$baseurl}/portal/om_portalen{$qloc}">Om portalen</a></div>
 				<div class="MenuItem">
 					<a href="{$baseurl}/tips{$qloc}">
 						<i18n:text key="menu.tips">Forsalg</i18n:text>
 					</a>
 				</div>
-				<div class="MenuItem">Hjelp</div>
+				<div class="MenuItem"><a href="{$baseurl}/portal/hjelp{$qloc}">Hjelp</a></div>
 			</div>
 			
 			<div class="langBar">

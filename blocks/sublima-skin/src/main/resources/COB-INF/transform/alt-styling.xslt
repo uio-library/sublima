@@ -165,11 +165,9 @@ PVJ: Made the file UTF-8
 			</div>
 			<div id="contentMiddleHeader">
 				<!-- A-Z -->
-				<xsl:if test="not(c:page/c:innhold)">
 					<div id="panel-az">
 						<xsl:apply-templates select="c:page" mode="a-z"/>
 					</div>
-				</xsl:if>
 			</div>
 		</div>
 		<div id="contentRightHeader">
@@ -217,7 +215,7 @@ PVJ: Made the file UTF-8
 
 					<!-- Search -->
 					<!-- Search is shown when advanced search is not, and when there are no static content -->
-					<xsl:if test="not(c:page/c:advancedsearch) and not(c:page/c:innhold)">
+					<xsl:if test="not(c:page/c:advancedsearch)">
 
 						<div id="panel-search" style="border:0px solid brown">
 							<div id="searchBox">
@@ -434,9 +432,9 @@ PVJ: Made the file UTF-8
 					<xsl:apply-templates select="c:page/c:login" mode="login"/>
 
 					<!-- Static content -->
-					<xsl:if test="/c:page/c:innhold">
+					<xsl:if test="/c:page/c:static">
 						<div>
-							<xsl:apply-templates select="/c:page/c:innhold"/>
+							<xsl:apply-templates select="/c:page/c:static"/>
 						</div>
 					</xsl:if>
 

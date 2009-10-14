@@ -4,501 +4,501 @@
              xsi:schemaLocation="http://apache.org/cocoon/sitemap/1.0 http://cocoon.apache.org/schema/sitemap/cocoon-sitemap-1.0.xsd"
              xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:flow language="spring-apples"/>
-
-  <map:components>
-
-    <map:serializers>
-      <map:serializer name="xml" mime-type="text/xml"
-                      src="org.apache.cocoon.serialization.XMLSerializer">
-        <map:encoding>UTF-8</map:encoding>
-      </map:serializer>
-
-      <map:serializer name="xhtml"
-                      src="org.apache.cocoon.serialization.XMLSerializer"
-                      mime-type="text/html; charset=UTF-8">
-        
-        <map:doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</map:doctype-public>
-        <map:doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</map:doctype-system>
-        <map:encoding>UTF-8</map:encoding>
-      </map:serializer>
-
-      <map:serializer name="html" mime-type="text/html; charset=UTF-8"
-                      src="org.apache.cocoon.serialization.HTMLSerializer">
-        <map:encoding>UTF-8</map:encoding>
-
-        <!-- the following common doctype is only included for completeness, it has no impact on encoding>
-           <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
-           <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system -->
-      </map:serializer>
-    </map:serializers>
-
-    <map:selectors>
-      <map:selector name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
-	<map:exception name="processing" class="java.lang.Exception"/>
-      </map:selector>
-    </map:selectors>
-
-  </map:components>
-
-  <map:pipelines>
-
-    <!-- Pipeline for the admin part -->
-    <map:pipeline>
-
-      <!-- ================= -->
-      <!-- Simple login page -->
-      <!-- ================= -->
-      <map:match pattern="login">
-        <!-- if we are already logged in, redirect to the protected document -->
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-
-          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-            <map:parameter name="mode" value=""/>
-          </map:call>
-        </map:act>
-        <map:call function="com.computas.sublima.app.controller.admin.LoginController">
-          <map:parameter name="mode" value="showform"/>
-        </map:call>
-      </map:match>
-
-      <!-- ========================================= -->
-      <!-- Form target which performs auth service   -->
-      <!-- ========================================= -->
-      <map:match pattern="do-login">
-        <!--map:call function="com.computas.sublima.app.controller.admin.LoginController"-->
-        <!-- try to login -->
-        <!--map:act type="locale"-->
-        <map:act type="cauth-login">
-          <!--map:parameter name="locale" value="{cookie:language}"/-->
-          <map:parameter name="application" value="Sublima"/>
-          <map:parameter name="name" value="{request-param:username}"/>
-          <map:parameter name="password" value="{request-param:password}"/>
-          <map:redirect-to uri="{request:contextPath}/admin/?{request:queryString}"/>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login?{request:queryString}"/>
-        <!--/map:call-->
-        <!--/map:act-->
-      </map:match>
-
-
-      <!-- Does the initial test before sending to the actual loginhandler. This because we want to display errors to the user when the auth fails -->
-      <map:match pattern="do-login2">
-        <map:call function="com.computas.sublima.app.controller.admin.LoginController"/>
-      </map:match>
-
-      <!-- ========================================= -->
-      <!-- Logout link which invalidates the session -->
-      <!-- ========================================= -->
-      <map:match pattern="do-logout">
-        <map:act type="cauth-logout">
-          <map:parameter name="application" value="Sublima"/>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login?{request:queryString}"/>
-      </map:match>
-
-      <!-- To test SPARQL queries -->
-      <map:match pattern="testsparql/*">
-        <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-          <map:parameter name="mode" value="testsparql"/>
-          <map:parameter name="submode" value="{1}"/>
-        </map:call>
-      </map:match>
-
-      <!-- To test SPARUL queries -->
-      <map:match pattern="testsparul/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-            <map:parameter name="mode" value="testsparul"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <!-- Initial admin page -->
-      <map:match pattern="admin">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-
-          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-            <map:parameter name="mode" value=""/>
-          </map:call>
-
-          <!-- map:generate src="templates/admin.jx.xml" type="jx"/ -->
-          <!-- apply styling -->
-          <map:serialize type="servletService">
-            <map:parameter name="service" value="servlet:skin:/admin-styling"/>
-          </map:serialize>
-          <map:serialize type="xml"/>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-
-      </map:match>
-
-      <!-- all resource admin pages. Returns a 404 if the page is not found. -->
-      <map:match pattern="admin/ressurser/kommentarer/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
-            <map:parameter name="mode" value="kommentarer"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="admin/ressurser/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
-            <map:parameter name="mode" value="ressurser"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="admin/lenkesjekk/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.LinkcheckController">
-            <map:parameter name="mode" value="lenkesjekk"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="admin/brukere/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.UserController">
-            <map:parameter name="mode" value="brukere"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <!-- individual page for each publisher. -->
-      <map:match pattern="admin/utgivere/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
-            <map:parameter name="mode" value="utgivere"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <!-- individual page for each topic. -->
-      <map:match pattern="admin/emner/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.TopicController">
-            <map:parameter name="mode" value="emner"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="admin/emner/relasjoner/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.TopicController">
-            <map:parameter name="mode" value="relasjoner"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="admin/brukere/roller/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.UserController">
-            <map:parameter name="mode" value="roller"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="admin/database/index/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-            <map:parameter name="mode" value="index"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="admin/database/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-            <map:parameter name="mode" value="database"/>
-            <map:parameter name="submode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="admin/*">
-        <map:act type="cauth-is-logged-in">
-          <map:parameter name="application" value="Sublima"/>
-          <map:call function="com.computas.sublima.app.controller.admin.AdminController">
-            <map:parameter name="mode" value="{../1}"/>
-          </map:call>
-        </map:act>
-        <map:redirect-to uri="{request:contextPath}/login"/>
-      </map:match>
-
-      <map:match pattern="emner/*">
-        <map:call function="com.computas.sublima.app.controller.admin.TopicController">
-          <map:parameter name="mode" value="a-z"/>
-          <map:parameter name="submode" value="{1}"/>
-          <map:parameter name="interface-language" value="{cookie:language}"/>
-        </map:call>
-      </map:match>
-
-    </map:pipeline>
-
-    <map:pipeline>
-      <!-- pattern to match for "", when users don't define a URL -->
-      <map:match pattern="">
-        <map:call function="com.computas.sublima.app.controller.admin.TopicController">
-          <map:parameter name="mode" value="start"/>
-        </map:call>
-      </map:match>
-
-      <map:match pattern="home">
-        <map:call function="com.computas.sublima.app.controller.admin.TopicController">
-          <map:parameter name="mode" value="browse"/>
-        </map:call>
-      </map:match>
-
-      <map:match pattern="a-z">
-        <map:call function="com.computas.sublima.app.controller.admin.TopicController">
-          <map:parameter name="mode" value="a-z"/>
-          <map:parameter name="submode" value="a-z"/>
-          <map:parameter name="interface-language" value="{cookie:language}"/>
-        </map:call>
-      </map:match>
-
-      <map:match pattern="portal/*">
-        <map:call function="com.computas.sublima.app.controller.ContentController">
-          <map:parameter name="mode" value="{1}"/>
-          <map:parameter name="interface-language" value="{cookie:language}"/>
-        </map:call>
-      </map:match>
-
-      <map:match pattern="empty">
-        <map:generate src="templates/empty-page.jx.xml" type="jx"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="tips">
-        <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
-          <map:parameter name="mode" value="tips"/>
-
-        </map:call>
-      </map:match>
-
-      <map:match pattern="textcontext/testcontext">
-        <map:generate src="templates/tips.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="sendtips">
-        <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
-          <map:parameter name="mode" value="sendtips"/>
-        </map:call>
-      </map:match>
-
-      <map:match pattern="resourcecomment">
-        <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
-          <map:parameter name="mode" value="resourcecomment"/>
-        </map:call>
-      </map:match>
-
-      <map:match pattern="takk">
-        <map:generate src="templates/takktips.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="advancedsearch">
-        <map:call function="com.computas.sublima.app.controller.SearchController">
-          <map:parameter name="mode" value="advancedsearch"/>
-        </map:call>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="search-result.*">
-          <map:call function="com.computas.sublima.app.controller.SearchController">
-            <map:parameter name="mode" value="search-result"/>
-            <map:parameter name="interface-language" value="{cookie:language}"/>
-            <map:parameter name="format" value="{1}"/>
-          </map:call>
-      </map:match>
-
-      <map:match pattern="topic/*.*">
-          <map:call function="com.computas.sublima.app.controller.SearchController">
-            <map:parameter name="mode" value="topic"/>
-            <map:parameter name="topic" value="{1}"/>
-            <map:parameter name="format" value="{2}"/>
-            <map:parameter name="interface-language" value="{cookie:language}"/>
-          </map:call>
-      </map:match>
-
-      <map:match pattern="topic/*">
-	<map:call function="com.computas.sublima.app.controller.RedirectController"/>
-      </map:match>
-
-
-      <map:match pattern="resource/*.*">
-          <map:call function="com.computas.sublima.app.controller.SearchController">
-            <map:parameter name="mode" value="resource"/>
-            <map:parameter name="name" value="{1}"/>
-            <map:parameter name="format" value="{2}"/>
-            <map:parameter name="interface-language" value="{cookie:language}"/>
-          </map:call>
-      </map:match>
-
-      <map:match pattern="resource/*">
-	<map:call function="com.computas.sublima.app.controller.RedirectController"/>
-      </map:match>
-
-      <map:match pattern="navigation-and-facets">
-        <map:generate src="service-consumer:"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <!-- Matchers for CSS and images -->
-      <map:match pattern="**/*.gif">
-        <map:read src="servlet:skin:/resources/images/{2}.gif" mime-type="image/gif"/>
-      </map:match>
-
-      <map:match pattern="**/*.jpg">
-        <map:read src="servlet:skin:/resources/images/{2}.jpg" mime-type="image/jpg"/>
-      </map:match>
-
-      <map:match pattern="**/*.png">
-        <map:read src="servlet:skin:/resources/images/{2}.png" mime-type="image/png"/>
-      </map:match>
-
-      <map:match pattern="**/*.css">
-        <map:read src="servlet:skin:/resources/styles/{2}.css" mime-type="text/css"/>
-      </map:match>
-
-      <map:match pattern="**/*.js">
-        <map:read src="servlet:skin:/resources/styles/{2}.js" mime-type="text/javascript"/>
-      </map:match>
-
-      <map:handle-errors>
-	<map:generate src="servlet:skin:/resources/errors/general.xml"/>
-	<map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-	</map:serialize>
-	
-        <map:serialize type="html"  status-code="500"/>
-
-      </map:handle-errors>
-      
-
-    </map:pipeline>
-
-
-    <map:pipeline internal-only="true">
-
-      <map:match pattern="xhtml/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <map:serialize type="xhtml"/>
-      </map:match>
-
-      <map:match pattern="xml/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-      </map:match>
-
-      <map:match pattern="static/*">
-        <map:generate src="servlet:skin:/resources/static/{1}.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
-        </map:serialize>
-      </map:match>
-
-      <map:match pattern="rss/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <!-- apply styling -->
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/rss-styling"/>
-        </map:serialize>
-      </map:match>
-
-      <map:match pattern="nostyle/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <map:serialize type="text"/>
-      </map:match>
-
-
-      <map:match pattern="xml2/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/admin-styling"/>
-        </map:serialize>
-        <!--map:serialize type="xml"/-->
-      </map:match>
-
-
-    </map:pipeline>
-
-    <map:pipeline>
-      <map:match pattern="sruserver">
-        <map:call function="com.computas.sublima.query.controller.SRUServer"/>
-      </map:match>
-    </map:pipeline>
-
-
-    <map:pipeline internal-only="true">
-      <map:match pattern="sru/sru-results">
-        <map:generate src="templates/sru-results.jx.xml" type="jx"/>
-        <map:serialize type="servletService">
-          <map:parameter name="service" value="servlet:skin:/rdfxml2sru-transform"/>
-        </map:serialize>
-      </map:match>
-    </map:pipeline>
-
-    <map:pipeline internal-only="true">
-      <map:match pattern="sru/*">
-        <map:generate src="templates/{1}.jx.xml" type="jx"/>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-
-  </map:pipelines>
+    <map:flow language="spring-apples"/>
+
+    <map:components>
+
+        <map:serializers>
+            <map:serializer name="xml" mime-type="text/xml"
+                            src="org.apache.cocoon.serialization.XMLSerializer">
+                <map:encoding>UTF-8</map:encoding>
+            </map:serializer>
+
+            <map:serializer name="xhtml"
+                            src="org.apache.cocoon.serialization.XMLSerializer"
+                            mime-type="text/html; charset=UTF-8">
+
+                <map:doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</map:doctype-public>
+                <map:doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</map:doctype-system>
+                <map:encoding>UTF-8</map:encoding>
+            </map:serializer>
+
+            <map:serializer name="html" mime-type="text/html; charset=UTF-8"
+                            src="org.apache.cocoon.serialization.HTMLSerializer">
+                <map:encoding>UTF-8</map:encoding>
+
+                <!-- the following common doctype is only included for completeness, it has no impact on encoding>
+               <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
+               <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system -->
+            </map:serializer>
+        </map:serializers>
+
+        <map:selectors>
+            <map:selector name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
+                <map:exception name="processing" class="java.lang.Exception"/>
+            </map:selector>
+        </map:selectors>
+
+    </map:components>
+
+    <map:pipelines>
+
+        <!-- Pipeline for the admin part -->
+        <map:pipeline>
+
+            <!-- ================= -->
+            <!-- Simple login page -->
+            <!-- ================= -->
+            <map:match pattern="login">
+                <!-- if we are already logged in, redirect to the protected document -->
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+
+                    <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+                        <map:parameter name="mode" value=""/>
+                    </map:call>
+                </map:act>
+                <map:call function="com.computas.sublima.app.controller.admin.LoginController">
+                    <map:parameter name="mode" value="showform"/>
+                </map:call>
+            </map:match>
+
+            <!-- ========================================= -->
+            <!-- Form target which performs auth service   -->
+            <!-- ========================================= -->
+            <map:match pattern="do-login">
+                <!--map:call function="com.computas.sublima.app.controller.admin.LoginController"-->
+                <!-- try to login -->
+                <!--map:act type="locale"-->
+                <map:act type="cauth-login">
+                    <!--map:parameter name="locale" value="{cookie:language}"/-->
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:parameter name="name" value="{request-param:username}"/>
+                    <map:parameter name="password" value="{request-param:password}"/>
+                    <map:redirect-to uri="{request:contextPath}/admin/?{request:queryString}"/>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login?{request:queryString}"/>
+                <!--/map:call-->
+                <!--/map:act-->
+            </map:match>
+
+
+            <!-- Does the initial test before sending to the actual loginhandler. This because we want to display errors to the user when the auth fails -->
+            <map:match pattern="do-login2">
+                <map:call function="com.computas.sublima.app.controller.admin.LoginController"/>
+            </map:match>
+
+            <!-- ========================================= -->
+            <!-- Logout link which invalidates the session -->
+            <!-- ========================================= -->
+            <map:match pattern="do-logout">
+                <map:act type="cauth-logout">
+                    <map:parameter name="application" value="Sublima"/>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login?{request:queryString}"/>
+            </map:match>
+
+            <!-- To test SPARQL queries -->
+            <map:match pattern="testsparql/*">
+                <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+                    <map:parameter name="mode" value="testsparql"/>
+                    <map:parameter name="submode" value="{1}"/>
+                </map:call>
+            </map:match>
+
+            <!-- To test SPARUL queries -->
+            <map:match pattern="testsparul/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+                        <map:parameter name="mode" value="testsparul"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <!-- Initial admin page -->
+            <map:match pattern="admin">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+
+                    <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+                        <map:parameter name="mode" value=""/>
+                    </map:call>
+
+                    <!-- map:generate src="templates/admin.jx.xml" type="jx"/ -->
+                    <!-- apply styling -->
+                    <map:serialize type="servletService">
+                        <map:parameter name="service" value="servlet:skin:/admin-styling"/>
+                    </map:serialize>
+                    <map:serialize type="xml"/>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+
+            </map:match>
+
+            <!-- all resource admin pages. Returns a 404 if the page is not found. -->
+            <map:match pattern="admin/ressurser/kommentarer/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
+                        <map:parameter name="mode" value="kommentarer"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="admin/ressurser/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.ResourceController">
+                        <map:parameter name="mode" value="ressurser"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="admin/lenkesjekk/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.LinkcheckController">
+                        <map:parameter name="mode" value="lenkesjekk"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="admin/brukere/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.UserController">
+                        <map:parameter name="mode" value="brukere"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <!-- individual page for each publisher. -->
+            <map:match pattern="admin/utgivere/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.PublisherController">
+                        <map:parameter name="mode" value="utgivere"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <!-- individual page for each topic. -->
+            <map:match pattern="admin/emner/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.TopicController">
+                        <map:parameter name="mode" value="emner"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="admin/emner/relasjoner/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.TopicController">
+                        <map:parameter name="mode" value="relasjoner"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="admin/brukere/roller/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.UserController">
+                        <map:parameter name="mode" value="roller"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="admin/database/index/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+                        <map:parameter name="mode" value="index"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="admin/database/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+                        <map:parameter name="mode" value="database"/>
+                        <map:parameter name="submode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="admin/*">
+                <map:act type="cauth-is-logged-in">
+                    <map:parameter name="application" value="Sublima"/>
+                    <map:call function="com.computas.sublima.app.controller.admin.AdminController">
+                        <map:parameter name="mode" value="{../1}"/>
+                    </map:call>
+                </map:act>
+                <map:redirect-to uri="{request:contextPath}/login"/>
+            </map:match>
+
+            <map:match pattern="emner/*">
+                <map:call function="com.computas.sublima.app.controller.admin.TopicController">
+                    <map:parameter name="mode" value="a-z"/>
+                    <map:parameter name="submode" value="{1}"/>
+                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                </map:call>
+            </map:match>
+
+        </map:pipeline>
+
+        <map:pipeline>
+            <!-- pattern to match for "", when users don't define a URL -->
+            <map:match pattern="">
+                <map:call function="com.computas.sublima.app.controller.admin.TopicController">
+                    <map:parameter name="mode" value="start"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="home">
+                <map:call function="com.computas.sublima.app.controller.admin.TopicController">
+                    <map:parameter name="mode" value="browse"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="a-z">
+                <map:call function="com.computas.sublima.app.controller.admin.TopicController">
+                    <map:parameter name="mode" value="a-z"/>
+                    <map:parameter name="submode" value="a-z"/>
+                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="portal/*">
+                <map:call function="com.computas.sublima.app.controller.ContentController">
+                    <map:parameter name="mode" value="{1}"/>
+                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="empty">
+                <map:generate src="templates/empty-page.jx.xml" type="jx"/>
+                <map:serialize type="xml"/>
+            </map:match>
+
+            <map:match pattern="tips">
+                <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
+                    <map:parameter name="mode" value="tips"/>
+
+                </map:call>
+            </map:match>
+
+            <map:match pattern="textcontext/testcontext">
+                <map:generate src="templates/tips.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+                <map:serialize type="xml"/>
+            </map:match>
+
+            <map:match pattern="sendtips">
+                <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
+                    <map:parameter name="mode" value="sendtips"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="resourcecomment">
+                <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
+                    <map:parameter name="mode" value="resourcecomment"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="takk">
+                <map:generate src="templates/takktips.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+                <map:serialize type="xml"/>
+            </map:match>
+
+            <map:match pattern="advancedsearch">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="advancedsearch"/>
+                </map:call>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+                <map:serialize type="xml"/>
+            </map:match>
+
+            <map:match pattern="search-result.*">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="search-result"/>
+                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                    <map:parameter name="format" value="{1}"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="topic/*.*">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="topic"/>
+                    <map:parameter name="topic" value="{1}"/>
+                    <map:parameter name="format" value="{2}"/>
+                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="topic/*">
+                <map:call function="com.computas.sublima.app.controller.RedirectController"/>
+            </map:match>
+
+
+            <map:match pattern="resource/*.*">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="resource"/>
+                    <map:parameter name="name" value="{1}"/>
+                    <map:parameter name="format" value="{2}"/>
+                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                </map:call>
+            </map:match>
+
+            <map:match pattern="resource/*">
+                <map:call function="com.computas.sublima.app.controller.RedirectController"/>
+            </map:match>
+
+            <map:match pattern="navigation-and-facets">
+                <map:generate src="service-consumer:"/>
+                <map:serialize type="xml"/>
+            </map:match>
+
+            <!-- Matchers for CSS and images -->
+            <map:match pattern="**/*.gif">
+                <map:read src="servlet:skin:/resources/images/{2}.gif" mime-type="image/gif"/>
+            </map:match>
+
+            <map:match pattern="**/*.jpg">
+                <map:read src="servlet:skin:/resources/images/{2}.jpg" mime-type="image/jpg"/>
+            </map:match>
+
+            <map:match pattern="**/*.png">
+                <map:read src="servlet:skin:/resources/images/{2}.png" mime-type="image/png"/>
+            </map:match>
+
+            <map:match pattern="**/*.css">
+                <map:read src="servlet:skin:/resources/styles/{2}.css" mime-type="text/css"/>
+            </map:match>
+
+            <map:match pattern="**/*.js">
+                <map:read src="servlet:skin:/resources/styles/{2}.js" mime-type="text/javascript"/>
+            </map:match>
+
+            <!--map:handle-errors>
+                <map:generate src="servlet:skin:/resources/errors/general.xml"/>
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+
+                <map:serialize type="html" status-code="500"/>
+
+            </map:handle-errors-->
+
+
+        </map:pipeline>
+
+
+        <map:pipeline internal-only="true">
+
+            <map:match pattern="xhtml/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <map:serialize type="xhtml"/>
+            </map:match>
+
+            <map:match pattern="xml/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+            </map:match>
+
+            <map:match pattern="static/*">
+                <map:generate src="static/{1}.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
+                </map:serialize>
+            </map:match>
+
+            <map:match pattern="rss/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <!-- apply styling -->
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/rss-styling"/>
+                </map:serialize>
+            </map:match>
+
+            <map:match pattern="nostyle/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <map:serialize type="text"/>
+            </map:match>
+
+
+            <map:match pattern="xml2/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/admin-styling"/>
+                </map:serialize>
+                <!--map:serialize type="xml"/-->
+            </map:match>
+
+
+        </map:pipeline>
+
+        <map:pipeline>
+            <map:match pattern="sruserver">
+                <map:call function="com.computas.sublima.query.controller.SRUServer"/>
+            </map:match>
+        </map:pipeline>
+
+
+        <map:pipeline internal-only="true">
+            <map:match pattern="sru/sru-results">
+                <map:generate src="templates/sru-results.jx.xml" type="jx"/>
+                <map:serialize type="servletService">
+                    <map:parameter name="service" value="servlet:skin:/rdfxml2sru-transform"/>
+                </map:serialize>
+            </map:match>
+        </map:pipeline>
+
+        <map:pipeline internal-only="true">
+            <map:match pattern="sru/*">
+                <map:generate src="templates/{1}.jx.xml" type="jx"/>
+                <map:serialize type="xml"/>
+            </map:match>
+        </map:pipeline>
+
+    </map:pipelines>
 
 </map:sitemap>

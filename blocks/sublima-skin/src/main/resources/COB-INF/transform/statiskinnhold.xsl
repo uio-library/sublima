@@ -13,12 +13,56 @@
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
-  <xsl:param name="baseurl"/>
-  <xsl:param name="interface-language"/>
+    <!-- Importerer de ulike språkversjonene av de statiske sidene -->
+    <xsl:import href="om_portalen_no.xsl"/>
+    <xsl:import href="om_portalen_sv.xsl"/>
+    <xsl:import href="hjelp_no.xsl"/>
 
-  <xsl:template match="c:innhold">
-    <!--xsl:value-of disable-output-escaping="yes" select="."/-->
-    <xsl:copy-of select="."/>
-  </xsl:template>
+    <xsl:param name="baseurl"/>
+    <xsl:param name="interface-language"/>
+
+    <!-- Matcher c:static som indikerer at vi skal se på statisk innhold -->
+    <xsl:template match="c:static">
+        <!--xsl:value-of disable-output-escaping="yes" select="."/-->
+
+        <!-- Sjekker om URL'en er portal/om_portalen -->
+        <xsl:if test=". = 'om_portalen'">
+            <!-- Sjekker på språk, og viser riktig språktemplate -->
+            <xsl:choose>
+                <xsl:when test="$interface-language = 'no'">
+                    <xsl:call-template name="om_portalen_no"/>
+                </xsl:when>
+                <xsl:when test="$interface-language = 'sv'">
+                    <xsl:call-template name="om_portalen_sv"/>
+                </xsl:when>
+                <xsl:when test="$interface-language = 'da'">
+                    <xsl:call-template name="om_portalen_no"/>
+                </xsl:when>
+                <xsl:otherwise>
+
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
+
+        <!-- Sjekker om URL'en er portal/om_portalen -->
+        <xsl:if test=". = 'hjelp'">
+            <!-- Sjekker på språk, og viser riktig språktemplate -->
+            <xsl:choose>
+                <xsl:when test="$interface-language = 'no'">
+                    <xsl:call-template name="hjelp_no"/>
+                </xsl:when>
+                <xsl:when test="$interface-language = 'sv'">
+                    <xsl:call-template name="hjelp_no"/>
+                </xsl:when>
+                <xsl:when test="$interface-language = 'da'">
+                    <xsl:call-template name="hjelp_no"/>
+                </xsl:when>
+                <xsl:otherwise>
+
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
+
+    </xsl:template>
 
 </xsl:stylesheet>
