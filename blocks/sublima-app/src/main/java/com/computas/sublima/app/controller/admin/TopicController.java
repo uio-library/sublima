@@ -773,7 +773,7 @@ public class TopicController implements StatelessAppleController {
 // Check if the value in the key is the uri of a relation
 // Since the relations are in the form <uri> we can check if it starts with < first
       String key = pairs.getKey();
-      if (key.startsWith("<")) { // Then it is a uri and possibly a relation
+      if (key.startsWith("<") && (pairs.getValue().length != 1 && pairs.getValue()[0].equals(""))) { // Then it is a uri, with associated value, and possibly a relation
         if (adminService.isRelation(key)) { // If the uri from the key is a relation
 
           // Check if the relation is one-way, symmetric or inverse
