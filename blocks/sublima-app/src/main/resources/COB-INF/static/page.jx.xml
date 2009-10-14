@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:page xmlns:c="http://xmlns.computas.com/cocoon"
+        xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+        xmlns="http://www.w3.org/1999/xhtml">
+
+  <c:loggedin><jx:out value="#{loggedin}" xmlize="false"/></c:loggedin>
+
+  <c:static><jx:out value="#{mode}" xmlize="false"/></c:static>
+
+</c:page>
