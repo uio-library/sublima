@@ -112,7 +112,7 @@
         </xsl:call-template>
         <xsl:call-template name="addinputfieldscript">
           <xsl:with-param name="uid">klassifisering</xsl:with-param>
-          <xsl:with-param name="values">lassifiseringvalues</xsl:with-param>
+          <xsl:with-param name="values">klassifiseringvalues</xsl:with-param>
           <xsl:with-param name="template">klassifiseringtemplate</xsl:with-param>
           <xsl:with-param name="count" select="count(c:topicdetails/rdf:RDF/skos:Concept/sub:classification)+2"/>
           <xsl:with-param name="linkid">addklassifisering</xsl:with-param>
@@ -289,10 +289,10 @@
           <xsl:with-param name="type">text</xsl:with-param>
         </xsl:call-template>
 
-        <tr id="addklassifikasjonbefore">
+        <tr id="addklassifiseringbefore">
           <td/>
           <td/>
-          <td><a id="addklassifikasjon"><i18n:text key="addklassifisering">Legg til klassifisering</i18n:text></a></td>
+          <td><a id="addklassifisering"><i18n:text key="addklassifisering">Legg til klassifisering</i18n:text></a></td>
         </tr>
 
       </table>
