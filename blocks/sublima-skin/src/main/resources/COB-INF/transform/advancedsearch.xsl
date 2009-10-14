@@ -182,20 +182,12 @@
                 <input type="submit" id="btnSearch" value="search.submit" i18n:attr="value"/>
                 <br/>
 
-                <xsl:choose>
-                    <xsl:when test="c:page/c:searchparams/c:searchparams/c:operator = 'OR'">
-                        <input type="radio" class="radio" name="booleanoperator" value="AND"/>
-                        <i18n:text key="search.boolean.and">og</i18n:text>
-                        <input type="radio" class="radio" name="booleanoperator" value="OR" checked="checked"/>
-                        <i18n:text key="search.boolean.or">eller</i18n:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <input type="radio" class="radio" name="booleanoperator" value="AND" checked="checked"/>
-                        <i18n:text key="search.boolean.and">og</i18n:text>
-                        <input type="radio" class="radio" name="booleanoperator" value="OR"/>
-                        <i18n:text key="search.boolean.or">eller</i18n:text>
-                    </xsl:otherwise>
-                </xsl:choose>
+
+                <input type="radio" class="radio" name="booleanoperator" value="AND" checked="checked"/>
+                <i18n:text key="search.boolean.and">og</i18n:text>
+                <input type="radio" class="radio" name="booleanoperator" value="OR"/>
+                <i18n:text key="search.boolean.or">eller</i18n:text>
+
                 <!-- sorting panel -->
                 <!-- updates and submits the search form -->
                 <span id="sortingpanel">
