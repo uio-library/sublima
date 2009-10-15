@@ -414,7 +414,7 @@
                 <map:read src="servlet:skin:/resources/styles/{2}.js" mime-type="text/javascript"/>
             </map:match>
 
-            <!--map:handle-errors>
+            <map:handle-errors>
                 <map:generate src="servlet:skin:/resources/errors/general.xml"/>
                 <map:serialize type="servletService">
                     <map:parameter name="service" value="servlet:skin:/sublima-styling"/>
@@ -422,7 +422,7 @@
 
                 <map:serialize type="html" status-code="500"/>
 
-            </map:handle-errors-->
+            </map:handle-errors>
 
 
         </map:pipeline>
