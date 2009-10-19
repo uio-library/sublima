@@ -50,6 +50,8 @@
       <script type="text/javascript">var dummy = null;</script>
       <script src="{$baseurl}/styles/jquery.template.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
+      <script src="{$baseurl}/styles/jquery.selectboxes.min.js" type="text/javascript" />
+      <script type="text/javascript">var dummy = null;</script>
 			<script src="{$baseurl}/styles/curvycorners.js" type="text/javascript" />
 			<script type="text/javascript">var dummy = null;</script>
 			<script src="{$baseurl}/styles/textsize.js" type="text/javascript" />

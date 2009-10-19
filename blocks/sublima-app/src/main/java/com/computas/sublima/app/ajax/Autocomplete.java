@@ -36,6 +36,8 @@ public class Autocomplete extends HttpServlet {
 
     if ("topic".equals(action)) {
       results = adminService.getTopicsByPartialName(partialname, language);
+    } else if ("topicvalue".equals(action)) {
+      results = adminService.getTopicsByPartialName(partialname, language);
     } else if ("publisher".equals(action)) {
       results = adminService.getPublishersByPartialName(partialname);    
     }

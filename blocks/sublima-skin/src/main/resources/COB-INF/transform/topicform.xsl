@@ -21,6 +21,7 @@
   <xsl:import href="selectmultiple.xsl"/>
   <xsl:import href="addinputfield_templates.xsl"/>
   <xsl:import href="addinputfield_script.xsl"/>
+  <xsl:import href="autocomplete_selectbox.xsl"/>
 
   <xsl:param name="baseurl"/>
   <xsl:param name="servername"/>
@@ -338,6 +339,15 @@
         <xsl:for-each select="c:relationtypes/rdf:RDF/owl:ObjectProperty | c:relationtypes/rdf:RDF/owl:SymmetricProperty">
           <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
           <xsl:variable name="relation-uri" select="./@rdf:about"/>
+          <xsl:call-template name="dropdownautocomplete">
+            <xsl:with-param name="select_id">the-relation-<xsl:value-of select="position()"/></xsl:with-param>
+            <xsl:with-param name="select_name">&lt;<xsl:value-of select="$relation-uri"/>&gt;</xsl:with-param>
+            <xsl:with-param name="node" select="/c:page/c:content/c:topic/c:alltopics/rdf:RDF/skos:Concept"/>
+            <xsl:with-param name="match" select="/c:page/c:content/c:topic/c:topicdetails/rdf:RDF/skos:Concept/*[concat(namespace-uri(), local-name()) = $relation-uri]/@rdf:resource"/>
+          </xsl:call-template>  
+
+
+          <!--
           <tr>
             <th scope="row">
               <label for="the-relation-{position()}">
@@ -352,8 +362,12 @@
                 <xsl:with-param name="position"><xsl:value-of select="position()"/></xsl:with-param>
               </xsl:call-template>
 
+              -->
+
               <!--select id="the-relation-{position()}" name="&lt;{$relation-uri}&gt;" multiple="multiple"-->
 
+
+            <!--
               <select class="selectmultiple" id="temp{position()}" multiple="multiple">
                 <xsl:for-each select="/c:page/c:content/c:topic/c:alltopics/rdf:RDF/skos:Concept">
                   <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
@@ -385,6 +399,7 @@
               <a href="#" id="remove{position()}" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
             </td>
           </tr>
+          -->
 
         </xsl:for-each>
 
