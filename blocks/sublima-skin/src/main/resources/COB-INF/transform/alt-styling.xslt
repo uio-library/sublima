@@ -748,7 +748,7 @@ PVJ: Made the file UTF-8
 					<a href="http://www.computas.com/">Computas AS</a>
 					, 2008
 				</i18n:text>
-				(Sublima 1.1.1.4096)
+				(Sublima 1.1.1.4416)
 			</p>
 		</div>
 		<div class="clearer">&#160;</div>
