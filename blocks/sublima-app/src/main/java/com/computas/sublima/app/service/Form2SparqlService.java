@@ -340,7 +340,7 @@ public class Form2SparqlService {
       }
     }
     sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
-    sparqlQueryBuffer.append("\n}\nOFFSET 1\nLIMIT 1");
+    sparqlQueryBuffer.append("\n}\nLIMIT 1");
     sparqlQueryBuffer.insert(0, getPrefixString());
     String returnString = sparqlQueryBuffer.toString();
     //logger.trace("Constructed SPARQL query: \n" + returnString);
