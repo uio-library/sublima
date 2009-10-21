@@ -59,6 +59,8 @@ public class Form2SparqlService {
 
   private boolean truncate = true;
 
+  boolean deepsearch = false;
+
   private String archiveuri;
 
   private MappingService mapping = new MappingService();
@@ -317,6 +319,34 @@ public class Form2SparqlService {
     return returnString;
   }
 
+  public String convertForm2SparqlMoreThanZeroHits(Map<String, String[]> parameterMap) {
+
+    // Using StringBuilder, since regular String can cause performance issues
+    // with large datasets
+    StringBuilder sparqlQueryBuffer = new StringBuilder();
+    sparqlQueryBuffer.append("SELECT DISTINCT ?resource ");
+    ArrayList<String> n3Listtmp = getN3List(parameterMap);
+    if (n3Listtmp.size() < 1) {
+      logger.info("convertForm2SparqlCount had no triples in the WHERE clause, avoiding getting the whole database.");
+      return null;
+    }
+    ArrayList<String> n3List = new ArrayList<String>();
+    sparqlQueryBuffer.append("WHERE {");
+    sparqlQueryBuffer.append("?resource a sub:Resource .\n");
+    for (String triple : n3Listtmp) {
+      // This is a hack to optimize the count a bit by leaving out the check for approved resources.
+      if (!triple.contains("status/godkjent_av_administrator")) {
+        n3List.add(triple);
+      }
+    }
+    sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
+    sparqlQueryBuffer.append("\n}\nOFFSET 1\nLIMIT 1");
+    sparqlQueryBuffer.insert(0, getPrefixString());
+    String returnString = sparqlQueryBuffer.toString();
+    //logger.trace("Constructed SPARQL query: \n" + returnString);
+    return returnString;
+  }
+
   /**
    * Appends most of the core SPARQL WHERE clause and a bit more to the querybuffer
    *
@@ -348,9 +378,9 @@ public class Form2SparqlService {
 
       if (parameterMap.get("searchstring") != null) { // Then it is a simple freetext search
         //Do deep search in external resources or not
-        boolean deepsearch = false;
+
         addPrefix("sub: <http://xmlns.computas.com/sublima#>");
-        if (parameterMap.get("deepsearch") != null && "deepsearch".equalsIgnoreCase(parameterMap.get("deepsearch")[0])) {
+        if ((parameterMap.get("deepsearch") != null && "deepsearch".equalsIgnoreCase(parameterMap.get("deepsearch")[0])) || deepsearch) {
           deepsearch = true;
           parameterMap.remove("deepsearch");
           logger.debug("SUBLIMA: Deep search enabled");
@@ -550,6 +580,14 @@ public class Form2SparqlService {
       this.archiveuri = archiveuri;
     }
 
+  }
+
+  public void setDeepsearch(boolean deepsearch) {
+      this.deepsearch = deepsearch;
+  }
+
+  public void nullN3List() {
+      this.n3List = null;
   }
 
 }

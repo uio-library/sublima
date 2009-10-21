@@ -295,7 +295,7 @@
   <message key="browseTheme.header">Kategorier</message><!-- MÅ OVERSETTES -->
   <message key="ascending">Stigende</message><!-- MÅ OVERSETTES -->
   <message key="descending">Synkende</message><!-- MÅ OVERSETTES -->
-  <message key="addklassifisering">Legg til klassifisering</message><!-- MÅ OVERSETTES -->    
-
+  <message key="addklassifisering">Legg til klassifisering</message><!-- MÅ OVERSETTES -->
+  <message key="search.zerohits">Ingen treff i ressursenes metadata, utførte derfor et dypere søk som også inkluderte søk i ressursenes eksterne innhold.</message><!-- MÅ OVERSETTES -->
 </catalogue>
 
