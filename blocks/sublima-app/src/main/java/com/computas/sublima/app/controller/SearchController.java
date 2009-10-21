@@ -17,6 +17,7 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -170,7 +171,11 @@ public class SearchController implements StatelessAppleController {
             searchstring = searchstring.replace("&", "&amp;");
             searchstring = searchstring.replace("<", "&lt;");
             searchstring = searchstring.replace(">", "&gt;");
-            xmlSearchParametersBuffer.append("\t<c:searchstring>" + searchstring + "</c:searchstring>\n");
+            try {
+                xmlSearchParametersBuffer.append("\t<c:searchstring>" + new String(searchstring.getBytes("ISO-8859-1"), "UTF-8") + "</c:searchstring>\n");
+            } catch (UnsupportedEncodingException e) {
+                xmlSearchParametersBuffer.append("\t<c:searchstring>" + searchstring + "</c:searchstring>\n");
+            }
         }
 
         xmlSearchParametersBuffer.append("\t<c:operator>" + req.getCocoonRequest().getParameter("booleanoperator") + "</c:operator>\n");
@@ -256,7 +261,6 @@ public class SearchController implements StatelessAppleController {
             countNumberOfHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMap, Integer.valueOf(SettingsService.getProperty("sublima.search.maxhitsbeforestop")));
 
 
-
             // OKE-562 If the search returns 0 hits, do a deep search.
             if (freetext) {
                 moreThanZeroHitsQuery = form2SparqlService.convertForm2SparqlMoreThanZeroHits(parameterMap);
@@ -300,7 +304,7 @@ public class SearchController implements StatelessAppleController {
                     Request r = req.getCocoonRequest();
                     String uri = r.getScheme() + "://" + r.getServerName();
                     if (r.getServerPort() != 80) {
-                        uri = uri + ":" + r.getServerPort();                        
+                        uri = uri + ":" + r.getServerPort();
                     }
                     uri = uri + r.getRequestURI() + "?dobigsearchanyway=true&" + r.getQueryString();
                     heavylogger.info(uri);

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.UnsupportedEncodingException;
 
 /**
  * A service class with methods to support advanced and free text search
@@ -39,9 +40,14 @@ public class SearchService {
    * @return A transformed search string, using AND/OR based on the configuration
    */
   //todo More advanced check on search string. Ie. - + NOT OR AND if defined in the search term by the user
-  public String buildSearchString(String searchstring, boolean truncate, boolean advancedsearch) {
+  public String buildSearchString(String searchstring, boolean truncate, boolean advancedsearch){
 
-    searchstring = mapping.charactermapping(searchstring);
+      try {
+          searchstring = new String(searchstring.getBytes("ISO-8859-1"), "UTF-8");
+      } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+      }
+      searchstring = mapping.charactermapping(searchstring);
 
     // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
     if (advancedsearch) {
