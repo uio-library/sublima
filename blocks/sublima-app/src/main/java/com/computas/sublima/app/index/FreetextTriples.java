@@ -116,6 +116,8 @@ public class FreetextTriples {
   public String getResourceExternalLiteralsAsString(String uri) {
     StringBuilder externalContent = new StringBuilder();
 
+    uri = uri.replace("<", "").replace(">", "").trim();
+
     URLActions urlAction = new URLActions(uri);
     String code = urlAction.getCode();
 
