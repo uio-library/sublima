@@ -16,7 +16,7 @@ public class Generate {
   }
 
   public void generateIndexForResources(boolean indexExternalContent, String basegraph, String[] fieldstoindex, String[] prefixes) {
-    EndpointSaver save = new EndpointSaver(basegraph, 10);
+    EndpointSaver save = new EndpointSaver(basegraph, 5);
     save.DropPropertyForType("?s", "<http://xmlns.computas.com/sublima#literals>", "<http://xmlns.computas.com/sublima#Resource>");
 
     if (indexExternalContent) {
