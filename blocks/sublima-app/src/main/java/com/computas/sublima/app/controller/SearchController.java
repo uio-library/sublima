@@ -261,8 +261,9 @@ public class SearchController implements StatelessAppleController {
             countNumberOfHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMap, Integer.valueOf(SettingsService.getProperty("sublima.search.maxhitsbeforestop")));
 
 
-            // OKE-562 If the search returns 0 hits, do a deep search.
-            if (freetext) {
+            // OKE-562 If the search returns 0 hits, do a deep search if such is enabled.
+            boolean zeroHitsStrategyEnables = Boolean.valueOf(getProperty("sulima.deepsearch.when.zero.hits"));
+            if (freetext && zeroHitsStrategyEnables) {
                 moreThanZeroHitsQuery = form2SparqlService.convertForm2SparqlMoreThanZeroHits(parameterMap);
                 String moreThanZeroHitsResult = (String) sparqlDispatcher.query(moreThanZeroHitsQuery);
 
