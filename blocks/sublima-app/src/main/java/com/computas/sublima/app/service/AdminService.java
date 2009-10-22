@@ -1363,4 +1363,41 @@ public class AdminService {
         //check whether match is found
         return m.matches();
     }
+
+    public LinkedHashSet<String> getListOfResourcesForTopic(String topicUri) {
+        String result = getResourcesForTopicAsJSON(topicUri);
+        LinkedHashSet<String> resourceSet = new LinkedHashSet<String>();
+
+        try {
+            JSONObject json = new JSONObject(result);
+            json = json.getJSONObject("results");
+            JSONArray jsonArray = json.getJSONArray("bindings");
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj2 = (JSONObject) jsonArray.get(i);
+                obj2 = (JSONObject) obj2.get("uri");
+                resourceSet.add(obj2.get("value").toString());
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return resourceSet;
+    }
+
+    public String getResourcesForTopicAsJSON(String topicUri) {
+        String queryString = StringUtils.join("\n", new String[]{
+                "PREFIX dct: <http://purl.org/dc/terms/>",
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
+                "SELECT ?uri FROM <" + SettingsService.getProperty("sublima.basegraph") + ">",
+                "WHERE {",
+                "?uri ?p <" + topicUri + ">. ",
+                "?uri a sub:Resource .",
+                "}"});
+
+        logger.trace("AdminService.getListOfResourcesForTopic() executing");
+        Object queryResult = sparqlDispatcher.getResultsAsFormat(queryString, "application/sparql-results+json");
+
+        return queryResult.toString();
+    }
 }

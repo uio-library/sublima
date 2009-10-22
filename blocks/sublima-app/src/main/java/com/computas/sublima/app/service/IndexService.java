@@ -15,10 +15,7 @@ import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A class to support Lucene/LARQ indexing in the web app
@@ -78,5 +75,9 @@ public class IndexService {
   }
 
 
- 
+    public void indexListOfResources(LinkedHashSet<String> listOfResourcesForTopic) {
+        for (String uri : listOfResourcesForTopic) {
+            indexResource(uri);
+        }
+    }
 }

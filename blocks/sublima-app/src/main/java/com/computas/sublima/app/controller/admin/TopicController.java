@@ -705,6 +705,8 @@ public class TopicController implements StatelessAppleController {
 
               indexService.indexTopic(form2SparqlService.getURI());
               logger.trace("Added the topic to the index");
+              indexService.indexListOfResources(adminService.getListOfResourcesForTopic(uri));
+              logger.trace("Indexed resources for the topic");
 
             } else {
               messageBuffer.append("<c:message><i18n:text key=\"topic.save.error\">Feil ved lagring av emne</i18n:text></c:message>\n");
