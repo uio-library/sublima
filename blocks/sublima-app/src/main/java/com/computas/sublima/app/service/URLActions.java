@@ -465,7 +465,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                     try {
                         connect();
                         String contentType = con.getContentType();
-                        if ("text/html".equalsIgnoreCase(contentType) || "text/xhtml".equalsIgnoreCase(contentType) || "text/xml".equalsIgnoreCase(contentType)) {
+                        if (contentType.toLowerCase().contains("text/html") || contentType.toLowerCase().contains("text/xhtml") || contentType.toLowerCase().contains("text/xml")) {
                             Reader reader = textExtractor.extractText(stream, contentType, "UTF-8");
                             int charValue = 0;
 
