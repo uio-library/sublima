@@ -47,6 +47,11 @@ public class Generate {
 
     EndpointSaver save = new EndpointSaver(basegraph, 10);
     save.DropPropertyForType(uri, "<http://xmlns.computas.com/sublima#literals>", "<http://xmlns.computas.com/sublima#Resource>");
+
+    if (indexExternalContent) {
+        save.DropPropertyForType(uri, "<http://xmlns.computas.com/sublima#externalliterals>", "<http://xmlns.computas.com/sublima#Resource>");        
+    }
+      
     String freetext = generateInternalFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, indexExternalContent);
 
     if (freetext != null) {
