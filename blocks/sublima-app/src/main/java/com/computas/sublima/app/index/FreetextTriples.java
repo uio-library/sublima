@@ -54,9 +54,9 @@ public class FreetextTriples {
 
     if (indexExternalContent) {
       String externalContent = getResourceExternalLiteralsAsString(uri);
-      return uri + " <http://xmlns.computas.com/sublima#literals> \"" + concatenatedSearchableText + "\" .\n" + uri + " <http://xmlns.computas.com/sublima#externalliterals> \"" + concatenatedSearchableText + " " + externalContent + "\" .\n";
+      return uri + " <http://xmlns.computas.com/sublima#literals> \"\"\"" + concatenatedSearchableText + "\"\"\" .\n" + uri + " <http://xmlns.computas.com/sublima#externalliterals> \"\"\"" + concatenatedSearchableText + " " + externalContent + "\"\"\" .\n";
     } else {
-      return concatenatedSearchableText.isEmpty() ? null : uri + " <http://xmlns.computas.com/sublima#literals> \"" + concatenatedSearchableText + "\" .";
+      return concatenatedSearchableText.isEmpty() ? null : uri + " <http://xmlns.computas.com/sublima#literals> \"\"\"" + concatenatedSearchableText + "\"\"\" .";
     }
   }
 
