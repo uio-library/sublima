@@ -27,7 +27,7 @@ public class Generate {
     int i = 1;
     int size = uris.size();
     for (String uri : uris) {
-      String freetext = generateInternalFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, indexExternalContent);
+      String freetext = generateFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, indexExternalContent);
       if (freetext != null) {
         save.Add(freetext);
       }
@@ -52,7 +52,7 @@ public class Generate {
         save.DropPropertyForType(uri, "<http://xmlns.computas.com/sublima#externalliterals>", "<http://xmlns.computas.com/sublima#Resource>");        
     }
       
-    String freetext = generateInternalFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, indexExternalContent);
+    String freetext = generateFreetextForSingleResource(uri, fieldstoindex, prefixes, new String[]{basegraph}, indexExternalContent);
 
     if (freetext != null) {
       save.Add(freetext);
@@ -101,7 +101,7 @@ public class Generate {
     save = null;
   }
 
-  public String generateInternalFreetextForSingleResource(String uri, String[] freetext, String[] prefixes, String[] graphs, boolean indexExternalContent) {
+  public String generateFreetextForSingleResource(String uri, String[] freetext, String[] prefixes, String[] graphs, boolean indexExternalContent) {
     return ft.generateFreetextTripleForURI(uri, freetext, prefixes, graphs, indexExternalContent);
   }
 

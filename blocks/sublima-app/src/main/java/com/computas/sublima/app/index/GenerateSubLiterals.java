@@ -1,7 +1,5 @@
 package com.computas.sublima.app.index;
 
-import com.computas.sublima.query.service.SettingsService;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -55,7 +53,7 @@ public class GenerateSubLiterals {
         BufferedWriter out = new BufferedWriter(fstream);
 
         for (String uri : uriList) {
-          String line = gen.generateInternalFreetextForSingleResource(uri, searchableProperties, prefixes, new String[]{graph}, indexexternal);
+          String line = gen.generateFreetextForSingleResource(uri, searchableProperties, prefixes, new String[]{graph}, indexexternal);
 
           if (line != null) {
             save.Add(line);

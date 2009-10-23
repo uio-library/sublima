@@ -28,7 +28,7 @@ public class GenerateService {
   }
 
   public String generateFreetextForSingle(String uri, String archive) {
-    return gen.generateInternalFreetextForSingleResource(uri, freetext, prefixes, new String[] {archive}, false);
+    return gen.generateFreetextForSingleResource(uri, freetext, prefixes, new String[] {archive}, false);
 
   }
 
