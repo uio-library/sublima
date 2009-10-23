@@ -104,7 +104,8 @@ public class FreetextTriples {
       e.printStackTrace();
     }
 
-    return escapeString(results.toString());
+    //return escapeString(results.toString());
+      return (results.toString());
   }
 
   /**
