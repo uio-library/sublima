@@ -171,11 +171,7 @@ public class SearchController implements StatelessAppleController {
             searchstring = searchstring.replace("&", "&amp;");
             searchstring = searchstring.replace("<", "&lt;");
             searchstring = searchstring.replace(">", "&gt;");
-            try {
-                xmlSearchParametersBuffer.append("\t<c:searchstring>" + new String(searchstring.getBytes("ISO-8859-1"), "UTF-8") + "</c:searchstring>\n");
-            } catch (UnsupportedEncodingException e) {
-                xmlSearchParametersBuffer.append("\t<c:searchstring>" + searchstring + "</c:searchstring>\n");
-            }
+            xmlSearchParametersBuffer.append("\t<c:searchstring>" + searchstring + "</c:searchstring>\n");
         }
 
         xmlSearchParametersBuffer.append("\t<c:operator>" + req.getCocoonRequest().getParameter("booleanoperator") + "</c:operator>\n");
