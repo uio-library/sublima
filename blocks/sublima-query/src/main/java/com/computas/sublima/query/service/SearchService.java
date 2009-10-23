@@ -42,12 +42,13 @@ public class SearchService {
   //todo More advanced check on search string. Ie. - + NOT OR AND if defined in the search term by the user
   public String buildSearchString(String searchstring, boolean truncate, boolean advancedsearch){
 
-      /*
+
       try {
           searchstring = new String(searchstring.getBytes("ISO-8859-1"), "UTF-8");
       } catch (UnsupportedEncodingException e) {
           e.printStackTrace();
-      }*/
+      }
+      
       searchstring = mapping.charactermapping(searchstring);
 
     // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
