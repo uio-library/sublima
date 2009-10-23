@@ -135,8 +135,8 @@ public class FreetextTriples {
         System.out.println(e);
       }
     }
-    //return escapeString(externalContent.toString());
-    return externalContent.toString();
+    return escapeString(externalContent.toString());
+    //return externalContent.toString();
   }
 
   private String escapeString(String s) {
