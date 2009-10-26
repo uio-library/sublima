@@ -78,10 +78,12 @@ public class FreetextTriples {
 
         String query = gu.createSelectQueryToGetFields(uri, fieldsToIndex, prefixes, graphs);
         String xml = (String) sparqlQuery.query(query);
+        
         try {
             xml = new String(xml.getBytes("ISO-8859-1"), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            return "";
         }
 
         StringBuilder results = new StringBuilder();
