@@ -4,27 +4,27 @@
 # COMMUNICATION between SERVER and CLIENT
 #
 # The Base URL for this deployment of Sublima. This should be the same as the URL where Sublima is available.
-sublima.base.url=http://smil.sys.wserver.no:8180/smil/
+sublima.base.url=http://smil.sublima.computas.com:8180/smil/
 # The basegraph defines the graph in Virtuoso where all data is stored. It is most common the same as sublima.base.url.
-sublima.basegraph=http://smil.sys.wserver.no:8180/smil/
+sublima.basegraph=http://smil.sublima.computas.com:8180/smil/
 # The SPARQL endpoint defines the location of the installed backend. This is used for queries from Sublima to Virtuoso.
-sublima.sparql.endpoint=http://smil.sys.wserver.no:8180/backend/sparql
+sublima.sparql.endpoint=http://smil.sublima.computas.com:8180/smilbackend/sparql
 # The SPARQL Authenticated endpoint defines the location of the Virtuoso SPARQL/Update endpoint. This points to the URL where
 # Virtuoso is installed and available online.
-sublima.sparul.endpoint=http://smil.sys.wserver.no:8890/sparql-auth
+sublima.sparul.endpoint=http://smil.sublima.computas.com:8890/sparql-auth
 # The SPARQL Direct endpoint defines the location of the Virtuoso SPARQL endpoint. This points to the URL where
 # Virtuoso is installed and available online. This is used for queries that don't have to be sent through the backend endpoint.
-sublima.sparql.directendpoint=http://smil.sys.wserver.no:8890/sparql
+sublima.sparql.directendpoint=http://smil.sublima.computas.com:8890/sparql
 # The SRU Server endpoint defines where the SRU Server for SRU queries are available.
-sublima.sruserver.endpoint=http://smil.sys.wserver.no:8180/smil/sruserver
+sublima.sruserver.endpoint=http://smil.sublima.computas.com:8180/smil/sruserver
 # Memcached servers define where Memcaced is running, if running at all.
 sublima.memcached.servers=localhost:11211
 # Credentials for Digest Authentication for Virtuoso.
-sublima.database.url=jdbc:virtuoso://smil.sys.wserver.no:1111
+sublima.database.url=jdbc:virtuoso://smil.sublima.computas.com:1111
 # Give the Virtuoso username and password here.
 # Remember to change the password! The default password are available from Virtuoso documentation and should not be used.
 virtuoso.digest.username=dba
-virtuoso.digest.password=13smil99
+virtuoso.digest.password=subpasswd
 # Leave this as-is
 virtuoso.digest.realm=SPARQL
 #
@@ -40,7 +40,7 @@ sublima.supported.locales=no,da,sv
 # COCOON ENCODING
 # The Cocoon Container encoding is the encoding of the operating system Sublima is installed on.
 # For Linux/Unix this is normally utf-8. For Windows it is normally iso-8859-1.
-org.apache.cocoon.containerencoding=utf-8
+org.apache.cocoon.containerencoding=iso-8859-1
 # The Cocoon Form encoding is the encoding of the input from HTML Forms in the system.
 # This should always be utf-8 to ensure correct handling of special characters.
 org.apache.cocoon.formencoding=utf-8
