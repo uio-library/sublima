@@ -88,7 +88,7 @@
         </xsl:if>
       </xsl:if>
       <xsl:if test="sub:Resource/dct:dateAccepted">
-        <xsl:if test="../../c:loggedin = 'true'">
+        <!--xsl:if test="../../c:loggedin = 'true'"-->
           <tr>
             <td scope="row">
               <i18n:text key="admin.accepteddate">Akseptert</i18n:text>:
@@ -97,7 +97,7 @@
               <xsl:apply-templates select="sub:Resource/dct:dateAccepted"/>
             </td>
           </tr>
-        </xsl:if>
+        <!--/xsl:if-->
       </xsl:if>
       <xsl:if test="sub:Resource/dct:language">
         <tr>
