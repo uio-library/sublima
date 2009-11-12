@@ -655,9 +655,9 @@ PVJ: Made the file UTF-8
 
                         <xsl:choose>
                             <xsl:when test="$interface-language = 'no'">
-                                <a href="http://no.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a>
-                                <a href="http://www.snl.no/.search?query={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Store norske leksikon">Store norske leksikon</a>
-                                <a href="http://www.pasienthandboka.no/default.asp?mode=search&amp;searchstring={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Pasienthåndboka">Pasienthåndboka</a>
+                                <a href="http://no.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a><br/>
+                                <a href="http://www.snl.no/.search?query={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Store norske leksikon">Store norske leksikon</a><br/>
+                                <a href="http://www.pasienthandboka.no/default.asp?mode=search&amp;searchstring={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Pasienthåndboka">Pasienthåndboka</a><br/>
                                 <a href="http://www.ub.uio.no/umh/bibsys_sok/?run={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Bøker og artikler">Bøker og artikler</a>
                            </xsl:when>
 
@@ -666,7 +666,7 @@ PVJ: Made the file UTF-8
                            </xsl:when>
 
                             <xsl:when test="$interface-language = 'da'">
-                                <a href="http://da.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a>
+                                <a href="http://da.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a><br/>
                                 <a href="https://www.sundhed.dk/Soeg.aspx?SoegeOrd={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Sundhed.dk">Sundhed.dk</a>
                            </xsl:when>
                         </xsl:choose>
