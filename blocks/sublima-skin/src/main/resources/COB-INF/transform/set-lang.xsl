@@ -8,9 +8,9 @@
   
   <xsl:template name="lang-text">
     <xsl:param name="url"/>
-    <a lang="no" hreflang="no" href="{$url}no"><i18n:text key="norwegian">Norsk</i18n:text></a>&#160;&#160;
-    <a lang="da" hreflang="da" href="{$url}da"><i18n:text key="danish">Dansk</i18n:text></a> &#160;&#160;
-    <a lang="sv" hreflang="sv" href="{$url}sv"><i18n:text key="swedish">Svenska</i18n:text></a> 
+    <a lang="no" hreflang="no" href="{$url}no">Norsk</a>&#160;&#160;
+    <a lang="da" hreflang="da" href="{$url}da">Dansk</a> &#160;&#160;
+    <a lang="sv" hreflang="sv" href="{$url}sv">Svenska</a> 
   </xsl:template>
 
   
