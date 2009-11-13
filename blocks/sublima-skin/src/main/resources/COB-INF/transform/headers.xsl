@@ -82,7 +82,7 @@
     <xsl:param name="baseurl"/>
     <div id="header">
 			<div id="headerLogo">
-				<a  href="{$baseurl}/">
+				<a  href="{$baseurl}/{$qloc}">
 				<img alt="header logo" class="headerImg" src="{$baseurl}/images/sublima-logo.png"/>
 				<span id="headerText">Emneportalverktøy</span>
 				</a>
