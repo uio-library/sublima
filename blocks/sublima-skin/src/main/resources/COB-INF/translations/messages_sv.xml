@@ -17,7 +17,7 @@
   <message key="admin.login">Login</message>
   <message key="admin.login.failed">Fel ved inloggning</message>
   <message key="admin.logout">Logga ut</message>
-  <message key="admin.posteddate">Insänt</message>
+  <message key="admin.posteddate">Registreringsdatum</message>
   <message key="admin.publisher.resources">Resurser med anknytning till denna utgivare</message>
   <message key="admin.topic.usedby">Resurser med anknytning till ämnet</message>
   <message key="administration">administration</message>
@@ -68,7 +68,7 @@
   <message key="error.generic.message">Ett fel uppstod. Anledningen är troligtvis ett tecken som inte kan hanteras.</message>
   <message key="facets.heading">Välj avgränsning</message>
   <message key="feedback.spam">Resursen du föreslår är spärrad i vår spam-databas</message>
-  <message key="fulldescription">Full beskrivning</message>
+  <message key="fulldescription">Detaljerad beskrivning</message>
   <message key="id">Id</message>
   <message key="in.google">i Google</message>
   <message key="inactivate">Inaktivera</message>

@@ -17,7 +17,7 @@
   <message key="admin.login">Log in</message>
   <message key="admin.login.failed">Wrong combination of username and password</message>
   <message key="admin.logout">Log out</message>
-  <message key="admin.posteddate">Posted</message>
+  <message key="admin.posteddate">Registered</message>
   <message key="admin.publisher.resources">Resources from this publisher</message>
   <message key="admin.topic.usedby">Resources with topic associated</message>
   <message key="administration">administration</message>

@@ -650,26 +650,27 @@ PVJ: Made the file UTF-8
 							<!-- avoid empty div -->
 
                             <!-- Videresøk for SMIL -->
-                        
-                        <h2>Videresøk</h2>
+                        <div>
+                            <h2>Videresøk</h2>
+    
+                            <xsl:choose>
+                                <xsl:when test="$interface-language = 'no'">
+                                    <a href="http://no.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a><br/>
+                                    <a href="http://www.snl.no/.search?query={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Store norske leksikon">Store norske leksikon</a><br/>
+                                    <a href="http://www.pasienthandboka.no/default.asp?mode=search&amp;searchstring={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Pasienthåndboka">Pasienthåndboka</a><br/>
+                                    <a href="http://www.ub.uio.no/umh/bibsys_sok/?run={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Bøker og artikler">Bøker og artikler</a>
+                               </xsl:when>
 
-                        <xsl:choose>
-                            <xsl:when test="$interface-language = 'no'">
-                                <a href="http://no.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a><br/>
-                                <a href="http://www.snl.no/.search?query={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Store norske leksikon">Store norske leksikon</a><br/>
-                                <a href="http://www.pasienthandboka.no/default.asp?mode=search&amp;searchstring={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Pasienthåndboka">Pasienthåndboka</a><br/>
-                                <a href="http://www.ub.uio.no/umh/bibsys_sok/?run={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Bøker og artikler">Bøker og artikler</a>
-                           </xsl:when>
+                               <xsl:when test="$interface-language = 'sv'">
+                                    <a href="http://sv.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a>
+                               </xsl:when>
 
-                           <xsl:when test="$interface-language = 'sv'">
-                                <a href="http://sv.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a>
-                           </xsl:when>
-
-                            <xsl:when test="$interface-language = 'da'">
-                                <a href="http://da.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a><br/>
-                                <a href="https://www.sundhed.dk/Soeg.aspx?SoegeOrd={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Sundhed.dk">Sundhed.dk</a>
-                           </xsl:when>
-                        </xsl:choose>
+                                <xsl:when test="$interface-language = 'da'">
+                                    <a href="http://da.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a><br/>
+                                    <a href="https://www.sundhed.dk/Soeg.aspx?SoegeOrd={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Sundhed.dk">Sundhed.dk</a>
+                               </xsl:when>
+                            </xsl:choose>
+                        </div>
 
 
 					</xsl:if>
@@ -771,7 +772,7 @@ PVJ: Made the file UTF-8
 					<a href="http://www.computas.com/">Computas AS</a>
 					, 2008
 				</i18n:text>
-				(Sublima 1.1.1.4512)
+				(Sublima 1.1.2.4512)
 			</p>
 		</div>
 		<div class="clearer">&#160;</div>

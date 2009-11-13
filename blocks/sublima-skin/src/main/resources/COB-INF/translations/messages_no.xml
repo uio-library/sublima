@@ -17,7 +17,7 @@
   <message key="admin.login">Logg inn</message>
   <message key="admin.login.failed">Feil ved innlogging</message>
   <message key="admin.logout">Logg ut</message>
-  <message key="admin.posteddate">Innsendt</message>
+  <message key="admin.posteddate">Registreringsdato</message>
   <message key="admin.publisher.resources">Ressurser tilknyttet utgiveren</message>
   <message key="admin.topic.usedby">Ressurser tilknyttet emnet</message>
   <message key="administration">administrasjon</message>
@@ -68,7 +68,7 @@
   <message key="error.generic.message">En feil oppsto. Årsaken er høyst sannsynlig tegn i søket som ikke kunne håndteres.</message>
   <message key="facets.heading">Velg avgrensning</message>
   <message key="feedback.spam">Ressursen du foreslår er sperret i vår spam-database</message>
-  <message key="fulldescription">Full beskrivelse</message>
+  <message key="fulldescription">Detaljert beskrivelse</message>
   <message key="id">Id</message>
   <message key="in.google">i Google</message>
   <message key="inactivate">Inaktivere</message>

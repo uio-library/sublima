@@ -17,7 +17,7 @@
   <message key="admin.login">Logg inn</message>
   <message key="admin.login.failed">Innlogging feilet</message>
   <message key="admin.logout">Logg ut</message>
-  <message key="admin.posteddate">Innsendt</message>
+  <message key="admin.posteddate">Registreringsdato</message>
   <message key="admin.publisher.resources">Ressurser tilknyttet utgiveren</message>
   <message key="admin.topic.usedby">Ressurser tilknyttet emnet</message>
   <message key="administration">administrasjon</message>
