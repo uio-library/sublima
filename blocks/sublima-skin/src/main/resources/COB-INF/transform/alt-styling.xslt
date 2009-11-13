@@ -651,7 +651,7 @@ PVJ: Made the file UTF-8
 
                             <!-- Videresøk for SMIL -->
                         <div>
-                            <h2>Videresøk</h2>
+                            <h2><i18n:text key="videresok">Videresøk</i18n:text></h2>
     
                             <xsl:choose>
                                 <xsl:when test="$interface-language = 'no'">
@@ -772,7 +772,7 @@ PVJ: Made the file UTF-8
 					<a href="http://www.computas.com/">Computas AS</a>
 					, 2008
 				</i18n:text>
-				(Sublima 1.1.2.4512)
+				(Sublima 1.1.2)
 			</p>
 		</div>
 		<div class="clearer">&#160;</div>
