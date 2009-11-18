@@ -341,6 +341,32 @@ PVJ: Made the file UTF-8
 					</xsl:if>
 
 					<!-- xsl:call-template name="messages"/ -->
+					
+					<div id="topicdescription">
+									<!--h3><i18n:text key="topic.heading">Emne</i18n:text></h3-->
+									<h3>
+										<xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
+										<xsl:if test="/c:page/c:loggedin = 'true'">
+											- <a href="{$baseurl}/admin/emner/emne?uri={/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about}{$aloc}">[Edit]</a>
+										</xsl:if>
+									</h3>
+									<xsl:if test="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]">
+										<p>
+											<xsl:text>(</xsl:text>
+											<xsl:for-each select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]">
+												<xsl:value-of select="."/>
+												<xsl:if test="position() !=last()">
+													<xsl:text>, </xsl:text>
+												</xsl:if>
+											</xsl:for-each>
+											<xsl:text>)</xsl:text>
+										</p>
+									</xsl:if>
+									<p>
+										<xsl:value-of disable-output-escaping="yes" select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:definition"/>
+									</p>
+								</div>
+							</xsl:if>
 
 
 
@@ -527,32 +553,6 @@ PVJ: Made the file UTF-8
 
 							<xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about and c:page/c:mode = 'topic'">
 
-								<div id="topicdescription">
-									<!--h3><i18n:text key="topic.heading">Emne</i18n:text></h3-->
-									<h3>
-										<xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
-										<xsl:if test="/c:page/c:loggedin = 'true'">
-											- <a href="{$baseurl}/admin/emner/emne?uri={/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about}{$aloc}">[Edit]</a>
-										</xsl:if>
-									</h3>
-									<xsl:if test="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]">
-										<p>
-											<xsl:text>(</xsl:text>
-											<xsl:for-each select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]">
-												<xsl:value-of select="."/>
-												<xsl:if test="position() !=last()">
-													<xsl:text>, </xsl:text>
-												</xsl:if>
-											</xsl:for-each>
-											<xsl:text>)</xsl:text>
-										</p>
-									</xsl:if>
-									<p>
-										<xsl:value-of disable-output-escaping="yes" select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:definition"/>
-									</p>
-								</div>
-							</xsl:if>
-
 							<xsl:if test="$numberofhits &gt; 0">
 
 								<!--h3>
@@ -650,7 +650,7 @@ PVJ: Made the file UTF-8
 							<!-- avoid empty div -->
 
                             <!-- Videresøk for SMIL -->
-                        <div>
+                        <!--div>
                             <h2><i18n:text key="videresok">Videresøk</i18n:text></h2>
     
                             <xsl:choose>
@@ -670,7 +670,7 @@ PVJ: Made the file UTF-8
                                     <a href="https://www.sundhed.dk/Soeg.aspx?SoegeOrd={/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Sundhed.dk">Sundhed.dk</a>
                                </xsl:when>
                             </xsl:choose>
-                        </div>
+                        </div-->
 
 
 					</xsl:if>
