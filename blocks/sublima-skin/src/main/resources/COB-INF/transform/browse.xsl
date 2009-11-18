@@ -22,7 +22,7 @@
     <xsl:if test="./rdf:RDF//skos:Concept/rdfs:label[@xml:lang=$interface-language]|./rdf:RDF//skos:Concept/skos:prefLabel[@xml:lang=$interface-language]">
 			<div id="browseHeader">
 				<span id="browseHeaderText">
-					<i18n:text key="browseTheme.header">Kategorier</i18n:text>
+					<i18n:text key="{//c:heading}">Kategorier</i18n:text>
 				</span>
 			</div>
 			
