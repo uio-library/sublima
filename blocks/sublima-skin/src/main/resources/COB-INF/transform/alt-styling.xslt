@@ -25,14 +25,14 @@ PVJ: Made the file UTF-8
     xmlns="http://www.w3.org/1999/xhtml"
     version="1.0">
   <!-- xsl:output method="html" indent="yes"/ -->
-  
+
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
   <xsl:import href="rdfxml2xhtml-deflist-full.xsl"/>
   <xsl:import href="rdfxml2xhtml-deflist-short.xsl"/>
   <xsl:import href="rdfxml2xhtml-facets.xsl"/>
   <xsl:import href="rdfxml2xhtml-table.xsl"/>
   <xsl:import href="rdfxml-nav-templates.xsl"/>
-  <xsl:import href="browse.xsl"/> 
+  <xsl:import href="browse.xsl"/>
   <xsl:import href="headers.xsl"/>
   <xsl:import href="tipsform.xsl"/>
   <xsl:import href="loginform.xsl"/>
@@ -44,7 +44,7 @@ PVJ: Made the file UTF-8
   <xsl:param name="baseurl"/>
   <xsl:param name="querystring"/>
   <xsl:param name="interface-language"/>
-  
+
 
   <xsl:param name="qloc">
     <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
@@ -52,15 +52,15 @@ PVJ: Made the file UTF-8
       <xsl:value-of select="$interface-language"/>
     </xsl:if>
   </xsl:param>
-  
+
   <xsl:param name="aloc">
     <xsl:if test="contains(/c:page/c:facets/c:request/@requesturl, 'locale=')">
       <xsl:text>&amp;locale=</xsl:text>
       <xsl:value-of select="$interface-language"/>
     </xsl:if>
   </xsl:param>
-  
-  <xsl:param name="rss-url">    
+
+  <xsl:param name="rss-url">
     <xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
       <xsl:choose>
 	<xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, '?')">
@@ -72,9 +72,9 @@ PVJ: Made the file UTF-8
       </xsl:choose>
     </xsl:if>
   </xsl:param>
-  
 
-  
+
+
   <xsl:param name="numberofhits" select="count(c:page/c:result-list/rdf:RDF/sub:Resource)"/>
   <xsl:param name="numberoftopics" select="count(c:page/c:navigation/rdf:RDF//skos:Concept)"/>
 
@@ -101,7 +101,7 @@ PVJ: Made the file UTF-8
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:param>
-	
+
   <!-- A debug template that dumps the source tree. Do not remove
        this, just comment out the call-template -->
   <xsl:template name="debug">
@@ -122,13 +122,13 @@ PVJ: Made the file UTF-8
       </ul>
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template name="advancedsearch"> <!-- I have no idea why it didn't work to have a normal node-based template -->
     <xsl:copy-of select="c:page/c:advancedsearch/*"/>
   </xsl:template>
-  
+
   <xsl:template match="/">
-    
+
     <html>
       <xsl:call-template name="head">
 	<xsl:with-param name="title">
@@ -141,7 +141,7 @@ PVJ: Made the file UTF-8
 		<xsl:value-of
 		    select="c:page/c:navigation/rdf:RDF/skos:Concept/skos:altLabel[@xml:lang=$interface-language]"/>
 	      </xsl:if>
-	      
+
 	    </xsl:when>
 	    <xsl:when test="c:page/c:mode = 'resource'">
 	      <xsl:value-of select="c:page/c:result-list/rdf:RDF/sub:Resource/dct:title"/>
@@ -150,7 +150,7 @@ PVJ: Made the file UTF-8
 	</xsl:with-param>
      <xsl:with-param name="baseurl" select="$baseurl"/>
       </xsl:call-template>
-   
+
 <body onload="checkExpandComment()">
 
 	<xsl:value-of select="$querystring"/>
@@ -161,7 +161,7 @@ PVJ: Made the file UTF-8
 	<div class="spacer">
 		<div id="contentLeftMiddleHeader">
 			<div id="contentLeftHeader">
-					&#160;	
+					&#160;
 			</div>
 			<div id="contentMiddleHeader">
 				<!-- A-Z -->
@@ -179,13 +179,13 @@ PVJ: Made the file UTF-8
 	    <div id="colleft">
 				<!-- ######################################################################
 	     LEFT COLUMN (col2)
-	     
+
 	     contains: facets
 	     ###################################################################### -->
 				<div class="col2">
-					<!-- Facets 
-    	  precondition: 
-	        page is topic or search-result 
+					<!-- Facets
+    	  precondition:
+	        page is topic or search-result
 	        there is at least one hit
 		    facets exists in the results (c:/page/c:facets exists in the XML)
 		-->
@@ -207,7 +207,7 @@ PVJ: Made the file UTF-8
 			<div id="colmid">
 				<!-- ######################################################################
      CENTER COLUMN (col1)
-	 contains: search panel, topic description panel, resource hits 
+	 contains: search panel, topic description panel, resource hits
 	 ###################################################################### -->
 				<div id="innerMidCol" class="col1" style="border:0px dotted red;">
 
@@ -313,8 +313,8 @@ PVJ: Made the file UTF-8
 								</form>
 							</div>
 						</div>
-						<!-- 
-		  Link to RSS representation of search result 
+						<!--
+		  Link to RSS representation of search result
 		  precondition:
 		    more than zero hits
 		    rss-url has been created
@@ -341,8 +341,10 @@ PVJ: Made the file UTF-8
 					</xsl:if>
 
 					<!-- xsl:call-template name="messages"/ -->
-					
-					<div id="topicdescription">
+
+                    <xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about and c:page/c:mode = 'topic'">
+
+								<div id="topicdescription">
 									<!--h3><i18n:text key="topic.heading">Emne</i18n:text></h3-->
 									<h3>
 										<xsl:value-of select="/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]"/>
@@ -370,11 +372,11 @@ PVJ: Made the file UTF-8
 
 
 
-					<!-- 
-         Number of hits 
+					<!--
+         Number of hits
             precondition:
              page is topic, or search-result
-             
+
         -->
 					<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
 					<div id="resourceHeading">
@@ -435,15 +437,15 @@ PVJ: Made the file UTF-8
 						</div>
 						<div class="clearer">&#160;</div>
 					</div>
-					</xsl:if>	
-					<!-- 
-		 Advanced search        
+					</xsl:if>
+					<!--
+		 Advanced search
 		    Her kommer avansert søk dersom denne er angitt
 		-->
 					<xsl:apply-templates select="c:page/c:advancedsearch" mode="advancedsearch"/>
 
 
-					<!-- 
+					<!--
 		 Tips
 		  precondition:
 		  vises dersom brukeren har valgt den
@@ -451,8 +453,8 @@ PVJ: Made the file UTF-8
 					<xsl:apply-templates select="c:page/c:tips" mode="form"/>
 
 
-					<!-- 
-		 Login 
+					<!--
+		 Login
 		  precondition:
 		-->
 					<xsl:apply-templates select="c:page/c:login" mode="login"/>
@@ -465,9 +467,9 @@ PVJ: Made the file UTF-8
 					</xsl:if>
 
 
-					<!-- 
-		 Resource Description (details) 
-		     precondition: 
+					<!--
+		 Resource Description (details)
+		     precondition:
 		      page is 'resource'
 		-->
 					<div id="panel-resource-details" style="border:0px solid pink;">
@@ -479,10 +481,10 @@ PVJ: Made the file UTF-8
 					</div>
 
 
-					<!-- 
-		 Topic description (details) 
-		     precondition: 
-		      page is 'browse' 
+					<!--
+		 Topic description (details)
+		     precondition:
+		      page is 'browse'
 		-->
 					<div id="panel-topic-details" style="border:0px solid purple;">
 						<xsl:if test="c:page/c:mode = 'browse'">
@@ -493,11 +495,11 @@ PVJ: Made the file UTF-8
 					</div>
 
 
-					<!-- 
-	    No-hits 
+					<!--
+	    No-hits
 		 precondition:
 		   page is topic or search-result
-		   no hits  
+		   no hits
 		-->
 					<div id="panel-zero-hits" style="1px solid brown;">
 						<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
@@ -540,7 +542,7 @@ PVJ: Made the file UTF-8
 
 
 
-					<!-- 
+					<!--
 		 Search results
 		  precondition:
 		   page-mode is topic or search-results
@@ -549,9 +551,6 @@ PVJ: Made the file UTF-8
 					<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
 					<div id="panel-results">
                         <xsl:call-template name="messages"/>
-						
-
-							<xsl:if test="c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about and c:page/c:mode = 'topic'">
 
 							<xsl:if test="$numberofhits &gt; 0">
 
@@ -587,7 +586,7 @@ PVJ: Made the file UTF-8
 									</xsl:otherwise>
 								</xsl:choose>
 							</xsl:if>
-						
+
 						<xsl:text> </xsl:text>
 						<!-- avoid empty results -->
 					</div>
@@ -630,13 +629,13 @@ PVJ: Made the file UTF-8
 		<div id="colright">
 			<!-- ######################################################################
 	     RIGHT COLUMN (col3)
-	     
-	     contains: 
+
+	     contains:
 	     ###################################################################### -->
 			<div class="col3" style="border:0px dotted green;">
 
 
-				<!-- Navigation 
+				<!-- Navigation
 		  precondition:
 		   page is either topic or search result
 		-->
@@ -645,14 +644,14 @@ PVJ: Made the file UTF-8
 				<div id="panel-nav" style="border:0px solid black">
 					<xsl:if test="c:page/c:mode = 'topic'">
 					  <xsl:apply-templates select="c:page/c:navigation/rdf:RDF/skos:Concept"/>
-								
+
 							<xsl:text> </xsl:text>
 							<!-- avoid empty div -->
 
                             <!-- Videresøk for SMIL -->
-                        <!--div>
+                        <!--div class="panel-tasks">
                             <h2><i18n:text key="videresok">Videresøk</i18n:text></h2>
-    
+
                             <xsl:choose>
                                 <xsl:when test="$interface-language = 'no'">
                                     <a href="http://no.wikipedia.org/wiki/{/c:page/c:navigation/rdf:RDF/skos:Concept/skos:prefLabel[@xml:lang=$interface-language]}" title="Wikipedia">Wikipedia</a><br/>
@@ -699,7 +698,7 @@ PVJ: Made the file UTF-8
 				</div>
 
 
-				<!-- 
+				<!--
          Tasks
           precondition:
             none
@@ -749,14 +748,14 @@ PVJ: Made the file UTF-8
 				</div>
 
 
-			
+
 			</div><!-- Column 3 end -->
 			&#160;
 		</div>
 		<div class="clearer">&#160;</div>
 	</div> <!-- three column layout end -->
 	<div class="clearer">&#160;</div>
-	
+
 	<div id="footer">
 		<div id="leftFooter">
 			<p>
@@ -765,7 +764,7 @@ PVJ: Made the file UTF-8
 		</div>
 		<div id="rightFooter">
 			<p>
-				<i18n:text key="sublima.footer">   
+				<i18n:text key="sublima.footer">
 					An Open Source Software Project supported by
 					<a href="http://www.abm-utvikling.no/">ABM Utvikling</a>
 					and
@@ -777,11 +776,11 @@ PVJ: Made the file UTF-8
 		</div>
 		<div class="clearer">&#160;</div>
 	</div>
-	
-      
+
+
       </body>
     </html>
   </xsl:template>
-  
-  
+
+
 </xsl:stylesheet>
