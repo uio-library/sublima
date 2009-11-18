@@ -4,85 +4,100 @@
 # COMMUNICATION between SERVER and CLIENT
 #
 # The Base URL for this deployment of Sublima. This should be the same as the URL where Sublima is available.
-sublima.base.url=http://smil.sublima.computas.com:8180/smil/
+sublima.base.url=http://www.example.com:8180/sublima/
+
 # The basegraph defines the graph in Virtuoso where all data is stored. It is most common the same as sublima.base.url.
-sublima.basegraph=http://smil.sublima.computas.com:8180/smil/
+sublima.basegraph=http://www.example.com:8180/sublima/
+
 # The SPARQL endpoint defines the location of the installed backend. This is used for queries from Sublima to Virtuoso.
-sublima.sparql.endpoint=http://smil.sublima.computas.com:8180/smilbackend/sparql
+sublima.sparql.endpoint=http://www.example.com:8180/backend/sparql
+
 # The SPARQL Authenticated endpoint defines the location of the Virtuoso SPARQL/Update endpoint. This points to the URL where
 # Virtuoso is installed and available online.
-sublima.sparul.endpoint=http://smil.sublima.computas.com:8890/sparql-auth
+sublima.sparul.endpoint=http://www.example.com:8890/sparql-auth
+
 # The SPARQL Direct endpoint defines the location of the Virtuoso SPARQL endpoint. This points to the URL where
 # Virtuoso is installed and available online. This is used for queries that don't have to be sent through the backend endpoint.
-sublima.sparql.directendpoint=http://smil.sublima.computas.com:8890/sparql
+sublima.sparql.directendpoint=http://www.example.com:8890/sparql
+
 # The SRU Server endpoint defines where the SRU Server for SRU queries are available.
-sublima.sruserver.endpoint=http://smil.sublima.computas.com:8180/smil/sruserver
+sublima.sruserver.endpoint=http://www.example.com:8180/sublima/sruserver
+
 # Memcached servers define where Memcaced is running, if running at all.
 sublima.memcached.servers=localhost:11211
+
 # Credentials for Digest Authentication for Virtuoso.
-sublima.database.url=jdbc:virtuoso://smil.sublima.computas.com:1111
+sublima.database.url=jdbc:virtuoso://www.example.com:1111
+
 # Give the Virtuoso username and password here.
 # Remember to change the password! The default password are available from Virtuoso documentation and should not be used.
 virtuoso.digest.username=dba
 virtuoso.digest.password=subpasswd
+
 # Leave this as-is
 virtuoso.digest.realm=SPARQL
-#
-#
+
+
 # LANGUAGES and ENCODING
-#
+
 # SUBLIMA LOCALES
 # The default locale defines which language is used by default, before the user selects a different language.
 sublima.default.locale=no
+
 # The supported locales tells the system which languages are supported.
 sublima.supported.locales=no,da,sv
-#
+
+
 # COCOON ENCODING
+
 # The Cocoon Container encoding is the encoding of the operating system Sublima is installed on.
 # For Linux/Unix this is normally utf-8. For Windows it is normally iso-8859-1.
-org.apache.cocoon.containerencoding=iso-8859-1
+org.apache.cocoon.containerencoding=utf-8
+
 # The Cocoon Form encoding is the encoding of the input from HTML Forms in the system.
 # This should always be utf-8 to ensure correct handling of special characters.
 org.apache.cocoon.formencoding=utf-8
-#
-#
-#
+
+
 # INDEXES AND SEARCH
-#
+
 # Index external tells the system to index a resource's external content (from it's webpage) or not.
 # Values true|false.
 sublima.index.external=true
-#
+
 # Deepsearch when zero hits tells the system to perform a search in the resources external content or not if
 # a regular search returns 0 hits. If sublima.index.external is set to false this should also be set to false.
 # Values true|false.
 sulima.deepsearch.when.zero.hits=true
-#
+
 # SEARCH FIELDS
+
 # Resource searchfields defines which fields of the resource that should be searchable.
 # The fields must be given with their prefix and separated with semicolon. Ie.
 # sublima.searchfields=dct:title;dct:subject;dct:publisher
 # that states that the title, subjects and publisher should be searchable
 # See resourceform.xsl for reference to which fields each resource contains
 sublima.resource.searchfields=dct:title;dct:description;dct:publisher/foaf:name;dct:subject/skos:prefLabel;dct:subject/skos:altLabel;dct:subject/skos:hiddenLabel
+
 # Topic searchfields defines which fields of the topic that should be searchable.
 # The fields must be given with their prefix and separated with semicolon. Ie.
 # sublima.topic.searchfields=skos:prefLabel;skos:altLabel;skos:hiddenLabel
 # that states that the preferred label, alternative label and synonym, subjects and publisher should be searchable
 # See resourceform.xsl for reference to which fields each resource contains
 sublima.topic.searchfields=skos:prefLabel;skos:altLabel;skos:hiddenLabel
+
 # For each of the fields defined in the two parameters above the corresponding prefix must be defined.
 # Ie. if you have fields within the dct and skos namespace, these prefixes must be defined.
 sublima.prefixes=dct: <http://purl.org/dc/terms/>;foaf: <http://xmlns.com/foaf/0.1/>;sub: <http://xmlns.computas.com/sublima#>;skos: <http://www.w3.org/2004/02/skos/core#>
-#
+
 # Maximum number of hits before the search is stopped. To ensure a somewhat consistent performance we stop all searches that returns more than the defined number of hits.
 # The user is asked to refine her search or use the topic navigation for further browsing.
 sublima.search.maxhitsbeforestop=200
-#
+
 # Advanced search truncate defines if search terms from the advanced search should be truncated or not.
 # Values true|false.
 sublima.advancedsearch.truncate=false
-#
+
 # Search mappings defines which characters to be replaced by which before indexing and search.
 # To define that a character should be replaced by space, or space should
 # be replaced by a character use two _ (underscores), ie. aa->__ or __->aa.
@@ -121,20 +136,15 @@ sublima.search.mapping=ä->a\n\
 ,->___\n\
 .->__\n\
 -->__
-#
-#
+
 # Import rules define which rules to apply to imported data. This should be left as-is.
 sublima.import.rules = [inverseRule1: (?Y skos:broader ?X) -> (?X skos:narrower ?Y)]  [inverseRule2: (?X skos:narrower ?Y) -> (?Y skos:broader ?X)]  [statusRule1: (?X rdf:type sub:Resource) noValue(?X wdr:describedBy) -> (?X wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator>)] [statusRule2: (?X rdf:type skos:Concept) noValue(?X wdr:describedBy) -> (?X wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator>)]
-
-
 
 # Akismet key, for spam check
 sublima.akismet.key=7db77ff96161
 
-#
 # COCOON FILE UPLOAD OPTIONS
 org.apache.cocoon.uploads.enable=true
 org.apache.cocoon.uploads.autosave=true
 org.apache.cocoon.uploads.overwrite=rename
 org.apache.cocoon.uploads.maxsize=1024000000
-
