@@ -300,4 +300,5 @@
   <message key="videresok">Videresøk</message><!-- MÅ OVERSETTES -->
   <message key="category">Kategorier</message><!-- MÅ OVERSETTES -->
   <message key="search.externalresources.explained">Her kan du søke, ikke bare i ressursens metadata, men også i ressursens innhold som vi henter fra ressursens nettside og gjør søkbart</message><!-- MÅ OVERSETTES -->
+  <message key="descriptionlink">Mer informasjon...</message> <!-- MÅ OVERSETTES -->
 </catalogue>
