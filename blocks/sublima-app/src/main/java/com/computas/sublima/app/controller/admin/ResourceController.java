@@ -188,10 +188,12 @@ public class ResourceController implements StatelessAppleController {
         if (adminService.validateURL(url)) {
           if (adminService.checkForDuplicatesByURI(url)) {
             messageBuffer.append("<c:message><i18n:text key=\"validation.urlexists\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n");
+            String message = "<c:message><i18n:text key=\"validation.urlexists\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n";
             messageBuffer.append("</c:messages>\n");
             bizData.put("messages", messageBuffer.toString());
 
-            res.sendPage("xml2/ressurs-prereg", bizData);
+            //res.sendPage("xml2/ressurs-prereg", bizData);
+            editResource(res, req, "editexisting", message);
 
           } else { // The URL is okay
             messageBuffer.append("<c:message><i18n:text key=\"validation.providedurlok\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>");
@@ -277,16 +279,18 @@ public class ResourceController implements StatelessAppleController {
     bizData.put("users", adminService.getAllUsers());
 
     // When GET present a blank form with listvalues or prefilled with resource
-    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
+    if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET") || type.equalsIgnoreCase("editexisting")) {
       bizData.put("tempvalues", "<empty></empty>");
 
       if ("ny".equalsIgnoreCase(type)) {
         registerNewResourceURL(req, res);
       } else {
-        bizData.put("resource", adminService.getResourceByURI(req.getCocoonRequest().getParameter("uri")));
+        String uri = req.getCocoonRequest().getParameter("uri") == null ? req.getCocoonRequest().getParameter("sub:url") : req.getCocoonRequest().getParameter("uri");
+        bizData.put("resource", adminService.getResourceByURI(uri));
         bizData.put("publishers", adminService.getAllPublishers());
         bizData.put("mode", "edit");
-        bizData.put("messages", "<empty></empty>");
+        messageBuffer.append("</c:messages>\n");
+        bizData.put("messages", messageBuffer.toString());
         bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
         res.sendPage("xml2/ressurs", bizData);
