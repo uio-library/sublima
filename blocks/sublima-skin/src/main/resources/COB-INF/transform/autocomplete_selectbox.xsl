@@ -55,18 +55,18 @@
                       <xsl:value-of select="./foaf:name"/>
                     </xsl:when>
                     <xsl:when test="./rdfs:label">
-                      <xsl:value-of select="./rdfs:label"/>
+                      <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
                     </xsl:when>
                     <xsl:when test="./skos:prefLabel">
-                      <xsl:value-of select="./skos:prefLabel"/>
+                      <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
                     </xsl:when>
                     <xsl:when test="./dct:title">
                       <xsl:choose>
                         <xsl:when test="./mv:musicPerformer/foaf:Agent">
-                          <xsl:value-of select="./dct:title"/><xsl:text> - </xsl:text><xsl:value-of select="./mv:musicPerformer/foaf:Agent/foaf:name"/>
+                          <xsl:value-of select="./dct:title[@xml:lang=$interface-language]"/><xsl:text> - </xsl:text><xsl:value-of select="./mv:musicPerformer/foaf:Agent/foaf:name"/>
                         </xsl:when>
                         <xsl:otherwise>
-                          <xsl:value-of select="./dct:title"/>
+                          <xsl:value-of select="./dct:title[@xml:lang=$interface-language]"/>
                         </xsl:otherwise>
                       </xsl:choose>
                     </xsl:when>
