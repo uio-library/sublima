@@ -17,7 +17,20 @@
     <xsl:param name="baseurl"/>
     <xsl:param name="interface-language">no</xsl:param>
 
+
+
     <xsl:template match="c:login" mode="login">
+
+        <xsl:if test="/c:page/c:content/c:messages/c:messages/c:message">
+      <ul>
+        <xsl:for-each select="/c:page/c:content/c:messages/c:messages/c:message">
+          <li>
+            <xsl:value-of select="."/>
+            <br/>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </xsl:if>
 
        <form action="do-login2" method="post">
          <xsl:call-template name="hidden-locale-field"/>
