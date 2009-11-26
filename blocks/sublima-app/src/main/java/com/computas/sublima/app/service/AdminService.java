@@ -780,8 +780,8 @@ public class AdminService {
     /**
      * Method to check if a given URL already exists as and URI in the data. Checks both with and without a trailing /.
      *
-     * @param url
-     * @return
+     * @param url URL to check
+     * @return boolean true or false
      */
     public boolean checkForDuplicatesByURI(String url) {
         String resourceWithEndingSlash;
@@ -800,12 +800,10 @@ public class AdminService {
                 resourceWithEndingSlash = (String) getResourceByURI(url + "/");
             }
 
-            if (resourceWithEndingSlash.contains(url)
-                    || resourceWithoutEndingSlash.contains(url)) {
-                return true;
-            } else {
-                return false;
-            }
+            url = url.replace("&", "&amp;");
+
+            return resourceWithEndingSlash.contains(url)
+                    || resourceWithoutEndingSlash.contains(url);
         } catch (Exception e) {
             return false;
         }
