@@ -136,6 +136,37 @@
                 </div>
             </xsl:if>
 
+            <xsl:if test="sub:Resource/dct:type">
+                <div class="facet">
+                    <div class="facetHeading">
+                        <h3>
+                            <i18n:text key="mediatype">Mediatype</i18n:text>
+                        </h3>
+                        <img id="openCloseType" alt="open/close mediatype" src="{$baseurl}/images/closefacet.png"
+                             onclick="OpenCloseFact('typeFacets', this);"/>
+                        <div class="clearer">&#160;</div>
+                    </div>
+                    <div id="typeFacets">
+                        <ul>
+                            <xsl:apply-templates select="sub:Resource/dct:type" mode="facets">
+                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+                                <xsl:sort lang="{$interface-language}"
+                                          select="dct:MediaType/rdfs:label[@xml:lang=$interface-language]"/>
+                            </xsl:apply-templates>
+                        </ul>
+                        <!--div id="typeFacetHideShow" class="showHideFacetslinks">
+                            <a id="typeFacetShowLink" href="javascript:showfacets('typeFacet');">
+                                <i18n:text key="more">mer</i18n:text>
+                            </a>
+                            <a id="typeFacetHideLink" href="javascript:hidefacets('typeFacet');">
+                                <i18n:text key="hide">skjul</i18n:text>
+                            </a>
+                        </div-->
+                    </div>
+                </div>
+            </xsl:if>
+
+
             <!-- Getting the right counts for the facets turned out to be
                  somewhat tricky.  Four situations can occur:
 
@@ -338,6 +369,20 @@
         </xsl:call-template>
     </xsl:template>
 
+    <xsl:template match="dct:type" mode="facets">
+        <xsl:param name="baseurlparams"/>
+        <xsl:variable name="uri" select="./dct:MediaType/@rdf:about"/>
+        <xsl:call-template name="facet-field">
+
+            <xsl:with-param name="this-field">dct:type</xsl:with-param>
+            <xsl:with-param name="this-label" select="./dct:MediaType/rdfs:label[@xml:lang=$interface-language]"/>
+            <xsl:with-param name="uri" select="$uri"/>
+            <xsl:with-param name="count"
+                            select="count(/c:page/c:result-list/rdf:RDF/sub:Resource/dct:type[@rdf:resource=$uri])+1"/>
+            <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+        </xsl:call-template>
+    </xsl:template>
+
 
     <!-- This template can used to construct facets. See the above for examples.
          it takes a number of parameters:
@@ -369,6 +414,9 @@
                     </xsl:when>
                     <xsl:when test="$this-field = 'dct:audience'">
                         <xsl:attribute name="class">audienceFacet</xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="$this-field = 'dct:type'">
+                        <xsl:attribute name="class">typeFacet</xsl:attribute>
                     </xsl:when>
                     <xsl:when test="$this-field = 'dct:subject'">
                         <xsl:attribute name="class">subjectFacet</xsl:attribute>
