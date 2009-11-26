@@ -382,9 +382,14 @@ PVJ: Made the file UTF-8
 					<div id="resourceHeading">
 						<div id="numberOfHits">
 							<xsl:if test="c:page/c:mode = 'topic' or c:page/c:mode = 'search-result'">
-								<xsl:if test="not($numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept)">
-									<i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>
-								</xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="$numberofhits = 0">
+                                        <i18n:text key="search.numberofhits">Antall treff</i18n:text>: -<br/>
+                                    </xsl:when>
+                                    <xsl:when test="not($numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept)">
+                                        <i18n:text key="search.numberofhits">Antall treff</i18n:text>: <xsl:value-of select="$numberofhits"/><br/>
+                                    </xsl:when>
+                                </xsl:choose>
 							</xsl:if>
 							<xsl:text> </xsl:text>
 							<!-- avoid empty div tags -->
@@ -597,6 +602,14 @@ PVJ: Made the file UTF-8
         If there are 0 hits in resources, but we have hits in the topics
      -->
 					<xsl:if test="$numberofhits = 0 and c:page/c:navigation/rdf:RDF//skos:Concept and c:page/c:mode = 'search-result' and c:page/c:abovemaxnumberofhits = 'true'">
+						<ul>
+							<li>
+								<i18n:text key="search.refine">Søket ditt gir for mange treff i ressurser. Velg eventuelt heller et emne fra navigasjonslisten til høyre eller forsøk å søke på mer enn ett ord.</i18n:text>
+							</li>
+						</ul>
+					</xsl:if>
+
+                    <xsl:if test="$numberofhits = 0 and not(c:page/c:navigation/rdf:RDF//skos:Concept) and c:page/c:mode = 'search-result' and c:page/c:abovemaxnumberofhits = 'true'">
 						<ul>
 							<li>
 								<i18n:text key="search.refine">Søket ditt gir for mange treff i ressurser. Velg eventuelt heller et emne fra navigasjonslisten til høyre eller forsøk å søke på mer enn ett ord.</i18n:text>

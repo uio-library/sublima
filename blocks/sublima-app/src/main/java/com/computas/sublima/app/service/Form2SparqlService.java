@@ -307,9 +307,9 @@ public class Form2SparqlService {
     sparqlQueryBuffer.append("WHERE {");
     for (String triple : n3Listtmp) {
       // This is a hack to optimize the count a bit by leaving out the check for approved resources.
-      if (!triple.contains("status/godkjent_av_administrator")) {
+      //if (!triple.contains("status/godkjent_av_administrator")) {
         n3List.add(triple);
-      }
+      //}
     }
     sparqlQueryBuffer.append(OptimizeTripleOrder(n3List));
     sparqlQueryBuffer.append("\n}\nOFFSET " + (cutoff - 1) + " LIMIT 1");
