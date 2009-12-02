@@ -63,6 +63,16 @@
           </td>
         </tr>
       </xsl:if>
+      <xsl:if test="sub:Resource/dct:publisher//dct:description">
+        <tr>
+          <td scope="row" valign="top">
+            <i18n:text key="publisher.about">Om utgiver:</i18n:text>:
+          </td>
+          <td>
+            <xsl:apply-templates select="sub:Resource/dct:publisher//dct:description"/>
+          </td>
+        </tr>
+      </xsl:if>
       <xsl:if test="sub:Resource/sub:lastApprovedBy">
         <xsl:if test="../../c:loggedin = 'true'">
           <tr>
