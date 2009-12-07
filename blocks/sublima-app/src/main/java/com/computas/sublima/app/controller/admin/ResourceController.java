@@ -299,8 +299,8 @@ public class ResourceController implements StatelessAppleController {
 
             // Fix problem with url encoding
             parameterMap.remove("the-resource");
-            parameterMap.put("the-resource", new String[]{req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20")});
-
+            String resource = req.getCocoonRequest().getParameter("the-resource").trim();
+            parameterMap.put("the-resource", new String[]{resource});
             if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
 
                 String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{\n" +

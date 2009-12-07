@@ -26,7 +26,7 @@
   <xsl:param name="interface-language">no</xsl:param>
   <xsl:template match="c:resourcedetails" mode="resourceedit">
 
-    <form action="{$baseurl}/admin/ressurser/ny" method="POST">
+    <form action="{$baseurl}/admin/ressurser/ny" method="POST" onsubmit="urlEncode();">
       <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
       <input type="hidden" name="prefix" value="rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;"/>
       <input type="hidden" name="prefix" value="wdr: &lt;http://www.w3.org/2007/05/powder#&gt;"/>
@@ -516,14 +516,6 @@
               <xsl:with-param name="buttonname">actionbuttondelete</xsl:with-param>
             </xsl:call-template>
 
-            <script type="text/javascript">
-              function copyAsNew() {
-                document.getElementById("the-resource").value = '';
-                document.getElementById("dct:identifier").value = '';
-                document.getElementById("markasnew").style.visibility = "hidden";
-              }
-            </script>
-
             <input type="button" value="button.copyasnew" i18n:attr="value" onclick="copyAsNew()"/>
 
           </td>
@@ -533,6 +525,49 @@
         </tr>
       </table>
     </form>
+
+                <script type="text/javascript">
+              function copyAsNew() {
+                document.getElementById("the-resource").value = '';
+                document.getElementById("dct:identifier").value = '';
+                document.getElementById("markasnew").style.visibility = "hidden";
+              };
+
+              function urlEncode() {
+                var theresource = document.getElementById("the-resource").value;
+                var oldresource = document.getElementById("old-resource").value;
+
+                theresource = encode(theresource);
+                oldresource = encode(oldresource);
+
+                document.getElementById("the-resource").value = theresource;
+                document.getElementById("old-resource").value = oldresource;
+            };
+
+            function encode(resource) {
+                resource = resource.replace(" ", "%20");
+                resource = resource.replace("ø", "%C3%B8");
+                resource = resource.replace("æ", "%C3%A6");
+                resource = resource.replace("å", "%C3%A5");
+                resource = resource.replace("à", "%C3%A0");
+                resource = resource.replace("è", "%C3%A8");
+                resource = resource.replace("ì", "%C3%AC");
+                resource = resource.replace("ò", "%C3%B2");
+                resource = resource.replace("á", "%C3%A1");
+                resource = resource.replace("é", "%C3%A9");
+                resource = resource.replace("í", "%C3%AD");
+                resource = resource.replace("ó", "%C3%B3");
+                resource = resource.replace("ä", "%C3%A4");
+                resource = resource.replace("ë", "%C3%AB");
+                resource = resource.replace("ï", "%C3%AF");
+                resource = resource.replace("ö", "%C3%B6");
+                resource = resource.replace("ü", "%C3%BC");
+                resource = resource.replace("ú", "%C3%BA");
+                resource = resource.replace("ù", "%C3%B9");
+                return resource;
+            };
+
+            </script>
   </xsl:template>
 
 </xsl:stylesheet>
