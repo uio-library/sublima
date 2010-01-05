@@ -84,7 +84,7 @@ public class FreetextTriples {
         }
         
         try {
-            xml = new String(xml.getBytes("ISO-8859-1"), "UTF-8");
+            xml = new String(xml.getBytes("UTF-8"), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return "";
