@@ -253,53 +253,75 @@ dct:MediaType a owl:Class .
 
 <http://purl.org/dc/dcmitype/Collection> a dct:MediaType ;
 	rdfs:label "Collection"@en ;
-	rdfs:label "Samling"@no .
+	rdfs:label "Samling"@no ;
+	rdfs:label "Samling"@sv ;
+  rdfs:label "Samling"@da .
 
 <http://purl.org/dc/dcmitype/Dataset> a dct:MediaType ;
 	rdfs:label "Dataset"@en ;
-	rdfs:label "Datasett"@no .
+	rdfs:label "Datasett"@no ;
+	rdfs:label "Datasamling"@sv ;
+	rdfs:label "Dataset"@da .
 
 <http://purl.org/dc/dcmitype/Event> a dct:MediaType ;
 	rdfs:label "Event"@en ;
-	rdfs:label "Hendelse"@no .
+	rdfs:label "Hendelse"@no ;
+	rdfs:label "Evenemang"@sv ;
+	rdfs:label "Hændelse"@da .
 
 <http://purl.org/dc/dcmitype/Image> a dct:MediaType ;
 	rdfs:label "Image"@en ;
-	rdfs:label "Avbildning"@no .
+	rdfs:label "Avbildning"@no ;
+	rdfs:label "Avbildning"@sv ;
+	rdfs:label "Afbildning"@da .
 
 <http://purl.org/dc/dcmitype/InteractiveResource> a dct:MediaType ;
 	rdfs:label "Interactive Resource"@en ;
-	rdfs:label "Interaktiv ressurs"@no .
+	rdfs:label "Interaktiv ressurs"@no ;
+	rdfs:label "Interaktiv resurs"@sv ;
+	rdfs:label "Interaktivt multimedie"@da .
 
 <http://purl.org/dc/dcmitype/MovingImage> a dct:MediaType ;
 	rdfs:label "Moving Image"@en ;
-	rdfs:label "Film"@no .
+	rdfs:label "Film"@no ;
+	rdfs:label "Film"@sv ;
+	rdfs:label "Film"@da .
 
 <http://purl.org/dc/dcmitype/PhysicalObject> a dct:MediaType ;
 	rdfs:label "Physical Object"@en ;
-	rdfs:label "Fysisk ting"@no .
+	rdfs:label "Fysisk ting"@no ;
+	rdfs:label "Fysiskt objekt"@sv ;
+	rdfs:label "Fysisk objekt"@da .
 
 <http://purl.org/dc/dcmitype/Service> a dct:MediaType ;
 	rdfs:label "Service"@en ;
-	rdfs:label "Service"@no .
+	rdfs:label "Service"@no ;
+	rdfs:label "Service"@sv ;
+	rdfs:label "Tjeneste"@da .
 
 <http://purl.org/dc/dcmitype/Software> a dct:MediaType ;
 	rdfs:label "Software"@en ;
-	rdfs:label "Programvare"@no .
+	rdfs:label "Programvare"@no ;
+	rdfs:label "Programvara"@sv ;
+	rdfs:label "Program"@da .
 
 <http://purl.org/dc/dcmitype/Sound> a dct:MediaType ;
 	rdfs:label "Sound"@en ;
-	rdfs:label "Lyd"@no .
+	rdfs:label "Lyd"@no ;
+	rdfs:label "Ljud"@sv ;
+	rdfs:label "Lyd"@da .
 
 <http://purl.org/dc/dcmitype/StillImage> a dct:MediaType ;
 	rdfs:label "StillImage"@en ;
-	rdfs:label "Bilde"@no .
+	rdfs:label "Bilde"@no ;
+	rdfs:label "Bild"@sv ;
+	rdfs:label "Billede"@da .
 
 <http://purl.org/dc/dcmitype/Text> a dct:MediaType ;
 	rdfs:label "Text"@en ;
-	rdfs:label "Tekst"@no .
-
-
+	rdfs:label "Tekst"@no ;
+	rdfs:label "Text"@sv ;
+	rdfs:label "Tekst"@da .
 
 
 
