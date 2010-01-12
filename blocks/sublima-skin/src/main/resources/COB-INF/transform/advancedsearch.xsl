@@ -24,6 +24,41 @@
 
     <xsl:template match="c:advancedsearch" mode="advancedsearch">
 
+        <script type="text/javascript">
+            function validateadvancedsearch() {
+
+                // ugly cause of ampersand issues with XHTML/XSLT
+
+                    if($('#subject').val() != '') {
+                        return true;
+                    } else if($('#title').val()!= '') {
+                        return true;
+                    } else if($('#description').val() != ''){
+                        return true;
+                    } else if($('#publisher').val() != ''){
+                        return true;
+                    } else if(document.getElementById("dct:type").value != ''){
+                        return true;
+                    } else if(document.getElementById("dct:language").value != ''){
+                        return true;
+                    } else if(document.getElementById("dct:audience").value != ''){
+                        return true;
+                 <xsl:if test="/c:page/c:loggedin = 'true'">
+                    } else if($('#dateAccepted').val() != '') {
+                        return true;
+                    } else if($('#dateSubmitted').val() != ''){
+                        return true;
+                    } else if(document.getElementById("sub:committer").value != ''){
+                        return true;
+                    } else if(document.getElementById("wdr:describedBy").value != ''){
+                        return true;
+                 </xsl:if>
+                        }  else {
+                            return false;
+                        }
+            }
+        </script>
+
         <xsl:call-template name="autocompletion">
             <xsl:with-param name="baseurl">
                 <xsl:value-of select="$baseurl"/>
@@ -33,7 +68,7 @@
             </xsl:with-param>
         </xsl:call-template>
 
-        <form action="search-result.html" method="GET">
+        <form name="advancedsearch" action="search-result.html" method="GET" onsubmit="return validateadvancedsearch()">
             <input type="hidden" name="freetext-field" value="dct:title"/>
             <input type="hidden" name="freetext-field" value="dct:subject/sub:literals"/>
             <input type="hidden" name="freetext-field" value="dct:description"/>
@@ -160,7 +195,13 @@
         </form>
         <br/>
         <br/>
-        <i18n:text key="search.externalresources">Søk i ressursenes innhold</i18n:text>
+        <hr/>
+        <br/>
+        <br/>
+        <h3><i18n:text key="dypsok">Dypsøk</i18n:text></h3>
+        <p>
+            <i18n:text key="search.externalresources.explained">Søk i ressursenes innhold</i18n:text>    
+        </p>
         <form action="{$baseurl}/search-result.html" method="get">
 
             <fieldset>
@@ -220,8 +261,6 @@
                 <i18n:text key="search.exactmatch">Eksakt ord</i18n:text>
             </fieldset>
         </form>
-
-
     </xsl:template>
 
 </xsl:stylesheet>
