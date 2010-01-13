@@ -52,12 +52,11 @@ public class CQL2SPARQL {
         logger.debug("CQL2SPARQL: Search String is: " + searchString);
         return  "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-                "DESCRIBE ?resource ?rest WHERE {\n" +
+                "DESCRIBE ?resource WHERE {\n" +
                 "?resource sub:literals ?lit .\n" +
                 "?lit <bif:contains> \"" + searchString + "\" .\n" +
-                "?resource ?p ?rest .\n" +
                 "?resource wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n" +
-                "}";
+                "} LIMIT 50";
 
     }
 
