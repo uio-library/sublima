@@ -53,7 +53,7 @@
                  </xsl:if>
                      } else if(document.getElementById("dct:language").value != ''){
                         alert("Søket vil gi for mange treff. Vennligst angi mer enn bare språk.");
-                        return true;
+                        return false;
                         }  else {
                             return false;
                         }
