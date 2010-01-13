@@ -28,7 +28,7 @@
             function validateadvancedsearch() {
 
                 // ugly cause of ampersand issues with XHTML/XSLT
-
+               
                     if($('#subject').val() != '') {
                         return true;
                     } else if($('#title').val()!= '') {
@@ -38,8 +38,6 @@
                     } else if($('#publisher').val() != ''){
                         return true;
                     } else if(document.getElementById("dct:type").value != ''){
-                        return true;
-                    } else if(document.getElementById("dct:language").value != ''){
                         return true;
                     } else if(document.getElementById("dct:audience").value != ''){
                         return true;
@@ -53,6 +51,9 @@
                     } else if(document.getElementById("wdr:describedBy").value != ''){
                         return true;
                  </xsl:if>
+                     } else if(document.getElementById("dct:language").value != ''){
+                        alert("Søket vil gi for mange treff. Vennligst angi mer enn bare språk.");
+                        return true;
                         }  else {
                             return false;
                         }
@@ -130,13 +131,6 @@
                     </xsl:with-param>
                 </xsl:apply-templates>
 
-                <xsl:apply-templates select="/c:page/c:languages/sq:sparql">
-                    <xsl:with-param name="field">dct:language</xsl:with-param>
-                    <xsl:with-param name="label">
-                        <i18n:text key="adv.language">Språk</i18n:text>
-                    </xsl:with-param>
-                </xsl:apply-templates>
-
                 <xsl:apply-templates select="/c:page/c:audiences/sq:sparql">
                     <xsl:with-param name="field">dct:audience</xsl:with-param>
                     <xsl:with-param name="label">
@@ -184,6 +178,14 @@
                                value="http://sublima.computas.com/status/godkjent_av_administrator"/>
                     </xsl:otherwise>
                 </xsl:choose>
+
+                <xsl:apply-templates select="/c:page/c:languages/sq:sparql">
+                    <xsl:with-param name="field">dct:language</xsl:with-param>
+                    <xsl:with-param name="label">
+                        <i18n:text key="adv.language">Språk</i18n:text>
+                    </xsl:with-param>
+                </xsl:apply-templates>
+                
                 <tr>
                     <td></td>
                     <td>
