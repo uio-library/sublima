@@ -301,6 +301,7 @@
   <message key="lastapproved">Sist godkjent</message><!-- MÅ OVERSETTES -->
   <message key="dateposted">Reg. dato</message><!-- MÅ OVERSETTES -->
   <message key="publisher.about">Om utgiver</message><!-- MÅ OVERSETTES -->
+  <message key="search.refine.notopics">Søket ditt gir for mange treff. Forsøk å angi flere søkekriterier.</message> <!-- MÅ OVERSETTES -->
 </catalogue>
 
 
