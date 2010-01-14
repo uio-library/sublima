@@ -609,10 +609,10 @@ PVJ: Made the file UTF-8
 						</ul>
 					</xsl:if>
 
-                    <xsl:if test="$numberofhits = 0 and not(c:page/c:navigation/rdf:RDF//skos:Concept) and c:page/c:mode = 'search-result' and c:page/c:abovemaxnumberofhits = 'true'">
+          <xsl:if test="$numberofhits = 0 and not(c:page/c:navigation/rdf:RDF//skos:Concept) and c:page/c:mode = 'search-result' and c:page/c:abovemaxnumberofhits = 'true'">
 						<ul>
 							<li>
-								<i18n:text key="search.refine">Søket ditt gir for mange treff i ressurser. Velg eventuelt heller et emne fra navigasjonslisten til høyre eller forsøk å søke på mer enn ett ord.</i18n:text>
+								<i18n:text key="search.refine.notopics">Søket ditt gir for mange treff i ressurser. Velg eventuelt heller et emne fra navigasjonslisten til høyre eller forsøk å søke på mer enn ett ord.</i18n:text>
 							</li>
 						</ul>
 					</xsl:if>
