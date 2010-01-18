@@ -181,6 +181,10 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         }
 
         logger.info("getCode() ---> " + url.toString() + " returned a " + ourcode);
+				
+				if (ourcode == null) {
+            ourcode = "IOEXCEPTION";
+        }
 
         return ourcode;
     }
