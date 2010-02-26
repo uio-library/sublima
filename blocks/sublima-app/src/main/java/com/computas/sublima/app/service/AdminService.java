@@ -1314,8 +1314,7 @@ public class AdminService {
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "DESCRIBE <" + publisherURI + "> ?resource ?subject",
                 "WHERE {",
-                "OPTIONAL { ?resource dct:publisher <" + publisherURI + "> .",
-                "?resource dct:subject ?subject . }",
+                "OPTIONAL { ?resource dct:publisher <" + publisherURI + "> . }",
                 "}"});
 
 
