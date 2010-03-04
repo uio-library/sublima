@@ -2,6 +2,7 @@ package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
+import com.computas.sublima.query.service.SettingsService;
 import org.apache.commons.io.IOUtils;
 import org.apache.jackrabbit.extractor.HTMLTextExtractor;
 import org.apache.log4j.Logger;
@@ -166,9 +167,9 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         catch (TimeoutException e) {
             ourcode = "CONNECTION_TIMEOUT";
         } catch (ExecutionException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
         finally {
@@ -181,8 +182,8 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         }
 
         logger.info("getCode() ---> " + url.toString() + " returned a " + ourcode);
-				
-				if (ourcode == null) {
+
+        if (ourcode == null) {
             ourcode = "IOEXCEPTION";
         }
 
@@ -351,7 +352,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
 
             if (status.equalsIgnoreCase("<http://sublima.computas.com/status/ok>")) {
                 deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                        "DELETE\n" +
+                        "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                         "{\n" +
                         "<" + url.toString() + "> sub:status ?oldstatus .\n" +
                         "}\n" +
@@ -360,14 +361,14 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                         "}";
 
                 updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                        "INSERT\n" +
+                        "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                         "{\n" +
                         "<" + url.toString() + "> sub:status " + status + ".\n" +
                         "}";
             } else {
                 deleteString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                         "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-                        "DELETE\n" +
+                        "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                         "{\n" +
                         "<" + url.toString() + "> sub:status ?oldstatus .\n" +
                         "<" + url.toString() + "> wdr:describedBy ?oldstatus .\n" +
@@ -379,7 +380,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
 
                 updateString = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                         "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
-                        "INSERT\n" +
+                        "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                         "{\n" +
                         "<" + url.toString() + "> sub:status " + status + ".\n" +
                         "<" + url.toString() + "> wdr:describedBy " + status + ".\n" +
@@ -412,7 +413,8 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         String resourceExternalContent = readContent();
         SearchService searchService = new SearchService();
 
-        String deleteString = "DELETE { ?response ?p ?o }" +
+        String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
+                "{ ?response ?p ?o }" +
                 " WHERE { <" + url.toString() + "> <http://www.w3.org/2007/ont/link#request> ?response . }";
 
         boolean success = false;
@@ -425,7 +427,8 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                 "PREFIX http: <http://www.w3.org/2007/ont/http#>\n" +
                 "PREFIX httph: <http://www.w3.org/2007/ont/httph#>\n" +
                 "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                "INSERT\n{\n<" + url.toString() + "> link:request " + requesturl + ".\n" +
+                "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
+                "{\n<" + url.toString() + "> link:request " + requesturl + ".\n" +
                 requesturl + "a http:ResponseMessage ; \n");
         HashMap<String, String> headers = getHTTPmap();
         for (String key : headers.keySet()) {
