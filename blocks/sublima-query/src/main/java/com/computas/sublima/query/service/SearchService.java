@@ -49,7 +49,9 @@ public class SearchService {
             e.printStackTrace();
         } */
 
-        searchstring = mapping.charactermapping(searchstring);
+        if (!advancedsearch) {
+            searchstring = mapping.charactermapping(searchstring);
+        }
 
         // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
         if (advancedsearch) {
@@ -77,7 +79,9 @@ public class SearchService {
 
         for (String aPartialSearchString : partialSearchString) {
 
-            aPartialSearchString = mapping.charactermapping(aPartialSearchString);
+            if(!advancedsearch) {
+                aPartialSearchString = mapping.charactermapping(aPartialSearchString);
+            }
 
             if (aPartialSearchString.startsWith("\"")) {
                 partOfPhrase = true;
