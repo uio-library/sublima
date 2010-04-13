@@ -12,11 +12,11 @@
     <xsl:param name="label"/>
     <xsl:if test="./sq:results/sq:result">
       <tr>
-	<th scope="row">
+	<td scope="row">
 	  <label for="{$field}">
 	    <xsl:value-of select="$label"/>
 	  </label>
-	</th>
+	</td>
 	<td>
 	  <select id="{$field}" name="{$field}">
 	    <option value=""></option>

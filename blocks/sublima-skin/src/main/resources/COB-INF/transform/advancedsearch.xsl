@@ -127,14 +127,37 @@
                 <xsl:apply-templates select="/c:page/c:mediatypes/sq:sparql">
                     <xsl:with-param name="field">dct:type</xsl:with-param>
                     <xsl:with-param name="label">
-                        <i18n:text key="adv.mediaType">Mediatype</i18n:text>
+                        <xsl:choose>
+                            <xsl:when test="$interface-language = 'no'">
+                                <i18n:text key="adv.mediaType">Medietype</i18n:text>
+                            </xsl:when>
+                            <xsl:when test="$interface-language = 'sv'">
+                                <i18n:text key="adv.mediaType">Mediaslag</i18n:text>
+                            </xsl:when>
+                            <xsl:when test="$interface-language = 'da'">
+                                <i18n:text key="adv.mediaType">Medietype</i18n:text>
+                            </xsl:when>
+                            <xsl:otherwise></xsl:otherwise>
+                        </xsl:choose>
                     </xsl:with-param>
                 </xsl:apply-templates>
 
                 <xsl:apply-templates select="/c:page/c:audiences/sq:sparql">
                     <xsl:with-param name="field">dct:audience</xsl:with-param>
                     <xsl:with-param name="label">
-                        <i18n:text key="adv.audience">Målgruppe</i18n:text>
+                        <xsl:choose>
+                            <xsl:when test="$interface-language = 'no'">
+                                <i18n:text key="adv.audience">Målgruppe</i18n:text>
+                            </xsl:when>
+                            <xsl:when test="$interface-language = 'sv'">
+                                <i18n:text key="adv.audience">Målgrupp</i18n:text>
+                            </xsl:when>
+                            <xsl:when test="$interface-language = 'da'">
+                                <i18n:text key="adv.audience">Målgruppe</i18n:text>
+                            </xsl:when>
+                            <xsl:otherwise></xsl:otherwise>
+                        </xsl:choose>
+
                     </xsl:with-param>
                 </xsl:apply-templates>
 
@@ -164,7 +187,18 @@
                         <xsl:apply-templates select="/c:page/c:committers/sq:sparql">
                             <xsl:with-param name="field">sub:committer</xsl:with-param>
                             <xsl:with-param name="label">
-                                <i18n:text key="adv.approved">Godkjent av</i18n:text>
+                                <xsl:choose>
+                                    <xsl:when test="$interface-language = 'no'">
+                                        <i18n:text key="adv.approved">Godkjent av</i18n:text>
+                                    </xsl:when>
+                                    <xsl:when test="$interface-language = 'sv'">
+                                        <i18n:text key="adv.approved">Godkänt av</i18n:text>
+                                    </xsl:when>
+                                    <xsl:when test="$interface-language = 'da'">
+                                        <i18n:text key="adv.approved">Godkendt af</i18n:text>
+                                    </xsl:when>
+                                    <xsl:otherwise></xsl:otherwise>
+                                </xsl:choose>
                             </xsl:with-param>
                         </xsl:apply-templates>
 
@@ -182,7 +216,18 @@
                 <xsl:apply-templates select="/c:page/c:languages/sq:sparql">
                     <xsl:with-param name="field">dct:language</xsl:with-param>
                     <xsl:with-param name="label">
-                        <i18n:text key="adv.language">Språk</i18n:text>
+                        <xsl:choose>
+                            <xsl:when test="$interface-language = 'no'">
+                                <i18n:text key="adv.language">Språk</i18n:text>
+                            </xsl:when>
+                            <xsl:when test="$interface-language = 'sv'">
+                                <i18n:text key="adv.language">Språk</i18n:text>
+                            </xsl:when>
+                            <xsl:when test="$interface-language = 'da'">
+                                <i18n:text key="adv.language">Sprog</i18n:text>
+                            </xsl:when>
+                            <xsl:otherwise></xsl:otherwise>
+                        </xsl:choose>
                     </xsl:with-param>
                 </xsl:apply-templates>
                 
