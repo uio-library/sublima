@@ -134,7 +134,7 @@ sublima.search.mapping=ä->a\n\
 ž->z\n\
 '->___\n\
 ,->___\n\
-.->__\n\
+. ->__\n\
 -->__
 
 # Import rules define which rules to apply to imported data. This should be left as-is.
