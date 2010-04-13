@@ -14,18 +14,21 @@
       $("#subject").autocomplete(url, {
         max: 50,
         minChars: 3,
+        selectFirst: false,
         extraParams : { action:"topic", language:"<xsl:value-of select="$interface-language"/>"}
       });
 
       $("#keyword").autocomplete(url, {
         max: 50,
         minChars: 3,
+        selectFirst: false,
         extraParams : { action:"topic", language:"<xsl:value-of select="$interface-language"/>"}
       });
 
       $("#publisher").autocomplete(url, {
         max: 50,
         minChars: 3,
+        selectFirst: false,
         extraParams : { action:"publisher", language:"<xsl:value-of select="$interface-language"/>"}
       });
 

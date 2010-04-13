@@ -93,6 +93,7 @@
     $("#input_<xsl:value-of select="$select_id"/>").autocomplete(url, {
             max: 50,
             minChars: 2,
+            selectFirst: false,
             extraParams : { action:"topicvalue", language:"<xsl:value-of select="$interface-language"/>"}
           });
 
