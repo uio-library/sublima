@@ -12,6 +12,7 @@
   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:url="http://whatever/java/java.net.URLEncoder"
   xmlns:xalan="http://xml.apache.org/xalan"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
@@ -122,13 +123,16 @@
     <dl>
       <!--xsl:for-each select="sub:Resource">
         <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/-->
-
+       <xsl:variable name="loggedin"><xsl:value-of select="//c:loggedin"/></xsl:variable>
 <!-- The root node for each described resource -->
        <xsl:for-each select="xalan:nodeset($res-copy)/sub:Resource">
         <xsl:sort lang="{$interface-language}" select="./*[local-name() = $sorting]" order="{$sortorder}"/>
 
 	  <dt>
 	    <xsl:apply-templates select="./dct:title" mode="external-link"/>
+      <xsl:if test="$loggedin = 'true'">-
+        <a href="{$baseurl}/admin/ressurser/edit?uri={url:encode(./@rdf:about)}{$aloc}">[Edit]</a>
+      </xsl:if>
 	  </dt>
 	<dd>
 	  <div style="font-size:small">
