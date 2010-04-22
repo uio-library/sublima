@@ -1201,6 +1201,24 @@ public class AdminService {
         }
     }
 
+    public boolean isTopic(String topicURI) {
+
+        if (!topicURI.startsWith("<") && !topicURI.endsWith(">")) {
+            topicURI = "<" + topicURI + ">";
+        }
+
+        String sparqlConstructQuery = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                "\n" +
+                "ASK { " + topicURI + " a skos:Concept  .\n}";
+
+
+        logger.trace("AdminService.isTopic() executing");
+        Object queryResult = sparqlDispatcher.query(sparqlConstructQuery, "ASK");
+
+        return queryResult != null && queryResult.toString().contains("true");
+
+    }
+
     public boolean isSymmetricProperty(String relationUri) {
 
         if (!relationUri.startsWith("<") && !relationUri.endsWith(">")) {

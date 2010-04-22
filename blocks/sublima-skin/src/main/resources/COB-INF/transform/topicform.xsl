@@ -137,7 +137,8 @@
 
       <xsl:choose>
         <xsl:when test="./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about">
-          <input type="hidden" name="the-resource" value="{./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about}"/>
+          <input type="text" name="the-resource" size="80" value="{./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about}"/>
+          <input type="hidden" name="old-the-resource" size="80" value="{./c:topicdetails/rdf:RDF/skos:Concept/@rdf:about}"/>
         </xsl:when>
         <xsl:otherwise>
           <input type="hidden" name="title-field" value="skos:prefLabel-1"/>

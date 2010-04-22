@@ -354,4 +354,5 @@
   <message key="dateposted">Registreringsdato</message>
   <message key="publisher.about">Om utgiver</message>
   <message key="search.refine.notopics">Søket ditt gir for mange treff. Forsøk å angi flere søkekriterier.</message> <!-- MÅ OVERSETTES -->
+  <message key="topic.validation.existing">Et emne med denne URIen er allerede lagret. Vennligst angi en ny og unik URI.</message> <!-- MÅ OVERSETTES -->
 </catalogue>
