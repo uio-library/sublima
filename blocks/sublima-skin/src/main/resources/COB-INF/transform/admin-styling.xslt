@@ -252,81 +252,15 @@
   </xsl:call-template>
 				<div class="spacer">&#160;</div>
 				<div class="spacer">
-						<div id="adminContentLeftHeader">
+                        <div id="adminContentMiddleRightHeader">
 							&#160;
 						</div>
-						<div id="adminContentMiddleRightHeader">
+						<div id="adminContentRightHeader">
 							&#160;
 						</div>
 				</div>
 				<div id="admincontent">
-					<div id="admincolleft">
-						<!-- ######################################################################
-     LEFT COLUMN (col2)
-     menues
-	 ###################################################################### -->
-
-
-						<div class="col2">
-							<!-- Column 2 start -->
-							<xsl:if test="c:page/c:menu/c:menuelement">
-
-								<ul>
-
-									<xsl:for-each select="c:page/c:menu/c:menuelement">
-
-										<li>
-											<a>
-												<xsl:attribute name="href">
-													<xsl:choose>
-														<xsl:when test="@link = ''">
-															<xsl:value-of select="@extlink"/>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/>
-														</xsl:otherwise>
-													</xsl:choose>
-												</xsl:attribute>
-												<xsl:value-of select="@title"/>
-											</a>
-
-										</li>
-										<xsl:if test="c:childmenuelement">
-											<ul>
-												<xsl:for-each select="c:childmenuelement">
-													<li>
-														<a>
-															<xsl:attribute name="href">
-																<xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/>
-															</xsl:attribute>
-															<xsl:value-of select="@title"/>
-														</a>
-													</li>
-													<xsl:if test="c:childmenuelement">
-														<ul>
-															<xsl:for-each select="c:childmenuelement">
-																<li>
-																	<a>
-																		<xsl:attribute name="href">
-																			<xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/>
-																		</xsl:attribute>
-																		<xsl:value-of select="@title"/>
-																	</a>
-																</li>
-															</xsl:for-each>
-														</ul>
-													</xsl:if>
-												</xsl:for-each>
-											</ul>
-										</xsl:if>
-									</xsl:for-each>
-								</ul>
-							</xsl:if>
-							<!-- Column 2 end -->
-							<xsl:text> </xsl:text>
-						</div>
-					</div>
-					<div id="admincolmidright">
+                    <div id="admincolmidright">
 						<!-- ######################################################################
      RIGHT (main) COLUMN (col1)
      menues
@@ -514,6 +448,73 @@
 							</xsl:if>
 						</div>
 					</div>
+					<div id="admincolright">
+						<!-- ######################################################################
+     LEFT COLUMN (col2)
+     menues
+	 ###################################################################### -->
+
+
+						<div class="col3">
+							<!-- Column 2 start -->
+							<xsl:if test="c:page/c:menu/c:menuelement">
+
+								<ul>
+
+									<xsl:for-each select="c:page/c:menu/c:menuelement">
+
+										<li>
+											<a>
+												<xsl:attribute name="href">
+													<xsl:choose>
+														<xsl:when test="@link = ''">
+															<xsl:value-of select="@extlink"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/>
+														</xsl:otherwise>
+													</xsl:choose>
+												</xsl:attribute>
+												<xsl:value-of select="@title"/>
+											</a>
+
+										</li>
+										<xsl:if test="c:childmenuelement">
+											<ul>
+												<xsl:for-each select="c:childmenuelement">
+													<li>
+														<a>
+															<xsl:attribute name="href">
+																<xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/>
+															</xsl:attribute>
+															<xsl:value-of select="@title"/>
+														</a>
+													</li>
+													<xsl:if test="c:childmenuelement">
+														<ul>
+															<xsl:for-each select="c:childmenuelement">
+																<li>
+																	<a>
+																		<xsl:attribute name="href">
+																			<xsl:value-of select="$baseurl"/>/<xsl:value-of select="@link"/><xsl:value-of select="$qloc"/>
+																		</xsl:attribute>
+																		<xsl:value-of select="@title"/>
+																	</a>
+																</li>
+															</xsl:for-each>
+														</ul>
+													</xsl:if>
+												</xsl:for-each>
+											</ul>
+										</xsl:if>
+									</xsl:for-each>
+								</ul>
+							</xsl:if>
+							<!-- Column 2 end -->
+							<xsl:text> </xsl:text>
+						</div>
+					</div>
+
 					<div class="clearer">&#160;</div>
 				</div>
 				<div id="footer">

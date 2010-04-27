@@ -372,14 +372,14 @@ fieldset {
 
 /*Admin*/
 
-#adminContentLeftHeader {
+#adminContentRightHeader {
   height: 100%;
   float:left;
   width: 25%;
-  background-image: url(lefttop.png);
-  background-position: right;
+  background-image: url(righttop.png);
+  background-position: left;
   background-repeat:no-repeat;
-  background-color:#d3dfe5;
+  background-color:#c0d2db;
   }
 #adminContentMiddleRightHeader {
   height: 100%;
@@ -388,14 +388,14 @@ fieldset {
   background-color: #ffffff
 }
 #admincontent {
-    background-color:#d3dfe5;
+    background-color:#c0d2db;
     width: 100%;
 }
-#admincolleft {
+#admincolright {
   height: 100%;
   float:left;
   width: 25%;
-  
+
 }
 #admincolmidright {
   height: 100%;
