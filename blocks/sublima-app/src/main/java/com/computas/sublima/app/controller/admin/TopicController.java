@@ -644,8 +644,8 @@ public class TopicController implements StatelessAppleController {
 
                 if (!validationmessages.isEmpty()) {
                     messageBuffer.append(validationmessages);
-                    bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("uri")));
-                    bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("uri")));
+                    bizData.put("topicdetails", adminService.getTopicByURI(req.getCocoonRequest().getParameter("old-the-resource")));
+                    bizData.put("topicresources", adminService.getTopicResourcesByURI(req.getCocoonRequest().getParameter("old-the-resource")));
                     bizData.put("alltopics", adminService.getAllTopics());
                     bizData.put("status", adminService.getAllStatuses());
                     bizData.put("tempvalues", "<empty></empty>");
