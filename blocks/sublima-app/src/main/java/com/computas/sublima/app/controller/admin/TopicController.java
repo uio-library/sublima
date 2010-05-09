@@ -882,12 +882,13 @@ public class TopicController implements StatelessAppleController {
     private String validateRequest(AppleRequest req) {
         StringBuilder validationMessages = new StringBuilder();
 
-        if (!req.getCocoonRequest().getParameter("old-the-resource").equalsIgnoreCase(req.getCocoonRequest().getParameter("the-resource"))) {
-            if (adminService.isTopic(req.getCocoonRequest().getParameter("the-resource"))) {
-                validationMessages.append("<c:message><i18n:text key=\"topic.validation.existing\">Et emne med denne URIen er allerede lagret. Vennligst angi en ny og unik URI.</i18n:text></c:message>\n");
-            }
-        }
-
+        if(req.getCocoonRequest().getParameter("old-the-resource") != null) {
+        	if (!req.getCocoonRequest().getParameter("old-the-resource").equalsIgnoreCase(req.getCocoonRequest().getParameter("the-resource"))) {
+          	  if (adminService.isTopic(req.getCocoonRequest().getParameter("the-resource"))) {
+            	    validationMessages.append("<c:message><i18n:text key=\"topic.validation.existing\">Et emne med denne URIen er allerede lagret. Vennligst angi en ny og unik URI.</i18n:text></c:message>\n");
+            	}
+        	}
+				}
 
         if ("".equalsIgnoreCase(req.getCocoonRequest().getParameter("skos:prefLabel-1")) || req.getCocoonRequest().getParameter("skos:prefLabel-1") == null) {
             validationMessages.append("<c:message><i18n:text key=\"topic.validation.titleblank\">Emnets tittel kan ikke være blank</i18n:text></c:message>\n");
