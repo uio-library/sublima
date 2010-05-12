@@ -456,6 +456,7 @@
 
 
 						<div class="col3">
+                            <div id="panel-tasks">
 							<!-- Column 2 start -->
 							<xsl:if test="c:page/c:menu/c:menuelement">
 
@@ -514,7 +515,7 @@
 							<xsl:text> </xsl:text>
 						</div>
 					</div>
-
+                    </div>
 					<div class="clearer">&#160;</div>
 				</div>
 				<div id="footer">
