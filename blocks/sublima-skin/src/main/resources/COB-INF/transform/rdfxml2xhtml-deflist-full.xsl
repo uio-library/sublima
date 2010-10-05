@@ -21,7 +21,13 @@
   <xsl:param name="baseurl"/>
 
   <xsl:template match="rdf:RDF" mode="results-full">
-    <xsl:param name="sorting"/>
+       <xsl:param name="sorting"/>
+      <xsl:param name="sortorder">
+      <xsl:choose>
+        <xsl:when test="$sorting = 'dateAccepted'">descending</xsl:when>
+        <xsl:otherwise>ascending</xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
 
 
     <!-- views -->
@@ -87,7 +93,7 @@
 
     <div id="fullDescribed">
       <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-	<xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
+	<xsl:sort lang="{$interface-language}" select="./*[local-name() = $sorting]" order="{$sortorder}"/>
       <br/>
       <table>
 

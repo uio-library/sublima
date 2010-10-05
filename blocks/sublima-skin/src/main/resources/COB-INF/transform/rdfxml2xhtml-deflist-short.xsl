@@ -20,7 +20,13 @@
   <xsl:param name="interface-language">no</xsl:param>
 
   <xsl:template match="rdf:RDF" mode="results-short">
-    <xsl:param name="sorting"/>
+       <xsl:param name="sorting"/>
+      <xsl:param name="sortorder">
+      <xsl:choose>
+        <xsl:when test="$sorting = 'dateAccepted'">descending</xsl:when>
+        <xsl:otherwise>ascending</xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
     
     <!-- views -->
     <!-- "just" remove the res-view attribute -->
@@ -83,7 +89,7 @@
     <xsl:variable name="loggedin"><xsl:value-of select="//c:loggedin"/></xsl:variable>
     <dl>
       <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/>
+        <xsl:sort lang="{$interface-language}" select="./*[local-name() = $sorting]" order="{$sortorder}"/>
 
   <dt>
 	  <xsl:apply-templates select="./dct:title" mode="internal-link"/>
