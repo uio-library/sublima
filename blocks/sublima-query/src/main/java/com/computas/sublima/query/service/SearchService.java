@@ -102,7 +102,7 @@ public class SearchService {
                     } else {
                         querystring.append(aPartialSearchString + " ");
                     }
-                } else if (!truncate || aPartialSearchString.length() <= 2) {
+                } else if (!truncate || aPartialSearchString.length() <= 3) {
                     querystring.append("'" + aPartialSearchString + "' ");
                 } else {
                     querystring.append("'" + aPartialSearchString + "*' ");
