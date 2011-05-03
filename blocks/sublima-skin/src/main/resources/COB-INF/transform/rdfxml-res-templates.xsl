@@ -89,7 +89,9 @@
 	<xsl:apply-templates select="./foaf:Agent|foaf:Person|foaf:Group|foaf:Organization" mode="external-link" />
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:text> </xsl:text>
+    <xsl:if test="position() != last()">
+      <xsl:text>, </xsl:text>
+    </xsl:if>
   </xsl:template>
 
 
@@ -189,6 +191,9 @@
 	<xsl:value-of select="./lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:if test="position() != last()">
+      <xsl:text>, </xsl:text>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="dct:coverage">
