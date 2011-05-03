@@ -510,6 +510,30 @@ PVJ: Made the file UTF-8
 
 							<xsl:if test="$numberofhits &lt; 1 and not(c:page/c:navigation/rdf:RDF//skos:Concept)">
 								<br/>
+								<!-- Generer et bibsys-søk -->
+								<a>
+									<xsl:attribute name="href">
+										<xsl:text>http://ask.bibsys.no/ask/action/result?cmd=&amp;kilde=biblio&amp;q=</xsl:text>
+										<xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/>
+									</xsl:attribute>
+									<i18n:text key="search.for">Søk etter</i18n:text>
+									<xsl:text> '</xsl:text>
+									<xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/>
+									<xsl:text>' i Bibsys</xsl:text>
+								</a>
+								<br/>
+								<!-- Generer et google scholar søk -->
+								<a>
+									<xsl:attribute name="href">
+										<xsl:text>http://scholar.google.com/scholar?hl=en&amp;btnG=Search&amp;as_sdt=1%2C5&amp;as_sdtp=on&amp;q=</xsl:text>
+										<xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/>
+									</xsl:attribute>
+									<i18n:text key="search.for">Søk etter</i18n:text>
+									<xsl:text> '</xsl:text>
+									<xsl:value-of select="c:page/c:facets/c:request/c:param[@key='searchstring']/c:value"/>
+									<xsl:text>' i Google Scholar</xsl:text>
+								</a>
+								<br/>
 								<!-- Generer et google søk -->
 								<a>
 									<xsl:attribute name="href">
