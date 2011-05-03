@@ -1,6 +1,5 @@
 package com.computas.sublima.query.service;
 
-
 import com.hp.hpl.jena.db.DBConnection;
 import com.hp.hpl.jena.db.IDBConnection;
 
@@ -13,12 +12,40 @@ import java.sql.*;
  * Date: 08.jan.2008
  */
 public class DatabaseService {
-  // todo Use JNDI instead of hard coded database parameters
-  private String M_DB_URL = "jdbc:virtuoso://rabbit.computas.int:1111";// SettingsService.getProperty("sublima.database.url");
-  private String M_DB_USER = "dba";//SettingsService.getProperty("sublima.database.username");
-  private String M_DB_PASSWD = "dba";//SettingsService.getProperty("sublima.database.password");
-  private String M_DB = "DB";//SettingsService.getProperty("sublima.database.databasetype");
-  private String M_DBDRIVER_CLASS = "virtuoso.jdbc3.Driver";//SettingsService.getProperty("sublima.database.class");
+    private static String __DB_URL;
+    private static String __DB_USER;
+    private static String __DB_PASSWD;
+    private static String M_DB = "DB";   //SettingsService.getProperty("sublima.database.databasetype");
+    private static String M_DBDRIVER_CLASS = "virtuoso.jdbc3.Driver";//SettingsService.getProperty("sublima.database.class");
+
+    /*
+     * The following variables are set  lazily as a workaround.
+     * If SettingsService.getProperty() is called during class initialization,
+     * an exception is thrown, probably because  SettingsService isn't
+     * configured yet.
+     * 
+     * Always use the getters to access these variables.
+     */
+    private static String getM_DB_URL() {
+	if (__DB_URL ==  null) {
+	    __DB_URL = SettingsService.getProperty("sublima.database.url");
+	}
+        return __DB_URL;
+    }
+
+    private static String getM_DB_USER() {
+	if (__DB_USER == null) {
+	    __DB_USER = SettingsService.getProperty("virtuoso.digest.username");	    
+	}
+        return __DB_USER;
+    }
+
+    private static String getM_DB_PASSWD() {
+	if (__DB_PASSWD == null) {
+	    __DB_PASSWD = SettingsService.getProperty("virtuoso.digest.password");
+	}
+	return __DB_PASSWD;
+    }
 
   public IDBConnection getConnection() {
 
@@ -48,7 +75,7 @@ public class DatabaseService {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    connection = new DBConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD, M_DB);
+    connection = new DBConnection(getM_DB_URL(), getM_DB_USER(), getM_DB_PASSWD(), M_DB);
 
     return connection;
 
@@ -93,7 +120,7 @@ public class DatabaseService {
     try
 
     {
-      connection = DriverManager.getConnection(M_DB_URL, M_DB_USER, M_DB_PASSWD);
+      connection = DriverManager.getConnection(getM_DB_URL(), getM_DB_USER(), getM_DB_PASSWD());
     }
 
     catch (
