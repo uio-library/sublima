@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <catalogue xml:lang="en">
-  <message key="add"></message> <!-- MÅ OVERSETTES -->
+  <message key="add">Add</message>
   <message key="added">Added </message>
   <message key="addedit">Add/Edit</message>
   <message key="addpublisher"></message> <!-- MÅ OVERSETTES -->
@@ -133,7 +133,7 @@
   <message key="menu.stats">Statistics</message>
   <message key="menu.suggested">Suggested</message>
   <message key="menu.theme">Theme topics</message>
-  <message key="menu.tips">Forslag</message>
+  <message key="menu.tips">Suggestions</message>
   <message key="menu.topic">Topics</message>
   <message key="menu.user">Users</message>
   <message key="menu.adminMeny">Menu</message><!-- MÅ OVERSETTES -->
