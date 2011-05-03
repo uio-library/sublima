@@ -55,9 +55,9 @@ public class SearchService {
 
         // Lucene gives certain characters a meaning, which may cause malformed queries, so remove them
         if (advancedsearch) {
-            searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\^\\+\\-\\!\\|\\?\\\\]", "");
+            searchstring = searchstring.replaceAll("[&:(){}\\[\\]~\\^\\+\\-\\!\\|\\?\\\\]", "");
         } else { // normal freetext search
-            searchstring = searchstring.replaceAll("[:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]", "");
+            searchstring = searchstring.replaceAll("[&:(){}\\[\\]~\\*\\^\\+\\-\\!\\|\\?\\\\]", "");
         }
 
         searchstring = searchstring.replace("&&", "");
