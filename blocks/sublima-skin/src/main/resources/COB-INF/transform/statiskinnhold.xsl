@@ -16,7 +16,9 @@
     <!-- Importerer de ulike språkversjonene av de statiske sidene -->
     <xsl:import href="om_portalen_no.xsl"/>
     <xsl:import href="om_portalen_sv.xsl"/>
+    <xsl:import href="om_portalen_en.xsl"/>
     <xsl:import href="hjelp_no.xsl"/>
+    <xsl:import href="hjelp_en.xsl"/>
 
     <xsl:param name="baseurl"/>
     <xsl:param name="interface-language"/>
@@ -38,6 +40,9 @@
                 <xsl:when test="$interface-language = 'da'">
                     <xsl:call-template name="om_portalen_no"/>
                 </xsl:when>
+                <xsl:when test="$interface-language = 'en'">
+                    <xsl:call-template name="om_portalen_en"/>
+                </xsl:when>
                 <xsl:otherwise>
 
                 </xsl:otherwise>
@@ -56,6 +61,9 @@
                 </xsl:when>
                 <xsl:when test="$interface-language = 'da'">
                     <xsl:call-template name="hjelp_no"/>
+                </xsl:when>
+                <xsl:when test="$interface-language = 'en'">
+                    <xsl:call-template name="hjelp_en"/>
                 </xsl:when>
                 <xsl:otherwise>
 
