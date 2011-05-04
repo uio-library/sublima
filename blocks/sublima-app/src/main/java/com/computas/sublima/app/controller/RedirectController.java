@@ -27,7 +27,7 @@ public class RedirectController implements StatelessAppleController {
       uri = uri + ":" + r.getServerPort();
     }
     uri = uri + r.getRequestURI();
-    String url = getProperty("sublima.base.url") + "sparql?query=" +
+    String url = getProperty("sublima.sparql.directendpoint") + "?query=" +
             "DESCRIBE <" + uri + ">";
     res.getCocoonResponse().addHeader("Location", url);
     res.sendStatus(303);
