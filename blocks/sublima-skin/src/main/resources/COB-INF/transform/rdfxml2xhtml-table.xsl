@@ -39,7 +39,7 @@
             <i18n:text key="search.result.publishedby">Publisert av</i18n:text>:
           </td>
           <td>
-            <xsl:apply-templates select="sub:Resource/dct:publisher" mode="external-link"/>
+            <xsl:apply-templates select="sub:Resource/dct:publisher"/>
           </td>
         </tr>
       </xsl:if>
