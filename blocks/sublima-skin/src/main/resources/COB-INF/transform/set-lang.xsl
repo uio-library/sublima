@@ -5,14 +5,16 @@
     xmlns:c="http://xmlns.computas.com/cocoon"
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
    version="1.0">
-  
+
   <xsl:template name="lang-text">
     <xsl:param name="url"/>
     <a lang="no" hreflang="no" href="{$url}no">Norsk</a>&#160;&#160;
+<!--  
     <a lang="da" hreflang="da" href="{$url}da">Dansk</a> &#160;&#160;
-    <a lang="sv" hreflang="sv" href="{$url}sv">Svenska</a> 
+    <a lang="sv" hreflang="sv" href="{$url}sv">Svenska</a>
+    <a lang="en" hreflang="en" href="{$url}en">English</a> 
+-->
   </xsl:template>
-
   
   <xsl:template name="set-langs"> 
     <xsl:param name="baseurl"/>
