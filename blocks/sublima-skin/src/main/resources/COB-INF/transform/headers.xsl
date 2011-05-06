@@ -18,7 +18,7 @@
     <head>
       <title>
 	<xsl:value-of select="$title"/>
-	<xsl:text> | SMIL</xsl:text>
+	<xsl:text> | Juridisk nettviser</xsl:text>
       </title>
    
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -29,6 +29,7 @@
 	      href="{$rss-url}" />
       </xsl:if>
 
+      <link rel="stylesheet" type="text/css" href="{$baseurl}/styles/uio-app-top-bottom.css"/>
       <link rel="stylesheet" type="text/css" href="{$baseurl}/styles/alt-css.css"/>
       <link rel="stylesheet" href="{$baseurl}/styles/jquery.autocomplete.css" type="text/css" />
       <link rel="stylesheet" href="{$baseurl}/styles/jquery.asmselect.css" type="text/css" />
@@ -80,6 +81,7 @@
 
   <xsl:template name="headers">
     <xsl:param name="baseurl"/>
+<!--
     <div id="header">
 			<div id="headerLogo">
 				<a  href="{$baseurl}/{$qloc}">
@@ -107,6 +109,47 @@
 			</div>
 			
     </div>
+-->
+
+<!-- UiO Page header starts -->
+<div id="app-head-wrapper"> 
+  <div id="line-top">
+    <div id="uiologo">
+      <a href="http://www.uio.no/">Universitetet i Oslo</a>
+    </div> 
+  </div>
+  <div id="app-head">
+    <div id="app-name"> 
+      <a href="{$baseurl}/{$qloc}">Juridisk nettviser</a> 
+      <span id="tagline">Norsk fagportal for jus</span>
+    </div>
+    <div id="head-menu"> 
+      <div class="language-menu">
+	<xsl:call-template name="set-langs">
+	  <xsl:with-param name="baseurl" select="$baseurl"/>
+	</xsl:call-template>
+      </div> 
+    </div>
+<!--
+    <div id="head-login">
+      <span id="head-login-user-fullname">Fornavn Etternavn</span>
+      <a id="head-login-logout" href="/">logg ut</a>
+    </div>
+-->
+  </div> 
+</div> 
+<!-- UiO Page header end -->
+    <div id="topMenuUIO">
+      <div id="headerSpacer">&#160;</div>
+      <div class="MenuItem"><a href="{$baseurl}/portal/om_portalen{$qloc}">Om portalen</a></div>
+      <div class="MenuItem">
+	<a href="{$baseurl}/tips{$qloc}">
+	  <i18n:text key="menu.tips">Forsalg</i18n:text>
+	</a>
+      </div>
+      <div class="MenuItem"><a href="{$baseurl}/portal/hjelp{$qloc}">Hjelp</a></div>
+    </div>
+
   </xsl:template>
 
 

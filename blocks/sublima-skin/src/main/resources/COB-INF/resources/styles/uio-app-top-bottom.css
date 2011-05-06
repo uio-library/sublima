@@ -1,0 +1,443 @@
+/*
+ *
+ *  UiO design - Apps
+ *
+ */
+
+html {
+  background-color: #fff;
+}
+
+h1 {
+  font-family: Arial, sans-serif;
+  font-size: 1.69em;
+  line-height: 1.2em;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+}
+
+h2 {
+  font-family: Arial, sans-serif;
+  font-size: 1.38em;
+  line-height: 1.33em;
+  font-weight: bold;
+  margin: 15px 0 8px;
+}
+
+p {
+  margin: 3px 0px 8px;
+}
+
+img {
+  border: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  background-color: #f8f8f8;
+  color: #2b2b2b;
+  font: normal 81.25%/1.31em Arial, sans-serif; /* 13 / 17 */
+/*  text-align: center; */
+  min-width: 1000px;
+}
+
+#app-head a,
+#app-footer a {
+  color: #0b5a9d;
+  text-decoration: none;
+}
+
+#app-head a:hover,
+#app-footer a:hover {
+  text-decoration: underline;
+}
+
+/* TODO later: look at std typography */
+
+/* Head and footer */
+
+#app-head,
+#app-footer {
+  background-color: #fff;
+  clear: both;
+  position: relative;
+}
+
+#app-head-wrapper {
+  background: #fff url(images/uio-app-head-white-grey-border.png) repeat-x left bottom;
+  margin-bottom: 20px;
+}
+
+#app-head {
+  margin: 0 auto 0 auto;
+  height: 128px;
+  background-color: transparent;
+  width: 970px;
+  text-align: left;
+}
+
+#app-content {
+  width: 940px;
+  margin: 0 auto;
+  text-align: left;
+  padding: 30px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+#app-footer-wrapper {
+  text-align: center;
+  border-top: 1px solid #e4e4e4;
+  background-color: #fff;
+  padding: 0px;
+  position: relative;
+}
+
+#app-footer {
+  margin-bottom: 0;
+  width: 940px;
+  margin: 0 auto;
+  text-align: left;
+  border: none;
+  font: normal 0.85em/1.25em Verdana, sans-serif;
+  background: url(images/uio-app-uio-sickle-medium.png) no-repeat 15px 24px;
+  padding: 24px 15px 44px 15px;
+}
+
+#app-head:after,
+#app-footer:after,
+#app-content:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+
+/* Black line and UiO logo */
+
+#app-head-wrapper #line-top {
+  background-color: #000;
+  height: 34px;
+}
+
+#app-head-wrapper #line-top #uiologo {
+  width: 970px;
+  margin: 0 auto;
+  position: relative;
+  height: 34px;
+}
+
+/* "The Phark Method" - image replacement
+ * Don't want that extra empty span from Levin Alexander method
+ * (although it is used elsewhere in Ny UiO design and have an extra advantage).
+ */
+
+#app-head-wrapper #line-top #uiologo a {
+  background: url(images/uio-app-uio-small-black.png) no-repeat 0 0;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  height: 15px;
+  width: 195px;
+  text-indent: -9999px;
+}
+
+#app-head-wrapper #line-top #uiologo.english-uiologo a {
+  background-image: url(images/uio-app-uio-small-black-eng.png);
+  height: 18px;
+}
+
+#app-head-wrapper #line-top #uiologo a:hover {
+  background: url(images/uio-app-uio-small-black.png) no-repeat 0 -17px;
+}
+
+#app-head-wrapper #line-top #uiologo.english-uiologo a:hover {
+  background-image: url(images/uio-app-uio-small-black-eng.png);
+}
+
+/* ^ Black line and UiO logo */
+
+/* Head menu */
+
+#app-head #head-menu {
+ font-weight: bold;
+ position: absolute;
+ top: 16px;
+ right: 15px;
+}
+
+#app-head #head-menu ul {
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  float: right;
+  list-style: none;
+}
+
+#app-head #head-menu ul li {
+  background-image: none;
+  margin: 0 0 0 10px;
+  padding: 0;
+  list-style: none;
+  display: inline;
+  font-size: 0.92em;
+  color: #000;
+}
+
+#app-head #head-menu a {
+  color: #000;
+}
+
+#app-head-wrapper #head-login {
+  position: absolute;
+  top: 84px;
+  right: 15px;
+  font-size: 0.92em;
+}
+
+#app-head-wrapper #head-login #head-login-user-fullname {
+  padding-right: 10px;
+}
+
+#app-head form {
+  position: absolute;
+  right: 15px;
+  top: 46px;
+}
+
+/* ^ Head menu */
+
+/* App name */
+
+#app-head #app-name {
+  position: absolute;
+  top: 38px;
+  left: 15px;
+  font-size: 2.77em;
+  font-weight: bold;
+  color: #96948e;
+  line-height: 1.05em;
+  white-space: nowrap;
+}
+
+#app-head #app-name a {
+  color: #96948e;
+}
+
+#app-head #app-name span#tagline {
+  color: #000;
+  font-size: 0.47em;
+  margin-top: 10px;
+  line-height: 1em;
+  display: block;
+  font-weight: normal;
+}
+
+#app-head #app-name a:hover {
+  text-decoration: none;
+  color: #0b5a9d;
+}
+
+/* ^ App name */
+
+/* Footer */
+
+#app-footer div span {
+  display: block;
+  color: #5e5e5e;
+  margin-bottom: 3px;
+}
+
+#app-footer span.vrtx-label {
+  font-weight: bold;
+  color: #7e7e7e;
+}
+
+#app-footer #contact-info,
+#app-footer #app-responsible {
+  width: auto;
+  float: right;
+}
+
+#app-footer div.phone-fax-email {
+  padding-right: 50px;
+}
+
+/* ^ Footer */
+
+/* ^ Head and footer */
+
+/* Fluid design */
+
+.app-fluid {
+  min-width: 880px;
+}
+
+.app-fluid #app-head-wrapper,
+.app-fluid #app-footer-wrapper {
+  min-width: 880px;
+  width: 100%;
+}
+
+.app-fluid #app-head,
+.app-fluid #app-head-wrapper #line-top #uiologo,
+.app-fluid #app-footer {
+  width: auto;
+  max-width: 1200px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.app-fluid #app-content {
+  width: auto;
+  min-width: 780px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.app-fluid #app-footer {
+  background-position: 50px 24px;
+}
+
+.app-fluid #app-head-wrapper #line-top #uiologo a,
+.app-fluid #app-head #app-name {
+  left: 50px;
+}
+
+.app-fluid #app-head #head-menu,
+.app-fluid #app-head form,
+.app-fluid #app-head-wrapper #head-login {
+  right: 50px;
+}
+
+* html .app-fluid #app-footer {
+  float: left;
+}
+
+/* ^ Fluid design */
+
+/* Forms */
+
+#app-head form, #app-head fieldset, #app-head input, #app-head button{margin:0;padding:0;}
+#app-head fieldset{border:0;}
+#app-head input, #app-head button{font-family:inherit;font-size:100%;font-style:inherit;font-weight:inherit;}
+
+#app-head form fieldset {
+  background: transparent;
+  border: none;
+}
+
+#app-head form {
+  font-size: 0.92em;
+}
+
+#app-head form button:active,
+#app-head form button.active,
+#app-head form button:hover {
+  background: transparent url(images/uio-app-button-small-right-rollover.png) no-repeat scroll 100% 0;
+}
+
+#app-head form button:active span,
+#app-head form button.active span,
+#app-head form button:hover span {
+  background: transparent url(images/uio-app-button-small-left-rollover.png) no-repeat scroll 0 0;
+}
+
+#app-head form {
+  background: url(images/uio-app-form-input.png) no-repeat 0 0;
+  height: 23px;
+  padding-left: 10px;
+  padding-top: 2px;
+  width: 223px;
+}
+
+#app-head form {
+  position: absolute;
+  right: 15px;
+  top: 46px;
+}
+
+#app-head form label {
+  position: absolute;
+  left: -9999px;
+  top: -1000px;
+}
+
+#app-head form input {
+  border: 1px solid transparent;
+  margin-top: 3px;
+  width: 165px;
+}
+
+#app-head form input:focus {
+  outline: 0;
+}
+
+#app-head form button {
+  background: transparent url(images/uio-app-button-small-right.png) no-repeat 100% 0;
+  border: none;
+  cursor: pointer;
+  height: 25px;
+  margin-right: -3px;
+  overflow: visible;
+  padding-right: 3px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#app-head form button span {
+  background: url(images/uio-app-button-small-left.png) no-repeat 0 0;
+  display: block;
+  height: 20px;
+  padding: 5px 10px 0 12px;
+}
+
+/* Mozilla hacks */
+
+#app-head form::-moz-focus-inner,
+#app-head form button::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+
+/* ^ Mozilla hacks */
+
+/* IE 6 hacks */
+
+* html #app-head input {
+  border: none;
+}
+
+* html #app-head form {
+  background-image: url(images/uio-app-form-input.gif);
+}
+
+/* ^ IE 6 hacks */
+
+/* iPhone hacks */
+
+@media only screen and (max-device-width: 480px) {
+
+  #app-head form button span {
+  	margin-right:-6px;
+  }
+
+  /* iPhone reset */
+  input {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
+  }
+
+}
+
+/* ^ iPhone hacks */
+
+/* ^ Forms */
+
+/* ^ UiO design - Apps */

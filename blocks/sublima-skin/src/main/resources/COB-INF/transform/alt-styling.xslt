@@ -805,6 +805,26 @@ PVJ: Made the file UTF-8
 	</div> <!-- three column layout end -->
 	<div class="clearer">&#160;</div>
 
+<!-- UiO Page footer starts -->
+<div id="app-footer-wrapper"> 
+   <div id="app-footer">
+     <div id="app-responsible"> 
+       <span class="vrtx-label">Ansvarlig for denne tjenesten</span> 
+       <span><a href="http://www.ub.uio.no/fag/jus/jus/">Juridisk bibliotek</a></span> 
+     </div>
+     <div id="contact-info"> 
+       <div class="phone-fax-email"> 
+         <span class="vrtx-label">Kontaktinformasjon</span>
+         <span class="email">E-post: <a href="mailto:ujur-nettviser@ub.uio.no">ujur-nettviser@ub.uio.no</a></span>  
+         <span class="tel">Tlf: 22 85 98 85</span>  
+       </div> 
+     </div>
+   </div> 
+</div>
+<!-- UiO Page footer end -->
+
+
+<!-- Original sublima footer
 	<div id="footer">
 		<div id="leftFooter">
 			<p>
@@ -825,7 +845,7 @@ PVJ: Made the file UTF-8
 		</div>
 		<div class="clearer">&#160;</div>
 	</div>
-
+-->
 
       </body>
     </html>
