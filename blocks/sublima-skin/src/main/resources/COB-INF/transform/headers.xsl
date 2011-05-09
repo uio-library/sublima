@@ -140,7 +140,6 @@
 </div> 
 <!-- UiO Page header end -->
     <div id="topMenuUIO">
-      <div id="headerSpacer">&#160;</div>
       <div class="MenuItem"><a href="{$baseurl}/portal/om_portalen{$qloc}">Om portalen</a></div>
       <div class="MenuItem">
 	<a href="{$baseurl}/tips{$qloc}">
