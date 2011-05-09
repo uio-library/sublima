@@ -19,6 +19,7 @@
     <xsl:import href="om_portalen_en.xsl"/>
     <xsl:import href="hjelp_no.xsl"/>
     <xsl:import href="hjelp_en.xsl"/>
+    <xsl:import href="mer_om_no.xsl"/>
 
     <xsl:param name="baseurl"/>
     <xsl:param name="interface-language"/>
@@ -71,6 +72,23 @@
             </xsl:choose>
         </xsl:if>
 
+        <!-- Sjekker om URL'en er portal/mer_om -->
+        <xsl:if test=". = 'mer_om'">
+            <!-- Sjekker på språk, og viser riktig språktemplate -->
+            <xsl:choose>
+                <xsl:when test="$interface-language = 'no'">
+                    <xsl:call-template name="mer_om_no"/>
+                </xsl:when>
+<!--
+                <xsl:when test="$interface-language = 'en'">
+                    <xsl:call-template name="mer_om_en"/>
+                </xsl:when>
+-->
+                <xsl:otherwise>
+
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>
