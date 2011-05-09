@@ -130,24 +130,18 @@
 	</xsl:call-template>
       </div> 
     </div>
-<!--
     <div id="head-login">
+      <a href="{$baseurl}/portal/om_portalen{$qloc}">Om portalen</a>&#160;
+      <a href="{$baseurl}/tips{$qloc}"><i18n:text key="menu.tips">Forsalg</i18n:text></a>&#160;
+      <a href="{$baseurl}/portal/hjelp{$qloc}">Hjelp</a>
+<!--
       <span id="head-login-user-fullname">Fornavn Etternavn</span>
       <a id="head-login-logout" href="/">logg ut</a>
-    </div>
 -->
+    </div>
   </div> 
 </div> 
 <!-- UiO Page header end -->
-    <div id="topMenuUIO">
-      <div class="MenuItem"><a href="{$baseurl}/portal/om_portalen{$qloc}">Om portalen</a></div>
-      <div class="MenuItem">
-	<a href="{$baseurl}/tips{$qloc}">
-	  <i18n:text key="menu.tips">Forsalg</i18n:text>
-	</a>
-      </div>
-      <div class="MenuItem"><a href="{$baseurl}/portal/hjelp{$qloc}">Hjelp</a></div>
-    </div>
 
   </xsl:template>
 
