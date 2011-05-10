@@ -8,7 +8,7 @@
 
   <xsl:template name="lang-text">
     <xsl:param name="url"/>
-    <a lang="no" hreflang="no" href="{$url}no">Norsk</a>&#160;&#160;
+    <a lang="no" hreflang="no" href="{$url}no">Norsk</a> <!--&#160;&#160;-->
 <!--  
     <a lang="da" hreflang="da" href="{$url}da">Dansk</a> &#160;&#160;
     <a lang="sv" hreflang="sv" href="{$url}sv">Svenska</a>
