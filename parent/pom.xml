@@ -315,10 +315,10 @@
       <url>http://bleu.west.spy.net/~dustin/repo</url>
       <layout>legacy</layout>
     </repository-->
-    <repository>
+    <!--repository>
       <id>Jena</id>
       <url>http://jena.hpl.hp.com/repo-dev/</url>
-    </repository>
+    </repository-->
   </repositories>
 
 
