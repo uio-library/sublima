@@ -1122,6 +1122,7 @@ public class AdminService {
                 "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
                         "prefix skos: <http://www.w3.org/2004/02/skos/core#> \n" +
                         "prefix owl: <http://www.w3.org/2002/07/owl#> \n" +
+                        "PREFIX wdr: <http://www.w3.org/2007/05/powder#> \n" +
                         "CONSTRUCT {\n" +
                         subject + "\n" +
                         "   a skos:Concept ;\n" +
@@ -1138,7 +1139,8 @@ public class AdminService {
                         "WHERE {\n" +
                         subject + "\n" +
                         "   skos:prefLabel ?preflabel ;\n" +
-                        "   a skos:Concept .\n" +
+                        "   a skos:Concept ;\n" +
+                        "   wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n" +
                         "OPTIONAL {\n" +
                         subject + "\n" +
                         "   skos:altLabel ?altlabel .\n" +
@@ -1153,7 +1155,8 @@ public class AdminService {
                         "?semrelation rdfs:subPropertyOf skos:semanticRelation ;\n" +
                         "   rdfs:label ?semrellabel .\n" +
                         "?object  a skos:Concept ;\n" +
-                        "   skos:prefLabel ?preflabel2 .\n" +
+                        "   skos:prefLabel ?preflabel2 ;\n" +
+                        "   wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> . \n" +
                         "}\n" +
                         "}";
 
