@@ -90,11 +90,8 @@
 			<div id="topMenu">
 				<div id="headerSpacer">&#160;</div>
 				<div class="MenuItem"><a href="{$baseurl}/portal/om_portalen{$qloc}">Om portalen</a></div>
-				<div class="MenuItem">
-					<a href="{$baseurl}/tips{$qloc}">
-						<i18n:text key="menu.tips">Forsalg</i18n:text>
-					</a>
-				</div>
+				<div class="MenuItem"><a href="{$baseurl}/tips{$qloc}"><i18n:text key="menu.tips">Forslag</i18n:text></a></div>
+                <div class="MenuItem"><a href="{$baseurl}/nyeste{$qloc}"><i18n:text key="menu.nyeste">Nyeste ressurser</i18n:text></a></div>
 				<div class="MenuItem"><a href="{$baseurl}/portal/hjelp{$qloc}">Hjelp</a></div>
 			</div>
 			

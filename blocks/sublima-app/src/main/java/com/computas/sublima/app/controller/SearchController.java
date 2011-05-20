@@ -82,6 +82,21 @@ public class SearchController implements StatelessAppleController {
         if ("topic".equalsIgnoreCase(mode)) {
             doGetTopic(res, req);
         }
+
+        if ("nyeste".equalsIgnoreCase(mode)) {
+            showNewestResources(res);
+        }
+    }
+
+    private void showNewestResources(AppleResponse res) {
+
+        Map<String, Object> bizData = new HashMap<String, Object>();
+
+        bizData.put("nyeste", adminService.getNewestResources());
+        bizData.put("mode", mode);
+        bizData.put("loggedin", loggedIn);
+
+        res.sendPage(format + "/nyeste", bizData);
     }
 
     private void doGetTopic(AppleResponse res, AppleRequest req) {

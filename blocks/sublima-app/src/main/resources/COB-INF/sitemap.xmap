@@ -308,7 +308,12 @@
             <map:match pattern="tips">
                 <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
                     <map:parameter name="mode" value="tips"/>
+                </map:call>
+            </map:match>
 
+            <map:match pattern="nyeste">
+                <map:call function="com.computas.sublima.app.controller.SearchController">
+                    <map:parameter name="mode" value="nyeste"/>
                 </map:call>
             </map:match>
 

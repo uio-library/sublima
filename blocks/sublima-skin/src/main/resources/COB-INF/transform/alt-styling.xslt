@@ -10,10 +10,6 @@ This stylesheet is the main stylesheet that is called for all pages.
 PVJ: Made the file UTF-8
 -->
 
-
-
-
-
 <xsl:stylesheet
     xmlns:c="http://xmlns.computas.com/cocoon"
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -40,6 +36,7 @@ PVJ: Made the file UTF-8
   <xsl:import href="set-lang.xsl"/>
   <xsl:import href="advancedsearch.xsl"/>
   <xsl:import href="statiskinnhold.xsl"/>
+  <xsl:import href="nyeste.xsl"/>
 
   <xsl:param name="baseurl"/>
   <xsl:param name="querystring"/>
@@ -456,6 +453,8 @@ PVJ: Made the file UTF-8
 		  vises dersom brukeren har valgt den
 		-->
 					<xsl:apply-templates select="c:page/c:tips" mode="form"/>
+
+                     <xsl:apply-templates select="c:page/c:nyeste" mode="list"/>
 
 
 					<!--

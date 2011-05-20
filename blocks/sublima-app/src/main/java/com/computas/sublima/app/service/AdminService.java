@@ -1418,4 +1418,35 @@ public class AdminService {
 
         return queryResult.toString();
     }
+
+    public String getNewestResources() {
+       String queryString =
+               "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                       "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+                       "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+                       "CONSTRUCT {\n" +
+                       "  ?resource a sub:Resource ;\n" +
+                       "            dct:title ?resourceTitle ;\n" +
+                       "            dct:dateAccepted ?dateAccepted ;\n" +
+                       "            dct:identifier ?internalURL ;\n" +
+                       "            dct:publisher ?publisherURL .\n" +
+                       "  ?publisherURL foaf:name ?publisherName .\n" +
+                       "} \n" +
+                       "from <http://smil.uio.no/>\n" +
+                       "where {\n" +
+                       "  ?resource a sub:Resource ;\n" +
+                       "            dct:title ?resourceTitle ;\n" +
+                       "            dct:dateAccepted ?dateAccepted ;\n" +
+                       "            dct:identifier ?internalURL ;\n" +
+                       "            dct:publisher ?publisherURL .\n" +
+                       "  ?publisherURL foaf:name ?publisherName .\n" +
+                       "} \n" +
+                       "ORDER BY DESC(?dateAccepted)\n" +
+                       "LIMIT 20";
+
+        logger.trace("AdminService.getNewestResources() executing");
+        Object queryResult = sparqlDispatcher.query(queryString);
+
+        return queryResult.toString();
+    }
 }
