@@ -1432,7 +1432,7 @@ public class AdminService {
                        "            dct:publisher ?publisherURL .\n" +
                        "  ?publisherURL foaf:name ?publisherName .\n" +
                        "} \n" +
-                       "from <http://smil.uio.no/>\n" +
+                       "from <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                        "where {\n" +
                        "  ?resource a sub:Resource ;\n" +
                        "            dct:title ?resourceTitle ;\n" +
