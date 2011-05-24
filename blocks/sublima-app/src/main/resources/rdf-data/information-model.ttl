@@ -223,7 +223,8 @@ skos:narrower 	a 			owl:ObjectProperty ;
 		rdfs:range  skos:Concept;
 		rdfs:label		"Mer spesifikke emner"@no ; 
 		rdfs:label		"Narrower"@en ; 
-		rdfs:subPropertyOf	skos:semanticRelation . 
+		rdfs:subPropertyOf	skos:semanticRelation ;
+		owl:inverseOf skos:broader .
  
 skos:broader 	a 			owl:ObjectProperty ;
 		rdfs:domain skos:Concept;
