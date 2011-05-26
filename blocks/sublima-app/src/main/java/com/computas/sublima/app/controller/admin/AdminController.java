@@ -73,6 +73,8 @@ public class AdminController implements StatelessAppleController {
     if ("".equalsIgnoreCase(mode)) {
       Map<String, Object> bizData = new HashMap<String, Object>();
       bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
+      bizData.put("comments", adminService.getCommentsFromLastNumberOfDays());
+      bizData.put("tips", adminService.getUnhandledTips());
       System.gc();
       res.sendPage("xml2/admin", bizData);
     } else if ("testsparql".equalsIgnoreCase(mode)) {

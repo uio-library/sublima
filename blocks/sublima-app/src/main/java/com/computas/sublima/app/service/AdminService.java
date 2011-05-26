@@ -31,12 +31,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * A class to support the administration of Sublima
@@ -1446,6 +1445,66 @@ public class AdminService {
 
         logger.trace("AdminService.getNewestResources() executing");
         Object queryResult = sparqlDispatcher.query(queryString);
+
+        return queryResult.toString();
+    }
+
+    public String getCommentsFromLastNumberOfDays() {
+
+        int days = -30; //Integer.valueOf(SettingsService.getProperty("sublima.commentsfromdays"));
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, days);
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = dateFormat.format(cal.getTime());
+
+        String query = "PREFIX sioc: <http://rdfs.org/sioc/ns#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "                PREFIX dct: <http://purl.org/dc/terms/>\n" +
+                "                CONSTRUCT {\n" +
+                "?comment a sioc:Item ;\n" +
+                "         sioc:has_owner ?owner ;\n" +
+                "         sioc:content ?content ;\n" +
+                "         sioc:has_creator ?creator .\n" +
+                "?owner dct:title ?title ; \n" +
+                "dct:identifier ?url .}\n"  +
+                "                where {\n" +
+                "                  ?comment a sioc:Item ;\n" +
+                "                          dct:dateAccepted ?date ;\n" +
+                "sioc:has_owner ?owner ;\n" +
+                "         sioc:content ?content ;\n" +
+                "         sioc:has_creator ?creator .\n" +
+                "?owner dct:title ?title ;\n" +
+                "dct:identifier ?url .\n"  +
+                "                FILTER ( ?date > \"" + date + "T00:00:00Z\"^^xsd:dateTime ) }";
+
+        logger.trace("AdminService.getCommentsFromLastNumberOfDays() executing");
+        Object queryResult = sparqlDispatcher.query(query);
+
+        return queryResult.toString();
+    }
+
+    public String getUnhandledTips() {
+
+        String query = "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "PREFIX dct: <http://purl.org/dc/terms/>\n" +
+                "\n" +
+                "construct { \n" +
+                "  ?resource a sub:Resource ;\n" +
+                "            dct:title ?title ;\n" +
+                "            dct:identifier ?internalUrl .\n" +
+                "}\n" +
+                "where {\n" +
+                "  ?resource a sub:Resource ;\n" +
+                "            dct:title ?title ;\n" +
+                "            dct:identifier ?internalUrl ;\n" +
+                "            wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
+                "}";
+
+        logger.trace("AdminService.getCommentsFromLastNumberOfDays() executing");
+        Object queryResult = sparqlDispatcher.query(query);
 
         return queryResult.toString();
     }

@@ -308,4 +308,6 @@
   <message key="search.refine.notopics">Søket ditt gir for mange treff. Forsøk å angi flere søkekriterier.</message> <!-- MÅ OVERSETTES -->
   <message key="topic.validation.existing">Et emne med denne URIen er allerede lagret. Vennligst angi en ny og unik URI.</message> <!-- MÅ OVERSETTES -->
   <message key="menu.nyeste">Nyeste ressurser</message>
+  <message key="admin.newest.tips">Ubehandlede tips</message>
+  <message key="admin.newest.comments">Kommentarer siste 30 dager</message>
 </catalogue>

@@ -12,6 +12,7 @@
         xmlns:sub="http://xmlns.computas.com/sublima#"
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
+        xmlns:sioc="http://rdfs.org/sioc/ns#"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
@@ -232,7 +233,33 @@
 
   </xsl:template>
   
-  
+  <xsl:template name="adminforside">
+
+      <xsl:if test="c:page/c:tips/rdf:RDF/sub:Resource">
+      <br/>
+      <i18n:text key="admin.newest.tips">Ubehandlede tips</i18n:text>
+      <ul>
+        <xsl:for-each select="c:page/c:tips/rdf:RDF/sub:Resource">
+          <li>
+            <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </xsl:if>
+
+      <xsl:if test="c:page/c:comments/rdf:RDF/sioc:Item">
+      <br/>
+      <i18n:text key="admin.newest.comments">Kommentarer siste 30 dager</i18n:text>
+      <ul>
+        <xsl:for-each select="c:page/c:comments/rdf:RDF/sioc:Item">
+          <li>
+            <xsl:value-of select="./sioc:content"/><br/><xsl:apply-templates select="./sioc:has_owner//dct:title" mode="internal-link"/>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </xsl:if>
+
+  </xsl:template>
   
   
   <!-- START of page -->
@@ -319,6 +346,10 @@
 								<xsl:text> </xsl:text>
 							</div>
 
+                            <div style="border:0px dotted lightblue;">
+								<xsl:call-template name="adminforside"/>
+								<xsl:text> </xsl:text>
+							</div>
 
 							<div style="border:0px dotted darkblue;">
 								<xsl:call-template name="alltopics"/>

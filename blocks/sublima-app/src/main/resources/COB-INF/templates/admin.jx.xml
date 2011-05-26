@@ -27,4 +27,9 @@
         </c:text>
     </c:content>
 
+    <c:tips><jx:out value="#{tips}" xmlize="true"/></c:tips>
+
+    <c:comments><jx:out value="#{comments}" xmlize="true"/></c:comments>
+
+
 </c:page>
