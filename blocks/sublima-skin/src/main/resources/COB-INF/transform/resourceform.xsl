@@ -21,10 +21,40 @@
   <xsl:import href="controlbutton.xsl"/>
   <xsl:import href="labels.xsl"/>
   <xsl:import href="selectmultiple.xsl"/>
+  <xsl:import href="addinputfield_templates.xsl"/>
+  <xsl:import href="addinputfield_script.xsl"/>
 
   <xsl:param name="baseurl"/>
   <xsl:param name="interface-language">no</xsl:param>
   <xsl:template match="c:resourcedetails" mode="resourceedit">
+
+<xsl:call-template name="addinputfieldtemplates">
+      <xsl:with-param name="uid">description</xsl:with-param>
+      <xsl:with-param name="interface-language" select="$interface-language"/>
+      <xsl:with-param name="values">descriptionvalues</xsl:with-param>
+      <xsl:with-param name="template">descriptiontemplate</xsl:with-param>
+      <xsl:with-param name="name">dct:description</xsl:with-param>
+      <xsl:with-param name="i18nkey">beskrivelse</xsl:with-param>
+      <xsl:with-param name="i18ntext">Beskrivelse</xsl:with-param>
+    </xsl:call-template>
+
+    <script type="text/javascript">
+
+      // Hook up the add button handler.
+      $(
+      function(){
+
+        <xsl:call-template name="addinputfieldscript">
+          <xsl:with-param name="uid">description</xsl:with-param>
+          <xsl:with-param name="values">descriptionvalues</xsl:with-param>
+          <xsl:with-param name="template">descriptiontemplate</xsl:with-param>
+          <xsl:with-param name="count" select="count(./c:resource/rdf:RDF/sub:Resource/dct:description)+2"/>
+          <xsl:with-param name="linkid">adddescription</xsl:with-param>
+          <xsl:with-param name="appendto">adddescriptionbefore</xsl:with-param>
+        </xsl:call-template>
+        }
+      );
+    </script>
 
     <form action="{$baseurl}/admin/ressurser/ny" method="POST" onsubmit="urlEncode();">
       <input type="hidden" name="prefix" value="skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;"/>
@@ -111,18 +141,38 @@
             <input id="old-resource" name="old-resource" type="hidden" value="{url:decode(./c:resource/rdf:RDF/sub:Resource/sub:url/@rdf:resource)}"/>
           </td>
         </tr>
-        <tr>
-          <td>
-            <label for="dct:description">
+         <xsl:for-each select="./c:resource/rdf:RDF/sub:Resource/dct:description">
+          <xsl:call-template name="labels">
+            <xsl:with-param name="label">
               <i18n:text key="description">Beskrivelse</i18n:text>
-            </label>
-          </td>
-          <td>
-            <textarea id="dct:description" name="dct:description" rows="6" cols="40">
-              <xsl:value-of select="./c:resource/rdf:RDF/sub:Resource/dct:description"/>
-              <xsl:text> </xsl:text>
-            </textarea>
-          </td>
+            </xsl:with-param>
+            <xsl:with-param name="value" select="."/>
+            <xsl:with-param name="default-language" select="@xml:lang"/>
+            <xsl:with-param name="field">
+              <xsl:text>dct:description-</xsl:text>
+              <xsl:value-of select="position()"/>
+            </xsl:with-param>
+            <xsl:with-param name="type">textarea</xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+
+        <xsl:call-template name="labels">
+            <xsl:with-param name="label">
+              <i18n:text key="description">Beskrivelse</i18n:text>
+            </xsl:with-param>
+            <xsl:with-param name="value"/>
+            <xsl:with-param name="default-language" select="$interface-language"/>
+            <xsl:with-param name="field">
+              <xsl:text>dct:description-</xsl:text>
+              <xsl:value-of select="count(./c:resource/rdf:RDF/sub:Resource/dct:description)+1"/>
+            </xsl:with-param>
+            <xsl:with-param name="type">textarea</xsl:with-param>
+          </xsl:call-template>
+
+        <tr id="adddescriptionbefore">
+          <td/>
+          <td/>
+          <td><a id="adddescription"><i18n:text key="adddescription">Legg til beskrivelse</i18n:text></a></td>
         </tr>
 
         <tr>

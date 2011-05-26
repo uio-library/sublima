@@ -19,38 +19,81 @@
     <xsl:param name="i18nkey"/>
     <xsl:param name="i18ntext"/>
 
-    <textarea rows="5" cols="40"
+    <xsl:choose>
+        <xsl:when test="$name = 'dct:description'">
+
+            <textarea rows="5" cols="40"
               id="{$values}"
               style="display: none;">
-      {
-      count: intCount<xsl:value-of select="$uid"/>,
-      name: "<xsl:value-of select="$name"/>"
-      }
-    </textarea>
+              {
+              count: intCount<xsl:value-of select="$uid"/>,
+              name: "<xsl:value-of select="$name"/>"
+              }
+            </textarea>
 
-    <textarea rows="5" cols="40"
-              id="{$template}"
+            <textarea rows="5" cols="40"
+                      id="{$template}"
+                      style="display: none;">
+              &lt;tr&gt;
+              &lt;th scope="row"&gt;
+              &lt;label for="{name}-{count}"&gt;&lt;i18n:text key="<xsl:value-of select="$i18nkey"/>"&gt;<xsl:value-of select="$i18ntext"/>&lt;/i18n:text&gt;&lt;/label&gt;
+              &lt;/th&gt;
+              &lt;td&gt;
+              &lt;textarea rows="6" cols="40" name="{name}-{count}" id="{name}-{count}"&gt;<xsl:text> </xsl:text>&lt;/textarea&gt;
+              &lt;/td&gt;
+              &lt;td&gt;
+              &lt;select name="{name}-{count}"&gt;
+
+              <xsl:apply-templates select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo" mode="list-options">
+                <xsl:with-param name="default-language" select="$interface-language"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
+              </xsl:apply-templates>
+
+              &lt;/select&gt;
+              &lt;/td&gt;
+              &lt;/tr&gt;
+
+            </textarea>
+
+        </xsl:when>
+
+        <xsl:otherwise>
+
+            <textarea rows="5" cols="40"
+              id="{$values}"
               style="display: none;">
-      &lt;tr&gt;
-      &lt;th scope="row"&gt;
-      &lt;label for="{name}-{count}"&gt;&lt;i18n:text key="<xsl:value-of select="$i18nkey"/>"&gt;<xsl:value-of select="$i18ntext"/>&lt;/i18n:text&gt;&lt;/label&gt;
-      &lt;/th&gt;
-      &lt;td&gt;
-      &lt;input value="" size="20" name="{name}-{count}" type="text" id="{name}-{count}"/&gt;
-      &lt;/td&gt;
-      &lt;td&gt;
-      &lt;select name="{name}-{count}"&gt;
+              {
+              count: intCount<xsl:value-of select="$uid"/>,
+              name: "<xsl:value-of select="$name"/>"
+              }
+            </textarea>
 
-      <xsl:apply-templates select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo" mode="list-options">
-        <xsl:with-param name="default-language" select="$interface-language"/>
-        <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
-      </xsl:apply-templates>
+            <textarea rows="5" cols="40"
+                      id="{$template}"
+                      style="display: none;">
+              &lt;tr&gt;
+              &lt;th scope="row"&gt;
+              &lt;label for="{name}-{count}"&gt;&lt;i18n:text key="<xsl:value-of select="$i18nkey"/>"&gt;<xsl:value-of select="$i18ntext"/>&lt;/i18n:text&gt;&lt;/label&gt;
+              &lt;/th&gt;
+              &lt;td&gt;
+              &lt;input value="" size="20" name="{name}-{count}" type="text" id="{name}-{count}"/&gt;
+              &lt;/td&gt;
+              &lt;td&gt;
+              &lt;select name="{name}-{count}"&gt;
 
-      &lt;/select&gt;
-      &lt;/td&gt;
-      &lt;/tr&gt;
+              <xsl:apply-templates select="/c:page/c:content/c:allanguages/rdf:RDF/lingvoj:Lingvo" mode="list-options">
+                <xsl:with-param name="default-language" select="$interface-language"/>
+                <xsl:sort lang="{$interface-language}" select="./rdfs:label[@xml:lang=$interface-language]"/>
+              </xsl:apply-templates>
 
-    </textarea>
+              &lt;/select&gt;
+              &lt;/td&gt;
+              &lt;/tr&gt;
+
+            </textarea>
+
+        </xsl:otherwise>
+    </xsl:choose>
 
   </xsl:template>
 </xsl:stylesheet>

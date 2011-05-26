@@ -114,7 +114,7 @@
             <xsl:copy-of select="./*"/>
            </sub:Resource>
         </xsl:for-each> 
-    </xsl:variable>
+    </xsl:variable>                                          
     
 
     

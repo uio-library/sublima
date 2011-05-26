@@ -47,7 +47,7 @@
   </xsl:template-->
   
   <xsl:template match="dct:description">
-    <xsl:value-of select="." disable-output-escaping="yes"/>
+    <xsl:value-of select="self::node()[@xml:lang=$interface-language]" disable-output-escaping="yes"/>
   </xsl:template>
 
   <xsl:template match="sub:committer|sub:lastApprovedBy">
