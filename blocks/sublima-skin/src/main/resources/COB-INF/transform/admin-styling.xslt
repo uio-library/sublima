@@ -241,7 +241,7 @@
       <ul>
         <xsl:for-each select="c:page/c:tips/rdf:RDF/sub:Resource">
           <li>
-            <xsl:apply-templates select="./dct:title" mode="internal-link"/>
+            <a href="{$baseurl}/admin/ressurser/edit?uri={url:encode(./@rdf:about)}{$aloc}"><xsl:value-of select="./dct:title"/></a>
           </li>
         </xsl:for-each>
       </ul>
@@ -253,8 +253,18 @@
       <ul>
         <xsl:for-each select="c:page/c:comments/rdf:RDF/sioc:Item">
           <li>
-            <xsl:value-of select="./sioc:content"/><br/><xsl:apply-templates select="./sioc:has_owner//dct:title" mode="internal-link"/>
+            <xsl:value-of select="./sioc:content"/><br/>
+             <xsl:choose>
+                 <xsl:when test=".//dct:title">
+                    <a href="{$baseurl}/admin/ressurser/edit?uri={url:encode(.//rdf:Description/@rdf:about)}{$aloc}"><xsl:value-of select=".//dct:title"/></a>
+                 </xsl:when>
+                 <xsl:otherwise>
+                    <a href="{$baseurl}/admin/ressurser/edit?uri={url:encode(.//sioc:has_owner/@rdf:resource)}{$aloc}">Link til ressursen</a>
+                 </xsl:otherwise>
+             </xsl:choose>
+
           </li>
+          <br/>
         </xsl:for-each>
       </ul>
     </xsl:if>

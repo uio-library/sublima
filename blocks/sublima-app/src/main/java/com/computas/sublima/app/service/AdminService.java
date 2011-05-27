@@ -1460,6 +1460,7 @@ public class AdminService {
         String date = dateFormat.format(cal.getTime());
 
         String query = "PREFIX sioc: <http://rdfs.org/sioc/ns#>\n" +
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                 "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
                 "                PREFIX dct: <http://purl.org/dc/terms/>\n" +
                 "                CONSTRUCT {\n" +
@@ -1468,7 +1469,7 @@ public class AdminService {
                 "         sioc:content ?content ;\n" +
                 "         sioc:has_creator ?creator .\n" +
                 "?owner dct:title ?title ; \n" +
-                "dct:identifier ?url .}\n"  +
+                "sub:url ?url .}\n"  +
                 "                where {\n" +
                 "                  ?comment a sioc:Item ;\n" +
                 "                          dct:dateAccepted ?date ;\n" +
@@ -1476,7 +1477,7 @@ public class AdminService {
                 "         sioc:content ?content ;\n" +
                 "         sioc:has_creator ?creator .\n" +
                 "?owner dct:title ?title ;\n" +
-                "dct:identifier ?url .\n"  +
+                "sub:url ?url .\n"  +
                 "                FILTER ( ?date > \"" + date + "T00:00:00Z\"^^xsd:dateTime ) }";
 
         logger.trace("AdminService.getCommentsFromLastNumberOfDays() executing");
