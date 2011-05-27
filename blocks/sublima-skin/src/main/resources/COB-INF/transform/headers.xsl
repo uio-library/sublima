@@ -131,6 +131,7 @@
       </div> 
     </div>
     <div id="head-login">
+      <a href="{$baseurl}/nyeste{$qloc}"><i18n:text key="menu.nyeste">Nyeste ressurser</i18n:text></a>&#160;
       <a href="{$baseurl}/portal/om_portalen{$qloc}">Om portalen</a>&#160;
       <a href="{$baseurl}/tips{$qloc}"><i18n:text key="menu.tips">Forsalg</i18n:text></a>&#160;
       <a href="{$baseurl}/portal/hjelp{$qloc}">Hjelp</a>
