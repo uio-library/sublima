@@ -83,18 +83,49 @@ public class SearchController implements StatelessAppleController {
             doGetTopic(res, req);
         }
 
-        if ("nyeste".equalsIgnoreCase(mode)) {
-            showNewestResources(res);
+        if ("nyeste".equalsIgnoreCase(mode) && !"rss".equalsIgnoreCase(format)) {
+            showNewestResources(res, req);
+            return;
+        }
+
+        if ("nyeste".equalsIgnoreCase(mode) && "rss".equalsIgnoreCase(format)) {
+            showNewestResourcesRSS(res, req);
         }
     }
 
-    private void showNewestResources(AppleResponse res) {
+    private void showNewestResourcesRSS(AppleResponse res, AppleRequest req) {
+
+        Map<String, Object> bizData = new HashMap<String, Object>();
+
+        bizData.put("result-list", adminService.getNewestResources());
+        bizData.put("navigation", "<empty/>");
+        bizData.put("mode", "search-result");
+
+        bizData.put("searchparams", "<empty/>");
+        StringBuilder params = adminService.getMostOfTheRequestXML(req);
+        params.append("\n  </request>\n");
+
+        bizData.put("request", params.toString());
+        bizData.put("loggedin", loggedIn);
+        bizData.put("messages","<empty/>");
+        bizData.put("abovemaxnumberofhits", "false");
+        bizData.put("comment", "<empty/>");
+        System.gc();
+        res.sendPage(format + "/sparql-result", bizData);
+    }
+
+    private void showNewestResources(AppleResponse res, AppleRequest req) {
 
         Map<String, Object> bizData = new HashMap<String, Object>();
 
         bizData.put("nyeste", adminService.getNewestResources());
         bizData.put("mode", mode);
         bizData.put("loggedin", loggedIn);
+
+        StringBuilder params = adminService.getMostOfTheRequestXML(req);
+        params.append("\n  </request>\n");
+
+        bizData.put("request", params.toString());
 
         res.sendPage(format + "/nyeste", bizData);
     }

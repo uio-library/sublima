@@ -1428,6 +1428,7 @@ public class AdminService {
                        "            dct:title ?resourceTitle ;\n" +
                        "            dct:dateAccepted ?dateAccepted ;\n" +
                        "            dct:identifier ?internalURL ;\n" +
+                       "            dct:description ?description ;\n" +
                        "            dct:publisher ?publisherURL .\n" +
                        "  ?publisherURL foaf:name ?publisherName .\n" +
                        "} \n" +
@@ -1437,6 +1438,7 @@ public class AdminService {
                        "            dct:title ?resourceTitle ;\n" +
                        "            dct:dateAccepted ?dateAccepted ;\n" +
                        "            dct:identifier ?internalURL ;\n" +
+                       "            dct:description ?description ;\n" +
                        "            dct:publisher ?publisherURL .\n" +
                        "  ?publisherURL foaf:name ?publisherName .\n" +
                        "} \n" +
