@@ -14,7 +14,7 @@
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:sioc="http://rdfs.org/sioc/ns#"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
-        xmlns:url="http://whatever/java/java.net.URLDecoder"
+        xmlns:url="http://whatever/java/java.net.URLEncoder"
         xmlns="http://www.w3.org/1999/xhtml"
         version="1.0">
   <xsl:import href="rdfxml2xhtml-deflist.xsl"/>
