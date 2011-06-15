@@ -39,7 +39,7 @@ public class LanguageService {
 
     if (cookies != null) {
       for (Cookie cookie : cookies) {
-        if ("language".equals(cookie.getName())) {
+        if ("locale".equals(cookie.getName())) {
           cookieLang = cookie.getValue();
           langCookie = cookie;
         }
@@ -60,7 +60,7 @@ public class LanguageService {
         }
       }
       if (langCookie == null) {
-        langCookie = res.getCocoonResponse().createCookie("language", setLang);
+        langCookie = res.getCocoonResponse().createCookie("locale", setLang);
       } else {
         langCookie.setValue(setLang);
       }

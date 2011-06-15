@@ -71,7 +71,7 @@
                 <!-- try to login -->
                 <!--map:act type="locale"-->
                 <map:act type="cauth-login">
-                    <!--map:parameter name="locale" value="{cookie:language}"/-->
+                    <!--map:parameter name="locale" value="{cookie:locale}"/-->
                     <map:parameter name="application" value="Sublima"/>
                     <map:parameter name="name" value="{request-param:username}"/>
                     <map:parameter name="password" value="{request-param:password}"/>
@@ -265,7 +265,7 @@
                 <map:call function="com.computas.sublima.app.controller.admin.TopicController">
                     <map:parameter name="mode" value="a-z"/>
                     <map:parameter name="submode" value="{1}"/>
-                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                    <map:parameter name="interface-language" value="{cookie:locale}"/>
                 </map:call>
             </map:match>
 
@@ -289,14 +289,14 @@
                 <map:call function="com.computas.sublima.app.controller.admin.TopicController">
                     <map:parameter name="mode" value="a-z"/>
                     <map:parameter name="submode" value="a-z"/>
-                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                    <map:parameter name="interface-language" value="{cookie:locale}"/>
                 </map:call>
             </map:match>
 
             <map:match pattern="portal/*">
                 <map:call function="com.computas.sublima.app.controller.ContentController">
                     <map:parameter name="mode" value="{1}"/>
-                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                    <map:parameter name="interface-language" value="{cookie:locale}"/>
                 </map:call>
             </map:match>
 
@@ -368,7 +368,7 @@
             <map:match pattern="search-result.*">
                 <map:call function="com.computas.sublima.app.controller.SearchController">
                     <map:parameter name="mode" value="search-result"/>
-                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                    <map:parameter name="interface-language" value="{cookie:locale}"/>
                     <map:parameter name="format" value="{1}"/>
                 </map:call>
             </map:match>
@@ -378,7 +378,7 @@
                     <map:parameter name="mode" value="topic"/>
                     <map:parameter name="topic" value="{1}"/>
                     <map:parameter name="format" value="{2}"/>
-                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                    <map:parameter name="interface-language" value="{cookie:locale}"/>
                 </map:call>
             </map:match>
 
@@ -392,7 +392,7 @@
                     <map:parameter name="mode" value="resource"/>
                     <map:parameter name="name" value="{1}"/>
                     <map:parameter name="format" value="{2}"/>
-                    <map:parameter name="interface-language" value="{cookie:language}"/>
+                    <map:parameter name="interface-language" value="{cookie:locale}"/>
                 </map:call>
             </map:match>
 
