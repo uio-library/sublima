@@ -19,6 +19,9 @@
     <xsl:param name="interface-language">no</xsl:param>
     <xsl:param name="max_facets">2</xsl:param>
 
+    <!-- Key for sorting concepts -->
+    <xsl:key name="concepts" match="/c:page/c:result-list/rdf:RDF//skos:Concept" use="sub:classification"/>
+
     <xsl:template match="rdf:RDF" mode="facets">
         <xsl:variable name="baseurlparams">
             <xsl:choose>
@@ -199,22 +202,27 @@
                  should be investigated.
             -->
 
+            <xsl:if test="sub:Resource/dct:subject">
 
+	    <!-- Grouping concepts using the "Muench method" -->
+            <xsl:for-each select="/c:page/c:result-list/rdf:RDF//skos:Concept[generate-id(.)=
+				  generate-id(key('concepts', sub:classification)[1])]">
+	      <xsl:sort select="sub:classification"/>
             <div class="facet">
 
                 <!-- sorted by preferred label -->
                 <div class="facetHeading">
                     <h3>
-                        <i18n:text key="topic">Emne</i18n:text>
+                        <!--i18n:text key="topic">Emne</i18n:text-->
+			<xsl:value-of select="sub:classification"/>
                     </h3>
-                    <img id="openCloseTopic" alt="open/close publisher" src="{$baseurl}/images/closefacet.png"
-                         onclick="OpenCloseFact('subjectFacets', this);"/>
+                    <img class="openCloseTopic" alt="open/close topic" src="{$baseurl}/images/closefacet.png"
+                         onclick="OpenCloseFact('{sub:classification}Facets', this);"/>
                     <div class="clearer">&#160;</div>
                 </div>
-                <xsl:if test="sub:Resource/dct:subject">
-                    <div id="subjectFacets">
+                    <div id="{sub:classification}Facets">
                         <ul>
-                            <xsl:for-each select="/c:page/c:result-list/rdf:RDF//skos:Concept">
+                              <xsl:for-each select="key('concepts', sub:classification)">
                                 <xsl:sort lang="{$interface-language}"
                                           select="skos:prefLabel[@xml:lang=$interface-language]"/>
                                 <xsl:variable name="uri" select="./@rdf:about"/>
@@ -289,23 +297,25 @@
                                         <xsl:with-param name="uri" select="$uri"/>
                                         <xsl:with-param name="count" select="$count"/>
                                         <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+					<xsl:with-param name="concept-type" select="concat(sub:classification, 'Facet')"/>
 
                                     </xsl:call-template>
                                 </xsl:if>
 
                             </xsl:for-each>
                         </ul>
-                        <div id="subjectFacetHideShow" class="showHideFacetslinks">
-                            <a id="subjectFacetShowLink" href="javascript:showfacets('subjectFacet');">
+                        <div id="{sub:classification}FacetHideShow" class="showHideFacetslinks">
+                            <a id="{sub:classification}FacetShowLink" href="javascript:showfacets('{sub:classification}Facet');">
                                 <i18n:text key="more">mer</i18n:text>
                             </a>
-                            <a id="subjectFacetHideLink" href="javascript:hidefacets('subjectFacet');">
+                            <a id="{sub:classification}FacetHideLink" href="javascript:hidefacets('{sub:classification}Facet');">
                                 <i18n:text key="hide">skjul</i18n:text>
                             </a>
                         </div>
                     </div>
-                </xsl:if>
             </div>
+	    </xsl:for-each>
+            </xsl:if>
         </div>
     </xsl:template>
 
@@ -403,6 +413,7 @@
         <xsl:param name="this-field"/>
         <xsl:param name="uri"/>
         <xsl:param name="count"/>
+        <xsl:param name="concept-type"/>
         <xsl:if test="$uri">
             <li>
                 <xsl:choose>
@@ -419,7 +430,9 @@
                         <xsl:attribute name="class">typeFacet</xsl:attribute>
                     </xsl:when>
                     <xsl:when test="$this-field = 'dct:subject'">
-                        <xsl:attribute name="class">subjectFacet</xsl:attribute>
+                        <xsl:attribute name="class">
+			  <xsl:value-of select="$concept-type"/>
+			</xsl:attribute>
                     </xsl:when>
                 </xsl:choose>
 
