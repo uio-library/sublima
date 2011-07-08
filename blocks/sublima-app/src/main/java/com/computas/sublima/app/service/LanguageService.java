@@ -49,6 +49,7 @@ public class LanguageService {
     if (cookieLang == null) {
       if (paramLang == null) {
         setLang = getProperty("sublima.default.locale");
+	logger.trace("Neither cookie nor param set, using default locale: " + setLang);
       } else {
         List defaultLangs = Arrays.asList(getProperty("sublima.supported.locales").split(","));
         if (defaultLangs.contains(paramLang)) {
