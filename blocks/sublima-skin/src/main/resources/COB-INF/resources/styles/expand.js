@@ -1,6 +1,23 @@
 function hideFacetsOnLoad() {
   var maxFacets = 10;
-  
+
+  var Facets = getAllFacets();
+  for (var i = 0; i < Facets.length; i++) {
+      var FacetName = Facets[i];
+      var Facet = getElementsByClassName(FacetName);
+      if (Facet != null) {
+	  if (Facet.length > maxFacets) {
+	      hidefacets(FacetName);
+	  } else {
+	      var el = document.getElementById(FacetName+"HideShow");
+	      if (el != null) {
+		  el.style.display = 'none';
+	      }
+	  }
+      }
+  }
+
+
   var publisherFacet = getElementsByClassName("publisherFacet");
   if (publisherFacet != null) {
       if (publisherFacet.length > maxFacets) {
@@ -87,6 +104,33 @@ function hidefacets(className) {
 }
 calculateDivHeight()
 }
+
+function getAllFacets() {
+    var retnode = [];
+    var myRegExp = new RegExp('.+Facet$');
+    var elem = document.getElementsByTagName('*');
+    for (var i = 0; i < elem.length; i++) {
+	var classes = elem[i].className;
+	if (myRegExp.test(classes)) {
+	    retnode.push(classes);
+	}
+    }
+    return retnode.unique();
+}
+
+Array.prototype.unique = function() {
+    var a = [];
+    var l = this.length;
+    for(var i=0; i<l; i++) {
+	for(var j=i+1; j<l; j++) {
+	    // If this[i] is found later in the array
+	    if (this[i] === this[j])
+		j = ++i;
+	}
+	a.push(this[i]);
+    }
+    return a;
+};
 
 function getElementsByClassName(cl) {
 var retnode = [];
