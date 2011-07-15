@@ -1,0 +1,154 @@
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ns1:	<http://www.lingvoj.org/lang/> .
+@prefix ns2:	<http://www.lingvoj.org/ontology#> .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+ns1:de 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Tyska"@sv ,
+		"German"@en ,
+		"Tysk"@no ,
+		"Tysk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/de.rdf> ;
+	ns2:iso1	"de" ;
+	ns2:iso3	"deu" ;
+	ns2:iso2t	"deu" ;
+	ns2:iso2b	"ger" .
+ns1:fr 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Franska"@sv ,
+		"French"@en ,
+		"Fransk"@no ,
+		"Fransk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/fr.rdf> ;
+	ns2:iso1	"fr" ;
+	ns2:iso3	"fra" ;
+	ns2:iso2t	"fra" ;
+	ns2:iso2b	"fre" .
+ns1:it 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Italienska"@sv ,
+		"Italian"@en ,
+		"Italiensk"@no ,
+		"Italiensk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/it.rdf> ;
+	ns2:iso1	"it" ;
+	ns2:iso3	"ita" ;
+	ns2:iso2t	"ita" ;
+	ns2:iso2b	"ita" .
+ns1:pt 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Portugisisk"@sv ,
+		"Portuguese"@en ,
+		"Portugisisk"@no ,
+		"Portugisisk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/pt.rdf> ;
+	ns2:iso1	"pt" ;
+	ns2:iso3	"por" ;
+	ns2:iso2t	"por" ;
+	ns2:iso2b	"por" .
+ns1:es 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Spanska"@sv ,
+		"Spanish"@en ,
+		"Spansk"@no ,
+		"Spansk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/es.rdf> ;
+	ns2:iso1	"es" ;
+	ns2:iso3	"spa" ;
+	ns2:iso2t	"spa" ;
+	ns2:iso2b	"spa" .
+ns1:nl 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Nederl\u00E4ndska"@sv ,
+		"Dutch"@en ,
+		"Nederlandsk"@no ,
+		"Nederlandsk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/nl.rdf> ;
+	ns2:iso1	"nl" ;
+	ns2:iso3	"nld" ;
+	ns2:iso2t	"nld" ;
+	ns2:iso2b	"dut" .
+ns1:ru 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Ryska"@sv ,
+		"Russian"@en ,
+		"Russisk"@no ,
+		"Russisk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/ru.rdf> ;
+	ns2:iso1	"ru" ;
+	ns2:iso3	"rus" ;
+	ns2:iso2t	"rus" ;
+	ns2:iso2b	"rus" .
+ns1:is 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Isl\u00E4ndska"@sv ,
+		"Icelandic"@en ,
+		"Islandsk"@no ,
+		"Islandsk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/is.rdf> ;
+	ns2:iso1	"is" ;
+	ns2:iso3	"isl" ;
+	ns2:iso2t	"isl" ;
+	ns2:iso2b	"ice" .
+ns1:ja 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Japanska"@sv ,
+		"Japanese"@en ,
+		"Japansk"@no ,
+		"Japansk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/ja.rdf> ;
+	ns2:iso1	"ja" ;
+	ns2:iso3	"jpn" ;
+	ns2:iso2t	"jpn" ;
+	ns2:iso2b	"jpn" .
+ns1:et 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Estniska"@sv ,
+		"Estonian"@en ,
+		"Estisk"@no ,
+		"Estisk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/et.rdf> ;
+	ns2:iso1	"et" ;
+	ns2:iso3	"est" ;
+	ns2:iso2t	"est" ;
+	ns2:iso2b	"est" .
+ns1:fo 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"F\u00E4r\u00F6iska"@sv ,
+		"Faroese"@en ,
+		"F\u00E6r\u00F8ysk"@no ,
+		"F\u00E6r\u00F8sk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/fo.rdf> ;
+	ns2:iso1	"fo" ;
+	ns2:iso3	"fao" ;
+	ns2:iso2t	"fao" ;
+	ns2:iso2b	"fao" .
+ns1:lt 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Litauiska"@sv ,
+		"Lithuanian"@en ,
+		"Litauisk"@no ,
+		"Litauisk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/lt.rdf> ;
+	ns2:iso1	"lt" ;
+	ns2:iso3	"lit" ;
+	ns2:iso2t	"lit" ;
+	ns2:iso2b	"lit" .
+ns1:pl 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Polska"@sv ,
+		"Polish"@en ,
+		"Polsk"@no ,
+		"Polsk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/pl.rdf> ;
+	ns2:iso1	"pl" ;
+	ns2:iso3	"pol" ;
+	ns2:iso2t	"pol" ;
+	ns2:iso2b	"pol" .
+ns1:sk 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Slovakiska"@sv ,
+		"Slovak"@en ,
+		"Slovakisk"@no ,
+		"Slovakisk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/sk.rdf> ;
+	ns2:iso1	"sk" ;
+	ns2:iso3	"slk" ;
+	ns2:iso2t	"slk" ;
+	ns2:iso2b	"slo" .
+ns1:uk 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Ukrainska"@sv ,
+		"Ukrainian"@en ,
+		"Ukrainsk"@no ,
+		"Ukrainsk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/uk.rdf> ;
+	ns2:iso1	"uk" ;
+	ns2:iso3	"ukr" ;
+	ns2:iso2t	"ukr" ;
+	ns2:iso2b	"ukr" .
