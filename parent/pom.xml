@@ -315,10 +315,11 @@
       <url>http://bleu.west.spy.net/~dustin/repo</url>
       <layout>legacy</layout>
     </repository-->
-    <!--repository>
-      <id>Jena</id>
-      <url>http://jena.hpl.hp.com/repo-dev/</url>
-    </repository-->
+    <repository>
+      <id>OpenJena.org</id>
+      <name>Jena, ARQ, etc</name>
+      <url>http://openjena.org/repo/</url>
+    </repository>
   </repositories>
 
 
