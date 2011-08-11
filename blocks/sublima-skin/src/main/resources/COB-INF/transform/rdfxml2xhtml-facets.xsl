@@ -50,125 +50,6 @@
                     <i18n:text key="limit.search">Avgrens søk</i18n:text>
                 </h2>
                 <br/>
-                <div class="facet">
-                    <div class="facetHeading">
-                        <h3>
-                            <i18n:text key="publisher">Utgiver</i18n:text>
-                        </h3>
-                        <img id="openClosePublisher" alt="open/close publisher" src="{$baseurl}/images/closefacet.png"
-                             onclick="OpenCloseFact('publisherFacets', this);"/>
-                        <div class="clearer">&#160;</div>
-                    </div>
-                    <div id="publisherFacets">
-                        <ul>
-                            <xsl:apply-templates select="sub:Resource/dct:publisher" mode="facets">
-                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-                                <xsl:sort lang="{$interface-language}" select="foaf:Agent/foaf:name"/>
-                            </xsl:apply-templates>
-                        </ul>
-                        <div id="publisherFacetHideShow" class="showHideFacetslinks">
-                            <a id="publisherFacetShowLink" href="javascript:showfacets('publisherFacet');">
-                                <i18n:text key="more">mer</i18n:text>
-                            </a>
-                            <a id="publisherFacetHideLink" href="javascript:hidefacets('publisherFacet');">
-                                <i18n:text key="hide">skjul</i18n:text>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </xsl:if>
-
-            <xsl:if test="sub:Resource/dct:language">
-                <div class="facet">
-                    <div class="facetHeading">
-                        <h3>
-                            <i18n:text key="language">Språk</i18n:text>
-                        </h3>
-                        <img id="openCloseLanguage" alt="open/close publisher" src="{$baseurl}/images/closefacet.png"
-                             onclick="OpenCloseFact('languageFacets', this);"/>
-                        <div class="clearer">&#160;</div>
-                    </div>
-                    <div id="languageFacets">
-                        <ul>
-                            <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
-                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-                                <xsl:sort lang="{$interface-language}"
-                                          select="lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
-                            </xsl:apply-templates>
-                        </ul>
-                        <div id="languageFacetHideShow" class="showHideFacetslinks">
-                            <a id="languageFacetShowLink" href="javascript:showfacets('languageFacet');">
-                                <i18n:text key="more">mer</i18n:text>
-                            </a>
-                            <a id="languageFacetHideLink" href="javascript:hidefacets('languageFacet');">
-                                <i18n:text key="hide">skjul</i18n:text>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </xsl:if>
-
-
-            <xsl:if test="sub:Resource/dct:audience">
-                <div class="facet">
-                    <div class="facetHeading">
-                        <h3>
-                            <i18n:text key="audience">Målgruppe</i18n:text>
-                        </h3>
-                        <img id="openCloseAudience" alt="open/close publisher" src="{$baseurl}/images/closefacet.png"
-                             onclick="OpenCloseFact('audienceFacets', this);"/>
-                        <div class="clearer">&#160;</div>
-                    </div>
-                    <div id="audienceFacets">
-                        <ul>
-                            <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
-                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-                                <xsl:sort lang="{$interface-language}"
-                                          select="dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
-                            </xsl:apply-templates>
-                        </ul>
-                        <div id="audienceFacetHideShow" class="showHideFacetslinks">
-                            <a id="audienceFacetShowLink" href="javascript:showfacets('audienceFacet');">
-                                <i18n:text key="more">mer</i18n:text>
-                            </a>
-                            <a id="audienceFacetHideLink" href="javascript:hidefacets('audienceFacet');">
-                                <i18n:text key="hide">skjul</i18n:text>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </xsl:if>
-
-            <xsl:if test="sub:Resource/dct:type">
-                <div class="facet">
-                    <div class="facetHeading">
-                        <h3>
-                            <i18n:text key="mediatype">Mediatype</i18n:text>
-                        </h3>
-                        <img id="openCloseType" alt="open/close mediatype" src="{$baseurl}/images/closefacet.png"
-                             onclick="OpenCloseFact('typeFacets', this);"/>
-                        <div class="clearer">&#160;</div>
-                    </div>
-                    <div id="typeFacets">
-                        <ul>
-                            <xsl:apply-templates select="sub:Resource/dct:type" mode="facets">
-                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
-                                <xsl:sort lang="{$interface-language}"
-                                          select="dct:MediaType/rdfs:label[@xml:lang=$interface-language]"/>
-                            </xsl:apply-templates>
-                        </ul>
-                        <!--div id="typeFacetHideShow" class="showHideFacetslinks">
-                            <a id="typeFacetShowLink" href="javascript:showfacets('typeFacet');">
-                                <i18n:text key="more">mer</i18n:text>
-                            </a>
-                            <a id="typeFacetHideLink" href="javascript:hidefacets('typeFacet');">
-                                <i18n:text key="hide">skjul</i18n:text>
-                            </a>
-                        </div-->
-                    </div>
-                </div>
-            </xsl:if>
-
 
             <!-- Getting the right counts for the facets turned out to be
                  somewhat tricky.  Four situations can occur:
@@ -316,6 +197,126 @@
             </div>
 	    </xsl:for-each>
             </xsl:if>
+
+            <div class="facet">
+                    <div class="facetHeading">
+                        <h3>
+                            <i18n:text key="publisher">Utgiver</i18n:text>
+                        </h3>
+                        <img id="openClosePublisher" alt="open/close publisher" src="{$baseurl}/images/closefacet.png"
+                             onclick="OpenCloseFact('publisherFacets', this);"/>
+                        <div class="clearer">&#160;</div>
+                    </div>
+                    <div id="publisherFacets">
+                        <ul>
+                            <xsl:apply-templates select="sub:Resource/dct:publisher" mode="facets">
+                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+                                <xsl:sort lang="{$interface-language}" select="foaf:Agent/foaf:name"/>
+                            </xsl:apply-templates>
+                        </ul>
+                        <div id="publisherFacetHideShow" class="showHideFacetslinks">
+                            <a id="publisherFacetShowLink" href="javascript:showfacets('publisherFacet');">
+                                <i18n:text key="more">mer</i18n:text>
+                            </a>
+                            <a id="publisherFacetHideLink" href="javascript:hidefacets('publisherFacet');">
+                                <i18n:text key="hide">skjul</i18n:text>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </xsl:if>
+
+            <xsl:if test="sub:Resource/dct:language">
+                <div class="facet">
+                    <div class="facetHeading">
+                        <h3>
+                            <i18n:text key="language">Språk</i18n:text>
+                        </h3>
+                        <img id="openCloseLanguage" alt="open/close publisher" src="{$baseurl}/images/closefacet.png"
+                             onclick="OpenCloseFact('languageFacets', this);"/>
+                        <div class="clearer">&#160;</div>
+                    </div>
+                    <div id="languageFacets">
+                        <ul>
+                            <xsl:apply-templates select="sub:Resource/dct:language" mode="facets">
+                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+                                <xsl:sort lang="{$interface-language}"
+                                          select="lingvoj:Lingvo/rdfs:label[@xml:lang=$interface-language]"/>
+                            </xsl:apply-templates>
+                        </ul>
+                        <div id="languageFacetHideShow" class="showHideFacetslinks">
+                            <a id="languageFacetShowLink" href="javascript:showfacets('languageFacet');">
+                                <i18n:text key="more">mer</i18n:text>
+                            </a>
+                            <a id="languageFacetHideLink" href="javascript:hidefacets('languageFacet');">
+                                <i18n:text key="hide">skjul</i18n:text>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </xsl:if>
+
+
+            <xsl:if test="sub:Resource/dct:audience">
+                <div class="facet">
+                    <div class="facetHeading">
+                        <h3>
+                            <i18n:text key="audience">Målgruppe</i18n:text>
+                        </h3>
+                        <img id="openCloseAudience" alt="open/close publisher" src="{$baseurl}/images/closefacet.png"
+                             onclick="OpenCloseFact('audienceFacets', this);"/>
+                        <div class="clearer">&#160;</div>
+                    </div>
+                    <div id="audienceFacets">
+                        <ul>
+                            <xsl:apply-templates select="sub:Resource/dct:audience" mode="facets">
+                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+                                <xsl:sort lang="{$interface-language}"
+                                          select="dct:AgentClass/rdfs:label[@xml:lang=$interface-language]"/>
+                            </xsl:apply-templates>
+                        </ul>
+                        <div id="audienceFacetHideShow" class="showHideFacetslinks">
+                            <a id="audienceFacetShowLink" href="javascript:showfacets('audienceFacet');">
+                                <i18n:text key="more">mer</i18n:text>
+                            </a>
+                            <a id="audienceFacetHideLink" href="javascript:hidefacets('audienceFacet');">
+                                <i18n:text key="hide">skjul</i18n:text>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </xsl:if>
+
+            <xsl:if test="sub:Resource/dct:type">
+                <div class="facet">
+                    <div class="facetHeading">
+                        <h3>
+                            <i18n:text key="mediatype">Mediatype</i18n:text>
+                        </h3>
+                        <img id="openCloseType" alt="open/close mediatype" src="{$baseurl}/images/closefacet.png"
+                             onclick="OpenCloseFact('typeFacets', this);"/>
+                        <div class="clearer">&#160;</div>
+                    </div>
+                    <div id="typeFacets">
+                        <ul>
+                            <xsl:apply-templates select="sub:Resource/dct:type" mode="facets">
+                                <xsl:with-param name="baseurlparams" select="$baseurlparams"/>
+                                <xsl:sort lang="{$interface-language}"
+                                          select="dct:MediaType/rdfs:label[@xml:lang=$interface-language]"/>
+                            </xsl:apply-templates>
+                        </ul>
+                        <!--div id="typeFacetHideShow" class="showHideFacetslinks">
+                            <a id="typeFacetShowLink" href="javascript:showfacets('typeFacet');">
+                                <i18n:text key="more">mer</i18n:text>
+                            </a>
+                            <a id="typeFacetHideLink" href="javascript:hidefacets('typeFacet');">
+                                <i18n:text key="hide">skjul</i18n:text>
+                            </a>
+                        </div-->
+                    </div>
+                </div>
+            </xsl:if>
+
         </div>
     </xsl:template>
 
