@@ -339,7 +339,10 @@ fieldset {
   list-style-type: none;
 }
 #panel-topic-details li {
-  line-height: 1.5em;
+  padding-bottom: 0.5em;
+}
+#panel-topic-details a {
+  text-decoration: none;
 }
 .browseCol {
   width:32%;
