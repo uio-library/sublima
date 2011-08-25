@@ -176,8 +176,8 @@ On the command line run the following command (if not logged in as root, append 
 Virtuoso does not have a RDF/XML-ABBREV serialisation of its own, thus for Sublima, we must put Jena in between to create it. This is done in a separate servlet, which creates another endpoint. To get the code and build, do:
 
         
-    svn co https://submarine.computas.com/mediasone-maven/trunk/backend/
-    cd backend
+    git clone git://github.com/sublima/sublima-backend.git
+    cd sublima-backend
     
 
 ## Virtuoso 5
@@ -231,13 +231,11 @@ This will create a WAR in target/, which can be deployed in the same way as the 
 
 ### 5.1.1 Download Sublima with Subversion
 
-Download the latest release of Sublima by using Subversion and this command:
-        svn checkout pathToLatestRelease destinationDirectory
-    Ie. svn checkout https://submarine.computas.com/sublima/branches/1.1.2/ sublima
-    
-This downloads all the source code for sublima and places it in the folder sublima. Information about which release is the latest will be received by e-mail and the example path used here can therefore change.
+If you have not already done so, download the latest release of Sublima:
 
-Delete the sublima/virtuoso folder. This contains the Virtuoso installation packages and is only needed when installing Virtuoso.
+    git clone git://github.com/sublima/sublima.git
+    
+This downloads all the source code for sublima and places it in the folder sublima.
 
 ### 5.1.2 Build Sublima with Maven to make available necessary tools
 
