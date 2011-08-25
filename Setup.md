@@ -1,14 +1,8 @@
+# 1. Introduction
+
 This document describes the points needed to set up Sublima on Debian or Debian-derived distributions such as Ubuntu.
 
 In short this document covers installation and configuration of Virtuoso (database), Sublima backend (Virtuoso2Sublima communication) and Sublima.
-
-# 1. Hardware
-
-## 1.1 Minimal requirements
-
-These are the minimal requirements, i.e. the needed hardware to run Sublima for testing by a small number of test users without having to wait too long for the system to respond.
-
-**RAM:** 2048 MB
 
 # 2. Required tools
 
@@ -86,24 +80,9 @@ Maven2 is not available in older versions of the distros. Then you need to get <
 
 ## 3.1 Installation
 
-Virtuoso is being packaged for Debian, thus it can be expected that Virtuoso soon can be installed from Debian and Ubuntu.
+Sublima uses [Virtuoso Open-Source Edition](http://www.openlinksw.com/wiki/main/Main) for storing RDF data. It can be downloaded from here: <http://www.openlinksw.com/wiki/main/Main/VOSDownload>
 
-Use Subversion to checkout the Virtuoso packages.
-        
-    svn co https://submarine.computas.com/sublima/trunk/virtuoso/
-    
-
-If you're installing on a 32-bit system install the 32-bit version:
-        
-    dpkg -i virtuoso-opensource_6.1.0_i386.deb
-    
-
-If you're installing on a 64-bit system install the 64-bit version:
-        
-    dpkg -i virtuoso-opensource_6.1.0_amd64.deb
-    
-
-This will install Virtusoo on your system
+Virtuoso should be built and installed according to its documentation.
 
 ## 3.2 Configuration
 
