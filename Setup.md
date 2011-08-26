@@ -92,7 +92,7 @@ In the file /var/lib/virtuoso/db/virtuoso.ini
 
 First, one needs to be able to load data from different locations in the file system, this is set in DirsAllowed.
 
-Then, the number of buffers assigned to Virtuoso should be set. This is set in chunks of 8kB, and the rule of thumb is that it should be set to half the available RAM. Thus, 100000 is 0.8 GB RAM. As a first default, I've set these parameters:
+Then, the number of buffers assigned to Virtuoso should be set. This is set in chunks of 8kB. Thus, 100000 is 0.8 GB RAM. This might be a good starting point:
 
         
     NumberOfBuffers                 = 100000
@@ -115,32 +115,16 @@ This can be done by using the Web frontend, point your browser to the installati
 
 The PROXY, SIMILE and XMLA users can be removed. You don't need to change the SPARQL and nobody users, but it is important to **change the password of dav and dba**
 
-### 3.2.2 Known problems
+### 3.2.2 Virtuoso Open Source Upgrade Notes
 
-First of all, the structure of the Debian packages I produce does not yet conform to Debian policy, thus you will find everything in /var/lib/virtuoso, including logs and setup.
+Depending on installation method, the setup file virtuoso.ini might be
+overwritten with each upgrade of Virtuoso. Thus you should copy it
+before upgrading.
 
-### 3.2.3 Upgrade
-
-This means that the setup file virtuoso.ini is overwritten with each upgrade. Thus you should copy it before upgrading.
-
-Further, you may get the following error when upgrading:
-
-_Starting OpenLink Virtuoso Open-Source Edition: The VDBMS server process terminated prematurely after opening the database._
-
-If you look in the log:
-        
-    tail /var/lib/virtuoso/db/virtuoso.log
-    you may see a message like this:
-
-_10:28:11 The transaction log file has been produced by server version '05.10.3038'. The version of this server is '05.11.3039'. If the transaction log is empty or you do not want to replay it then delete it and start the server again. Otherwise replay the log using the server of version '05.10.3038' and make checkpoint and shutdown to ensure that the log is empty, then delete it and start using new version._
-
-You can safely delete the transaction log, and then instruct APT to resume the install:
-
-        rm /var/lib/virtuoso/db/virtuoso.trx
-    dpkg -a --configure
-    
-
-It is expected that this will be more straightforward in near future.
+The database file format has previously changed substantially between
+major versions of Virtuoso. More information regarding upgrades can be
+found at
+<http://virtuoso.openlinksw.com/dataspace/dav/wiki/Main/UpgradingToVOS610>.
 
 ## 3.3 How to
 
