@@ -16,7 +16,6 @@
   
   <modules>
     <module>sublima-app</module>
-    <module>sublima-detektor-skin</module>
     <module>sublima-query</module>
     <module>sublima-skin</module>
   </modules>
