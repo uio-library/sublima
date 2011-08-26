@@ -82,7 +82,9 @@ Maven2 is not available in older versions of the distros. Then you need to get <
 
 Sublima uses [Virtuoso Open-Source Edition](http://www.openlinksw.com/wiki/main/Main) for storing RDF data. It can be downloaded from here: <http://www.openlinksw.com/wiki/main/Main/VOSDownload>
 
-Virtuoso should be built and installed according to its documentation.
+Virtuoso should be built and installed according to its documentation. There are binary packages available from som distros, like Fedora OS.
+
+Virtuoso does not install an init script by default. However there is one in the source, debian/init.d. This should work for most distros.
 
 ## 3.2 Configuration
 
@@ -222,7 +224,7 @@ Now that Sublima is downloaded it is time to build it using Maven. To do this it
 
 On the command line, and in the root folder of Sublima, run the following command:
 
-    mvn -Dmaven.test.skip=true package{code}
+    mvn -Dmaven.test.skip=true package
 
 The first time executed this can take some time depending on how much depencencies Maven downloads. When the build is done you should see the text BUILD SUCCESSFUL.
 
