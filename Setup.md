@@ -184,10 +184,10 @@ Virtuoso does not have a RDF/XML-ABBREV serialisation of its own, thus for Subli
 Virtuoso has support for naming numerous graphs that can hold different data, identified by a URI.
 Sublima has only one graph, thus this can be set as a default. The queries will run without, but one will experience severe performance problems. It is important that the graph URI matches the URI in sublima.basegraph in the properties file, as seen in 5.2.1. Usually this is the same as the URL where the installation will be available.
 
-The Jena endpoint needs to be configured with the URL of the Virtuoso endpoint. This is done in src/main/webapp/WEB-INF/web.xml . If sublima.basegraph is set to <http://www.example.com:8180/graph/> then a reasonable default is:
+The Jena endpoint needs to be configured with the URL of the Virtuoso endpoint. This is done in src/main/webapp/WEB-INF/web.xml . If sublima.basegraph is set to <http://www.example.com/sublima/> then a reasonable default is:
 
         
-    <param-value>http://127.0.0.1:8890/sparql?default-graph-uri=http://www.example.com:8180/graph/&amp;</param-value>
+    <param-value>http://127.0.0.1:8890/sparql?default-graph-uri=http://www.example.com/sublima/&amp;</param-value>
     
 
 Then, the servlet can by built:
@@ -260,13 +260,13 @@ There are some field that must be changed for Sublima to work, while others can 
 The following fields must be configured:
 
 The Base URL for this deployment of Sublima. This should be the same as the URL where Sublima is available.  
-**sublima.base.url**=<http://www.example.com:8180/sublima/>
+**sublima.base.url**=<http://www.example.com/sublima/>
 
 The basegraph defines the graph in Virtuoso where all data is stored. It is most common the same as sublima.base.url.  
-**sublima.basegraph**=<http://www.example.com:8180/sublima/>
+**sublima.basegraph**=<http://www.example.com/sublima/>
 
 The SPARQL endpoint defines the location of the installed backend. This is used for queries from Sublima to Virtuoso.  
-**sublima.sparql.endpoint**=<http://www.example.com:8180/backend/sparql>
+**sublima.sparql.endpoint**=<http://www.example.com:8080/backend/sparql>
 
 The SPARQL Authenticated endpoint defines the location of the Virtuoso SPARQL/Update endpoint. This points to the URL where Virtuoso is installed and available online.  
 **sublima.sparul.endpoint**=<http://www.example.com:8890/sparql-auth>
@@ -313,56 +313,56 @@ Use the following SQL to create the tables in Virtuoso Conductors Interactive SQ
     CREATE TABLE DB.DBA.indexstatistics ( type VARCHAR(20) NOT NULL, "date" VARCHAR(40) NOT NULL, CONSTRAINT indexstatistics_pk PRIMARY KEY (type, "date") ) ;
     
 
-Use the following SQL to insert an admin user with all rights in Virtuoso Conductors Interactive SQL. Remember to alter <http://www.example.com:8180/sublima/> to match your base graph, and also replace 815a287366c30b1c8460e04eb59c4cd0d396c33c with the SHA1 sum of your administrator password.
+Use the following SQL to insert an admin user with all rights in Virtuoso Conductors Interactive SQL. Remember to alter <http://www.example.com/sublima/> to match your base graph, and also replace 815a287366c30b1c8460e04eb59c4cd0d396c33c with the SHA1 sum of your administrator password.
 
 	INSERT INTO DB.DBA.users(username, "password") VALUES('Administrator', '815a287366c30b1c8460e04eb59c4cd0d396c33c');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.edit');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.approve');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.delete');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.theme');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.join');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','relation.edit');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','relation.approve');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','relation.delete');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.edit');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.approve');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.delete');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','user.edit');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','user.approve');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','user.delete');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','role.edit');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','role.approve');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','role.delete');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','publisher.edit');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','publisher.delete');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','database.import');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','database.export');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/godkjent_av_administrator');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/ikke_godkjent_av_administrator');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/inaktiv');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/nytt_forslag');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/til_godkjenning');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/under_behandling');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/godkjent_av_administrator');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/ikke_godkjent_av_administrator');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/inaktiv');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/nytt_forslag');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/til_godkjenning');
-	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com:8180/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/under_behandling');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.edit');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.approve');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.delete');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.theme');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.join');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','relation.edit');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','relation.approve');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','relation.delete');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.edit');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.approve');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.delete');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','user.edit');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','user.approve');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','user.delete');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','role.edit');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','role.approve');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','role.delete');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','publisher.edit');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','publisher.delete');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','database.import');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','database.export');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/godkjent_av_administrator');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/ikke_godkjent_av_administrator');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/inaktiv');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/nytt_forslag');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/til_godkjenning');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','resource.status.http://sublima.computas.com/status/under_behandling');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/godkjent_av_administrator');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/ikke_godkjent_av_administrator');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/inaktiv');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/nytt_forslag');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/til_godkjenning');
+	INSERT INTO DB.DBA.roleprivilege("role", privilege) VALUES('http://www.example.com/sublima/role/Administrator','topic.status.http://sublima.computas.com/status/under_behandling');
 
 
 ### 5.2.3 Virtuoso
 
 These are the indexing rules, which should be run from the isql-v command line or Interactive SQL in the web administration console, Conductor.
-Again, the graph name is important, this example assumes that sublima.basegraph=<http://www.example.com:8180/graph/>. The last command tells Virtuoso to update its index every 10 minutes. Change the interval as you which.
+Again, the graph name is important, this example assumes that sublima.basegraph=<http://www.example.com/graph/>. The last command tells Virtuoso to update its index every 10 minutes. Change the interval as you which.
 Then, this should be used:
 
         
-    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com:8180/graph/', 'http://xmlns.computas.com/sublima#literals', 'literals');
-    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com:8180/graph/', 'http://xmlns.computas.com/sublima#externalliterals', 'externalliterals');
-    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com:8180/graph/', 'http://purl.org/dc/terms/title', 'title');
-    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com:8180/graph/', 'http://purl.org/dc/terms/description', 'description');
-    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com:8180/graph/', 'http://xmlns.com/foaf/0.1/name', 'pubname');
+    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com/graph/', 'http://xmlns.computas.com/sublima#literals', 'literals');
+    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com/graph/', 'http://xmlns.computas.com/sublima#externalliterals', 'externalliterals');
+    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com/graph/', 'http://purl.org/dc/terms/title', 'title');
+    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com/graph/', 'http://purl.org/dc/terms/description', 'description');
+    DB.DBA.RDF_OBJ_FT_RULE_ADD ('http://www.example.com/graph/', 'http://xmlns.com/foaf/0.1/name', 'pubname');
     DB.DBA.VT_BATCH_UPDATE ('DB.DBA.RDF_OBJ', 'ON', 10);
     DB.DBA.VT_INC_INDEX_DB_DBA_RDF_OBJ ();
     
@@ -382,7 +382,7 @@ and copy sublima/sublima-webapp/target/sublima-webapp-1.0-SNAPSHOT.war to /var/l
 
 ### 5.4.1 Login to the administration part of Sublima
 
-Access the administration login at <http://www.example.com:8180/sublima/admin> and login with user Administrator and the password you inserted.
+Access the administration login at <http://www.example.com/sublima/admin> and login with user Administrator and the password you inserted.
 
 ### 5.4.2 Add static pages
 
@@ -493,7 +493,7 @@ Use <http://www.example.com:8890/sparql-auth> to run the SPARQL commands. Usenam
         
     PREFIX sub: <http://xmlns.computas.com/sublima#>
     PREFIX wdr: <http://www.w3.org/2007/05/powder#>
-    INSERT INTO <http://www.example.com:8180/sublima/> {
+    INSERT INTO <http://www.example.com/sublima/> {
       ?resource wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .}
     WHERE {
       ?resource a sub:Resource .
@@ -509,12 +509,12 @@ Use <http://www.example.com:8890/sparql-auth> to run the SPARQL commands. Usenam
         
     PREFIX dct: <http://purl.org/dc/terms/>
     PREFIX sub: <http://xmlns.computas.com/sublima#>
-    DELETE FROM <http://www.example.com:8180/sublima/> {
+    DELETE FROM <http://www.example.com/sublima/> {
       ?resource ?p ?o .
     } WHERE {
       ?resource ?p ?o .
       ?resource a sub:Resource .
-      ?resource dct:publisher <http://smil.sys.wserver.no:8180/smil/agent/TryggHansa> .
+      ?resource dct:publisher <http://smil.sys.wserver.no/smil/agent/TryggHansa> .
     }
     
 
@@ -522,17 +522,17 @@ Use <http://www.example.com:8890/sparql-auth> to run the SPARQL commands. Usenam
 
 With Sublima and Virtuoso installed and configured it's time to give Sublima some data to use.
 
-Using the isql-v command line tool from Virtusoso, upload Sublima specific data using the following command. Remember to alter <http://www.example.com:8180/sublima/> to match your base graph.
+Using the isql-v command line tool from Virtusoso, upload Sublima specific data using the following command. Remember to alter <http://www.example.com/sublima/> to match your base graph.
         
-    ttlp (file_to_string_output ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/information-model.ttl'), 'http://www.example.com:8180/sublima/', 'http://www.example.com:8180/sublima/', 0);
-    ttlp (file_to_string_output ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/sublima-ns.ttl'), 'http://www.example.com:8180/sublima/', 'http://www.example.com:8180/sublima/', 0);
-    ttlp (file_to_string_output ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/geonames-excerpt.ttl'), 'http://www.example.com:8180/sublima/', 'http://www.example.com:8180/sublima/', 0);
-    DB.DBA.RDF_LOAD_RDFXML (file_to_string ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/lingvoj-excerpt.rdf'), 'http://www.example.com:8180/sublima/', 'http://www.example.com:8180/sublima/');
+    ttlp (file_to_string_output ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/information-model.ttl'), 'http://www.example.com/sublima/', 'http://www.example.com/sublima/', 0);
+    ttlp (file_to_string_output ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/sublima-ns.ttl'), 'http://www.example.com/sublima/', 'http://www.example.com/sublima/', 0);
+    ttlp (file_to_string_output ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/geonames-excerpt.ttl'), 'http://www.example.com/sublima/', 'http://www.example.com/sublima/', 0);
+    DB.DBA.RDF_LOAD_RDFXML (file_to_string ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/lingvoj-excerpt.rdf'), 'http://www.example.com/sublima/', 'http://www.example.com/sublima/');
     
 
-If you have a data file for import, use the following command. Remember to alter <http://www.example.com:8180/sublima/> to match your base graph, and do the same in the actual data file.
+If you have a data file for import, use the following command. Remember to alter <http://www.example.com/sublima/> to match your base graph, and do the same in the actual data file.
         
-    DB.DBA.RDF_LOAD_RDFXML (file_to_string ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/kurs-test-data.rdf'), 'http://www.example.com:8180/sublima/', 'http://www.example.com:8180/sublima/');
+    DB.DBA.RDF_LOAD_RDFXML (file_to_string ('/usr/local/src/sublima/blocks/sublima-app/src/main/resources/rdf-data/kurs-test-data.rdf'), 'http://www.example.com/sublima/', 'http://www.example.com/sublima/');
     
 
 Now you should be ready to login to Sublima using your newly created administrator user and use the Database - Index menu option to start indexing of resources and topics.
