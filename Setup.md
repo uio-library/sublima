@@ -51,12 +51,7 @@ possible to serve static pages outside of Sublima, should that be wanted.
 
 Needs Apache installed and running.
 
-In sublima-query.properties:
-        
-    sublima.base.url=http://www.example.com/sublima/
-    sublima.basegraph=http://www.example.com/sublima/
-
-In /etc/tomcatx/server.xml:
+In /etc/tomcatx/server.xml, set proxyName and proxyPort:
         
     <Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="0" maxThreads="150"
