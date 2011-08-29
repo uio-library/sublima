@@ -37,15 +37,49 @@ in the same file, set file encoding and memory limits
     # Arguments to pass to the Java virtual machine (JVM).
     JAVA_OPTS="-Dfile.encoding=UTF-8 -Xmx2048M -Xms2048M"
 
-In the file /etc/tomcat5.5/server.xml locate the Connector element, and set the URI encoding here in a _attribute_, like:
+In the file /etc/tomcat5.5/server.xml locate the Connector element, and set the URI encoding here in an _attribute_, like:
 
-    <Connector port="8180" maxHttpHeaderSize="8192" URIEncoding="UTF-8"
+    <Connector port="8080" maxHttpHeaderSize="8192" URIEncoding="UTF-8"
 
 (Note that the other elements may have other values).
 
-#### 2.1.2.1 Running Tomcat on a different port
+#### 2.1.2.1 Running Sublima on port 80
 
-If you want to use another port than 8180 change the port attribute in server.xml as well. Remember to use your selected port whenever we reference port 8180 in this documentation. If your selected port is port 80, remove all port references where port 8180 occur. So that <http://www.example.com:8180/sublima/> is <http://www.example.com/sublima/>. If using port 80 also remember to shutdown any instances of Apache web server running, since this uses port 80.
+By default, Tomcat runs on port 8080. In order to simplify the url, it
+is recommended to use an Apache server as a proxy. This also makes it
+possible to serve static pages outside of Sublima, should that be wanted.
+
+Needs Apache installed and running.
+
+In sublima-query.properties:
+        
+    sublima.base.url=http://www.example.com/sublima/
+    sublima.basegraph=http://www.example.com/sublima/
+
+In /etc/tomcatx/server.xml:
+        
+    <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="0" maxThreads="150"
+               redirectPort="8443" disableUploadTimeout="true"
+               maxHttpHeaderSize="8192" URIEncoding="UTF-8"
+               proxyName="www.example.com" proxyPort="80"
+    />
+    
+
+In /etc/apache2/httpd.conf add proxypass and proxypassreverse from port 80 to 8080:
+        
+        ProxyRequests Off
+        ProxyPreserveHost On
+    
+        <Proxy *>
+            Order deny,allow
+            Allow from all
+        </Proxy>
+    
+        ProxyPass               /sublima       http://www.example.com:8080/sublima/
+        ProxyPassReverse        /sublima       http://www.example.com:8080/sublima/
+    
+Restart apache and then restart tomcat.
 
 ### 2.1.3 Memcached
 
@@ -483,64 +517,6 @@ Use <http://www.example.com:8890/sparql-auth> to run the SPARQL commands. Usenam
       ?resource dct:publisher <http://smil.sys.wserver.no:8180/smil/agent/TryggHansa> .
     }
     
-
-### 5.4.6 Run Sublima on port 80
-
-Using smil.emneportal.no as example URL.
-Needs Apache installed and running.
-
-In sublima-query.properties:
-        
-    sublima.base.url=http://smil.emneportal.no/
-    sublima.basegraph=http://smil.emneportal.no/
-    sublima.sparql.endpoint=http://smil.emneportal.no/backend/sparql
-    sublima.sparul.endpoint=http://smil.emneportal.no:8890/sparql-auth
-    
-    sublima.sparql.directendpoint=http://smil.emneportal.no:8890/sparql
-    sublima.sruserver.endpoint=http://smil.emneportal.no/sruserver
-    sublima.memcached.servers=localhost:11211
-    sublima.database.url=jdbc:virtuoso://smil.emneportal.no:1111
-    
-
-In /etc/tomcatx/server.xml:
-        
-    <Connector port="8180" protocol="HTTP/1.1"
-               connectionTimeout="0" maxThreads="150"
-               redirectPort="8443" disableUploadTimeout="true"
-               maxHttpHeaderSize="8192" URIEncoding="UTF-8"
-               proxyName="smil.emneportal.no" proxyPort="80"
-    />
-    
-
-In /etc/apache2/httpd.conf add proxypass and proxypassreverse from port 80 to 8180:
-        
-    <VirtualHost *:80>
-        DocumentRoot /var/lib/tomcat6/webapps
-        ServerName smil.emneportal.no
-    
-        ProxyRequests Off
-        ProxyPreserveHost On
-    
-        <Proxy *>
-            Order deny,allow
-            Allow from all
-        </Proxy>
-    
-        ProxyPass               /server-status  !
-        ProxyPass               /server-info    !
-        ProxyPass               /       http://smil.emneportal.no:8180/sublima
-        ProxyPassReverse        /       http://smil.emneportal.no:8180/sublima
-        ProxyPassReverse        /backend       http://smil.emneportal.no:8180/backend
-        ProxyPass               /backend       http://smil.emneportal.no:8180/backend
-    </VirtualHost>
-    
-
-If not already done, activate proxy:
-        
-    a2enmod proxy a2enmod proxy-http
-    
-
-Restart apache and then restart tomcat.
 
 # 6. Data
 
