@@ -4,13 +4,13 @@
 # COMMUNICATION between SERVER and CLIENT
 #
 # The Base URL for this deployment of Sublima. This should be the same as the URL where Sublima is available.
-sublima.base.url=http://www.example.com:8180/sublima/
+sublima.base.url=http://www.example.com/sublima/
 
 # The basegraph defines the graph in Virtuoso where all data is stored. It is most common the same as sublima.base.url.
-sublima.basegraph=http://www.example.com:8180/sublima/
+sublima.basegraph=http://www.example.com/sublima/
 
 # The SPARQL endpoint defines the location of the installed backend. This is used for queries from Sublima to Virtuoso.
-sublima.sparql.endpoint=http://www.example.com:8180/backend/sparql
+sublima.sparql.endpoint=http://www.example.com:8080/backend/sparql
 
 # The SPARQL Authenticated endpoint defines the location of the Virtuoso SPARQL/Update endpoint. This points to the URL where
 # Virtuoso is installed and available online.
@@ -21,7 +21,7 @@ sublima.sparul.endpoint=http://www.example.com:8890/sparql-auth
 sublima.sparql.directendpoint=http://www.example.com:8890/sparql
 
 # The SRU Server endpoint defines where the SRU Server for SRU queries are available.
-sublima.sruserver.endpoint=http://www.example.com:8180/sublima/sruserver
+sublima.sruserver.endpoint=http://www.example.com/sublima/sruserver
 
 # Memcached servers define where Memcaced is running, if running at all.
 sublima.memcached.servers=localhost:11211
