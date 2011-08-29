@@ -90,7 +90,7 @@ Accept all dependencies.
 Sublima uses Git for version control.
 As root (use sudo or open a shell), run:
         
-    apt-get install git
+    apt-get install git-core
     
 Accept all dependencies.
 
