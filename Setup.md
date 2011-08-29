@@ -35,7 +35,7 @@ Disable Tomcat's security: In the file /etc/default/tomcat5.5 set
 in the same file, set file encoding and memory limits
 
     # Arguments to pass to the Java virtual machine (JVM).
-    JAVA_OPTS="-Dfile.encoding=UTF-8 -Xmx2048M -Xms2048M"
+    JAVA_OPTS="${JAVA_OPTS} -Dfile.encoding=UTF-8 -Xmx2048M -Xms2048M"
 
 In the file /etc/tomcat5.5/server.xml locate the Connector element, and set the URI encoding here in an _attribute_, like:
 
