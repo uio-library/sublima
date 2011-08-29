@@ -85,12 +85,12 @@ As root (use sudo or open a shell), run:
     
 Accept all dependencies.
 
-### 2.1.4 Subversion
+### 2.1.4 Git
 
-Sublima uses Subversion for version control.
+Sublima uses Git for version control.
 As root (use sudo or open a shell), run:
         
-    apt-get install subversion
+    apt-get install git
     
 Accept all dependencies.
 
@@ -223,7 +223,7 @@ This will create a WAR in target/, which can be deployed in the same way as the 
 ## 5.1 Installation
 
 
-### 5.1.1 Download Sublima with Subversion
+### 5.1.1 Download Sublima with git
 
 If you have not already done so, download the latest release of Sublima:
 
