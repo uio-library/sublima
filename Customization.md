@@ -299,7 +299,7 @@ All fields that are relevant to any modes (c:modes) can be visualized in the XHT
 
 ## 4. Configuring CSS
 
-The CSS files are located in $SUBLIMA_HOME/blocks/sublima-app/src/main/resources/COB-INF/resources/styles/
+The CSS files are located in $SUBLIMA_HOME/blocks/sublima-skin/src/main/resources/COB-INF/resources/styles/
 
 ### 4.1 The main stylesheet
 
@@ -321,12 +321,12 @@ There is separate stylesheets for autocompletion. These third party stylesheet a
 
 Sublima has a great deal of flexibility when it comes to adding new metadata to the resources. The following steps needs to be done to add a new field to the resources:
 
-* <describing the new field in the schemas>
-* optionally <load a controlled list of values> (if the new field contains list of choices)
-* <changing the administrative forms to accept this new field>
-* <changing the end-user interface to show the field>
-* <optionally change the configuration to accept searches on this field>
-* <optionally add it as a separate search field> in advanced search
+* describing the new field in the schemas
+* optionally load a controlled list of values (if the new field contains list of choices)
+* changing the administrative forms to accept this new field
+* changing the end-user interface to show the field
+* optionally change the configuration to accept searches on this field
+* optionally add it as a separate search field in advanced search
 
 
 When all these tasks has been covered you will have to restart the application and the changes should show up.
