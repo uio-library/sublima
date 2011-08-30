@@ -221,7 +221,7 @@ The contents of this file is
 	<servlet:context mount-path="/sublima-skin" context-path="blockcontext:/sublima-skin/" /> 
 	-->
 	<servlet:context mount-path="/sublima-skin" 
-			 context-path="file:///usr/local/src/sublima/blocks/sublima-skin/src/main/resources/COB-INF/"
+			 context-path="file:///usr/local/src/sublima/blocks/sublima-skin/src/main/resources/COB-INF/" />
       </bean>
 
     </beans>
