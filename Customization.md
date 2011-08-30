@@ -208,8 +208,24 @@ We can in principle put the XLSTs and CSSes wherever we want. However, it is req
     
 The contents of this file is
         
-    <?xml version="1.0" encoding="UTF-8"?> <beans xmlns="http://www.springframework.org/schema/beans"        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"        xmlns:servlet="http://cocoon.apache.org/schema/servlet"        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd   http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">      <bean id="com.computas.sublima.sublima-skin.service" class="org.apache.cocoon.sitemap.SitemapServlet">       <\!-\-       <servlet:context mount-path="/sublima-skin" context-path="blockcontext:/sublima-skin/" />        \-->           <servlet:context mount-path="/sublima-skin" context-path="file:///usr/local/src/sublima/blocks/sublima-skin/src/main/resources/COB-INF/" />      </bean> </beans>
-    
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:servlet="http://cocoon.apache.org/schema/servlet"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+			       http://cocoon.apache.org/schema/servlet http://cocoon.apache.org/schema/servlet/cocoon-servlet-1.0.xsd">
+
+      <bean id="com.computas.sublima.sublima-skin.service" class="org.apache.cocoon.sitemap.SitemapServlet">
+
+	<!--
+	<servlet:context mount-path="/sublima-skin" context-path="blockcontext:/sublima-skin/" /> 
+	-->
+	<servlet:context mount-path="/sublima-skin" 
+			 context-path="file:///usr/local/src/sublima/blocks/sublima-skin/src/main/resources/COB-INF/"
+      </bean>
+
+    </beans>
+
 In the code above you can see the location of the sublima-skin block is changed to a explicit path on the disk, <file:///usr/local/src/sublima/blocks/sublima-skin/src/main/resources/COB-INF/>. The statement above (commented out) indicated what was in this file originally.
 
 Making this change, we now have all user interface elements in a separate catalog
