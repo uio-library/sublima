@@ -67,7 +67,6 @@
   <message key="descriptionlink">Mer informasjon...</message>
   <message key="email">E-post</message>
   <message key="error.generic.message">Det oppsto en feil. Årsaken er sannsynligvis et tegn som ikke kunne håndteres.</message>
-
   <message key="facets.heading">Velg avgrensning</message>
   <message key="feedback.spam">Ressursen du sendte inn er markert i vår spam-database. Vennligst kontakt administrator.</message>
   <message key="fulldescription">Detaljert beskrivelse</message>
@@ -194,8 +193,8 @@
   <message key="search.exactmatch">Eksakt ord</message>
   <message key="search.externalresources">Dypsøk</message>
   <message key="search.for">Søk etter</message>
-  <message key="search.nohits">Vi fant dessverre ingen nettsider om dette, men aktuelle emner finnes i listen til høyre.</message>
-  <message key="search.noresources">Vi har dessverre ingen nettsider om dette emnet, men relaterte emner finnes i listen til høyre.</message>
+  <message key="search.nohits">Velg et emne fra høyre kolonne.</message>
+  <message key="search.noresources">Velg et emne fra høyre kolonne.</message>
   <message key="search.numberofhits">Antall treff</message>
   <message key="search.refine">Søket ditt gir for mange treff. Velg heller et emne fra listen til høyre eller forsøk å søke på mer enn ett ord.</message>
   <message key="search.result.hastopic">har emne</message>
@@ -299,13 +298,13 @@
   <message key="tips.resourcenotitle">Ressursen mangler tittel</message>
   <message key="publisher.notitle">Utgiver må ha et navn</message>
   <message key="limit.search">Avgrens søk</message>
-  <message key="browseTheme.header">Kategorier</message>
+  <message key="browseTheme.header">Utvalgte kategorier</message>
   <message key="ascending">Stigende</message>
   <message key="descending">Synkende</message>
   <message key="addklassifisering">Legg til klassifikasjon</message>
   <message key="videresok">Videresøk</message>
   <message key="dypsok">Dypsøk</message>
-  <message key="category">Kategorier</message>
+  <message key="category">Utvalgte kategorier</message>
   <message key="search.externalresources.explained">Hvis du vil ha flere treff, kan du forsøke et dypsøk. Da søkes det også i alle ressursenes startsider.</message>
   <message key="lastapproved">Sist godkjent</message>
   <message key="dateposted">Registreringsdato</message>
