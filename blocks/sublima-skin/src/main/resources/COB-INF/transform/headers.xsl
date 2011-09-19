@@ -53,27 +53,16 @@
       <script type="text/javascript">var dummy = null;</script>
       <script src="{$baseurl}/styles/jquery.selectboxes.min.js" type="text/javascript" />
       <script type="text/javascript">var dummy = null;</script>
-			<script src="{$baseurl}/styles/curvycorners.js" type="text/javascript" />
-			<script type="text/javascript">var dummy = null;</script>
 			<script src="{$baseurl}/styles/textsize.js" type="text/javascript" />
 			<script type="text/javascript">var dummy = null;</script>
 			<script src="{$baseurl}/styles/calculateHeight.js" type="text/javascript" />
 			<script type="text/javascript">var dummy = null;</script>
 			<script type="text/JavaScript">
-				addEvent(window, 'load', initCorners);
-
-				function initCorners() {
-				var headerMenuSettings = {
-				tl: { radius: 20 },
-				tr: { radius: 20 },
-				bl: { radius: 0 },
-				br: { radius: 0 },
-				antiAlias: true
-				}
-				curvyCorners(headerMenuSettings, ".MenuItem");
+ 			        window.onload = function() {
 				ChangeTextSize(null, null);
 				calculateDivHeight();
 				hideFacetsOnLoad();
+				checkExpandComment();
 				}
 			</script>
 		</head>

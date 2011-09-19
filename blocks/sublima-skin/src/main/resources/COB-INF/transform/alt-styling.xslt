@@ -161,7 +161,7 @@ PVJ: Made the file UTF-8
      <xsl:with-param name="baseurl" select="$baseurl"/>
       </xsl:call-template>
 
-<body onload="checkExpandComment()">
+<body>
 
 	<xsl:value-of select="$querystring"/>
 	<xsl:call-template name="headers">
