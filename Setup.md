@@ -199,7 +199,9 @@ This will create a WAR in target/, which can be deployed in the same way as the 
 
 ## Virtuoso 6
 
-The Jena endpoint needs to be configured with the URL of the Virtuoso endpoint. This is done in src/main/webapp/WEB-INF/web.xml .
+The Jena endpoint needs to be configured with the URL of the Virtuoso
+endpoint. This is done in src/main/webapp/WEB-INF/web.xml. The default
+is running Virtuoso on localhost, so usually no change is required:
 
         
     <param-value>http://127.0.0.1:8890/sparql?</param-value>
