@@ -6,9 +6,9 @@
 # Define appname here. The default is sublima, 
 # http://www.example.com/sublima/
 
-appname=sublima
+appname=jn
 
-source=/usr/src/sublima/sublima-webapp/target/sublima-webapp-1.0-SNAPSHOT.war
+source=/site/sublima/sublima-webapp/target/sublima-webapp-1.0-SNAPSHOT.war
 target_dir=/var/lib/tomcat5/webapps
 
 if [ x$1 = x-t ]
