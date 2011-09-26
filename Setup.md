@@ -371,9 +371,18 @@ Then, this should be used:
 Re-build Sublima using:
         
     mvn -Dmaven.test.skip=true clean package
-    
 
-and copy sublima/sublima-webapp/target/sublima-webapp-1.0-SNAPSHOT.war to /var/lib/tomcat5.5/webapps/yourappname.war where you replace yourappname.war with your desired application name. Restart Tomcat and Sublima should now be available on your selected URL.
+And deploy using the deployment script:
+
+    ./deploy.sh
+    
+This copies sublima/sublima-webapp/target/sublima-webapp-1.0-SNAPSHOT.war
+to /var/lib/tomcat5/webapps/sublima.war. You can edit the script to replace
+sublima.war with your desired application name. It also restarts Tomcat and
+Sublima should now be available on your selected URL.
+
+Use deploy.sh -t to deploy a test install, http://www.example.com/test/
+
 
 ## 5.4 How to
 
