@@ -815,8 +815,7 @@ PVJ: Made the file UTF-8
      <div id="contact-info"> 
        <div class="phone-fax-email"> 
          <span class="vrtx-label">Kontaktinformasjon</span>
-         <span class="email">E-post: <a href="mailto:ujur-nettviser@ub.uio.no">ujur-nettviser@ub.uio.no</a></span>  
-         <span class="tel">Tlf: 22 85 98 85</span>  
+         <span class="email">E-post: <a href="mailto:ujur-nettred@ub.uio.no">ujur-nettred@ub.uio.no</a></span>  
        </div> 
      </div>
    </div> 
