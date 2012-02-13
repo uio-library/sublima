@@ -300,11 +300,6 @@
   </dependencyManagement>
 
   <repositories>
-    <repository>
-      <id>computas-external</id>
-      <name>Computas external Maven repository</name>
-      <url>http://maven.computas.com</url>
-    </repository>
     <!-- repository>
       <id>jivesoftware</id>
       <url>http://maven.jivesoftware.com/central</url>
