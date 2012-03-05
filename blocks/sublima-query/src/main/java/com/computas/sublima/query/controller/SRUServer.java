@@ -31,7 +31,6 @@ public class SRUServer implements StatelessAppleController {
       bizData.put("servername", req.getCocoonRequest().getServerName());
       bizData.put("serverport", req.getCocoonRequest().getServerPort());
       bizData.put("requesturi", req.getCocoonRequest().getRequestURI());
-      System.gc();
       res.sendPage("sru/explain", bizData);
       return;
     } else if ("searchRetrieve".equals(operation)) {
@@ -108,13 +107,11 @@ public class SRUServer implements StatelessAppleController {
       bizData.put("errorcode", errorcode);
       bizData.put("errormsg", errormsg);
       bizData.put("errordetail", errordetail);
-      System.gc();
       res.sendPage("sru/error", bizData);
     } else {
       Map<String, Object> bizData = new HashMap<String, Object>();
       bizData.put("result", queryResult);
       bizData.put("stylesheet", req.getCocoonRequest().getParameter("stylesheet"));
-      System.gc();
       res.sendPage("sru/sru-results", bizData);
     }
 

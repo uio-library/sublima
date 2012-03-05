@@ -128,7 +128,6 @@ public class LinkcheckController implements StatelessAppleController {
     bizData.put("lenkesjekklist_inactive", queryResultINACTIVE);
     bizData.put("lenkesjekklist_gone", queryResultGONE);
     bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
-    System.gc();
     res.sendPage("xml2/lenkesjekk", bizData);
   }
 

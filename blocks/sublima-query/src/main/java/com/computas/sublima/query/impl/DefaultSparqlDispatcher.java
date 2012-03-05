@@ -98,7 +98,6 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
       result = fromCache.toString();
     }
     cache.close(memcached);
-    System.gc();
     return result;
   }
 
@@ -143,7 +142,6 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
       result = fromCache.toString();
     }
     cache.close(memcached);
-    System.gc();
     return result;
   }
 }

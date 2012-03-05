@@ -68,7 +68,6 @@ public class SearchController implements StatelessAppleController {
             StringBuilder params = adminService.getMostOfTheRequestXML(req);
             params.append("\n  </request>\n");
             bizData.put("facets", params.toString());
-            System.gc();
             res.sendPage("xml/advancedsearch", bizData);
             return;
         }
@@ -110,7 +109,6 @@ public class SearchController implements StatelessAppleController {
         bizData.put("messages","<empty/>");
         bizData.put("abovemaxnumberofhits", "false");
         bizData.put("comment", "<empty/>");
-        System.gc();
         res.sendPage(format + "/sparql-result", bizData);
     }
 
@@ -161,8 +159,6 @@ public class SearchController implements StatelessAppleController {
         bizData.put("messages", "<empty/>");
         bizData.put("abovemaxnumberofhits", "false");
         bizData.put("comment", "<empty/>");
-
-        System.gc();
         res.sendPage(format + "/sparql-result", bizData);
     }
 
@@ -403,7 +399,6 @@ public class SearchController implements StatelessAppleController {
         bizData.put("messages", messageBuffer.toString());
         bizData.put("abovemaxnumberofhits", abovemaxnumberofhits);
         bizData.put("comment", "<empty/>");
-        System.gc();
         res.sendPage(format + "/sparql-result", bizData);
     }
 

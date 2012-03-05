@@ -75,11 +75,9 @@ public class AdminController implements StatelessAppleController {
       bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
       bizData.put("comments", adminService.getCommentsFromLastNumberOfDays());
       bizData.put("tips", adminService.getUnhandledTips());
-      System.gc();
       res.sendPage("xml2/admin", bizData);
     } else if ("testsparql".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
-        System.gc();
         res.sendPage("xhtml/testsparql", null);
       } else {
         String query = req.getCocoonRequest().getParameter("query");
@@ -87,7 +85,6 @@ public class AdminController implements StatelessAppleController {
       }
     } else if ("testsparul".equalsIgnoreCase(mode)) {
       if ("".equalsIgnoreCase(submode)) {
-        System.gc();
         res.sendPage("xhtml/testsparul", null);
       } else {
         String query = req.getCocoonRequest().getParameter("query");
@@ -95,7 +92,6 @@ public class AdminController implements StatelessAppleController {
 
         logger.trace("TestSparul:\n" + query);
         logger.trace("TestSparul result: " + deleteResourceSuccess);
-        System.gc();
         res.sendPage("xhtml/testsparul", null);
       }
     } else if ("database".equalsIgnoreCase(mode)) {
@@ -155,7 +151,6 @@ public class AdminController implements StatelessAppleController {
     String query ="CONSTRUCT {?s ?p ?o} FROM <" + SettingsService.getProperty("sublima.basegraph") + "> WHERE {?s ?p ?o}";
     String results = sparqlDispatcher.getResultsAsFormat(query, type);
     bizData.put("ontology", results);
-    System.gc();
     res.sendPage("nostyle/export", bizData);
     adminService.deleteSubjectOf();
   }
@@ -166,7 +161,6 @@ public class AdminController implements StatelessAppleController {
     bizData.put("userprivileges", userPrivileges);
 
     if (req.getCocoonRequest().getMethod().equalsIgnoreCase("GET")) {
-      System.gc();
       res.sendPage("xml2/upload", bizData);
     } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
 
@@ -183,7 +177,6 @@ public class AdminController implements StatelessAppleController {
           e.printStackTrace();
         }
       }
-      System.gc();
       res.sendPage("xml2/upload", bizData);
       adminService.deleteSubjectOf();
     }
