@@ -18,16 +18,18 @@ public class CachingService {
 
     private static Logger logger = Logger.getLogger(CachingService.class);
     private boolean useMemcached = false;
+    private MemcachedClient mc;
 
     public CachingService() {
         // This should really have inherited and extended MencachedClient, but that can't be done in Java.
+    	mc = connect();
     }
 
     /**
      * Connect to the memcached
      * @return an instance of the MemcachedClient
      **/
-    public MemcachedClient connect() {
+    private MemcachedClient connect() {
         MemcachedClient memcached = null;
         try {
             memcached = new MemcachedClient(
@@ -54,12 +56,11 @@ public class CachingService {
 
     /**
      * Get whatever from the memcached with a given key
-     *
-     * @param mc the Memcached Client
      * @param key the String key of the cache entry
+     *
      * @return an Object with the cached entry or null if it wasn't found.
      */
-    public Object get(MemcachedClient mc, String key) {
+    public Object get(String key) {
         long connecttime = System.currentTimeMillis();
         Object fromCache = null;
         if (useMemcached) {
@@ -78,30 +79,34 @@ public class CachingService {
 
     /**
      * Ask if something with the given key is allready memcached
-     *
-     * @param mc the Memcached Client
      * @param key the String key of the cache entry
+     *
      * @return boolean returns true if the key was found.
      */
-    public boolean ask(MemcachedClient mc, String key) {
-      return (this.get(mc, key) != null);
+    public boolean ask(String key) {
+      return (this.get(key) != null);
     }
 
     /**
      * Will invalidate the cache when called
-     * @param mc The MemcachedClient object
      */
-
-    public void modelChanged(MemcachedClient mc) {
+    public void modelChanged() {
         if (useMemcached) {
           mc.waitForQueues(2, TimeUnit.SECONDS);
           mc.flush();
         }
     }
 
-    public void close(MemcachedClient mc) {
+    public void close() {
         if (useMemcached) {
             mc.shutdown(2, TimeUnit.SECONDS);
+            useMemcached = false;
         }
     }
+
+	public void set(String cacheKey, int i, String result) {
+		if (useMemcached) {
+			mc.set(cacheKey, 60 * 60 * 24 * 30, result);
+		}
+	}
 }

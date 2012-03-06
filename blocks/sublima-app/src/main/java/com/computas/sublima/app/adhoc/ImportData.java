@@ -85,9 +85,8 @@ public class ImportData {
   private void modelChanged() {
     logger.debug("ImportData invalidates the cache.");
     CachingService cache = new CachingService();
-    MemcachedClient memcached = cache.connect();
-    cache.modelChanged(memcached);
-    cache.close(memcached);
+    cache.modelChanged();
+    cache.close();
   }
 
   public static void main(String[] args) {

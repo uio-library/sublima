@@ -60,14 +60,14 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 
     // Configure memcached if available.
     CachingService cache = new CachingService();
-    MemcachedClient memcached = cache.connect();
+   
 
     String url = SettingsService.getProperty("sublima.sparql.endpoint");
     logger.info("SPARQLdispatcher executing.\n" + query + "\n");
     String cacheString = query.replaceAll("\\s+", " ") + SettingsService.getProperty("sublima.base.url");
     String cacheKey = String.valueOf(cacheString.hashCode()); // We could parse the query first to get a better key
     //  logger.trace("SPARQLdispatcher hashing for use as key.\n" + cacheString + "\n");
-    Object fromCache = cache.get(memcached, cacheKey);
+    Object fromCache = cache.get(cacheKey);
 
     if (fromCache == null) {
       logger.debug("SPARQLdispatcher found nothing in the cache.");
@@ -83,9 +83,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
         result = IOUtils.toString(con.getInputStream());
         long requesttime = System.currentTimeMillis() - connecttime;
         logger.info("SPARQLdispatcher got results from the triplestore. Query took " + requesttime + " ms.");
-        if (cache.useMemcached()) {
-          memcached.set(cacheKey, 60 * 60 * 24 * 30, result);
-        }
+        cache.set(cacheKey, 60 * 60 * 24 * 30, result);
       } catch (Exception e) {
         logger.error("SPARQLdispatcher got " + e.toString() + " while talking to the endpoint, with message: " + e.getMessage());
         con.disconnect();
@@ -97,7 +95,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
       logger.debug("SPARQLdispatcher using cache.");
       result = fromCache.toString();
     }
-    cache.close(memcached);
+    cache.close();
     return result;
   }
 
@@ -106,15 +104,14 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
     HttpURLConnection con = null;
 
     // Configure memcached if available.
-    CachingService cache = new CachingService();
-    MemcachedClient memcached = cache.connect();
+    CachingService cache = new CachingService();  
 
     String url = SettingsService.getProperty("sublima.sparql.directendpoint");
     logger.info("SPARQLdispatcher executing.\n" + query + "\n");
     String cacheString = query.replaceAll("\\s+", " ") + SettingsService.getProperty("sublima.base.url");
     String cacheKey = String.valueOf(cacheString.hashCode()); // We could parse the query first to get a better key
     //  logger.trace("SPARQLdispatcher hashing for use as key.\n" + cacheString + "\n");
-    Object fromCache = cache.get(memcached, cacheKey);
+    Object fromCache = cache.get(cacheKey);
 
     if (fromCache == null) {
       logger.debug("SPARQLdispatcher found nothing in the cache.");
@@ -128,9 +125,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
         result = IOUtils.toString(con.getInputStream());
         long requesttime = System.currentTimeMillis() - connecttime;
         logger.info("SPARQLdispatcher got results from the triplestore. Query took " + requesttime + " ms.");
-        if (cache.useMemcached()) {
-          memcached.set(cacheKey, 60 * 60 * 24 * 30, result);
-        }
+        cache.set(cacheKey, 60 * 60 * 24 * 30, result);
       } catch (Exception e) {
         logger.error("SPARQLdispatcher got " + e.toString() + " while talking to the endpoint, with message: " + e.getMessage());
         con.disconnect();
@@ -141,7 +136,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
       logger.debug("SPARQLdispatcher using cache.");
       result = fromCache.toString();
     }
-    cache.close(memcached);
+    cache.close();
     return result;
   }
 }
