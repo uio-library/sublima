@@ -350,6 +350,7 @@ public class SearchController implements StatelessAppleController {
                     queryResult = "<empty/>";
                     abovemaxnumberofhits = true;
                 }
+                cache.close(memcached);
             } else {
                 // We are below the threshold, do the search. Cache will be checked
                 queryResult = sparqlDispatcher.query(sparqlQuery);
