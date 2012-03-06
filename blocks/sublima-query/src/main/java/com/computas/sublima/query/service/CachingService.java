@@ -66,7 +66,7 @@ public class CachingService {
             try {
                 fromCache = mc.get(key);
             } catch (Exception e) {
-                useMemcached = false;
+//                useMemcached = false;
                 logger.warn("SPARQLdispatcher timed out when contacting memcached: "  + e.getMessage()
                         + ". Have you set sublima.memcached.servers?");
             }
