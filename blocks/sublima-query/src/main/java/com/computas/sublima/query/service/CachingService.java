@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 public class CachingService {
 
     private static Logger logger = Logger.getLogger(CachingService.class);
-    private boolean useMemcached = false;
     private MemcachedClient memcached;
 
     public CachingService() {
@@ -37,21 +36,11 @@ public class CachingService {
                             SettingsService.getProperty("sublima.memcached.servers")
                     )
             );
-            useMemcached = true;
         } catch (Exception e) {
-            useMemcached = false;
             logger.info("SPARQLdispatcher couldn't find the memcached server and said " + e.getMessage()
                     + ". Have you set sublima.memcached.servers?");
         }
         return mc;
-    }
-
-    /**
-     * If we are using memcached
-     * @return boolean
-     */
-    public boolean useMemcached() {
-        return useMemcached;
     }
 
     /**
@@ -63,11 +52,10 @@ public class CachingService {
     public Object get(String key) {
         long connecttime = System.currentTimeMillis();
         Object fromCache = null;
-        if (useMemcached) {
+        if (memcached != null) {
             try {
                 fromCache = memcached.get(key);
             } catch (Exception e) {
-//                useMemcached = false;
                 logger.warn("SPARQLdispatcher timed out when contacting memcached: "  + e.getMessage()
                         + ". Have you set sublima.memcached.servers?");
             }
@@ -91,21 +79,21 @@ public class CachingService {
      * Will invalidate the cache when called
      */
     public void modelChanged() {
-        if (useMemcached) {
+        if (memcached != null) {
           memcached.waitForQueues(2, TimeUnit.SECONDS);
           memcached.flush();
         }
     }
 
     public void close() {
-        if (useMemcached) {
+        if (memcached != null) {
             memcached.shutdown(2, TimeUnit.SECONDS);
-            useMemcached = false;
+            memcached = null;
         }
     }
 
 	public void set(String cacheKey, int i, String result) {
-		if (useMemcached) {
+		if (memcached != null) {
 			memcached.set(cacheKey, 60 * 60 * 24 * 30, result);
 		}
 	}
