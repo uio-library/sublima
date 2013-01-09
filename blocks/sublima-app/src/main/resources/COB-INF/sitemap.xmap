@@ -360,12 +360,6 @@
                 </map:call>
             </map:match>
 
-            <map:match pattern="resourcecomment">
-                <map:call function="com.computas.sublima.app.controller.admin.FeedbackController">
-                    <map:parameter name="mode" value="resourcecomment"/>
-                </map:call>
-            </map:match>
-
             <map:match pattern="takk">
                 <map:generate src="templates/takktips.jx.xml" type="jx"/>
                 <!-- apply styling -->
