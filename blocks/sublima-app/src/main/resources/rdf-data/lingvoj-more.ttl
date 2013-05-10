@@ -162,3 +162,23 @@ ns1:tr 	rdf:type	ns2:Lingvo ;
 	ns2:iso3	"tur" ;
 	ns2:iso2t	"tur" ;
 	ns2:iso2b	"tur" .
+ns1:el 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Grekiska"@sv ,
+		"Greek"@en ,
+		"Gresk"@no ,
+		"Græsk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/el.rdf> ;
+	ns2:iso1	"el" ;
+	ns2:iso3	"ell" ;
+	ns2:iso2t	"ell" ;
+	ns2:iso2b	"gre" .
+ns1:zh 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Kinesiska"@sv ,
+		"Chinese"@en ,
+		"Kinesisk"@no ,
+		"Kinesisk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/zh.rdf> ;
+	ns2:iso1	"zh" ;
+	ns2:iso3	"zho" ;
+	ns2:iso2t	"zho" ;
+	ns2:iso2b	"chi" .
