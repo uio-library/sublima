@@ -182,3 +182,14 @@ ns1:zh 	rdf:type	ns2:Lingvo ;
 	ns2:iso3	"zho" ;
 	ns2:iso2t	"zho" ;
 	ns2:iso2b	"chi" .
+ns1:ar 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Arabiska"@sv ,
+		"Arabic"@en ,
+		"Arabisk"@no ,
+		"Arabisk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/ar.rdf> ;
+	ns2:iso1	"ar" ;
+	ns2:iso3	"ara" ;
+	ns2:iso2t	"ara" ;
+	ns2:iso2b	"ara" .
+
