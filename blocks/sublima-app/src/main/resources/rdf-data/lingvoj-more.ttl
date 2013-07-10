@@ -192,4 +192,13 @@ ns1:ar 	rdf:type	ns2:Lingvo ;
 	ns2:iso3	"ara" ;
 	ns2:iso2t	"ara" ;
 	ns2:iso2b	"ara" .
-
+ns1:ko 	rdf:type	ns2:Lingvo ;
+	rdfs:label	"Koreanska"@sv ,
+		"Korean"@en ,
+		"Koreansk"@no ,
+		"Koreansk"@da ;
+	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/ko.rdf> ;
+	ns2:iso1	"ko" ;
+	ns2:iso3	"kor" ;
+	ns2:iso2t	"kor" ;
+	ns2:iso2b	"kor" .
