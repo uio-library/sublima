@@ -202,3 +202,13 @@ ns1:ko 	rdf:type	ns2:Lingvo ;
 	ns2:iso3	"kor" ;
 	ns2:iso2t	"kor" ;
 	ns2:iso2b	"kor" .
+ns1:kl rdf:type ns2:Lingvo ;
+	rdfs:label "Gr\u00F6nl\u00E4ndska"@sv ,
+		"Greenlandic"@en ,
+		"Gr\u00F8nlandsk"@no ,
+		"Gr\u00F8nlandsk"@da ;
+	rdfs:isDefinedBy <http://www.lingvoj.org/lingvo/kl.rdf> ;
+	ns2:iso1 "kl" ;
+	ns2:iso3 "kal" ;
+	ns2:iso2t "kal" ;
+	ns2:iso2b "kal" .
