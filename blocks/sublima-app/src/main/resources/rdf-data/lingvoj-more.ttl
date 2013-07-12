@@ -166,7 +166,7 @@ ns1:el 	rdf:type	ns2:Lingvo ;
 	rdfs:label	"Grekiska"@sv ,
 		"Greek"@en ,
 		"Gresk"@no ,
-		"Græsk"@da ;
+		"Gr\u00E6sk"@da ;
 	rdfs:isDefinedBy	<http://www.lingvoj.org/lingvo/el.rdf> ;
 	ns2:iso1	"el" ;
 	ns2:iso3	"ell" ;
