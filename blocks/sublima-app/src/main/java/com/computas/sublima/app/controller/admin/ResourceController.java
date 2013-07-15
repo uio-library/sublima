@@ -511,7 +511,7 @@ public class ResourceController implements StatelessAppleController {
             }
         }
 
-        if (req.getCocoonRequest().getParameter("the-resource") == null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20"))) {
+        if (req.getCocoonRequest().getParameter("the-resource") != null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20"))) {
             validationMessages.append("<c:message><i18n:text key=\"validation.url.errorcode\">Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</i18n:text></c:message>\n");
         }
 
