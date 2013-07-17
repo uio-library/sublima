@@ -1086,8 +1086,8 @@ public class AdminService {
             	"	dct:subject " + subject + ", ?subjects ;",
             	"	wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
             	"	?p ?rest .",
-            	"OPTIONAL { ?resource dct:language ?lang;",
-            	"		dct:publisher ?publisher . }",
+            	"OPTIONAL { ?resource dct:language ?lang . }",
+            	"OPTIONAL { ?resource dct:publisher ?publisher . }",
         		"}"});
         
         logger.trace("AdminService.getTopicDetailsForTopicPage() executing");
@@ -1109,8 +1109,8 @@ public class AdminService {
             	"?resource a sub:Resource;",
             	"	dct:subject " + subject + ", ?subjects ;",
             	"	?p ?rest .",
-            	"OPTIONAL { ?resource dct:language ?lang;",
-            	"		dct:publisher ?publisher . }",
+            	"OPTIONAL { ?resource dct:language ?lang . }",
+            	"OPTIONAL { ?resource dct:publisher ?publisher . }",
         		"}"});
 
         logger.trace("AdminService.getTopicDetailsForTopicPageFromAdmin() executing");
