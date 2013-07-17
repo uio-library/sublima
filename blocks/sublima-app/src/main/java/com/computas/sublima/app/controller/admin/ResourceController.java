@@ -535,21 +535,23 @@ public class ResourceController implements StatelessAppleController {
 
     private StringBuilder getTempValues(AppleRequest req) {
         //Keep all selected values in case of validation error
-        String temp_title = req.getCocoonRequest().getParameter("dct:title");
-        String temp_uri = req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20");
-        String temp_identifier = req.getCocoonRequest().getParameter("dct:identifier");
-        String temp_description = req.getCocoonRequest().getParameter("dct:description");
-        String[] temp_publisher = req.getCocoonRequest().getParameterValues("dct:publisher");
-        String[] temp_languages = req.getCocoonRequest().getParameterValues("dct:language");
-        String[] temp_mediatypes = req.getCocoonRequest().getParameterValues("dct:type");
-        String[] temp_audiences = req.getCocoonRequest().getParameterValues("dct:audience");
-        String[] temp_subjects = req.getCocoonRequest().getParameterValues("dct:subject");
-        String temp_comment = req.getCocoonRequest().getParameter("rdfs:comment");
-        String temp_status = req.getCocoonRequest().getParameter("wdr:describedBy");
-        String temp_date = req.getCocoonRequest().getParameter("dct:dateAccepted");
-        String temp_dateSubmitted = req.getCocoonRequest().getParameter("dct:dateSubmitted");
-        String temp_registeredby = req.getCocoonRequest().getParameter("sub:committer");
-        String temp_approvedby = req.getCocoonRequest().getParameter("sub:lastApprovedBy");
+        final Request request = req.getCocoonRequest();
+        
+	String temp_title = request.getParameter("dct:title");
+        String temp_uri = request.getParameter("the-resource").trim().replace(" ", "%20");
+        String temp_identifier = request.getParameter("dct:identifier");
+        String temp_descriptions = getDescriptions(request);
+        String[] temp_publisher = request.getParameterValues("dct:publisher");
+        String[] temp_languages = request.getParameterValues("dct:language");
+        String[] temp_mediatypes = request.getParameterValues("dct:type");
+        String[] temp_audiences = request.getParameterValues("dct:audience");
+        String[] temp_subjects = request.getParameterValues("dct:subject");
+        String temp_comment = request.getParameter("rdfs:comment");
+        String temp_status = request.getParameter("wdr:describedBy");
+        String temp_date = request.getParameter("dct:dateAccepted");
+        String temp_dateSubmitted = request.getParameter("dct:dateSubmitted");
+        String temp_registeredby = request.getParameter("sub:committer");
+        String temp_approvedby = request.getParameter("sub:lastApprovedBy");
 
 //Create an XML structure for the selected values, to use in the JX template
         StringBuilder xmlStructureBuffer = new StringBuilder();
@@ -578,8 +580,8 @@ public class ResourceController implements StatelessAppleController {
             xmlStructureBuffer.append("<dct:identifier rdf:resource=\"" + temp_identifier + "\"/>\n");
         }
 
-        xmlStructureBuffer.append("<dct:description>" + temp_description + "</dct:description>\n");
-
+        xmlStructureBuffer.append(temp_descriptions);
+        
         if (temp_registeredby != null && !temp_registeredby.isEmpty())
             xmlStructureBuffer.append("<sub:committer rdf:resource=\"" + temp_registeredby + "\"/>\n");
         if (temp_approvedby != null && !temp_approvedby.isEmpty())
@@ -631,6 +633,44 @@ public class ResourceController implements StatelessAppleController {
     }
 
     /**
+     * helper for getTempValues() to process the descriptions
+     * 
+     * @param request - Request
+     * @return the XML formatted descriptions
+     */
+    private String getDescriptions(Request request) {
+	StringBuilder descriptions = new StringBuilder();
+	int index = 1;
+	String[] values = null;
+
+	while ((values = request.getParameterValues("dct:description-" + index)) != null) {
+	    String language  = null;
+	    String description  = null;
+
+	    for (String value: values) {
+		value = value.trim();
+
+		if (!"".equalsIgnoreCase(value) && value != null) {
+		    if (value.startsWith("http://www.lingvoj.org/lang/")) {
+			language = value.substring(value.lastIndexOf("/") + 1, value.length());
+		    } else {
+			description = value;
+		    }
+		}
+	    }
+	 
+	    if (description != null && !description.isEmpty()) {
+		descriptions.append("<dct:description xml:lang=\"" + language + "\">");
+		descriptions.append(description);
+		descriptions.append("</dct:description>\n");
+	    }
+
+	    index++;
+	}
+	return descriptions.toString();
+    }
+
+	/**
      * Method to display the initial page for administrating resources
      *
      * @param res - AppleResponse
