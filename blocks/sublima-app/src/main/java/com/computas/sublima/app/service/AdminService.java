@@ -1113,7 +1113,7 @@ public class AdminService {
             	"		dct:publisher ?publisher . }",
         		"}"});
 
-        logger.trace("AdminService.getTopicDetailsForTopicPage() executing");
+        logger.trace("AdminService.getTopicDetailsForTopicPageFromAdmin() executing");
         Object queryResult = sparqlDispatcher.query(queryString);
 
         return queryResult.toString();
