@@ -52,7 +52,7 @@ public class ResourceController implements StatelessAppleController {
 
     private static Logger logger = Logger.getLogger(ResourceController.class);
 
-    @SuppressWarnings("unchecked")
+//    @SuppressWarnings("unchecked")
     public void process(AppleRequest req, AppleResponse res) throws Exception {
 
         this.mode = req.getSitemapParameter("mode");
@@ -671,7 +671,7 @@ public class ResourceController implements StatelessAppleController {
         if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
             int i = 0;
             int modified = 0;
-            Enumeration fo = req.getCocoonRequest().getParameterNames();
+//            Enumeration fo = req.getCocoonRequest().getParameterNames();
             while (req.getCocoonRequest().getParameterValues("new-" + i) != null) {
                 String newurl = req.getCocoonRequest().getParameterValues("new-" + i)[0];
                 String oldurl = req.getCocoonRequest().getParameterValues("old-" + i)[0];
