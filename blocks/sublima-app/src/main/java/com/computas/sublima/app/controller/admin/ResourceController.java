@@ -580,13 +580,13 @@ public class ResourceController implements StatelessAppleController {
 
         xmlStructureBuffer.append("<dct:description>" + temp_description + "</dct:description>\n");
 
-        if (temp_registeredby != null || !temp_registeredby.isEmpty())
+        if (temp_registeredby != null && !temp_registeredby.isEmpty())
             xmlStructureBuffer.append("<sub:committer rdf:resource=\"" + temp_registeredby + "\"/>\n");
-        if (temp_approvedby != null || !temp_approvedby.isEmpty())
+        if (temp_approvedby != null && !temp_approvedby.isEmpty())
             xmlStructureBuffer.append("<sub:lastApprovedBy rdf:resource=\"" + temp_approvedby + "\"/>\n");
-        if (temp_date != null || !temp_date.isEmpty())
+        if (temp_date != null && !temp_date.isEmpty())
             xmlStructureBuffer.append("<dct:dateAccepted rdf:datatype=\"http://www.w3.org/2001/XMLSchema#dateTime\">" + temp_date + "</dct:dateAccepted>\n");
-        if (temp_dateSubmitted != null || !temp_dateSubmitted.isEmpty())
+        if (temp_dateSubmitted != null && !temp_dateSubmitted.isEmpty())
             xmlStructureBuffer.append("<dct:dateSubmitted rdf:datatype=\"http://www.w3.org/2001/XMLSchema#dateTime\">" + temp_dateSubmitted + "</dct:dateSubmitted>\n");
 
         if (temp_languages != null) {
