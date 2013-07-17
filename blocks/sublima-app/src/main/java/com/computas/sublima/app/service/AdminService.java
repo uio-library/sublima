@@ -1079,14 +1079,17 @@ public class AdminService {
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                 "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
                 "WHERE {",
-                "        ?resource dct:language ?lang;",
-                "				 dct:publisher ?publisher ;",
-                "                dct:subject " + subject + ", ?subjects ;",
-                "        wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
-                "                ?p ?rest .}"});
-
+            	"?resource a sub:Resource;",
+            	"	dct:subject " + subject + ", ?subjects ;",
+            	"	wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> ;",
+            	"	?p ?rest .",
+            	"OPTIONAL { ?resource dct:language ?lang;",
+            	"		dct:publisher ?publisher . }",
+        		"}"});
+        
         logger.trace("AdminService.getTopicDetailsForTopicPage() executing");
         Object queryResult = sparqlDispatcher.query(queryString);
 
@@ -1100,12 +1103,16 @@ public class AdminService {
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
+                "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                 "DESCRIBE ?resource " + subject + " ?publisher ?subjects ?rest",
                 "WHERE {",
-                "        ?resource dct:language ?lang;",
-                "				 dct:publisher ?publisher ;",
-                "                dct:subject " + subject + ", ?subjects ;",
-                "                ?p ?rest .}"});
+            	"?resource a sub:Resource;",
+            	"	dct:subject " + subject + ", ?subjects ;",
+            	"	?p ?rest .",
+            	"OPTIONAL { ?resource dct:language ?lang;",
+            	"		dct:publisher ?publisher . }",
+        		"}"});
+
         logger.trace("AdminService.getTopicDetailsForTopicPage() executing");
         Object queryResult = sparqlDispatcher.query(queryString);
 
