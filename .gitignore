@@ -5,3 +5,4 @@ sublima-webapp/target/
 .project
 .settings/
 .classpath
+blocks/sublima-query/src/main/resources/META-INF/cocoon/properties/sublima-query.properties
