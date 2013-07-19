@@ -24,7 +24,6 @@
 
   <logger name="com.computas.sublima">
       <level value="trace"/>
-      <appender-ref ref="COCOON_DEFAULT" />
     </logger>
   <logger name="HeavyLogger">
       <level value="info"/>
