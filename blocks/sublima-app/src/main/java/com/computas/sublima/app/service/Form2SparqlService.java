@@ -475,6 +475,7 @@ public class Form2SparqlService {
         String property = e.getKey();
         if (property.equals(property.split("-")[0]) || (property.startsWith("<") && property.endsWith(">"))) { // Then we have normal triple
           for (String value : e.getValue()) {
+            value = value.trim();
             if (!"".equalsIgnoreCase(value) && value != null) {
               RDFObject myRDFObject = new RDFObject(value, language);
               sparqlQueryBuffer.append("<" + SparulSubjectURI + "> " + property
@@ -490,7 +491,7 @@ public class Form2SparqlService {
                 language = value.substring(value.lastIndexOf("/") + 1, value.length());
 
               } else {
-                object = value;
+                object = value.trim();
               }
             }
           }
