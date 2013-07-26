@@ -7,8 +7,11 @@ import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+
 import static com.computas.sublima.query.service.SettingsService.getProperty;
+
 import com.hp.hpl.jena.sparql.util.StringUtils;
+
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -18,6 +21,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -178,7 +182,11 @@ public class ResourceController implements StatelessAppleController {
 
         } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
             String url = req.getCocoonRequest().getParameter("sub:url").trim();
-            bizData.put("tempvalues", tempPrefixes + "<sub:url>" + URLEncoder.encode(req.getCocoonRequest().getParameter("sub:url").trim()) + "</sub:url></c:tempvalues>\n");
+            try {
+		bizData.put("tempvalues", tempPrefixes + "<sub:url>" + URLEncoder.encode(req.getCocoonRequest().getParameter("sub:url").trim(), "UTF-8") + "</sub:url></c:tempvalues>\n");
+	    } catch (UnsupportedEncodingException e) {
+		e.printStackTrace();
+	    }
             bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
             if (!"".equalsIgnoreCase(url)) {
@@ -206,13 +214,17 @@ public class ResourceController implements StatelessAppleController {
                         bizData.put("userprivileges", userPrivileges);
                         bizData.put("mode", "edit");
                         bizData.put("messages", messageBuffer.toString());
-                        bizData.put("resource", "<rdf:RDF\n" +
-                                "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-                                "    xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n" +
-                                "  <sub:Resource>\n" +
-                                "    <sub:url rdf:resource=\"" + URLEncoder.encode(url) + "\"/>\n" +
-                                "  </sub:Resource>\n" +
-                                "</rdf:RDF>");
+                        try {
+			    bizData.put("resource", "<rdf:RDF\n" +
+			            "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+			            "    xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n" +
+			            "  <sub:Resource>\n" +
+			            "    <sub:url rdf:resource=\"" + URLEncoder.encode(url, "UTF-8") + "\"/>\n" +
+			            "  </sub:Resource>\n" +
+			            "</rdf:RDF>");
+			} catch (UnsupportedEncodingException e) {
+			    e.printStackTrace();
+			}
 
                         res.sendPage("xml2/ressurs", bizData);
                     }
@@ -572,7 +584,11 @@ public class ResourceController implements StatelessAppleController {
                 "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n");
         xmlStructureBuffer.append("<sub:Resource>\n");
         xmlStructureBuffer.append("<dct:title>" + temp_title + "</dct:title>\n");
-        xmlStructureBuffer.append("<sub:url rdf:resource=\"" + URLEncoder.encode(temp_uri) + "\"/>\n");
+        try {
+	    xmlStructureBuffer.append("<sub:url rdf:resource=\"" + URLEncoder.encode(temp_uri, "UTF-8") + "\"/>\n");
+	} catch (UnsupportedEncodingException e) {
+	    e.printStackTrace();
+	}
 
         if ("".equals(temp_identifier)) {
             xmlStructureBuffer.append("<dct:identifier/>\n");
