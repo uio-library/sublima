@@ -136,10 +136,12 @@
 	  </dt>
 	<dd>
 	  <div style="font-size:small">
-	    <i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
-	    <xsl:apply-templates select="./dct:publisher"/>
-	    <xsl:text> </xsl:text>
-	    <!--xsl:apply-templates select="./dct:dateAccepted"/-->
+	    <xsl:if test="./dct:publisher">
+	    	<i18n:text key="search.result.publishedby">Publisert av</i18n:text><xsl:text>: </xsl:text>
+	    	<xsl:apply-templates select="./dct:publisher"/>
+	    	<xsl:text> </xsl:text>
+	    </xsl:if>
+        <!--xsl:apply-templates select="./dct:dateAccepted"/-->
 	  </div>
 	  <xsl:apply-templates select="./dct:description"/><xsl:text> (</xsl:text><xsl:apply-templates select="./dct:title" mode="description-link"/><xsl:text>)</xsl:text><p/>
 	</dd>
