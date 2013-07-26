@@ -12,7 +12,9 @@
         xmlns:foaf="http://xmlns.com/foaf/0.1/"
         xmlns:sparql="http://www.w3.org/2005/sparql-results#"
         xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+        xmlns:url="http://whatever/java/java.net.URLDecoder"
         xmlns="http://www.w3.org/1999/xhtml"
+        exclude-result-prefixes="url"
         version="1.0">
 
   <xsl:import href="controlbutton.xsl"/>
@@ -30,7 +32,7 @@
           </td>
           <td>
             <input id="sub:url" type="text" name="sub:url" size="40"
-                   value="{./c:tempvalues/c:tempvalues/sub:url}"/>
+                   value="{url:decode(./c:tempvalues/c:tempvalues/sub:url)}"/>
           </td>
         </tr>
         <tr>
