@@ -33,6 +33,7 @@ public class FeedbackController implements StatelessAppleController {
   private SearchService searchService = new SearchService();
   private MappingService mapping = new MappingService();
   boolean loggedIn;
+  private String language;
 
   //todo Check how to send error messages with Cocoon (like Struts 2's s:actionmessage)
   @SuppressWarnings("unchecked")
@@ -42,7 +43,7 @@ public class FeedbackController implements StatelessAppleController {
     loggedIn = appMan.isLoggedIn("Sublima");
 
     LanguageService langServ = new LanguageService();
-    String language = langServ.checkLanguage(req, res);
+    language = langServ.checkLanguage(req, res);
 
     logger.trace("FeedbackController: Language from sitemap is " + req.getSitemapParameter("interface-language"));
     logger.trace("FeedbackController: Language from service is " + language);
@@ -131,7 +132,6 @@ public class FeedbackController implements StatelessAppleController {
             "307".equals(status) ||
             status.startsWith("2"))) {
 
-      String lang = req.getSitemapParameter("interface-language");
       String dctidentifier = searchService.sanitizeStringForURI(tittel);
       String insertTipString =
               "PREFIX dct: <http://purl.org/dc/terms/>\n" +
@@ -140,9 +140,9 @@ public class FeedbackController implements StatelessAppleController {
                       "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
                       "{\n" +
                       "<" + url + "> a sub:Resource .\n" +
-                      "<" + url + "> dct:title " + "\"\"\"" + mapping.escapeString(tittel) + "\"\"\"@"+lang+" . \n" +
-                      "<" + url + "> dct:description " + "\"\"\"" + mapping.escapeString(beskrivelse.replace("\\", "\\\\")) + "\"\"\"@"+lang+" . \n" +
-                      "<" + url + "> sub:keywords " + "\"\"\"" + mapping.escapeString(stikkord) + "\"\"\"@"+lang+" . \n" +
+                      "<" + url + "> dct:title " + "\"\"\"" + mapping.escapeString(tittel) + "\"\"\"@"+language+" . \n" +
+                      "<" + url + "> dct:description " + "\"\"\"" + mapping.escapeString(beskrivelse.replace("\\", "\\\\")) + "\"\"\"@"+language+" . \n" +
+                      "<" + url + "> sub:keywords " + "\"\"\"" + mapping.escapeString(stikkord) + "\"\"\"@"+language+" . \n" +
                       "<" + url + "> wdr:describedBy <http://sublima.computas.com/status/nytt_forslag> .\n" +
                       "<" + url + "> sub:url <" + url + "> . \n" +
                       "<" + url + "> dct:identifier <" + SettingsService.getProperty("sublima.base.url") + "resource/" + dctidentifier + url.hashCode() + "> . }";
