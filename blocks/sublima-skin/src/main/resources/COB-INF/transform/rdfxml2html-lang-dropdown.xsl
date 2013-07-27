@@ -12,8 +12,18 @@
 
   <xsl:template match="lingvoj:Lingvo" mode="list-options">
     <xsl:param name="default-language"/>
+  	<xsl:variable name="language">
+  		<xsl:choose>
+  			<xsl:when test="$default-language = 'null' or $default-language = ''">
+  				<xsl:value-of select="$interface-language"/>
+  			</xsl:when>
+  			<xsl:otherwise>
+  				<xsl:value-of select="$default-language"/>
+  			</xsl:otherwise>
+  		</xsl:choose>
+  	</xsl:variable>
     <xsl:choose>
-      <xsl:when test="concat('http://www.lingvoj.org/lang/', $default-language) = ./@rdf:about">
+      <xsl:when test="concat('http://www.lingvoj.org/lang/', $language) = ./@rdf:about">
         <xsl:if test="./rdfs:label[@xml:lang=$interface-language]">
           <option value="{./@rdf:about}" selected="selected">
             <xsl:value-of select="./rdfs:label[@xml:lang=$interface-language]"/>
