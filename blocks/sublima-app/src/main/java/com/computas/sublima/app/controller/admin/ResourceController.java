@@ -314,24 +314,7 @@ public class ResourceController implements StatelessAppleController {
             String resource = req.getCocoonRequest().getParameter("the-resource").trim();
             parameterMap.put("the-resource", new String[]{resource});
             if (req.getCocoonRequest().getParameter("actionbuttondelete") != null) {
-
-                String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{\n" +
-                        "<" + req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20") + "> ?a ?o.\n" +
-                        "} WHERE {\n" +
-                        "<" + req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20") + "> ?a ?o. }";
-
-                boolean deleteResourceSuccess = sparulDispatcher.query(deleteString);
-
-                logger.trace("ResourceController.editResource --> DELETE RESOURCE QUERY:\n" + deleteString);
-                logger.trace("ResourceController.editResource --> DELETE RESOURCE QUERY RESULT: " + deleteResourceSuccess);
-
-
-                if (deleteResourceSuccess) {
-                    messageBuffer.append("<c:message><i18n:text key=\"resource.deletedok\">Ressursen slettet!</i18n:text></c:message>\n");
-                } else {
-                    messageBuffer.append("<c:message><i18n:text key=\"resource.deletefailed\">Feil ved sletting av ressurs</i18n:text></c:message>\n");
-                }
-
+		deleteResource(req, messageBuffer);
             } else {
 
                 boolean isNew = (req.getCocoonRequest().getParameter("dct:identifier") == null || req.getCocoonRequest().getParameter("dct:identifier").isEmpty());
@@ -493,8 +476,30 @@ public class ResourceController implements StatelessAppleController {
                 res.sendPage("xml2/ressurs", bizData);
             }
 
-
         }
+    }
+
+    /**
+     * helper for editResource() for deleting resources
+     * @param req  the request
+     * @param messageBuffer for output to be displayed to the user
+     */
+    private void deleteResource(AppleRequest req, StringBuilder messageBuffer) {
+	String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">{\n" +
+		"<" + req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20") + "> ?a ?o.\n" +
+		"} WHERE {\n" +
+		"<" + req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20") + "> ?a ?o. }";
+
+	boolean deleteResourceSuccess = sparulDispatcher.query(deleteString);
+
+	logger.trace("ResourceController.editResource --> DELETE RESOURCE QUERY:\n" + deleteString);
+	logger.trace("ResourceController.editResource --> DELETE RESOURCE QUERY RESULT: " + deleteResourceSuccess);
+
+	if (deleteResourceSuccess) {
+	    messageBuffer.append("<c:message><i18n:text key=\"resource.deletedok\">Ressursen slettet!</i18n:text></c:message>\n");
+	} else {
+	    messageBuffer.append("<c:message><i18n:text key=\"resource.deletefailed\">Feil ved sletting av ressurs</i18n:text></c:message>\n");
+	}
     }
 
     /**
