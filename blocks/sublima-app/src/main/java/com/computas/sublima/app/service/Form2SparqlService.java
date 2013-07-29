@@ -485,18 +485,18 @@ public class Form2SparqlService {
         } else { // Then, the language is included as an URI in one of the values
           property = property.split("-")[0];
           String object = new String();
+          String lang = null;
           for (String value : e.getValue()) {
             if (!"".equalsIgnoreCase(value) && value != null) {
               if (value.startsWith("http://www.lingvoj.org/lang/")) {
-                language = value.substring(value.lastIndexOf("/") + 1, value.length());
-
+                lang = value.substring(value.lastIndexOf("/") + 1, value.length());
               } else {
                 object = value.trim();
               }
             }
           }
           if (!"".equalsIgnoreCase(object)) {
-            RDFObject myRDFObject = new RDFObject(object, language);
+            RDFObject myRDFObject = new RDFObject(object, (lang != null ? lang : language));
             sparqlQueryBuffer.append("<" + SparulSubjectURI + "> " + property
                     + " " + myRDFObject.toN3() + " .\n");
           }
