@@ -260,7 +260,7 @@ public class AdminService {
      *
      * @return A String RDF/XML containing the resource
      */
-    public Object getResourceByURI(String uri) {
+    public String getResourceByURI(String uri) {
 
         try {
             uri = "<" + uri + ">";
@@ -790,13 +790,13 @@ public class AdminService {
 
             // We have to check the url both with and without an ending /
             if (url.endsWith("/")) {
-                resourceWithEndingSlash = (String) getResourceByURI(url);
+                resourceWithEndingSlash = getResourceByURI(url);
                 url = url.substring(0, url.length() - 1);
-                resourceWithoutEndingSlash = (String) getResourceByURI(url);
+                resourceWithoutEndingSlash = getResourceByURI(url);
 
             } else {
-                resourceWithoutEndingSlash = (String) getResourceByURI(url);
-                resourceWithEndingSlash = (String) getResourceByURI(url + "/");
+                resourceWithoutEndingSlash = getResourceByURI(url);
+                resourceWithEndingSlash = getResourceByURI(url + "/");
             }
 
             url = url.replace("&", "&amp;");
