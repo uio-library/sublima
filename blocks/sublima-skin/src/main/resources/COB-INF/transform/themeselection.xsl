@@ -44,7 +44,7 @@
             <select class="selectmultiple" id="tempsubject" multiple="multiple">
               <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
                 <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                <xsl:if test="not(./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about)">
+                <xsl:if test="not(./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF//skos:Concept/@rdf:about)">
                   <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
                     <option value="{./@rdf:about}">
                       <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
@@ -58,15 +58,13 @@
           <td>
             <select name="dct:subject" class="selectmultiple" multiple="multiple" id="dctsubject">
               <option/>
-              <xsl:for-each select="./c:alltopics/rdf:RDF/skos:Concept">
+              <xsl:for-each select="./c:themetopics/rdf:RDF//skos:Concept">
                 <xsl:sort lang="{$interface-language}" select="./skos:prefLabel[@xml:lang=$interface-language]"/>
-                <xsl:if test="./@rdf:about = /c:page/c:content/c:theme/c:themetopics/rdf:RDF/skos:Concept/@rdf:about">
                   <xsl:if test="./skos:prefLabel[@xml:lang=$interface-language]">
                     <option value="{./@rdf:about}" selected="selected">
                       <xsl:value-of select="./skos:prefLabel[@xml:lang=$interface-language]"/>
                     </option>
                   </xsl:if>
-                </xsl:if>
               </xsl:for-each>
             </select>
             <a href="#" id="removesubject" class="selectmultiplebutton">&lt;&lt; <i18n:text key="remove">remove</i18n:text></a>
