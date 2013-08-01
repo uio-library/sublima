@@ -4,6 +4,8 @@ import com.computas.sublima.query.RDFObject;
 import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+
+import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.log4j.Logger;
 
@@ -589,4 +591,13 @@ public class Form2SparqlService {
       this.n3List = null;
   }
 
+  public static Map<String, String[]> createParametersMap(Request request) {
+      Map<String, String[]> result = new HashMap<String, String[]>();
+      Enumeration parameterNames = request.getParameterNames();
+      while (parameterNames.hasMoreElements()) {
+	  String paramName = (String) parameterNames.nextElement();
+	  result.put(paramName, request.getParameterValues(paramName));
+      }
+      return result;
+  }
 }

@@ -1,6 +1,7 @@
 package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.*;
+import static com.computas.sublima.app.service.Form2SparqlService.createParametersMap;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SearchService;
@@ -13,7 +14,6 @@ import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -904,17 +904,6 @@ public class TopicController implements StatelessAppleController {
 
     public void setSparulDispatcher(SparulDispatcher sparulDispatcher) {
         this.sparulDispatcher = sparulDispatcher;
-    }
-
-    //todo Move to a Service-class
-    private Map<String, String[]> createParametersMap(Request request) {
-        Map<String, String[]> result = new HashMap<String, String[]>();
-        Enumeration parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String paramName = (String) parameterNames.nextElement();
-            result.put(paramName, request.getParameterValues(paramName));
-        }
-        return result;
     }
 
     public void setAppMan(ApplicationManager appMan) {

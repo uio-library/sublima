@@ -2,6 +2,7 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
+import static com.computas.sublima.app.service.Form2SparqlService.createParametersMap; 
 import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
@@ -697,19 +698,6 @@ public class ResourceController implements StatelessAppleController {
             (SparulDispatcher
                     sparulDispatcher) {
         this.sparulDispatcher = sparulDispatcher;
-    }
-
-    //todo Move to a Service-class
-    private Map<String, String[]> createParametersMap
-            (Request
-                    request) {
-        Map<String, String[]> result = new HashMap<String, String[]>();
-        Enumeration parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String paramName = (String) parameterNames.nextElement();
-            result.put(paramName, request.getParameterValues(paramName));
-        }
-        return result;
     }
 
     private void massEditResource(AppleResponse res, AppleRequest req) {

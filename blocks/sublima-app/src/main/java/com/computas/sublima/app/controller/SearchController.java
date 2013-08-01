@@ -9,6 +9,7 @@ import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
+import static com.computas.sublima.app.service.Form2SparqlService.createParametersMap;
 import net.spy.memcached.MemcachedClient;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -18,7 +19,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -400,16 +400,6 @@ public class SearchController implements StatelessAppleController {
         bizData.put("abovemaxnumberofhits", abovemaxnumberofhits);
         bizData.put("comment", "<empty/>");
         res.sendPage(format + "/sparql-result", bizData);
-    }
-
-    private Map<String, String[]> createParametersMap(Request request) {
-        Map<String, String[]> result = new HashMap<String, String[]>();
-        Enumeration parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String paramName = (String) parameterNames.nextElement();
-            result.put(paramName, request.getParameterValues(paramName));
-        }
-        return result;
     }
 
     public void setSparqlDispatcher(SparqlDispatcher sparqlDispatcher) {

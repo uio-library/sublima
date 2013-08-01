@@ -7,20 +7,19 @@ import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
+import static com.computas.sublima.app.service.Form2SparqlService.createParametersMap;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
-import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -574,17 +573,6 @@ public class UserController implements StatelessAppleController {
           (SparulDispatcher
                   sparulDispatcher) {
     this.sparulDispatcher = sparulDispatcher;
-  }
-
-  //todo Move to a Service-class
-  private Map<String, String[]> createParametersMap(Request request) {
-    Map<String, String[]> result = new HashMap<String, String[]>();
-    Enumeration parameterNames = request.getParameterNames();
-    while (parameterNames.hasMoreElements()) {
-      String paramName = (String) parameterNames.nextElement();
-      result.put(paramName, request.getParameterValues(paramName));
-    }
-    return result;
   }
 }
 
