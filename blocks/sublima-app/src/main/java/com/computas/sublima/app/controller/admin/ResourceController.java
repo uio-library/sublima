@@ -7,11 +7,8 @@ import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
-
 import static com.computas.sublima.query.service.SettingsService.getProperty;
-
 import com.hp.hpl.jena.sparql.util.StringUtils;
-
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -21,15 +18,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.io.LineNumberReader;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author: mha
@@ -186,11 +177,7 @@ public class ResourceController implements StatelessAppleController {
 
         } else if (req.getCocoonRequest().getMethod().equalsIgnoreCase("POST")) {
             String url = req.getCocoonRequest().getParameter("sub:url").trim();
-            try {
-		bizData.put("tempvalues", tempPrefixes + "<sub:url>" + URLEncoder.encode(req.getCocoonRequest().getParameter("sub:url").trim(), "UTF-8") + "</sub:url></c:tempvalues>\n");
-	    } catch (UnsupportedEncodingException e) {
-		e.printStackTrace();
-	    }
+            bizData.put("tempvalues", tempPrefixes + "<sub:url>" + encodeXML(req.getCocoonRequest().getParameter("sub:url").trim()) + "</sub:url></c:tempvalues>\n");
             bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
             if (!"".equalsIgnoreCase(url)) {
@@ -218,17 +205,13 @@ public class ResourceController implements StatelessAppleController {
                         bizData.put("userprivileges", userPrivileges);
                         bizData.put("mode", "edit");
                         bizData.put("messages", messageBuffer.toString());
-                        try {
-			    bizData.put("resource", "<rdf:RDF\n" +
-			            "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
-			            "    xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n" +
-			            "  <sub:Resource>\n" +
-			            "    <sub:url rdf:resource=\"" + URLEncoder.encode(url, "UTF-8") + "\"/>\n" +
-			            "  </sub:Resource>\n" +
-			            "</rdf:RDF>");
-			} catch (UnsupportedEncodingException e) {
-			    e.printStackTrace();
-			}
+                        bizData.put("resource", "<rdf:RDF\n" +
+                                "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+                                "    xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n" +
+                                "  <sub:Resource>\n" +
+                                "    <sub:url rdf:resource=\"" + encodeXML(url) + "\"/>\n" +
+                                "  </sub:Resource>\n" +
+                                "</rdf:RDF>");
 
                         res.sendPage("xml2/ressurs", bizData);
                     }
@@ -248,6 +231,10 @@ public class ResourceController implements StatelessAppleController {
                 res.sendPage("xml2/ressurs-prereg", bizData);
             }
         }
+    }
+
+    private String encodeXML(String url) {
+	return url.replace("&", "&amp;").replace("<", "&lt");
     }
 
 
@@ -299,7 +286,7 @@ public class ResourceController implements StatelessAppleController {
                 registerNewResourceURL(req, res);
             } else {
                 String uri = req.getCocoonRequest().getParameter("uri") == null ? req.getCocoonRequest().getParameter("sub:url") : req.getCocoonRequest().getParameter("uri");
-                bizData.put("resource", encodeURLinXML(adminService.getResourceByURI(uri)));                
+                bizData.put("resource", adminService.getResourceByURI(uri));
                 bizData.put("publishers", adminService.getAllPublishers());
                 bizData.put("mode", "edit");
                 messageBuffer.append("</c:messages>\n");
@@ -484,48 +471,6 @@ public class ResourceController implements StatelessAppleController {
     }
 
     /**
-     * helper method for editResource to URLencode the URL tag in an  RDF/XML resource
-     * @param resource RDF/XML representation of a resource
-     * @return the RDF/XML resource with the URL tag encoded
-     */
-    private String encodeURLinXML(String resource) {
-	//not pretty, maybe using DOM would be a better idea
-	StringBuilder result = new StringBuilder();
-	LineNumberReader reader = new LineNumberReader(new StringReader(resource));
-	//match lines like     <ns4:url rdf:resource="http://www.stami.no"/>
-	Pattern regex = Pattern.compile("(.*:url rdf:resource\\=\")(.*?)(\".*)");
-	String line = null;
-
-	try {
-	    line = reader.readLine();
-
-	    while (line != null) {
-		Matcher matcher = regex.matcher(line);
-
-		if (matcher.find()) {
-		    //decode XML entities
-		    String url = matcher.group(2).replace("&amp;", "&").replace("&quot;", "\"").replace("&apos;", "'").replace("&lt;", "<").replace("&gt;", ">");
-		    url = URLEncoder.encode(url, "UTF-8");
-		    line = matcher.group(1) + url + matcher.group(3);
-		}
-		result.append(line);
-		line = reader.readLine();
-	    }
-
-	} catch (IOException e1) {
-	    e1.printStackTrace();
-	} finally {
-	    try {
-		reader.close();
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    }
-	}
-
-	return result.toString();
-    }
-
-    /**
      * helper for editResource() for deleting resources
      * @param req  the request
      * @param messageBuffer for output to be displayed to the user
@@ -635,11 +580,7 @@ public class ResourceController implements StatelessAppleController {
                 "xmlns:sub=\"http://xmlns.computas.com/sublima#\">\n");
         xmlStructureBuffer.append("<sub:Resource>\n");
         xmlStructureBuffer.append("<dct:title>" + temp_title + "</dct:title>\n");
-        try {
-	    xmlStructureBuffer.append("<sub:url rdf:resource=\"" + URLEncoder.encode(temp_uri, "UTF-8") + "\"/>\n");
-	} catch (UnsupportedEncodingException e) {
-	    e.printStackTrace();
-	}
+        xmlStructureBuffer.append("<sub:url rdf:resource=\"" + encodeXML(temp_uri) + "\"/>\n");
 
         if ("".equals(temp_identifier)) {
             xmlStructureBuffer.append("<dct:identifier/>\n");
