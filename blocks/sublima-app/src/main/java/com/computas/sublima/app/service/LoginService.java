@@ -67,7 +67,7 @@ public class LoginService {
 
 	    } catch (SQLException e) {
 		e.printStackTrace();
-		throw new AuthenticationException("An error occured when trying to validate password.");
+		return false;
 	    }
 
 	    return validUser;
