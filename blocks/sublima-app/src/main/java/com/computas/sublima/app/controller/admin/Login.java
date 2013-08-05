@@ -1,19 +1,13 @@
 package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
-import com.computas.sublima.query.service.DatabaseService;
+import com.computas.sublima.app.service.LoginService;
 import com.computas.sublima.query.service.SettingsService;
 import org.apache.cocoon.auth.AuthenticationException;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.auth.impl.AbstractSecurityHandler;
 import org.apache.cocoon.auth.impl.StandardUser;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Connection;
 import java.util.Map;
 
 /**
@@ -22,56 +16,17 @@ import java.util.Map;
  */
 public class Login extends AbstractSecurityHandler { //implements StatelessAppleController {
 
-  DatabaseService dbService = new DatabaseService();
-  AdminService adminService = new AdminService();
-  User user = null;
+  private LoginService loginService = new LoginService();
+  private AdminService adminService = new AdminService();
 
   public User login(final Map loginContext) throws AuthenticationException {
-
-    Statement statement = null;
+    User user = null;
 
     final String name = (String) loginContext.get("name");//(String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_USERNAME_KEY);
     final String password = (String) loginContext.get("password");//(String) loginContext.get(ApplicationManager.LOGIN_CONTEXT_PASSWORD_KEY);
 
-    if (name == null) {
+    if ((name == null) || !loginService.validateUser(name, password)) {
       return null;//throw new AuthenticationException("Required user name property is missing for login.");
-    } else {
-
-      String sql = "SELECT * FROM DB.DBA.users WHERE username = '" + name + "'";
-
-      if ("Computas".equalsIgnoreCase(name)) {
-
-      } else {
-        try {
-          ResultSet rs;
-
-          Connection connection = dbService.getJavaSQLConnection();
-
-          statement = connection.createStatement();
-          rs = statement.executeQuery(sql);
-
-          if (!rs.next()) { //empty
-            return null;//throw new AuthenticationException("Username is wrong or does not exist.");
-          }
-
-          if (!adminService.generateSHA1(password).equals(rs.getString("password"))) {
-            return null;
-          }
-
-          statement.close();
-          connection.close();
-
-        } catch (SQLException e) {
-          e.printStackTrace();
-          throw new AuthenticationException("Required user name property is missing for login.");
-        } catch (NoSuchAlgorithmException e) {
-          e.printStackTrace();
-          throw new AuthenticationException("Required user name property is missing for login.");
-        } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();
-          throw new AuthenticationException("An error occured when trying to ");
-        }
-      }
     }
 
     user = new StandardUser(name);
