@@ -507,12 +507,20 @@ public class AdminService {
         return buf.toString();
     }
 
-    public String generateSHA1(String text)
-            throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest md;
-        md = MessageDigest.getInstance("SHA-1");
+    public String generateSHA1(String text) {
+	MessageDigest md = null;
+        try {
+	    md = MessageDigest.getInstance("SHA-1");
+	} catch (NoSuchAlgorithmException e) {
+	    e.printStackTrace();
+	}
         byte[] sha1hash = new byte[40];
-        md.update(text.getBytes("UTF-8"), 0, text.length());
+
+        try {
+	    md.update(text.getBytes("UTF-8"), 0, text.length());
+	} catch (UnsupportedEncodingException e) {
+	    e.printStackTrace();
+	}
         //todo simplify
         sha1hash = md.digest();
         return convertToHex(sha1hash);

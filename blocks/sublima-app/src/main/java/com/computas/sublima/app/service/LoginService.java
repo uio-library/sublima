@@ -67,12 +67,6 @@ public class LoginService {
 
 	    } catch (SQLException e) {
 		e.printStackTrace();
-		throw new AuthenticationException("Required user name property is missing for login.");
-	    } catch (NoSuchAlgorithmException e) {
-		e.printStackTrace();
-		throw new AuthenticationException("Required user name property is missing for login.");
-	    } catch (UnsupportedEncodingException e) {
-		e.printStackTrace();
 		throw new AuthenticationException("An error occured when trying to validate password.");
 	    }
 

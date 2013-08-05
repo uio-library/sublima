@@ -202,11 +202,6 @@ public class UserController implements StatelessAppleController {
             int insertedRows = dbService.doSQLUpdate(insertSql);
             logger.debug("UserController.editUser --> We have a new user.\n");
 
-
-          } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-          } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
           } catch (SQLException e) { // Cause most probably that user already exists
             logger.trace("UserController.editUser --> NEW USER: INSERT USERNAME FAILED\n" + e.toString() + "\n");
             messageBuffer.append("<c:message><i18n:text xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" key=\"validation.user.new.existingusername\">En bruker med dette brukernavnet finnes allerede.</i18n:text></c:message>\n</c:messages>\n");
@@ -243,7 +238,7 @@ public class UserController implements StatelessAppleController {
           if (!req.getCocoonRequest().getParameter("password1").equalsIgnoreCase("passwordplaceholder")) {
             // Encrypt the password and store it in a database table
             int insertedRows = 0;
-            try {
+            
               String password = adminService.generateSHA1(req.getCocoonRequest().getParameter("password1"));
               logger.trace("UserController.editUser --> GENERATE PASSWORD SHA1 " + password + "\n");
 
@@ -259,13 +254,6 @@ public class UserController implements StatelessAppleController {
                 e.printStackTrace();
                 logger.error("UserController.editUser --> INSERT USERINFO FAILED\n");
               }
-
-
-            } catch (NoSuchAlgorithmException e) {
-              e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-              e.printStackTrace();
-            }
 
             // If insertedRows is 0, then the insert failed and we give the user a proper feedback
             if (insertedRows == 0) {
