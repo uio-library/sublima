@@ -293,13 +293,6 @@ Deepsearch when zero hits tells the system to perform a search in the resources 
 Values true\|false.  
 **sulima.deepsearch.when.zero.hits=true**
 
-In DatabaseService.java located in sublima/blocks/sublima-query/src/main/java/com/computas/sublima/query/service must be altered so that the following lines have the same values as **sublima.database.url**, **virtuoso.digest.username** and **virtuoso.digest.password**:
-
-
-    private String M_DB_URL = "jdbc:virtuoso://www.example.com:1111";
-    private String M_DB_USER = "dba";
-    private String M_DB_PASSWD = "subpasswd";
-
 
 ### 5.2.2 Create database tables and an administrator user with all rights
 
