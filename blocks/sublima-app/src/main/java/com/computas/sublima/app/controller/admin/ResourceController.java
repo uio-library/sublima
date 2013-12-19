@@ -520,12 +520,14 @@ public class ResourceController implements StatelessAppleController {
             }
         }
 
-        if (req.getCocoonRequest().getParameter("the-resource") != null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20"))) {
-            validationMessages.append("<c:message><i18n:text key=\"validation.url.errorcode\">Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</i18n:text></c:message>\n");
-        }
-
-
         if ("http://sublima.computas.com/status/godkjent_av_administrator".equalsIgnoreCase(req.getCocoonRequest().getParameter("wdr:describedBy"))) {
+            // Checks for resources with status approved
+            
+            // Validate the URL
+            if (req.getCocoonRequest().getParameter("the-resource") != null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20"))) {
+                validationMessages.append("<c:message><i18n:text key=\"validation.url.errorcode\">Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</i18n:text></c:message>\n");
+            }
+
             // Check if the user tries to save it with an approved status, but without a subject
             // It's only one element in the list, and that element is empty
             if (req.getCocoonRequest().getParameterValues("dct:subject") == null || (req.getCocoonRequest().getParameterValues("dct:subject").length == 1 && req.getCocoonRequest().getParameterValues("dct:subject")[0].isEmpty())) {
