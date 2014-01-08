@@ -65,6 +65,7 @@ public class SearchController implements StatelessAppleController {
             bizData.put("mediatypes", adminService.getDistinctAndUsedLabels("dct:MediaType", "dct:type"));
             bizData.put("audiences", adminService.getDistinctAndUsedLabels("dct:AgentClass", "dct:audience"));
             bizData.put("committers", adminService.getDistinctAndUsedLabels("<http://rdfs.org/sioc/ns#User>", "<http://xmlns.computas.com/sublima#committer>"));
+            bizData.put("approvers", adminService.getDistinctAndUsedLabels("<http://rdfs.org/sioc/ns#User>", "<http://xmlns.computas.com/sublima#lastApprovedBy>"));
             StringBuilder params = adminService.getMostOfTheRequestXML(req);
             params.append("\n  </request>\n");
             bizData.put("facets", params.toString());

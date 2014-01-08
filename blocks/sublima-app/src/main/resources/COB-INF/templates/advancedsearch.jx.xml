@@ -9,6 +9,7 @@
   <mediatypes><jx:out value="#{mediatypes}" xmlize="true"/></mediatypes>
   <audiences><jx:out value="#{audiences}" xmlize="true"/></audiences>
   <committers><jx:out value="#{committers}" xmlize="true"/></committers>
+  <approvers><jx:out value="#{approvers}" xmlize="true"/></approvers>
   <facets><jx:out value="#{facets}" xmlize="true"/></facets>
 
   <advancedsearch/>

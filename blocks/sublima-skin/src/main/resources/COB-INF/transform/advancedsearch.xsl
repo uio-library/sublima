@@ -186,6 +186,11 @@
                         </tr>
                         <xsl:apply-templates select="/c:page/c:committers/sq:sparql">
                             <xsl:with-param name="field">sub:committer</xsl:with-param>
+                            <xsl:with-param name="label">Committer</xsl:with-param>
+                        </xsl:apply-templates>
+
+                        <xsl:apply-templates select="/c:page/c:approvers/sq:sparql">
+                            <xsl:with-param name="field">sub:lastApprovedBy</xsl:with-param>
                             <xsl:with-param name="label">
                                 <xsl:choose>
                                     <xsl:when test="$interface-language = 'no'">
@@ -201,7 +206,7 @@
                                 </xsl:choose>
                             </xsl:with-param>
                         </xsl:apply-templates>
-
+                        
                         <xsl:apply-templates select="/c:page/c:statuses/sq:sparql">
                             <xsl:with-param name="field">wdr:describedBy</xsl:with-param>
                             <xsl:with-param name="label">Status</xsl:with-param>
