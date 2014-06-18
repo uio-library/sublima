@@ -13,7 +13,6 @@
   xmlns:wdr="http://www.w3.org/2007/05/powder#"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:url="http://whatever/java/java.net.URLEncoder"
-  xmlns:xalan="http://xml.apache.org/xalan"
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="rdf rdfs dct foaf sub sioc lingvoj wdr">
   <xsl:import href="rdfxml-res-templates.xsl"/>
@@ -88,46 +87,11 @@
        </xsl:attribute>
        <i18n:text key="fulldescription">full description</i18n:text></a-->
     
-    
-    
-    <!-- testing if we can insert a relevance sorting attribute in the RESOURCE tree -->
-
-    <!-- we have either come to this by navigation or search. If first we have a URI
-         for the topic, if second we have a search string. --> 
-         
-   <xsl:variable name="topic-uri" select="/c:page/c:navigation/rdf:RDF/skos:Concept/@rdf:about" />
-   <xsl:variable name="search-string" select="/c:page/c:searchparams/c:searchparams/c:searchstring"/>
-
-    <xsl:variable name="res-copy">
-        <xsl:for-each select="sub:Resource">
-          <sub:Resource rdf:about="{./@rdf:about}"> 
-           <xsl:if test="$topic-uri != ''"> 
-                <sub:relevance>
-                    <xsl:value-of select="count(./dct:subject)"/>
-                </sub:relevance>
-           </xsl:if> 
-           <xsl:if test="$search-string !='' and contains(./dct:subject/skos:prefLabel, $search-string)">
-                <sub:relevance>
-                    <xsl:value-of select="1"/>
-                </sub:relevance>
-           </xsl:if>  
-            <xsl:copy-of select="./*"/>
-           </sub:Resource>
-        </xsl:for-each> 
-    </xsl:variable>                                          
-    
-
-    
-    
-    
     <dl>
-      <!--xsl:for-each select="sub:Resource">
-        <xsl:sort lang="{$interface-language}" select="./*[name() = $sorting]"/-->
-       <xsl:variable name="loggedin"><xsl:value-of select="//c:loggedin"/></xsl:variable>
-<!-- The root node for each described resource -->
-       <xsl:for-each select="xalan:nodeset($res-copy)/sub:Resource">
+      <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
         <xsl:sort lang="{$interface-language}" select="./*[local-name() = $sorting]" order="{$sortorder}"/>
-
+       <xsl:variable name="loggedin"><xsl:value-of select="//c:loggedin"/></xsl:variable>
+	
 	  <dt>
 	    <xsl:apply-templates select="./dct:title" mode="external-link"/>
       <xsl:if test="$loggedin = 'true'">-
