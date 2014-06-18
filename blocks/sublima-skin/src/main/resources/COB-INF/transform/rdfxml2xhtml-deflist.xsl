@@ -50,11 +50,18 @@
 	</xsl:choose>
 	</xsl:param>
     
+	<xsl:variable name="loggedin"><xsl:value-of select="//c:loggedin"/></xsl:variable>
+	<!-- sort by title by default -->
+	<xsl:variable name="sort">
+		<xsl:choose>
+			<xsl:when test="$sorting = ''">title</xsl:when>		
+			<xsl:otherwise><xsl:value-of select="$sorting"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
 
     <dl>
       <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-        <xsl:sort lang="{$interface-language}" select="./*[local-name() = $sorting]" order="{$sortorder}"/>
-       <xsl:variable name="loggedin"><xsl:value-of select="//c:loggedin"/></xsl:variable>
+        <xsl:sort lang="{$interface-language}" select="./*[local-name() = $sort]" order="{$sortorder}"/>
 	
 	  <dt>
 	    <xsl:apply-templates select="./dct:title" mode="external-link"/>
