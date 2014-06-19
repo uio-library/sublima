@@ -52,48 +52,19 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:param>
-
-
-    <!-- a>
-       <xsl:attribute name="href">
-         <xsl:choose>
-           <xsl:when test="not(contains(/c:page/c:facets/c:request/@requesturl, '?'))">
-            <xsl:value-of select="concat($gen-req, '?res-view=short')"/>
-           </xsl:when>
-           <xsl:otherwise>
-            <xsl:value-of select="concat($gen-req, '&amp;res-view=short')"/>
-           </xsl:otherwise>
-         </xsl:choose>
-       </xsl:attribute>
-       <i18n:text key="shortdescription">short description</i18n:text>
-    </a-->
-
-		<!--a>
-      <xsl:attribute name="href">
-        <xsl:choose>
-          <xsl:when test="not(contains(/c:page/c:facets/c:request/@requesturl, '?'))">
-            <xsl:value-of select="concat($gen-req, '?res-view=medium')"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="concat($gen-req, '&amp;res-view=medium')"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-      <i18n:text key="mediumdescription">medium description</i18n:text>
-    </a-->
-
-    <!--
-    <a>
-       <xsl:attribute name="href">
-        <xsl:value-of select="concat($gen-req, '&amp;res-view=full')"/>
-       </xsl:attribute>
-       full description
-    </a>
-    -->
-
+    
+	<xsl:variable name="loggedin"><xsl:value-of select="//c:loggedin"/></xsl:variable>
+	<!-- sort by title by default -->
+	<xsl:variable name="sort">
+		<xsl:choose>
+			<xsl:when test="$sorting = ''">title</xsl:when>		
+			<xsl:otherwise><xsl:value-of select="$sorting"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	
     <div id="fullDescribed">
       <xsl:for-each select="sub:Resource"> <!-- The root node for each described resource -->
-	<xsl:sort lang="{$interface-language}" select="./*[local-name() = $sorting]" order="{$sortorder}"/>
+	<xsl:sort lang="{$interface-language}" select="./*[local-name() = $sort]" order="{$sortorder}"/>
       <br/>
       <table>
 
@@ -103,7 +74,7 @@
 	  </th>
           <th scope="col">
             <xsl:apply-templates select="./dct:title" mode="external-link"/>
-            <xsl:if test="../../../c:loggedin = 'true'">-
+            <xsl:if test="$loggedin = 'true'">-
               <a href="{$baseurl}/admin/ressurser/edit?uri={url:encode(./@rdf:about)}{$aloc}">[Edit]</a>
             </xsl:if>
           </th>
