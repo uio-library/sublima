@@ -29,30 +29,6 @@
       </xsl:choose>
     </xsl:param>
 
-
-    <!-- views -->
-    <!-- "just" remove the res-view attribute -->
-    <!-- issue: a & is left.... -->
-    <xsl:param name="gen-req">
-      <xsl:choose>
-        <!-- xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=short')">
-        <xsl:value-of select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, 'res-view=short'),  substring-after(/c:page/c:facets/c:request/@requesturl, 'res-view=short'))"/>
-      </xsl:when -->
-        <xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=full')">
-          <xsl:value-of
-                  select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, 'res-view=full'),  substring-after(/c:page/c:facets/c:request/@requesturl, 'res-view=full'))"/>
-        </xsl:when>
-        <xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=medium')">
-          <xsl:value-of
-                  select="concat(substring-before(/c:page/c:facets/c:request/@requesturl, 'res-view=medium'),  substring-after(/c:page/c:facets/c:request/@requesturl, 'res-view=medium'))"/>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:value-of select="/c:page/c:facets/c:request/@requesturl"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:param>
-    
 	<xsl:variable name="loggedin"><xsl:value-of select="//c:loggedin"/></xsl:variable>
 	<!-- sort by title by default -->
 	<xsl:variable name="sort">

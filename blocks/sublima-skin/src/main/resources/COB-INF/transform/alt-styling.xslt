@@ -81,6 +81,9 @@ PVJ: Made the file UTF-8
     </xsl:if>
   </xsl:param>
 
+    <!-- views -->
+    <!-- "just" remove the res-view attribute -->
+    <!-- issue: a & is left.... -->
 	<xsl:param name="gen-req">
 		<xsl:choose>
 			<!--xsl:when test="contains(/c:page/c:facets/c:request/@requesturl, 'res-view=short')">
