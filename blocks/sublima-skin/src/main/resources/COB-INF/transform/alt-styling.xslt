@@ -102,6 +102,16 @@ PVJ: Made the file UTF-8
 		</xsl:choose>
 	</xsl:param>
 
+	<!-- sort by title by default -->
+	<xsl:variable name="sortby">
+		<xsl:choose>
+			<xsl:when test="/c:page/c:searchparams/c:searchparams/c:sortby">
+				<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/>
+			</xsl:when>		
+			<xsl:otherwise>title</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+
   <!-- A debug template that dumps the source tree. Do not remove
        this, just comment out the call-template -->
   <xsl:template name="debug">
@@ -594,7 +604,7 @@ PVJ: Made the file UTF-8
 
 										<xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results-full">
 											<xsl:with-param name="sorting">
-												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/>
+												<xsl:value-of select="$sortby"/>
 											</xsl:with-param>
 										</xsl:apply-templates>
 									</xsl:when>
@@ -603,7 +613,7 @@ PVJ: Made the file UTF-8
 
 										<xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results-short">
 											<xsl:with-param name="sorting">
-												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/>
+												<xsl:value-of select="$sortby"/>
 											</xsl:with-param>
 										</xsl:apply-templates>
 									</xsl:when>
@@ -611,7 +621,7 @@ PVJ: Made the file UTF-8
 									<xsl:otherwise>
 										<xsl:apply-templates select="c:page/c:result-list/rdf:RDF" mode="results">
 											<xsl:with-param name="sorting">
-												<xsl:value-of select="/c:page/c:searchparams/c:searchparams/c:sortby"/>
+												<xsl:value-of select="$sortby"/>
 											</xsl:with-param>
 										</xsl:apply-templates>
 									</xsl:otherwise>
