@@ -75,6 +75,9 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         if (con == null) {
             try {
                 con = (HttpURLConnection) url.openConnection();
+                
+                //Some servers require user-agent to be set
+                con.addRequestProperty("User-Agent", "Mozilla");
             }
             catch (IOException e) {
                 ourcode = "IOEXCEPTION";
