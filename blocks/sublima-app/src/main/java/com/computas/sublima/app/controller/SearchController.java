@@ -329,11 +329,11 @@ public class SearchController implements StatelessAppleController {
 
         } else if (doSearch) {
             if (adminService.isAboveMaxNumberOfHits(countNumberOfHitsQuery)) {
-                // We are above the threshold, lets see if we have it cached
-                CachingService cache = new CachingService();
-                
+                // We are above the threshold, lets see if we have it cached                
                 String cacheString = sparqlQuery.replaceAll("\\s+", " ") + SettingsService.getProperty("sublima.base.url");
                 String cacheKey = String.valueOf(cacheString.hashCode()); // We could parse the query first to get a better key
+                CachingService cache = new CachingService();
+
                 //  logger.trace("SPARQLdispatcher hashing for use as key.\n" + cacheString + "\n");
                 if (cache.ask(cacheKey)) {
                     logger.debug("SearchController found the query in the cache.");
