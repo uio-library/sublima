@@ -3,7 +3,6 @@ package com.computas.sublima.query.impl;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.CachingService;
 import com.computas.sublima.query.service.SettingsService;
-import net.spy.memcached.MemcachedClient;
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
@@ -78,9 +77,10 @@ public class DefaultSparulDispatcher implements SparulDispatcher {
                     }
                 }
                 input.close();
-                CachingService cache = new CachingService();
-                cache.modelChanged();
-                cache.close();
+                
+                try (CachingService cache = new CachingService();) {
+                    cache.modelChanged();
+                }
             }
 
         } catch (Exception e) {

@@ -10,15 +10,12 @@ import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import static com.computas.sublima.app.service.Form2SparqlService.createParametersMap;
-import net.spy.memcached.MemcachedClient;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Logger;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,7 +32,6 @@ public class SearchController implements StatelessAppleController {
     private static Logger logger = Logger.getLogger(SearchController.class);
     private static Logger heavylogger = Logger.getLogger("HeavyLogger");
 
-    @SuppressWarnings("unchecked")
     public void process(AppleRequest req, AppleResponse res) throws Exception {
         loggedIn = appMan.isLoggedIn("Sublima");
 
@@ -332,25 +328,26 @@ public class SearchController implements StatelessAppleController {
                 // We are above the threshold, lets see if we have it cached                
                 String cacheString = sparqlQuery.replaceAll("\\s+", " ") + SettingsService.getProperty("sublima.base.url");
                 String cacheKey = String.valueOf(cacheString.hashCode()); // We could parse the query first to get a better key
-                CachingService cache = new CachingService();
 
-                //  logger.trace("SPARQLdispatcher hashing for use as key.\n" + cacheString + "\n");
-                if (cache.ask(cacheKey)) {
-                    logger.debug("SearchController found the query in the cache.");
-                    queryResult = sparqlDispatcher.query(sparqlQuery); // Cache will be used in here.
-                    abovemaxnumberofhits = false;
-                } else {
-                    Request r = req.getCocoonRequest();
-                    String uri = r.getScheme() + "://" + r.getServerName();
-                    if (r.getServerPort() != 80) {
-                        uri = uri + ":" + r.getServerPort();
+                try (CachingService cache = new CachingService();) {
+
+                    //  logger.trace("SPARQLdispatcher hashing for use as key.\n" + cacheString + "\n");
+                    if (cache.ask(cacheKey)) {
+                	logger.debug("SearchController found the query in the cache.");
+                	queryResult = sparqlDispatcher.query(sparqlQuery); // Cache will be used in here.
+                	abovemaxnumberofhits = false;
+                    } else {
+                	Request r = req.getCocoonRequest();
+                	String uri = r.getScheme() + "://" + r.getServerName();
+                	if (r.getServerPort() != 80) {
+                	    uri = uri + ":" + r.getServerPort();
+                	}
+                	uri = uri + r.getRequestURI() + "?dobigsearchanyway=true&" + r.getQueryString();
+                	heavylogger.info(uri);
+                	queryResult = "<empty/>";
+                	abovemaxnumberofhits = true;
                     }
-                    uri = uri + r.getRequestURI() + "?dobigsearchanyway=true&" + r.getQueryString();
-                    heavylogger.info(uri);
-                    queryResult = "<empty/>";
-                    abovemaxnumberofhits = true;
                 }
-                cache.close();
             } else {
                 // We are below the threshold, do the search. Cache will be checked
                 queryResult = sparqlDispatcher.query(sparqlQuery);

@@ -11,7 +11,6 @@ import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.rulesys.GenericRuleReasoner;
 import com.hp.hpl.jena.reasoner.rulesys.Rule;
 import com.hp.hpl.jena.util.PrintUtil;
-import net.spy.memcached.MemcachedClient;
 import org.apache.log4j.Logger;
 
 import java.io.ByteArrayOutputStream;
@@ -84,9 +83,9 @@ public class ImportData {
 
   private void modelChanged() {
     logger.debug("ImportData invalidates the cache.");
-    CachingService cache = new CachingService();
-    cache.modelChanged();
-    cache.close();
+    try (CachingService cache = new CachingService();) {
+	cache.modelChanged();
+    }
   }
 
   public static void main(String[] args) {

@@ -2,10 +2,9 @@ package com.computas.sublima.query.service;
 
 import net.spy.memcached.MemcachedClient;
 import net.spy.memcached.AddrUtil;
-import net.spy.memcached.OperationTimeoutException;
+
 import org.apache.log4j.Logger;
 
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -14,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Date: Oct 27, 2008
  * Time: 2:37:58 PM
  */
-public class CachingService {
+public class CachingService implements AutoCloseable {
 
     private static Logger logger = Logger.getLogger(CachingService.class);
     private MemcachedClient memcached;
