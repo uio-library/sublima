@@ -77,7 +77,9 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                 con = (HttpURLConnection) url.openConnection();
                 
                 //Some servers require user-agent to be set
-                con.addRequestProperty("User-Agent", "Mozilla");
+                con.addRequestProperty("User-Agent", "Sublima/1.0");
+//                con.addRequestProperty("Accept-Language", "en-us");
+//                con.addRequestProperty("Accept-Charset", "UTF-8,ISO-8859-1");
             }
             catch (IOException e) {
                 ourcode = "IOEXCEPTION";
