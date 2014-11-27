@@ -1,12 +1,10 @@
 package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
-import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import org.apache.commons.io.IOUtils;
 import org.apache.jackrabbit.extractor.HTMLTextExtractor;
 import org.apache.log4j.Logger;
-import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -408,46 +406,6 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         } catch (Exception e) {
             logger.info("insertNewStatusForResource() ---> Gave an exception. Check if this URL is valid.");
         }
-    }
-
-    /**
-     * @throws UnsupportedEncodingException
-     * @throws PSQLException
-     * @deprecated Deprecated because of new index method
-     */
-    public void updateResourceExternalContent() throws UnsupportedEncodingException, PSQLException {
-        sparulDispatcher = new DefaultSparulDispatcher();
-        String resourceExternalContent = readContent();
-        SearchService searchService = new SearchService();
-
-        String deleteString = "DELETE FROM <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
-                "{ ?response ?p ?o }" +
-                " WHERE { <" + url.toString() + "> <http://www.w3.org/2007/ont/link#request> ?response . }";
-
-        boolean success = false;
-        success = sparulDispatcher.query(deleteString);
-        logger.info("updateResourceExternalContent() ---> " + url.toString() + " -- DELETE OLD CONTENT --> " + success);
-
-        String requesturl = "<http://sublima.computas.com/latest-get/" + url.toString().hashCode() + "> ";
-        StringBuilder updateString = new StringBuilder();
-        updateString.append("PREFIX link: <http://www.w3.org/2007/ont/link#>\n" +
-                "PREFIX http: <http://www.w3.org/2007/ont/http#>\n" +
-                "PREFIX httph: <http://www.w3.org/2007/ont/httph#>\n" +
-                "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
-                "INSERT INTO <" + SettingsService.getProperty("sublima.basegraph") + ">\n" +
-                "{\n<" + url.toString() + "> link:request " + requesturl + ".\n" +
-                requesturl + "a http:ResponseMessage ; \n");
-        HashMap<String, String> headers = getHTTPmap();
-        for (String key : headers.keySet()) {
-            updateString.append(key + " \"" + searchService.escapeString(headers.get(key)) + "\" ;\n");
-        }
-        updateString.append("sub:stripped \"\"\"" + searchService.escapeString(strippedContent(null)) + "\"\"\" .\n}");
-        logger.trace("updateResourceExternalContent() ---> INSERT: " + updateString.toString());
-
-        success = false;
-
-        success = sparulDispatcher.query(updateString.toString());
-        logger.info("updateResourceExternalContent() ---> " + url.toString() + " -- INSERT NEW CONTENT --> " + success);
     }
 
     public String strippedContent

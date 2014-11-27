@@ -132,11 +132,6 @@
         <artifactId>arq</artifactId>
       </dependency>
     <dependency>
-      <groupId>postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
         <groupId>com.openlinksw</groupId>
         <artifactId>virtjdbc3</artifactId>
       </dependency>
