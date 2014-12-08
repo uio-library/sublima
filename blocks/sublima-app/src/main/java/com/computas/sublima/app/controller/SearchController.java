@@ -5,7 +5,6 @@ import com.computas.sublima.app.service.Form2SparqlService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.CachingService;
-import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
@@ -24,7 +23,6 @@ public class SearchController implements StatelessAppleController {
     private SparqlDispatcher sparqlDispatcher;
     private ApplicationManager appMan;
     private AdminService adminService = new AdminService();
-    private MappingService ms = new MappingService();
     private String mode;
     private String format;
     boolean loggedIn;
