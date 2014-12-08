@@ -1,20 +1,10 @@
 package com.computas.sublima.app.service;
 
-import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
-import com.computas.sublima.query.impl.DefaultSparulDispatcher;
-import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
-import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.app.index.Generate;
 import com.computas.sublima.app.index.GenerateUtils;
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.query.larq.LARQ;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.DoesNotExistException;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.io.File;
 import java.util.*;
 
 /**
