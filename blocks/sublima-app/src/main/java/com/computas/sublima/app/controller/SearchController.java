@@ -313,7 +313,9 @@ public class SearchController implements StatelessAppleController {
             }
 
         } else {
+            //no query given
             res.sendStatus(400);
+            return;
         }
 
         //logger.trace("doAdvancedSearch: SPARQL query sent to dispatcher:\n" + sparqlQuery);
