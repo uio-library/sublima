@@ -140,12 +140,8 @@
         <artifactId>virt_jena</artifactId>
       </dependency>
     <dependency>
-      <groupId>spy</groupId>
-      <artifactId>memcached</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>spy</groupId>
-      <artifactId>spy</artifactId>
+      <groupId>net.spy</groupId>
+      <artifactId>spymemcached</artifactId>
     </dependency>
 		
   </dependencies>
