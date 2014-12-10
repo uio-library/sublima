@@ -160,7 +160,7 @@
       <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
-        <version>290508-SNAPSHOT</version>
+        <version>20141113</version>
         <scope>compile</scope>
       </dependency>
 
