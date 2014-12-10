@@ -201,12 +201,6 @@
       </dependency>
 
       <dependency>
-        <groupId>EDU.oswega.cs.dl.util</groupId>
-        <artifactId>concurrent</artifactId>
-        <version>290508-SNAPSHOT</version>
-      </dependency>
-
-      <dependency>
         <groupId>antlr</groupId>
         <artifactId>antlr</artifactId>
         <version>2.7.5</version>

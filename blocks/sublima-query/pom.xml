@@ -88,11 +88,6 @@
       </dependency>
 
       <dependency>
-        <groupId>EDU.oswega.cs.dl.util</groupId>
-        <artifactId>concurrent</artifactId>
-      </dependency>
-
-      <dependency>
         <groupId>com.ibm.icu</groupId>
         <artifactId>icu4j</artifactId>
       </dependency>
