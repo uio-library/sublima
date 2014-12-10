@@ -711,7 +711,7 @@ public class AdminService {
 
     /**
      * Method to get the user role based on the username
-     * This method use JAXP to perform a XPATH operation on the results from Joseki.
+     * This method use JAXP to perform a XPATH operation on the results from the sparql endpoint.
      *
      * @param name
      * @return role

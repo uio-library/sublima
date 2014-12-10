@@ -145,23 +145,6 @@
     <url-pattern>/autocomplete</url-pattern>
   </servlet-mapping>
 
-  <!-- COPIED FROM THE XPATCH -->
-
-  <!-- The Joseki SPARQL servlet -->
-  <servlet>
-    <servlet-name>SPARQL service processor</servlet-name>
-    <servlet-class>org.joseki.http.Servlet</servlet-class>
-    <!-- Configuration file -->
-    <init-param>
-      <param-name>org.joseki.rdfserver.config</param-name>
-      <param-value>joseki-config.ttl</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SPARQL service processor</servlet-name>
-    <url-pattern>/sparql</url-pattern>
-  </servlet-mapping>
-
   <!-- AuthenticationFilter -->
   <!--filter>
     <description>Authentication and authorization</description>
@@ -173,8 +156,6 @@
     <filter-name>AuthenticationFilter</filter-name>
     <servlet-name>DispatcherServlet</servlet-name>
   </filter-mapping-->
-
-  <!-- END COPIED FROM THE XPATCH -->
 
   <servlet>
     <description>A client for the SRU Server of Sublima</description>
