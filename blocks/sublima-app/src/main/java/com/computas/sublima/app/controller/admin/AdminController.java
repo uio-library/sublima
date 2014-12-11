@@ -8,8 +8,6 @@ import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SettingsService;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
@@ -18,11 +16,8 @@ import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.net.URLEncoder;
-import java.net.URL;
-import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +47,6 @@ public class AdminController implements StatelessAppleController {
   private static Logger logger = Logger.getLogger(AdminController.class);
   ConvertSublimaResources convert = new ConvertSublimaResources();
 
-  @SuppressWarnings("unchecked")
   public void process(AppleRequest req, AppleResponse res) throws Exception {
 
     String mode = req.getSitemapParameter("mode");
