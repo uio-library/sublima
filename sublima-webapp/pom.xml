@@ -7,12 +7,10 @@
   <name>sublima-webapp</name>
   <parent>
     <groupId>com.computas.sublima</groupId>
-    <artifactId>sublima-parent</artifactId>
-    <version>1-SNAPSHOT</version>
-    <relativePath>../parent/pom.xml</relativePath>
+    <artifactId>sublima-root</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>sublima-webapp</artifactId>
-  <version>1.0-SNAPSHOT</version>
 
   <build>
     <plugins>

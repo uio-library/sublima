@@ -7,9 +7,8 @@
   <name>sublima-blocks</name>
   <parent>
     <groupId>com.computas.sublima</groupId>
-    <artifactId>sublima-parent</artifactId>
-    <version>1-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
+    <artifactId>sublima-root</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>sublima-blocks</artifactId>
   <version>1-SNAPSHOT</version>
@@ -20,41 +19,23 @@
     <module>sublima-skin</module>
   </modules>
 
+  <repositories>
+    <repository>
+      <id>OpenJena.org</id>
+      <name>Jena, ARQ, etc</name>
+      <url>http://openjena.org/repo/</url>
+    </repository>
+  </repositories>
+  
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.cocoon</groupId>
-        <artifactId>cocoon-maven-plugin</artifactId>
-        <!--executions>
-          <execution>
-            <id>rcl</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>rcl</goal>
-            </goals>
-          </execution>
-        </executions-->
-      </plugin>
-      <plugin>
-        <groupId>org.mortbay.jetty</groupId>
-        <artifactId>maven-jetty-plugin</artifactId>
-        <configuration>
-          <connectors>
-            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-              <port>8888</port>
-              <maxIdleTime>30000</maxIdleTime>
-            </connector>
-          </connectors>
-          <webAppSourceDirectory>${project.build.directory}/rcl/webapp</webAppSourceDirectory>
-          <contextPath>/</contextPath>
-          <systemProperties>
-            <systemProperty>
-              <name>org.apache.cocoon.mode</name>
-              <value>dev</value>
-            </systemProperty>
-          </systemProperties>
-        </configuration>
-      </plugin>
+	  <plugin>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<configuration>
+			<source>1.7</source>
+			<target>1.7</target>
+		</configuration>
+	  </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
@@ -67,5 +48,229 @@
       </plugin>
     </plugins>
   </build>
+  
+  <dependencyManagement>
+    <dependencies>
+      <!-- Sublima -->
+      <dependency>
+        <groupId>com.computas.sublima</groupId>
+        <artifactId>sublima-query</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.computas.sublima</groupId>
+        <artifactId>sublima-skin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
 
+      <dependency>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>jackrabbit-text-extractors</artifactId>
+        <version>1.4</version>
+      </dependency>
+
+      <!-- Cocoon -->
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-core</artifactId>
+        <version>2.2.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-servlet-service-components</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-template-impl</artifactId>
+        <version>1.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-forms-impl</artifactId>
+        <version>1.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-apples-impl</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-auth-impl</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-flowscript-impl</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+      <!--dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-ajax-impl</artifactId>
+        <version>1.0.0</version>
+      </dependency-->
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.4</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>2.5.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>2.5.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>2.5.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>2.5.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>2.5.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-httpclient</groupId>
+        <artifactId>commons-httpclient</artifactId>
+        <version>3.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.openlinksw</groupId>
+        <artifactId>virtjdbc3</artifactId>
+        <version>5.0.9</version>
+      </dependency>
+      <dependency>
+        <groupId>com.openlinksw</groupId>
+        <artifactId>virt_jena</artifactId>
+        <version>5.0.9</version>
+      </dependency>
+
+      <dependency>
+        <groupId>postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>8.2-504.jdbc3</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <!-- Test -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.1</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- HTML Parser -->
+      <dependency>
+        <groupId>net.sourceforge.nekohtml</groupId>
+        <artifactId>nekohtml</artifactId>
+        <version>1.9.7</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <!--dependency>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>servlet-api-2.5</artifactId>
+        <version>6.1.10</version>
+      </dependency-->
+
+      <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20140107</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.hp.hpl.jena</groupId>
+        <artifactId>jenatest</artifactId>
+        <version>2.5.6</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.hp.hpl.jena</groupId>
+        <artifactId>iri</artifactId>
+        <version>0.5</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>antlr</groupId>
+        <artifactId>antlr</artifactId>
+        <version>2.7.5</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>2.3.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.z3950.zing</groupId>
+        <artifactId>cql</artifactId>
+        <version>1.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.4.3</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.hp.hpl.jena</groupId>
+        <artifactId>jena</artifactId>
+        <version>2.5.6</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.hp.hpl.jena</groupId>
+        <artifactId>arq</artifactId>
+        <version>2.5.0</version>
+        <scope>compile</scope>
+      </dependency>
+      <!-- Unicode -->
+      <dependency>
+        <groupId>com.ibm.icu</groupId>
+        <artifactId>icu4j</artifactId>
+        <version>3.4.4</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.jivesoftware</groupId>
+        <artifactId>akismet-java</artifactId>
+        <version>1.0-J</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>net.spy</groupId>
+        <artifactId>spymemcached</artifactId>
+        <version>2.11.5</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
 </project>
