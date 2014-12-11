@@ -12,12 +12,7 @@ This section will describe installation and configuration of the tools required 
 
 ### 2.1.1 Java
 
-Sublima uses Java version 6.
-As root (use sudo or open a shell), run:
-
-    apt-get install sun-java6-jdk
-
-Accept all dependencies.
+Sublima uses Java version 7. Install with your favorite package tool.
 
 ### 2.1.2 Tomcat
 
@@ -94,16 +89,11 @@ As root (use sudo or open a shell), run:
     
 Accept all dependencies.
 
-### 2.1.5 Maven 2
+### 2.1.5 Maven 3
 
-Sublima uses Maven 2 as build tool
-As root (use sudo or open a shell), run:
-        
-    apt-get install maven2
-    
-Accept all dependencies.
+Sublima uses Maven 3 as build tool.
 
-Maven2 is not available in older versions of the distros. Then you need to get <http://maven.apache.org/download.html> at least version 2.0.8.
+<http://maven.apache.org/download.html>
 
 # 3. Virtuoso
 
@@ -167,36 +157,16 @@ On the command line run the following command (if not logged in as root, append 
 
 # 4. Backend
 
+The RDF/XML standard allows for great variation in the serialization of RDF data.
+In order to be able to use XSLT for transforming the RDF/XML to HTML, the XML
+data must have a predictable structure.
+
 Virtuoso does not have a RDF/XML-ABBREV serialisation of its own, thus for Sublima, we must put Jena in between to create it. This is done in a separate servlet, which creates another endpoint. To get the code and build, do:
 
         
     git clone git://github.com/sublima/sublima-backend.git
     cd sublima-backend
     
-
-## Virtuoso 5
-
-Virtuoso has support for naming numerous graphs that can hold different data, identified by a URI.
-Sublima has only one graph, thus this can be set as a default. The queries will run without, but one will experience severe performance problems. It is important that the graph URI matches the URI in sublima.basegraph in the properties file, as seen in 5.2.1. Usually this is the same as the URL where the installation will be available.
-
-The Jena endpoint needs to be configured with the URL of the Virtuoso endpoint. This is done in src/main/webapp/WEB-INF/web.xml . If sublima.basegraph is set to <http://www.example.com/sublima/> then a reasonable default is:
-
-        
-    <param-value>http://127.0.0.1:8890/sparql?default-graph-uri=http://www.example.com/sublima/&amp;</param-value>
-    
-
-Then, the servlet can by built:
-
-        
-    mvn package
-    
-
-This will create a WAR in target/, which can be deployed in the same way as the sublima-WAR, by e.g. copying it:
-
-        
-    cp target/backend-1.0-SNAPSHOT.war /var/lib/tomcat5.5/webapps/backend.war
-    
-
 ## Virtuoso 6
 
 The Jena endpoint needs to be configured with the URL of the Virtuoso
