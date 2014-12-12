@@ -2,6 +2,7 @@ package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.impl.DefaultSparulDispatcher;
 import com.computas.sublima.query.service.SettingsService;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.jackrabbit.extractor.HTMLTextExtractor;
 import org.apache.log4j.Logger;
@@ -31,12 +32,14 @@ public class URLActions { // Should this class extend HttpUrlConnection?
     private String encoding = "ISO-8859-1";
     private static Logger logger = Logger.getLogger(URLActions.class);
     private DefaultSparulDispatcher sparulDispatcher;
+    private Exception exception;
 
 
     public URLActions(String u) {
         try {
             url = new URL(u);
         } catch (MalformedURLException e) {
+            exception = e;
             ourcode = "MALFORMED_URL";
         }
     }
@@ -82,6 +85,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                 con.addRequestProperty("Accept-Charset", "utf-8,iso-8859-1");
             }
             catch (IOException e) {
+        	exception = e;
                 ourcode = "IOEXCEPTION";
             }
         }
@@ -95,9 +99,11 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             result = con.getInputStream();
         }
         catch (MalformedURLException e) {
+            exception = e;
             ourcode = "MALFORMED_URL";
         }
         catch (IOException e) {
+            exception = e;
             ourcode = "IOEXCEPTION";
         }
         con = null;
@@ -143,21 +149,27 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                         ourcode = String.valueOf(con.getResponseCode());
                     }
                     catch (MalformedURLException e) {
+                	exception = e;
                         ourcode = "MALFORMED_URL";
                     }
                     catch (ClassCastException e) {
+                	exception = e;
                         ourcode = "UNSUPPORTED_PROTOCOL";
                     }
                     catch (UnknownHostException e) {
+                	exception = e;
                         ourcode = "UNKNOWN_HOST";
                     }
                     catch (ConnectException e) {
+                	exception = e;
                         ourcode = "CONNECTION_TIMEOUT";
                     }
                     catch (SocketTimeoutException e) {
+                	exception = e;
                         ourcode = "CONNECTION_TIMEOUT";
                     }
                     catch (IOException e) {
+                	exception = e;
                         ourcode = "IOEXCEPTION";
                     }
                 }
@@ -170,6 +182,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             theTask.get(10L, TimeUnit.SECONDS);
         }
         catch (TimeoutException e) {
+            exception = e;
             ourcode = "CONNECTION_TIMEOUT";
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -465,5 +478,11 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         }
         return sb.toString();
 
+    }
+
+    public String getMessage() {
+	String message = (exception == null ? "" : exception.getMessage());
+
+	return String.format("Status: %s, %s", ourcode, message);
     }
 }

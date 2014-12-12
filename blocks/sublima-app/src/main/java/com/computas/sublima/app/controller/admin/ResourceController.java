@@ -2,14 +2,20 @@ package com.computas.sublima.app.controller.admin;
 
 import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.Form2SparqlService;
+import com.computas.sublima.app.service.URLActions;
+
 import static com.computas.sublima.app.service.Form2SparqlService.createParametersMap; 
+
 import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
+
 import static com.computas.sublima.query.service.SettingsService.getProperty;
+
 import com.hp.hpl.jena.sparql.util.StringUtils;
+
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -182,7 +188,7 @@ public class ResourceController implements StatelessAppleController {
             bizData.put("facets", adminService.getMostOfTheRequestXMLWithPrefix(req) + "</c:request>");
 
             if (!"".equalsIgnoreCase(url)) {
-                if (adminService.validateURL(url)) {
+                if (validateURL(url, messageBuffer)) {
                     if (adminService.checkForDuplicatesByURI(url)) {
                         messageBuffer.append("<c:message><i18n:text key=\"validation.urlexists\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n");
                         String message = "<c:message><i18n:text key=\"validation.urlexists\" xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\"/></c:message>\n";
@@ -524,7 +530,7 @@ public class ResourceController implements StatelessAppleController {
             // Checks for resources with status approved
             
             // Validate the URL
-            if (req.getCocoonRequest().getParameter("the-resource") != null && !adminService.validateURL(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20"))) {
+            if (req.getCocoonRequest().getParameter("the-resource") != null && !validateURL(req.getCocoonRequest().getParameter("the-resource").trim().replace(" ", "%20"), validationMessages)) {
                 validationMessages.append("<c:message><i18n:text key=\"validation.url.errorcode\">Denne ressursens URI gir en statuskode som tilsier at den ikke er OK. Vennligst sjekk ressursens nettside og prøv igjen.</i18n:text></c:message>\n");
             }
 
@@ -700,6 +706,33 @@ public class ResourceController implements StatelessAppleController {
             (SparulDispatcher
                     sparulDispatcher) {
         this.sparulDispatcher = sparulDispatcher;
+    }
+    
+    private boolean validateURL(String url, StringBuilder messages) {
+        String ourcode;
+        try {
+            // Do a URL check so that we know we have a valid URL
+            URLActions urlAction = new URLActions(url);
+            ourcode = urlAction.getCode();
+            boolean valid = "302".equals(ourcode) ||
+                    "303".equals(ourcode) ||
+                    "304".equals(ourcode) ||
+                    "305".equals(ourcode) ||
+                    "307".equals(ourcode) ||
+                    ourcode.startsWith("2");
+            
+	    if (!valid && messages != null) {
+		messages.append("<c:message>");
+		messages.append(urlAction.getMessage());
+		messages.append("</c:message>");
+	    }
+ 
+	    return valid;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private void massEditResource(AppleResponse res, AppleRequest req) {
