@@ -110,6 +110,9 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         return result;
     }
 
+    /**
+     * @deprecated Not in use, candidate for removal?
+     */
     public String readContent() { // Sux0rz. Dude, where's my multiple return types?
         String result = null;
         try {
@@ -218,6 +221,8 @@ public class URLActions { // Should this class extend HttpUrlConnection?
      *         and represented in an appropriate namespace. The returned HTTP code is in the
      *         http:status field. In case of exceptions a String
      *         representation of the exception is used.
+     *         
+     * @deprecated Not in use, candidate for removal
      */
     public HashMap<String, String> getHTTPmap() {
         final HashMap<String, String> result = new HashMap<String, String>();
