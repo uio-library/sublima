@@ -721,13 +721,13 @@ public class ResourceController implements StatelessAppleController {
             return false;
         }
         
-        if (!valid && messages != null) {
-		messages.append("<c:message>");
-		messages.append(urlAction.getMessage());
-		messages.append("</c:message>");
-	    }
+	if (!valid && messages != null) {
+	    messages.append("<c:message>");
+	    messages.append(urlAction.getMessage());
+	    messages.append("</c:message>");
+	}
         
-         return valid;
+	return valid;
     }
 
     private void massEditResource(AppleResponse res, AppleRequest req) {
