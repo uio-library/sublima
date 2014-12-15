@@ -69,7 +69,7 @@ public class FeedbackController implements StatelessAppleController {
     String tittel = req.getCocoonRequest().getParameter("tittel");
     String beskrivelse = req.getCocoonRequest().getParameter("beskrivelse");
     String stikkord = req.getCocoonRequest().getParameter("stikkord");
-    String status;
+    boolean validURL;
 
     if (isSpam(req, loggedIn, url, tittel + "\n" + beskrivelse, "", "")) {
       logger.debug("FeedbackController.java --> Akismet said " + url + " was spam.");
@@ -110,7 +110,7 @@ public class FeedbackController implements StatelessAppleController {
     try {
       // Do a URL check so that we know we have a valid URL
       URLActions urlAction = new URLActions(url);
-      status = urlAction.getCode();
+      validURL = urlAction.isValid();
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -124,14 +124,7 @@ public class FeedbackController implements StatelessAppleController {
       return;
     }
 
-    //todo Move the 30x check to a private static method
-    if (status != null && ("302".equals(status) ||
-            "303".equals(status) ||
-            "304".equals(status) ||
-            "305".equals(status) ||
-            "307".equals(status) ||
-            status.startsWith("2"))) {
-
+    if (validURL) {
       String dctidentifier = searchService.sanitizeStringForURI(tittel);
       String insertTipString =
               "PREFIX dct: <http://purl.org/dc/terms/>\n" +

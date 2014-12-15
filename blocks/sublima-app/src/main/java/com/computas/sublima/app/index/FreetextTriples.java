@@ -132,14 +132,8 @@ public class FreetextTriples {
         uri = uri.replace("<", "").replace(">", "").trim();
 
         URLActions urlAction = new URLActions(uri);
-        String code = urlAction.getCode();
-
-        if ("302".equals(code) ||
-                "303".equals(code) ||
-                "304".equals(code) ||
-                "305".equals(code) ||
-                "307".equals(code) ||
-                code.startsWith("2")) {
+        
+        if (urlAction.isValid()) {
             try {
 
                 externalContent.append(urlAction.strippedContent(null).replace("\\", "\\\\"));

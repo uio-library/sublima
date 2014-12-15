@@ -133,7 +133,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
      *
      * @return ourcode
      */
-    public String getCode() {
+    private String getCode() {
         if (ourcode != null) {
             logger.debug("getCode() has already thrown exception ---> ");
             return ourcode;
@@ -326,12 +326,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                 getCode();
             }
 
-            if ("302".equals(ourcode) ||
-                    "303".equals(ourcode) ||
-                    "304".equals(ourcode) ||
-                    "305".equals(ourcode) ||
-                    "307".equals(ourcode) ||
-                    ourcode.startsWith("2")) {
+            if (isValid()) {
                 status = "<http://sublima.computas.com/status/ok>";
 
                 // Update the external content of the resource
@@ -365,6 +360,23 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         // OK
 
         insertNewStatusForResource(status);
+    }
+
+    /**
+     * Attempts to fetch the URL, and checks that the resulting status code is OK
+     * @return true if the URL is valid
+     */
+    public boolean isValid() {
+	if (ourcode == null) {
+            getCode();
+        }
+	
+	return ourcode.startsWith("2") ||
+	        "302".equals(ourcode) ||
+	        "303".equals(ourcode) ||
+	        "304".equals(ourcode) ||
+	        "305".equals(ourcode) ||
+	        "307".equals(ourcode);
     }
 
     private void insertNewStatusForResource(String status) {

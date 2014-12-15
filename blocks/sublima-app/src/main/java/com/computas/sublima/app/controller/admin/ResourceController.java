@@ -709,30 +709,25 @@ public class ResourceController implements StatelessAppleController {
     }
     
     private boolean validateURL(String url, StringBuilder messages) {
-        String ourcode;
+	boolean valid;
+	URLActions urlAction;
+	
         try {
             // Do a URL check so that we know we have a valid URL
-            URLActions urlAction = new URLActions(url);
-            ourcode = urlAction.getCode();
-            boolean valid = "302".equals(ourcode) ||
-                    "303".equals(ourcode) ||
-                    "304".equals(ourcode) ||
-                    "305".equals(ourcode) ||
-                    "307".equals(ourcode) ||
-                    ourcode.startsWith("2");
-            
-	    if (!valid && messages != null) {
+            urlAction = new URLActions(url);
+            valid = urlAction.isValid();
+	} catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        if (!valid && messages != null) {
 		messages.append("<c:message>");
 		messages.append(urlAction.getMessage());
 		messages.append("</c:message>");
 	    }
- 
-	    return valid;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        
+         return valid;
     }
 
     private void massEditResource(AppleResponse res, AppleRequest req) {

@@ -38,7 +38,7 @@ public class URLActionsTest extends TestCase {
 */
 
     public void testGetCode() throws Exception {
-        assertEquals("Not equal", "200", urlactions.getCode());
+        assertEquals("Not equal", true, urlactions.isValid());
 
     }
 
