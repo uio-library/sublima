@@ -287,7 +287,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
      * <p/>
      * 2xx - OK
      * <p/>
-     * 301 - Fetch new URL from HTTP Header, then CHECK
+     * 301 - should arguably be CHECK, but this causes unnecessary noise in the link checker, so we accept it as OK
      * 302 - OK
      * 303 - OK
      * 304 - OK
@@ -372,6 +372,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         }
 	
 	return ourcode.startsWith("2") ||
+		"301".equals(ourcode) || // should arguably be CHECK, but this causes unnecessary noise in the link checker, so we accept it as OK
 	        "302".equals(ourcode) ||
 	        "303".equals(ourcode) ||
 	        "304".equals(ourcode) ||
