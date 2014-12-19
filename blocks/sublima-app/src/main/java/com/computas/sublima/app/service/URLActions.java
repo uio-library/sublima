@@ -25,7 +25,7 @@ import java.util.concurrent.TimeoutException;
  * Date: Apr 23, 2008
  * Time: 11:11:41 AM
  */
-public class URLActions { // Should this class extend HttpUrlConnection?
+public class URLActions {
     private URL url;
     private HttpURLConnection con = null;
     private String ourcode = null; // This is the code we base our status on
@@ -39,12 +39,16 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         try {
             url = new URL(u);
         } catch (MalformedURLException e) {
-            exception = e;
-            ourcode = "MALFORMED_URL";
+            setExceptionAndCode(e);
         }
     }
 
-    public URLActions(URL u) throws MalformedURLException {
+    private void setExceptionAndCode(Exception e) {
+	exception = e;
+	ourcode = e.getClass().getSimpleName();
+    }
+
+    public URLActions(URL u) {
         url = u;
     }
 
@@ -85,8 +89,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                 con.addRequestProperty("Accept-Charset", "utf-8,iso-8859-1");
             }
             catch (IOException e) {
-        	exception = e;
-                ourcode = "IOEXCEPTION";
+        	setExceptionAndCode(e);
             }
         }
     }
@@ -97,14 +100,8 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         try {
             connect();
             result = con.getInputStream();
-        }
-        catch (MalformedURLException e) {
-            exception = e;
-            ourcode = "MALFORMED_URL";
-        }
-        catch (IOException e) {
-            exception = e;
-            ourcode = "IOEXCEPTION";
+	} catch (IOException e) {
+            setExceptionAndCode(e);
         }
         con = null;
         return result;
@@ -120,7 +117,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             result = IOUtils.toString(content);
         }
         catch (IOException e) {
-            ourcode = "IOEXCEPTION";
+            setExceptionAndCode(e);
         }
         con = null;
         return result;
@@ -135,7 +132,6 @@ public class URLActions { // Should this class extend HttpUrlConnection?
      */
     private String getCode() {
         if (ourcode != null) {
-            logger.debug("getCode() has already thrown exception ---> ");
             return ourcode;
         }
 
@@ -150,30 +146,8 @@ public class URLActions { // Should this class extend HttpUrlConnection?
                         connect();
                         con.setConnectTimeout(6000);
                         ourcode = String.valueOf(con.getResponseCode());
-                    }
-                    catch (MalformedURLException e) {
-                	exception = e;
-                        ourcode = "MALFORMED_URL";
-                    }
-                    catch (ClassCastException e) {
-                	exception = e;
-                        ourcode = "UNSUPPORTED_PROTOCOL";
-                    }
-                    catch (UnknownHostException e) {
-                	exception = e;
-                        ourcode = "UNKNOWN_HOST";
-                    }
-                    catch (ConnectException e) {
-                	exception = e;
-                        ourcode = "CONNECTION_TIMEOUT";
-                    }
-                    catch (SocketTimeoutException e) {
-                	exception = e;
-                        ourcode = "CONNECTION_TIMEOUT";
-                    }
-                    catch (IOException e) {
-                	exception = e;
-                        ourcode = "IOEXCEPTION";
+		    } catch (Exception e) {
+                	setExceptionAndCode(e);
                     }
                 }
             }, null);
@@ -185,11 +159,9 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             theTask.get(10L, TimeUnit.SECONDS);
         }
         catch (TimeoutException e) {
-            exception = e;
-            ourcode = "CONNECTION_TIMEOUT";
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+            setExceptionAndCode(e);
+        } catch (InterruptedException|ExecutionException e) {
+            setExceptionAndCode(e);
             e.printStackTrace();
         }
 
@@ -205,7 +177,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
         logger.info("getCode() ---> " + url.toString() + " returned a " + ourcode);
 
         if (ourcode == null) {
-            ourcode = "IOEXCEPTION";
+            ourcode = "UNKNOWN";
         }
 
         return ourcode;
@@ -245,24 +217,8 @@ public class URLActions { // Should this class extend HttpUrlConnection?
 
                         ourcode = String.valueOf(con.getResponseCode());
                         con = null;
-                    }
-                    catch (MalformedURLException e) {
-                        ourcode = "MALFORMED_URL";
-                    }
-                    catch (ClassCastException e) {
-                        ourcode = "UNSUPPORTED_PROTOCOL";
-                    }
-                    catch (UnknownHostException e) {
-                        ourcode = "UNKNOWN_HOST";
-                    }
-                    catch (ConnectException e) {
-                        ourcode = "CONNECTION_TIMEOUT";
-                    }
-                    catch (SocketTimeoutException e) {
-                        ourcode = "CONNECTION_TIMEOUT";
-                    }
-                    catch (IOException e) {
-                        ourcode = "IOEXCEPTION";
+                    } catch (Exception e) {
+                	setExceptionAndCode(e);
                     }
                     result.put("http:status", ourcode);
                 }
@@ -275,7 +231,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             theTask.get(10L, TimeUnit.SECONDS);
         }
         catch (Exception e) {
-            ourcode = "CONNECTION_TIMEOUT";
+            setExceptionAndCode(e);
         }
         return result;
     }
@@ -341,9 +297,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             else if ("306".equals(ourcode) ||
                     "400".equals(ourcode) ||
                     "403".equals(ourcode) ||
-                    "405".equals(ourcode) ||
-                    "MALFORMED_URL".equals(ourcode) ||
-                    "UNSUPPORTED_PROTOCOL".equals(ourcode)) {
+                    "405".equals(ourcode)) {
                 status = "<http://sublima.computas.com/status/inaktiv>";
             }
             // CHECK
@@ -492,7 +446,7 @@ public class URLActions { // Should this class extend HttpUrlConnection?
             theTask.get(10L, TimeUnit.SECONDS);
         }
         catch (Exception e) {
-            ourcode = "CONNECTION_TIMEOUT";
+            setExceptionAndCode(e);
         }
         return sb.toString();
 
