@@ -19,7 +19,7 @@ Sublima uses Java version 7. Install with your favorite package tool.
 Sublima uses Tomcat 5.5 or newer, but is only tested on Tomcat 5.5.
 As root (use sudo or open a shell), run:
 
-    apt-get install tomcat5.5
+    yum install tomcat
 
 Accept all dependencies.
 
@@ -76,7 +76,7 @@ Restart apache and then restart tomcat.
 Sublima uses Memcached to cache queries.
 As root (use sudo or open a shell), run:
         
-    apt-get install memcached
+    yum install memcached
     
 Accept all dependencies.
 
@@ -85,7 +85,7 @@ Accept all dependencies.
 Sublima uses Git for version control.
 As root (use sudo or open a shell), run:
         
-    apt-get install git-core
+    yum install git
     
 Accept all dependencies.
 
