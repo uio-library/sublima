@@ -8,8 +8,8 @@
 
 appname=jn
 
-source=/site/sublima/sublima-webapp/target/sublima-webapp-1.0-SNAPSHOT.war
-target_dir=/var/lib/tomcat5/webapps
+source=~/jn/src/sublima-webapp/target/sublima-webapp-1.0-SNAPSHOT.war
+target_dir=/var/lib/tomcat/webapps
 
 if [ x$1 = x-t ]
 then
@@ -29,12 +29,12 @@ while [ -d $target ] ; do sleep 1 ; done
 # Re-deploying without restarting tomcat seems to cause a memory
 # leak. YMMV.
 
-sudo /etc/init.d/tomcat5 stop
+#sudo /etc/init.d/tomcat5 stop
 
 cp $source $target.war
 chmod 644 $target.war
 
-sudo /etc/init.d/tomcat5 start
+#sudo /etc/init.d/tomcat5 start
 
 source=
 target_dir=
