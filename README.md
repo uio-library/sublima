@@ -12,18 +12,19 @@ This section will describe installation and configuration of the tools required 
 
 ### 2.1.1 Java
 
-Sublima uses Java version 7. Install with your favorite package tool.
+Install with your favorite package tool.
 
+	yum install java-1.8.0-oracle
+	
 ### 2.1.2 Tomcat
 
-Sublima uses Tomcat 5.5 or newer, but is only tested on Tomcat 5.5.
-As root (use sudo or open a shell), run:
+Sublima uses Tomcat 5.5 or newer.
 
     yum install tomcat
 
 Accept all dependencies.
 
-Disable Tomcat's security: In the file /etc/default/tomcat5.5 set
+Disable Tomcat's security. Does not seem to apply to tomcat 7. In the file /etc/default/tomcat5.5 set
 
     TOMCAT_SECURITY=no
 
@@ -37,6 +38,9 @@ In the file /etc/tomcat5.5/server.xml locate the Connector element, and set the 
     <Connector port="8080" maxHttpHeaderSize="8192" URIEncoding="UTF-8"
 
 (Note that the other elements may have other values).
+Firewall:
+
+	firewall-cmd --add-port=8080/tcp --permanent
 
 #### 2.1.2.1 Running Sublima on port 80
 
@@ -56,7 +60,7 @@ In /etc/tomcatx/server.xml, set proxyName and proxyPort:
     />
     
 
-In /etc/apache2/httpd.conf add proxypass and proxypassreverse from port 80 to 8080:
+In httpd.conf add proxypass and proxypassreverse from port 80 to 8080:
         
         ProxyRequests Off
         ProxyPreserveHost On
@@ -65,10 +69,15 @@ In /etc/apache2/httpd.conf add proxypass and proxypassreverse from port 80 to 80
             Order deny,allow
             Allow from all
         </Proxy>
-    
-        ProxyPass               /sublima       http://www.example.com:8080/sublima/
-        ProxyPassReverse        /sublima       http://www.example.com:8080/sublima/
-    
+		
+        ProxyPass               /jn       http://localhost:8080/jn
+        ProxyPassReverse        /jn       http://localhost:8080/jn
+
+Firewall and SE Linux:
+
+	/usr/sbin/setsebool -P httpd_can_network_connect 1
+	firewall-cmd --add-service http --permanent
+
 Restart apache and then restart tomcat.
 
 ### 2.1.3 Memcached
@@ -78,7 +87,10 @@ As root (use sudo or open a shell), run:
         
     yum install memcached
     
-Accept all dependencies.
+Config:
+	
+	CACHESIZE="256"
+	OPTIONS="-l 127.0.0.1"
 
 ### 2.1.4 Git
 
@@ -100,10 +112,9 @@ Sublima uses Maven 3 as build tool.
 ## 3.1 Installation
 
 Sublima uses [Virtuoso Open-Source Edition](http://www.openlinksw.com/wiki/main/Main) for storing RDF data. It can be downloaded from here: <http://www.openlinksw.com/wiki/main/Main/VOSDownload>
+Red Hat enterprise Linux has a package:
 
-Virtuoso should be built and installed according to its documentation. There are binary packages available from som distros, like Fedora OS.
-
-Virtuoso does not install an init script by default. However there is one in the source, debian/init.d. This should work for most distros.
+	yum install virtuoso-opensource
 
 ## 3.2 Configuration
 
