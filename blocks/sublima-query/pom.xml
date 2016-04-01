@@ -91,7 +91,7 @@
       </dependency>
       <dependency>
 	<groupId>org.z3950.zing</groupId>
-	<artifactId>cql</artifactId>
+	<artifactId>cql-java</artifactId>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
