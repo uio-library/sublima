@@ -306,7 +306,7 @@ public class SearchController implements StatelessAppleController {
                     form2SparqlService.nullN3List();
                     sparqlQuery = form2SparqlService.convertForm2Sparql(parameterMapBackup);
                     countNumberOfHitsQuery = form2SparqlService.convertForm2SparqlCount(parameterMapBackup, Integer.valueOf(SettingsService.getProperty("sublima.search.maxhitsbeforestop")));
-                    messageBuffer.append("<c:message><i18n:text key=\"search.zerohits\">Ingen treff i ressursenes metadata, utførte derfor et dypere søk som også inkluderte søk i ressursenes eksterne innhold.</i18n:text></c:message>");
+                    messageBuffer.append("<c:message><i18n:text key=\"search.zerohits\">Ingen treff i ressursenes metadata, utfÃ¸rte derfor et dypere sÃ¸k som ogsÃ¥ inkluderte sÃ¸k i ressursenes eksterne innhold.</i18n:text></c:message>");
                 }
             }
 
