@@ -1,8 +1,13 @@
 # 1. Introduction
 
-This document describes the points needed to set up Sublima on Debian or Debian-derived distributions such as Ubuntu. Still, Sublima can be run on any Linux distro that supplies the necessary tools, like Fedora OS or RHEL.
+This document describes the points needed to set up Sublima on Red Hat
+or Fedora distributions. Still, Sublima can be
+run on any Linux distro that supplies the necessary tools, like Ubuntu.
+The documentation is currently being  updated to cover RHEL 7.
 
-In short this document covers installation and configuration of Virtuoso (database), Sublima backend (Virtuoso2Sublima communication) and Sublima. For more in-depth documentation, see Customization.md.
+In short this document covers installation and configuration of
+Virtuoso (database), Sublima backend (Virtuoso2Sublima communication)
+and Sublima. For more in-depth documentation, see Customization.md.
 
 # 2. Required tools
 
