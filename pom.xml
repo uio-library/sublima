@@ -49,6 +49,21 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>2.6</version>
 				</plugin>
+				<plugin>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>9.3.7.v20160115</version>
+					<configuration>
+						<!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
+						<httpConnector>
+							<port>8888</port>
+						</httpConnector>
+						<webAppSourceDirectory>${project.basedir}/sublima-webapp/target/sublima-webapp-${project.version}</webAppSourceDirectory>
+						<webApp>
+							<contextPath>/test</contextPath>
+						</webApp>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
