@@ -119,13 +119,36 @@ Sublima uses Maven 3 as build tool.
 Sublima uses [Virtuoso Open-Source Edition](http://www.openlinksw.com/wiki/main/Main) for storing RDF data. It can be downloaded from here: <http://www.openlinksw.com/wiki/main/Main/VOSDownload>
 Red Hat enterprise Linux has a package:
 
-	yum install virtuoso-opensource
+	yum install virtuoso-opensource virtuoso-opensource-utils
+
+Open firewall:
+
+	firewall-cmd --add-port=8890/tcp --permanent
+	
+Setup systemd unit-file in /etc/systemd/system/virtuoso.service:
+
+	[Unit]
+	Description=Virtuoso Opensource
+	Before=tomcat.service
+	After=network.target
+	
+	[Service]
+	User=virtuoso
+	Group=virtuoso
+	Type=forking
+	ExecStart=/usr/bin/virtuoso-t +configfile /var/lib/virtuoso/db/virtuoso.ini +wait
+	
+	[Install]
+	WantedBy=multi-user.target
+
+
 
 ## 3.2 Configuration
 
 In the file /var/lib/virtuoso/db/virtuoso.ini
 
-First, one needs to be able to load data from different locations in the file system, this is set in DirsAllowed.
+First, you might want to load data from different locations in the file system, this is set in DirsAllowed. 
+This is optional, and might have security implications.
 
 Then, the number of buffers assigned to Virtuoso should be set. This is set in chunks of 8kB. Thus, 100000 is 0.8 GB RAM. This might be a good starting point:
 
