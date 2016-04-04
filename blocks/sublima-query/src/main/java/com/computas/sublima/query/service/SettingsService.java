@@ -101,10 +101,15 @@ public class SettingsService {
 
 
   public void setCocoonSettings(Settings cocoonSettings) {
-    this.cocoonSettings = cocoonSettings;
+      SettingsService.cocoonSettings = cocoonSettings;
   }
 
   public static String getProperty(String property) {
-    return cocoonSettings.getProperty(property);
+      if (cocoonSettings != null){
+	  return cocoonSettings.getProperty(property);
+      } else {
+	  logger.warn("SUBLIMA: getProperty() --> cocoonSettings is null, should only happen during unit testing");
+	  return "";
+      }
   }
 }

@@ -21,10 +21,14 @@ public class MappingService {
 
   public String charactermapping(String text) {
 
-
     try {
       // Property-files in Java is not UTF-8 so...
       String property = new String(SettingsService.getProperty("sublima.search.mapping").getBytes("ISO-8859-1"), "UTF-8");
+      //Check if we  have any mappings
+      if (property == null || property.isEmpty()) {
+	  return text;
+      }
+      
       String[] mappings = property.split("\n");
 
       for (String mapping : mappings) {
