@@ -1,0 +1,5 @@
+#!/bin/sh
+#export SUBLIMA_HOME=~/jn/src/
+
+cp ../config/test/sublima-query.properties blocks/sublima-query/src/main/resources/META-INF/cocoon/properties/
+mvn clean && mvn -Dmaven.test.skip=true package  
