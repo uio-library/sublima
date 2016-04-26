@@ -53,7 +53,7 @@ possible to serve static pages outside of Sublima, should that be wanted.
 
 Needs Apache installed and running.
 
-In /etc/tomcatx/server.xml, set proxyName and proxyPort:
+In /etc/tomcat/server.xml, set proxyName and proxyPort:
         
     <Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="0" maxThreads="150"
@@ -122,9 +122,12 @@ Accept all dependencies.
 
 ### 2.1.5 Maven 3
 
-Sublima uses Maven 3 as build tool.
-
+Sublima uses Maven 3 as build tool. 
+It is recommended to get the newest version from
 <http://maven.apache.org/download.html>
+, but it can also be  installed using yum:
+
+	yum install maven
 
 # 3. Virtuoso
 
