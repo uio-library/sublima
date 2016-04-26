@@ -26,26 +26,24 @@ Install with your favorite package tool.
 Sublima uses Tomcat 5.5 or newer.
 
     yum install tomcat
+    systemctl enable tomcat
+    firewall-cmd --add-port=8080/tcp --permanent
 
-Accept all dependencies.
-
-Disable Tomcat's security. Does not seem to apply to tomcat 7. In the file /etc/default/tomcat5.5 set
+Disable Tomcat's security. Does not seem to apply to tomcat 7. In the file /etc/tomcat/tomcat.conf set
 
     TOMCAT_SECURITY=no
 
 in the same file, set file encoding and memory limits
 
-    # Arguments to pass to the Java virtual machine (JVM).
-    JAVA_OPTS="${JAVA_OPTS} -Dfile.encoding=UTF-8 -Xmx2048M -Xms2048M"
+	# Arguments to pass to the Java virtual machine (JVM).
+	JAVA_OPTS="-Dfile.encoding=UTF-8 -Xmx2048M -Xms2048M"
 
-In the file /etc/tomcat5.5/server.xml locate the Connector element, and set the URI encoding here in an _attribute_, like:
+In the file /etc/tomcat/server.xml locate the Connector element, and set the URI encoding here in an _attribute_, like:
 
     <Connector port="8080" maxHttpHeaderSize="8192" URIEncoding="UTF-8"
 
 (Note that the other elements may have other values).
-Firewall:
 
-	firewall-cmd --add-port=8080/tcp --permanent
 
 #### 2.1.2.1 Running Sublima on port 80
 
@@ -65,18 +63,33 @@ In /etc/tomcatx/server.xml, set proxyName and proxyPort:
     />
     
 
-In httpd.conf add proxypass and proxypassreverse from port 80 to 8080:
+In /etc/httpd/conf.d/httpd-sublima.conf add proxypass and proxypassreverse from port 80 to 8080:
         
-        ProxyRequests Off
-        ProxyPreserveHost On
-    
-        <Proxy *>
-            Order deny,allow
-            Allow from all
-        </Proxy>
-		
-        ProxyPass               /jn       http://localhost:8080/jn
-        ProxyPassReverse        /jn       http://localhost:8080/jn
+	<VirtualHost *:80>
+	    Redirect /index.html http://juridisk.net/jn/
+	    ServerName juridisk.net
+	    ServerAlias www.juridisk.net
+	    DocumentRoot "/var/www/html"
+	    DirectoryIndex index.html
+	     
+	    ProxyRequests Off
+	    ProxyPreserveHost On
+	
+	    <Proxy *>
+	        Order deny,allow
+	        Allow from all
+	    </Proxy>
+	
+	    ProxyPass               /jn       http://localhost:8080/jn timeout=3600 keepalive=On
+	    ProxyPassReverse        /jn       http://localhost:8080/jn
+	</VirtualHost>
+	
+	<VirtualHost *:80>
+	    ServerName   sublima-prod02.uio.no
+	    ServerAlias sublima-prod02
+	    Redirect / http://juridisk.net/
+	</VirtualHost>
+	
 
 Firewall and SE Linux:
 
@@ -91,6 +104,7 @@ Sublima uses Memcached to cache queries.
 As root (use sudo or open a shell), run:
         
     yum install memcached
+    systemctl enable memcached
     
 Config:
 	
@@ -141,6 +155,13 @@ Setup systemd unit-file in /etc/systemd/system/virtuoso.service:
 	[Install]
 	WantedBy=multi-user.target
 
+Enable service:
+	
+	adduser -U virtuoso
+	chown -R virtuoso /var/lib/virtuoso/db
+	systemctl daemon-reload
+	systemctl enable virtuoso
+	systemctl start virtuoso
 
 
 ## 3.2 Configuration
@@ -160,10 +181,7 @@ Then, the number of buffers assigned to Virtuoso should be set. This is set in c
 
 Then, a restart is required:
 
-        
-    /etc/init.d/virtuoso-opensource stop
-    /etc/init.d/virtuoso-opensource start
-    
+	systemctl restart virtuoso
 
 ### 3.2.1 Replace the default password
 
@@ -190,9 +208,7 @@ found at
 
 On the command line run the following command (if not logged in as root, append sudo first):
         
-    /etc/init.d/virtuoso-opensource stop
-    /etc/init.d/virtuoso-opensource start
-    
+    systemctl restart virtuoso    
 
 # 4. Backend
 
@@ -222,10 +238,10 @@ Then, the servlet can by built:
     mvn package
     
 
-This will create a WAR in target/, which can be deployed in the same way as the sublima-WAR, by e.g. copying it:
-
+This will create a WAR in target/, which can be deployed in the same way 
+as the sublima-WAR, for example using the deployment script:
         
-    cp target/backend-1.0-SNAPSHOT.war /var/lib/tomcat5.5/webapps/backend.war
+    ./deploy.sh
     
 
 # 5. Sublima
@@ -379,7 +395,7 @@ And deploy using the deployment script:
     ./deploy.sh
     
 This copies sublima/sublima-webapp/target/sublima-webapp-1.0-SNAPSHOT.war
-to /var/lib/tomcat5/webapps/sublima.war. You can edit the script to replace
+to /var/lib/tomcat/webapps/sublima.war. You can edit the script to replace
 sublima.war with your desired application name. It also restarts Tomcat and
 Sublima should now be available on your selected URL.
 
