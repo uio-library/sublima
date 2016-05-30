@@ -1,7 +1,6 @@
 package com.computas.sublima.query.service;
 
 import com.computas.sublima.query.exceptions.UnsupportedCQLFeatureException;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLParseException;
@@ -10,7 +9,6 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.net.URLDecoder;
 
 /**

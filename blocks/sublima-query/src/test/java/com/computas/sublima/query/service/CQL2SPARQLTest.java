@@ -26,12 +26,14 @@ public class CQL2SPARQLTest extends TestCase {
     }
 
     public void setUp() throws Exception {
-        expectedPrefix =                 "PREFIX dct: <http://purl.org/dc/terms/>\n" +
-                "DESCRIBE ?resource ?rest WHERE {\n" +
-                "?resource dct:identifier ?lit .\n" +
-                "?lit <bif:contains> \"'";
-        expectedSuffix = "'\" .\n?resource ?p ?rest .\n" +
-                "}";
+        expectedPrefix = "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
+                "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
+                "DESCRIBE ?resource WHERE {\n" +
+                "?resource sub:literals ?lit .\n" +
+                "?lit <bif:contains> \"";
+        expectedSuffix = "\" .\n" +
+        	"?resource wdr:describedBy <http://sublima.computas.com/status/godkjent_av_administrator> .\n"
+		+ "} LIMIT 50";
         super.setUp();
     }
 
@@ -45,16 +47,16 @@ public class CQL2SPARQLTest extends TestCase {
 
     public void testTerm() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
         CQL2SPARQL translator = new CQL2SPARQL("vondt");
-        assertEquals("Query not as expected:", expectedPrefix + "vondt*" + expectedSuffix, translator.Level0());
+        assertEquals("Query not as expected:", expectedPrefix + "'vondt*'" + expectedSuffix, translator.Level0());
     }
 
     public void testTermThreeWords() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
          CQL2SPARQL translator = new CQL2SPARQL("\"vondt i magen\"");
-         assertEquals("Query not as expected:", expectedPrefix + "vondt* AND i AND magen*" + expectedSuffix, translator.Level0());
+         assertEquals("Query not as expected:", expectedPrefix + "'vondt*' AND 'i' AND 'magen*'" + expectedSuffix, translator.Level0());
      }
     public void testTermThreeWordsQuoted() throws CQLParseException, IOException, UnsupportedCQLFeatureException {
           CQL2SPARQL translator = new CQL2SPARQL("\"vondt \\\"i magen\\\"\"");
-          assertEquals("Query not as expected:", expectedPrefix + "vondt* AND \"i magen\" " + expectedSuffix, translator.Level0());
+          assertEquals("Query not as expected:", expectedPrefix + "'vondt*' AND '\"i magen\"'" + expectedSuffix, translator.Level0());
       }
 
      public void testLevel0IndexAndTerm() throws CQLParseException, IOException {
