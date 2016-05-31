@@ -78,7 +78,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 		    con.setRequestProperty("Accept", "application/sparql-results+xml");
 		}
 
-		result = IOUtils.toString(con.getInputStream());
+		result = IOUtils.toString(con.getInputStream(), "UTF-8");
 		long requesttime = System.currentTimeMillis() - connecttime;
 		logger.info("SPARQLdispatcher got results from the triplestore. Query took " + requesttime + " ms.");
 		cache.set(cacheKey, 60 * 60 * 24 * 30, result);
@@ -121,7 +121,7 @@ public class DefaultSparqlDispatcher implements SparqlDispatcher {
 		con = (HttpURLConnection) u.openConnection();
 		con.setRequestProperty("Accept", format);
 
-		result = IOUtils.toString(con.getInputStream());
+		result = IOUtils.toString(con.getInputStream(), "UTF-8");
 		long requesttime = System.currentTimeMillis() - connecttime;
 		logger.info("SPARQLdispatcher got results from the triplestore. Query took " + requesttime + " ms.");
 		cache.set(cacheKey, 60 * 60 * 24 * 30, result);
