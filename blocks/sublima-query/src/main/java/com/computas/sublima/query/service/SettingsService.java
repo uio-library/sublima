@@ -76,12 +76,13 @@ public class SettingsService {
       if (dir == null) {
         indexBuilderNode = new IndexBuilderNode();
       } else {
-
         // check if exist, if not or corrupt - create a new
         try {
           //todo Might fail here if it is a write.lock()
-          IndexWriter iw = new IndexWriter(dir, new StandardAnalyzer());
+          //todo: if this method is in use, fix constructor below
+          IndexWriter iw = new IndexWriter(null, null);
           indexBuilderNode = new IndexBuilderNode(iw);
+          throw new UnsupportedOperationException("Not implemented");
         } catch (org.apache.lucene.index.CorruptIndexException cie) {
           logger.warn("SUBLIMA: getIndexBuilderNode() --> Indexing - Failed to retrieve index, creating a new (empty in-memory index)");
           indexBuilderNode = new IndexBuilderNode();
