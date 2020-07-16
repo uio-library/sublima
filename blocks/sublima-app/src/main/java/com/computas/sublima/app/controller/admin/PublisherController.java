@@ -10,7 +10,6 @@ import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import static com.computas.sublima.app.service.Form2SparqlService.createParametersMap;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -46,7 +45,7 @@ public class PublisherController implements StatelessAppleController {
           "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
 
-  String completePrefixes = StringUtils.join("\n", completePrefixArray);
+  String completePrefixes = String.join("\n", completePrefixArray);
   private String userPrivileges = "<empty/>";
   private String language;
 
@@ -247,7 +246,7 @@ public class PublisherController implements StatelessAppleController {
     messageBuffer.append("<c:messages xmlns:i18n=\"http://apache.org/cocoon/i18n/2.1\" xmlns:c=\"http://xmlns.computas.com/cocoon\">\n");
     messageBuffer.append(messages);
 
-    String queryString = StringUtils.join("\n", new String[]{
+    String queryString = String.join("\n", new String[]{
             completePrefixes,
             "CONSTRUCT { ?publisher foaf:name ?name; a foaf:Agent .}",
             "WHERE {",

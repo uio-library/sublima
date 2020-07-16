@@ -1,7 +1,6 @@
 package com.computas.sublima.app.service;
 
 import com.computas.sublima.query.service.SearchService;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -228,7 +227,7 @@ public class Form2SparqlServiceTest extends TestCase {
     testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
     String resultString = myService.convertForm2Sparql(testMap);
     assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX sub: <http://xmlns.computas.com/sublima#>",
@@ -246,7 +245,7 @@ public class Form2SparqlServiceTest extends TestCase {
     testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
     String resultString = myService.convertForm2SparqlCount(testMap, 100);
     assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX sub: <http://xmlns.computas.com/sublima#>",
@@ -265,7 +264,7 @@ public class Form2SparqlServiceTest extends TestCase {
     String results = myService.convertForm2Sparql(testMap);
     String resultString = myService.convertForm2SparqlCount(testMap, 100);
     assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
 
@@ -286,7 +285,7 @@ public class Form2SparqlServiceTest extends TestCase {
 
     String resultString = myService.convertForm2Sparql(testMap);
     assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX sub: <http://xmlns.computas.com/sublima#>",
@@ -302,7 +301,7 @@ public class Form2SparqlServiceTest extends TestCase {
     testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
     String resultString = myService.convertForm2Sparql(testMap);
     assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX sub: <http://xmlns.computas.com/sublima#>",
@@ -318,7 +317,7 @@ public class Form2SparqlServiceTest extends TestCase {
       testMap.put("searchstring", new String[]{searchService.buildSearchString("os", true, false)});
       String resultString = myService.convertForm2Sparql(testMap);
       assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX sub: <http://xmlns.computas.com/sublima#>",
@@ -334,7 +333,7 @@ public class Form2SparqlServiceTest extends TestCase {
       testMap.put("searchstring", new String[]{searchService.buildSearchString("oslo s", true, false)});
       String resultString = myService.convertForm2Sparql(testMap);
       assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX sub: <http://xmlns.computas.com/sublima#>",
@@ -350,7 +349,7 @@ public class Form2SparqlServiceTest extends TestCase {
       testMap.put("searchstring", new String[]{searchService.buildSearchString("oslo sen", true, false)});
       String resultString = myService.convertForm2Sparql(testMap);
       assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX sub: <http://xmlns.computas.com/sublima#>",
@@ -366,7 +365,7 @@ public class Form2SparqlServiceTest extends TestCase {
     testMap.put("searchstring", new String[]{searchService.buildSearchString("engine", true, false)});
     String resultString = myService.convertForm2Sparql(testMap);
     assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX sub: <http://xmlns.computas.com/sublima#>",
@@ -385,7 +384,7 @@ public class Form2SparqlServiceTest extends TestCase {
     myService.addPrefix("wdr: <http://www.w3.org/2007/05/powder#>");
     String resultString = myService.convertForm2Sparql(testMap);
     assertEquals("Expected result and actual result not equal",
-            StringUtils.join("\n", new String[]{
+            String.join("\n", new String[]{
                     "PREFIX dct: <http://purl.org/dc/terms/>",
                     "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                     "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
@@ -441,7 +440,7 @@ public class Form2SparqlServiceTest extends TestCase {
    /*
   public void testConvertForm2SparqlTwoValuesSubjectFree() {
     // Single value test
-    String expectS = StringUtils.join("\n", new String[]{"PREFIX dct: <http://purl.org/dc/terms/>",
+    String expectS = String.join("\n", new String[]{"PREFIX dct: <http://purl.org/dc/terms/>",
             "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
             "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",

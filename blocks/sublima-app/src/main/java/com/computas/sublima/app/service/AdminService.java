@@ -8,7 +8,6 @@ import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.MappingService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -59,7 +58,7 @@ public class AdminService {
      */
     public String getAllRelationTypes() {
         String queryResult;
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "DESCRIBE ?relation WHERE {",
@@ -79,7 +78,7 @@ public class AdminService {
      */
     public String getAllPublishers() {
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
@@ -104,7 +103,7 @@ public class AdminService {
      * @return A String RDF/XML containing all the statuses
      */
     public String getAllStatuses() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "CONSTRUCT {",
@@ -129,7 +128,7 @@ public class AdminService {
      * @return A String RDF/XML containing all the statuses
      */
     public String getAllStatusesForUser() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>\n" +
                         "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
                         "CONSTRUCT {\n" +
@@ -160,7 +159,7 @@ public class AdminService {
      * @return A String RDF/XML containing all the languages
      */
     public String getAllLanguages() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "CONSTRUCT {",
@@ -187,7 +186,7 @@ public class AdminService {
      * @return A String containing SPARQL Result Set XML with the languages
      */
     public String getDistinctAndUsedLabels(String rdfType, String property) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "SELECT DISTINCT ?uri ?label",
@@ -212,7 +211,7 @@ public class AdminService {
      */
     public String getAllMediaTypes() {
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "CONSTRUCT {",
@@ -237,7 +236,7 @@ public class AdminService {
      */
     public String getAllAudiences() {
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "CONSTRUCT {",
@@ -269,7 +268,7 @@ public class AdminService {
             e.printStackTrace();
         }
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                 "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
@@ -323,7 +322,7 @@ public class AdminService {
      */
     public String getAllTopics() {
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
                 "CONSTRUCT {",
@@ -345,7 +344,7 @@ public class AdminService {
     }
 
     public String getTopicByURI(String uri) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
@@ -361,7 +360,7 @@ public class AdminService {
     }
 
     public String getTopicsAsJSON() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
                 "SELECT distinct ?uri ?label FROM <" + SettingsService.getProperty("sublima.basegraph") + ">",
@@ -381,7 +380,7 @@ public class AdminService {
     }
 
     public String getPublishersAsJSON() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
@@ -400,7 +399,7 @@ public class AdminService {
     }
 
     public String getTopicResourcesByURI(String uri) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "DESCRIBE ?resource",
@@ -415,7 +414,7 @@ public class AdminService {
     }
 
     public String getThemeTopics() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                 "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
@@ -434,7 +433,7 @@ public class AdminService {
     }
 
     public String getAllApprovedUsers() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
@@ -452,7 +451,7 @@ public class AdminService {
     }
 
     public String getAllUsers() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "DESCRIBE ?user",
@@ -471,7 +470,7 @@ public class AdminService {
         if (uri == null) {
             return "";
         }
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
                 "DESCRIBE <" + uri + ">"});
 
@@ -482,7 +481,7 @@ public class AdminService {
     }
 
     public String getRelationByURI(String uri) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "DESCRIBE <" + uri + ">"});
 
         logger.trace("AdminService.getRelationByURI() executing");
@@ -533,7 +532,7 @@ public class AdminService {
             letter = "[0-9]";
         }
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
                 "PREFIX dct: <http://purl.org/dc/terms/>",
@@ -560,7 +559,7 @@ public class AdminService {
     }
 
     public String getAllRoles() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "DESCRIBE ?role",
@@ -576,7 +575,7 @@ public class AdminService {
     }
 
     public String getRoleByURI(String uri) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "DESCRIBE <" + uri + ">"});
 
         logger.trace("AdminService.getRoleByURI() --> executing");
@@ -696,7 +695,7 @@ public class AdminService {
      * @return role
      */
     public String getUserRole(String name) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
                 "SELECT ?role",
                 "WHERE {",
@@ -752,7 +751,7 @@ public class AdminService {
      * @return role
      */
     public String getUserByEmail(String email) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX sioc: <http://rdfs.org/sioc/ns#>",
                 "DESCRIBE ?user",
                 "WHERE {",
@@ -867,7 +866,7 @@ public class AdminService {
     }
 
     public String getAllTopicsByStatus(String status) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
@@ -893,7 +892,7 @@ public class AdminService {
      */
     public String getAllTopicsWithPrefAndAltLabel() {
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
@@ -1027,7 +1026,7 @@ public class AdminService {
     }
 
     public String getAllComments() {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX sioc: <http://rdfs.org/sioc/ns#>\n" +
                         "PREFIX sub: <http://xmlns.computas.com/sublima#>\n" +
                         "PREFIX dct: <http://purl.org/dc/terms/>\n" +
@@ -1061,7 +1060,7 @@ public class AdminService {
 
     public String getTopicDetailsForTopicPage(String subject) {
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
@@ -1085,7 +1084,7 @@ public class AdminService {
 
     public String getTopicDetailsForTopicPageFromAdmin(String subject) {
 
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
@@ -1324,7 +1323,7 @@ public class AdminService {
     }
 
     public String getPublisherByURI(String publisherURI) {
-        String findPublisherByURIQuery = StringUtils.join("\n", new String[]{
+        String findPublisherByURIQuery = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "DESCRIBE <" + publisherURI + "> ?resource ?subject",
                 "WHERE {",
@@ -1397,7 +1396,7 @@ public class AdminService {
     }
 
     public String getResourcesForTopicAsJSON(String topicUri) {
-        String queryString = StringUtils.join("\n", new String[]{
+        String queryString = String.join("\n", new String[]{
                 "PREFIX dct: <http://purl.org/dc/terms/>",
                 "PREFIX sub: <http://xmlns.computas.com/sublima#>",
                 "SELECT ?uri FROM <" + SettingsService.getProperty("sublima.basegraph") + ">",

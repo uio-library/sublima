@@ -4,7 +4,6 @@ import com.computas.sublima.app.service.AdminService;
 import com.computas.sublima.app.service.IndexService;
 import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparqlDispatcher;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
 import org.apache.cocoon.components.flow.apples.AppleResponse;
 import org.apache.cocoon.components.flow.apples.StatelessAppleController;
@@ -32,7 +31,7 @@ public class LinkcheckController implements StatelessAppleController {
           "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
 
-  String completePrefixes = StringUtils.join("\n", completePrefixArray);
+  String completePrefixes = String.join("\n", completePrefixArray);
 
   private static Logger logger = Logger.getLogger(LinkcheckController.class);
 
@@ -76,7 +75,7 @@ public class LinkcheckController implements StatelessAppleController {
   private void showLinkcheckResults(AppleResponse res, AppleRequest req) {
 
     // CHECK
-    String queryStringCHECK = StringUtils.join("\n", new String[]{
+    String queryStringCHECK = String.join("\n", new String[]{
             completePrefixes,
             "CONSTRUCT {",
             "    ?resource dct:title ?title ;" +
@@ -92,7 +91,7 @@ public class LinkcheckController implements StatelessAppleController {
     Object queryResultCHECK = sparqlDispatcher.query(queryStringCHECK);
 
 // INACTIVE
-    String queryStringINACTIVE = StringUtils.join("\n", new String[]{
+    String queryStringINACTIVE = String.join("\n", new String[]{
             completePrefixes,
             "CONSTRUCT {",
             "    ?resource dct:title ?title ;" +
@@ -108,7 +107,7 @@ public class LinkcheckController implements StatelessAppleController {
     Object queryResultINACTIVE = sparqlDispatcher.query(queryStringINACTIVE);
 
 // GONE
-    String queryStringGONE = StringUtils.join("\n", new String[]{
+    String queryStringGONE = String.join("\n", new String[]{
             completePrefixes,
             "CONSTRUCT {",
             "    ?resource dct:title ?title ;" +

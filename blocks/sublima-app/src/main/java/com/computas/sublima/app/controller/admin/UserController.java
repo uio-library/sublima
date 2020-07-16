@@ -8,7 +8,6 @@ import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SettingsService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
 import static com.computas.sublima.app.service.Form2SparqlService.createParametersMap;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -17,8 +16,6 @@ import org.apache.cocoon.components.flow.apples.StatelessAppleController;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +46,7 @@ public class UserController implements StatelessAppleController {
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>",
           "PREFIX sioc: <http://rdfs.org/sioc/ns#>"};
 
-  String completePrefixes = StringUtils.join("\n", completePrefixArray);
+  String completePrefixes = String.join("\n", completePrefixArray);
 
   private static Logger logger = Logger.getLogger(UserController.class);
   private String language;

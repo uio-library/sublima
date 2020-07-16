@@ -8,7 +8,6 @@ import com.computas.sublima.query.service.SearchService;
 import com.computas.sublima.query.service.SettingsService;
 import com.computas.sublima.query.service.MappingService;
 import static com.computas.sublima.query.service.SettingsService.getProperty;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import net.sf.akismet.Akismet;
 import org.apache.cocoon.auth.ApplicationManager;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -237,7 +236,7 @@ public class FeedbackController implements StatelessAppleController {
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
       String dateCommented = dateFormat.format(date); //"2008-18-09T13:39:38";
 
-      String commentString = StringUtils.join("\n", new String[]{
+      String commentString = String.join("\n", new String[]{
               "PREFIX dct: <http://purl.org/dc/terms/>",
               "PREFIX wdr: <http://www.w3.org/2007/05/powder#>",
               "PREFIX sub: <http://xmlns.computas.com/sublima#>",

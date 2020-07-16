@@ -3,7 +3,6 @@ package com.computas.sublima.app.index;
 import com.computas.sublima.query.impl.DefaultSparqlDispatcher;
 import com.computas.sublima.query.service.DatabaseService;
 import com.computas.sublima.query.service.SettingsService;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -35,7 +34,7 @@ public class GenerateUtils {
    * @return ArrayList<String> containing all URIs
    */
   public ArrayList<String> getListOfTopicURIs() {
-    String queryString = StringUtils.join("\n", new String[]{
+    String queryString = String.join("\n", new String[]{
             "SELECT DISTINCT ?uri",
             "WHERE {",
             "        ?uri a <http://www.w3.org/2004/02/skos/core#Concept> }"});
@@ -83,7 +82,7 @@ public class GenerateUtils {
    * @return ArrayList<String> containing all URIs
    */
   public ArrayList<String> getListOfResourceURIs() {
-    String queryString = StringUtils.join("\n", new String[]{
+    String queryString = String.join("\n", new String[]{
             "SELECT DISTINCT ?uri",
             "WHERE {",
             "        ?uri a <http://xmlns.computas.com/sublima#Resource> }"});

@@ -8,7 +8,6 @@ import com.computas.sublima.app.service.LanguageService;
 import com.computas.sublima.query.SparulDispatcher;
 import com.computas.sublima.query.SparqlDispatcher;
 import com.computas.sublima.query.service.SettingsService;
-import com.hp.hpl.jena.sparql.util.StringUtils;
 import org.apache.cocoon.auth.ApplicationUtil;
 import org.apache.cocoon.auth.User;
 import org.apache.cocoon.components.flow.apples.AppleRequest;
@@ -42,7 +41,7 @@ public class AdminController implements StatelessAppleController {
           "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
           "PREFIX lingvoj: <http://www.lingvoj.org/ontology#>"};
 
-  String completePrefixes = StringUtils.join("\n", completePrefixArray);
+  String completePrefixes = String.join("\n", completePrefixArray);
 
   private static Logger logger = Logger.getLogger(AdminController.class);
   ConvertSublimaResources convert = new ConvertSublimaResources();
