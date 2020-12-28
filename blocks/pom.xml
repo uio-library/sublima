@@ -178,7 +178,7 @@
       <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
-        <version>20200518</version>
+        <version>20201115</version>
         <scope>compile</scope>
       </dependency>
 
@@ -240,7 +240,7 @@
       <dependency>
         <groupId>com.ibm.icu</groupId>
         <artifactId>icu4j</artifactId>
-        <version>68.1</version>
+        <version>68.2</version>
         <scope>compile</scope>
       </dependency>
 
