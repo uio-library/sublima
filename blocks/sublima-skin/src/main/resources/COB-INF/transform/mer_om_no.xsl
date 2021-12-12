@@ -39,9 +39,6 @@
     <p>Ansvarlig redaktør er overbibliotekar Randi Halveg Iversby, Juridisk bibliotek, Universitetsbiblioteket i Oslo. Redaksjonen består forøvrig av Rebecca Josefine Five Bergstrøm, Karen Danbolt og Erik Winge. Redaksjonen tar prinsipielle avgjørelser, bestemmer design og portalens struktur og emnehierarki, og godkjenner innkomne forslag til nye lenker, beskrivelser og plassering. Redaksjonen står også for den tekniske driften.</p>
     <h3>Referansegruppe</h3>
     <p>Den tidligere nettredaksjonen vil fra nå fungere som en referansegruppe. Referansegruppen kommer med forslag til nye lenker, foreslår navn på lenken samt foreslår beskrivelse. Redaksjonen vil trekke inn referansegruppen der det er naturlig, også i forhold til videre utvikling av Juridisk nettviser. </p>
-    <h2>Teknisk løsning</h2>
-    <p>Juridisk nettviser bruker emneportalverktøyet Sublima. Sublima er et fri-programvare-verktøy fra
-      ABM-utvikling, utviklet av Computas AS.</p>
     <h2>Samarbeidspartner</h2>
     <p>Advokatforeningen</p>
   </xsl:template>
