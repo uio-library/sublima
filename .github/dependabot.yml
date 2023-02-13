@@ -9,3 +9,7 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    ignore:
+      # Ignore major version updates, stick with Spring 5 (6 requires Java 17)
+      - dependency-name: "org.springframework:*"
+        update-types: ["version-update:semver-major"]
