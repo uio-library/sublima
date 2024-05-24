@@ -129,6 +129,7 @@
       <a id="head-login-logout" href="/">logg ut</a>
 -->
     </div>
+    <div id="shutdown-notice"> <p><strong>OBS: Juridisk nettleser legges ned omtrent 15. juni 2024</strong></p> </div>
   </div> 
 </div> 
 <!-- UiO Page header end -->

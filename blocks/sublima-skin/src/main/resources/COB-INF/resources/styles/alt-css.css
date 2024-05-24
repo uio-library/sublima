@@ -177,6 +177,10 @@ fieldset {
   background-repeat:no-repeat;
   background-color:#c0d2db;  /*background color right col */
 }
+#shutdown-notice {
+  padding: 5px 15px 5px 15px;
+  background-color: yellow;
+}
 #panel-az {
   padding: 5px 40px 0 40px;
 }
